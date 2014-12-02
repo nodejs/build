@@ -78,6 +78,8 @@ The following platforms will eventually be included in the build and **test-all*
   * MinGW 32-bit
   * MinGW 64-bit
   * POWER8 (pending V8 changes and acceptance by the core team)
+  * GNU Hurd
+  * MIPS
 
 
 CI Software
