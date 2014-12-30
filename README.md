@@ -1,6 +1,8 @@
 Node Test and Build Infrastructure
 ==================================
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/iojs/build?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ***Please note that this project is a work-in-progress, the details outlined in this document are ideals and may not represent the actual state of the project (yet). See the issues list for progress updates.***
 
 Wut?
