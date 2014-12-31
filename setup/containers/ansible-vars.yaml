@@ -1,0 +1,9 @@
+---
+server_user: iojs
+ssh_users:
+  - rvagg
+  - wblankenship
+  - ghostbar
+packages:
+  - nodejs
+  - openjdk-7-jre
