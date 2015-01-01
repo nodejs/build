@@ -1,0 +1,108 @@
+---
+- hosts: iojs-www
+
+  remote_user: root
+
+  tasks:
+    - include_vars: ansible-vars.yaml
+      tags: vars
+
+    - name: General | APT Update
+      apt: update_cache=yes
+      tags: general
+
+    - name: General | APT Upgrade
+      apt: upgrade=full
+      tags: general
+
+    # Not strictly required at the moment, intended to be used with a
+    # Docker webhook updater, _maybe_
+    - name: Node.js | Add the NodeSource Node.js repo
+      command: "bash -c 'curl -sL https://deb.nodesource.com/setup | bash -'"
+      tags: node
+
+    - name: General | Install required packages
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items: packages
+      tags: general
+
+    - name: User | Add {{ server_user }} user
+      user: name="{{ server_user }}" shell=/bin/bash
+      tags: user
+
+    - name: User | Download pubkey(s)
+      get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
+      delegate_to: 127.0.0.1
+      with_items: ssh_users
+      tags: user
+
+    - name: General | Create authorized_keys for root
+      authorized_key: user="root" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+      with_items: ssh_users
+      tags: user
+
+    - name: General | Create authorized_keys for {{ server_user }}
+      authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+      with_items: ssh_users
+      tags: user
+
+    - name: GitHub Webhook | Install github-webhook
+      command: "npm install github-webhook -g"
+      tags: webhook
+
+    - name: GitHub Webhook | Copy config
+      copy: src=./resources/github-webhook.json dest=/etc/github-webhook.json mode=0644
+      tags: webhook
+
+    - name: GitHub Webhook | Copy secret to config
+      replace: dest=/etc/github-webhook.json regexp="\{\{github_secret\}\}" replace="{{ github_secret }}"
+      tags: webhook
+
+    - name: GitHub Webhook | Copy update command to config
+      replace: dest=/etc/github-webhook.json regexp="\{\{update_command\}\}" replace="{{ update_command }}"
+      tags: webhook
+
+    - name: GitHub Webhook | Copy Upstart config
+      copy: src=./resources/github-webhook.conf dest=/etc/init/github-webhook.conf mode=0644
+      tags: webhook
+
+    - name: GitHub Webhook | Start service
+      service: name=github-webhook state=started
+      tags: webhook
+
+    - name: Setup | Initial clone
+      remote_user: "{{ server_user }}"
+      command: "bash -c '{{ clone_command }}'"
+      tags: setup
+
+    - name: Setup | Initial update
+      remote_user: "{{ server_user }}"
+      command: "bash -c '{{ update_command }}'"
+      tags: setup
+
+    - name: nginx | Copy site config
+      copy: src=./resources/iojs.org dest=/etc/nginx/sites-available/iojs.org mode=0644
+      tags: nginx
+
+    - name: nginx | Create config symlink
+      file: src=/etc/nginx/sites-available/iojs.org dest=/etc/nginx/sites-enabled/00-iojs.org state=link
+      tags: nginx
+
+    - name: nginx | Generate DH params
+      command: "bash -c 'mkdir -p /etc/nginx/ssl/ && openssl dhparam -out /etc/nginx/ssl/dhparam.pem 4096'"
+      tags: nginx
+
+    - name: nginx | Copy site certificates
+      copy: src=./resources/{{ item }} dest=/etc/nginx/ssl/{{ item }} mode=0644
+      with_items:
+        - iojs_chained.crt
+        - iojs.key
+      tags: nginx
+
+    - name: nginx | Delete default config
+      file: path=/etc/nginx/sites-enabled/default state=absent
+      tags: nginx
+
+    - name: nginx | Restart service
+      service: name=nginx state=restarted
+      tags: webhook
