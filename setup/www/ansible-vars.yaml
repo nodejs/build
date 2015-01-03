@@ -1,0 +1,9 @@
+---
+server_user: iojs
+ssh_users:
+  - rvagg
+  - indutny
+packages:
+  - nodejs
+  - nginx
+  - git
