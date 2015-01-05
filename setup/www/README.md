@@ -21,5 +21,5 @@ An SSL certificate should also be provided along with a key. The certificate, al
 To set up the web server, run:
 
 ```text
-$ ansible-playbook -i ansible-inventory ansible-playbook.yaml
+$ ansible-playbook -i ../ansible-inventory ansible-playbook.yaml
 ```

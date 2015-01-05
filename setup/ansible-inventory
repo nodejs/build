@@ -1,3 +1,10 @@
+[iojs-build-centos7]
+iojs-build-centos7-1
+
 [iojs-build-containers]
 iojs-build-containers-1
 iojs-build-containers-2
+
+[iojs-www]
+iojs-www
+

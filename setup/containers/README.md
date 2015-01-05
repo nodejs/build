@@ -18,7 +18,7 @@ Note that these hostnames are also used in the *ansible-inventory* file. The IP 
 To set up a host, run:
 
 ```text
-$ ansible-playbook -i ansible-inventory ansible-playbook.yaml
+$ ansible-playbook -i ../ansible-inventory ansible-playbook.yaml
 ```
 
 Start-up of the Jenkins slaves is manual (for now), run:
