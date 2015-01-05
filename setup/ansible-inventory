@@ -4,6 +4,9 @@ iojs-build-centos7-1
 [iojs-build-centos6]
 iojs-build-centos6-1
 
+[iojs-build-centos5]
+iojs-build-centos5-1
+
 [iojs-build-containers]
 iojs-build-containers-1
 iojs-build-containers-2
