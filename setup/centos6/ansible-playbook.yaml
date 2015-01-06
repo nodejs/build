@@ -28,6 +28,10 @@
       command: rpm --import http://ftp.scientificlinux.org/linux/scientific/5x/x86_64/RPM-GPG-KEYs/RPM-GPG-KEY-cern
       tags: general
 
+    - name: General | Download SLC SCL repo config
+      command: curl http://linuxsoft.cern.ch/cern/scl/slc6-scl.repo -o /etc/yum.repos.d/slc6-scl.repo
+      tags: general
+
     - name: General | Install required packages
       yum: name={{ item }} state=latest
       with_items: packages
@@ -74,6 +78,14 @@
       replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{secret\}\}" replace="{{ server_secret }}"
       tags: jenkins
 
+    - name: Jenkins | Copy GCC 4.4 secret to start.sh script
+      replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{gcc44_secret\}\}" replace="{{ gcc44_server_secret }}"
+      tags: jenkins
+
     - name: Jenkins | Copy server id to start.sh script
       replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{id\}\}" replace="{{ server_id }}"
+      tags: jenkins
+
+    - name: Jenkins | Copy GCC 4.4 server id to start.sh script
+      replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{gcc44_id\}\}" replace="{{ gcc44_server_id }}"
       tags: jenkins

@@ -100,8 +100,16 @@
       replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{secret\}\}" replace="{{ server_secret }}"
       tags: jenkins
 
+    - name: Jenkins | Copy GCC 4.1 secret to start.sh script
+      replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{gcc41_secret\}\}" replace="{{ gcc41_server_secret }}"
+      tags: jenkins
+
     - name: Jenkins | Copy server id to start.sh script
       replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{id\}\}" replace="{{ server_id }}"
+      tags: jenkins
+
+    - name: Jenkins | Copy GCC 4.1 server id to start.sh script
+      replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{gcc41_id\}\}" replace="{{ gcc41_server_id }}"
       tags: jenkins
 
     - name: Jenkins | Create {{ server_user }} bin directory
