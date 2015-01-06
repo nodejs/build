@@ -1,0 +1,14 @@
+---
+server_user: iojs
+ssh_users:
+  - rvagg
+  - wblankenship
+  - ryanstevens
+packages:
+  - java-1.7.0-openjdk
+  - git
+  - gcc
+  - gcc-c++
+  - make
+  - automake
+  - libtool

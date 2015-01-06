@@ -15,8 +15,6 @@
       apt: upgrade=full
       tags: general
 
-    # Not strictly required at the moment, intended to be used with a
-    # Docker webhook updater, _maybe_
     - name: Node.js | Add the NodeSource Node.js repo
       command: "bash -c 'curl -sL https://deb.nodesource.com/setup | bash -'"
       tags: node

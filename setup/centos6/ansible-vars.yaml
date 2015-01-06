@@ -1,0 +1,10 @@
+---
+server_user: iojs
+ssh_users:
+  - rvagg
+  - wblankenship
+  - ryanstevens
+packages:
+  - git
+  - java-1.8.0-openjdk
+  - devtoolset-2

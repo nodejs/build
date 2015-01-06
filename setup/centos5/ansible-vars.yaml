@@ -1,0 +1,11 @@
+---
+server_user: iojs
+ssh_users:
+  - rvagg
+  - wblankenship
+  - ryanstevens
+packages:
+  - git
+  - java-1.7.0-openjdk
+  - devtoolset-2
+  - python26
