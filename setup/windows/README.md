@@ -1,5 +1,7 @@
 # Windows Server 2012 R2 Setup
 
+THis setup also works for **Windows Server 2008 R2** after initial default updates applied from Windows Update.
+
 For io.js & libuv Jenkins setup, on a fresh server:
 
 1. Use Internet Explorer to install [Chrome](http://google.com/chrome) (while shaking fists at "Enhanced Security Configuration", who thought this was a good idea?)
