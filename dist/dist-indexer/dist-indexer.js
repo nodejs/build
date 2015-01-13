@@ -13,17 +13,17 @@ const fs         = require('fs')
     , dirre      = /^(v\d\.\d\.\d)(?:-nightly\d{8}(\w+))?$/ // get version or commit from dir name
 
     , types = {
-          'tar.gz'              : 'src'
-        , 'darwin-x64.tar.gz'   : 'osx-x64-tar'
-        , 'pkg'                 : 'osx-x64-pkg'
-        , 'linux-armv7l.tar.gz' : 'linux-armv7l'
-        , 'linux-armv6l.tar.gz' : 'linux-armv6l'
-        , 'linux-x64.tar.gz'    : 'linux-x64'
-        , 'linux-x86.tar.gz'    : 'linux-x86'
-        , 'x64.msi'             : 'win-x64-msi'
-        , 'x86.msi'             : 'win-x86-msi'
-        , 'win-x64/iojs.exe'    : 'win-x64-exe'
-        , 'win-x86/iojs.exe'    : 'win-x86-exe'
+          'tar.gz'           : 'src'
+        , 'darwin-x64'       : 'osx-x64-tar'
+        , 'pkg'              : 'osx-x64-pkg'
+        , 'linux-armv7l'     : 'linux-armv7l'
+        , 'linux-armv6l'     : 'linux-armv6l'
+        , 'linux-x64'        : 'linux-x64'
+        , 'linux-x86'        : 'linux-x86'
+        , 'x64.msi'          : 'win-x64-msi'
+        , 'x86.msi'          : 'win-x86-msi'
+        , 'win-x64/iojs.exe' : 'win-x64-exe'
+        , 'win-x86/iojs.exe' : 'win-x86-exe'
       }
 
     , npmPkgJsonUrl  = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/npm/package.json'
@@ -229,7 +229,7 @@ function dirDate (dir, callback) {
 
 
 function transformFilenames (file) {
-  file = file && file.replace(/^iojs-v\d\.\d\.\d(-nightly\d{8}[^-\.]+[-\.]?)?/, '')
+  file = file && file.replace(/^iojs-v\d\.\d\.\d-(nightly\d{8}[^-\.]+[-\.]?)?/, '')
                      .replace(/\.tar\.gz$/, '')
 
   return types[file]
