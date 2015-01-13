@@ -105,6 +105,14 @@
       lineinfile: dest=/etc/nginx/mime.types line='application/octet-stream pkg;' insertafter='^types.*'
       tags: nginx
 
+    - name: nginx | Add .xz mime-type
+      lineinfile: dest=/etc/nginx/mime.types line='application/x-xz xz;' insertafter='^types.*'
+      tags: nginx
+
+    - name: nginx | Use official .gz mime-type
+      lineinfile: dest=/etc/nginx/mime.types line='application/gzip gz;' insertafter='^types.*'
+      tags: nginx
+
     - name: nginx | Restart service
       service: name=nginx state=restarted
       tags: webhook
