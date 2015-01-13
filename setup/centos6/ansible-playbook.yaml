@@ -37,6 +37,18 @@
       with_items: packages
       tags: general
 
+    - name: NTP | Run initial NTP
+      command: ntpdate -u pool.ntp.org
+      tags: ntp
+
+    - name: NTP | Enable NTP
+      command: chkconfig ntpd on
+      tags: ntp
+
+    - name: NTP | Start NTP
+      service: name=ntpd state=started enabled=yes
+      tags: ntp
+
     - name: General | Increase file descriptor limits
       lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
       with_items:

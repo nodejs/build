@@ -13,3 +13,4 @@ packages:
   - autoconf
   - libtool
   - make
+  - ntp

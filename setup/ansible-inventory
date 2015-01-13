@@ -5,7 +5,10 @@ iojs-build-centos7-1
 iojs-build-centos6-1
 
 [iojs-build-centos5]
-iojs-build-centos5-1
+iojs-build-centos5-64-1
+iojs-build-centos5-32-1
+iojs-release-centos5-64-1
+iojs-release-centos5-32-1
 
 [iojs-build-ubuntu1410]
 iojs-build-ubuntu1410-64-1
@@ -28,3 +31,19 @@ iojs-build-containers-2
 [iojs-www]
 iojs-www
 
+[iojs-jenkins]
+iojs-jenkins
+
+[iojs-ubuntu:children]
+iojs-build-ubuntu1410
+iojs-build-ubuntu1404
+iojs-build-ubuntu1204
+iojs-build-ubuntu1004
+iojs-build-containers
+iojs-www
+iojs-jenkins
+
+[iojs-centos:children]
+iojs-build-centos7
+iojs-build-centos6
+iojs-build-centos5

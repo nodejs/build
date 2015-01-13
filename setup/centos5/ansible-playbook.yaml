@@ -31,7 +31,7 @@
       tags: vars
 
     - name: General | Download EPEL RPM
-      command: curl -sL http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm -o /tmp/epel-release-5-4.noarch.rpm
+      command: curl -sL http://dl.fedoraproject.org/pub/epel/5/{{ server_arch }}/epel-release-5-4.noarch.rpm -o /tmp/epel-release-5-4.noarch.rpm
       tags: general
 
     - name: General | Install EPEL RPM
@@ -51,13 +51,25 @@
       tags: general
 
     - name: General | Add SLC devtoolset repo GPG key
-      command: rpm --import http://ftp.scientificlinux.org/linux/scientific/5x/x86_64/RPM-GPG-KEYs/RPM-GPG-KEY-cern
+      command: rpm --import http://ftp.scientificlinux.org/linux/scientific/5x/{{ server_arch }}/RPM-GPG-KEYs/RPM-GPG-KEY-cern
       tags: general
 
     - name: General | Install required packages
       yum: name={{ item }} state=latest
       with_items: packages
       tags: general
+
+    - name: NTP | Run initial NTP
+      command: ntpdate -u pool.ntp.org
+      tags: ntp
+
+    - name: NTP | Enable NTP
+      command: chkconfig ntpd on
+      tags: ntp
+
+    - name: NTP | Start NTP
+      service: name=ntpd state=started enabled=yes
+      tags: ntp
 
     - name: General | Increase file descriptor limits
       lineinfile: dest=/etc/security/limits.conf line="{{ item }}"

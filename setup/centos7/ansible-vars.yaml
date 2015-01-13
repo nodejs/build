@@ -12,3 +12,4 @@ packages:
   - make
   - automake
   - libtool
+  - ntp

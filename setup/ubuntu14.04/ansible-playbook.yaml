@@ -21,6 +21,10 @@
       with_items: packages
       tags: general
 
+    - name: NTP | Run initial NTP
+      command: ntpdate -u pool.ntp.org
+      tags: ntp
+
     - name: General | Increase file descriptor limits
       lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
       with_items:
@@ -51,7 +55,7 @@
       tags: user
 
     - name: GYP | Clone the GYP repo
-      command: git clone http://git.chromium.org/external/gyp.git /home/{{ server_user }}/gyp
+      command: rm -rf /home/{{ server_user }}/gyp && git clone http://git.chromium.org/external/gyp.git /home/{{ server_user }}/gyp
       tags: gyp
 
     - name: Jenkins | Download Jenkins' slave.jar
