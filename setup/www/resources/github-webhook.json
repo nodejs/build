@@ -5,7 +5,7 @@
   "log": "/var/log/github-webhook.log",
   "rules": [{
     "event": "push",
-    "match": "ref == \"refs/heads/master\" && repository.full_name == \"iojs/iojs.github.io\"",
+    "match": "ref == \"refs/heads/master\" && repository.full_name == \"iojs/website\"",
     "exec": "{{update_command}}"
   }]
 }
