@@ -1,0 +1,15 @@
+{
+  "name": "dist-indexer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist-indexer.js",
+  "author": "Rod Vagg <rod@vagg.org>",
+  "license": "MIT",
+  "dependencies": {
+    "after": "~0.8.1",
+    "bl": "~0.9.3",
+    "hyperquest": "~1.0.1",
+    "map-async": "~0.1.1",
+    "minimist": "~1.1.0"
+  }
+}
