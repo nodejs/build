@@ -1,4 +1,4 @@
 ---
 github_secret: "INSERT SECRET FROM WEBHOOK HERE"
-clone_command: "cd /home/iojs/ && rm -rf iojs.github.io && git clone https://github.com/iojs/iojs.github.io.git"
-update_command: "cd /home/iojs/iojs.github.io/ && git checkout master && git reset --hard && git clean -fdx && git pull origin master && rsync -avz --delete --exclude .git /home/iojs/iojs.github.io/ /home/iojs/www/"
+clone_command: "cd /home/iojs/ && rm -rf iojs.github.io && rm -rf website && git clone https://github.com/iojs/webite.git"
+update_command: "cd /home/iojs/website/ && git checkout master && git reset --hard && git clean -fdx && git pull origin master && rsync -avz --delete --exclude .git /home/iojs/website/ /home/iojs/www/"
