@@ -8,6 +8,8 @@ server {
 
     server_name iojs.org;
 
+    root /home/iojs/www;
+
     ssl_certificate ssl/iojs_chained.crt;
     ssl_certificate_key ssl/iojs.key;
     ssl_trusted_certificate ssl/iojs_chained.crt;
@@ -46,9 +48,7 @@ server {
         rewrite ^(.*)$ https://iojs.org$1;
     }
 
-    location / {
-        root /home/iojs/www;
-        index index.html;
-        default_type text/plain;
+    location ~* (\.xz|\.gz|\.pkg|\.msi)$ {
+        gzip off;
     }
 }
