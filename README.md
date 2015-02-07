@@ -2,14 +2,12 @@ Node Test and Build Infrastructure
 ==================================
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/iojs/build?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-***Please note that this project is a work-in-progress, the details outlined in this document are ideals and may not represent the actual state of the project (yet). See the issues list for progress updates.***
-
 Wut?
 ----
 
-This repository contains information used to set up and maintain the **Node.js** and **libuv** CI infrastructure. It is intended to be open and transparent, if you see any relevant information missing please open an issue.
+This repository contains information used to set up and maintain the **io.js** and **libuv** CI infrastructure. It is intended to be open and transparent, if you see any relevant information missing please open an issue.
 
-Node.js and libuv are tested on a specific set of hardware / operating system / configuration combinations. Commits to the repository are tested on the full set while pull requests to the Node.js and libuv projects from non-core contributors are tested on a smaller, more secure subset. Build and test output is collected and success or fail status is reported back to GitHub.
+io.js and libuv are tested on a specific set of hardware / operating system / configuration combinations. Commits to the repository are tested on the full set while pull requests to the Node.js and libuv projects from non-core contributors are tested on a smaller, more secure subset. Build and test output is collected and success or fail status is reported back to GitHub.
 
 Test Configurations
 -------------------
@@ -18,12 +16,12 @@ The set of build configurations is divided into three main categories:
 
 * **All code**: configurations where code compilation and test execution can be performed in an isolated and transient containerized environment. These configurations will allow the testing of untrusted code submitted by untrusted individuals to the main repositories via pull requests.
 
-* **Core platforms**: configurations deemed to be primary build targets of the Node.js and libuv projects. Failures on these configurations will cause a failure report to GitHub on pull requests and commits. Core contributors should aim for all commits to be able to pass on these configurations. Additionally, these platforms will initially split up into two sub-categories:
+* **Core platforms**: configurations deemed to be primary build targets of the io.js and libuv projects. Failures on these configurations will cause a failure report to GitHub on pull requests and commits. Core contributors should aim for all commits to be able to pass on these configurations. Additionally, these platforms will initially split up into two sub-categories:
 
   - **Core & easy**: configurations that are simple to set up and maintain.
   - **Core & difficult**: configurations that require a level of yak shaving to set up and maintain, such as very old versions of Linux (e.g. EL5) and very new tooling (e.g. XCode 6). This set of configurations may not be initially (and fully) available to the project as they may take time to set up in a reliable enough way.
 
-* **Non-core platforms**: configurations that are secondary build targets of the Node.js and libuv projects. These platforms are of interest to the community and core contributors will be given insight to the success of their commits on these platforms but failure will be reported as advisory-only. However, it is expected that project releases will pass on all of these platforms.
+* **Non-core platforms**: configurations that are secondary build targets of the io.js and libuv projects. These platforms are of interest to the community and core contributors will be given insight to the success of their commits on these platforms but failure will be reported as advisory-only. However, it is expected that project releases will pass on all of these platforms.
 
 
 ### Configurations: All code
@@ -83,11 +81,11 @@ The following platforms will eventually be included in the build and **test-all*
 CI Software
 -----------
 
-Build and test orchestration will be primarily performed by [Buildbot](http://buildbot.net/). Each build platform will run a Buildbot slave and they will communicate with a Buildbot master that will coordinate both Node.js and libuv.
+Build and test orchestration will be primarily performed by [Buildbot](http://buildbot.net/). Each build platform will run a Buildbot slave and they will communicate with a Buildbot master that will coordinate both io.js and libuv.
 
-A small Node.js application will watch the Node.js and libuv projects on GitHub and request builds from the Buildbot master and provide feedback to GitHub. The scope of the Node.js application may increase over time, potentially leaving Buildbot to perform orchestration only.
+A small io.js application will watch the io.js and libuv projects on GitHub and request builds from the Buildbot master and provide feedback to GitHub. The scope of the io.js application may increase over time, potentially leaving Buildbot to perform orchestration only.
 
-The goal is to invest in Node.js-specific CI infrastructure and tooling while leaning on existing, proven technologies where appropriate.
+The goal is to invest in io.js-specific CI infrastructure and tooling while leaning on existing, proven technologies where appropriate.
 
 
 Hardware Sponsors
