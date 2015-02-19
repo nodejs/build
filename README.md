@@ -98,21 +98,13 @@ The following companies are contributing hardware to this project:
 * [IBM](http://www.ibm.com/) / [Softlayer](http://www.softlayer.com/) (via Dave Ings and Andrew Low)
 
 
-People
-------
+Current Project Team Members
+----------------------------
 
-**Rod Vagg** of [NodeSource](https://nodesource.com) will be initial project lead
-
-Additional assistance to be provided by the Node.js and libuv core team members and other interested and experienced parties:
-
-* TJ Fontaine [@tjfontaine](https://github.com/tjfontaine) (Joyent)
-* Saúl Ibarra Corretgé [@saghul](https://github.com/saghul)
-* Trevor Norris (NodeSource) [@trevnorris](https://github.com/trevnorris)
-* Fedor Indutny (Voxer) [@indutny](https://github.com/indutny)
-* Ben Noordhuis (StrongLoop) [@bnoordhuis](https://github.com/bnoordhuis)
-* Maciej Małecki [@mmalecki](https://github.com/mmalecki)
-* Chris Lea (NodeSource) [@chrislea](https://github.com/chrislea)
-* Ryan Graham (StrongLoop) [@rmg](https://github.com/rmg)
-* Andrew Low (IBM) [@andrewlow](https://github.com/andrewlow)
-* Mark Wolfe (Ninjablocks) [@wolfeidau](https://github.com/wolfeidau)
-* William Blankenship (NodeSource) [@wblanenship](https://github.com/wblankenship)
+* Forrest L Norvell (npm) @othiym23
+* Johan Bergström @jbergstroem
+* Ken Perkins (Rackspace) @kenperkins
+* Ryan Graham (StrongLoop) @rmg
+* William Blankenship (NodeSource) @wblankenship
+* Rod Vagg (NodeSource) @rvagg
+* Ben Noordhuis (StrongLoop) @bnoordhuis
