@@ -81,11 +81,9 @@ The following platforms will eventually be included in the build and **test-all*
 CI Software
 -----------
 
-Build and test orchestration will be primarily performed by [Buildbot](http://buildbot.net/). Each build platform will run a Buildbot slave and they will communicate with a Buildbot master that will coordinate both io.js and libuv.
+Build and test orchestration is performed by [Jenkins](http://jenkins-ci.org). You can find a summary of build status [here](https://jenkins-iojs.nodesource.com).
 
-A small io.js application will watch the io.js and libuv projects on GitHub and request builds from the Buildbot master and provide feedback to GitHub. The scope of the io.js application may increase over time, potentially leaving Buildbot to perform orchestration only.
-
-The goal is to invest in io.js-specific CI infrastructure and tooling while leaning on existing, proven technologies where appropriate.
+Our ambition is to invest in io.js-specific CI infrastructure and tooling while leaning on existing, proven technologies where appropriate. This will slowly replace Jenkins as orchestrator and buildslaves throughout our CI ecosystem.
 
 
 Hardware Sponsors
