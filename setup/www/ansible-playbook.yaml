@@ -86,7 +86,7 @@
       file: src=/etc/nginx/sites-available/iojs.org dest=/etc/nginx/sites-enabled/00-iojs.org state=link
       tags: nginx
 
-    - name: Creates directory
+    - name: nginx | Creates ssl directory
       file: path=/etc/nginx/ssl/ state=directory
       tags: nginx
 
