@@ -18,6 +18,8 @@ Note that the *host_vars/iojs-www* file needs to be created, the *host_vars/iojs
 
 An SSL certificate should also be provided along with a key. The certificate, along with chain, should be placed in *resources/iojs_chained.crt* and the key in *resources/iojs.key*.
 
+Additionally, you'll need the private SSH keys for `staging` and `dist`, which should be `resources/keys/staging/id_rsa` and `resources/keys/dist/id_rsa`.
+
 To set up the web server, run:
 
 ```text
