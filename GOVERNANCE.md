@@ -32,12 +32,12 @@ _Note:_ If you make a significant contribution and are not considered
 for commit-access log an issue or contact a WG member directly and it
 will be brought up in the next WG meeting.
 
-Modifications of the contents of the iojs/website repository are made on
-a collaborative basis. Anybody with a GitHub account may propose a
-modification via pull request and it will be considered by the project
-Collaborators. All pull requests must be reviewed and accepted by a
-Collaborator with sufficient expertise who is able to take full
-responsibility for the change. In the case of pull requests proposed
+Modifications of the contents of the repositories under the control of
+this WG are made on a collaborative basis. Anybody with a GitHub account
+may propose a modification via pull request and it will be considered by
+the project Collaborators. All pull requests must be reviewed and
+accpeted by a ollaborator with sufficient expertise who is able to take
+full responsibility for the change. In the case of pull requests proposed
 by an existing Collaborator, an additional Collaborator is required
 for sign-off. Consensus should be sought if additional Collaborators
 participate and there is disagreement around a particular
