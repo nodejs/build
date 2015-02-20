@@ -104,6 +104,10 @@
 
     ### configure cron and utility capabilities
 
+    - name: Configure | setup download-stats script
+      copy: src=../../dist/update-download-stats.sh dest="/home/{{ server_user }}" mode=0755
+      tags: setup
+      
     - name: Configure | setup cron for nightly
       cron: name="promote_nightly" minute="*/5" job="/home/staging/promote/promote_nightly.sh" user="{{ dist_user }}"
       tags: setup
