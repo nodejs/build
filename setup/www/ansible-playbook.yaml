@@ -24,8 +24,12 @@
       with_items: packages
       tags: general
 
-    - name: User | Add {{ server_user }} user
-      user: name="{{ server_user }}" shell=/bin/bash
+    - name: User | Add system users
+      user: name="{{ item }}" shell=/bin/bash
+      with_items:
+        - "{{ server_user }}"
+        - "{{ staging_user }}"
+        - "{{ dist_user }}"
       tags: user
 
     - name: User | Download pubkey(s)
@@ -39,9 +43,23 @@
       with_items: ssh_users
       tags: user
 
-    - name: General | Create authorized_keys for {{ server_user }}
-      authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
-      with_items: ssh_users
+    - name: General | authorized_keys for users
+      authorized_key: user="{{ item[0] }}" key="{{ lookup('file', '/tmp/' + item[1] + '.keys') }}"
+      with_nested:
+        - [ '{{ dist_user }}', '{{ server_user }}', '{{ staging_user }}' ]
+        - ssh_users
+      tags: user
+
+    - name: General | place ssh keys
+      copy: owner="{{ item[0] }}" group="{{ item[0] }}" src=resources/keys/{{ item[0] }}/{{ item[1].name }} dest=/home/{{ item[0] }}/.ssh/{{ item[1].name }} mode={{item[1].perms}}
+      with_nested:
+        - [ "{{ dist_user }}", "{{ staging_user }}" ]
+        - [ { name: 'id_rsa', perms: '0600' }, { name: 'id_rsa.pub', perms: '0644' } ]
+
+    - name: General | add id_rsa.pub to staging, dist authorized_keys
+      authorized_key: user="{{ item }}" key="{{ lookup('file', 'resources/keys/' + item + '/id_rsa.pub') }}"
+      with_items:
+        [ "{{ staging_user }}", "{{ dist_user }}" ]
       tags: user
 
     - name: GitHub Webhook | Install github-webhook
@@ -49,7 +67,7 @@
       tags: webhook
 
     - name: GitHub Webhook | Copy config
-      copy: src=./resources/github-webhook.json dest=/etc/github-webhook.json mode=0644
+      copy: src=resources/github-webhook.json dest=/etc/github-webhook.json mode=0644
       tags: webhook
 
     - name: GitHub Webhook | Copy secret to config
@@ -61,7 +79,7 @@
       tags: webhook
 
     - name: GitHub Webhook | Copy Upstart config
-      copy: src=./resources/github-webhook.conf dest=/etc/init/github-webhook.conf mode=0644
+      copy: src=resources/github-webhook.conf dest=/etc/init/github-webhook.conf mode=0644
       tags: webhook
 
     - name: GitHub Webhook | Start service
@@ -79,7 +97,7 @@
       tags: setup
 
     - name: nginx | Copy site config
-      copy: src=./resources/iojs.org dest=/etc/nginx/sites-available/iojs.org mode=0644
+      copy: src=resources/iojs.org dest=/etc/nginx/sites-available/iojs.org mode=0644
       tags: nginx
 
     - name: nginx | Create config symlink
@@ -95,7 +113,7 @@
       tags: nginx
 
     - name: nginx | Copy site certificates
-      copy: src=./resources/{{ item }} dest=/etc/nginx/ssl/{{ item }} mode=0644
+      copy: src=resources/{{ item }} dest=/etc/nginx/ssl/{{ item }} mode=0644
       with_items:
         - iojs_chained.crt
         - iojs.key

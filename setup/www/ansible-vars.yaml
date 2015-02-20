@@ -1,5 +1,7 @@
 ---
+dist_user: dist
 server_user: iojs
+staging_user: staging
 ssh_users:
   - rvagg
   - indutny
