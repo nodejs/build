@@ -7,6 +7,8 @@
     - include_vars: ansible-vars.yaml
       tags: vars
 
+    ### configure machine and core packages
+
     - name: General | APT Update
       apt: update_cache=yes
       tags: general
@@ -23,6 +25,8 @@
       apt: name={{ item }} update_cache=yes state=latest
       with_items: packages
       tags: general
+
+    ### setup the users
 
     - name: User | Add system users
       user: name="{{ item }}" shell=/bin/bash
@@ -62,6 +66,8 @@
         [ "{{ staging_user }}", "{{ dist_user }}" ]
       tags: user
 
+    ### setup git and git webhooks
+
     - name: GitHub Webhook | Install github-webhook
       command: "npm install github-webhook -g"
       tags: webhook
@@ -95,6 +101,18 @@
       remote_user: "{{ server_user }}"
       command: "bash -c '{{ update_command }}'"
       tags: setup
+
+    ### configure cron and utility capabilities
+
+    - name: Configure | setup cron for nightly
+      cron: name="promote_nightly" minute="*/5" job="/home/staging/promote/promote_nightly.sh" user="{{ dist_user }}"
+      tags: setup
+
+    - name: Configure | setup cron for download-stats
+      cron: name="update_download_stats" minute="30" hour="1" job="/home/iojs/update-download-stats.sh" user="root"
+      tags: setup
+
+    ### configure nginx
 
     - name: nginx | Copy site config
       copy: src=resources/iojs.org dest=/etc/nginx/sites-available/iojs.org mode=0644
