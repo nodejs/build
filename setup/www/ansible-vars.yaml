@@ -3,6 +3,7 @@ server_user: iojs
 ssh_users:
   - rvagg
   - indutny
+  - kenperkins
 packages:
   - nodejs
   - nginx
