@@ -107,7 +107,20 @@
     - name: Configure | setup download-stats script
       copy: src=../../dist/update-download-stats.sh dest="/home/{{ server_user }}" mode=0755
       tags: setup
-      
+
+    - name: Configure | setup dist-indexer directory
+      file: path="/home/{{ dist_user }}/dist-indexer" state=directory
+      tags: setup
+
+    - name: Configure | setup dist-indexer
+      copy: src="../../dist/dist-indexer/{{ item.name }}" dest="/home/{{ dist_user }}/dist-indexer/{{ item.name }}" mode={{ item.perms }}
+      with_items:
+        - [ { name: 'package.json', perms: '0644' }, { name: 'dist-indexer.js', perms: '0755' } ]
+
+    - name: Configure | npm install for dist-indexer
+      command: npm install chdir="/home/{{ dist_user }}/dist-indexer"
+      tags: setup
+
     - name: Configure | setup cron for nightly
       cron: name="promote_nightly" minute="*/5" job="/home/staging/promote/promote_nightly.sh" user="{{ dist_user }}"
       tags: setup
