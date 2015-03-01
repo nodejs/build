@@ -17,8 +17,12 @@
       with_items: packages
       tags: general
 
+    - name: User | Add {{ server_user }} group
+      command: groupadd {{ server_user }}
+      tags: user
+
     - name: User | Add {{ server_user }} user
-      user: name="{{ server_user }}" shell=/bin/bash append=yes groups=staff
+      user: name="{{ server_user }}" shell=/bin/bash append=yes groups=staff,{{ server_user }}
       tags: user
 
     - name: User | Unlock {{ server_user }} user
