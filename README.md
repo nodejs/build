@@ -94,7 +94,7 @@ The following companies are contributing hardware to this project:
 * [DigitalOcean](http://digitalocean.com/) (via Mikeal Rogers)
 * [Rackspace](http://rackspace.com/) (via Paul Querna)
 * [IBM](http://www.ibm.com/) / [Softlayer](http://www.softlayer.com/) (via Dave Ings and Andrew Low)
-* [WalmartLabs](http://www.walmartlabs.com/) (via Wyatt Preul)
+* [Walmart](http://www.walmartlabs.com/) (via Wyatt Preul)
 
 
 People

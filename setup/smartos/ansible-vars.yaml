@@ -10,6 +10,7 @@ packages:
   - gcc49-4.9.1
   - gcc49-libs-4.9.1nb1
   - gccmakedep-1.0.3
+  - clang-3.5.0
   - gmake-4.0
   - automake-1.14.1nb1
   - libtool-2.4.2nb2
