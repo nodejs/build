@@ -1,0 +1,47 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<service_bundle type='manifest' name='jenkins'>
+    <service name='application/jenkins' type='service' version='1'>
+
+        <create_default_instance enabled='false' />
+
+        <single_instance />
+
+        <dependency name='multi-user-server' type='service' grouping='require_all' restart_on='none'>
+            <service_fmri value='svc:/milestone/multi-user-server' />
+        </dependency>
+        <dependency name='network' grouping='require_all' restart_on='error' type='service'>
+            <service_fmri value='svc:/milestone/network:default' />
+        </dependency>
+        <dependency name='filesystem' grouping='require_all' restart_on='error' type='service'>
+            <service_fmri value='svc:/system/filesystem/local' />
+        </dependency>
+
+        <method_context>
+            <method_credential user='iojs' group='iojs' privileges='basic,net_privaddr' />
+            <method_environment>
+                <envvar name='NODE_COMMON_PIPE' value='/home/iojs/test.pipe' />
+                <envvar name='OSTYPE' value='smartos' />
+            </method_environment>
+        </method_context>
+
+        <exec_method type='method' name='start'
+                     exec='/opt/local/bin/java -Xmx512m -jar /home/iojs/slave.jar  -jnlpUrl https://jenkins-iojs.nodesource.com/computer/iojs-walmart-smartos14-%{id}/slave-agent.jnlp -secret %{secret}'
+                     timeout_seconds='600' />
+        <exec_method type='method' name='stop' exec=':kill -TERM' timeout_seconds='60' />
+
+        <property_group name='application' type='application'>
+            <propval name='id' type='astring' value='{{id}}' />
+            <propval name='secret' type='astring' value='{{secret}}' />
+        </property_group>
+
+        <template>
+            <common_name>
+                <loctext xml:lang='C'>Jenkins Continuous Build Server</loctext>
+            </common_name>
+            <documentation>
+                <doc_link name='hudson.dev.java.net' uri='http://jenkins-ci.org/' />
+            </documentation>
+        </template>
+    </service>
+</service_bundle>

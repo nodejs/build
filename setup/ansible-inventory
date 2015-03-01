@@ -25,7 +25,7 @@ iojs-build-ubuntu1004-64-1
 iojs-build-ubuntu1004-32-1
 
 [iojs-build-smartos]
-iojs-build-smartos ansible_python_interpreter=/opt/local/bin/python
+iojs-build-smartos ansible_python_interpreter=/opt/local/bin/python ansible_ssh_user=root ansible_ssh_host=165.225.129.118
 
 [iojs-build-containers]
 iojs-build-containers-1
