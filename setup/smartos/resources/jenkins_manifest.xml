@@ -19,6 +19,7 @@
             <method_environment>
                 <envvar name='NODE_COMMON_PIPE' value='/home/iojs/test.pipe' />
                 <envvar name='OSTYPE' value='solaris' />
+                <envvar name='HOME' value='/home/iojs' />
                 <envvar name='JOBS' value='8' />
                 <envvar name='DESTCPU' value='{{destcpu}}' />
                 <envvar name='PATH' value='/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin' />
