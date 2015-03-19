@@ -15,7 +15,7 @@
         </dependency>
 
         <method_context working_directory="/home/iojs">
-            <method_credential user='iojs' group='iojs' privileges='basic,net_privaddr' />
+            <method_credential user='iojs' group='iojs' privileges='basic' />
             <method_environment>
                 <envvar name='NODE_COMMON_PIPE' value='/home/iojs/test.pipe' />
                 <envvar name='OSTYPE' value='solaris' />
