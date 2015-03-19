@@ -28,6 +28,12 @@ iojs-build-ubuntu1004-32-1
 iojs-build-smartos-64-1
 iojs-build-smartos-32-1
 
+[iojs-build-freebsd101-32]
+iojs-build-freebsd101-32-1
+
+[iojs-build-freebsd101-64]
+iojs-build-freebsd101-64-1
+
 [iojs-build-containers]
 iojs-build-containers-1
 iojs-build-containers-2
@@ -54,3 +60,7 @@ iojs-build-centos5
 
 [iojs-smartos:children]
 iojs-build-smartos
+
+[iojs-freebsd-101:children]
+iojs-build-freebsd101-32
+iojs-build-freebsd101-64

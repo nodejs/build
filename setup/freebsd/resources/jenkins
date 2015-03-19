@@ -1,0 +1,71 @@
+#!/bin/sh
+
+# $FreeBSD: $
+#
+# Based on the jenkins init script
+#
+# PROVIDE: jenkins-iojs
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Configuration settings for jenkins in /etc/rc.conf:
+#
+# jenkins_enable (bool):
+#   Set to "NO" by default.
+#   Set it to "YES" to enable jenkins
+#
+
+. /etc/rc.subr
+
+name="jenkins"
+rcvar=jenkins_enable
+
+load_rc_config "${name}"
+
+
+OSTYPE="freebsd"
+NODE_COMMON_PIPE="/home/iojs/test.pipe"
+LOCALHOST="{{interface}}"
+
+jenkins_jnlpurl="https://jenkins-iojs.nodesource.com/computer/iojs-voxer-freebsd101-{{id}}/slave-agent.jnlp"
+jenkins_secret="{{secret}}"
+jenkins_jar="/home/iojs/slave.jar"
+jenkins_log_file="/home/iojs/jenkins_console.log"
+jenkins_args="-jnlpUrl ${jenkins_jnlpurl} -secret ${jenkins_secret}"
+jenkins_user="iojs"
+jenkins_group="iojs"
+
+pidfile="/var/run/jenkins/jenkins.pid"
+command="/usr/sbin/daemon"
+java_cmd="/usr/local/bin/java"
+procname="/usr/local/openjdk7/bin/java"
+command_args="-p ${pidfile} ${java_cmd} -jar ${jenkins_jar} ${jenkins_args} > ${jenkins_log_file} 2>&1"
+env="LOCALHOST=${LOCALHOST} OSTYPE=${OSTYPE} NODE_COMMON_PIPE=${NODE_COMMON_PIPE} CC=cc CXX=c++"
+required_files="${java_cmd}"
+
+start_precmd="jenkins_prestart"
+start_cmd="jenkins_start"
+
+jenkins_prestart() {
+	if [ ! -f "${jenkins_log_file}" ]; then
+		touch "${jenkins_log_file}"
+		chown "${jenkins_user}:${jenkins_group}" "${jenkins_log_file}"
+		chmod 640 "${jenkins_log_file}"
+	fi
+	if [ ! -d "/var/run/jenkins" ]; then
+		install -d -o "${jenkins_user}" -g "${jenkins_group}" -m 750 "/var/run/jenkins"
+	fi
+
+	if [ $jenkins_secret == "{{secret}}" ]; then
+		err 1 "You need to change the jenkins secret"
+	fi
+}
+
+jenkins_start()
+{
+	check_startmsgs && echo "Starting ${name}."
+	su -l ${jenkins_user} -c "${env} exec ${command} ${command_args}"
+}
+
+run_rc_command "$1"
