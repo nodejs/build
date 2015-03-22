@@ -50,6 +50,11 @@ iojs-build-freebsd101-64-1
 iojs-build-containers-1
 iojs-build-containers-2
 
+[iojs-armv7-wheezy]
+iojs-build-armv7-wheezy-1
+iojs-build-armv7-wheezy-2
+iojs-release-armv7-wheezy-1
+
 [iojs-raspbian]
 iojs-ns-pi1-1
 iojs-ns-pi1-2
@@ -78,6 +83,7 @@ iojs-build-debian8
 iojs-build-containers
 iojs-www
 iojs-jenkins
+iojs-armv7-wheezy
 
 [iojs-centos:children]
 iojs-build-centos7
