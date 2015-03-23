@@ -27,7 +27,10 @@ const fs         = require('fs')
       }
 
     , npmPkgJsonUrl  = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/npm/package.json'
-    , v8VersionUrl   = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/v8/src/version.cc'
+    , v8VersionUrl   = [
+          'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/v8/src/version.cc'
+        , 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/v8/include/v8-version.h'
+      ]
     , uvVersionUrl   = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/uv/include/uv-version.h'
     , sslVersionUrl  = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/openssl/openssl/Makefile'
     , zlibVersionUrl = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/zlib/zlib.h'
@@ -65,7 +68,8 @@ function cacheGet (commit, prop) {
 
 
 function cachePut (commit, prop, value) {
-  (versionCache[commit] || (versionCache[commit] = {}))[prop] = value
+  if (prop && value)
+    (versionCache[commit] || (versionCache[commit] = {}))[prop] = value
 }
 
 
@@ -114,19 +118,36 @@ function fetchV8Version (commit, callback) {
   if (version)
     return setImmediate(callback.bind(null, null, version))
 
-  fetch(v8VersionUrl, commit, function (err, rawData) {
+  fetch(v8VersionUrl[0], commit, function (err, rawData) {
     if (err)
       return callback(err)
 
     version = rawData.split('\n').map(function (line) {
-      return line.match(/^#define (?:MAJOR_VERSION|MINOR_VERSION|BUILD_NUMBER|PATCH_LEVEL)\s+(\d+)$/)
-    })
-    .filter(Boolean)
-    .map(function (m) { return m[1] })
-    .join('.')
+        return line.match(/^#define (?:MAJOR_VERSION|MINOR_VERSION|BUILD_NUMBER|PATCH_LEVEL)\s+(\d+)$/)
+      })
+      .filter(Boolean)
+      .map(function (m) { return m[1] })
+      .join('.')
 
-    cachePut(commit, 'v8', version)
-    callback(null, version)
+    if (version) {
+      cachePut(commit, 'v8', version)
+      return callback(null, version)
+    }
+
+    fetch(v8VersionUrl[1], commit, function (err, rawData) {
+      if (err)
+        return callback(err)
+
+      version = rawData.split('\n').map(function (line) {
+          return line.match(/^#define V8_(?:MAJOR_VERSION|MINOR_VERSION|BUILD_NUMBER|PATCH_LEVEL)\s+(\d+)$/)
+        })
+        .filter(Boolean)
+        .map(function (m) { return m[1] })
+        .join('.')
+
+      cachePut(commit, 'v8', version)
+      callback(null, version)
+    })
   })
 }
 
