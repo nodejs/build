@@ -250,7 +250,7 @@ function dirDate (dir, callback) {
 
 
 function transformFilenames (file) {
-  file = file && file.replace(/^iojs-v\d\.\d\.\d-(nightly\d{8}[^-\.]+[-\.]?)?/, '')
+  file = file && file.replace(/^iojs-v\d\.\d\.\d-((next-)?nightly\d{8}[^-\.]+[-\.]?)?/, '')
                      .replace(/\.tar\.gz$/, '')
 
   return types[file]
