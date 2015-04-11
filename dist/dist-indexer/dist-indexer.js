@@ -10,7 +10,7 @@ const fs         = require('fs')
 
     , versionCachePath = path.join(process.env.HOME, '.dist-indexer-version-cache')
 
-    , dirre      = /^(v\d\.\d\.\d)(?:-nightly\d{8}(\w+))?$/ // get version or commit from dir name
+    , dirre      = /^(v\d\.\d\.\d)(?:-(?:next-)?nightly\d{8}(\w+))?$/ // get version or commit from dir name
 
     , types = {
           'tar.gz'           : 'src'
