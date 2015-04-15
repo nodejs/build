@@ -38,6 +38,15 @@ iojs-build-freebsd101-64-1
 iojs-build-containers-1
 iojs-build-containers-2
 
+[iojs-raspbian]
+iojs-ns-pi1-1
+iojs-ns-pi1-2
+iojs-ns-pi1p-1
+iojs-ns-pi2-1
+iojs-ns-pi2-2
+iojs-ns-pi2-3
+iojs-ns-pi2-4
+
 [iojs-www]
 iojs-www
 
