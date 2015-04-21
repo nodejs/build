@@ -3,7 +3,7 @@
 const ghrepos = require('ghrepos')
 
 const typeRefs = {
-          'nightly'      : 'heads/v1.x'
+          'nightly'      : 'heads/master'
         , 'next-nightly' : 'heads/next'
       }
 
