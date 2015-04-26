@@ -16,6 +16,9 @@ iojs-release-centos5-32-1
 [iojs-build-debian8]
 iojs-build-debian8-64-1
 
+[iojs-build-ubuntu1504]
+iojs-build-ubuntu1504-64-1
+
 [iojs-build-ubuntu1410]
 iojs-build-ubuntu1410-64-1
 
