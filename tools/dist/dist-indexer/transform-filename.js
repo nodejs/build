@@ -2,6 +2,7 @@ const types = {
           'tar.gz'           : 'src'
         , 'darwin-x64'       : 'osx-x64-tar'
         , 'pkg'              : 'osx-x64-pkg'
+        , 'linux-arm64'      : 'linux-arm64'
         , 'linux-armv7l'     : 'linux-armv7l'
         , 'linux-armv6l'     : 'linux-armv6l'
         , 'linux-x64'        : 'linux-x64'

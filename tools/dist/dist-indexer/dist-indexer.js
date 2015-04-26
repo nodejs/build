@@ -8,23 +8,11 @@ const fs         = require('fs')
     , hyperquest = require('hyperquest')
     , bl         = require('bl')
 
+    , transformFilename = require('./transform-filename')
+
     , versionCachePath = path.join(process.env.HOME, '.dist-indexer-version-cache')
 
     , dirre      = /^(v\d\.\d\.\d)(?:-(?:next-)?nightly\d{8}(\w+))?$/ // get version or commit from dir name
-
-    , types = {
-          'tar.gz'           : 'src'
-        , 'darwin-x64'       : 'osx-x64-tar'
-        , 'pkg'              : 'osx-x64-pkg'
-        , 'linux-armv7l'     : 'linux-armv7l'
-        , 'linux-armv6l'     : 'linux-armv6l'
-        , 'linux-x64'        : 'linux-x64'
-        , 'linux-x86'        : 'linux-x86'
-        , 'x64.msi'          : 'win-x64-msi'
-        , 'x86.msi'          : 'win-x86-msi'
-        , 'win-x64/iojs.exe' : 'win-x64-exe'
-        , 'win-x86/iojs.exe' : 'win-x86-exe'
-      }
 
     , npmPkgJsonUrl  = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/npm/package.json'
     , v8VersionUrl   = [
@@ -246,14 +234,6 @@ function dirDate (dir, callback) {
       callback(null, mtimes[0])
     }
   })
-}
-
-
-function transformFilenames (file) {
-  file = file && file.replace(/^iojs-v\d\.\d\.\d-((next-)?nightly\d{8}[^-\.]+[-\.]?)?/, '')
-                     .replace(/\.tar\.gz$/, '')
-
-  return types[file]
 }
 
 
