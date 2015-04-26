@@ -1,3 +1,6 @@
+[iojs-build-fedora21]
+iojs-build-fedora21-1
+
 [iojs-build-centos7]
 iojs-build-centos7-1
 
@@ -66,6 +69,7 @@ iojs-jenkins
 iojs-build-centos7
 iojs-build-centos6
 iojs-build-centos5
+iojs-build-fedora21
 
 [iojs-smartos:children]
 iojs-build-smartos
