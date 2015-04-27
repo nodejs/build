@@ -10,6 +10,9 @@ iojs-build-centos5-32-1
 iojs-release-centos5-64-1
 iojs-release-centos5-32-1
 
+[iojs-build-debian8]
+iojs-build-debian8-64-1
+
 [iojs-build-ubuntu1410]
 iojs-build-ubuntu1410-64-1
 
@@ -58,6 +61,7 @@ iojs-build-ubuntu1410
 iojs-build-ubuntu1404
 iojs-build-ubuntu1204
 iojs-build-ubuntu1004
+iojs-build-debian8
 iojs-build-containers
 iojs-www
 iojs-jenkins
