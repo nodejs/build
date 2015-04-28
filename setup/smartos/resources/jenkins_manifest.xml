@@ -22,7 +22,7 @@
                 <envvar name='HOME' value='/home/iojs' />
                 <envvar name='JOBS' value='8' />
                 <envvar name='DESTCPU' value='{{destcpu}}' />
-                <envvar name='PATH' value='/usr/local/libexec/ccache:/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin' />
+                <envvar name='PATH' value='/opt/local/libexec/ccache:/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin' />
             </method_environment>
         </method_context>
 
