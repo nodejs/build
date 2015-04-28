@@ -11,7 +11,7 @@
     - include_vars: ansible-vars.yaml
       tags: vars
 
-    - name: General | Update packages
+    - name: General | Update package repository
       command: pkg update
       tags: general
 
