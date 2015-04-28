@@ -16,3 +16,4 @@ packages:
   - gmake
   - automake
   - libtool
+  - ccache

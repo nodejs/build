@@ -47,6 +47,17 @@
       authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
       with_items: ssh_users
       tags: user
+      
+    - name: CCache | Create directory that hold symlinks to ccache
+      file: path=/opt/local/libexec/ccache state=directory mode=0755
+      tags: ccache
+    
+    - name: CCache | Symlink compiler binaries to ccache
+      file: src={{ item.src }} dest={{ item.dest }} state=link
+      with_items: 
+        - { src: '/opt/local/bin/ccache', dest: '/opt/local/libexec/ccache/gcc' }
+        - { src: '/opt/local/bin/ccache', dest: '/opt/local/libexec/ccache/g++' }
+      tags: ccache
 
     - name: Jenkins | Download Jenkins' slave.jar
       command: curl -sL https://jenkins-iojs.nodesource.com/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
