@@ -8,3 +8,4 @@ packages:
   - openjdk
   - git
   - gmake
+  - ccache

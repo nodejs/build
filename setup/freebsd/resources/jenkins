@@ -27,6 +27,7 @@ load_rc_config "${name}"
 OSTYPE="freebsd"
 NODE_COMMON_PIPE="/home/iojs/test.pipe"
 LOCALHOST="{{interface}}"
+PATH="/usr/local/libexec/ccache:/usr/local/bin:${PATH}"
 
 jenkins_jnlpurl="https://jenkins-iojs.nodesource.com/computer/iojs-voxer-freebsd101-{{id}}/slave-agent.jnlp"
 jenkins_secret="{{secret}}"
@@ -38,11 +39,10 @@ jenkins_group="iojs"
 
 pidfile="/var/run/jenkins/jenkins.pid"
 command="/usr/sbin/daemon"
-java_cmd="/usr/local/bin/java"
 procname="/usr/local/openjdk7/bin/java"
-command_args="-p ${pidfile} ${java_cmd} -jar ${jenkins_jar} ${jenkins_args} > ${jenkins_log_file} 2>&1"
-env="LOCALHOST=${LOCALHOST} OSTYPE=${OSTYPE} NODE_COMMON_PIPE=${NODE_COMMON_PIPE} CC=cc CXX=c++"
-required_files="${java_cmd}"
+command_args="-p ${pidfile} ${procname} -jar ${jenkins_jar} ${jenkins_args} > ${jenkins_log_file} 2>&1"
+env="PATH=${PATH} LOCALHOST=${LOCALHOST} OSTYPE=${OSTYPE} NODE_COMMON_PIPE=${NODE_COMMON_PIPE} CC=cc CXX=c++"
+required_files="${procname} ${jenkins_jar}"
 
 start_precmd="jenkins_prestart"
 start_cmd="jenkins_start"
@@ -57,8 +57,8 @@ jenkins_prestart() {
 		install -d -o "${jenkins_user}" -g "${jenkins_group}" -m 750 "/var/run/jenkins"
 	fi
 
-	if [ $jenkins_secret == "{{secret}}" ]; then
-		err 1 "You need to change the jenkins secret"
+	if [ ! $jenkins_secret ]; then
+		err 1 "You need to add a jenkins secret"
 	fi
 }
 
