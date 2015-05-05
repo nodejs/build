@@ -91,27 +91,21 @@ Hardware Sponsors
 
 The following companies are contributing hardware to this project:
 
-* [DigitalOcean](http://digitalocean.com/) (via Mikeal Rogers)
-* [Rackspace](http://rackspace.com/) (via Paul Querna)
-* [IBM](http://www.ibm.com/) / [Softlayer](http://www.softlayer.com/) (via Dave Ings and Andrew Low)
-* [Joyent](http://joyent.com/) (via TJ Fontaine)
+* [DigitalOcean](http://digitalocean.com/)
+* [Rackspace](http://rackspace.com/)
+* [Joyent](http://joyent.com/)
+* [Linaro](http://linaro.org/)
+* [Scaleway](https://www.scaleway.com/)
+* [NodeSource](https://nodesource.com/)
 
 
 People
 ------
 
-**Rod Vagg** of [NodeSource](https://nodesource.com) will be initial project lead
-
-Additional assistance to be provided by the Node.js and libuv core team members and other interested and experienced parties:
-
-* TJ Fontaine [@tjfontaine](https://github.com/tjfontaine) (Joyent)
-* Saúl Ibarra Corretgé [@saghul](https://github.com/saghul)
-* Trevor Norris (NodeSource) [@trevnorris](https://github.com/trevnorris)
-* Fedor Indutny (Voxer) [@indutny](https://github.com/indutny)
-* Ben Noordhuis (StrongLoop) [@bnoordhuis](https://github.com/bnoordhuis)
-* Maciej Małecki [@mmalecki](https://github.com/mmalecki)
-* Chris Lea (NodeSource) [@chrislea](https://github.com/chrislea)
-* Ryan Graham (StrongLoop) [@rmg](https://github.com/rmg)
-* Andrew Low (IBM) [@andrewlow](https://github.com/andrewlow)
-* Mark Wolfe (Ninjablocks) [@wolfeidau](https://github.com/wolfeidau)
-* William Blankenship (NodeSource) [@wblanenship](https://github.com/wblankenship)
+* Rod Vagg [@rvagg](https://github.com/rvagg)
+* Ben Noordhuis [@bnoordhuis](https://github.com/bnoordhuis)
+* Ryan Graham [@rmg](https://github.com/rmg)
+* William Blankenship [@wblanenship](https://github.com/wblankenship)
+* Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
+* Ken Perkins [@kenperkins](https://github.com/kenperkins)
+* Wyatt Preul [@geek](https://github.com/geek)
