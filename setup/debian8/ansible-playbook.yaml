@@ -1,0 +1,76 @@
+---
+- hosts: iojs-build-debian8
+
+  remote_user: root
+
+  tasks:
+
+    - include_vars: ansible-vars.yaml
+      tags: vars
+
+    - name: General | APT Update
+      apt: update_cache=yes
+      tags: general
+
+    - name: General | APT Upgrade
+      apt: upgrade=dist
+      tags: general
+
+    - name: General | Install required packages
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items: packages
+      tags: general
+
+    - name: General | Increase file descriptor limits
+      lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
+      with_items:
+        - "*         hard    nofile      500000"
+        - "*         soft    nofile      500000"
+        - "root      hard    nofile      500000"
+        - "root      soft    nofile      500000"
+      tags: general
+
+    - name: User | Add {{ server_user }} user
+      user: name="{{ server_user }}" shell=/bin/bash
+      tags: user
+
+    - name: User | Download pubkey(s)
+      get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
+      delegate_to: 127.0.0.1
+      with_items: ssh_users
+      tags: user
+
+    - name: General | Create authorized_keys for root
+      authorized_key: user="root" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+      with_items: ssh_users
+      tags: user
+
+    - name: General | Create authorized_keys for {{ server_user }}
+      authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+      with_items: ssh_users
+      tags: user
+
+    - name: Jenkins | Download Jenkins' slave.jar
+      command: curl -sL https://jenkins-iojs.nodesource.com/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
+      tags: jenkins
+
+    - name: Jenkins | Copy jenkins.service systemd config
+      copy: src=./resources/jenkins.service dest=/lib/systemd/system/jenkins.service mode=0644
+      tags: jenkins
+
+    - name: Jenkins | Copy server user to jenkins.service
+      replace: dest=/lib/systemd/system/jenkins.service regexp="\{\{user\}\}" replace="{{ server_user }}"
+      tags: jenkins
+
+    - name: Jenkins | Copy secrets to jenkins.service
+      replace: dest=/lib/systemd/system/jenkins.service regexp="\{\{secret\}\}" replace="{{ server_secret }}"
+      tags: jenkins
+
+    - name: Jenkins | Copy server ids to jenkins.service
+      replace: dest=/lib/systemd/system/jenkins.service regexp="\{\{id\}\}" replace="{{ server_id }}"
+      tags: jenkins
+
+    - name: Jenkins | Start Jenkins service
+      service: name=jenkins state=started
+      tags: jenkins
+
