@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict';
+
 const fs         = require('fs')
     , path       = require('path')
     , argv       = require('minimist')(process.argv.slice(2))
@@ -68,7 +70,7 @@ function commitFromDir (dir) {
 
 
 function fetch (url, commit, callback) {
-  url = url.replace("{commit}", commit)
+  url = url.replace('{commit}', commit)
   hyperquest.get(url).pipe(bl(function (err, data) {
     if (err)
       return callback(err)
@@ -244,11 +246,11 @@ function dirFiles (dir, callback) {
     if (err)
       return callback(err)
 
-    files = contents.split('\n').map(function (line) {
+    var files = contents.split('\n').map(function (line) {
       var seg = line.split(/\s+/)
       return seg.length >= 2 && seg[1]
     })
-    .map(transformFilenames)
+    .map(transformFilename)
     .filter(Boolean)
     .sort()
 
@@ -265,6 +267,7 @@ function inspectDir (dir, callback) {
     , uvVersion
     , sslVersion
     , zlibVersion
+    , modVersion
     , date
 
   if (!commit) {
