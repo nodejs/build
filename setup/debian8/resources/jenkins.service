@@ -20,3 +20,5 @@ Restart=always
 RestartSec=30
 StartLimitInterval=0
 
+[Install]
+WantedBy=multi-user.target
