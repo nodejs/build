@@ -14,7 +14,7 @@ function latestCommit (type, callback) {
   if (!ref)
     throw new Error(`Unknown type "${type}"`)
 
-  ghrepos.getRef(null, 'iojs', 'io.js', ref, function (err, data) {
+  ghrepos.getRef(null, 'nodejs', 'io.js', ref, function (err, data) {
     if (err)
       return callback(err)
 
