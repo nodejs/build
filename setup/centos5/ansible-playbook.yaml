@@ -105,16 +105,16 @@
       tags: jenkins
 
     - name: Jenkins | Copy init script
-      copy: src=./resources/jenkins.initd dest={{ init_script_path }}/jenkins owner={{ server_user }} group={{ server_user }} mode=0755
+      copy: src=./resources/jenkins.initd dest=/etc/init.d/jenkins owner={{ server_user }} group={{ server_user }} mode=0755
       tags: jenkins
 
     - name: Jenkins | Symlink gcc41 init script
-      file: src={{ init_script_path }}/jenkins dest={{ init_script_path }}/jenkins-gcc1 state=link
+      file: src=/etc/init.d/jenkins dest=/etc/init.d/jenkins-gcc1 state=link
       tags: jenkins
 
     - name: Jenkins | Copy environment file
-      copy: src=./resources/jenkins.sysconfig dest={{ init_script_path }}/jenkins owner={{ server_user }} group={{ server_user }} mode=0400
-      copy: src=./resources/jenkins.sysconfig dest={{ init_script_path }}/jenkins-gcc41 owner={{ server_user }} group={{ server_user }} mode=0400
+      copy: src=./resources/jenkins.sysconfig dest=/etc/sysconfig/jenkins owner={{ server_user }} group={{ server_user }} mode=0400
+      copy: src=./resources/jenkins.sysconfig dest=/etc/sysconfig/jenkins-gcc41 owner={{ server_user }} group={{ server_user }} mode=0400
       tags: jenkins
 
     - name: Jenkins | Copy secret to environments
