@@ -109,21 +109,29 @@
       tags: jenkins
 
     - name: Jenkins | Symlink gcc41 init script
-      file: src=/etc/init.d/jenkins dest=/etc/init.d/jenkins-gcc1 state=link
+      file: src=/etc/init.d/jenkins dest=/etc/init.d/jenkins-gcc41 state=link
       tags: jenkins
 
-    - name: Jenkins | Copy environment file
-      copy: src=./resources/jenkins.sysconfig dest=/etc/sysconfig/jenkins owner={{ server_user }} group={{ server_user }} mode=0400
-      copy: src=./resources/jenkins.sysconfig dest=/etc/sysconfig/jenkins-gcc41 owner={{ server_user }} group={{ server_user }} mode=0400
+    - name: Jenkins | Copy environment files
+      copy: src=./resources/jenkins.sysconfig dest=/etc/sysconfig/{{ item }} owner={{ server_user }} group={{ server_user }} mode=0400
+      with_items:
+        - jenkins
+        - jenkins-gcc41
       tags: jenkins
 
-    - name: Jenkins | Copy secret to environments
+    - name: Jenkins | Copy secret to environment
       replace: dest=/etc/sysconfig/jenkins regexp="\{\{secret\}\}" replace="{{ server_secret }}"
+      tags: jenkins
+
+    - name: Jenkins | Copy secret to gcc41 environment
       replace: dest=/etc/sysconfig/jenkins-gcc41 regexp="\{\{secret\}\}" replace="{{ gcc41_server_secret }}"
       tags: jenkins
 
-    - name: Jenkins | Copy server id to environments
+    - name: Jenkins | Copy server id to environment
       replace: dest=/etc/sysconfig/jenkins regexp="\{\{id\}\}" replace="{{ server_id }}"
+      tags: jenkins
+      
+    - name: Jenkins | Copy server id to gcc41 environment
       replace: dest=/etc/sysconfig/jenkins-gcc41 regexp="\{\{id\}\}" replace="{{ gcc41_server_id }}"
       tags: jenkins
       
@@ -133,6 +141,12 @@
 
     - name: Jenkins | Add init scripts to startup
       action: shell chkconfig --add {{ item }}
+      with_items:
+        - jenkins
+        - jenkins-gcc41
+      tags: jenkins
+
+    - name: Jenkins | Add init scripts to runlevels
       action: shell chkconfig --level 345 {{ item }} on
       with_items:
         - jenkins
