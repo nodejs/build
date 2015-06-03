@@ -37,7 +37,8 @@ slave_start() {
 
   ENV="PATH=$JENKINS_PATH NODE_COMMON_PIPE=$NODE_COMMON_PIPE OSTYPE=$OSTYPE"
   runuser -m -l $JENKINS_SLAVE_USER -c "$ENV $JAVA -jar $JENKINS_SLAVE_JAR $JENKINS_SLAVE_ARGS > $JENKINS_SLAVE_LOG 2>&1 &"
-  pgrep -f -u $JENKINS_SLAVE_USER $JENKINS_SLAVE_JAR > $PIDFILE
+  secret=`echo $JENKINS_SLAVE_ARGS | egrep -o "\-secret \w+" | cut -d " " -f 2`
+  pgrep -f -u $JENKINS_SLAVE_USER $secret > $PIDFILE
   RETVAL=$?
   [ $RETVAL -eq 0 ] && touch $LOCK_FILE
 }
