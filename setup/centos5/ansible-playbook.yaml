@@ -166,4 +166,5 @@
       with_items:
         - gcc
         - g++
+        - cc
       tags: jenkins
