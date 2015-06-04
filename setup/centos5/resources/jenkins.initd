@@ -27,7 +27,7 @@ JENKINS_PATH=""
 [ $SCL ] && JENKINS_PATH=$SCL:$JENKINS_PATH 
 
 # Add bin last since we link ccache in there
-JENKINS_PATH=/home/iojs/bin:$JENKINS_PATH
+JENKINS_PATH=/home/iojs/bin:$JENKINS_PATH:$PATH
 
 slave_start() {
   echo Starting $NAME...
