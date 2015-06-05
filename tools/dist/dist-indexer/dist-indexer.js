@@ -16,15 +16,20 @@ const fs         = require('fs')
 
     , dirre      = /^(v\d\.\d\.\d)(?:-(?:next-)?nightly\d{8}(\w+))?$/ // get version or commit from dir name
 
-    , npmPkgJsonUrl  = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/npm/package.json'
-    , v8VersionUrl   = [
-          'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/v8/src/version.cc'
-        , 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/v8/include/v8-version.h'
+    // needs auth: githubContentUrl = 'https://api.github.com/repos/nodejs/io.js/contents'
+    , githubContentUrl = 'https://raw.githubusercontent.com/nodejs/io.js/{commit}'
+    , npmPkgJsonUrl    = `${githubContentUrl}/deps/npm/package.json`
+    , v8VersionUrl     = [
+          `${githubContentUrl}/deps/v8/src/version.cc`
+        , `${githubContentUrl}/deps/v8/include/v8-version.h`
       ]
-    , uvVersionUrl   = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/uv/include/uv-version.h'
-    , sslVersionUrl  = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/openssl/openssl/Makefile'
-    , zlibVersionUrl = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/zlib/zlib.h'
-    , modVersionUrl  = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/src/node_version.h'
+    , uvVersionUrl     = `${githubContentUrl}/deps/uv/include/uv-version.h`
+    , sslVersionUrl    = `${githubContentUrl}/deps/openssl/openssl/Makefile`
+    , zlibVersionUrl   = `${githubContentUrl}/deps/zlib/zlib.h`
+    , modVersionUrl    = `${githubContentUrl}/src/node_version.h`
+    , githubOptions    = { headers: {
+          'accept': 'text/plain,application/vnd.github.v3.raw'
+      } }
 
 
 if (typeof argv.dist != 'string')
@@ -70,8 +75,8 @@ function commitFromDir (dir) {
 
 
 function fetch (url, commit, callback) {
-  url = url.replace('{commit}', commit)
-  hyperquest.get(url).pipe(bl(function (err, data) {
+  url = url.replace('{commit}', commit) + `?rev=${commit}`
+  hyperquest.get(url, githubOptions).pipe(bl(function (err, data) {
     if (err)
       return callback(err)
 
