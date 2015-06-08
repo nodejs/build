@@ -135,8 +135,12 @@
       replace: dest=/etc/sysconfig/jenkins-gcc41 regexp="\{\{id\}\}" replace="{{ gcc41_server_id }}"
       tags: jenkins
       
-    - name: Jenkins | Add scl to environment
-      lineinfile: dest=/etc/sysconfig/jenkins line="SCL=\"/opt/rh/devtoolset-2/root/usr/bin:/opt/rh/devtoolset-2/root/bin\""
+    - name: Jenkins | Add scl path to environment
+      replace: dest=/etc/sysconfig/jenkins regexp="\{\{scl\}\}" replace="/opt/rh/devtoolset-2/root/usr/bin"
+      tags: jenkins
+
+    - name: Jenkins | Add scl path to gcc41 environment
+      replace: dest=/etc/sysconfig/jenkins-gcc41 regexp="\{\{scl\}\}" replace=""
       tags: jenkins
 
     - name: Jenkins | Add init scripts to startup
