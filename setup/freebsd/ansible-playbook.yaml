@@ -65,9 +65,9 @@
       tags: jenkins
 
     - name: Jenkins | Enable init script at startup
-      command: echo "jenkins_enable=YES" >> /etc/rc.conf
+      lineinfile: dest=/etc/rc.conf line="jenkins_enable=YES"
       tags: jenkins
 
     - name: Jenkins | Start service
-      command: service jenkins enable
+      command: service jenkins start
       tags: jenkins
