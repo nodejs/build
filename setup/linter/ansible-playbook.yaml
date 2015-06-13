@@ -1,0 +1,75 @@
+---
+- hosts: iojs-linter
+
+  remote_user: freebsd
+  sudo: yes
+
+  vars:
+    - ansible_python_interpreter: "/usr/bin/env python"
+
+  tasks:
+
+    - include_vars: ansible-vars.yaml
+      tags: vars
+
+    - name: General | Update package repository
+      command: pkg update
+      tags: general
+
+    - name: General | Install required packages
+      command: pkg install -U -y  {{ item }}
+      with_items: packages
+      tags: general
+
+    - name: User | Add {{ server_user }} group
+      group: name="{{ server_user }}" state=present
+      tags: user
+
+    - name: User | Add {{ server_user }} user
+      user: name="{{ server_user }}" shell=/bin/sh append=yes groups={{ server_user }}
+      tags: user
+
+    - name: User | Download pubkey(s)
+      get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
+      delegate_to: 127.0.0.1
+      with_items: ssh_users
+      tags: user
+
+    - name: General | Create authorized_keys for root
+      authorized_key: user="root" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+      with_items: ssh_users
+      tags: user
+
+    - name: General | Create authorized_keys for {{ server_user }}
+      authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+      with_items: ssh_users
+      tags: user
+      
+    - name: General | Keep iojs up to date
+      cron: name="update iojs" minute="0" hour="0" day="*/7" job="pkg update -q && pkg upgrade -yq iojs >/dev/null 2>&1"
+      tags: cron
+
+    - name: Jenkins | Download Jenkins' slave.jar
+      command: curl -sL https://jenkins-iojs.nodesource.com/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
+      tags: jenkins
+
+    - name: Jenkins | Copy init script
+      copy: src=./resources/jenkins dest={{ init_script_path }} owner={{ server_user }} group={{ server_user }} mode=0755
+      tags: jenkins
+
+    - name: Jenkins | Copy secret into init script
+      replace: dest={{ init_script_path }} regexp="\{\{secret\}\}" replace="{{ server_secret }}"
+      tags: jenkins
+
+    - name: Jenkins | Copy server id into init script
+      replace: dest={{ init_script_path }} regexp="\{\{id\}\}" replace="{{ server_id }}"
+      tags: jenkins
+
+    - name: Jenkins | Enable init script at startup
+      lineinfile: dest=/etc/rc.conf line="jenkins_enable=YES"
+      tags: jenkins
+
+    - name: Jenkins | Start service
+      command: service jenkins start
+      tags: jenkins
+      
