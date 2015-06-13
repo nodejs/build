@@ -1,7 +1,7 @@
-### io.js Build Team Working Group
+### Build Working Group
 
-The io.js build team is jointly governed by a Working Group (WG)
-which is responsible for high-level guidance of the project.
+The io.js Build responsibilities are jointly governed by a Working Group (WG)
+that is responsible for high-level guidance of the project.
 
 The WG has final authority over this project including:
 
@@ -13,15 +13,13 @@ The WG has final authority over this project including:
 * Maintaining the list of additional Collaborators
 
 For the current list of WG members, see the project
-[README.md](./README.md#current-project-team-members).
+[README.md](./README.md#people).
 
 ### Collaborators
 
-The [iojs/build](https://github.com/iojs/build),
-[iojs/docker-iojs](https://github.com/iojs/docker-iojs), and the
-[iojs/build-containers](https://github.com/iojs/build-containers)
-GitHub repositories are maintained by the WG and additional Collaborators
-who are added by the WG on an ongoing basis.
+The Build GitHub repositories and resources is
+maintained by the WG and additional Collaborators who are added by the
+WG on an ongoing basis.
 
 Individuals making significant and valuable contributions are made
 Collaborators and given commit-access to the project. These
@@ -32,12 +30,12 @@ _Note:_ If you make a significant contribution and are not considered
 for commit-access log an issue or contact a WG member directly and it
 will be brought up in the next WG meeting.
 
-Modifications of the contents of the repositories under the control of
-this WG are made on a collaborative basis. Anybody with a GitHub account
-may propose a modification via pull request and it will be considered by
-the project Collaborators. All pull requests must be reviewed and
-accpeted by a collaborator with sufficient expertise who is able to take
-full responsibility for the change. In the case of pull requests proposed
+Modifications of the contents of the Build repositories are made on
+a collaborative basis. Anybody with a GitHub account may propose a
+modification via pull request and it will be considered by the project
+Collaborators. All pull requests must be reviewed and accepted by a
+Collaborator with sufficient expertise who is able to take full
+responsibility for the change. In the case of pull requests proposed
 by an existing Collaborator, an additional Collaborator is required
 for sign-off. Consensus should be sought if additional Collaborators
 participate and there is disagreement around a particular
@@ -51,7 +49,7 @@ request or issue. The WG should serve as the final arbiter where
 required.
 
 For the current list of Collaborators, see the project
-[README.md](./README.md#current-project-team-members).
+[README.md](./README.md#people).
 
 ### WG Membership
 
@@ -88,15 +86,15 @@ members affiliated with the over-represented employer(s).
 
 ### WG Meetings
 
-The WG meets weekly on a Google Hangout On Air. The meeting is run by
-a designated moderator approved by the WG. Each meeting should be
+The WG meets monthly on a Google Hangout On Air. A designated moderator
+approved by the WG runs the meeting. Each meeting should be
 published to YouTube.
 
-Items are added to the WG agenda which are considered contentious or
+Items are added to the WG agenda that are considered contentious or
 are modifications of governance, contribution policy, WG membership,
 or release process.
 
-The intention of the agenda is not to approve or review all patches,
+The intention of the agenda is not to approve or review all patches;
 that should happen continuously on GitHub and be handled by the larger
 group of Collaborators.
 
@@ -114,13 +112,13 @@ The WG may invite persons or representatives from certain projects to
 participate in a non-voting capacity.
 
 The moderator is responsible for summarizing the discussion of each
-agenda item and send it as a pull request after the meeting.
+agenda item and sends it as a pull request after the meeting.
 
 ### Consensus Seeking Process
 
 The WG follows a
 [Consensus Seeking](http://en.wikipedia.org/wiki/Consensus-seeking_decision-making)
-decision making model.
+decision-making model.
 
 When an agenda item has appeared to reach a consensus the moderator
 will ask "Does anyone object?" as a final call for dissent from the
@@ -133,3 +131,57 @@ or else the discussion will continue. Simple majority wins.
 
 Note that changes to WG membership require unanimous consensus.  See
 "WG Membership" above.
+
+### Developer's Certificate of Origin 1.0
+
+By making a contribution to this project, I certify that:
+
+* (a) The contribution was created in whole or in part by me and I
+  have the right to submit it under the open source license indicated
+  in the file; or
+* (b) The contribution is based upon previous work that, to the best
+  of my knowledge, is covered under an appropriate open source license
+  and I have the right under that license to submit that work with
+  modifications, whether created in whole or in part by me, under the
+  same open source license (unless I am permitted to submit under a
+  different license), as indicated in the file; or
+* (c) The contribution was provided directly to me by some other
+  person who certified (a), (b) or (c) and I have not modified it.
+
+
+### Code of Conduct
+
+This Code of Conduct is adapted from [Rust's wonderful
+CoC](https://github.com/rust-lang/rust/wiki/Note-development-policy#conduct).
+
+* We are committed to providing a friendly, safe and welcoming
+  environment for all, regardless of gender, sexual orientation,
+  disability, ethnicity, religion, or similar personal characteristic.
+* Please avoid using overtly sexual nicknames or other nicknames that
+  might detract from a friendly, safe and welcoming environment for
+  all.
+* Please be kind and courteous. There's no need to be mean or rude.
+* Respect that people have differences of opinion and that every
+  design or implementation choice carries a trade-off and numerous
+  costs. There is seldom a right answer.
+* Please keep unstructured critique to a minimum. If you have solid
+  ideas you want to experiment with, make a fork and see how it works.
+* We will exclude you from interaction if you insult, demean or harass
+  anyone.  That is not welcome behaviour. We interpret the term
+  "harassment" as including the definition in the [Citizen Code of
+  Conduct](http://citizencodeofconduct.org/); if you have any lack of
+  clarity about what might be included in that concept, please read
+  their definition. In particular, we don't tolerate behavior that
+  excludes people in socially marginalized groups.
+* Private harassment is also unacceptable. No matter who you are, if
+  you feel you have been or are being harassed or made uncomfortable
+  by a community member, please contact one of the channel ops or any
+  of the TC members immediately with a capture (log, photo, email) of
+  the harassment if possible.  Whether you're a regular contributor or
+  a newcomer, we care about making this community a safe place for you
+  and we've got your back.
+* Likewise any spamming, trolling, flaming, baiting or other
+  attention-stealing behaviour is not welcome.
+* Avoid the use of personal pronouns in code comments or
+  documentation. There is no need to address persons when explaining
+  code (e.g. "When the developer")
