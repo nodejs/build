@@ -1,4 +1,4 @@
-## Developer's Certificate of Origin 1.0
+### Developer's Certificate of Origin 1.0
 
 By making a contribution to this project, I certify that:
 
@@ -15,7 +15,7 @@ By making a contribution to this project, I certify that:
   person who certified (a), (b) or (c) and I have not modified it.
 
 
-## Code of Conduct
+### Code of Conduct
 
 This Code of Conduct is adapted from [Rust's wonderful
 CoC](https://github.com/rust-lang/rust/wiki/Note-development-policy#conduct).
