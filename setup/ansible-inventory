@@ -1,3 +1,6 @@
+[iojs-build-fedora21]
+iojs-build-fedora21-1
+
 [iojs-build-centos7]
 iojs-build-centos7-1
 
@@ -9,6 +12,9 @@ iojs-build-centos5-64-1
 iojs-build-centos5-32-1
 iojs-release-centos5-64-1
 iojs-release-centos5-32-1
+
+[iojs-build-debian8]
+iojs-build-debian8-64-1
 
 [iojs-build-ubuntu1410]
 iojs-build-ubuntu1410-64-1
@@ -24,9 +30,32 @@ iojs-build-ubuntu1204-64-1
 iojs-build-ubuntu1004-64-1
 iojs-build-ubuntu1004-32-1
 
+[iojs-build-smartos]
+iojs-build-smartos-64-1
+iojs-build-smartos-32-1
+
+[iojs-build-freebsd101-32]
+iojs-build-freebsd101-32-1
+
+[iojs-build-freebsd101-64]
+iojs-build-freebsd101-64-1
+
 [iojs-build-containers]
 iojs-build-containers-1
 iojs-build-containers-2
+
+[iojs-raspbian]
+iojs-ns-pi1-1
+iojs-ns-pi1-2
+iojs-ns-pi1p-1
+iojs-ns-pi1p-2
+iojs-ns-pi1p-3
+iojs-ns-pi1p-4
+iojs-ns-pi1p-5
+iojs-ns-pi2-1
+iojs-ns-pi2-2
+iojs-ns-pi2-3
+iojs-ns-pi2-4
 
 [iojs-www]
 iojs-www
@@ -39,6 +68,7 @@ iojs-build-ubuntu1410
 iojs-build-ubuntu1404
 iojs-build-ubuntu1204
 iojs-build-ubuntu1004
+iojs-build-debian8
 iojs-build-containers
 iojs-www
 iojs-jenkins
@@ -47,3 +77,11 @@ iojs-jenkins
 iojs-build-centos7
 iojs-build-centos6
 iojs-build-centos5
+iojs-build-fedora21
+
+[iojs-smartos:children]
+iojs-build-smartos
+
+[iojs-freebsd-101:children]
+iojs-build-freebsd101-32
+iojs-build-freebsd101-64

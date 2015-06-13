@@ -1,0 +1,17 @@
+---
+server_user: iojs
+ssh_users:
+  - rvagg
+  - wblankenship
+  - jbergstrom
+packages:
+  - openjdk-7-jre
+  - python-all
+  - python-software-properties
+  - automake
+  - libtool
+  - curl
+  - git
+  - gcc-4.8
+  - g++-4.8
+  - ccache

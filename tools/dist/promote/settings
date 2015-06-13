@@ -1,0 +1,8 @@
+staging_rootdir=/home/staging/staging/
+dist_rootdir=/home/dist/public/
+nightly_srcdir=${staging_rootdir}nightly
+next_nightly_srcdir=${staging_rootdir}next-nightly
+release_srcdir=${staging_rootdir}release
+nightly_dstdir=${dist_rootdir}nightly
+next_nightly_dstdir=${dist_rootdir}next-nightly
+release_dstdir=${dist_rootdir}release

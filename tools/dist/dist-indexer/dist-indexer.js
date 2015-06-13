@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict';
+
 const fs         = require('fs')
     , path       = require('path')
     , argv       = require('minimist')(process.argv.slice(2))
@@ -8,30 +10,26 @@ const fs         = require('fs')
     , hyperquest = require('hyperquest')
     , bl         = require('bl')
 
+    , transformFilename = require('./transform-filename')
+
     , versionCachePath = path.join(process.env.HOME, '.dist-indexer-version-cache')
 
-    , dirre      = /^(v\d\.\d\.\d)(?:-nightly\d{8}(\w+))?$/ // get version or commit from dir name
+    , dirre      = /^(v\d\.\d\.\d)(?:-(?:next-)?nightly\d{8}(\w+))?$/ // get version or commit from dir name
 
-    , types = {
-          'tar.gz'           : 'src'
-        , 'darwin-x64'       : 'osx-x64-tar'
-        , 'pkg'              : 'osx-x64-pkg'
-        , 'linux-armv7l'     : 'linux-armv7l'
-        , 'linux-armv6l'     : 'linux-armv6l'
-        , 'linux-x64'        : 'linux-x64'
-        , 'linux-x86'        : 'linux-x86'
-        , 'x64.msi'          : 'win-x64-msi'
-        , 'x86.msi'          : 'win-x86-msi'
-        , 'win-x64/iojs.exe' : 'win-x64-exe'
-        , 'win-x86/iojs.exe' : 'win-x86-exe'
-      }
-
-    , npmPkgJsonUrl  = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/npm/package.json'
-    , v8VersionUrl   = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/v8/src/version.cc'
-    , uvVersionUrl   = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/uv/include/uv-version.h'
-    , sslVersionUrl  = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/openssl/openssl/Makefile'
-    , zlibVersionUrl = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/deps/zlib/zlib.h'
-    , modVersionUrl  = 'https://raw.githubusercontent.com/iojs/io.js/{commit}/src/node_version.h'
+    // needs auth: githubContentUrl = 'https://api.github.com/repos/nodejs/io.js/contents'
+    , githubContentUrl = 'https://raw.githubusercontent.com/nodejs/io.js/{commit}'
+    , npmPkgJsonUrl    = `${githubContentUrl}/deps/npm/package.json`
+    , v8VersionUrl     = [
+          `${githubContentUrl}/deps/v8/src/version.cc`
+        , `${githubContentUrl}/deps/v8/include/v8-version.h`
+      ]
+    , uvVersionUrl     = `${githubContentUrl}/deps/uv/include/uv-version.h`
+    , sslVersionUrl    = `${githubContentUrl}/deps/openssl/openssl/Makefile`
+    , zlibVersionUrl   = `${githubContentUrl}/deps/zlib/zlib.h`
+    , modVersionUrl    = `${githubContentUrl}/src/node_version.h`
+    , githubOptions    = { headers: {
+          'accept': 'text/plain,application/vnd.github.v3.raw'
+      } }
 
 
 if (typeof argv.dist != 'string')
@@ -65,7 +63,8 @@ function cacheGet (commit, prop) {
 
 
 function cachePut (commit, prop, value) {
-  (versionCache[commit] || (versionCache[commit] = {}))[prop] = value
+  if (prop && value)
+    (versionCache[commit] || (versionCache[commit] = {}))[prop] = value
 }
 
 
@@ -76,8 +75,8 @@ function commitFromDir (dir) {
 
 
 function fetch (url, commit, callback) {
-  url = url.replace("{commit}", commit)
-  hyperquest.get(url).pipe(bl(function (err, data) {
+  url = url.replace('{commit}', commit) + `?rev=${commit}`
+  hyperquest.get(url, githubOptions).pipe(bl(function (err, data) {
     if (err)
       return callback(err)
 
@@ -114,19 +113,36 @@ function fetchV8Version (commit, callback) {
   if (version)
     return setImmediate(callback.bind(null, null, version))
 
-  fetch(v8VersionUrl, commit, function (err, rawData) {
+  fetch(v8VersionUrl[0], commit, function (err, rawData) {
     if (err)
       return callback(err)
 
     version = rawData.split('\n').map(function (line) {
-      return line.match(/^#define (?:MAJOR_VERSION|MINOR_VERSION|BUILD_NUMBER|PATCH_LEVEL)\s+(\d+)$/)
-    })
-    .filter(Boolean)
-    .map(function (m) { return m[1] })
-    .join('.')
+        return line.match(/^#define (?:MAJOR_VERSION|MINOR_VERSION|BUILD_NUMBER|PATCH_LEVEL)\s+(\d+)$/)
+      })
+      .filter(Boolean)
+      .map(function (m) { return m[1] })
+      .join('.')
 
-    cachePut(commit, 'v8', version)
-    callback(null, version)
+    if (version) {
+      cachePut(commit, 'v8', version)
+      return callback(null, version)
+    }
+
+    fetch(v8VersionUrl[1], commit, function (err, rawData) {
+      if (err)
+        return callback(err)
+
+      version = rawData.split('\n').map(function (line) {
+          return line.match(/^#define V8_(?:MAJOR_VERSION|MINOR_VERSION|BUILD_NUMBER|PATCH_LEVEL)\s+(\d+)$/)
+        })
+        .filter(Boolean)
+        .map(function (m) { return m[1] })
+        .join('.')
+
+      cachePut(commit, 'v8', version)
+      callback(null, version)
+    })
   })
 }
 
@@ -228,14 +244,6 @@ function dirDate (dir, callback) {
 }
 
 
-function transformFilenames (file) {
-  file = file && file.replace(/^iojs-v\d\.\d\.\d-(nightly\d{8}[^-\.]+[-\.]?)?/, '')
-                     .replace(/\.tar\.gz$/, '')
-
-  return types[file]
-}
-
-
 function dirFiles (dir, callback) {
   fs.readFile(path.join(argv.dist, dir, 'SHASUMS256.txt'), 'utf8', afterReadFile)
 
@@ -243,11 +251,11 @@ function dirFiles (dir, callback) {
     if (err)
       return callback(err)
 
-    files = contents.split('\n').map(function (line) {
+    var files = contents.split('\n').map(function (line) {
       var seg = line.split(/\s+/)
       return seg.length >= 2 && seg[1]
     })
-    .map(transformFilenames)
+    .map(transformFilename)
     .filter(Boolean)
     .sort()
 
@@ -264,6 +272,7 @@ function inspectDir (dir, callback) {
     , uvVersion
     , sslVersion
     , zlibVersion
+    , modVersion
     , date
 
   if (!commit) {
