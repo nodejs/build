@@ -9,7 +9,9 @@ Host iojs-linter
   HostName 104.236.229.96
 ```
 
-Note that these hostnames are also used in the ansible-inventory file. The IP addresses will need to be updated each time the servers are reprovisioned.
+Note that these hostnames are also used in the ansible-inventory file.
+The IP addresses will need to be updated each time the servers
+are reprovisioned.
 
 To set up a host, run:
 
@@ -17,6 +19,7 @@ To set up a host, run:
 $ ansible-playbook -i ../ansible-inventory ansible-playbook.yaml
 ```
 
-**Users**: The ansible-vars.yaml file contains a list of users who's GitHub public keys are pulled and placed into
-authorized_keys for both root and iojs users. This file should be updates when new users are added to the build project
-who are able to help maintain the containerized builds.
+**Users**: The ansible-vars.yaml file contains a list of users whose GitHub
+public keys are pulled and placed into authorized_keys for both root and
+iojs users. This file should be updates when new users are added to the
+build project who are able to help maintain the containerized builds.
