@@ -13,6 +13,11 @@ Note that these hostnames are also used in the ansible-inventory file.
 The IP addresses will need to be updated each time the servers
 are reprovisioned.
 
+Before running ansible you need to install Python (2.x):
+```
+$ ssh freebsd@iojs-linter1 sudo pkg install -y python
+```
+
 To set up a host, run:
 
 ```text
