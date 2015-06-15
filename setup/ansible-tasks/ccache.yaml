@@ -1,0 +1,38 @@
+---
+# Downloads and installs ccache
+# @requires: version=3.2.2
+
+- name: CCache | Download ccache-{{ version }}
+  get_url: url=http://samba.org/ftp/ccache/ccache-{{ version }}.tar.gz dest=/tmp/
+  register: new_archive
+
+- name: CCache | Extract ccache-{{ version }}
+  unarchive: src=/tmp/ccache-{{ version }}.tar.gz dest=/tmp/ copy=no
+  when: new_archive|changed
+
+- name: CCache | Prepare for compilation by running configure
+  shell: ./configure chdir=/tmp/ccache-{{ version }} >> /dev/null
+
+- name: CCache | Compile ccache
+  shell: make chdir=/tmp/ccache-{{ version }} >> /dev/null
+
+- name: CCache | Install generated binary
+  command: install -c -m 755 ccache /usr/local/bin
+  args:
+    creates: /usr/local/bin/ccache
+    chdir: /tmp/ccache-{{ version }}
+
+
+- name: CCache | Create symlinks
+  file: src=/usr/local/bin/ccache dest=/usr/local/bin/{{ item }} state=link
+  with_items:
+    - gcc
+    - cc
+    - g++
+    - c++
+
+- name: CCache | Cleanup
+  file: path="{{ item }}" state=absent
+  with_items:
+    - /tmp/ccache-{{ version }}.tar.gz
+    - /tmp/ccache-{{ version }}
