@@ -5,8 +5,11 @@ linting any code before passing it on to compile/test.
 
 To set up hosts, make sure you add them to your ssh config first:
 ```
-Host iojs-linter
+Host iojs-linter-1
   HostName 104.236.229.96
+
+Host iojs-linter-2
+  HostNAme 104.236.156.5
 ```
 
 Note that these hostnames are also used in the ansible-inventory file.
