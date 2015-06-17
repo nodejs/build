@@ -13,3 +13,4 @@ packages:
   - libtool
   - curl
   - ntp
+  - ccache
