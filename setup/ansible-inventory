@@ -32,10 +32,6 @@ iojs-build-ubuntu1404-32-1
 [iojs-build-ubuntu1204]
 iojs-build-ubuntu1204-64-1
 
-[iojs-build-ubuntu1004]
-iojs-build-ubuntu1004-64-1
-iojs-build-ubuntu1004-32-1
-
 [iojs-build-smartos]
 iojs-build-smartos-64-1
 iojs-build-smartos-32-1
@@ -78,7 +74,6 @@ iojs-jenkins
 iojs-build-ubuntu1410
 iojs-build-ubuntu1404
 iojs-build-ubuntu1204
-iojs-build-ubuntu1004
 iojs-build-debian8
 iojs-build-containers
 iojs-www
