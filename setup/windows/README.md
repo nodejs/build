@@ -32,26 +32,22 @@ For io.js & libuv Jenkins setup, on a fresh server:
   - Start -> "cmd"
   - Run `cd \`
   - Run `curl https://jenkins-iojs.nodesource.com/jnlpJars/slave.jar -o slave.jar`
-1. Install **nssm** from http://nssm.cc/download
-  - Extract nssm.exe from the *win64* directory of the ZIP file into C:\
 1. Create **batch file** to launch Jenkins
   - Start -> "notepad c:\jenkins.bat" (click through to start Notepad, it'll create a new file for you)
   - Put `java -jar slave.jar -jnlpUrl https://jenkins-iojs.nodesource.com/computer/SLAVE-ID/slave-agent.jnlp -secret SECRET` (replace SLAVE-ID and SECRET) into the file and save
-1. **Set up Jenkins service**
-  - Start -> "C:\nssm.exe install Jenkins" (click through)
-  - Application
-    - Path: `C:\jenkins.bat`
-    - Startup directory: `C:\`
-  - Log on
-    - This account: `Administrator`
-    - Password & Confirm as per login
-  - I/O redirection
-    - Output (stdout): `C:\jenkins_stdout.log`
-    - Error (stderr): `C:\jenkins_stderr.log`
-  - click "Install service"
-1. **Start Jenkins service**
-  - Either from Start -> "Services" -> Jenkins -> Start;
-  - Or on the command prompt `net start Jenkins`
-
-
-
+1. Add Jenkins to **Startup**
+  - Go to `%AppData%\Microsoft\Windows\Start Menu\Programs\Windows System` (or `Accessories` in Windows 7)
+  - Copy the "Command Prompt" shortcut
+  - Go to `%AppData%\Microsoft\Windows\Start Menu\Programs\Startup`
+  - Paste
+  - Rename the shortcut to "Jenkins Command Prompt"
+  - Right click on it and then Properties
+  - The target should be cmd.exe. Append this: ` /c c:\jenkins.bat`
+  - Change "Start in" to be `c:\`
+  - Click OK
+1. Enable **autologon** for Administrator
+  - Start -> "netplwiz"
+  - Uncheck "Users must enter a username and password to use this computer"
+  - Click OK
+  - It will ask for the password of the user that should be automatically logged on. Set it for Administrator.
+1. **Reboot**
