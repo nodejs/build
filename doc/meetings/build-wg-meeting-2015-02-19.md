@@ -2,8 +2,8 @@
 
 ## Links
 
-**Public YouTube feed**: http://www.youtube.com/watch?v=OKQi3pTF7fs
-**Google Plus Event page**: https://plus.google.com/hangouts/_/hoaevent/AP36tYdM5W875vX5xRYouREWZkfLnVzw9nkYGmibICbeim4W7J3Mcw
+* **Public YouTube feed**: http://www.youtube.com/watch?v=OKQi3pTF7fs
+* **Google Plus Event page**: https://plus.google.com/hangouts/_/hoaevent/AP36tYdM5W875vX5xRYouREWZkfLnVzw9nkYGmibICbeim4W7J3Mcw
 * **GitHub Issue**: https://github.com/iojs/build/issues/43
 * **Original Minutes Google Doc**: https://docs.google.com/document/d/1vRhsYBs4Hw6vRu55h5eWTwDzS1NctxdTvMMEnCbDs14
 
