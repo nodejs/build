@@ -5,7 +5,7 @@ const hyperquest = require('hyperquest')
     , qs         = require('querystring')
 
 
-const urlbase      = 'https://jenkins-iojs.nodesource.com/job/iojs+release+nightly/build?token='
+const urlbase      = 'https://jenkins-iojs.nodesource.com/job/iojs+nightly/build?token='
     , buildUser    = 'iojs'
     , buildProject = 'io.js'
 
