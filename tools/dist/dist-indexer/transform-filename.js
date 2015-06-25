@@ -11,6 +11,7 @@ const types = {
         , 'x86.msi'          : 'win-x86-msi'
         , 'win-x64/iojs.exe' : 'win-x64-exe'
         , 'win-x86/iojs.exe' : 'win-x86-exe'
+	, 'headers'          : 'heaaders'
       }
 
 
