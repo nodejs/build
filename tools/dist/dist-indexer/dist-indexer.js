@@ -11,13 +11,12 @@ const fs         = require('fs')
     , bl         = require('bl')
 
     , transformFilename = require('./transform-filename')
+    , decodeRef  = require('./decode-ref')
 
     , versionCachePath = path.join(process.env.HOME, '.dist-indexer-version-cache')
 
-    , dirre      = /^(v\d\.\d\.\d)(?:-(?:next-)?nightly\d{8}(\w+))?$/ // get version or commit from dir name
-
     // needs auth: githubContentUrl = 'https://api.github.com/repos/nodejs/io.js/contents'
-    , githubContentUrl = 'https://raw.githubusercontent.com/nodejs/io.js/{commit}'
+    , githubContentUrl = 'https://raw.githubusercontent.com/nodejs/io.js/{gitref}'
     , npmPkgJsonUrl    = `${githubContentUrl}/deps/npm/package.json`
     , v8VersionUrl     = [
           `${githubContentUrl}/deps/v8/src/version.cc`
@@ -57,25 +56,19 @@ function saveVersionCache () {
 }
 
 
-function cacheGet (commit, prop) {
-  return versionCache[commit] && versionCache[commit][prop]
+function cacheGet (gitref, prop) {
+  return versionCache[gitref] && versionCache[gitref][prop]
 }
 
 
-function cachePut (commit, prop, value) {
+function cachePut (gitref, prop, value) {
   if (prop && value)
-    (versionCache[commit] || (versionCache[commit] = {}))[prop] = value
+    (versionCache[gitref] || (versionCache[gitref] = {}))[prop] = value
 }
 
 
-function commitFromDir (dir) {
-  var m = dir.match(dirre)
-  return m && (m[2] || m[1])
-}
-
-
-function fetch (url, commit, callback) {
-  url = url.replace('{commit}', commit) + `?rev=${commit}`
+function fetch (url, gitref, callback) {
+  url = url.replace('{gitref}', gitref) + `?rev=${gitref}`
   hyperquest.get(url, githubOptions).pipe(bl(function (err, data) {
     if (err)
       return callback(err)
@@ -85,12 +78,12 @@ function fetch (url, commit, callback) {
 }
 
 
-function fetchNpmVersion (commit, callback) {
-  var version = cacheGet(commit, 'npm')
+function fetchNpmVersion (gitref, callback) {
+  var version = cacheGet(gitref, 'npm')
   if (version)
     return setImmediate(callback.bind(null, null, version))
 
-  fetch(npmPkgJsonUrl, commit, function (err, rawData) {
+  fetch(npmPkgJsonUrl, gitref, function (err, rawData) {
     if (err)
       return callback(err)
 
@@ -102,18 +95,18 @@ function fetchNpmVersion (commit, callback) {
       return callback(e)
     }
 
-    cachePut(commit, 'npm', data.version)
+    cachePut(gitref, 'npm', data.version)
     return callback(null, data.version)
   })
 }
 
 
-function fetchV8Version (commit, callback) {
-  var version = cacheGet(commit, 'v8')
+function fetchV8Version (gitref, callback) {
+  var version = cacheGet(gitref, 'v8')
   if (version)
     return setImmediate(callback.bind(null, null, version))
 
-  fetch(v8VersionUrl[0], commit, function (err, rawData) {
+  fetch(v8VersionUrl[0], gitref, function (err, rawData) {
     if (err)
       return callback(err)
 
@@ -125,11 +118,11 @@ function fetchV8Version (commit, callback) {
       .join('.')
 
     if (version) {
-      cachePut(commit, 'v8', version)
+      cachePut(gitref, 'v8', version)
       return callback(null, version)
     }
 
-    fetch(v8VersionUrl[1], commit, function (err, rawData) {
+    fetch(v8VersionUrl[1], gitref, function (err, rawData) {
       if (err)
         return callback(err)
 
@@ -140,19 +133,19 @@ function fetchV8Version (commit, callback) {
         .map(function (m) { return m[1] })
         .join('.')
 
-      cachePut(commit, 'v8', version)
+      cachePut(gitref, 'v8', version)
       callback(null, version)
     })
   })
 }
 
 
-function fetchUvVersion (commit, callback) {
-  var version = cacheGet(commit, 'uv')
+function fetchUvVersion (gitref, callback) {
+  var version = cacheGet(gitref, 'uv')
   if (version)
     return setImmediate(callback.bind(null, null, version))
 
-  fetch(uvVersionUrl, commit, function (err, rawData) {
+  fetch(uvVersionUrl, gitref, function (err, rawData) {
     if (err)
       return callback(err)
 
@@ -163,60 +156,60 @@ function fetchUvVersion (commit, callback) {
     .map(function (m) { return m[1] })
     .join('.')
 
-    cachePut(commit, 'uv', version)
+    cachePut(gitref, 'uv', version)
     callback(null, version)
   })
 }
 
 
-function fetchSslVersion (commit, callback) {
-  var version = cacheGet(commit, 'ssl')
+function fetchSslVersion (gitref, callback) {
+  var version = cacheGet(gitref, 'ssl')
   if (version)
     return setImmediate(callback.bind(null, null, version))
 
-  fetch(sslVersionUrl, commit, function (err, rawData) {
+  fetch(sslVersionUrl, gitref, function (err, rawData) {
     if (err)
       return callback(err)
 
     var m = rawData.match(/^VERSION=(.+)$/m)
     version = m && m[1]
-    cachePut(commit, 'ssl', version)
+    cachePut(gitref, 'ssl', version)
 
     callback(null, version)
   })
 }
 
 
-function fetchZlibVersion (commit, callback) {
-  var version = cacheGet(commit, 'zlib')
+function fetchZlibVersion (gitref, callback) {
+  var version = cacheGet(gitref, 'zlib')
   if (version)
     return setImmediate(callback.bind(null, null, version))
 
-  fetch(zlibVersionUrl, commit, function (err, rawData) {
+  fetch(zlibVersionUrl, gitref, function (err, rawData) {
     if (err)
       return callback(err)
 
     var m = rawData.match(/^#define ZLIB_VERSION\s+"(.+)"$/m)
     version = m && m[1]
-    cachePut(commit, 'zlib', version)
+    cachePut(gitref, 'zlib', version)
 
     callback(null, version)
   })
 }
 
 
-function fetchModVersion (commit, callback) {
-  var version = cacheGet(commit, 'mod')
+function fetchModVersion (gitref, callback) {
+  var version = cacheGet(gitref, 'mod')
   if (version)
     return setImmediate(callback.bind(null, null, version))
 
-  fetch(modVersionUrl, commit, function (err, rawData) {
+  fetch(modVersionUrl, gitref, function (err, rawData) {
     if (err)
       return callback(err)
 
     var m = rawData.match(/^#define NODE_MODULE_VERSION\s+([^\s]+)\s+.+$/m)
     version = m && m[1]
-    cachePut(commit, 'mod', version)
+    cachePut(gitref, 'mod', version)
 
     callback(null, version)
   })
@@ -265,7 +258,7 @@ function dirFiles (dir, callback) {
 
 
 function inspectDir (dir, callback) {
-  var commit = commitFromDir(dir)
+  var gitref = decodeRef(dir)
     , files
     , npmVersion
     , v8Version
@@ -275,7 +268,7 @@ function inspectDir (dir, callback) {
     , modVersion
     , date
 
-  if (!commit) {
+  if (!gitref) {
     console.error('Ignoring directory "%s"', dir)
     return callback()
   }
@@ -298,55 +291,55 @@ function inspectDir (dir, callback) {
       done()
     })
 
-    fetchNpmVersion(commit, function (err, version) {
+    fetchNpmVersion(gitref, function (err, version) {
       if (err) {
         console.error(err)
-        console.error('(ignoring error fetching npm version for %s)', commit)
+        console.error('(ignoring error fetching npm version for %s)', gitref)
       }
       npmVersion = version
       done()
     })
 
-    fetchV8Version(commit, function (err, version) {
+    fetchV8Version(gitref, function (err, version) {
       if (err) {
         console.error(err)
-        console.error('(ignoring error fetching V8 version for %s)', commit)
+        console.error('(ignoring error fetching V8 version for %s)', gitref)
       }
       v8Version = version
       done()
     })
 
-    fetchUvVersion(commit, function (err, version) {
+    fetchUvVersion(gitref, function (err, version) {
       if (err) {
         console.error(err)
-        console.error('(ignoring error fetching uv version for %s)', commit)
+        console.error('(ignoring error fetching uv version for %s)', gitref)
       }
       uvVersion = version
       done()
     })
 
-    fetchSslVersion(commit, function (err, version) {
+    fetchSslVersion(gitref, function (err, version) {
       if (err) {
         console.error(err)
-        console.error('(ignoring error fetching OpenSSL version for %s)', commit)
+        console.error('(ignoring error fetching OpenSSL version for %s)', gitref)
       }
       sslVersion = version
       done()
     })
 
-    fetchZlibVersion(commit, function (err, version) {
+    fetchZlibVersion(gitref, function (err, version) {
       if (err) {
         console.error(err)
-        console.error('(ignoring error fetching zlib version for %s)', commit)
+        console.error('(ignoring error fetching zlib version for %s)', gitref)
       }
       zlibVersion = version
       done()
     })
 
-    fetchModVersion(commit, function (err, version) {
+    fetchModVersion(gitref, function (err, version) {
       if (err) {
         console.error(err)
-        console.error('(ignoring error fetching modules version for %s)', commit)
+        console.error('(ignoring error fetching modules version for %s)', gitref)
       }
       modVersion = version
       done()
