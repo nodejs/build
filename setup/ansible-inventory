@@ -28,6 +28,7 @@ iojs-build-ubuntu1410-64-1
 [iojs-build-ubuntu1404]
 iojs-build-ubuntu1404-64-1
 iojs-build-ubuntu1404-32-1
+iojs-ibm-ppcle-ubuntu1404-64-1
 
 [iojs-build-ubuntu1204]
 iojs-build-ubuntu1204-64-1
