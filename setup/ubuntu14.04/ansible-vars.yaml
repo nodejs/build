@@ -4,6 +4,7 @@ ssh_users:
   - rvagg
   - wblankenship
   - ryanstevens
+  - mhdawson
 packages:
   - openjdk-7-jre
   - git
