@@ -12,3 +12,4 @@ packages:
   - automake
   - libtool
   - curl
+  - ccache
