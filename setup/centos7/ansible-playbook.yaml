@@ -29,6 +29,10 @@
       service: name=ntpd state=started enabled=yes
       tags: ntp
 
+    - name: ccache | Install ccache
+      include: ../ansible-tasks/ccache.yaml version=3.2.2
+      tags: ccache
+
     - name: General | Increase file descriptor limits
       lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
       with_items:
@@ -62,15 +66,22 @@
       command: curl -sL https://jenkins-iojs.nodesource.com/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
       tags: jenkins
 
-    - name: Jenkins | Copy start.sh script
-      copy: src=./resources/start.sh dest=/home/{{ server_user }}/start.sh owner={{ server_user }} group={{ server_user }} mode=0755
+    - name: Jenkins | Copy jenkins.service systemd config
+      copy: src=./resources/jenkins.service dest=/usr/lib/systemd/system/jenkins.service mode=0644
       tags: jenkins
 
-    - name: Jenkins | Copy secrets to start.sh script
-      replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{secret\}\}" replace="{{ server_secret }}"
+    - name: Jenkins | Copy server user to jenkins.service
+      replace: dest=/usr/lib/systemd/system/jenkins.service regexp="\{\{user\}\}" replace="{{ server_user }}"
       tags: jenkins
 
-    - name: Jenkins | Copy server ids to start.sh script
-      replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{id\}\}" replace="{{ server_id }}"
+    - name: Jenkins | Copy secrets to jenkins.service
+      replace: dest=/usr/lib/systemd/system/jenkins.service regexp="\{\{secret\}\}" replace="{{ server_secret }}"
       tags: jenkins
 
+    - name: Jenkins | Copy server ids to jenkins.service
+      replace: dest=/usr/lib/systemd/system/jenkins.service regexp="\{\{id\}\}" replace="{{ server_id }}"
+      tags: jenkins
+      
+    - name: Jenkins | Start service
+      service: name=jenkins state=started
+      tags: jenkins
