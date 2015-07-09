@@ -1,0 +1,17 @@
+---
+server_user: iojs
+ssh_users:
+  - rvagg
+  - wblankenship
+  - jbergstroem
+  - mhdawson
+packages:
+  - java-1.8.0-openjdk
+  - git
+  - gcc
+  - gcc-c++
+  - make
+  - automake
+  - libtool
+  - ntp
+  - ccache
