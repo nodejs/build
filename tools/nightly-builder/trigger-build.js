@@ -6,7 +6,7 @@ const hyperquest = require('hyperquest')
 
 
 const urlbase      = 'https://jenkins-iojs.nodesource.com/job/iojs+release/build?token='
-    , buildUser    = 'iojs'
+    , buildUser    = 'nodejs'
     , buildProject = 'io.js'
 
 
@@ -31,8 +31,12 @@ function triggerBuild(token, options, callback) {
                 , value : options.date
               }
             , {
-                  name  : 'buildtype'
+                  name  : 'disttype'
                 , value : options.type
+              }
+            , {
+                  name  : 'rc'
+                , value : '0'
               }
           ]
       }
