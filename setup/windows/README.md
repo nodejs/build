@@ -23,7 +23,7 @@ For io.js & libuv Jenkins setup, on a fresh server:
   - Find `Path` under "System variables" -> "Edit"
   - Append `;C:\Python27\;C:\Program Files (x86)\Java\jre1.8.0_25\bin` (adjust Java location appropriately) to the end of the "Variable value"
   - OK, OK, OK
-1. Install **Git** from http://git-scm.com/download/win
+1. Install **Git** from https://github.com/git-for-windows/git/releases
   - Default options except _"Use Git and optional Unix tools from the Windows Command Prompt"_ (they are used in tests)
 1. Clone **GYP**
   - Start -> "cmd"
