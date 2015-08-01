@@ -8,6 +8,10 @@
     - include_vars: ansible-vars.yaml
       tags: vars
 
+    - name: General | Install updated git PPA
+      apt_repository: repo='ppa:git-core/ppa'
+      tags: general
+
     - name: General | APT Update
       apt: update_cache=yes
       tags: general
