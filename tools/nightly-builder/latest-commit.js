@@ -3,8 +3,8 @@
 const ghrepos = require('ghrepos')
 
 const typeRefs = {
-          'nightly'      : 'heads/master'
-        , 'next-nightly' : 'heads/next'
+          'nightly'      : 'heads/v3.x'
+        , 'next-nightly' : 'heads/master'
       }
 
 
@@ -14,7 +14,7 @@ function latestCommit (type, callback) {
   if (!ref)
     throw new Error(`Unknown type "${type}"`)
 
-  ghrepos.getRef(null, 'nodejs', 'io.js', ref, function (err, data) {
+  ghrepos.getRef(null, 'nodejs', 'node', ref, function (err, data) {
     if (err)
       return callback(err)
 

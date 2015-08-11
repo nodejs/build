@@ -15,8 +15,8 @@ const fs         = require('fs')
 
     , versionCachePath = path.join(process.env.HOME, '.dist-indexer-version-cache')
 
-    // needs auth: githubContentUrl = 'https://api.github.com/repos/nodejs/io.js/contents'
-    , githubContentUrl = 'https://raw.githubusercontent.com/nodejs/io.js/{gitref}'
+    // needs auth: githubContentUrl = 'https://api.github.com/repos/nodejs/node/contents'
+    , githubContentUrl = 'https://raw.githubusercontent.com/nodejs/node/{gitref}'
     , npmPkgJsonUrl    = `${githubContentUrl}/deps/npm/package.json`
     , v8VersionUrl     = [
           `${githubContentUrl}/deps/v8/src/version.cc`
