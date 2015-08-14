@@ -4,6 +4,7 @@ ssh_users:
   - rvagg
   - wblankenship
   - jbergstroem
+  - joaocgreis
 packages:
   - java-1.8.0-openjdk
   - git

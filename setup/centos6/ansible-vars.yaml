@@ -5,6 +5,7 @@ ssh_users:
   - wblankenship
   - ryanstevens
   - jbergstroem
+  - joaocgreis
 packages:
   - git
   - java-1.8.0-openjdk

@@ -4,6 +4,7 @@ ssh_users:
   - rvagg
   - wblankenship
   - ghostbar
+  - joaocgreis
 packages:
   - nodejs
   - openjdk-7-jre
