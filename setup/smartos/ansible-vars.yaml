@@ -7,6 +7,7 @@ ssh_users:
   - geek
   - rvagg
   - jbergstroem
+  - joaocgreis
 packages:
   - openjdk7
   - git

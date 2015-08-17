@@ -4,6 +4,7 @@ ssh_users:
   - rvagg
   - wblankenship
   - jbergstroem
+  - joaocgreis
 packages:
   - openjdk-8-jre
   - git

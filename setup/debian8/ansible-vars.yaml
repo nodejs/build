@@ -5,6 +5,7 @@ ssh_users:
   - wblankenship
   - jbergstroem
   - kenperkins
+  - joaocgreis
 packages:
   - openjdk-7-jre
   - git
