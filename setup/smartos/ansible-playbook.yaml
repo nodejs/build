@@ -20,6 +20,15 @@
       with_items: packages
       tags: general
 
+    - name: Remove all DNS servers from resolv.conf
+      lineinfile: dest=/etc/resolv.conf state=absent regexp="^(\s*)nameserver(\s+)"
+      tags: general
+
+    - name: Add DNS servers to the list in resolv.conf
+      lineinfile: dest=/etc/resolv.conf state=present regexp="^(\s*)nameserver(\s+){{ item }}(\s*)$" line="nameserver {{ item }}"
+      with_items: dns_servers
+      tags: general
+
     - name: User | Add {{ server_user }} group
       command: groupadd {{ server_user }}
       tags: user
