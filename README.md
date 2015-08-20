@@ -66,6 +66,9 @@ The following platforms will eventually be included in the "Core" set when prope
   * ARMv8 64-bit (Linux, one day, when suitable hardware & OS is available)
   * Ubuntu 14.10 (Utopic Unicorn) 64-bit (preferably prior to official release)
   * Mac OS X 10.10 (Yosemite) + XCode 6
+  * PowerPC LE (Linux)
+  * PowerPC BE (Linux)
+  * AIX
 
 ### Configurations: Non-core
 
@@ -75,7 +78,6 @@ The following platforms will eventually be included in the build and **test-all*
   * FreeBSD stable/10
   * MinGW 32-bit
   * MinGW 64-bit
-  * POWER8 (pending V8 changes and acceptance by the core team)
 
 
 CI Software
@@ -97,6 +99,7 @@ The following companies are contributing hardware to this project:
 * [Linaro](http://linaro.org/)
 * [Scaleway](https://www.scaleway.com/)
 * [NodeSource](https://nodesource.com/)
+* [IBM](https://ibm.com) through [OSU Open Source Lab](http://osuosl.org/services/powerdev)
 
 
 People
@@ -109,3 +112,4 @@ People
 * Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
 * Ken Perkins [@kenperkins](https://github.com/kenperkins)
 * Wyatt Preul [@geek](https://github.com/geek)
+* Michael Dawson [@mhdawson](https://github.com/mhdawson)
