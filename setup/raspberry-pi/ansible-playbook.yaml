@@ -78,3 +78,16 @@
     - name: Jenkins | Copy arch to start.sh script
       replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{server_arch\}\}" replace="{{ server_arch }}"
       tags: jenkins
+
+    - name: git | Install required packages for git compile
+      apt: name=gettext update_cache=yes state=latest
+      tags: git
+
+    - name: git | Download, compile and install git 2.5
+      shell: curl https://www.kernel.org/pub/software/scm/git/git-2.5.0.tar.xz -O && \
+        tar -xvf git-2.5.0.tar.xz && \
+        cd git-2.5.0/ && \
+        ./configure --prefix=/usr --with-gitconfig=/etc/gitconfig && \
+        make && \
+        sudo make install
+      tags: git
