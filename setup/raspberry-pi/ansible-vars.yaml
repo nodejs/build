@@ -11,7 +11,6 @@ packages:
   - automake
   - libtool
   - curl
-  - git
   - gcc-4.8
   - g++-4.8
   - ccache
