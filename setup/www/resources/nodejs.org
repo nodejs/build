@@ -1,18 +1,46 @@
 server {
     listen 80;
     listen [::]:80;
-    return 301 https://iojs.org$request_uri;
+    return 301 https://nodejs.org$request_uri;
+
+    # TODO: old nodejs.org allowed /dist/ and *.json through on 80, should we
+    # also do the same here? The suggestion was that it would break npm/travis-ci
+    # although that's likely to be old versions
+    # If we let it through then we need to copy some of the 443 config here
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name doc.nodejs.org docs.nodejs.org;
+    rewrite ^/(v[0-9]+\.[0-9]+\.[0-9]+)(/?.*)$ https://nodejs.org/docs/$1$2 permanent;
+    rewrite /(.*)$ https://nodejs.org/docs/latest/$1 permanent;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name api.nodejs.org;
+    rewrite ^/(v[0-9]+\.[0-9]+\.[0-9]+)(/?.*)$ https://nodejs.org/docs/$1/api$2 permanent;
+    rewrite /(.*)$ https://nodejs.org/docs/latest/api/$1 permanent;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name dist.nodejs.org;
+    rewrite /(.*)$ http://nodejs.org/dist/$1 permanent;
 }
 
 server {
     listen 443 ssl spdy;
     listen [::]:443 ipv6only=on ssl spdy;
 
-    server_name iojs.org;
+    server_name nodejs.org;
 
-    ssl_certificate ssl/iojs_chained.crt;
-    ssl_certificate_key ssl/iojs.key;
-    ssl_trusted_certificate ssl/iojs_chained.crt;
+    ssl_certificate ssl/nodejs_chained.crt;
+    ssl_certificate_key ssl/nodejs.key;
+    ssl_trusted_certificate ssl/nodejs_chained.crt;
     ssl_dhparam ssl/dhparam.pem;
 
     ssl_ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS;
@@ -42,8 +70,8 @@ server {
       '"$status" $body_bytes_sent "$http_referer" '
       '"$http_user_agent" "$http_x_forwarded_for"';
 
-    access_log /var/log/nginx/iojs.org-access.log;
-    error_log /var/log/nginx/iojs.org-error.log;
+    access_log /var/log/nginx/nodejs.org-access.log;
+    error_log /var/log/nginx/nodejs.org-error.log;
 
     gzip on;
     gzip_static on;
@@ -52,7 +80,7 @@ server {
     gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
     if ($host ~* ^www\.){
-        rewrite ^(.*)$ https://iojs.org$1;
+        rewrite ^(.*)$ https://nodejs.org$1;
     }
 
     location ~ \.json$ {
@@ -63,8 +91,12 @@ server {
       expires max;
     }
 
+    location /documentation/ {
+      rewrite ^/documentation/api(.*)$ /api$1 permanent;
+    }
+
     location / {
-        root /home/iojs/www;
+        root /home/nodejs/www;
         index index.html;
         default_type text/plain;
     }

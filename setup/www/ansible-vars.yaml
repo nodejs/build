@@ -1,8 +1,10 @@
 ---
-server_user: iojs
+server_user: nodejs
 ssh_users:
   - rvagg
   - indutny
+  - jbergstroem
+  - orangemocha
 packages:
   - nodejs
   - nginx

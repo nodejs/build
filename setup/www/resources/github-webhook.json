@@ -3,9 +3,16 @@
   "path": "/webhook",
   "secret": "{{github_secret}}",
   "log": "/var/log/github-webhook.log",
-  "rules": [{
-    "event": "push",
-    "match": "ref == \"refs/heads/master\" && repository.full_name == \"iojs/website\"",
-    "exec": "{{update_command}}"
-  }]
+  "rules": [
+    {
+      "event": "push",
+      "match": "ref == \"refs/heads/master\" && repository.full_name == \"nodejs/new.nodejs.org\"",
+      "exec": "{{update_nodejs_command}}"
+    },
+    {
+      "event": "push",
+      "match": "ref == \"refs/heads/master\" && repository.full_name == \"nodejs/iojs.org\"",
+      "exec": "{{update_iojs_command}}"
+    }
+  ]
 }
