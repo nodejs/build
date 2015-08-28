@@ -51,4 +51,26 @@ server {
         index index.html;
         default_type text/plain;
     }
+
+    location /download {
+        alias /home/dist/public;
+        autoindex on;
+        default_type text/plain;
+    }
+
+    location /dist {
+        alias /home/dist/public/release/;
+        autoindex on;
+        default_type text/plain;
+    }
+
+    location /api {
+        alias /home/dist/public/release/latest/doc/api;
+        autoindex on;
+        default_type text/plain;
+    }
+
+    location /download-stats.json {
+        alias /home/iojs/download-stats.json;
+    }
 }
