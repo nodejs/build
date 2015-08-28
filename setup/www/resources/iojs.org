@@ -6,7 +6,7 @@ server {
 
 server {
     listen 443 ssl spdy;
-    listen [::]:443 ipv6only=on ssl spdy;
+    #listen [::]:443 ipv6only=on ssl spdy;
 
     server_name iojs.org;
 
@@ -37,10 +37,6 @@ server {
     add_header Strict-Transport-Security max-age=63072000;
     add_header X-Frame-Options DENY;
     add_header X-Content-Type-Options nosniff;
-
-    log_format main '$remote_addr - $remote_user [$time_local] $request '
-      '"$status" $body_bytes_sent "$http_referer" '
-      '"$http_user_agent" "$http_x_forwarded_for"';
 
     access_log /var/log/nginx/iojs.org-access.log;
     error_log /var/log/nginx/iojs.org-error.log;

@@ -1,4 +1,0 @@
----
-github_secret: "INSERT SECRET FROM WEBHOOK HERE"
-clone_command: "cd /home/nodejs/ && rm -rf new.nodejs.org.github && git clone https://github.com/nodejs/new.nodejs.org.git new.nodejs.org.github"
-update_command: "cd /home/nodejs/new.nodejs.org.github/ && git checkout master && git reset --hard && git clean -fdx && git pull origin master && rsync -avz --delete --exclude .git /home/nodejs/new.nodejs.org.github/public/ /home/nodejs/www/"

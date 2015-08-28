@@ -2,17 +2,17 @@
   "port": 9999,
   "path": "/webhook",
   "secret": "{{github_secret}}",
-  "log": "/var/log/github-webhook.log",
+  "log": "/home/nodejs/github-webhook.log",
   "rules": [
     {
       "event": "push",
       "match": "ref == \"refs/heads/master\" && repository.full_name == \"nodejs/new.nodejs.org\"",
-      "exec": "{{update_nodejs_command}}"
+      "exec": "/home/nodejs/build-site.sh nodejs"
     },
     {
       "event": "push",
       "match": "ref == \"refs/heads/master\" && repository.full_name == \"nodejs/iojs.org\"",
-      "exec": "{{update_iojs_command}}"
+      "exec": "/home/nodejs/build-site.sh iojs"
     }
   ]
 }

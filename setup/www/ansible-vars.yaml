@@ -2,10 +2,9 @@
 server_user: nodejs
 ssh_users:
   - rvagg
-  - indutny
   - jbergstroem
   - orangemocha
 packages:
-  - nodejs
+  - iojs
   - nginx
   - git
