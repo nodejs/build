@@ -1,0 +1,17 @@
+---
+server_user: iojs
+ssh_users:
+  - rvagg
+  - jbergstroem
+  - joaocgreis
+  - orangemocha
+packages:
+  - openjdk-7-jre
+  - git
+  - build-essential
+  - python-all
+  - python-software-properties
+  - automake
+  - libtool
+  - curl
+  - monit
