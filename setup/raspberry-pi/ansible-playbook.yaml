@@ -94,6 +94,11 @@
         ./configure --prefix=/usr --with-gitconfig=/etc/gitconfig && \
         make && \
         sudo make install && \
+        sudo mkdir -p /usr/lib/ccache && \
+        sudo ln -sf $(which gcc) /usr/lib/ccache/gcc && \
+        sudo ln -sf $(which cc) /usr/lib/ccache/cc && \
+        sudo ln -sf $(which g++) /usr/lib/ccache/g++ && \
+        sudo ln -sf $(which c++) /usr/lib/ccache/c++ && \
         rm -rf git-2.5.0*
       tags: git
 
