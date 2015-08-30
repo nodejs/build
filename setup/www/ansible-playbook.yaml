@@ -1,146 +1,25 @@
 ---
 - hosts: node-www
-
   remote_user: root
 
   tasks:
     - include_vars: ansible-vars.yaml
       tags: vars
 
-    - name: Node.js | Add the NodeSource Node.js repo
-      command: "bash -c 'curl -sL https://deb.nodesource.com/setup_iojs_3.x | bash -'"
-      tags: general
-
-    - name: General | APT Update
-      apt: update_cache=yes
-      tags: general
-
-    - name: General | APT Upgrade
-      apt: upgrade=full
-      tags: general
-
-    - name: General | Install required packages
-      apt: name={{ item }} update_cache=yes state=latest
-      with_items: packages
-      tags: general
-
-    - name: User | Add nodejs user
-      user: name="nodejs" shell=/bin/bash
+    - include: tasks/user.yaml
       tags: user
 
-    - name: User | Download pubkey(s)
-      get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
-      delegate_to: 127.0.0.1
-      with_items: ssh_users
-      tags: user
-
-    - name: General | Create authorized_keys for root
-      authorized_key: user="root" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
-      with_items: ssh_users
-      tags: user
-
-    - name: General | Create authorized_keys for nodejs
-      authorized_key: user="nodejs" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
-      with_items: ssh_users
-      tags: user
-
-    - name: Docker | Add the Docker.io repo
-      command: "bash -c 'curl -sL http://get.docker.io/ | bash -'"
+    - include: tasks/docker.yaml
       tags: docker
 
-    - name: Docker | Add {{ system_user }} to docker group
-      command: usermod -aG docker nodejs
-      tags: docker
-
-    - name: GitHub Webhook | Install github-webhook
-      command: "npm install github-webhook -g"
-      tags: webhook
-
-    - name: GitHub Webhook | Copy config
-      copy: src=./resources/github-webhook.json dest=/etc/github-webhook.json mode=0644
-      tags: webhook
-
-    - name: GitHub Webhook | Copy secret to config
-      replace: dest=/etc/github-webhook.json regexp="\{\{github_secret\}\}" replace="{{ github_secret }}"
-      tags: webhook
-
-    - name: GitHub Webhook | Copy Upstart config
-      copy: src=./resources/github-webhook.conf dest=/etc/init/github-webhook.conf mode=0644
-      tags: webhook
-
-    - name: GitHub Webhook | Copy build-site scripts
-      copy: src=./resources/{{ item }} dest=/home/nodejs/{{ item }} mode=0700
-      remote_user: "nodejs"
-      with_items:
-        - build-site.sh
-        - check-build-site.sh
-      tags: webhook
-
-    - name: GitHub Webhook | Start service
-      service: name=github-webhook state=started
-      tags: webhook
-
-    - name: Setup | Make /home/iojs
-      file: path=/home/iojs state=directory mode=0755 owner=nodejs
+    - include: tasks/site-setup.yaml
       tags: setup
 
-    - name: Setup | Make /home/nodejs/.npm
-      file: path=/home/nodejs/.npm state=directory mode=0755 owner=nodejs
-      tags: setup
+    - include: tasks/cloudfuse.yaml
+      tags: cloudfuse
 
-    - name: Setup | Initial nodejs and iojs clone and update
-      remote_user: "nodejs"
-      command: "{{ item }}"
-      with_items:
-        - "/home/nodejs/build-site.sh nodejs"
-        - "/home/nodejs/build-site.sh iojs"
-      tags: setup
+    - include: tasks/webhook.yaml
+      tags: webhook
 
-    - name: nginx | Copy site configs
-      copy: src=./resources/{{ item }} dest=/etc/nginx/sites-available/{{ item }} mode=0644
-      with_items:
-        - nodejs.org
-        - iojs.org
-      tags: nginx
-
-    - name: nginx | Create nodejs config symlink
-      file: src=/etc/nginx/sites-available/nodejs.org dest=/etc/nginx/sites-enabled/00-nodejs.org state=link
-      tags: nginx
-
-    - name: nginx | Create iojs config symlink
-      file: src=/etc/nginx/sites-available/iojs.org dest=/etc/nginx/sites-enabled/00-iojs.org state=link
-      tags: nginx
-
-    - name: Setup | Make /etc/nginx/ssl/
-      file: path=/etc/nginx/ssl/ state=directory mode=0755 owner=root
-      tags: nginx
-
-    - name: nginx | Copy site certificates
-      copy: src=./resources/{{ item }} dest=/etc/nginx/ssl/{{ item }} mode=0644
-      with_items:
-        - nodejs_chained.crt
-        - iojs_chained.crt
-        - nodejs.key
-        - iojs.key
-        - dhparam.pem
-      tags: nginx
-
-    - name: nginx | Delete default config
-      file: path=/etc/nginx/sites-enabled/default state=absent
-      tags: nginx
-
-    - name: nginx | Add .pkg mime-type
-      lineinfile: dest=/etc/nginx/mime.types line='application/octet-stream pkg;' insertafter='^types.*'
-      tags: nginx
-
-    - name: nginx | Add .xz mime-type
-      lineinfile: dest=/etc/nginx/mime.types line='application/x-xz xz;' insertafter='^types.*'
-      tags: nginx
-
-    - name: nginx | Use official .gz mime-type
-      lineinfile: dest=/etc/nginx/mime.types line='application/gzip gz;' insertafter='^types.*'
-      tags: nginx
-
-    - name: nginx | Restart service
-      service: name=nginx state=restarted
+    - include: tasks/nginx.yaml
       tags: nginx

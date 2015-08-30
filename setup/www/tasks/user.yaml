@@ -1,0 +1,72 @@
+- name: User | Add nodejs, dist, staging users
+  user:
+    name: "{{ item }}"
+    shell: /bin/bash
+  with_items:
+    - nodejs
+    - dist
+    - staging
+  tags: user
+
+- name: User | Download pubkeys (root_users)
+  get_url:
+    url: https://github.com/{{ item }}.keys
+    dest: /tmp/{{ item }}.keys
+  delegate_to: 127.0.0.1
+  with_items: root_users
+  tags: user
+
+- name: User | Download pubkeys (dist_users)
+  get_url:
+    url: https://github.com/{{ item }}.keys
+    dest: /tmp/{{ item }}.keys
+  delegate_to: 127.0.0.1
+  with_items: dist_users
+  tags: user
+
+- name: User | Create authorized_keys for root
+  authorized_key:
+    user: "root"
+    key: "{{ lookup('file', '/tmp/' + item + '.keys') }}"
+  with_items: root_users
+  tags: user
+
+- name: User | Create authorized_keys for nodejs
+  authorized_key:
+    user: "nodejs"
+    key: "{{ lookup('file', '/tmp/' + item + '.keys') }}"
+  with_items: root_users
+  tags: user
+
+- name: User | Create authorized_keys for dist (root_users)
+  authorized_key:
+    user: "dist"
+    key: "{{ lookup('file', '/tmp/' + item + '.keys') }}"
+  with_items: root_users
+  tags: user
+
+- name: User | Create authorized_keys for dist (dist_users)
+  authorized_key:
+    user: "dist"
+    key: "{{ lookup('file', '/tmp/' + item + '.keys') }}"
+  with_items: dist_users
+  tags: user
+
+- name: User | Set up dist/{nodejs,iojs}/public directories
+  file:
+    path: /home/dist/{{ item }}
+    state: directory
+    mode: 0755
+    owner: dist
+  with_items:
+    - nodejs/public/next-nightly
+    - nodejs/public/nightly
+    - nodejs/public/rc
+    - nodejs/public/release
+    - nodejs/public/test
+    - iojs/public/next-nightly
+    - iojs/public/nightly
+    - iojs/public/rc
+    - iojs/public/release
+    - iojs/public/test
+  tags: user

@@ -57,3 +57,5 @@ docker run \
   "
 
 rsync -avz --delete --exclude .git ${clonedir}/${rsync_from} /home/${site}/www/
+
+/home/nodejs/queue-cdn-purge.sh $site

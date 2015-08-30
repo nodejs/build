@@ -1,0 +1,28 @@
+- name: GitHub Webhook | Install github-webhook
+  command: "npm install github-webhook -g"
+  tags: webhook
+
+- name: GitHub Webhook | Copy config
+  copy:
+    src: ./resources/config/github-webhook.json
+    dest: /etc/github-webhook.json
+    mode: 0644
+  tags: webhook
+
+- name: GitHub Webhook | Copy secret to config
+  replace:
+    dest: /etc/github-webhook.json
+    regexp: '\{\{github_secret\}\}'
+    replace: '{{ github_secret }}'
+  tags: webhook
+
+- name: GitHub Webhook | Copy Upstart config
+  copy:
+    src: ./resources/config/github-webhook.conf
+    dest: /etc/init/github-webhook.conf
+    mode: 0644
+  tags: webhook
+
+- name: GitHub Webhook | Start service
+  service: name=github-webhook state=started
+  tags: webhook
