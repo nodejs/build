@@ -1,0 +1,20 @@
+- name: Site Setup | Make /home/dist/tools/nightly-builder
+  file:
+    path: /home/dist/tools/nightly-builder
+    state: directory
+    mode: 0755
+    owner: dist
+    group: dist
+  tags: setup
+
+- name: nightly-builder | Copy source files
+  copy:
+    src: tools/nightly-builder/
+    dest: /home/dist/tools/nightly-builder/
+    owner: dist
+    group: dist
+  tags: nightly-builder
+
+- name: nightly-builder | npm install
+  command: cd /home/dist/tools/nightly-builder/ && npm install
+  tags: nightly-builder

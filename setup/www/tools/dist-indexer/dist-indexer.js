@@ -9,6 +9,7 @@ const fs         = require('fs')
     , after      = require('after')
     , hyperquest = require('hyperquest')
     , bl         = require('bl')
+    , semver     = require('semver')
 
     , transformFilename = require('./transform-filename')
     , decodeRef  = require('./decode-ref')
@@ -22,10 +23,16 @@ const fs         = require('fs')
           `${githubContentUrl}/deps/v8/src/version.cc`
         , `${githubContentUrl}/deps/v8/include/v8-version.h`
       ]
-    , uvVersionUrl     = `${githubContentUrl}/deps/uv/include/uv-version.h`
+    , uvVersionUrl     = [
+          `${githubContentUrl}/deps/uv/include/uv-version.h`
+        , `${githubContentUrl}/deps/uv/src/version.c`
+      ]
     , sslVersionUrl    = `${githubContentUrl}/deps/openssl/openssl/Makefile`
     , zlibVersionUrl   = `${githubContentUrl}/deps/zlib/zlib.h`
-    , modVersionUrl    = `${githubContentUrl}/src/node_version.h`
+    , modVersionUrl    = [
+          `${githubContentUrl}/src/node_version.h`
+        , `${githubContentUrl}/src/node.h`
+      ]
     , githubOptions    = { headers: {
           'accept': 'text/plain,application/vnd.github.v3.raw'
       } }
@@ -145,19 +152,36 @@ function fetchUvVersion (gitref, callback) {
   if (version)
     return setImmediate(callback.bind(null, null, version))
 
-  fetch(uvVersionUrl, gitref, function (err, rawData) {
+  fetch(uvVersionUrl[0], gitref, function (err, rawData) {
     if (err)
       return callback(err)
 
     version = rawData.split('\n').map(function (line) {
-      return line.match(/^#define UV_VERSION_(?:MAJOR|MINOR|PATCH)\s+(\d+)$/)
-    })
-    .filter(Boolean)
-    .map(function (m) { return m[1] })
-    .join('.')
+        return line.match(/^#define UV_VERSION_(?:MAJOR|MINOR|PATCH)\s+(\d+)$/)
+      })
+      .filter(Boolean)
+      .map(function (m) { return m[1] })
+      .join('.')
 
-    cachePut(gitref, 'uv', version)
-    callback(null, version)
+    if (version) {
+      cachePut(gitref, 'uv', version)
+      return callback(null, version)
+    }
+
+    fetch(uvVersionUrl[1], gitref, function (err, rawData) {
+      if (err)
+        return callback(err)
+
+      version = rawData.split('\n').map(function (line) {
+          return line.match(/^#define UV_VERSION_(?:MAJOR|MINOR|PATCH)\s+(\d+)$/)
+        })
+        .filter(Boolean)
+        .map(function (m) { return m[1] })
+        .join('.')
+
+      cachePut(gitref, 'uv', version)
+      callback(null, version)
+    })
   })
 }
 
@@ -203,15 +227,27 @@ function fetchModVersion (gitref, callback) {
   if (version)
     return setImmediate(callback.bind(null, null, version))
 
-  fetch(modVersionUrl, gitref, function (err, rawData) {
+  fetch(modVersionUrl[0], gitref, function (err, rawData) {
     if (err)
       return callback(err)
 
     var m = rawData.match(/^#define NODE_MODULE_VERSION\s+([^\s]+)\s+.+$/m)
     version = m && m[1]
-    cachePut(gitref, 'mod', version)
 
-    callback(null, version)
+    if (version) {
+      cachePut(gitref, 'mod', version)
+      return callback(null, version)
+    }
+
+    fetch(modVersionUrl[1], gitref, function (err, rawData) {
+      if (err)
+        return callback(err)
+
+      m = rawData.match(/^#define NODE_MODULE_VERSION\s+\(?([^\s\)]+)\)?\s+.+$/m)
+      version = m && m[1]
+      cachePut(gitref, 'mod', version)
+      callback(null, version)
+    })
   })
 }
 
@@ -238,6 +274,7 @@ function dirDate (dir, callback) {
 
 
 function dirFiles (dir, callback) {
+  //TODO: look in SHASUMS.txt as well for older versions
   fs.readFile(path.join(argv.dist, dir, 'SHASUMS256.txt'), 'utf8', afterReadFile)
 
   function afterReadFile (err, contents) {
@@ -245,12 +282,12 @@ function dirFiles (dir, callback) {
       return callback(err)
 
     var files = contents.split('\n').map(function (line) {
-      var seg = line.split(/\s+/)
-      return seg.length >= 2 && seg[1]
-    })
-    .map(transformFilename)
-    .filter(Boolean)
-    .sort()
+        var seg = line.split(/\s+/)
+        return seg.length >= 2 && seg[1]
+      })
+      .map(transformFilename)
+      .filter(Boolean)
+      .sort()
 
     callback(null, files)
   }
@@ -374,6 +411,10 @@ map(fs.readdirSync(argv.dist).sort().reverse(), inspectDir, afterMap)
 function afterMap (err, dirs) {
   if (err)
     throw err
+
+  dirs.sort(function (d1, d2) {
+    return semver.compare(d2.version, d1.version)
+  })
 
   saveVersionCache()
 

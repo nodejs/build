@@ -39,3 +39,12 @@
 - name: CloudFuse | Mount all
   shell: mount -a
   tags: cloudfuse
+
+- name: CloudFuse | Copy backup script
+  copy:
+    src: ./resources/scripts/rsync-cloudfuse.sh
+    dest: /home/nodejs/rsync-cloudfuse.sh
+    mode: 0700
+    owner: nodejs
+    group: nodejs
+  tags: cloudfuse

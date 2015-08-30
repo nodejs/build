@@ -23,3 +23,10 @@
 
     - include: tasks/nginx.yaml
       tags: nginx
+
+    - include: tasks/dist-indexer.yaml
+      tags: dist-indexer
+
+    - include: tasks/nightly-builder.yaml
+      tags: nightly-builder
+

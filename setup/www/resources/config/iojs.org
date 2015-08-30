@@ -66,19 +66,19 @@ server {
     }
 
     location /download {
-        alias /home/dist/public;
+        alias /home/dist/iojs/public;
         autoindex on;
         default_type text/plain;
     }
 
     location /dist {
-      alias /home/dist/public/release/;
+      alias /home/dist/iojs/public/release/;
       autoindex on;
       default_type text/plain;
     }
 
     location /api {
-      alias /home/dist/public/release/latest/doc/api;
+      alias /home/dist/iojs/public/release/latest/doc/api;
       autoindex on;
       default_type text/plain;
     }

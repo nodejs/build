@@ -19,6 +19,8 @@ if (module === require.main) {
     , { dir: 'v2.3.1-next-nightly201506308f6f4280c6' , ref: '8f6f4280c6'      }
     , { dir: 'v3.0.0-rc.1'                           , ref: 'v3.0.0-rc.1'     }
     , { dir: 'v33.22.1-rc.111'                       , ref: 'v33.22.1-rc.111' }
+    , { dir: 'v0.6.1'                                , ref: 'v0.6.1'          }
+    , { dir: 'v0.5.1'                                , ref: 'v0.5.1'          }
   ]
 
   tests.forEach(function (test) {

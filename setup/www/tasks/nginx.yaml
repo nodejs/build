@@ -45,7 +45,7 @@
     state: absent
   tags: nginx
 
-- name: nginx | Add .pkg mime-type
+- name: nginx | Add extra mime-type
   lineinfile:
     dest: /etc/nginx/mime.types
     line: '{{ item }}'
