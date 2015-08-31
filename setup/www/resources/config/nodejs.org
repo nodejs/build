@@ -127,7 +127,7 @@ server {
     }
 
     location /api {
-        alias /home/dist/nodejs/public/release/latest/doc/api;
+        alias /home/dist/nodejs/public/release/latest/docs/api;
         autoindex on;
         default_type text/plain;
 

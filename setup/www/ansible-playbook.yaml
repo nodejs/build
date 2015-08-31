@@ -30,3 +30,9 @@
     - include: tasks/nightly-builder.yaml
       tags: nightly-builder
 
+    - include: tasks/promote.yaml
+      tags: promote
+
+    - include: tasks/latest-linker.yaml
+      tags: latest-linker
+

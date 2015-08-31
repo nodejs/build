@@ -52,3 +52,9 @@ bash -c "$gpgcmd" < ${secretsdir}/build/release/star_iojs.org-COMODORSAAddTrustC
 echo "" >> ./iojs_chained.crt
 bash -c "$gpgcmd" < ${secretsdir}/build/release/star_iojs.org-AddTrustExternalCARoot.crt 1>> ./iojs_chained.crt 2> /dev/null || bork
 echo "" >> ./nodejs_chained.crt
+
+echo "Extracting staging_id_rsa_public.key..."
+bash -c "$gpgcmd" < ${secretsdir}/build/release/staging_id_rsa_public.key 1>> ./staging_id_rsa_public.key 2> /dev/null || bork
+echo "" >> ./staging_id_rsa_public.key
+
+

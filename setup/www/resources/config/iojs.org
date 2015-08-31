@@ -78,7 +78,7 @@ server {
     }
 
     location /api {
-      alias /home/dist/iojs/public/release/latest/doc/api;
+      alias /home/dist/iojs/public/release/latest/docs/api;
       autoindex on;
       default_type text/plain;
     }

@@ -70,3 +70,28 @@
     - iojs/public/release
     - iojs/public/test
   tags: user
+
+- name: User | Insert SSH public key to staging
+  authorized_key:
+    user: "staging"
+    key: "{{ item }}"
+  with_file:
+    - resources/secrets/staging_id_rsa_public.key
+  tags: user
+
+- name: User | Set up staging/{nodejs,iojs} directories
+  file:
+    path: /home/staging/{{ item }}
+    state: directory
+    mode: 0775
+    owner: staging
+  with_items:
+    - nodejs/custom
+    - nodejs/next-nightly
+    - nodejs/nightly
+    - nodejs/release
+    - iojs/custom
+    - iojs/next-nightly
+    - iojs/nightly
+    - iojs/release
+  tags: user

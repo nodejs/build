@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [ "X$1" == "X" ]; then
+  echo "Must supply a version string to promote"
+  exit 1
+fi
+
+/home/staging/promote/promote_release.sh $1

@@ -5,7 +5,7 @@
     mode: 0755
     owner: dist
     group: dist
-  tags: setup
+  tags: dist-indexer
 
 - name: dist-indexer | Copy source files
   copy:

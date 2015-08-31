@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [ "X$1" == "X" ]; then
+  echo "Must supply a version string to sign"
+  exit 1
+fi
+
+/home/staging/promote/resha_release.sh $1

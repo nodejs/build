@@ -1,0 +1,25 @@
+- name: Site Setup | Make /home/dist/tools/latest-linker
+  file:
+    path: /home/dist/tools/latest-linker
+    state: directory
+    mode: 0755
+    owner: dist
+    group: dist
+  tags: latest-linker
+
+- name: latest-linker | Copy source files
+  copy:
+    src: tools/latest-linker/
+    dest: /home/dist/tools/latest-linker/
+    owner: dist
+    group: dist
+  tags: latest-linker
+
+- name: latest-linker | npm install
+  shell: cd /home/dist/tools/latest-linker/ && npm install
+  tags: latest-linker
+
+- name: latest-linker | Set executables
+  file:
+    path: /home/dist/tools/latest-linker/latest-linker.js
+    mode: 0755

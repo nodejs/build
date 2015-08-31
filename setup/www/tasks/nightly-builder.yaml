@@ -5,7 +5,7 @@
     mode: 0755
     owner: dist
     group: dist
-  tags: setup
+  tags: nightly-builder
 
 - name: nightly-builder | Copy source files
   copy:
@@ -16,5 +16,5 @@
   tags: nightly-builder
 
 - name: nightly-builder | npm install
-  command: cd /home/dist/tools/nightly-builder/ && npm install
+  shell: cd /home/dist/tools/nightly-builder/ && npm install
   tags: nightly-builder
