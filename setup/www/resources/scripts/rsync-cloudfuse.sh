@@ -1,7 +1,7 @@
 #!/bin/bash
 
 for d in nodejs iojs; do
-  srcdir=/home/dist/${d}/public/release/
+  srcdir=/home/dist/${d}/release/
   dstdir=/home/nodejs/cloudfuse/${d}.org/public/release/
   timesfile=/home/nodejs/cloudfuse/${d}.org/public.times
 

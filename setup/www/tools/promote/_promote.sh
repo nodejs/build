@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+__dirname="$(CDPATH= cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 if [ -z ${srcdir+x} ]; then
   echo "\$srcdir is not set"
   exit 1
@@ -10,7 +12,8 @@ if [ -z ${dstdir+x} ]; then
   exit 1
 fi
 
-version=$1
+site=$1
+version=$2
 
 for subdir in $(cd $srcdir && ls); do
 
@@ -38,9 +41,10 @@ for subdir in $(cd $srcdir && ls); do
     done
 
     if [ "X${version}" == "X" ] && [ "$resha" == "yes" ]; then
-      /home/staging/promote/_resha.sh $dstdir $subdir
+      ${__dirname}/_resha.sh $site $dstdir $subdir
     fi
 
+    /home/nodejs/queue-cdn-purge.sh $site
   fi
 
 done

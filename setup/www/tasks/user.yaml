@@ -8,6 +8,10 @@
     - staging
   tags: user
 
+- name: User | Add dist to staging group
+  command: usermod -aG staging dist
+  tags: user
+
 - name: User | Download pubkeys (root_users)
   get_url:
     url: https://github.com/{{ item }}.keys
@@ -52,23 +56,23 @@
   with_items: dist_users
   tags: user
 
-- name: User | Set up dist/{nodejs,iojs}/public directories
+- name: User | Set up dist/{nodejs,iojs}/ directories
   file:
     path: /home/dist/{{ item }}
     state: directory
     mode: 0755
     owner: dist
   with_items:
-    - nodejs/public/next-nightly
-    - nodejs/public/nightly
-    - nodejs/public/rc
-    - nodejs/public/release
-    - nodejs/public/test
-    - iojs/public/next-nightly
-    - iojs/public/nightly
-    - iojs/public/rc
-    - iojs/public/release
-    - iojs/public/test
+    - nodejs/next-nightly
+    - nodejs/nightly
+    - nodejs/rc
+    - nodejs/release
+    - nodejs/test
+    - iojs/next-nightly
+    - iojs/nightly
+    - iojs/rc
+    - iojs/release
+    - iojs/test
   tags: user
 
 - name: User | Insert SSH public key to staging

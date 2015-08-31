@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 
-. /home/staging/promote/settings
+site=$1
+
+__dirname="$(CDPATH= cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [ "X$site" != "Xiojs" ] && [ "X$site" != "Xnodejs" ]; then
+  echo "Usage: resha_release.sh < iojs | nodejs > <version>"
+  exit 1
+fi
+
+if [ "X$2" == "X" ]; then
+  echo "Usage: resha_release.sh < iojs | nodejs > <version>"
+  exit 1
+fi
+
+. ${__dirname}/settings
 
 dstdir=$release_dstdir
 
@@ -9,4 +23,6 @@ if [ "X${1}" == "X" ]; then
   exit 1
 fi
 
-/home/staging/promote/_resha.sh $dstdir $1
+${__dirname}/_resha.sh $site $dstdir $2
+
+/home/nodejs/queue-cdn-purge.sh $site

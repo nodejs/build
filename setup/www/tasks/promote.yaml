@@ -12,6 +12,19 @@
     src: tools/promote/
     dest: /home/staging/tools/promote/
     owner: root
-    group: root
+    group: dist
     mode: 0750
+  tags: promote
+
+- name: promote | Copy dist promote files
+  copy:
+    src: tools/dist/{{ item }}
+    dest: /usr/local/bin/{{ item }}
+    owner: dist
+    group: dist
+    mode: 0750
+  with_items:
+    - dist-promotable
+    - dist-promote
+    - dist-sign
   tags: promote

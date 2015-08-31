@@ -6,6 +6,7 @@ root_users:
   - orangemocha
 dist_users:
   - cjihrig
+  - chrisdickinson
   - sam-github
   - fishrock123
   - jasnell

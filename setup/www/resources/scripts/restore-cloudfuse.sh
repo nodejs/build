@@ -2,7 +2,7 @@
 
 for d in nodejs iojs; do
   srcdir=/home/nodejs/cloudfuse/${d}.org/public/release/
-  dstdir=/home/dist/${d}/public/release/
+  dstdir=/home/dist/${d}/release/
   timesfile=/home/nodejs/cloudfuse/${d}.org/public.times
 
   mkdir -p $dstdir

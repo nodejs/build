@@ -7,8 +7,8 @@ if [ "X$site" != "Xiojs" ] && [ "X$site" != "Xnodejs" ]; then
   exit 1
 fi
 
-indexjson=/home/${site}/dist/public/release/index.json
-indexhtml=/home/${site}//www/en/index.html
+indexjson=/home/dist/${site}/release/index.json
+indexhtml=/home/www/${site}/en/index.html
 buildsite=/home/nodejs/build-site.sh
 
 [ $indexjson -nt $indexhtml ] && $buildsite $site

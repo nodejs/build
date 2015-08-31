@@ -12,7 +12,7 @@
     - fuse
   tags: cloudfuse
 
-- name: CloudFuse | Download source
+- name: CloudFuse | Download and compile
   shell: cd /usr/src/ && \
     curl -sL http://github.com/redbo/cloudfuse/tarball/master | tar -zx && \
     cd redbo-cloudfuse-*/ && \

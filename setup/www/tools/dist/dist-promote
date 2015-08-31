@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 
-if [ "X$1" == "X" ]; then
-  echo "Must supply a version string to promote"
+set -e
+
+site=$1
+
+if [ "X$site" != "Xiojs" ] && [ "X$site" != "Xnodejs" ]; then
+  echo "Usage: dist-promote < iojs | nodejs > <version>"
   exit 1
 fi
 
-/home/staging/promote/promote_release.sh $1
+if [ "X$2" == "X" ]; then
+  echo "Usage: dist-promote < iojs | nodejs > <version>"
+  exit 1
+fi
+
+/home/staging/tools/promote/promote_release.sh $1 $2

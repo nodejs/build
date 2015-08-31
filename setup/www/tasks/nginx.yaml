@@ -56,6 +56,15 @@
     - 'application/gzip gz;'
   tags: nginx
 
+- name: nginx | Copy nginx logrotate config
+  copy:
+    src: ./resources/config/logrotate-nginx
+    dest: /etc/logrotate.d/nginx
+    mode: 0644
+    owner: root
+    group: root
+  tags: nginx
+
 - name: nginx | Restart service
   service:
     name: nginx

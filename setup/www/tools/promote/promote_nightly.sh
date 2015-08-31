@@ -1,13 +1,29 @@
 #!/usr/bin/env bash
 
-. /home/staging/promote/settings
+set -e
+
+site=$1
+
+__dirname="$(CDPATH= cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [ "X$site" != "Xiojs" ] && [ "X$site" != "Xnodejs" ]; then
+  echo "Usage: promote_nightly.sh < iojs | nodejs > <version>"
+  exit 1
+fi
+
+if [ "X$2" == "X" ]; then
+  echo "Usage: promote_nightly.sh < iojs | nodejs > <version>"
+  exit 1
+fi
+
+. ${__dirname}/settings
 
 srcdir=$nightly_srcdir
 dstdir=$nightly_dstdir
 
-. /home/staging/promote/_promote.sh
+. ${__dirname}/_promote.sh $site $2
 
 srcdir=$next_nightly_srcdir
 dstdir=$next_nightly_dstdir
 
-. /home/staging/promote/_promote.sh
+. ${__dirname}/_promote.sh $site $2

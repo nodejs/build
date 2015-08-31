@@ -46,12 +46,17 @@
     group: root
   tags: setup
 
-- name: Site Setup | Make /home/iojs
+- name: Site Setup | Make /home/www
   file:
-    path: /home/iojs
+    path: "{{ item }}"
     state: directory
     mode: 0755
     owner: nodejs
+  with_items:
+    - /home/www
+    - /home/www/iojs
+    - /home/www/nodejs
+    - /home/www/github
   tags: setup
 
 - name: Site Setup | Make /home/nodejs/.npm

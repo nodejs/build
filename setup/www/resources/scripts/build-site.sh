@@ -13,7 +13,7 @@ pidof -s -o '%PPID' -x $(basename $0) > /dev/null 2>&1 && \
   echo "$(basename $0) already running" && \
   exit 1
 
-clonedir=/home/${site}/website.github
+clonedir=/home/www/github/${site}
 
 if [ ! -d "${clonedir}" ]; then
   repo="${site}.org"
@@ -56,6 +56,6 @@ docker run \
     ' \
   "
 
-rsync -avz --delete --exclude .git ${clonedir}/${rsync_from} /home/${site}/www/
+rsync -avz --delete --exclude .git ${clonedir}/${rsync_from} /home/www/${site}/
 
 /home/nodejs/queue-cdn-purge.sh $site

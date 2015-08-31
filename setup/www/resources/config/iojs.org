@@ -1,14 +1,15 @@
 server {
     listen 80;
-    listen [::]:80;
+    listen iojs.org:80;
+    server_name iojs.org www.iojs.org;
+
     return 301 https://iojs.org$request_uri;
 }
 
 server {
     listen 443 ssl spdy;
-    #listen [::]:443 ipv6only=on ssl spdy;
-
-    server_name iojs.org;
+    listen iojs.org:443 ssl spdy;
+    server_name iojs.org www.iojs.org;
 
     ssl_certificate ssl/iojs_chained.crt;
     ssl_certificate_key ssl/iojs.key;
@@ -44,46 +45,51 @@ server {
     gzip on;
     gzip_static on;
     gzip_disable "MSIE [1-6]\.";
-    default_type text/html;
     gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
     if ($host ~* ^www\.){
         rewrite ^(.*)$ https://iojs.org$1;
     }
 
-    location ~ \.json$ {
-      add_header access-control-allow-origin *;
-    }
-
-    location ~ /(dist|docs)/v[0-9]+\.[0-9]+\.[0-9]+/.*\.(tar\.gz|msi|exe|pdb|lib|html|json) {
-      expires max;
-    }
+    root /home/www/iojs;
+    default_type text/plain;
+    index index.html;
 
     location / {
-        root /home/iojs/www;
-        index index.html;
-        default_type text/plain;
+        rewrite ^/$ /en/ redirect;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
     }
 
     location /download {
-        alias /home/dist/iojs/public;
+        alias /home/dist/iojs;
         autoindex on;
         default_type text/plain;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
     }
 
     location /dist {
-      alias /home/dist/iojs/public/release/;
-      autoindex on;
-      default_type text/plain;
+        alias /home/dist/iojs/release/;
+        autoindex on;
+        default_type text/plain;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
     }
 
     location /api {
-      alias /home/dist/iojs/public/release/latest/docs/api;
-      autoindex on;
-      default_type text/plain;
-    }
+        alias /home/dist/iojs/release/latest/docs/api;
+        autoindex on;
+        default_type text/plain;
 
-    location /download-stats.json {
-      alias /home/iojs/download-stats.json;
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
     }
 }

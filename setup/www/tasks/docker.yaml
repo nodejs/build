@@ -2,6 +2,6 @@
   command: "bash -c 'curl -sL http://get.docker.io/ | bash -'"
   tags: docker
 
-- name: Docker | Add {{ system_user }} to docker group
+- name: Docker | Add nodejs to docker group
   command: usermod -aG docker nodejs
   tags: docker
