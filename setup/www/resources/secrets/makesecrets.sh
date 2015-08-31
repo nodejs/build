@@ -40,6 +40,8 @@ bash -c "$gpgcmd" < ${secretsdir}/build/release/star_nodejs.org-COMODORSADomainV
 echo "" >> ./nodejs_chained.crt
 bash -c "$gpgcmd" < ${secretsdir}/build/release/star_nodejs.org-COMODORSAAddTrustCA.crt 1>> ./nodejs_chained.crt 2> /dev/null || bork
 echo "" >> ./nodejs_chained.crt
+bash -c "$gpgcmd" < ${secretsdir}/build/release/star_nodejs.org-AddTrustExternalCARoot.crt 1>> ./nodejs_chained.crt 2> /dev/null || bork
+echo "" >> ./nodejs_chained.crt
 
 echo "Extracting iojs_chained.crt..."
 bash -c "$gpgcmd" < ${secretsdir}/build/release/star_iojs.org.crt 1> ./iojs_chained.crt 2> /dev/null || bork
@@ -48,3 +50,5 @@ bash -c "$gpgcmd" < ${secretsdir}/build/release/star_iojs.org-COMODORSADomainVal
 echo "" >> ./iojs_chained.crt
 bash -c "$gpgcmd" < ${secretsdir}/build/release/star_iojs.org-COMODORSAAddTrustCA.crt 1>> ./iojs_chained.crt 2> /dev/null || bork
 echo "" >> ./iojs_chained.crt
+bash -c "$gpgcmd" < ${secretsdir}/build/release/star_iojs.org-AddTrustExternalCARoot.crt 1>> ./iojs_chained.crt 2> /dev/null || bork
+echo "" >> ./nodejs_chained.crt
