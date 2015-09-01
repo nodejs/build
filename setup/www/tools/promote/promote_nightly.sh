@@ -21,9 +21,9 @@ fi
 srcdir=$nightly_srcdir
 dstdir=$nightly_dstdir
 
-. ${__dirname}/_promote.sh $site $2
+. ${__dirname}/_promote.sh $site
 
 srcdir=$next_nightly_srcdir
 dstdir=$next_nightly_dstdir
 
-. ${__dirname}/_promote.sh $site $2
+. ${__dirname}/_promote.sh $site
