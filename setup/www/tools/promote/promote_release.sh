@@ -23,4 +23,4 @@ dstdir=$release_dstdir
 
 . ${__dirname}/_promote.sh $site $2
 
-/home/dist/tools/latest-linker/latest-linker.js  /home/dist/${site}/release/
+/home/dist/tools/latest-linker/latest-linker.js /home/dist/${site}/release/ /home/dist/${site}/docs/

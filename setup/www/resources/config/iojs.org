@@ -83,8 +83,18 @@ server {
         }
     }
 
+    location /docs {
+        alias /home/dist/iojs/docs/;
+        autoindex on;
+        default_type text/html;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
+    }
+
     location /api {
-        alias /home/dist/iojs/release/latest/docs/api;
+        alias /home/dist/iojs/docs/latest/api;
         autoindex on;
         default_type text/plain;
 

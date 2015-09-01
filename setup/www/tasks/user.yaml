@@ -68,11 +68,13 @@
     - nodejs/rc
     - nodejs/release
     - nodejs/test
+    - nodejs/docs
     - iojs/next-nightly
     - iojs/nightly
     - iojs/rc
     - iojs/release
     - iojs/test
+    - iojs/docs
   tags: user
 
 - name: User | Insert SSH public key to staging

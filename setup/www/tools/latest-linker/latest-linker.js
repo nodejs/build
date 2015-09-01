@@ -9,12 +9,16 @@ const fs     = require('fs')
 
 
 if (process.argv.length < 3)
-  throw new Error('Please provide a downloads directory location')
+  throw new Error('Usage: latest-linker.js <downloads directory> [docs directory]')
 
-const dir = process.argv[2]
+const dir = path.resolve(process.argv[2])
+    , docsDir = process.argv[3] && path.resolve(process.argv[3])
 
 if (!fs.statSync(dir).isDirectory())
-  throw new Error('Please provide a downloads directory location')
+  throw new Error('Usage: latest-linker.js <downloads directory> [docs directory]')
+
+if (docsDir && !fs.statSync(docsDir).isDirectory())
+  throw new Error('Usage: latest-linker.js <downloads directory> [docs directory]')
 
 map(
     fs.readdirSync(dir).map(function (d) { return path.join(dir, d) })
@@ -24,16 +28,19 @@ map(
   , afterMap
 )
 
-function afterMap (err, dirs) {
+function afterMap (err, allDirs) {
   if (err)
     throw err
 
-  dirs = dirs.filter(function (d) { return d.stat && d.stat.isDirectory() })
-    .map(function (d) { return path.basename(d.d) })
-    .map(function (d) { try { return semver(d) } catch (e) {} })
-    .filter(Boolean)
-    .filter(function (d) { return semver.satisfies(d, '~0.10 || ~0.12 || >= 1.0') })
-    .map(function (d) { return d.raw })
+  allDirs = allDirs.filter(function (d) { return d.stat && d.stat.isDirectory() })
+                   .map(function (d) { return path.basename(d.d) })
+                   .map(function (d) { try { return semver(d) } catch (e) {} })
+                   .filter(Boolean)
+
+  makeDocsLinks(allDirs.map(function (v) { return v.raw }))
+
+  var dirs = allDirs.filter(function (d) { return semver.satisfies(d, '~0.10 || ~0.12 || >= 1.0') })
+                    .map(function (d) { return d.raw })
 
   dirs.sort(function (d1, d2) { return semver.compare(d1, d2) })
 
@@ -61,6 +68,31 @@ function afterMap (err, dirs) {
 }
 
 
+function makeDocsLinks (versions) {
+  if (!docsDir)
+    return
+
+  versions.forEach(function (version) {
+    var src = path.join(dir, version, 'docs')
+      , dst = path.join(docsDir, version)
+
+    fs.stat(src, function (err, stat) {
+      if (err)
+        throw err
+
+      if (!stat.isDirectory())
+        return
+
+      fs.unlink(dst, function () {
+        fs.symlink(src, dst, function (err) {
+          if (err)
+            throw err
+        })
+      })
+    })
+  })
+}
+
 function link (line, dirs) {
   var range = line ? `${line[0] == '0' ? '~' : '^'}${line}` : '*'
     , max   = semver.maxSatisfying(dirs, range)
@@ -69,10 +101,20 @@ function link (line, dirs) {
 
   function symlink (name) {
     var dst = path.join(dir, name)
-    try { fs.unlinkSync(dst) } catch (e) {}
-    fs.symlinkSync(path.join(dir, max), dst)
-  }
+      , src = path.join(dir, max)
 
+    try { fs.unlinkSync(dst) } catch (e) {}
+    fs.symlinkSync(src, dst)
+
+    if (!docsDir)
+      return
+
+    var dsrc = path.join(dir, max, 'docs')
+      , ddst = path.join(docsDir, name)
+
+    try { fs.unlinkSync(ddst) } catch (e) {}
+    fs.symlinkSync(dsrc, ddst)
+  }
 
   if (line) {
     symlink(`latest-v${line}`)
