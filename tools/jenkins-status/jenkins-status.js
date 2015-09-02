@@ -45,4 +45,4 @@ function onData (err, computers) {
 }
 
 
-jsonist.get('https://jenkins-iojs.nodesource.com/computer/api/json?pretty=true', onData)
+jsonist.get('https://ci.nodejs.org/computer/api/json?pretty=true', onData)
