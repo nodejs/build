@@ -1,13 +1,22 @@
-log_format main '$remote_addr - $remote_user [$time_local] $request '
-  '"$status" $body_bytes_sent "$http_referer" '
-  '"$http_user_agent" "$http_x_forwarded_for"';
+# default combined nginx log_format:
+#log_format combined '$remote_addr - $remote_user [$time_local] '
+#                    '"$request" $status $body_bytes_sent '
+#                    '"$http_referer" "$http_user_agent"';
+
+log_format joyent    '$remote_addr - $remote_user [$time_local] '
+                     '$request "$status" $body_bytes_sent '
+                     '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
+
+log_format nodejs    '$remote_addr - $remote_user [$time_local] '
+                     '"$request" $status $body_bytes_sent '
+                     '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
 
 server {
     listen 80 default_server;
     listen [::]:80;
     server_name www.nodejs.org nodejs.org;
 
-    access_log /var/log/nginx/nodejs.org-access.log;
+    access_log /var/log/nginx/nodejs.org-access.log nodejs;
     error_log /var/log/nginx/nodejs.org-error.log;
 
     keepalive_timeout 60;
@@ -168,7 +177,7 @@ server {
     #add_header X-Frame-Options DENY;
     #add_header X-Content-Type-Options nosniff;
 
-    access_log /var/log/nginx/nodejs.org-access.log;
+    access_log /var/log/nginx/nodejs.org-access.log nodejs;
     error_log /var/log/nginx/nodejs.org-error.log;
 
     gzip on;

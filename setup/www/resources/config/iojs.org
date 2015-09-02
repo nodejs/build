@@ -39,7 +39,7 @@ server {
     add_header X-Frame-Options DENY;
     add_header X-Content-Type-Options nosniff;
 
-    access_log /var/log/nginx/iojs.org-access.log;
+    access_log /var/log/nginx/iojs.org-access.log nodejs;
     error_log /var/log/nginx/iojs.org-error.log;
 
     gzip on;
