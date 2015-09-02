@@ -94,5 +94,21 @@
         ./configure --prefix=/usr --with-gitconfig=/etc/gitconfig && \
         make && \
         sudo make install && \
+        sudo mkdir -p /usr/lib/ccache && \
+        sudo ln -sf $(which gcc) /usr/lib/ccache/gcc && \
+        sudo ln -sf $(which cc) /usr/lib/ccache/cc && \
+        sudo ln -sf $(which g++) /usr/lib/ccache/g++ && \
+        sudo ln -sf $(which c++) /usr/lib/ccache/c++ && \
         rm -rf git-2.5.0*
+      tags: git
+
+    - name: git | Download, compile and install ccache 3.2
+      shell: rm -rf ccache-3.2.3 && \
+        curl -sL http://samba.org/ftp/ccache/ccache-3.2.3.tar.xz | tar -Jxv && \
+        cd ccache-3.2.3/ && \
+        ./configure --prefix=/usr --sysconfdir=/etc -q && \
+        make && \
+        sudo apt-get remove ccache -y && \
+        sudo make install && \
+        rm -rf ccache-3.2.3
       tags: git
