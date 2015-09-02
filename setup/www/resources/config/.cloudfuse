@@ -1,0 +1,3 @@
+username={{ cloudfuse_user }}
+api_key={{ cloudfuse_key }}
+region=IAD

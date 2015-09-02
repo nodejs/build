@@ -1,0 +1,19 @@
+- name: Base | Add the NodeSource Node.js repo
+  command: "bash -c 'curl -sL https://deb.nodesource.com/setup_iojs_3.x | bash -'"
+  tags: base
+
+- name: Base | APT Update
+  apt: update_cache=yes
+  tags: base
+
+- name: Base | APT Upgrade
+  apt: upgrade=full
+  tags: base
+
+- name: Base | Install required packages
+  apt:
+    name: '{{ item }}'
+    update_cache: yes
+    state: latest
+  with_items: packages
+  tags: base

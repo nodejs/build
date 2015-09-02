@@ -1,0 +1,76 @@
+- name: Site Setup | Copy build-site scripts
+  copy:
+    src: ./resources/scripts/{{ item }}
+    dest: /home/nodejs/{{ item }}
+    mode: 0700
+    owner: nodejs
+    group: nodejs
+  with_items:
+    - build-site.sh
+    - check-build-site.sh
+  tags: setup
+
+- name: Site Setup | Copy cdn-purge.sh script
+  copy:
+    src: ./resources/scripts/cdn-purge.sh
+    dest: /home/nodejs/cdn-purge.sh
+    mode: 0700
+    owner: root
+    group: root
+  tags: setup
+
+- name: Site Setup | Replace cdn-purge.sh secrets
+  replace:
+    dest: /home/nodejs/cdn-purge.sh
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  with_items:
+    - { regexp: '\{\{cdn_api_key\}\}', replace: '{{ cdn_api_key }}' }
+    - { regexp: '\{\{cdn_api_email\}\}', replace: '{{ cdn_api_email }}' }
+    - { regexp: '\{\{cdn_api_iojs_id\}\}', replace: '{{ cdn_api_iojs_id }}' }
+    - { regexp: '\{\{cdn_api_nodejs_id\}\}', replace: '{{ cdn_api_nodejs_id }}' }
+  tags: setup
+
+- name: Site Setup | Add cdn-purge.sh to crontab
+  lineinfile:
+    dest: /etc/crontab
+    line: '*  *    * * *   root    /home/nodejs/cdn-purge.sh'
+  tags: setup
+
+- name: Site Setup | Copy queue-cdn-purge.sh script
+  copy:
+    src: ./resources/scripts/queue-cdn-purge.sh
+    dest: /home/nodejs/queue-cdn-purge.sh
+    mode: 0755
+    owner: root
+    group: root
+  tags: setup
+
+- name: Site Setup | Make /home/www
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: nodejs
+  with_items:
+    - /home/www
+    - /home/www/iojs
+    - /home/www/nodejs
+    - /home/www/github
+  tags: setup
+
+- name: Site Setup | Make /home/nodejs/.npm
+  file:
+    path: /home/nodejs/.npm
+    state: directory
+    mode: 0755
+    owner: nodejs
+  tags: setup
+
+- name: Site Setup | Initial nodejs and iojs clone and update
+  remote_user: "nodejs"
+  command: "{{ item }}"
+  with_items:
+    - "/home/nodejs/build-site.sh nodejs"
+    - "/home/nodejs/build-site.sh iojs"
+  tags: setup

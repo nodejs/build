@@ -1,0 +1,50 @@
+- name: CloudFuse | Install required packages for CloudFuse compile
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: latest
+  with_items:
+    - build-essential
+    - libcurl4-openssl-dev
+    - libxml2
+    - libxml2-dev
+    - libfuse-dev
+    - fuse
+  tags: cloudfuse
+
+- name: CloudFuse | Download and compile
+  shell: cd /usr/src/ && \
+    curl -sL http://github.com/redbo/cloudfuse/tarball/master | tar -zx && \
+    cd redbo-cloudfuse-*/ && \
+    ./configure && \
+    make && \
+    make install
+  tags: cloudfuse
+
+- name: CloudFuse | Copy config file
+  copy:
+    src: ./resources/config/.cloudfuse
+    dest: /root/.cloudfuse
+    mode: 0600
+    owner: root
+    group: root
+  tags: cloudfuse
+
+- name: CloudFuse | Add /etc/fstab entry
+  lineinfile:
+    dest: /etc/fstab
+    line: 'cloudfuse /home/nodejs/cloudfuse fuse auto,_netdev,defaults,uid=1000,gid=1000,umask=002,allow_other 0 0'
+  tags: cloudfuse
+
+- name: CloudFuse | Mount all
+  shell: mount -a
+  tags: cloudfuse
+
+- name: CloudFuse | Copy backup script
+  copy:
+    src: ./resources/scripts/rsync-cloudfuse.sh
+    dest: /home/nodejs/rsync-cloudfuse.sh
+    mode: 0700
+    owner: nodejs
+    group: nodejs
+  tags: cloudfuse

@@ -1,0 +1,353 @@
+# default combined nginx log_format:
+#log_format combined '$remote_addr - $remote_user [$time_local] '
+#                    '"$request" $status $body_bytes_sent '
+#                    '"$http_referer" "$http_user_agent"';
+
+log_format joyent    '$remote_addr - $remote_user [$time_local] '
+                     '$request "$status" $body_bytes_sent '
+                     '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
+
+log_format nodejs    '$remote_addr - $remote_user [$time_local] '
+                     '"$request" $status $body_bytes_sent '
+                     '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
+
+server {
+    listen 80 default_server;
+    listen [::]:80;
+    server_name www.nodejs.org nodejs.org;
+
+    access_log /var/log/nginx/nodejs.org-access.log nodejs;
+    error_log /var/log/nginx/nodejs.org-error.log;
+
+    keepalive_timeout 60;
+    server_tokens off;
+
+    gzip on;
+    gzip_static on;
+    gzip_disable "MSIE [1-6]\.";
+    gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+    # let the blog.nodejs.org redirector handle this
+    location ~ /blog(.*) {
+      rewrite ^/blog(.*) http://blog.nodejs.org/$1 permanent;
+    }
+
+    location ~ ^/(?!(dist/|dist$|\.json$)) {
+        rewrite ^ https://nodejs.org$request_uri permanent;
+    }
+
+    root /home/www/nodejs;
+    default_type text/plain;
+    index index.html;
+
+    if ($host ~* ^www\.){
+        rewrite ^(.*)$ http://$server_name$1;
+    }
+
+    location / {
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
+    }
+
+    location /dist {
+        alias /home/dist/nodejs/release/;
+        autoindex on;
+        default_type text/plain;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
+    }
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name blog.nodejs.org;
+
+    rewrite ^/\d+/\d+/\d+/(?:node-v(?:ersion-)?|version-)(\d+)[-\.](\d+)[-\.](\d+).*$ https://nodejs.org/en/blog/release/v$1.$2.$3/ permanent;
+
+    rewrite ^/2015/05/16/node-leaders-are-building-an-open-foundation/$ https://nodejs.org/en/blog/community/node-leaders-building-open-neutral-foundation/ permanent;
+    rewrite ^/2015/05/16/the-nodejs-foundation-benefits-all/$ https://nodejs.org/en/blog/community/foundation-benefits-all/ permanent;
+    rewrite ^/2014/01/17/nodejs-road-ahead/$ https://nodejs.org/en/blog/nodejs-road-ahead/ permanent;
+    rewrite ^/2013/12/03/bnoordhuis-departure/$ https://nodejs.org/en/blog/uncategorized/bnoordhuis-departure/ permanent;
+    rewrite ^/2013/11/26/npm-post-mortem/$ https://nodejs.org/en/blog/npm/2013-outage-postmortem/ permanent;
+    rewrite ^/2013/10/22/cve-2013-4450-http-server-pipeline-flood-dos/$ https://nodejs.org/en/blog/vulnerability/http-server-pipeline-flood-dos/ permanent;
+    rewrite ^/2015/05/08/transitions/$ https://nodejs.org/en/blog/community/transitions/ permanent;
+    rewrite ^/2015/05/08/next-chapter/$ https://nodejs.org/en/blog/community/next-chapter/ permanent;
+    rewrite ^/2013/02/08/peer-dependencies/$ https://nodejs.org/en/blog/npm/peer-dependencies/ permanent;
+    rewrite ^/2012/12/21/streams2/$ https://nodejs.org/en/blog/feature/streams2/ permanent;
+    rewrite ^/2012/09/30/bert-belder-libuv-lxjs-2012/$ https://nodejs.org/en/blog/video/bert-belder-libuv-lxjs-2012/ permanent;
+    rewrite ^/2012/05/08/bryan-cantrill-instrumenting-the-real-time-web/$ https://nodejs.org/en/blog/video/bryan-cantrill-instrumenting-the-real-time-web/ permanent;
+    rewrite ^/2012/05/07/http-server-security-vulnerability-please-upgrade-to-0-6-17/$ https://nodejs.org/en/blog/vulnerability/http-server-security-vulnerability-please-upgrade-to-0-6-17/ permanent;
+    rewrite ^/2012/05/02/multi-server-continuous-deployment-with-fleet/$ https://nodejs.org/en/blog/module/multi-server-continuous-deployment-with-fleet/ permanent;
+    rewrite ^/2012/04/25/profiling-node-js/$ https://nodejs.org/en/blog/uncategorized/profiling-node-js/ permanent;
+    rewrite ^/2012/03/28/service-logging-in-json-with-bunyan/$ https://nodejs.org/en/blog/module/service-logging-in-json-with-bunyan/ permanent;
+    rewrite ^/2012/02/27/managing-node-js-dependencies-with-shrinkwrap/$ https://nodejs.org/en/blog/npm/managing-node-js-dependencies-with-shrinkwrap/ permanent;
+    rewrite ^/2011/12/15/growing-up/$ https://nodejs.org/en/blog/uncategorized/growing-up/ permanent;
+    rewrite ^/2011/10/26/version-0-6/$ https://nodejs.org/en/blog/uncategorized/version-0-6/ permanent;
+    rewrite ^/2011/10/05/an-easy-way-to-build-scalable-network-programs/$ https://nodejs.org/en/blog/uncategorized/an-easy-way-to-build-scalable-network-programs/ permanent;
+    rewrite ^/2011/09/23/libuv-status-report/$ https://nodejs.org/en/blog/uncategorized/libuv-status-report/ permanent;
+    rewrite ^/2011/09/08/ldapjs-a-reprise-of-ldap/$ https://nodejs.org/en/blog/uncategorized/ldapjs-a-reprise-of-ldap/ permanent;
+    rewrite ^/2011/08/29/some-new-node-projects/$ https://nodejs.org/en/blog/uncategorized/some-new-node-projects/ permanent;
+    rewrite ^/2011/08/12/the-videos-from-node-meetup/$ https://nodejs.org/en/blog/uncategorized/the-videos-from-node-meetup/ permanent;
+    rewrite ^/2011/08/03/node-meetup-this-thursday/$ https://nodejs.org/en/blog/uncategorized/node-meetup-this-thursday/ permanent;
+    rewrite ^/2011/07/11/evolving-the-node-js-brand/$ https://nodejs.org/en/blog/uncategorized/evolving-the-node-js-brand/ permanent;
+    rewrite ^/2011/06/24/porting-node-to-windows-with-microsoft.+s-help/$ https://nodejs.org/en/blog/uncategorized/porting-node-to-windows-with-microsofts-help/ permanent;
+    rewrite ^/2011/05/01/npm-1-0-released/$ https://nodejs.org/en/blog/npm/npm-1-0-released/ permanent;
+    rewrite ^/2011/04/29/trademark/$ https://nodejs.org/en/blog/uncategorized/trademark/ permanent;
+    rewrite ^/2011/04/28/node-office-hours-cut-short/$ https://nodejs.org/en/blog/uncategorized/node-office-hours-cut-short/ permanent;
+    rewrite ^/2011/04/07/npm-1-0-link/$ https://nodejs.org/en/blog/npm/npm-1-0-link/ permanent;
+    rewrite ^/2011/04/05/development-environment/$ https://nodejs.org/en/blog/uncategorized/development-environment/ permanent;
+    rewrite ^/2014/12/05/listening-to-the-community/$ https://nodejs.org/en/blog/advisory-board/listening-to-the-community/ permanent;
+    rewrite ^/2014/12/03/advisory-board-update/$ https://nodejs.org/en/blog/advisory-board/advisory-board-update/ permanent;
+    rewrite ^/2011/03/25/jobs-nodejs-org/$ https://nodejs.org/en/blog/uncategorized/jobs-nodejs-org/ permanent;
+    rewrite ^/2011/03/24/npm-1-0-global-vs-local-installation/$ https://nodejs.org/en/blog/npm/npm-1-0-global-vs-local-installation/ permanent;
+    rewrite ^/2011/03/24/office-hours/$ https://nodejs.org/en/blog/uncategorized/office-hours/ permanent;
+    rewrite ^/2011/03/18/npm-1-0-the-new-ls/$ https://nodejs.org/en/blog/npm/npm-1-0-the-new-ls/ permanent;
+    rewrite ^/2011/03/18/welcome-to-the-node-blog/$ https://nodejs.org/en/blog/video/welcome-to-the-node-blog/ permanent;
+    rewrite ^/2014/07/31/v8-memory-corruption-stack-overflow/$ https://nodejs.org/en/blog/vulnerability/v8-memory-corruption-stack-overflow/ permanent;
+    rewrite ^/2014/07/29/building-nodejs-together/$ https://nodejs.org/en/blog/community/building-nodejs-together/ permanent;
+    rewrite ^/2014/06/16/openssl-and-breaking-utf-8-change/$ https://nodejs.org/en/blog/vulnerability/openssl-and-utf8/ permanent;
+    rewrite ^/2014/06/11/notes-from-the-road/$ https://nodejs.org/en/blog/uncategorized/notes-from-the-road/ permanent;
+
+    rewrite ^/((atom|feed|rss)(/|\.xml)|(feed))$ https://nodejs.org/en/feed/blog.xml permanent;
+    rewrite ^/(feed/)?release/?$                 https://nodejs.org/en/feed/releases.xml permanent;
+    rewrite ^/(feed/)?vulnerability/?$           https://nodejs.org/en/feed/vulnerability.xml permanent;
+
+    rewrite ^/(.*)$ https://nodejs.org/en/blog/ permanent;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name doc.nodejs.org docs.nodejs.org;
+
+    rewrite ^/(.*)$ https://nodejs.org/en/docs/ permanent;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name api.nodejs.org;
+
+    rewrite ^/(.*)$ https://nodejs.org/api/ permanent;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name dist.nodejs.org;
+
+    rewrite ^/(.*)$ https://nodejs.org/dist/ permanent;
+}
+
+server {
+    listen 443 default_server ssl spdy;
+    listen [::]:443 default_server ipv6only=on ssl spdy;
+
+    server_name nodejs.org www.nodejs.org blog.nodejs.org;
+
+    ssl_certificate ssl/nodejs_chained.crt;
+    ssl_certificate_key ssl/nodejs.key;
+    ssl_trusted_certificate ssl/nodejs_chained.crt;
+    ssl_dhparam ssl/dhparam.pem;
+
+    ssl_ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS;
+    ssl_prefer_server_ciphers on;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 24h;
+
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    spdy_keepalive_timeout 300;
+    spdy_headers_comp 9;
+
+    keepalive_timeout 60;
+    server_tokens off;
+
+    resolver 8.8.4.4 8.8.8.8 valid=300s;
+    resolver_timeout 10s;
+
+    #add_header Strict-Transport-Security max-age=63072000;
+    #add_header X-Frame-Options DENY;
+    #add_header X-Content-Type-Options nosniff;
+
+    access_log /var/log/nginx/nodejs.org-access.log nodejs;
+    error_log /var/log/nginx/nodejs.org-error.log;
+
+    gzip on;
+    gzip_static on;
+    gzip_disable "MSIE [1-6]\.";
+    gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+    if ($host ~* ^www\.) {
+        rewrite ^(.*)$ https://$server_name$1;
+    }
+
+    if ($host ~* ^blog\.) {
+        # keep the blog rewrites in the blog.nodejs.org:80 config
+        # and shunt blog.nodejs.org:443 requests through there
+        rewrite ^(.*)$ http://blog.nodejs.org$1;
+    }
+
+    location /documentation/ {
+        rewrite ^/documentation/api(.*)$ /api$1 permanent;
+    }
+
+    root /home/www/nodejs;
+    default_type text/plain;
+    index index.html;
+
+    location / {
+        rewrite ^/$ /en/ redirect;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
+    }
+
+    location /download {
+        alias /home/dist/nodejs;
+        autoindex on;
+        default_type text/plain;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
+    }
+
+    location /dist {
+        alias /home/dist/nodejs/release/;
+        autoindex on;
+        default_type text/plain;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
+    }
+
+    location /docs {
+        alias /home/dist/nodejs/docs/;
+        autoindex on;
+        default_type text/html;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
+    }
+
+    location /api {
+        alias /home/dist/nodejs/docs/latest/api;
+        autoindex on;
+        default_type text/plain;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
+    }
+
+    location /robots.txt {
+        alias /home/www/nodejs/static/robots.txt;
+        default_type text/plain;
+    }
+
+    rewrite ^/about/advisory-board(.*)$                           https://$server_name/en/about/organization/ permanent;
+    rewrite ^/advisory-board(.*)$                                 https://$server_name/en/about/organization/ permanent;
+    rewrite ^/about/organization/tsc-meetings/?$                  https://$server_name/en/foundation/tsc/minutes/ permanent;
+    rewrite ^/about/organization/tsc-meetings/(.*?)/minutes.html$ https://$server_name/en/foundation/tsc/minutes/$1/ permanent;
+    rewrite ^/about/security/?$                                   https://$server_name/en/security/ permanent;
+    rewrite ^/contribute/?$                                       https://$server_name/en/get-involved/ permanent;
+    rewrite ^/contribute/accepting_contributions.html$            https://github.com/nodejs/dev-policy permanent;
+    rewrite ^/contribute/becoming_collaborator.html$              https://$server_name/en/get-involved/ permanent;
+    rewrite ^/contribute/code_contributions/?$                    https://$server_name/en/get-involved/ permanent;
+    rewrite ^/contribute/code_contributions/workflow.html$        https://$server_name/en/get-involved/ permanent;
+    rewrite ^/documentation(.*)$                                  https://$server_name/en/docs/ permanent;
+    rewrite ^/foundation/blog.html$                               https://$server_name/en/blog/ permanent;
+    rewrite ^/foundation/members.html$                            https://$server_name/en/foundation/members/ permanent;
+    rewrite ^/images/foundation-visual-guidelines.pdf$            https://$server_name/static/documents/foundation-visual-guidelines.pdf permanent;
+    rewrite ^/images/logos/js-black(.*)$                          https://$server_name/static/images/logos/js-black$1 permanent;
+    rewrite ^/images/logos/nodejs-(.*)$                           https://$server_name/static/images/logos/nodejs-$1 permanent;
+    rewrite ^/images/node-foundation-by-laws.pdf$                 https://$server_name/static/documents/node-foundation-by-laws.pdf permanent;
+    rewrite ^/images/.*trademark-policy.pdf$                      https://$server_name/static/documents/trademark-policy.pdf permanent;
+    rewrite ^/video(.*)$                                          https://$server_name/static/video$1 permanent;
+    rewrite ^/changelog.html$                                     https://github.com/nodejs/node/blob/master/CHANGELOG.md permanent;
+    rewrite ^/api.html$                                           https://$server_name/api/ permanent;
+    rewrite ^/index.html$                                         https://$server_name/ permanent;
+
+    rewrite ^/(20\d\d/\d\d/\d\d/.*)$                              http://blog.nodejs.org/$1 permanent;
+
+    rewrite ^/about/?$                                            https://$server_name/en/about/ permanent;
+    rewrite ^/about/advisory-board/?$                             https://$server_name/en/about/organization/ permanent;
+    rewrite ^/about/advisory-board/members/?$                     https://$server_name/en/about/organization/ permanent;
+    rewrite ^/about/organization/?$                               https://$server_name/en/about/organization/ permanent;
+    rewrite ^/about/organization/tsc-meetings/(\d\d\d\d-\d\d-\d\d)/?$ https://$server_name/en/foundation/tsc/minutes/$1/ permanent;
+    rewrite ^/about/organization/tsc-meetings/(\d\d\d\d-\d\d-\d\d)/minutes.html$ https://$server_name/en/foundation/tsc/minutes/$1/ permanent;
+    rewrite ^/about/releases/?$                                   https://$server_name/en/about/releases/ permanent;
+    rewrite ^/about/resources/?$                                  https://$server_name/en/about/resources/ permanent;
+    rewrite ^/about/security/?$                                   https://$server_name/en/security/ permanent;
+    rewrite ^/about/trademark/?$                                  https://$server_name/en/about/trademark/ permanent;
+    rewrite ^/blog/?$                                             https://$server_name/en/blog/ permanent;
+    rewrite ^/community/?$                                        https://$server_name/en/get-involved/ permanent;
+    rewrite ^/foundation/?$                                       https://$server_name/en/foundation/ permanent;
+
+    rewrite ^/dist/staging/(.*)$                                  https://$server_name/dist/$1 permanent;
+
+    # RSS Feeds
+    rewrite ^/((atom|feed|rss)(/|\.xml)|(feed))$                  https://$server_name/en/feed/blog.xml permanent;
+    rewrite ^/feed/release/?$                                     https://$server_name/en/feed/releases.xml permanent;
+    rewrite ^/feed/vulnerability/?$                               https://$server_name/en/feed/vulnerability.xml permanent;
+
+    # Asset rewrites
+    rewrite ^/(?!static/)?favicon\.ico$                           https://$server_name/static/favicon.ico permanent;
+    rewrite ^/apple-touch-icon.*\.png$                            https://$server_name/static/apple-touch-icon.png permanent;
+    rewrite ^/trademark-policy.pdf$                               https://$server_name/static/documents/trademark-policy.pdf permanent;
+
+    rewrite ^/logos/                                              https://$server_name/static/images/logos/ permanent;
+    rewrite ^/logos/monitor.png                                   https://$server_name/static/images/logos/monitor.png permanent;
+    rewrite ^/logos/nodejs(.*)$                                   https://$server_name/static/images/logos/nodejs$1 permanent;
+
+    # Foundation member logos
+    rewrite ^/images/logos/apigee_logo_md.png$                    https://$server_name/static/images/foundation/apigee_logo_md.png permanent;
+    rewrite ^/images/logos/codefreshLogo.png$                     https://$server_name/static/images/foundation/codefreshLogo.png permanent;
+    rewrite ^/images/logos/codefreshLogo2.png$                    https://$server_name/static/images/foundation/codefreshLogo2.png permanent;
+    rewrite ^/images/logos/digitaloceanLogo.png$                  https://$server_name/static/images/foundation/digitaloceanLogo.png permanent;
+    rewrite ^/images/logos/famousLogo.jpg$                        https://$server_name/static/images/foundation/famousLogo.jpg permanent;
+    rewrite ^/images/logos/famousLogo.png$                        https://$server_name/static/images/foundation/famousLogo.png permanent;
+    rewrite ^/images/logos/fidelityLogo.png$                      https://$server_name/static/images/foundation/fidelityLogo.png permanent;
+    rewrite ^/images/logos/godaddyLogo.png$                       https://$server_name/static/images/foundation/godaddyLogo.png permanent;
+    rewrite ^/images/logos/grouponLogo.png$                       https://$server_name/static/images/foundation/grouponLogo.png permanent;
+    rewrite ^/images/logos/ibmLogo.png$                           https://$server_name/static/images/foundation/ibmLogo.png permanent;
+    rewrite ^/images/logos/intelLogo.png$                         https://$server_name/static/images/foundation/intelLogo.png permanent;
+    rewrite ^/images/logos/joyentLogo.svg$                        https://$server_name/static/images/foundation/joyentLogo.svg permanent;
+    rewrite ^/images/logos/microsoftLogo.png$                     https://$server_name/static/images/foundation/microsoftLogo.png permanent;
+    rewrite ^/images/logos/microsoftLogo2.png$                    https://$server_name/static/images/foundation/microsoftLogo2.png permanent;
+    rewrite ^/images/logos/modulusLogo.png$                       https://$server_name/static/images/foundation/modulusLogo.png permanent;
+    rewrite ^/images/logos/nearformLogo.png$                      https://$server_name/static/images/foundation/nearformLogo.png permanent;
+    rewrite ^/images/logos/nearformLogo2.png$                     https://$server_name/static/images/foundation/nearformLogo2.png permanent;
+    rewrite ^/images/logos/nodesourceLogo.png$                    https://$server_name/static/images/foundation/nodesourceLogo.png permanent;
+    rewrite ^/images/logos/npmLogo.png$                           https://$server_name/static/images/foundation/npmLogo.png permanent;
+    rewrite ^/images/logos/paypalLogo.png$                        https://$server_name/static/images/foundation/paypalLogo.png permanent;
+    rewrite ^/images/logos/sapLogo.png$                           https://$server_name/static/images/foundation/sapLogo.png permanent;
+    rewrite ^/images/logos/saucelabsLogo.png$                     https://$server_name/static/images/foundation/saucelabsLogo.png permanent;
+    rewrite ^/images/logos/saucelabsLogo2.png$                    https://$server_name/static/images/foundation/saucelabsLogo2.png permanent;
+    rewrite ^/images/logos/strongloopLogo.png$                    https://$server_name/static/images/foundation/strongloopLogo.png permanent;
+    rewrite ^/images/logos/yldLogo.png$                           https://$server_name/static/images/foundation/yldLogo.png permanent;
+    rewrite ^/images/logos/yldLogo2.png$                          https://$server_name/static/images/foundation/yldLogo2.png permanent;
+
+    # legacy v0.12.x docs/ html
+    rewrite ^/pipe.css$                                           https://$server_name/static/legacy/pipe.css permanent;
+    rewrite ^/sh_vim-dark.css$                                    https://$server_name/static/legacy/sh_vim-dark.css permanent;
+    rewrite ^/lfcollab.css$                                       https://$server_name/static/legacy/lfcollab.css permanent;
+    rewrite ^/images/stripe.png$                                  https://$server_name/static/legacy/stripe.png permanent;
+    rewrite ^/images/walmart-thumb.jpg$                           https://$server_name/static/legacy/walmart-thumb.jpg permanent;
+    rewrite ^/sh_main.js$                                         https://$server_name/static/legacy/sh_main.js permanent;
+    rewrite ^/sh_javascript.min.js$                               https://$server_name/static/legacy/sh_javascript.min.js permanent;
+
+
+    rewrite ^/images/(.*)                                         https://$server_name/static/images/$1 permanent;
+}

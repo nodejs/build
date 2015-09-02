@@ -1,0 +1,29 @@
+- name: dist-indexer | Make /home/dist/tools/dist-indexer
+  file:
+    path: /home/dist/tools/dist-indexer
+    state: directory
+    mode: 0755
+    owner: dist
+    group: dist
+  tags: dist-indexer
+
+- name: dist-indexer | Copy source files
+  copy:
+    src: tools/dist-indexer/
+    dest: /home/dist/tools/dist-indexer/
+    owner: dist
+    group: dist
+  tags: dist-indexer
+
+- name: dist-indexer | Set executables
+  file:
+    path: /home/dist/tools/dist-indexer/{{ item }}
+    mode: 0755
+  with_items:
+    - dist-indexer.js
+    - ls-types.js
+
+- name: dist-indexer | npm install
+  shell: cd /home/dist/tools/dist-indexer/ && npm install
+  remote_user: dist
+  tags: dist-indexer

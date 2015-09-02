@@ -1,0 +1,103 @@
+- name: User | Add nodejs, dist, staging users
+  user:
+    name: "{{ item }}"
+    shell: /bin/bash
+  with_items:
+    - nodejs
+    - dist
+    - staging
+  tags: user
+
+- name: User | Add dist to staging group
+  command: usermod -aG staging dist
+  tags: user
+
+- name: User | Download pubkeys (root_users)
+  get_url:
+    url: https://github.com/{{ item }}.keys
+    dest: /tmp/{{ item }}.keys
+  delegate_to: 127.0.0.1
+  with_items: root_users
+  tags: user
+
+- name: User | Download pubkeys (dist_users)
+  get_url:
+    url: https://github.com/{{ item }}.keys
+    dest: /tmp/{{ item }}.keys
+  delegate_to: 127.0.0.1
+  with_items: dist_users
+  tags: user
+
+- name: User | Create authorized_keys for root
+  authorized_key:
+    user: "root"
+    key: "{{ lookup('file', '/tmp/' + item + '.keys') }}"
+  with_items: root_users
+  tags: user
+
+- name: User | Create authorized_keys for nodejs
+  authorized_key:
+    user: "nodejs"
+    key: "{{ lookup('file', '/tmp/' + item + '.keys') }}"
+  with_items: root_users
+  tags: user
+
+- name: User | Create authorized_keys for dist (root_users)
+  authorized_key:
+    user: "dist"
+    key: "{{ lookup('file', '/tmp/' + item + '.keys') }}"
+  with_items: root_users
+  tags: user
+
+- name: User | Create authorized_keys for dist (dist_users)
+  authorized_key:
+    user: "dist"
+    key: "{{ lookup('file', '/tmp/' + item + '.keys') }}"
+  with_items: dist_users
+  tags: user
+
+- name: User | Set up dist/{nodejs,iojs}/ directories
+  file:
+    path: /home/dist/{{ item }}
+    state: directory
+    mode: 0755
+    owner: dist
+  with_items:
+    - nodejs/next-nightly
+    - nodejs/nightly
+    - nodejs/rc
+    - nodejs/release
+    - nodejs/test
+    - nodejs/docs
+    - iojs/next-nightly
+    - iojs/nightly
+    - iojs/rc
+    - iojs/release
+    - iojs/test
+    - iojs/docs
+  tags: user
+
+- name: User | Insert SSH public key to staging
+  authorized_key:
+    user: "staging"
+    key: "{{ item }}"
+  with_file:
+    - resources/secrets/staging_id_rsa_public.key
+  tags: user
+
+- name: User | Set up staging/{nodejs,iojs} directories
+  file:
+    path: /home/staging/{{ item }}
+    state: directory
+    mode: 0775
+    owner: staging
+  with_items:
+    - nodejs/custom
+    - nodejs/next-nightly
+    - nodejs/nightly
+    - nodejs/release
+    - iojs/custom
+    - iojs/next-nightly
+    - iojs/nightly
+    - iojs/release
+  tags: user

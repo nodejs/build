@@ -1,9 +1,17 @@
 ---
-server_user: iojs
-ssh_users:
+server_user: nodejs
+root_users:
   - rvagg
-  - indutny
+  - jbergstroem
+  - orangemocha
+dist_users:
+  - cjihrig
+  - chrisdickinson
+  - sam-github
+  - fishrock123
+  - jasnell
+  - rvagg
 packages:
-  - nodejs
+  - iojs
   - nginx
   - git

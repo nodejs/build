@@ -1,2 +1,3 @@
-iojs_chained.crt
-iojs.key
+*.crt
+*.key
+*.pem

@@ -69,6 +69,9 @@ iojs-ns-pi2-5
 [iojs-www]
 iojs-www
 
+[node-www]
+node-www
+
 [iojs-jenkins]
 iojs-jenkins
 
@@ -79,6 +82,7 @@ iojs-build-ubuntu1204
 iojs-build-debian8
 iojs-build-containers
 iojs-www
+node-www
 iojs-jenkins
 iojs-armv7-wheezy
 

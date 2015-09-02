@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+site=$1
+
+if [ "X$site" != "Xiojs" ] && [ "X$site" != "Xnodejs" ]; then
+  echo "Usage: dist-promotable < iojs | nodejs >"
+  exit 1
+fi
+
+(cd /home/staging/${site}/release/ && /home/dist/tools/dist-indexer/ls-types.js -d *)
