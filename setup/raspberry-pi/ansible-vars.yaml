@@ -2,7 +2,7 @@
 server_user: iojs
 ssh_users:
   - rvagg
-  - wblankenship
+  - orangemocha
   - jbergstrom
 packages:
   - openjdk-7-jre
