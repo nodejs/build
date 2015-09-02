@@ -22,18 +22,23 @@
 
     - name: General | update-alternatives for gcc
       alternatives: name=gcc link=/usr/bin/gcc path=/usr/bin/gcc-4.8
+      tags: general
 
     - name: General | update-alternatives for cc
       alternatives: name=cc link=/usr/bin/cc path=/usr/bin/gcc-4.8
+      tags: general
 
     - name: General | update-alternatives for g++
       alternatives: name=g++ link=/usr/bin/g++ path=/usr/bin/g++-4.8
+      tags: general
 
     - name: General | update-alternatives for c++
       alternatives: name=c++ link=/usr/bin/c++ path=/usr/bin/g++-4.8
+      tags: general
 
     - name: General | update-alternatives for cpp
       alternatives: name=cpp link=/usr/bin/cpp path=/usr/bin/g++-4.8
+      tags: general
 
     - name: General | Increase file descriptor limits
       lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
@@ -50,7 +55,6 @@
 
     - name: User | Download pubkey(s)
       get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
-      delegate_to: 127.0.0.1
       with_items: ssh_users
       tags: user
 
@@ -94,11 +98,6 @@
         ./configure --prefix=/usr --with-gitconfig=/etc/gitconfig && \
         make && \
         sudo make install && \
-        sudo mkdir -p /usr/lib/ccache && \
-        sudo ln -sf $(which gcc) /usr/lib/ccache/gcc && \
-        sudo ln -sf $(which cc) /usr/lib/ccache/cc && \
-        sudo ln -sf $(which g++) /usr/lib/ccache/g++ && \
-        sudo ln -sf $(which c++) /usr/lib/ccache/c++ && \
         rm -rf git-2.5.0*
       tags: git
 
@@ -110,5 +109,18 @@
         make && \
         sudo apt-get remove ccache -y && \
         sudo make install && \
+        sudo mkdir -p /usr/lib/ccache && \
+        sudo ln -sf $(which ccache) /usr/lib/ccache/gcc && \
+        sudo ln -sf $(which ccache) /usr/lib/ccache/cc && \
+        sudo ln -sf $(which ccache) /usr/lib/ccache/g++ && \
+        sudo ln -sf $(which ccache) /usr/lib/ccache/c++ && \
         rm -rf ccache-3.2.3
-      tags: git
+      tags: ccache
+
+    - name: Monit | Copy monit config
+      copy: src=./resources/monit-jenkins.conf dest=/etc/monit/conf.d/jenkins owner=root group=root mode=0644
+      tags: monit
+
+    - name: Monit | Restart service
+      service: name=monit state=restarted
+      tags: monit
