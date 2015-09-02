@@ -53,8 +53,6 @@ iojs-build-armv7-wheezy-2
 iojs-release-armv7-wheezy-1
 
 [iojs-raspbian]
-iojs-ns-pi1-1
-iojs-ns-pi1-2
 iojs-ns-pi1p-1
 iojs-ns-pi1p-2
 iojs-ns-pi1p-3
