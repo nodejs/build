@@ -330,5 +330,15 @@ server {
     rewrite ^/images/logos/yldLogo.png$                           https://$server_name/static/images/foundation/yldLogo.png permanent;
     rewrite ^/images/logos/yldLogo2.png$                          https://$server_name/static/images/foundation/yldLogo2.png permanent;
 
+    # legacy v0.12.x docs/ html
+    rewrite ^/pipe.css$                                           https://$server_name/static/legacy/pipe.css permanent;
+    rewrite ^/sh_vim-dark.css$                                    https://$server_name/static/legacy/sh_vim-dark.css permanent;
+    rewrite ^/lfcollab.css$                                       https://$server_name/static/legacy/lfcollab.css permanent;
+    rewrite ^/images/stripe.png$                                  https://$server_name/static/legacy/stripe.png permanent;
+    rewrite ^/images/walmart-thumb.jpg$                           https://$server_name/static/legacy/walmart-thumb.jpg permanent;
+    rewrite ^/sh_main.js$                                         https://$server_name/static/legacy/sh_main.js permanent;
+    rewrite ^/sh_javascript.min.js$                               https://$server_name/static/legacy/sh_javascript.min.js permanent;
+
+
     rewrite ^/images/(.*)                                         https://$server_name/static/images/$1 permanent;
 }
