@@ -1,7 +1,6 @@
 ---
 - hosts: iojs-build-ubuntu1404
-
-  remote_user: root
+  sudo: yes
 
   tasks:
 
@@ -28,6 +27,7 @@
     - name: User | Download pubkey(s)
       get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
       delegate_to: 127.0.0.1
+      become: no
       with_items: ssh_users
       tags: user
 

@@ -2,10 +2,10 @@
 server_user: iojs
 ssh_users:
   - rvagg
-  - wblankenship
-  - ryanstevens
   - mhdawson
   - joaocgreis
+  - jbergstroem
+  - orangemocha
 packages:
   - openjdk-7-jre
   - git
@@ -15,4 +15,3 @@ packages:
   - libtool
   - curl
   - ntp
-  - ccache
