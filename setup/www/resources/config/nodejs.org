@@ -41,7 +41,7 @@ server {
     index index.html;
 
     if ($host ~* ^www\.){
-        rewrite ^(.*)$ http://$server_name$1;
+        rewrite ^(.*)$ http://nodejs.org$1;
     }
 
     location / {
@@ -186,7 +186,7 @@ server {
     gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
     if ($host ~* ^www\.) {
-        rewrite ^(.*)$ https://$server_name$1;
+        rewrite ^(.*)$ https://nodejs.org$1;
     }
 
     if ($host ~* ^blog\.) {
