@@ -185,6 +185,8 @@ server {
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
+    error_page 404 /en/404.html;
+
     if ($host ~* ^www\.) {
         rewrite ^(.*)$ https://nodejs.org$1;
     }
