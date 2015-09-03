@@ -46,6 +46,9 @@ release-osuosl-ubuntu14-ppc64_le-1
 test-osuosl-ubuntu14-ppc64_be-1
 test-osuosl-ubuntu14-ppc64_be-2
 release-osuosl-ubuntu14-ppc64_be-1
+iojs-ns-xgene-1
+iojs-ns-xgene-2
+iojs-ns-xgene-3
 
 [iojs-build-ubuntu1204]
 test-digitalocean-ubuntu12-x64-1
