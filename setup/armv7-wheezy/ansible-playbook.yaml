@@ -16,6 +16,7 @@
       lineinfile: dest=/etc/apt/sources.list line="{{ item }}"
       with_items:
         - "deb http://archive.raspberrypi.org/debian/ wheezy main"
+      tags: general
 
     - name: General | APT Update
       apt: update_cache=yes
@@ -23,6 +24,10 @@
 
     - name: General | APT Upgrade
       apt: upgrade=dist
+      tags: general
+
+    - name: General | Install older tzdata
+      apt: name=tzdata=2014j-0wheezy1 update_cache=yes state=present force=yes
       tags: general
 
     - name: General | Install required packages
@@ -37,21 +42,22 @@
 
     - name: General | update-alternatives for gcc
       alternatives: name=gcc link=/usr/bin/gcc path=/usr/bin/gcc-4.8
+      tags: general
 
     - name: General | update-alternatives for cc
       alternatives: name=cc link=/usr/bin/cc path=/usr/bin/gcc-4.8
+      tags: general
 
     - name: General | update-alternatives for g++
       alternatives: name=g++ link=/usr/bin/g++ path=/usr/bin/g++-4.8
+      tags: general
 
     - name: General | update-alternatives for c++
       alternatives: name=c++ link=/usr/bin/c++ path=/usr/bin/g++-4.8
+      tags: general
 
     - name: General | update-alternatives for cpp
       alternatives: name=cpp link=/usr/bin/cpp path=/usr/bin/g++-4.8
-
-    - name: General | Install ccache
-      apt: name=ccache update_cache=yes state=latest
       tags: general
 
     - name: General | Increase file descriptor limits
@@ -98,3 +104,17 @@
     - name: Jenkins | Copy server ids to start.sh script
       replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{id\}\}" replace="{{ server_id }}"
       tags: jenkins
+
+    - include: ../ansible-tasks/ccache.yaml version=3.2.3
+      tags: ccache
+
+    - include: ../ansible-tasks/git.yaml version=2.5.0
+      tags: git
+
+    - name: Monit | Copy monit config
+      copy: src=./resources/monit-jenkins.conf dest=/etc/monit/conf.d/jenkins owner=root group=root mode=0644
+      tags: monit
+
+    - name: Monit | Restart service
+      service: name=monit state=restarted
+      tags: monit

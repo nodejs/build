@@ -1,0 +1,42 @@
+---
+# Downloads and installs git
+# @requires: version=2.5.0
+
+- name: Git | Install required packages for git compile
+  apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+    - gettext
+    - libcurl4-openssl-dev
+  tags: git
+
+- name: Git | Download git-{{ version }}
+  get_url: url=https://www.kernel.org/pub/software/scm/git/git-{{ version }}.tar.xz dest=/tmp/
+  register: new_archive
+  tags: git
+
+- name: Git | Extract git-{{ version }}
+  unarchive: src=/tmp/git-{{ version }}.tar.xz dest=/tmp/ copy=no
+  when: new_archive|changed
+  tags: git
+
+- name: Git | Prepare for compilation by running configure
+  shell: ./configure --prefix=/usr --with-gitconfig=/etc/gitconfig chdir=/tmp/git-{{ version }} >> /dev/null
+  tags: git
+
+- name: Git | Compile git
+  shell: make chdir=/tmp/git-{{ version }} >> /dev/null
+  tags: git
+
+- name: Git | Install generated binary
+  command: make install
+  args:
+    creates: /usr/local/bin/git
+    chdir: /tmp/git-{{ version }}
+  tags: git
+
+- name: Git | Cleanup
+  file: path="{{ item }}" state=absent
+  with_items:
+    - /tmp/git-{{ version }}.tar.gz
+    - /tmp/git-{{ version }}
+  tags: git
