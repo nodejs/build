@@ -2,8 +2,8 @@
 server_user: iojs
 ssh_users:
   - rvagg
-  - wblankenship
-  - jbergstrom
+  - jbergstroem
+  - orangemocha
 packages:
   - openjdk-7-jre
   - python-all
@@ -11,6 +11,7 @@ packages:
   - automake
   - libtool
   - curl
+  - monit
 backports_packages:
   - git
   - gcc-4.8
