@@ -31,10 +31,16 @@
     - { regexp: '\{\{cdn_api_nodejs_id\}\}', replace: '{{ cdn_api_nodejs_id }}' }
   tags: setup
 
-- name: Site Setup | Add cdn-purge.sh to crontab
+- name: Site Setup | Add periodic tasks to crontab
   lineinfile:
     dest: /etc/crontab
-    line: '*  *    * * *   root    /home/nodejs/cdn-purge.sh'
+    line: "{{ item }}"
+  with_items:
+    - '*/5 *   * * *   dist    /home/staging/tools/promote/promote_nightly.sh nodejs'
+    - '*/5 *   * * *   dist    /home/staging/tools/promote/promote_nightly.sh iojs'
+    - '*  *    * * *   nodejs  /home/nodejs/check-build-site.sh nodejs'
+    - '*  *    * * *   nodejs  /home/nodejs/check-build-site.sh iojs'
+    - '*  *    * * *   root    /home/nodejs/cdn-purge.sh'
   tags: setup
 
 - name: Site Setup | Copy queue-cdn-purge.sh script
