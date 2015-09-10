@@ -1,0 +1,44 @@
+'use strict';
+
+const url = require('url');
+const http = require('http');
+const https = require('https');
+const assert = require('assert');
+const merge = require('lodash.merge');
+
+
+const testUrl = module.exports.url = function (requestUrl, callback) {
+    requestUrl = url.parse(requestUrl);
+
+    const options = merge({}, requestUrl, { method: 'HEAD' });
+    const protocol = requestUrl.protocol === 'http:' ? http : https;
+    const req = protocol.request(options, function (res) {
+
+        if (typeof callback !== 'function') { return; }
+        callback(res.statusCode, res.headers);
+    });
+
+    req.on('error', function (err) {
+
+        throw err;
+    });
+
+    req.end();
+};
+
+
+module.exports.redirect = function (expectedStatus) {
+    return function (redirect) {
+
+        it(`should redirect ${redirect.src} to ${redirect.dest} via HTTP ${expectedStatus}`, function (done) {
+
+            testUrl(redirect.src, function (status, headers) {
+
+                assert.equal(status, expectedStatus);
+                assert.equal(headers.location, redirect.dest);
+                done();
+            });
+
+        });
+    };
+};
