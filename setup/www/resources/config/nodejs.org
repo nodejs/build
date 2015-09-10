@@ -62,7 +62,7 @@ server {
 }
 
 server {
-    listen blog.nodejs.org:80;
+    listen 80;
     server_name blog.nodejs.org;
 
     rewrite ^/\d+/\d+/\d+/(?:node-v(?:ersion-)?|version-)(\d+)[-\.](\d+)[-\.](\d+).*$ https://nodejs.org/en/blog/release/v$1.$2.$3/ permanent;
@@ -119,28 +119,28 @@ server {
 }
 
 server {
-    listen docs.nodejs.org:80;
+    listen 80;
     server_name doc.nodejs.org docs.nodejs.org;
 
     rewrite ^/(.*)$ https://nodejs.org/en/docs/ permanent;
 }
 
 server {
-    listen api.nodejs.org:80;
+    listen 80;
     server_name api.nodejs.org;
 
     rewrite ^/(.*)$ https://nodejs.org/api/ permanent;
 }
 
 server {
-    listen dist.nodejs.org:80;
+    listen 80;
     server_name dist.nodejs.org;
 
     rewrite ^/(.*)$ https://nodejs.org/dist/ permanent;
 }
 
 server {
-    listen interactive.nodejs.org:80;
+    listen 80;
     server_name interactive.nodejs.org;
 
     rewrite ^(.*)$ http://events.linuxfoundation.org/events/node-interactive permanent;
@@ -150,7 +150,7 @@ server {
     listen 443 default_server ssl spdy;
     listen [::]:443 default_server ipv6only=on ssl spdy;
 
-    server_name nodejs.org www.nodejs.org blog.nodejs.org new.nodejs.org;
+    server_name nodejs.org www.nodejs.org new.nodejs.org;
 
     ssl_certificate ssl/nodejs_chained.crt;
     ssl_certificate_key ssl/nodejs.key;
