@@ -8,40 +8,40 @@
       tags: vars
 
     - name: General | APT Update
-      apt: update_cache=yes
+      apt:
+        update_cache: yes
       tags: general
 
     - name: General | APT Upgrade
-      apt: upgrade=dist
+      apt:
+        upgrade: dist
       tags: general
 
     - name: General | Install required packages
-      apt: name={{ item }} update_cache=yes state=latest
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+        state: latest
       with_items: packages
       tags: general
 
     - name: General | update-alternatives for gcc
-      alternatives: name=gcc link=/usr/bin/gcc path=/usr/bin/gcc-4.8
-      tags: general
-
-    - name: General | update-alternatives for cc
-      alternatives: name=cc link=/usr/bin/cc path=/usr/bin/gcc-4.8
-      tags: general
-
-    - name: General | update-alternatives for g++
-      alternatives: name=g++ link=/usr/bin/g++ path=/usr/bin/g++-4.8
-      tags: general
-
-    - name: General | update-alternatives for c++
-      alternatives: name=c++ link=/usr/bin/c++ path=/usr/bin/g++-4.8
-      tags: general
-
-    - name: General | update-alternatives for cpp
-      alternatives: name=cpp link=/usr/bin/cpp path=/usr/bin/g++-4.8
+      alternatives:
+        name: "{{ item.link }}"
+        link: "/usr/bin/{{ item.link }}"
+        path: "/usr/bin/{{ item.path }}"
+      with_items:
+        - { link: 'gcc', path: 'gcc-4.8' }
+        - { link: 'cc', path: 'gcc-4.8' }
+        - { link: 'g++', path: 'g++-4.8' }
+        - { link: 'c++', path: 'g++-4.8' }
+        - { link: 'cpp', path: 'g++-4.8' }
       tags: general
 
     - name: General | Increase file descriptor limits
-      lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
+      lineinfile:
+        dest: /etc/security/limits.conf
+        line: "{{ item }}"
       with_items:
         - "*         hard    nofile      500000"
         - "*         soft    nofile      500000"
@@ -50,11 +50,15 @@
       tags: general
 
     - name: User | Add {{ server_user }} user
-      user: name="{{ server_user }}" shell=/bin/bash
+      user:
+        name: "{{ server_user }}"
+        shell: /bin/bash
       tags: user
 
     - name: User | Download pubkey(s)
-      get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
+      get_url:
+        url: "https://github.com/{{ item }}.keys"
+        dest: "/tmp/{{ item }}.keys"
       with_items: ssh_users
       tags: user
 
@@ -63,64 +67,62 @@
       with_items: ssh_users
       tags: user
 
+    - name: NFS | Make NFS mounted directories
+      file:
+        path: "/home/{{ server_user }}/{{ item }}"
+        state: directory
+        mode: 0755
+        owner: "{{ server_user }}"
+      with_items:
+        - ".ccache"
+        - "build"
+      ignore_errors: True
+      tags: nfs
+
+    - name: NFS | Add directories to /etc/fstab
+      lineinfile:
+        dest: /etc/fstab
+        line: "{{ item }}"
+      with_items:
+        - "{{ nfs_server }}:{{ nfs_share_root }}/.ccache /home/{{ server_user }}/.ccache nfs defaults 0 1"
+        - "{{ nfs_server }}:{{ nfs_share_root }}/{{ server_id }} /home/{{ server_user }}/build nfs defaults 0 1"
+      tags: nfs
+
+    - name: NFS | Mount all
+      command: mount -a
+      tags: nfs
+
     - name: Jenkins | Download Jenkins' slave.jar to {{ server_user }}
-      command: curl -sL https://jenkins-iojs.nodesource.com/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
+      command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
       tags: jenkins
 
     - name: Jenkins | Copy start.sh script
-      copy: src=./resources/start.sh dest=/home/{{ server_user }}/start.sh owner={{ server_user }} group={{ server_user }} mode=0755
+      copy:
+        src: "./resources/start.sh"
+        dest: "/home/{{ server_user }}/start.sh"
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: 0755
       tags: jenkins
 
-    - name: Jenkins | Copy secrets to start.sh script
-      replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{secret\}\}" replace="{{ server_secret }}"
-      tags: jenkins
-
-    - name: Jenkins | Copy server ids to start.sh script
-      replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{id\}\}" replace="{{ server_id }}"
-      tags: jenkins
-
-    - name: Jenkins | Copy arch to start.sh script
-      replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{server_arch\}\}" replace="{{ server_arch }}"
-      tags: jenkins
-
-    - name: git | Install required packages for git compile
-      apt: name={{ item }} update_cache=yes state=latest
+    - name: Jenkins | Copy variables to start.sh script
+      replace:
+        dest: "/home/{{ server_user }}/start.sh"
+        regexp: "{{ item.regexp }}"
+        replace: "{{ item.replace }}"
       with_items:
-        - gettext
-        - libcurl4-openssl-dev
-      tags: git
+        - { regexp: '\{\{server_secret\}\}', replace: '{{ server_secret }}' }
+        - { regexp: '\{\{server_id\}\}', replace: '{{ server_id }}' }
+        - { regexp: '\{\{server_suffix\}\}', replace: '{{ server_suffix }}' }
+        - { regexp: '\{\{server_arch\}\}', replace: '{{ server_arch }}' }
+      tags: jenkins
 
-    - name: git | Download, compile and install git 2.5
-      shell: rm -rf git-2.5.0* && \
-        curl https://www.kernel.org/pub/software/scm/git/git-2.5.0.tar.xz -O && \
-        tar -xvf git-2.5.0.tar.xz && \
-        cd git-2.5.0/ && \
-        ./configure --prefix=/usr --with-gitconfig=/etc/gitconfig && \
-        make && \
-        sudo make install && \
-        rm -rf git-2.5.0*
-      tags: git
-
-    - name: git | Download, compile and install ccache 3.2
-      shell: rm -rf ccache-3.2.3 && \
-        curl -sL http://samba.org/ftp/ccache/ccache-3.2.3.tar.xz | tar -Jxv && \
-        cd ccache-3.2.3/ && \
-        ./configure --prefix=/usr --sysconfdir=/etc -q && \
-        make && \
-        sudo apt-get remove ccache -y && \
-        sudo make install && \
-        sudo mkdir -p /usr/lib/ccache && \
-        sudo ln -sf $(which ccache) /usr/lib/ccache/gcc && \
-        sudo ln -sf $(which ccache) /usr/lib/ccache/cc && \
-        sudo ln -sf $(which ccache) /usr/lib/ccache/g++ && \
-        sudo ln -sf $(which ccache) /usr/lib/ccache/c++ && \
-        rm -rf ccache-3.2.3
+    - include: ../ansible-tasks/ccache.yaml version=3.2.3
       tags: ccache
 
-    - name: Monit | Copy monit config
-      copy: src=./resources/monit-jenkins.conf dest=/etc/monit/conf.d/jenkins owner=root group=root mode=0644
+    - include: ../ansible-tasks/git.yaml version=2.5.0
+      tags: git
+
+    - include: ../ansible-tasks/monit.yaml monit_conf_file=../ansible-tasks/resources/monit-jenkins.conf
       tags: monit
 
-    - name: Monit | Restart service
-      service: name=monit state=restarted
-      tags: monit
