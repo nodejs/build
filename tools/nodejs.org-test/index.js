@@ -28,4 +28,53 @@ describe('blog.nodejs.org', function () {
 });
 
 // describe('doc(s).nodejs.org');
-// describe('dist.nodejs.org');
+describe('dist.nodejs.org', function () {
+
+    let nodeVersions;
+
+    before(function (done) {
+
+        test.download('https://nodejs.org/dist/index.json', function (err, versions) {
+            if (err) { return done(err); }
+            nodeVersions = versions;
+            done();
+        });
+    });
+
+
+    it('https://nodejs.org/dist/latest/ should contain the latest release', function (done) {
+
+        test.url(`https://nodejs.org/dist/latest/node-${nodeVersions[0].version}.tar.gz`, function (status) {
+
+            assert.equal(status, 200);
+            done();
+        });
+
+    });
+
+
+    it('https://nodejs.org/dist/latest/latest-v0.10.x/ should contain the latest v0.10 release', function (done) {
+
+        let latestVersion = test.getLatestRelease(nodeVersions, '^0.10');
+
+        test.url(`https://nodejs.org/dist/latest-v0.10.x/node-${latestVersion}.tar.gz`, function (status) {
+
+            assert.equal(status, 200);
+            done();
+        });
+
+    });
+
+
+    it('https://nodejs.org/dist/latest/latest-v0.12.x/ should contain the latest v0.12 release', function (done) {
+
+        let latestVersion = test.getLatestRelease(nodeVersions, '^0.12');
+
+        test.url(`https://nodejs.org/dist/latest-v0.12.x/node-${latestVersion}.tar.gz`, function (status) {
+
+            assert.equal(status, 200);
+            done();
+        });
+
+    });
+});

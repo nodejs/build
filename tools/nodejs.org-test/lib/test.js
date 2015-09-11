@@ -5,6 +5,7 @@ const http = require('http');
 const https = require('https');
 const assert = require('assert');
 const merge = require('lodash.merge');
+const semver = require('semver');
 
 
 const testUrl = module.exports.url = function (requestUrl, callback) {
@@ -41,4 +42,35 @@ module.exports.redirect = function (expectedStatus) {
 
         });
     };
+};
+
+
+module.exports.download = function (url, cb) {
+
+    let data = '';
+    https
+        .get(url, function (res) {
+
+            res.on('data', function (chunk) { data += chunk; });
+            res.on('end', function () {
+
+                try {
+                    cb(null, JSON.parse(data));
+                } catch (e) {
+                    return cb(e);
+                }
+            });
+        })
+        .on('error', function (e) { cb(e); });
+};
+
+
+module.exports.getLatestRelease = function (releases, range) {
+
+    const versions = releases.map(function (release) {
+
+        return release.version;
+    });
+
+    return semver.maxSatisfying(versions, range);
 };

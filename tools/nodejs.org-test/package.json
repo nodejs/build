@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "lodash.merge": "^3.3.2",
-    "mocha": "^2.3.2"
+    "mocha": "^2.3.2",
+    "semver": "^5.0.1"
   }
 }
