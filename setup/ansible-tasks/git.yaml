@@ -2,29 +2,38 @@
 # Downloads and installs git
 # @requires: version=2.5.0
 
+- name: Git | Check git --version
+  shell: git --version
+  ignore_errors: True
+  register: git_version
+
 - name: Git | Install required packages for git compile
   apt: name={{ item }} update_cache=yes state=latest
   with_items:
     - gettext
     - libcurl4-openssl-dev
+  when: git_version.stdout.find('{{ version }}') == -1
   tags: git
 
 - name: Git | Download git-{{ version }}
   get_url: url=https://www.kernel.org/pub/software/scm/git/git-{{ version }}.tar.xz dest=/tmp/
   register: new_archive
+  when: git_version.stdout.find('{{ version }}') == -1
   tags: git
 
 - name: Git | Extract git-{{ version }}
   unarchive: src=/tmp/git-{{ version }}.tar.xz dest=/tmp/ copy=no
-  when: new_archive|changed
+  when: git_version.stdout.find('{{ version }}') == -1 and new_archive|changed
   tags: git
 
 - name: Git | Prepare for compilation by running configure
   shell: ./configure --prefix=/usr --with-gitconfig=/etc/gitconfig chdir=/tmp/git-{{ version }} >> /dev/null
+  when: git_version.stdout.find('{{ version }}') == -1
   tags: git
 
 - name: Git | Compile git
   shell: make chdir=/tmp/git-{{ version }} >> /dev/null
+  when: git_version.stdout.find('{{ version }}') == -1
   tags: git
 
 - name: Git | Install generated binary
@@ -32,6 +41,7 @@
   args:
     creates: /usr/local/bin/git
     chdir: /tmp/git-{{ version }}
+  when: git_version.stdout.find('{{ version }}') == -1
   tags: git
 
 - name: Git | Cleanup
@@ -39,4 +49,5 @@
   with_items:
     - /tmp/git-{{ version }}.tar.gz
     - /tmp/git-{{ version }}
+  when: git_version.stdout.find('{{ version }}') == -1
   tags: git
