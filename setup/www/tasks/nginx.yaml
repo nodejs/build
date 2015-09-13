@@ -6,6 +6,7 @@
   with_items:
     - nodejs.org
     - iojs.org
+    - libuv.org
   tags: nginx
 
 - name: nginx | Create nginx config symlinks
@@ -16,6 +17,7 @@
   with_items:
     - { src: nodejs.org, dest: 00-nodejs.org }
     - { src: iojs.org, dest: 01-iojs.org }
+    - { src: libuv.org, dest: 02-libuv.org }
   tags: nginx
 
 - name: nginx | Make /etc/nginx/ssl/
