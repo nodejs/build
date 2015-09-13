@@ -11,6 +11,10 @@ dist_users:
   - fishrock123
   - jasnell
   - rvagg
+libuv_users:
+  - saghul
+  - piscisaureus
+  - bnoordhuis
 packages:
   - iojs
   - nginx
