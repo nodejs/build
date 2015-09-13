@@ -1,0 +1,27 @@
+server {
+    listen 80;
+    listen dist.libuv.org:80;
+    server_name dist.libuv.org;
+
+    keepalive_timeout 60;
+    server_tokens off;
+
+    resolver 8.8.4.4 8.8.8.8 valid=300s;
+    resolver_timeout 10s;
+
+    add_header X-Frame-Options DENY;
+    add_header X-Content-Type-Options nosniff;
+
+    access_log /var/log/nginx/libuv.org-access.log nodejs;
+    error_log /var/log/nginx/libuv.org-error.log;
+
+    gzip on;
+    gzip_static on;
+    gzip_disable "MSIE [1-6]\.";
+    gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+    root /home/libuv/dist;
+    default_type text/plain;
+    index index.html;
+    autoindex on;
+}

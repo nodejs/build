@@ -1,4 +1,4 @@
-- name: User | Add nodejs, dist, staging users
+- name: User | Add nodejs, dist, staging, libuv users
   user:
     name: "{{ item }}"
     shell: /bin/bash
@@ -6,6 +6,7 @@
     - nodejs
     - dist
     - staging
+    - libuv
   tags: user
 
 - name: User | Add dist to staging group
@@ -26,6 +27,14 @@
     dest: /tmp/{{ item }}.keys
   delegate_to: 127.0.0.1
   with_items: dist_users
+  tags: user
+
+- name: User | Download pubkeys (libuv_users)
+  get_url:
+    url: https://github.com/{{ item }}.keys
+    dest: /tmp/{{ item }}.keys
+  delegate_to: 127.0.0.1
+  with_items: libuv_users
   tags: user
 
 - name: User | Create authorized_keys for root
@@ -54,6 +63,13 @@
     user: "dist"
     key: "{{ lookup('file', '/tmp/' + item + '.keys') }}"
   with_items: dist_users
+  tags: user
+
+- name: User | Create authorized_keys for libuv (libuv_users)
+  authorized_key:
+    user: "libuv"
+    key: "{{ lookup('file', '/tmp/' + item + '.keys') }}"
+  with_items: libuv_users
   tags: user
 
 - name: User | Set up dist/{nodejs,iojs}/ directories
@@ -100,4 +116,14 @@
     - iojs/next-nightly
     - iojs/nightly
     - iojs/release
+  tags: user
+
+- name: User | Set up libuv directories
+  file:
+    path: /home/libuv/{{ item }}
+    state: directory
+    mode: 0755
+    owner: libuv
+  with_items:
+    - dist
   tags: user
