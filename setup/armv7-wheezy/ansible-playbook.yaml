@@ -26,10 +26,6 @@
       apt: upgrade=dist
       tags: general
 
-    - name: General | Install older tzdata
-      apt: name=tzdata=2014j-0wheezy1 update_cache=yes state=present force=yes
-      tags: general
-
     - name: General | Install required packages
       apt: name={{ item }} update_cache=yes state=latest
       with_items: packages
