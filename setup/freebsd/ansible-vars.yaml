@@ -5,7 +5,7 @@ ssh_users:
   - rvagg
   - jbergstroem
 packages:
-  - openjdk
+  - openjdk-jre
   - git
   - gmake
   - ccache
