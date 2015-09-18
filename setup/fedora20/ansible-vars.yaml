@@ -8,10 +8,11 @@ ssh_users:
 packages:
   - java-1.8.0-openjdk
   - git
-  - gcc-4.8.3-7.fc20
-  - gcc-c++-4.8.3-7.fc20
   - make
   - automake
   - libtool
   - ntp
   - ccache
+ppcpackages:
+  - gcc.ppc64
+  - gcc-c++.ppc64

@@ -17,6 +17,12 @@
       with_items: packages
       tags: general
 
+    - name: General | Install additional packages for PPC
+      yum: name={{ item }} state=latest
+      with_items: ppcpackages
+      tags: general
+      when: ansible_architecture == "ppc64"
+
     - name: NTP | Run initial NTP
       command: ntpdate -u pool.ntp.org
       tags: ntp
