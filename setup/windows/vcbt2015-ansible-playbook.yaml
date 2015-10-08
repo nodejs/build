@@ -1,0 +1,33 @@
+---
+- hosts: node-windows
+
+  tasks:
+
+    - name: Create C:\TEMP directory
+      win_file: path='C:\TEMP' state=directory
+
+    - name: VCBT2015 | Download .NET Framework Setup
+      win_get_url:
+        url: 'http://go.microsoft.com/fwlink/?LinkId=671743'
+        dest: 'C:\TEMP\netfw.exe'
+      tags: [download, visualstudio]
+
+    - name: VCBT2015 | Install .NET Framework
+      raw: 'C:\TEMP\netfw.exe /q /norestart
+            /log C:\TEMP\netfw_install_log.txt'
+      tags: [install, visualstudio]
+
+    - name: VCBT2015 | Download Visual C++ Build Tools 2015 Setup
+      win_get_url:
+        url: 'https://download.microsoft.com/download/3/8/E/38EE4758-7C31-4D96-8FF9-83CC313F0F78/VisualCppBuildTools_Full.exe'
+        dest: 'C:\TEMP\vcbt2015.exe'
+      tags: [download, visualstudio]
+
+    - name: VCBT2015 | Install Visual C++ Build Tools 2015
+      raw: 'C:\TEMP\vcbt2015.exe /Silent /NoRestart
+            /Full
+            /Log C:\TEMP\vsbt2015_install_log.txt'
+      tags: [install, visualstudio]
+
+    - include: ./common-ansible-playbook.yaml
+      tags: common
