@@ -83,7 +83,7 @@ The following platforms will eventually be included in the build and **test-all*
 CI Software
 -----------
 
-Build and test orchestration is performed by [Jenkins](http://jenkins-ci.org). You can find a summary of build status [here](https://jenkins-iojs.nodesource.com).
+Build and test orchestration is performed by [Jenkins](http://jenkins-ci.org). You can find a summary of build status [here](https://ci.nodejs.org).
 
 Our ambition is to invest in io.js-specific CI infrastructure and tooling while leaning on existing, proven technologies where appropriate. We hope to slowly replace Jenkins as orchestrator and build-slaves throughout our CI ecosystem.
 

@@ -14,7 +14,7 @@ Environment="USER={{user}}" \
             "OSTYPE=linux-gnu"
 ExecStart=/usr/bin/java \
           -jar /home/{{user}}/slave.jar \
-          -jnlpUrl https://jenkins-iojs.nodesource.com/computer/iojs-digitalocean-fedora22-{{id}}/slave-agent.jnlp \
+          -jnlpUrl https://ci.nodejs.org/computer/iojs-digitalocean-fedora22-{{id}}/slave-agent.jnlp \
           -secret {{secret}}
 Restart=always
 RestartSec=30

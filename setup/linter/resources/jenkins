@@ -28,7 +28,7 @@ OSTYPE="freebsd"
 NODE_COMMON_PIPE="/home/iojs/test.pipe"
 PATH="/usr/local/libexec/ccache:/usr/local/bin:${PATH}"
 
-jenkins_jnlpurl="https://jenkins-iojs.nodesource.com/computer/iojs-digitalocean-freebsd-linter-{{id}}/slave-agent.jnlp"
+jenkins_jnlpurl="https://ci.nodejs.org/computer/iojs-digitalocean-freebsd-linter-{{id}}/slave-agent.jnlp"
 jenkins_secret="{{secret}}"
 jenkins_jar="/home/iojs/slave.jar"
 jenkins_log_file="/home/iojs/jenkins_console.log"

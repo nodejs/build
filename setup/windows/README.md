@@ -31,10 +31,10 @@ For io.js & libuv Jenkins setup, on a fresh server:
 1. Copy **Jenkins slave.jar**
   - Start -> "cmd"
   - Run `cd \`
-  - Run `curl https://jenkins-iojs.nodesource.com/jnlpJars/slave.jar -o slave.jar`
+  - Run `curl https://ci.nodejs.org/jnlpJars/slave.jar -o slave.jar`
 1. Create **batch file** to launch Jenkins
   - Start -> "notepad c:\jenkins.bat" (click through to start Notepad, it'll create a new file for you)
-  - Put `java -jar slave.jar -jnlpUrl https://jenkins-iojs.nodesource.com/computer/SLAVE-ID/slave-agent.jnlp -secret SECRET` (replace SLAVE-ID and SECRET) into the file and save
+  - Put `java -jar slave.jar -jnlpUrl https://ci.nodejs.org/computer/SLAVE-ID/slave-agent.jnlp -secret SECRET` (replace SLAVE-ID and SECRET) into the file and save
 1. Add Jenkins to **Startup**
   - Go to `%AppData%\Microsoft\Windows\Start Menu\Programs\Windows System` (or `Accessories` in Windows 7)
   - Copy the "Command Prompt" shortcut

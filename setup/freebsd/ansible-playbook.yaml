@@ -45,7 +45,7 @@
       tags: user
 
     - name: Jenkins | Download Jenkins' slave.jar
-      command: curl -sL https://jenkins-iojs.nodesource.com/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
+      command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
       tags: jenkins
 
     - name: Jenkins | Copy init script
