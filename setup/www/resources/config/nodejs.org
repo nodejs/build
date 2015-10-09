@@ -342,14 +342,34 @@ server {
     rewrite ^/images/logos/yldLogo2.png$                          https://$server_name/static/images/foundation/yldLogo2.png permanent;
 
     # legacy v0.12.x docs/ html
-    rewrite ^/pipe.css$                                           https://$server_name/static/legacy/pipe.css permanent;
-    rewrite ^/sh_vim-dark.css$                                    https://$server_name/static/legacy/sh_vim-dark.css permanent;
     rewrite ^/lfcollab.css$                                       https://$server_name/static/legacy/lfcollab.css permanent;
-    rewrite ^/images/stripe.png$                                  https://$server_name/static/legacy/stripe.png permanent;
-    rewrite ^/images/walmart-thumb.jpg$                           https://$server_name/static/legacy/walmart-thumb.jpg permanent;
-    rewrite ^/sh_main.js$                                         https://$server_name/static/legacy/sh_main.js permanent;
+    rewrite ^/pipe.css$                                           https://$server_name/static/legacy/pipe.css permanent;
     rewrite ^/sh_javascript.min.js$                               https://$server_name/static/legacy/sh_javascript.min.js permanent;
-
+    rewrite ^/sh_main.js$                                         https://$server_name/static/legacy/sh_main.js permanent;
+    rewrite ^/sh_vim-dark.css$                                    https://$server_name/static/legacy/sh_vim-dark.css permanent;
+    rewrite ^/images/anchor.png                                   https://$server_name/static/legacy/images/anchor.png permanent;
+    rewrite ^/images/close-downloads.png                          https://$server_name/static/legacy/images/close-downloads.png permanent;
+    rewrite ^/images/community-icons.png                          https://$server_name/static/legacy/images/community-icons.png permanent;
+    rewrite ^/images/download-logo.png                            https://$server_name/static/legacy/images/download-logo.png permanent;
+    rewrite ^/images/ebay-logo.png                                https://$server_name/static/legacy/images/ebay-logo.png permanent;
+    rewrite ^/images/footer-logo-alt.png                          https://$server_name/static/legacy/images/footer-logo-alt.png permanent;
+    rewrite ^/images/footer-logo.png                              https://$server_name/static/legacy/images/footer-logo.png permanent;
+    rewrite ^/images/forkme.png                                   https://$server_name/static/legacy/images/forkme.png permanent;
+    rewrite ^/images/home-icons.png                               https://$server_name/static/legacy/images/home-icons.png permanent;
+    rewrite ^/images/icons-interior.png                           https://$server_name/static/legacy/images/icons-interior.png permanent;
+    rewrite ^/images/icons.png                                    https://$server_name/static/legacy/images/icons.png permanent;
+    rewrite ^/images/joyent-logo_orange_nodeorg-01.png            https://$server_name/static/legacy/images/joyent-logo_orange_nodeorg-01.png permanent;
+    rewrite ^/images/linkedin-logo.png                            https://$server_name/static/legacy/images/linkedin-logo.png permanent;
+    rewrite ^/images/logo-light.png                               https://$server_name/static/legacy/images/logo-light.png permanent;
+    rewrite ^/images/logo.png                                     https://$server_name/static/legacy/images/logo.png permanent;
+    rewrite ^/images/microsoft-logo.png                           https://$server_name/static/legacy/images/microsoft-logo.png permanent;
+    rewrite ^/images/not-invented-here.png                        https://$server_name/static/legacy/images/not-invented-here.png permanent;
+    rewrite ^/images/ryan-speaker.jpg                             https://$server_name/static/legacy/images/ryan-speaker.jpg permanent;
+    rewrite ^/images/sponsored.png                                https://$server_name/static/legacy/images/sponsored.png permanent;
+    rewrite ^/images/stripe.png$                                  https://$server_name/static/legacy/images/stripe.png permanent;
+    rewrite ^/images/twitter-bird.png                             https://$server_name/static/legacy/images/twitter-bird.png permanent;
+    rewrite ^/images/walmart-thumb.jpg$                           https://$server_name/static/legacy/images/walmart-thumb.jpg permanent;
+    rewrite ^/images/yahoo-logo.png                               https://$server_name/static/legacy/images/yahoo-logo.png permanent;
 
     rewrite ^/images/(.*)                                         https://$server_name/static/images/$1 permanent;
 }
