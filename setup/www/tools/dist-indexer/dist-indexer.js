@@ -17,7 +17,7 @@ const fs         = require('fs')
     , versionCachePath = path.join(process.env.HOME, '.dist-indexer-version-cache')
 
     // needs auth: githubContentUrl = 'https://api.github.com/repos/nodejs/node/contents'
-    , githubContentUrl = 'https://raw.githubusercontent.com/nodejs/node/{gitref}'
+    , githubContentUrl = 'https://raw.githubusercontent.com/nodejs/{repo}/{gitref}'
     , npmPkgJsonUrl    = `${githubContentUrl}/deps/npm/package.json`
     , v8VersionUrl     = [
           `${githubContentUrl}/deps/v8/src/version.cc`
@@ -26,6 +26,7 @@ const fs         = require('fs')
     , uvVersionUrl     = [
           `${githubContentUrl}/deps/uv/include/uv-version.h`
         , `${githubContentUrl}/deps/uv/src/version.c`
+        , `${githubContentUrl}/deps/uv/include/uv.h`
       ]
     , sslVersionUrl    = `${githubContentUrl}/deps/openssl/openssl/Makefile`
     , zlibVersionUrl   = `${githubContentUrl}/deps/zlib/zlib.h`
@@ -33,6 +34,7 @@ const fs         = require('fs')
           `${githubContentUrl}/src/node_version.h`
         , `${githubContentUrl}/src/node.h`
       ]
+    , ltsVersionUrl    = `${githubContentUrl}/src/node_version.h`
     , githubOptions    = { headers: {
           'accept': 'text/plain,application/vnd.github.v3.raw'
       } }
@@ -69,13 +71,18 @@ function cacheGet (gitref, prop) {
 
 
 function cachePut (gitref, prop, value) {
-  if (prop && value)
+  if (prop && (value || value === false))
     (versionCache[gitref] || (versionCache[gitref] = {}))[prop] = value
 }
 
 
 function fetch (url, gitref, callback) {
-  url = url.replace('{gitref}', gitref) + `?rev=${gitref}`
+  let repo = (/^v0\.\d\./).test(gitref)
+             ? 'node-v0.x-archive'
+             : 'node'
+  url = url.replace('{gitref}', gitref)
+           .replace('{repo}', repo)
+           + `?rev=${gitref}`
   hyperquest.get(url, githubOptions).pipe(bl(function (err, data) {
     if (err)
       return callback(err)
@@ -87,7 +94,7 @@ function fetch (url, gitref, callback) {
 
 function fetchNpmVersion (gitref, callback) {
   var version = cacheGet(gitref, 'npm')
-  if (version)
+  if (version || (/^v0\.(5\.\d+|6\.[0-2])$/).test(gitref))
     return setImmediate(callback.bind(null, null, version))
 
   fetch(npmPkgJsonUrl, gitref, function (err, rawData) {
@@ -179,8 +186,25 @@ function fetchUvVersion (gitref, callback) {
         .map(function (m) { return m[1] })
         .join('.')
 
-      cachePut(gitref, 'uv', version)
-      callback(null, version)
+      if (version) {
+        cachePut(gitref, 'uv', version)
+        return callback(null, version)
+      }
+
+      fetch(uvVersionUrl[2], gitref, function (err, rawData) {
+        if (err)
+          return callback(err)
+
+        version = rawData.split('\n').map(function (line) {
+            return line.match(/^#define UV_VERSION_(?:MAJOR|MINOR|PATCH)\s+(\d+)$/)
+          })
+          .filter(Boolean)
+          .map(function (m) { return m[1] })
+          .join('.')
+
+        cachePut(gitref, 'uv', version)
+        callback(null, version)
+      })
     })
   })
 }
@@ -188,7 +212,7 @@ function fetchUvVersion (gitref, callback) {
 
 function fetchSslVersion (gitref, callback) {
   var version = cacheGet(gitref, 'ssl')
-  if (version)
+  if (version || (/^v0\.5\.[1-4]$/).test(gitref))
     return setImmediate(callback.bind(null, null, version))
 
   fetch(sslVersionUrl, gitref, function (err, rawData) {
@@ -206,7 +230,7 @@ function fetchSslVersion (gitref, callback) {
 
 function fetchZlibVersion (gitref, callback) {
   var version = cacheGet(gitref, 'zlib')
-  if (version)
+  if (version || (/^v0\.5\.[0-7]$/).test(gitref))
     return setImmediate(callback.bind(null, null, version))
 
   fetch(zlibVersionUrl, gitref, function (err, rawData) {
@@ -248,6 +272,29 @@ function fetchModVersion (gitref, callback) {
       cachePut(gitref, 'mod', version)
       callback(null, version)
     })
+  })
+}
+
+
+function fetchLtsVersion (gitref, callback) {
+  var version = cacheGet(gitref, 'lts')
+
+  if (version || version === false)
+    return setImmediate(callback.bind(null, null, version))
+
+  fetch(ltsVersionUrl, gitref, function (err, rawData) {
+    if (err)
+      return callback(err)
+
+    var m = rawData.match(/^#define NODE_VERSION_IS_LTS 1$/m)
+    if (m) {
+      m = rawData.match(/^#define NODE_VERSION_LTS_CODENAME "([^"]+)"$/m)
+      version = m && m[1]
+    } else
+      version = false
+
+    cachePut(gitref, 'lts', version)
+    callback(null, version)
   })
 }
 
@@ -303,22 +350,28 @@ function inspectDir (dir, callback) {
     , sslVersion
     , zlibVersion
     , modVersion
+    , ltsVersion
     , date
 
   if (!gitref) {
-    console.error('Ignoring directory "%s"', dir)
-    return callback()
+    return fs.stat(dir, function (err, stat) {
+      if (err)
+        return callback(err)
+      if (stat.isDirectory() && !(/^(latest|npm$|patch$|v0\.10\.16-isaacs-manual$)/).test(dir))
+        console.error(`Ignoring directory "${dir}" (can't decode ref)`)
+      return callback()
+    })
   }
 
   dirFiles(dir, function (err, _files) {
     if (err) {
-      console.error('Ignoring directory "%s"', dir)
+      console.error(`Ignoring directory "${dir}" (can't decode dir contents)`)
       return callback() // not a dir we care about
     }
 
     files = _files
 
-    var done = after(7, afterAll)
+    var done = after(8, afterAll)
 
     dirDate(dir, function (err, _date) {
       if (err)
@@ -381,6 +434,15 @@ function inspectDir (dir, callback) {
       modVersion = version
       done()
     })
+
+    fetchLtsVersion(gitref, function (err, version) {
+      if (err) {
+        console.error(err)
+        console.error('(ignoring error fetching LTS version for %s)', gitref)
+      }
+      ltsVersion = version
+      done()
+    })
   })
 
   function afterAll (err) {
@@ -400,6 +462,7 @@ function inspectDir (dir, callback) {
       , zlib      : zlibVersion
       , openssl   : sslVersion
       , modules   : modVersion
+      , lts       : ltsVersion
     })
   }
 }
@@ -424,15 +487,27 @@ function afterMap (err, dirs) {
     , tabOut  = fs.createWriteStream(argv.indextab, 'utf8')
 
   function tabWrite () {
-    tabOut.write(Array.prototype.join.call(arguments, '\t') + '\n')
+    var args = [].slice.call(arguments).map((a) => a || '-')
+    tabOut.write(args.join('\t') + '\n')
   }
 
   jsonOut.write('[\n')
-  tabWrite('version', 'date', 'files', 'npm', 'v8', 'uv', 'zlib', 'openssl', 'modules')
+  tabWrite('version', 'date', 'files', 'npm', 'v8', 'uv', 'zlib', 'openssl', 'modules', 'lts')
 
   dirs.forEach(function (dir, i) {
     jsonOut.write(JSON.stringify(dir) + (i != dirs.length - 1 ? ',\n' : '\n'))
-    tabWrite(dir.version, dir.date, dir.files.join(','), dir.npm, dir.v8, dir.uv, dir.zlib, dir.openssl, dir.modules)
+    tabWrite(
+        dir.version
+      , dir.date
+      , dir.files.join(',')
+      , dir.npm
+      , dir.v8
+      , dir.uv
+      , dir.zlib
+      , dir.openssl
+      , dir.modules
+      , dir.lts
+    )
   })
 
   jsonOut.write(']\n')
