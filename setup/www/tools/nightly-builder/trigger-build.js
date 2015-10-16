@@ -36,7 +36,7 @@ function triggerBuild(token, options, callback) {
               }
             , {
                   name  : 'release_urlbase'
-                , value : `https://iojs.org/download/${options.type}/`
+                , value : `https://nodejs.org/download/${options.type}/`
               }
             , {
                   name  : 'rc'

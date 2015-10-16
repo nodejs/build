@@ -2,7 +2,7 @@
 
 const jsonist = require('jsonist')
 
-const indexUrl = 'https://iojs.org/download/{type}/index.json'
+const indexUrl = 'https://nodejs.org/download/{type}/index.json'
 
 
 function latestBuild (type, callback) {
