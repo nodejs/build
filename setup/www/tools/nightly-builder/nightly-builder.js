@@ -8,13 +8,14 @@ const argv          = require('minimist')(process.argv.slice(2))
 
 if (typeof argv.type != 'string'
     || !/^(nightly|next-nightly)$/.test(argv.type)
+    || typeof argv.ref != 'string'
     || typeof argv.token != 'string') {
 
-  console.error('Usage: nightly-builder --type <nightly|next-nightly> --token <jenkins job token>')
+  console.error('Usage: nightly-builder --type <nightly|next-nightly> --ref <git head ref> --token <jenkins job token>')
   return process.exit(1)
 }
 
-buildRequired(argv.type, function (err, data) {
+buildRequired(argv.type, argv.ref, function (err, data) {
   if (err)
     throw err
 
