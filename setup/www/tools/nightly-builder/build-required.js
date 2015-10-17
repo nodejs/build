@@ -13,7 +13,7 @@ function timeString () {
 }
 
 
-function buildRequired (type, ref, callback) {
+function buildRequired (type, ref, force, callback) {
   let done = after(2, onData)
     , build
     , commit
@@ -28,7 +28,7 @@ function buildRequired (type, ref, callback) {
 
     commit = commit.substr(0, 10)
 
-    if (buildCommit != commit) // only need to compare commit
+    if (force || buildCommit != commit) // only need to compare commit
       return callback(null, { type: type, commit: commit, date: nowDate })
 
     return callback()

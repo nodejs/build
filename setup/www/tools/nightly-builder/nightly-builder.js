@@ -15,7 +15,7 @@ if (typeof argv.type != 'string'
   return process.exit(1)
 }
 
-buildRequired(argv.type, argv.ref, function (err, data) {
+buildRequired(argv.type, argv.ref, argv.force, function (err, data) {
   if (err)
     throw err
 

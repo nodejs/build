@@ -37,9 +37,11 @@ function latestBuild (type, callback) {
 
 module.exports = latestBuild
 
-latestBuild('nightly', function (err, data) {
-  if (err)
-    throw err
+if (require.main == module) {
+  latestBuild('nightly', function (err, data) {
+    if (err)
+      throw err
 
-  console.log('data', data)
-})
+    console.log('data', data)
+  })
+}
