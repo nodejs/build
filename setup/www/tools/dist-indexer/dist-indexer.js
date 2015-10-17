@@ -354,7 +354,7 @@ function inspectDir (dir, callback) {
     , date
 
   if (!gitref) {
-    return fs.stat(dir, function (err, stat) {
+    return fs.stat(path.join(argv.dist, dir), function (err, stat) {
       if (err)
         return callback(err)
       if (stat.isDirectory() && !(/^(latest|npm$|patch$|v0\.10\.16-isaacs-manual$)/).test(dir))
