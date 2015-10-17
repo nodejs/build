@@ -5,22 +5,18 @@ const hyperquest = require('hyperquest')
     , qs         = require('querystring')
 
 
-const urlbase      = 'https://ci.nodejs.org/job/iojs+release/build?token='
-    , buildUser    = 'nodejs'
-    , buildProject = 'node'
+const urlbase    = 'https://ci.nodejs.org/job/iojs+release/build?token='
+    , repository = 'https://github.com/nodejs/node.git'
 
 
 function triggerBuild(token, options, callback) {
   let url  = `${urlbase}${token}`
     , data = {
-          parameter : [
+          token     : token
+        , parameter : [
               {
-                  name  : 'user'
-                , value : buildUser
-              }
-            , {
-                  name  : 'project'
-                , value : buildProject
+                  name  : 'repository'
+                , value : repository
               }
             , {
                   name  : 'commit'
