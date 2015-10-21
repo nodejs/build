@@ -42,6 +42,6 @@ test('latest-commit', function (t) {
     }
   }
 
-  latestCommit('nightly', verify('nightly'))
-  latestCommit('next-nightly', verify('next-nightly'))
+  latestCommit('nightly', 'heads/v5.x', verify('nightly'))
+  latestCommit('next-nightly', 'heads/master', verify('next-nightly'))
 })

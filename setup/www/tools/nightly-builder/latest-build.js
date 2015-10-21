@@ -2,7 +2,7 @@
 
 const jsonist = require('jsonist')
 
-const indexUrl = 'https://iojs.org/download/{type}/index.json'
+const indexUrl = 'https://nodejs.org/download/{type}/index.json'
 
 
 function latestBuild (type, callback) {
@@ -37,9 +37,11 @@ function latestBuild (type, callback) {
 
 module.exports = latestBuild
 
-latestBuild('nightly', function (err, data) {
-  if (err)
-    throw err
+if (require.main == module) {
+  latestBuild('nightly', function (err, data) {
+    if (err)
+      throw err
 
-  console.log('data', data)
-})
+    console.log('data', data)
+  })
+}
