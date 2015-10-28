@@ -217,6 +217,7 @@ server {
         alias /home/dist/nodejs;
         autoindex on;
         default_type text/plain;
+        add_header X-Robots-Tag noindex;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
