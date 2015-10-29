@@ -77,10 +77,7 @@ function makeDocsLinks (versions) {
       , dst = path.join(docsDir, version)
 
     fs.stat(src, function (err, stat) {
-      if (err)
-        throw err
-
-      if (!stat.isDirectory())
+      if (err || !stat.isDirectory())
         return
 
       fs.unlink(dst, function () {
