@@ -38,12 +38,12 @@ git clean -fdx
 git fetch origin
 git checkout origin/master
 
-docker pull iojs:latest
+docker pull node:latest
 docker run \
   --rm \
   -v ${clonedir}:/website/ \
   -v /home/nodejs/.npm:/npm/ \
-  iojs:latest \
+  node:latest \
   bash -c " \
     addgroup nodejs --gid 1000 && \
     adduser nodejs --uid 1000 --gid 1000 --gecos nodejs --disabled-password && \
