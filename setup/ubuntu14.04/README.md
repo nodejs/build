@@ -9,6 +9,12 @@ Host iojs-build-ubuntu1404-64-1
 Host iojs-build-ubuntu1404-32-1
   HostName 104.236.77.78
   User root
+Host iojs-ibm-ppcle-ubuntu1404-64-1
+  HostName 140.211.168.171
+  User root
+Host iojs-ibm-ppcle-ubuntu1404-64-2
+  HostName 140.211.168.192
+  User root
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.

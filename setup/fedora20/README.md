@@ -6,6 +6,10 @@ For setting up a Fedora 20 box
 Host iojs-ibm-ppcbe-fedora20-64-1
   HostName 140.211.168.172
   User root
+
+Host iojs-ibm-ppcbe-fedora20-64-2
+  HostName 140.211.168.191
+  User root
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.
