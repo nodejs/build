@@ -1,10 +1,10 @@
-# io.js Build Ubuntu 14.10 Setup
+# io.js Build Debian 8 Setup
 
-For setting up a Ubuntu 14.10 box
+For setting up a Debian 8 box
 
 ```text
-Host iojs-build-ubuntu1410-64-1
-  HostName 104.236.75.78
+Host iojs-build-debian8-1
+  HostName 104.130.166.132
   User root
 ```
 
@@ -16,11 +16,10 @@ To set up a host, run:
 $ ansible-playbook -i ../ansible-inventory ansible-playbook.yaml
 ```
 
-Start-up of the Jenkins slaves is manual (for now), run:
+Start-up of the Jenkins slave:
 
 ```text
-$ ssh iojs-build-ubuntu1410-64-1 -l iojs ./start.sh
-$ ssh iojs-build-ubuntu1410-32-1 -l iojs ./start.sh
+$ systemctl start jenkins
 ``` 
 
 **Users**: The ansible-vars.yaml file contains a list of users who's GitHub public keys are pulled and placed into authorized_keys for both root and iojs users. This file should be updates when new users are added to the build project who are able to help maintain the containerized builds.
