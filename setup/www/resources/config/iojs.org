@@ -1,14 +1,13 @@
 server {
-    listen 80;
-    listen iojs.org:80;
+    listen *:80;
     server_name iojs.org www.iojs.org;
 
     return 301 https://iojs.org$request_uri;
 }
 
 server {
-    listen 443 ssl spdy;
-    listen iojs.org:443 ssl spdy;
+    listen [::]:443 ssl spdy;
+    listen *:443 ssl spdy;
     server_name iojs.org www.iojs.org;
 
     ssl_certificate ssl/iojs_chained.crt;
@@ -20,7 +19,7 @@ server {
     ssl_prefer_server_ciphers on;
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 
-    ssl_session_cache shared:SSL:10m;
+    ssl_session_cache shared:iojs:10m;
     ssl_session_timeout 24h;
 
     ssl_stapling on;

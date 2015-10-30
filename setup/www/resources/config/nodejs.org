@@ -12,8 +12,8 @@ log_format nodejs    '$remote_addr - $remote_user [$time_local] '
                      '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
 
 server {
-    listen 80 default_server;
-    listen [::]:80;
+    listen *:80 default_server;
+    listen [::]:80 default_server ipv6only=on;
     server_name www.nodejs.org nodejs.org;
 
     access_log /var/log/nginx/nodejs.org-access.log nodejs;
@@ -62,8 +62,7 @@ server {
 }
 
 server {
-    listen 80;
-    listen [::]:80;
+    listen *:80;
     server_name blog.nodejs.org;
 
     rewrite ^/\d+/\d+/\d+/(?:node-v(?:ersion-)?|version-)(\d+)[-\.](\d+)[-\.](\d+).*$ https://nodejs.org/en/blog/release/v$1.$2.$3/ permanent;
@@ -120,34 +119,38 @@ server {
 }
 
 server {
-    listen 80;
-    listen [::]:80;
+    listen *:80;
     server_name doc.nodejs.org docs.nodejs.org;
 
     rewrite ^/(.*)$ https://nodejs.org/en/docs/ permanent;
 }
 
 server {
-    listen 80;
-    listen [::]:80;
+    listen *:80;
     server_name api.nodejs.org;
 
     rewrite ^/(.*)$ https://nodejs.org/api/ permanent;
 }
 
 server {
-    listen 80;
-    listen [::]:80;
+    listen *:80;
     server_name dist.nodejs.org;
 
     rewrite ^/(.*)$ https://nodejs.org/dist/ permanent;
 }
 
 server {
-    listen 443 default_server ssl spdy;
+    listen *:80;
+    server_name interactive.nodejs.org;
+
+    rewrite ^(.*)$ http://events.linuxfoundation.org/events/node-interactive permanent;
+}
+
+server {
+    listen *:443 default_server ssl spdy;
     listen [::]:443 default_server ipv6only=on ssl spdy;
 
-    server_name nodejs.org www.nodejs.org blog.nodejs.org;
+    server_name nodejs.org www.nodejs.org new.nodejs.org;
 
     ssl_certificate ssl/nodejs_chained.crt;
     ssl_certificate_key ssl/nodejs.key;
@@ -188,6 +191,10 @@ server {
     error_page 404 /en/404.html;
 
     if ($host ~* ^www\.) {
+        rewrite ^(.*)$ https://nodejs.org$1;
+    }
+
+    if ($host ~* ^new\.) {
         rewrite ^(.*)$ https://nodejs.org$1;
     }
 
