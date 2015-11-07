@@ -1,5 +1,5 @@
 const assert = require('assert')
-    , dirre  = /^(v\d+\.\d+\.\d+(?:-rc\.\d+)?)(?:-(?:next-)?nightly\d{8}(\w+))?$/ // get version or commit from dir name
+    , dirre  = /^(v\d+\.\d+\.\d+(?:-rc\.\d+)?)(?:-(?:(?:next-)?nightly|test)\d{8}(\w+))?$/ // get version or commit from dir name
 
 
 function decodeRef (dir) {
@@ -21,6 +21,7 @@ if (module === require.main) {
     , { dir: 'v33.22.1-rc.111'                       , ref: 'v33.22.1-rc.111' }
     , { dir: 'v0.6.1'                                , ref: 'v0.6.1'          }
     , { dir: 'v0.5.1'                                , ref: 'v0.5.1'          }
+    , { dir: 'v6.0.0-test20151107093b0e865c'         , ref: '093b0e865c'      }
   ]
 
   tests.forEach(function (test) {

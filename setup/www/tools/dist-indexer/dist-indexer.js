@@ -94,7 +94,7 @@ function fetch (url, gitref, callback) {
 
 function fetchNpmVersion (gitref, callback) {
   var version = cacheGet(gitref, 'npm')
-  if (version || (/^v0\.(5\.\d+|6\.[0-2])$/).test(gitref))
+  if (version || (/^v0\.([012345]\.\d+|6\.[0-2])$/).test(gitref))
     return setImmediate(callback.bind(null, null, version))
 
   fetch(npmPkgJsonUrl, gitref, function (err, rawData) {
@@ -156,7 +156,7 @@ function fetchV8Version (gitref, callback) {
 
 function fetchUvVersion (gitref, callback) {
   var version = cacheGet(gitref, 'uv')
-  if (version)
+  if (version || (/^v0\.([01234]\.\d+|5\.0)$/).test(gitref))
     return setImmediate(callback.bind(null, null, version))
 
   fetch(uvVersionUrl[0], gitref, function (err, rawData) {
@@ -212,7 +212,7 @@ function fetchUvVersion (gitref, callback) {
 
 function fetchSslVersion (gitref, callback) {
   var version = cacheGet(gitref, 'ssl')
-  if (version || (/^v0\.5\.[1-4]$/).test(gitref))
+  if (version || (/^v0\.([01234]\.\d+|5\.[0-4])$/).test(gitref))
     return setImmediate(callback.bind(null, null, version))
 
   fetch(sslVersionUrl, gitref, function (err, rawData) {
@@ -230,7 +230,7 @@ function fetchSslVersion (gitref, callback) {
 
 function fetchZlibVersion (gitref, callback) {
   var version = cacheGet(gitref, 'zlib')
-  if (version || (/^v0\.5\.[0-7]$/).test(gitref))
+  if (version || (/^v0\.([01234]\.\d+|5\.[0-7])$/).test(gitref))
     return setImmediate(callback.bind(null, null, version))
 
   fetch(zlibVersionUrl, gitref, function (err, rawData) {
@@ -248,7 +248,7 @@ function fetchZlibVersion (gitref, callback) {
 
 function fetchModVersion (gitref, callback) {
   var version = cacheGet(gitref, 'mod')
-  if (version)
+  if (version || (/^v0\.1\.\d+$/).test(gitref))
     return setImmediate(callback.bind(null, null, version))
 
   fetch(modVersionUrl[0], gitref, function (err, rawData) {
