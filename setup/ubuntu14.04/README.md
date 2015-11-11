@@ -18,6 +18,9 @@ Host iojs-ibm-ppcle-ubuntu1404-64-2
 Host iojs-softlayer-benchmark
   HostName 50.23.85.254
   User root
+Host iojs-ibm-ppcle-ubuntu1404-release-64-1
+  HostName 140.211.168.193
+  User root
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.
