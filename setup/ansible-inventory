@@ -26,9 +26,6 @@ iojs-build-debian8-64-1
 [iojs-build-ubuntu1504]
 iojs-build-ubuntu1504-64-1
 
-[iojs-build-ubuntu1410]
-iojs-build-ubuntu1410-64-1
-
 [iojs-build-ubuntu1404]
 iojs-build-ubuntu1404-64-1
 iojs-build-ubuntu1404-32-1
@@ -80,7 +77,6 @@ node-www
 iojs-jenkins
 
 [iojs-ubuntu:children]
-iojs-build-ubuntu1410
 iojs-build-ubuntu1404
 iojs-build-ubuntu1204
 iojs-build-debian8
