@@ -1,6 +1,7 @@
 [iojs-build-fedora20]
 iojs-ibm-ppcbe-fedora20-64-1
 iojs-ibm-ppcbe-fedora20-64-2
+iojs-ibm-ppcbe-fedora20-release-64-1
 
 [iojs-build-fedora21]
 iojs-build-fedora21-1
@@ -32,6 +33,7 @@ iojs-build-ubuntu1404-32-1
 iojs-ibm-ppcle-ubuntu1404-64-1
 iojs-ibm-ppcle-ubuntu1404-64-2
 iojs-softlayer-benchmark
+iojs-ibm-ppcle-ubuntu1404-release-64-1
 
 [iojs-build-ubuntu1204]
 iojs-build-ubuntu1204-64-1
