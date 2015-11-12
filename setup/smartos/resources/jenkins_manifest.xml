@@ -22,13 +22,14 @@
                 <envvar name='HOME' value='/home/iojs' />
                 <envvar name='JOBS' value='8' />
                 <envvar name='DESTCPU' value='{{destcpu}}' />
+                <envvar name='ARCH' value='{{destcpu}}' />
                 <envvar name='PATH' value='/opt/local/libexec/ccache:/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin' />
             </method_environment>
         </method_context>
 
         <exec_method type='method'
                      name='start'
-                     exec='/opt/local/bin/java -Xmx512m -jar slave.jar -jnlpUrl https://ci.nodejs.org/computer/iojs-joyent-smartos-{{id}}/slave-agent.jnlp -secret {{secret}} >> /home/iojs/jenkins_console.log'
+                     exec='/opt/local/bin/java -Xmx512m -jar slave.jar -jnlpUrl https://ci.nodejs.org/computer/{{id}}/slave-agent.jnlp -secret {{secret}} >> /home/iojs/jenkins_console.log'
                      timeout_seconds='60' />
 
         <exec_method type="method"

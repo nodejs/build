@@ -11,8 +11,8 @@ ssh_users:
 packages:
   - openjdk7
   - git
-  - gcc49
-  - gcc49-libs
+  - gcc48
+  - gcc48-libs
   - gccmakedep
   - gmake
   - automake
