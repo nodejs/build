@@ -11,3 +11,4 @@ packages:
   - gmake
   - ccache
   - node
+  - llvm-devel

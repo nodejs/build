@@ -40,7 +40,7 @@ pidfile="/var/run/jenkins/jenkins.pid"
 command="/usr/sbin/daemon"
 procname="/usr/local/openjdk7/bin/java"
 command_args="-r -p ${pidfile} ${procname} -jar ${jenkins_jar} ${jenkins_args} > ${jenkins_log_file} 2>&1"
-env="PATH=${PATH} OSTYPE=${OSTYPE} NODE_COMMON_PIPE=${NODE_COMMON_PIPE} CC=cc CXX=c++"
+env="CLANG_FORMAT=clang-format-devel PATH=${PATH} OSTYPE=${OSTYPE} NODE_COMMON_PIPE=${NODE_COMMON_PIPE} CC=cc CXX=c++"
 required_files="${procname} ${jenkins_jar}"
 
 start_precmd="jenkins_prestart"
