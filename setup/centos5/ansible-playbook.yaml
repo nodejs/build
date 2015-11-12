@@ -143,6 +143,14 @@
       replace: dest=/etc/sysconfig/jenkins-gcc41 regexp="\{\{scl\}\}" replace=""
       tags: jenkins
 
+    - name: Jenkins | Add server_arch to environment
+      replace: dest=/etc/sysconfig/jenkins regexp="\{\{arch\}\}" replace="{{ server_arch }}"
+      tags: jenkins
+
+    - name: Jenkins | Add server_arch to gcc41 environment
+      replace: dest=/etc/sysconfig/jenkins-gcc41 regexp="\{\{arch\}\}" replace="{{ server_arch }}"
+      tags: jenkins
+
     - name: Jenkins | Add init scripts to startup
       action: shell chkconfig --add {{ item }}
       with_items:

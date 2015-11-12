@@ -18,8 +18,9 @@ iojs-build-centos6-1
 [iojs-build-centos5]
 iojs-build-centos5-64-1
 iojs-build-centos5-32-1
-iojs-release-centos5-64-1
-iojs-release-centos5-32-1
+nodejs-test-ibm-centos5-64-1
+nodejs-release-ibm-centos5-32-1
+nodejs-release-digitalocean-centos5-64-1
 
 [iojs-build-debian8]
 iojs-build-debian8-64-1
