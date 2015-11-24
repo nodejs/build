@@ -45,12 +45,6 @@ iojs-build-smartos-32-1
 iojs-joyent-smartos13.3.1-release
 nodejs-release-joyent-smartos153-64-1
 
-[iojs-build-freebsd101-32]
-iojs-build-freebsd101-32-1
-
-[iojs-build-freebsd101-64]
-iojs-build-freebsd101-64-1
-
 [iojs-build-containers]
 iojs-build-containers-1
 iojs-build-containers-2
@@ -101,9 +95,9 @@ iojs-build-fedora22
 [iojs-smartos:children]
 iojs-build-smartos
 
-[iojs-freebsd-101:children]
-iojs-build-freebsd101-32
-iojs-build-freebsd101-64
+[iojs-freebsd10]
+test-digitalocean-freebsd10-x64-1
+test-digitalocean-freebsd10-x64-2
 
 [iojs-linter]
 lint-joyent-freebsd10-x64-1

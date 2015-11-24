@@ -1,16 +1,16 @@
 # io.js Build FreeBSD Setup
 
-The current FreeBSD lives behind a VPN at [Voxer](http://voxer.com).
-Should you need access, speak to [https://github.com/rvagg](rvagg) for
-further information.
+The current FreeBSD lives at Digitalocean.
 
 To set up hosts, make sure you add them to your ssh config first:
 ```
-Host iojs-build-freebsd-64-1
-  HostName 172.16.31.2
+Host test-digitalocean-freebsd10-x64-1
+  HostName 162.243.204.248
+  User freebsd
 
-Host iojs-build-freebsd-32-1
-  HostName 172.16.31.3
+Host test-digitalocean-freebsd10-x64-2
+  HostName 104.236.54.140
+  User freebsd
 ```
 
 Note that these hostnames are also used in the ansible-inventory file. The IP addresses will need to be updated each time the servers are reprovisioned.
