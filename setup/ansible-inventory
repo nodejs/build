@@ -106,5 +106,5 @@ iojs-build-freebsd101-32
 iojs-build-freebsd101-64
 
 [iojs-linter]
-iojs-linter-1
-iojs-linter-2
+lint-joyent-freebsd10-x64-1
+lint-digitalocean-freebsd10-x64-1
