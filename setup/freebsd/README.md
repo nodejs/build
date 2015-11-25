@@ -28,3 +28,7 @@ To set up a host, run:
 ```text
 $ ansible-playbook -i ../ansible-inventory ansible-playbook.yaml
 ```
+
+If you have to update settings related to how jenkins is deployed,
+the configuration lives in `/usr/local/etc/rc.conf.d/jenkins`.
+
