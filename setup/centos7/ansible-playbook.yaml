@@ -30,7 +30,7 @@
       tags: ntp
 
     - name: ccache | Install ccache
-      include: ../ansible-tasks/ccache.yaml version=3.2.2
+      include: ../ansible-tasks/ccache.yaml version=3.2.4
       tags: ccache
 
     - name: General | Increase file descriptor limits

@@ -10,10 +10,10 @@ iojs-build-fedora21-1
 iojs-build-fedora22-1
 
 [iojs-build-centos7]
-iojs-build-centos7-1
+test-ibm-centos7-x64-1
 
 [iojs-build-centos6]
-iojs-build-centos6-1
+test-ibm-centos6-x64-1
 
 [iojs-build-centos5]
 iojs-build-centos5-64-1

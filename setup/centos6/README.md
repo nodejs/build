@@ -3,8 +3,8 @@
 For setting up a CentOS 6 box
 
 ```text
-Host iojs-build-centos6-1
-  HostName 104.236.10.209
+Host test-ibm-centos6-x64-1
+  HostName 50.23.85.251
   User root
 ```
 

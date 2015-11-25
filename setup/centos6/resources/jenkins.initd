@@ -12,7 +12,7 @@ RETVAL=0
 NAME=`basename "$0"`
 JENKINS_CONFIG=/etc/sysconfig/$NAME
 LOCK_FILE=/var/lock/$NAME
-JAVA=/usr/bin/java
+JAVA=/usr/lib/jvm/jre-1.8.0/bin/java
 PIDFILE=/var/run/jenkins/$NAME.pid
 
 # Source function library.

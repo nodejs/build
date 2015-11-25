@@ -3,8 +3,8 @@
 For setting up a CentOS 7 box
 
 ```text
-Host iojs-build-centos7-1
-  HostName 104.236.24.160
+Host test-ibm-centos7-x64-1
+  HostName 50.23.85.250
   User root
 ```
 
