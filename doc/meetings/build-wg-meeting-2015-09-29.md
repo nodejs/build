@@ -8,9 +8,9 @@
 
 ## Present
 
-* Michael Dawson @mhdawson
-* Johan Bergström @jbergstroem
-* Alexis Campailla @orangemocha
+* Michael Dawson (@mhdawson)
+* Johan Bergström (@jbergstroem)
+* Alexis Campailla (@orangemocha)
 
 ## Standup
 
@@ -55,8 +55,10 @@ process. Old Jenkins is still available.
 
 ## Follow-ups
 
-* [ ] Add Windows machines to Azure subscription, freeing some resources from RackSpace [Alexis]
-* [ ] Extract or build an inventory of slaves per label (ansible inventory? Jenkins UI)?
+* [ ] Add Windows machines to Azure subscription, freeing some resources from
+  RackSpace [Alexis]
+* [ ] Extract or build an inventory of slaves per label (ansible inventory?
+  Jenkins UI)?
 * [ ] Make CI slaves redundant / ensure at least 2 slaves of each type
 * [ ] Give more people access to machines at Voxer for improved redundancy
 

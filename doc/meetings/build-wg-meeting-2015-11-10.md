@@ -8,14 +8,14 @@
 
 ## Present
 
-* Michael Dawson
-* Johan Bergström
-* Alexis Campailla
-* Hans Kristian Flaatten
-* João Reis
-* Rod Vagg
-* Myles Borins
-* Ryan Graham
+* Alexis Campailla (@orangemocha)
+* Hans Kristian Flaatten (@starefossen)
+* Johan Bergström (@jbergstroem)
+* João Reis (@joaocgreis)
+* Michael Dawson (@mhdawson)
+* Myles Borins (@TheAlphaNerd)
+* Rod Vagg (@rvagg)
+* Ryan Graham (@rmg)
 
 ## Standup
 

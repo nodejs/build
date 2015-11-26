@@ -6,11 +6,10 @@
 
 ## Present
 
-
-* Michael Dawson @mhdawson
-* Johan Bergström @jbergstroem
-* Alexis Campailla @orangemocha
-* Rod Vagg @rvagg
+* Alexis Campailla (@orangemocha)
+* Johan Bergström (@jbergstroem)
+* Michael Dawson (@mhdawson)
+* Rod Vagg (@rvagg)
 
 ## Standup
 

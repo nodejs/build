@@ -2,19 +2,19 @@
 
 ## Links
 
-* **Public YouTube feed**: N/A
+* **Meeting video**: N/A
+* **Meeting minutes:** https://docs.google.com/document/d/1zuUujd6XEdOJnvT6E_TzveZ8LGanhHGaOds69IyaVIw
 * **GitHub Issue**: N/A
-* **Google Docs:** https://docs.google.com/document/d/1zuUujd6XEdOJnvT6E_TzveZ8LGanhHGaOds69IyaVIw
 
 ## Minutes
 
 ### Present
 
-* Julien
-* Rod
-* Alexis
-* Michael
+* Alexis Campailla (@orangemocha)
 * Johan Bergström (@jbergstroem)
+* Julien Gilli (@misterdjules)
+* Michael Dawson (@mhdawson)
+* Rod Vagg (@rvagg)
 
 ### Standup
 

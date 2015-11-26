@@ -8,11 +8,11 @@
 
 ## Present
 
-* Alexis Campailla @orangemocha
-* Hans Kristian Flaatten @starefossen
-* Michael Dawson @mhdawson
-* Rod Vagg @rvagg
-* Ryan Graham @rmg
+* Alexis Campailla (@orangemocha)
+* Hans Kristian Flaatten (@starefossen)
+* Michael Dawson (@mhdawson)
+* Rod Vagg (@rvagg)
+* Ryan Graham (@rmg)
 
 ## Standup
 

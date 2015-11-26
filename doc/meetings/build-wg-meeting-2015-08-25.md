@@ -8,10 +8,10 @@
 
 ## Present
 
-* Will Blankenship
-* Rod Vagg
-* Johan Bergström
-* Alexis Campailla
+* Alexis Campailla (@orangemocha)
+* Johan Bergström (@jbergstroem)
+* Rod Vagg (@rvagg)
+* Will Blankenship (@wblankenship)
 
 ## Standup
 

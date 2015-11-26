@@ -2,10 +2,9 @@
 
 ## Links
 
-* **Public YouTube feed**: http://www.youtube.com/watch?v=8dxkM9vHmrY
-* **Google Plus Event page**: https://plus.google.com/hangouts/_/g77deac75xhp62i62uzoa4oopea
+* **Meeting video**: http://www.youtube.com/watch?v=8dxkM9vHmrY
+* **Meeting minutes**: https://docs.google.com/document/d/1rKyZ4gJKkK7IOL9qg3jvmW7ghA-4sot5d51oRhr_Q3E
 * **GitHub Issue**: https://github.com/nodejs/build/issues/98
-* **Original Minutes Google Doc**: https://docs.google.com/document/d/1rKyZ4gJKkK7IOL9qg3jvmW7ghA-4sot5d51oRhr_Q3E
 
 ## Agenda
 
@@ -22,13 +21,13 @@
 
 ## Present
 
-* Alexis Campala
-* Forrest Norvell
-* Rod Vagg
-* Johan Bergström
-* Hans Kristian Flaatten
-* Jeremiah Senkpiel
-* Michael Dawson
+* Alexis Campailla (@orangemocha)
+* Forrest Norvell (@othiym23)
+* Hans Kristian Flaatten (@starefossen)
+* Jeremiah Senkpiel (@Fishrock123)
+* Johan Bergström (@jbergstroem)
+* Michael Dawson (@mhdawson)
+* Rod Vagg (@rvagg)
 
 ## Make io.js CI infra work with joyent/node
 
