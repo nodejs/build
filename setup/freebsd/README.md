@@ -2,12 +2,6 @@
 
 The current FreeBSD VMs lives at Digitalocean.
 
-You have to install `python` before running ansible. Log in to the VM
-and run the following:
-```
-sudo pkg update && sudo pkg install -y python
-```
-
 To set up hosts, make sure you add them to your ssh config first:
 ```
 Host test-digitalocean-freebsd10-x64-1
