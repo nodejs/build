@@ -100,6 +100,7 @@ The following companies are contributing hardware to this project:
 * [Scaleway](https://www.scaleway.com/)
 * [NodeSource](https://nodesource.com/)
 * [IBM](https://ibm.com) through [OSU Open Source Lab](http://osuosl.org/services/powerdev)
+* [IBM](https://ibm.com) through [Softlayer](www.softlayer.com)
 
 
 People
