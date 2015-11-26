@@ -6,6 +6,10 @@ For setting up a CentOS 7 box
 Host test-ibm-centos7-x64-1
   HostName 50.23.85.250
   User root
+
+Host test-digitalocean-centos7-x64-1
+  HostName 162.243.244.241
+  User root
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.

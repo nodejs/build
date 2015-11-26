@@ -11,6 +11,7 @@ iojs-build-fedora22-1
 
 [iojs-build-centos7]
 test-ibm-centos7-x64-1
+test-digitalocean-centos7-x64-1
 
 [iojs-build-centos6]
 test-ibm-centos6-x64-1

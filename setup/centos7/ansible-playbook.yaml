@@ -21,11 +21,7 @@
       command: ntpdate -u pool.ntp.org
       tags: ntp
 
-    - name: NTP | Enable NTP
-      command: chkconfig ntpd on
-      tags: ntp
-
-    - name: NTP | Start NTP
+    - name: NTP | Start NTP and enable at startup
       service: name=ntpd state=started enabled=yes
       tags: ntp
 
@@ -79,7 +75,7 @@
       tags: jenkins
 
     - name: Jenkins | Copy server ids to jenkins.service
-      replace: dest=/usr/lib/systemd/system/jenkins.service regexp="\{\{id\}\}" replace="{{ server_id }}"
+      replace: dest=/usr/lib/systemd/system/jenkins.service regexp="\{\{id\}\}" replace="{{ inventory_hostname }}"
       tags: jenkins
       
     - name: Jenkins | Start service
