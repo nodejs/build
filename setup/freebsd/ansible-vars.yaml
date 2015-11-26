@@ -1,12 +1,11 @@
 ---
-server_user: iojs
 init_base: /usr/local/etc/
 ssh_users:
   - rvagg
   - jbergstroem
   - joaocgreis
 packages:
-  - openjdk
+  - openjdk-jre
   - git
   - gmake
   - ccache

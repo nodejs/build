@@ -1,0 +1,5 @@
+----
+# Varibles we use globally
+# Avoid pollution at all costs :)
+jenkins_user: iojs
+jenkins_base_url: https://ci.nodejs.org/

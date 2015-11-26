@@ -30,7 +30,7 @@ jenkins_args="-jar ${jenkins_jar} \
 jenkins_jobs="$(getconf NPROCESSORS_ONLN)"
 
 # FreeBSD uses a java wrapper. Without full path pid monitoring won't work
-procname=`cat /usr/local/etc/javavms | cut -d "#" -f 1`
+procname=$(cat /usr/local/etc/javavms | cut -d "#" -f 1)
 pidfile="/var/run/${name}/${name}.pid"
 monitor_pidfile="/var/run/${name}/${name}_monitor.pid"
 command="/usr/sbin/daemon"
@@ -50,9 +50,9 @@ jenkins_prestart() {
 		chown "${jenkins_user}:${jenkins_group}" "${jenkins_log_file}"
 		chmod 640 "${jenkins_log_file}"
 	fi
-	if [ ! -d `basename ${pidfile}` ]; then
+	if [ ! -d $(dirname ${pidfile}) ]; then
 		install -d -o "${jenkins_user}" -g "${jenkins_group}" \
-			-m 750 `basename ${pidfile}`
+			-m 750 $(dirname ${pidfile})
 	fi
 
 	if [ ! $jenkins_secret ]; then
@@ -62,9 +62,10 @@ jenkins_prestart() {
 
 jenkins_start()
 {
-	check_startmsgs && echo -n "Starting ${name}"
+	check_startmsgs
+	echo "Starting ${name}."
+	# @TODO: get rid of nasty banner when su -l
 	su -l ${jenkins_user} -c "${env} exec ${command} ${command_args}"
-	echo .
 }
 
 jenkins_stop()
@@ -74,7 +75,8 @@ jenkins_stop()
 	else
 		echo -n "Stopping service: ${name}"
 		kill `cat ${monitor_pidfile}`
-		rm ${pidfile} ${monitor_pidfile}
+		# files are removed on exit, but be extra sure
+		rm -f ${pidfile} ${monitor_pidfile}
 		echo .
 	fi
 }

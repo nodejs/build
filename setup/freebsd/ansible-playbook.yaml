@@ -1,32 +1,36 @@
 ----
 - hosts: iojs-freebsd10
-
+  gather_facts: no
   remote_user: freebsd
   sudo: yes
+
+  vars_files:
+    - ../ansible-includes/global-vars.yaml
+    - ansible-vars.yaml
 
   vars:
     - ansible_python_interpreter: "/usr/bin/env python"
 
   tasks:
-
-    - include_vars: ansible-vars.yaml
-      tags: vars
-
-    - name: General | Update package repository
-      command: pkg update
-      tags: general
+    - name: Bootstrap | Install python
+      raw: pkg install -y python
+      tags: bootstrap
 
     - name: General | Install required packages
-      command: pkg install -U -y {{ item }}
+      command: pkg install -y {{ item }}
       with_items: packages
       tags: general
 
-    - name: User | Add {{ server_user }} group
-      group: name="{{ server_user }}" state=present
+    - name: General | Start ntpd (and enable at boot)
+      service: name=ntpd state=started enabled=yes
+      tags: general
+
+    - name: User | Add group
+      group: name="{{ jenkins_user }}" state=present
       tags: user
 
-    - name: User | Add {{ server_user }} user
-      user: name="{{ server_user }}" shell=/bin/sh append=yes groups={{ server_user }}
+    - name: User | Add user
+      user: name="{{ jenkins_user }}" shell=/bin/sh createhome=yes append=yes groups={{ jenkins_user }}
       tags: user
 
     - name: User | Download pubkey(s)
@@ -40,16 +44,16 @@
       with_items: ssh_users
       tags: user
 
-    - name: General | Create authorized_keys for {{ server_user }}
-      authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+    - name: General | Create authorized_keys for user
+      authorized_key: user="{{ jenkins_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
       with_items: ssh_users
       tags: user
 
-    - name: Jenkins | Download Jenkins' slave.jar
-      command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
+    - name: Jenkins | Download Jenkins slave.jar
+      get_url: url={{ jenkins_base_url }}/jnlpJars/slave.jar dest=/home/{{ jenkins_user }}/slave.jar
       tags: jenkins
 
-    - name: Assures that {{ init_base }}/{rc.d, rc.conf.d} directories exists
+    - name: Init | Assure that {rc.d, rc.conf.d} directories exists
       file: path={{ init_base }}/{{ item }} state=directory
       with_items:
         - rc.d
@@ -57,26 +61,11 @@
       tags: init
 
     - name: Init | Copy init script
-      copy: src=./resources/jenkins dest={{ init_base }}/rc.d/jenkins owner={{ server_user }} group={{ server_user }} mode=0755
+      copy: src=./resources/jenkins dest={{ init_base }}/rc.d/jenkins mode=0755
       tags: init
 
-    - name: Init | Copy config template
-      copy: src=./resources/jenkins.conf dest={{ init_base }}/rc.conf.d/jenkins owner={{ server_user }} group={{ server_user }} mode=0600
-      tags: init
-
-    - name: Init | Copy secret to config`
-      replace: dest={{ init_base }}/rc.conf.d/jenkins regexp="\{\{secret\}\}" replace="{{ server_secret }}"
-      tags: init
-
-    - name: Init | Copy user/group to config`
-      replace: dest={{ init_base }}/rc.conf.d/jenkins regexp="\{\{{{item}}\}\}" replace="{{ server_user }}"
-      with_items:
-        - user
-        - group
-      tags: init
-
-    - name: Init | Copy id to config
-      replace: dest={{ init_base }}/rc.conf.d/jenkins regexp="\{\{id\}\}" replace="{{ inventory_hostname }}"
+    - name: Init | Generate config
+      template: src=./resources/jenkins.conf.j2 dest={{ init_base }}/rc.conf.d/jenkins
       tags: init
 
     - name: Init | Add to boot and start service
