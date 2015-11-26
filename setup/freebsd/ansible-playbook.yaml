@@ -1,4 +1,4 @@
-----
+---
 - hosts: iojs-freebsd10
   gather_facts: no
   remote_user: freebsd

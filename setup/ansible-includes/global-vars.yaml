@@ -1,4 +1,4 @@
-----
+---
 # Varibles we use globally
 # Avoid pollution at all costs :)
 jenkins_user: iojs
