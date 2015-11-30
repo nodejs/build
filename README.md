@@ -1,6 +1,7 @@
 Node Test and Build Infrastructure
 ==================================
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/iojs/build?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+Chat with us! We use IRC: [#node-build at freenode](irc://irc.freenode.net/node-build).
 
 Wut?
 ----
