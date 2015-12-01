@@ -9,3 +9,6 @@ packages:
   - git
   - gmake
   - ccache
+  - bash
+  - libtool
+  - automake
