@@ -100,6 +100,14 @@
       with_items: ssh_users
       tags: user
 
+    - name: General | Create python26 symlink
+      file: src=/usr/bin/python26 dest=/usr/local/bin/python owner={{ server_user }} state=link
+      tags: jenkins
+
+    - name: ccache | Install ccache
+      include: ../ansible-tasks/ccache.yaml version=3.2.4
+      tags: ccache
+
     - name: Jenkins | Download Jenkins' slave.jar
       command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
       tags: jenkins
@@ -108,75 +116,21 @@
       copy: src=./resources/jenkins.initd dest=/etc/init.d/jenkins owner={{ server_user }} group={{ server_user }} mode=0755
       tags: jenkins
 
-    - name: Jenkins | Symlink gcc41 init script
-      file: src=/etc/init.d/jenkins dest=/etc/init.d/jenkins-gcc41 state=link
-      tags: jenkins
-
     - name: Jenkins | Copy environment files
-      copy: src=./resources/jenkins.sysconfig dest=/etc/sysconfig/{{ item }} owner={{ server_user }} group={{ server_user }} mode=0400
-      with_items:
-        - jenkins
-        - jenkins-gcc41
-      tags: jenkins
+      copy: src=./resources/jenkins.sysconfig dest=/etc/sysconfig/jenkins owner={{ server_user }} group={{ server_user }} mode=0400
 
     - name: Jenkins | Copy secret to environment
       replace: dest=/etc/sysconfig/jenkins regexp="\{\{secret\}\}" replace="{{ server_secret }}"
       tags: jenkins
 
-    - name: Jenkins | Copy secret to gcc41 environment
-      replace: dest=/etc/sysconfig/jenkins-gcc41 regexp="\{\{secret\}\}" replace="{{ gcc41_server_secret }}"
-      tags: jenkins
-
     - name: Jenkins | Copy server id to environment
-      replace: dest=/etc/sysconfig/jenkins regexp="\{\{id\}\}" replace="{{ server_id }}"
-      tags: jenkins
-      
-    - name: Jenkins | Copy server id to gcc41 environment
-      replace: dest=/etc/sysconfig/jenkins-gcc41 regexp="\{\{id\}\}" replace="{{ gcc41_server_id }}"
-      tags: jenkins
-      
-    - name: Jenkins | Add scl path to environment
-      replace: dest=/etc/sysconfig/jenkins regexp="\{\{scl\}\}" replace="/opt/rh/devtoolset-2/root/usr/bin"
-      tags: jenkins
-
-    - name: Jenkins | Add scl path to gcc41 environment
-      replace: dest=/etc/sysconfig/jenkins-gcc41 regexp="\{\{scl\}\}" replace=""
+      replace: dest=/etc/sysconfig/jenkins regexp="\{\{id\}\}" replace="{{ inventory_hostname }}"
       tags: jenkins
 
     - name: Jenkins | Add server_arch to environment
       replace: dest=/etc/sysconfig/jenkins regexp="\{\{arch\}\}" replace="{{ server_arch }}"
       tags: jenkins
 
-    - name: Jenkins | Add server_arch to gcc41 environment
-      replace: dest=/etc/sysconfig/jenkins-gcc41 regexp="\{\{arch\}\}" replace="{{ server_arch }}"
-      tags: jenkins
-
-    - name: Jenkins | Add init scripts to startup
-      action: shell chkconfig --add {{ item }}
-      with_items:
-        - jenkins
-        - jenkins-gcc41
-      tags: jenkins
-
-    - name: Jenkins | Add init scripts to runlevels
-      action: shell chkconfig --level 345 {{ item }} on
-      with_items:
-        - jenkins
-        - jenkins-gcc41
-      tags: jenkins
-
-    - name: Jenkins | Create {{ server_user }} bin directory
-      file: path=/home/{{ server_user }}/bin owner={{ server_user }} mode=0755 state=directory
-      tags: jenkins
-
-    - name: Jenkins | Create python26 symlink
-      file: src=/usr/bin/python26 dest=/home/{{ server_user }}/bin/python owner={{ server_user }} state=link
-      tags: jenkins
-      
-    - name: Jenkins | Create ccache symlinks
-      file: src=/usr/bin/ccache dest=/home/{{ server_user }}/bin/{{ item }} owner={{ server_user }} state=link
-      with_items:
-        - gcc
-        - g++
-        - cc
+    - name: Jenkins | Enable and start init scripts
+      service: name=jenkins enabled=yes state=started
       tags: jenkins

@@ -78,44 +78,18 @@
       copy: src=./resources/jenkins.initd dest=/etc/init.d/jenkins owner={{ server_user }} group={{ server_user }} mode=0755
       tags: jenkins
 
-    - name: Jenkins | Symlink gcc44 init script
-      file: src=/etc/init.d/jenkins dest=/etc/init.d/jenkins-gcc44 state=link
-      tags: jenkins
-
     - name: Jenkins | Copy environment files
-      copy: src=./resources/jenkins.sysconfig dest=/etc/sysconfig/{{ item }} owner={{ server_user }} group={{ server_user }} mode=0400
-      with_items:
-        - jenkins
-        - jenkins-gcc44
+      copy: src=./resources/jenkins.sysconfig dest=/etc/sysconfig/jenkins owner={{ server_user }} group={{ server_user }} mode=0400
       tags: jenkins
 
     - name: Jenkins | Copy secret to environment
       replace: dest=/etc/sysconfig/jenkins regexp="\{\{secret\}\}" replace="{{ server_secret }}"
       tags: jenkins
 
-    - name: Jenkins | Copy secret to gcc44 environment
-      replace: dest=/etc/sysconfig/jenkins-gcc44 regexp="\{\{secret\}\}" replace="{{ gcc44_server_secret }}"
-      tags: jenkins
-
     - name: Jenkins | Copy server id to environment
-      replace: dest=/etc/sysconfig/jenkins regexp="\{\{id\}\}" replace="{{ server_id }}"
-      tags: jenkins
-      
-    - name: Jenkins | Copy server id to gcc44 environment
-      replace: dest=/etc/sysconfig/jenkins-gcc44 regexp="\{\{id\}\}" replace="{{ gcc44_server_id }}"
-      tags: jenkins
-      
-    - name: Jenkins | Add scl path to environment
-      replace: dest=/etc/sysconfig/jenkins regexp="\{\{scl\}\}" replace="/opt/rh/devtoolset-2/root/usr/bin"
-      tags: jenkins
-
-    - name: Jenkins | Add scl path to gcc44 environment
-      replace: dest=/etc/sysconfig/jenkins-gcc44 regexp="\{\{scl\}\}" replace="/opt/rh/git19/root/usr/bin"
+      replace: dest=/etc/sysconfig/jenkins regexp="\{\{id\}\}" replace="{{ inventory_hostname }}"
       tags: jenkins
 
     - name: Jenkins | Enable and start init scripts
-      service: name={{ item }} enabled=yes state=started
-      with_items:
-        - jenkins
-        - jenkins-gcc44
+      service: name=jenkins enabled=yes state=started
       tags: jenkins
