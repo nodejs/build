@@ -45,7 +45,7 @@ function afterMap (err, allDirs) {
 
   dirs.sort((d1, d2) => semver.compare(d1, d2))
 
-  link(0.10, dirs)
+  link('0.10', dirs)
   link(0.12, dirs)
 
   for (let i = 1;; i++)
@@ -90,7 +90,7 @@ function makeDocsLinks (versions) {
 
 function link (version, dirs) {
   let line  = version && `${version}.x`
-    , range = version ? `${version < 1 ? '~' : '^'}${line}` : '*'
+    , range = version ? `${Number(version) < 1 ? '~' : '^'}${line}` : '*'
     , max   = semver.maxSatisfying(dirs, range)
 
   if (!max) return false
