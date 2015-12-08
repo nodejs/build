@@ -7,15 +7,15 @@ Host iojs-build-centos5-32-1
   HostName 104.236.81.117
   User root
 
-Host iojs-build-centos5-64-1
-  HostName 104.131.169.190
+Host test-softlayer-centos6-x64-1
+  HostName 50.23.85.252
   User root
 
-Host nodejs-release-ibm-centos5-32-1
+Host release-softlayer-centos5-x86-1
   HostName 50.23.85.253
   User root
 
-Host nodejs-release-digitalocean-centos5-64-1
+Host release-digitalocean-centos5-x64-1
   Hostname 162.243.217.142
   User root
 ```
@@ -32,6 +32,6 @@ Start-up of the Jenkins slaves is manual (for now), run:
 
 ```text
 $ ssh iojs-build-centos5-1 "service jenkins start && service jenkins-gcc41 start"
-``` 
+```
 
 **Users**: The ansible-vars.yaml file contains a list of users who's GitHub public keys are pulled and placed into authorized_keys for both root and iojs users. This file should be updates when new users are added to the build project who are able to help maintain the containerized builds.

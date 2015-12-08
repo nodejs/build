@@ -19,9 +19,9 @@ test-ibm-centos6-x64-1
 [iojs-build-centos5]
 iojs-build-centos5-64-1
 iojs-build-centos5-32-1
-nodejs-test-ibm-centos5-64-1
-nodejs-release-ibm-centos5-32-1
-nodejs-release-digitalocean-centos5-64-1
+test-softlayer-centos5-x64-1 
+release-digitalocean-centos5-x64-1
+release-softlayer-centos5-x86-1
 
 [iojs-build-debian8]
 iojs-build-debian8-64-1
