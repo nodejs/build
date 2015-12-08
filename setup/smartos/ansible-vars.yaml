@@ -1,8 +1,5 @@
 ---
 server_user: iojs
-# override through host_vars if needed. we need it since we currently
-# run 32-bit tests on a 64-bit host. default is 64-bit.
-destcpu: x64
 ssh_users:
   - geek
   - rvagg

@@ -41,10 +41,10 @@ iojs-ibm-ppcle-ubuntu1404-release-64-1
 iojs-build-ubuntu1204-64-1
 
 [iojs-build-smartos]
-iojs-build-smartos-64-1
-iojs-build-smartos-32-1
-iojs-joyent-smartos13.3.1-release
-nodejs-release-joyent-smartos153-64-1
+test-joyent-smartos14-x64-1
+test-joyent-smartos14-x86-1
+release-joyent-smartos13-x64-1
+release-joyent-smartos14-x64-1
 
 [iojs-build-containers]
 iojs-build-containers-1

@@ -20,15 +20,6 @@
       with_items: packages
       tags: general
 
-    - name: Remove all DNS servers from resolv.conf
-      lineinfile: dest=/etc/resolv.conf state=absent regexp="^(\s*)nameserver(\s+)"
-      tags: general
-
-    - name: Add DNS servers to the list in resolv.conf
-      lineinfile: dest=/etc/resolv.conf state=present regexp="^(\s*)nameserver(\s+){{ item }}(\s*)$" line="nameserver {{ item }}"
-      with_items: dns_servers
-      tags: general
-
     - name: User | Add {{ server_user }} group
       command: groupadd {{ server_user }}
       tags: user
@@ -56,14 +47,14 @@
       authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
       with_items: ssh_users
       tags: user
-      
+
     - name: CCache | Create directory that hold symlinks to ccache
       file: path=/opt/local/libexec/ccache state=directory mode=0755
       tags: ccache
-    
+
     - name: CCache | Symlink compiler binaries to ccache
       file: src={{ item.src }} dest={{ item.dest }} state=link
-      with_items: 
+      with_items:
         - { src: '/opt/local/bin/ccache', dest: '/opt/local/libexec/ccache/gcc' }
         - { src: '/opt/local/bin/ccache', dest: '/opt/local/libexec/ccache/g++' }
       tags: ccache
@@ -81,11 +72,7 @@
       tags: jenkins
 
     - name: Jenkins | Copy server id into manifest
-      replace: dest=/home/{{ server_user }}/jenkins_manifest.xml regexp="\{\{id\}\}" replace="{{ server_id }}"
-      tags: jenkins
-
-    - name: Jenkins | Copy destination cpu architecture into manifest
-      replace: dest=/home/{{ server_user }}/jenkins_manifest.xml regexp="\{\{destcpu\}\}" replace="{{ destcpu }}"
+      replace: dest=/home/{{ server_user }}/jenkins_manifest.xml regexp="\{\{id\}\}" replace="{{ inventory_hostname }}"
       tags: jenkins
 
     - name: Jenkins | Import jenkins SMF manifest

@@ -2,19 +2,17 @@
 
 To set up hosts, make sure you add them to your ssh config first:
 ```
-Host iojs-build-smartos-64-1
-  HostName 165.225.137.91
-  User root
-
-Host iojs-build-smartos-32-1
-  HostName 165.225.138.254
-  User root
-
-Host iojs-joyent-smartos13.3.1-release
+Host release-joyent-smartos13-x64-1
   HostName 72.2.114.225
 
-Host nodejs-release-joyent-smartos153-64-1
-  Hostname 72.2.115.68
+Host test-joyent-smartos14-x64-1
+  Hostname 72.2.114.47
+
+Host test-joyent-smartos14-x86-1
+  Hostname 72.2.112.239
+
+Host release-joyent-smartos14-x64-1
+  Hostname 72.2.113.193
 ```
 
 Note that these hostnames are also used in the ansible-inventory file. The IP addresses will need to be updated each time the servers are reprovisioned.
