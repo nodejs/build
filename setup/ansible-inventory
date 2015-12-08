@@ -10,16 +10,16 @@ iojs-build-fedora21-1
 iojs-build-fedora22-1
 
 [iojs-build-centos7]
-test-ibm-centos7-x64-1
 test-digitalocean-centos7-x64-1
+test-softlayer-centos7-x64-1
 
 [iojs-build-centos6]
-test-ibm-centos6-x64-1
+test-softlayer-centos6-x64-1
 
 [iojs-build-centos5]
 iojs-build-centos5-64-1
 iojs-build-centos5-32-1
-test-softlayer-centos5-x64-1 
+test-softlayer-centos5-x64-1
 release-digitalocean-centos5-x64-1
 release-softlayer-centos5-x86-1
 
