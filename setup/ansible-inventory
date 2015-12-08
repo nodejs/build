@@ -36,6 +36,8 @@ iojs-ibm-ppcle-ubuntu1404-64-1
 iojs-ibm-ppcle-ubuntu1404-64-2
 iojs-softlayer-benchmark
 iojs-ibm-ppcle-ubuntu1404-release-64-1
+test-softlayer-ubuntu14-x64-1
+test-softlayer-ubuntu14-x86-1
 
 [iojs-build-ubuntu1204]
 iojs-build-ubuntu1204-64-1

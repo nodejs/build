@@ -21,6 +21,11 @@ Host iojs-softlayer-benchmark
 Host iojs-ibm-ppcle-ubuntu1404-release-64-1
   HostName 140.211.168.193
   User root
+Host test-softlayer-ubuntu14-x86-1
+  HostName 50.97.245.9
+
+Host test-softlayer-ubuntu14-x64-1
+  HostName 50.97.245.5
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.
@@ -36,6 +41,6 @@ Start-up of the Jenkins slaves is manual (for now), run:
 ```text
 $ ssh iojs-build-ubuntu1404-64-1 -l iojs ./start.sh
 $ ssh iojs-build-ubuntu1404-32-1 -l iojs ./start.sh
-``` 
+```
 
 **Users**: The ansible-vars.yaml file contains a list of users who's GitHub public keys are pulled and placed into authorized_keys for both root and iojs users. This file should be updates when new users are added to the build project who are able to help maintain the containerized builds.
