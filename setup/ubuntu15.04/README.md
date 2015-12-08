@@ -3,7 +3,7 @@
 For setting up a Ubuntu 15.04 box
 
 ```text
-Host iojs-build-ubuntu1504-64-1
+Host test-digitalocean-ubuntu15-x64-1
   HostName 45.55.229.131
   User root
 ```

@@ -27,7 +27,7 @@ nodejs-release-digitalocean-centos5-64-1
 iojs-build-debian8-64-1
 
 [iojs-build-ubuntu1504]
-iojs-build-ubuntu1504-64-1
+test-digitalocean-ubuntu15-x64-1
 
 [iojs-build-ubuntu1404]
 iojs-build-ubuntu1404-64-1
