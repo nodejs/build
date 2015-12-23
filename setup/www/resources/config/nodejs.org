@@ -380,4 +380,6 @@ server {
     rewrite ^/images/yahoo-logo.png                               https://$server_name/static/legacy/images/yahoo-logo.png permanent;
 
     rewrite ^/images/(.*)                                         https://$server_name/static/images/$1 permanent;
+
+    rewrite ^/windows-environment$                                https://github.com/nodejs/node/wiki/Windows-Environment permanent;
 }
