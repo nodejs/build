@@ -55,7 +55,7 @@
       tags: user
 
     - name: GYP | Clone the GYP repo
-      command: rm -rf /home/{{ server_user }}/gyp && git clone http://git.chromium.org/external/gyp.git /home/{{ server_user }}/gyp
+      command: rm -rf /home/{{ server_user }}/gyp && git clone http://git.chromium.org/external/gyp /home/{{ server_user }}/gyp
       tags: gyp
 
     - name: Jenkins | Download Jenkins' slave.jar
@@ -70,15 +70,6 @@
       replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{secret\}\}" replace="{{ server_secret }}"
       tags: jenkins
 
-    - name: Jenkins | Copy GYP secret to start.sh script
-      replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{gyp_secret\}\}" replace="{{ gyp_server_secret }}"
-      tags: jenkins
-
     - name: Jenkins | Copy server id to start.sh script
       replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{id\}\}" replace="{{ server_id }}"
       tags: jenkins
-
-    - name: Jenkins | Copy server GYP id to start.sh script
-      replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{gyp_id\}\}" replace="{{ gyp_server_id }}"
-      tags: jenkins
-
