@@ -14,12 +14,12 @@
             <service_fmri value='svc:/system/filesystem/local' />
         </dependency>
 
-        <method_context working_directory="/home/iojs">
-            <method_credential user='iojs' group='iojs' privileges='basic' />
+        <method_context working_directory="/home/{{ server_user }}">
+            <method_credential user='{{ server_user }}' group='{{ server_user }}' privileges='basic' />
             <method_environment>
-                <envvar name='NODE_COMMON_PIPE' value='/home/iojs/test.pipe' />
+                <envvar name='NODE_COMMON_PIPE' value='/home/{{ server_user }}/test.pipe' />
                 <envvar name='OSTYPE' value='solaris' />
-                <envvar name='HOME' value='/home/iojs' />
+                <envvar name='HOME' value='/home/{{ server_user }}' />
                 <envvar name='JOBS' value='2' />
                 <envvar name='PATH' value='/opt/local/libexec/ccache:/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin' />
             </method_environment>
@@ -27,18 +27,18 @@
 
         <exec_method type='method'
                      name='start'
-                     exec='/opt/local/bin/java -Xmx180m -jar slave.jar -jnlpUrl https://ci.nodejs.org/computer/{{id}}/slave-agent.jnlp -secret {{secret}} >> /home/iojs/jenkins_console.log'
-                     timeout_seconds='60' />
+                     exec='/opt/local/java/openjdk7/bin/java -Xmx128m -jar slave.jar -jnlpUrl https://ci.nodejs.org/computer/{{ inventory_hostname }}/slave-agent.jnlp -secret {{ secret }}'
+                     timeout_seconds='30' />
 
         <exec_method type="method"
                      name="stop"
                      exec=":kill"
-                     timeout_seconds="60" />
+                     timeout_seconds="30" />
 
         <exec_method name='refresh'
                      type='method'
                      exec=':kill -HUP'
-                     timeout_seconds='60' />
+                     timeout_seconds='30' />
 
         <property_group name="startd" type="framework">
             <propval name="duration" type="astring" value="child"/>
