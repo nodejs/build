@@ -3,6 +3,9 @@ Description=Jenkins Slave
 Wants=network.target
 After=network.target
 
+[Install]
+WantedBy=multi-user.target
+
 [Service]
 Type=simple
 User={{user}}
@@ -12,9 +15,9 @@ Environment="USER={{user}}" \
             "PATH=/usr/lib64/ccache:/usr/bin" \
             "NODE_COMMON_PIPE=/home/{{user}}/test.pipe" \
             "OSTYPE=linux-gnu"
-ExecStart=/usr/bin/java \
+ExecStart=/usr/bin/java -Xmx128m \
           -jar /home/{{user}}/slave.jar \
-          -jnlpUrl https://ci.nodejs.org/computer/iojs-digitalocean-fedora22-{{id}}/slave-agent.jnlp \
+          -jnlpUrl https://ci.nodejs.org/computer/{{id}}/slave-agent.jnlp \
           -secret {{secret}}
 Restart=always
 RestartSec=30
