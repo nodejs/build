@@ -27,20 +27,20 @@ release-softlayer-centos5-x86-1
 iojs-build-debian8-64-1
 
 [iojs-build-ubuntu1504]
-test-digitalocean-ubuntu15-x64-1
+test-digitalocean-ubuntu15-x64-2
 
 [iojs-build-ubuntu1404]
-iojs-build-ubuntu1404-64-1
-iojs-build-ubuntu1404-32-1
 iojs-ibm-ppcle-ubuntu1404-64-1
 iojs-ibm-ppcle-ubuntu1404-64-2
 iojs-softlayer-benchmark
 iojs-ibm-ppcle-ubuntu1404-release-64-1
 test-softlayer-ubuntu14-x64-1
 test-softlayer-ubuntu14-x86-1
+test-digitalocean-ubuntu14-x86-1
+test-digitalocean-ubuntu14-x64-1
 
 [iojs-build-ubuntu1204]
-iojs-build-ubuntu1204-64-1
+test-digitalocean-ubuntu12-x64-1
 
 [iojs-build-smartos]
 test-joyent-smartos14-x64-1

@@ -3,12 +3,6 @@
 For setting up a Ubuntu 14.04 box
 
 ```text
-Host iojs-build-ubuntu1404-64-1
-  HostName 104.236.74.49
-  User root
-Host iojs-build-ubuntu1404-32-1
-  HostName 104.236.77.78
-  User root
 Host iojs-ibm-ppcle-ubuntu1404-64-1
   HostName 140.211.168.171
   User root
@@ -23,9 +17,13 @@ Host iojs-ibm-ppcle-ubuntu1404-release-64-1
   User root
 Host test-softlayer-ubuntu14-x86-1
   HostName 50.97.245.9
-
 Host test-softlayer-ubuntu14-x64-1
   HostName 50.97.245.5
+Host test-digitalocean-ubuntu14-x86-1
+  HostName 159.203.115.220
+Host test-digitalocean-ubuntu14-x64-1
+  HostName 45.55.252.223
+
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.
