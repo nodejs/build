@@ -8,26 +8,13 @@
     - include_vars: ansible-vars.yaml
       tags: vars
 
-    - name: General | APT Update
-      apt: update_cache=yes
-      tags: general
-
-    - name: General | APT Upgrade
-      apt: upgrade=dist
+    - name: General | APT Update and upgrade
+      apt: update_cache=yes upgrade=full
       tags: general
 
     - name: General | Install required packages
       apt: name={{ item }} update_cache=yes state=latest
       with_items: packages
-      tags: general
-
-    - name: General | Increase file descriptor limits
-      lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
-      with_items:
-        - "*         hard    nofile      500000"
-        - "*         soft    nofile      500000"
-        - "root      hard    nofile      500000"
-        - "root      soft    nofile      500000"
       tags: general
 
     - name: User | Add {{ server_user }} user
@@ -50,27 +37,14 @@
       with_items: ssh_users
       tags: user
 
-    - name: Jenkins | Download Jenkins' slave.jar
-      command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
+    - name: Jenkins | Download Jenkins slave.jar
+      get_url: url=https://ci.nodejs.org/jnlpJars/slave.jar dest=/home/{{ server_user }}/slave.jar
       tags: jenkins
 
-    - name: Jenkins | Copy jenkins.service systemd config
-      copy: src=./resources/jenkins.service dest=/etc/systemd/system/jenkins.service mode=0644
-      tags: jenkins
+    - name: Init | Generate and copy init script
+      template: src=./resources/jenkins.service.j2 dest=/lib/systemd/system/jenkins.service
+      tags: init
 
-    - name: Jenkins | Copy server user to jenkins.service
-      replace: dest=/lib/systemd/system/jenkins.service regexp="\{\{user\}\}" replace="{{ server_user }}"
-      tags: jenkins
-
-    - name: Jenkins | Copy secrets to jenkins.service
-      replace: dest=/lib/systemd/system/jenkins.service regexp="\{\{secret\}\}" replace="{{ server_secret }}"
-      tags: jenkins
-
-    - name: Jenkins | Copy server ids to jenkins.service
-      replace: dest=/lib/systemd/system/jenkins.service regexp="\{\{id\}\}" replace="{{ server_id }}"
-      tags: jenkins
-
-    - name: Jenkins | Start Jenkins service
+    - name: Init | Start Jenkins
       service: name=jenkins state=started enabled=yes
-      tags: jenkins
-
+      tags: init

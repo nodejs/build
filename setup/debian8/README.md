@@ -3,9 +3,10 @@
 For setting up a Debian 8 box
 
 ```text
-Host iojs-build-debian8-1
-  HostName 104.130.166.132
-  User root
+Host test-rackspace-debian8-x64-1
+  HostName 23.253.109.216
+Host test-rackspace-debian8-x64-2
+  HostName 104.239.140.184
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.

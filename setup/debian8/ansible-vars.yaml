@@ -7,10 +7,11 @@ ssh_users:
   - kenperkins
   - joaocgreis
 packages:
+  - ntp
   - openjdk-7-jre
   - git
   - build-essential
-  - python-all
+  - python
   - automake
   - libtool
   - curl

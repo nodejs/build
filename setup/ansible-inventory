@@ -24,7 +24,8 @@ release-digitalocean-centos5-x64-1
 release-softlayer-centos5-x86-1
 
 [iojs-build-debian8]
-iojs-build-debian8-64-1
+test-rackspace-debian8-x64-1
+test-rackspace-debian8-x64-2
 
 [iojs-build-ubuntu1504]
 test-digitalocean-ubuntu15-x64-2
