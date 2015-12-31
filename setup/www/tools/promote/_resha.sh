@@ -16,7 +16,10 @@ if [ "X${version}" == "X" ]; then
   exit 1
 fi
 
-(cd "${dstdir}/${version}" && shasum -a256 $(ls node* iojs* win-*/* 2> /dev/null) > SHASUMS256.txt) || exit 1
+(cd "${dstdir}/${version}" && shasum -a256 $(ls node* openssl* iojs* win-*/* x64/* 2> /dev/null) > SHASUMS256.txt) || exit 1
+if [[ $version =~ ^v[0] ]]; then
+  (cd "${dstdir}/${version}" && shasum $(ls node* openssl* x64/* 2> /dev/null) > SHASUMS.txt) || exit 1
+fi
 echo "${dstdir}/${version}/SHASUMS256.txt"
 /home/dist/tools/dist-indexer/dist-indexer.js --dist $dstdir --indexjson ${dstdir}/index.json  --indextab ${dstdir}/index.tab
 find "${dstdir}/${version}" -type f -exec chmod 644 '{}' \;
