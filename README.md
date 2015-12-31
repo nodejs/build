@@ -1,117 +1,69 @@
-Node Test and Build Infrastructure
-==================================
+Node.js Build Working Group
+===========================
 
-Chat with us! We use IRC: [#node-build at freenode](irc://irc.freenode.net/node-build).
+Chat with us! We use IRC: [#node-build at Freenode](irc://irc.freenode.net/node-build)
 
 Wut?
 ----
 
-This repository contains information used to set up and maintain the **io.js** and **libuv** CI infrastructure. It is intended to be open and transparent, if you see any relevant information missing please open an issue.
+This repository contains information used to set up and maintain the **Node.js** and **libuv** CI infrastructure. It is intended to be open and transparent, if you see any relevant information missing please open an issue.
 
-io.js and libuv are tested on a specific set of hardware / operating system / configuration combinations. Commits to the repository are tested on the full set while pull requests to the Node.js and libuv projects from non-core contributors are tested on a smaller, more secure subset. Build and test output is collected and success or fail status is reported back to GitHub.
+Infrastructure Providers
+------------------------
 
-Test Configurations
--------------------
+The Node.js Foundation is proud to receive contributions from many companies, both in the form of monetary contributions in exchange for membership or in-kind contributions for required resources. The Build Working Group collaborates with the following companies who contribute various kinds of cloud and physical hardware to the Node.js project.
 
-The set of build configurations is divided into three main categories:
+### Tier-1 Providers
 
-* **All code**: configurations where code compilation and test execution can be performed in an isolated and transient containerized environment. These configurations will allow the testing of untrusted code submitted by untrusted individuals to the main repositories via pull requests.
+The Node.js Foundation's tier-1 infrastructure providers contribute the largest share of infrastructure to the Node.js project. Without these companies, the project would not be able to provide the quality, speed and availability of test coverage that it does today.
 
-* **Core platforms**: configurations deemed to be primary build targets of the io.js and libuv projects. Failures on these configurations will cause a failure report to GitHub on pull requests and commits. Core contributors should aim for all commits to be able to pass on these configurations. Additionally, these platforms will initially split up into two sub-categories:
+![Tier 1 Infrastructure Providers](./provider-logos/tier-1-providers.png)
 
-  - **Core & easy**: configurations that are simple to set up and maintain.
-  - **Core & difficult**: configurations that require a level of yak shaving to set up and maintain, such as very old versions of Linux (e.g. EL5) and very new tooling (e.g. XCode 6). This set of configurations may not be initially (and fully) available to the project as they may take time to set up in a reliable enough way.
+**[DigitalOcean](http://digitalocean.com/)**, a popular cloud hosting service, provide a significant amount of the resources required to run the Node.js project including key CI infrastructure and servers required to host [nodejs.org](https://nodejs.org/).
 
-* **Non-core platforms**: configurations that are secondary build targets of the io.js and libuv projects. These platforms are of interest to the community and core contributors will be given insight to the success of their commits on these platforms but failure will be reported as advisory-only. However, it is expected that project releases will pass on all of these platforms.
+**[Rackspace](https://www.rackspace.com/)**, a popular managed cloud company, provide significant resources used to power much of the Node.js project's CI system, including key Windows compilation servers, along with additional services such as object storage for backups via [Cloud Files](http://www.rackspace.com/en-au/cloud/files) and [Mailgun](http://www.mailgun.com/) for some [nodejs.org email](https://github.com/nodejs/email) services.
 
+### Tier-2 Providers
 
-### Configurations: All code
+The Node.js Foundation's tier-2 infrastructure providers fill essential gaps in architecture and operating system variations and shoulder some of the burden from the tier-1 providers, contributing to availability and speed in our CI system.
 
-All commits and pull requests will be submitted for compilation and execution of the **test-simple** test suite on the following platforms:
+![Tier 2 Infrastructure Providers](./provider-logos/tier-2-providers.png)
 
-  * Containerized 64bit image of the current oldest Ubuntu LTS Release (10.04, Lucid Lynx)
-  * Containerized 64bit image of the current latest Ubuntu LTS Release (14.04, Trusty Tahr)
+**[Microsoft Azure](https://azure.microsoft.com/en-us/)**, a cloud services platform, provide Windows test infrastructure for the Node.js CI system.
 
-### Configurations: Core & easy
+**[Joyent](https://www.joyent.com/)**, a public/private cloud infrastructure company, provide SmartOS test and build resources for the Node.js CI system.
 
-Additionally, all commits by core contributors will be submitted for compilation and execution of the **test-all** test suite on the following platforms:
+**[IBM](https://www.ibm.com/)**, via their cloud company, [SoftLayer](https://www.softlayer.com/) and the [Oregon State University Open Source Lab](https://osuosl.org/services/powerdev) provide PPC-based test and build infrastructure and other key hardware for testing and benchmarking for the Node.js project's CI system.
 
-  * CentOS 6 64-bit (EL6)
-  * CentOS 6 32-bit (EL6)
-  * CentOS 7 64-bit (EL7)
-  * Ubuntu 10.04 LTS (Lucid Lynx) 64-bit
-  * Ubuntu 10.04 LTS (Lucid Lynx) 32-bit
-  * Ubuntu 12.04 LTS (Precise Pangolin) 64-bit
-  * Ubuntu 12.04 LTS (Precise Pangolin) 32-bit
-  * Ubuntu 14.04 LTS (Trusty Tahr) 64-bit
-  * Ubuntu 14.04 LTS (Trusty Tahr) 32-bit
-  * Debian stable (wheezy) 64-bit
-  * Debian stable (wheezy) 32-bit
-  * Windows Server 2008 R2 + Visual C++ 2012 64-bit
-  * Windows Server 2008 R2 + Visual C++ 2012 32-bit
-  * Windows Server 2012 R2 + Visual C++ 2013 64-bit
-  * Windows Server 2012 R2 + Visual C++ 2013 32-bit
-  * Mac OS X 10.8 (Mountain Lion) + XCode 5
-  * Mac OS X 10.9 (Mavericks) + XCode 5
+**[Voxer](https://voxer.com/)**, a voice, text, photo and video messaging service and well-known Node.js early-adopter provide and host OS X hardware for building and testing via the Node.js project's CI 
+system.
 
-### Configurations: Core & difficult
+**[Scaleway](https://www.scaleway.com/)**, a "BareMetal" SSD cloud server provider, contributes key ARMv7 hardware for test and build for the Node.js CI system.
 
-The following platforms will eventually be included in the "Core" set when properly stabilized as build platforms (i.e. the yaks are bald):
+**[NodeSource](https://nodesource.com/)**, a Node.js enterprise products and services company, donate hardware and hosting for most of the Node.js project's ARM test and build infrastructure.
 
-  * CentOS 5 64-bit (EL5)
-  * CentOS 5 32-bit (EL5)
-  * SmartOS
-  * ARMv6 32-bit (Linux)
-  * ARMv7 32-bit (Linux)
-  * ARMv8 32-bit (Linux, one day, when suitable hardware & OS is available)
-  * ARMv8 64-bit (Linux, one day, when suitable hardware & OS is available)
-  * Ubuntu 14.10 (Utopic Unicorn) 64-bit (preferably prior to official release)
-  * Mac OS X 10.10 (Yosemite) + XCode 6
-  * PowerPC LE (Linux)
-  * PowerPC BE (Linux)
-  * AIX
+**[CloudFlare](https://www.cloudflare.com/)**, a CDN and internet traffic management provider, are responsible for providing fast and always-available access to [nodejs.org](https://nodejs.org).
 
-### Configurations: Non-core
-
-The following platforms will eventually be included in the build and **test-all** set for core-contributors but failure will be advisory-only as they do not constitute core release targets.
-
-  * FreeBSD stable/9 *(maybe)*
-  * FreeBSD stable/10
-  * MinGW 32-bit
-  * MinGW 64-bit
-
+**[ARM](https://www.arm.com/)**, semiconductor intellectual property supplier, have donated ARMv8 hardware for use by the Node.js CI system for build and testing Node.js.
 
 CI Software
 -----------
 
-Build and test orchestration is performed by [Jenkins](http://jenkins-ci.org). You can find a summary of build status [here](https://ci.nodejs.org).
+Build and test orchestration is performed by [Jenkins](http://jenkins-ci.org).
 
-Our ambition is to invest in io.js-specific CI infrastructure and tooling while leaning on existing, proven technologies where appropriate. We hope to slowly replace Jenkins as orchestrator and build-slaves throughout our CI ecosystem.
-
-
-Hardware Sponsors
------------------
-
-The following companies are contributing hardware to this project:
-
-* [DigitalOcean](http://digitalocean.com/)
-* [Rackspace](http://rackspace.com/)
-* [Joyent](http://joyent.com/)
-* [Linaro](http://linaro.org/)
-* [Scaleway](https://www.scaleway.com/)
-* [NodeSource](https://nodesource.com/)
-* [IBM](https://ibm.com) through [OSU Open Source Lab](http://osuosl.org/services/powerdev)
-* [IBM](https://ibm.com) through [Softlayer](http://www.softlayer.com)
+* A summary of build and test jobs can be found at: <https://ci.nodejs.org>
+* A listing of connected servers for testing, building and benchmarking can be found at: <http://ci.nodejs.org/computer/>
 
 
 People
 ------
 
-* Rod Vagg [@rvagg](https://github.com/rvagg)
-* Ben Noordhuis [@bnoordhuis](https://github.com/bnoordhuis)
-* Ryan Graham [@rmg](https://github.com/rmg)
-* William Blankenship [@wblanenship](https://github.com/wblankenship)
 * Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
-* Ken Perkins [@kenperkins](https://github.com/kenperkins)
-* Wyatt Preul [@geek](https://github.com/geek)
+* João Reis [@joaocgreis](https://github.com/joaocgreis)
+* Rod Vagg [@rvagg](https://github.com/rvagg)
+* Alexis Campailla [@orangemocha](https://github.com/orangemocha)
 * Michael Dawson [@mhdawson](https://github.com/mhdawson)
+* Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
+* Julien Gilli [@misterdjules](https://github.com/misterdjules)
+* Rich Trott [@trott](https://github.com/trott)
+* Myles Borins [@thealphanerd](https://github.com/thealphanerd)
