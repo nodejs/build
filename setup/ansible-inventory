@@ -39,6 +39,9 @@ test-softlayer-ubuntu14-x64-1
 test-softlayer-ubuntu14-x86-1
 test-digitalocean-ubuntu14-x86-1
 test-digitalocean-ubuntu14-x64-1
+iojs-ns-xgene-1
+iojs-ns-xgene-2
+iojs-ns-xgene-3
 
 [iojs-build-ubuntu1204]
 test-digitalocean-ubuntu12-x64-1
