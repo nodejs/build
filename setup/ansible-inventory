@@ -45,7 +45,9 @@ test-digitalocean-ubuntu12-x64-1
 
 [iojs-build-smartos]
 test-joyent-smartos14-x64-1
+test-joyent-smartos14-x64-2
 test-joyent-smartos14-x86-1
+test-joyent-smartos14-x86-2
 release-joyent-smartos13-x64-1
 release-joyent-smartos14-x64-1
 

@@ -8,8 +8,14 @@ Host release-joyent-smartos13-x64-1
 Host test-joyent-smartos14-x64-1
   Hostname 72.2.114.47
 
+Host test-joyent-smartos14-x64-2
+  Hostname 72.2.115.156
+
 Host test-joyent-smartos14-x86-1
   Hostname 72.2.112.239
+
+Host test-joyent-smartos14-x86-2
+  Hostname 72.2.112.29
 
 Host release-joyent-smartos14-x64-1
   Hostname 72.2.113.193
