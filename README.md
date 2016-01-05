@@ -52,6 +52,30 @@ system.
 
 **[ARM](https://www.arm.com/)**, semiconductor intellectual property supplier, have donated ARMv8 hardware for use by the Node.js CI system for build and testing Node.js.
 
+### Community Donations
+
+From time to time, the Node.js Build Working group calls for, and receives donations of hardware in order to expand the breadth of the build and test infrastructure it maintains.
+
+The Node.js Foundation would like to thank the following individuals and companies that have donated miscellaneous hardware:
+
+* NodeSource <https://nodesource.com/> for a Raspberry Pi B, a Raspberry Pi B+, a Raspberry Pi 2 B and an ODROID-XU3
+* Andrew Chilton [@chilts](https://github.com/chilts) for a Raspberry Pi B
+* Julian Duque [@julianduque](https://github.com/julianduque) for a Beaglebone Black
+* Andi Neck [@andineck](https://github.com/andineck) for 2 x Raspberry Pi B+
+* Bryan English [@bengl](https://github.com/bengl) for 2 x Raspberry Pi B+
+* Continuation Labs [@continuationlabs](https://github.com/continuationlabs) for a Raspberry Pi B+
+* C J Silverio [@ceejbot](https://github.com/ceejbot) for a Raspberry Pi B+ and a Raspberry Pi 2 B
+* miniNodes <https://www.mininodes.com/> for a Raspberry Pi B+ and a Raspberry Pi 2 B
+* Simeon Vincent [@svincent](https://github.com/svincent) for 3 x Raspberry Pi 2 B
+* Joey van Dijk [@joeyvandijk](https://github.com/joeyvandijk) and <http://techtribe.nl> for 2 x Raspberry Pi 2 B and an ODROID-U3+
+* Matteo Collina [@mcollina](https://github.com/mcollina) for a Raspberry Pi 2 B
+* Sam Thompson [@sambthompson](https://github.com/sambthompson) for a Raspberry Pi 2 B
+* Louis Center [@louiscntr](https://github.com/louiscntr) for a Raspberry Pi 2 B
+* Dav Glass [@davglass](https://github.com/davglass/) for 2 x ODROID-XU3
+* Tessel <https://tessel.io/> for a Tessel 2
+
+If you would like to donate hardware to the Node.js Foundation, please reach out to the Build Working Group, via IRC (details at the top of this page) or contact [Rod Vagg](mailto:rod@vagg.org) directly. The Build Working Group reserves the right to choose what hardware is actively used and how it is used, donating hardware does not guarantee its use within the testing infrastructure as there are many other factors that must be considered. Some donated hardware, while not used actively in the CI infrastructure, is used from time to time for R&D purposes by the project.
+
 CI Software
 -----------
 
@@ -59,7 +83,6 @@ Build and test orchestration is performed by [Jenkins](http://jenkins-ci.org).
 
 * A summary of build and test jobs can be found at: <https://ci.nodejs.org>
 * A listing of connected servers for testing, building and benchmarking can be found at: <http://ci.nodejs.org/computer/>
-
 
 People
 ------
