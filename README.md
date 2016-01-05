@@ -6,7 +6,11 @@ Chat with us! We use IRC: [#node-build at Freenode](irc://irc.freenode.net/node-
 Wut?
 ----
 
-This repository contains information used to set up and maintain the **Node.js** and **libuv** CI infrastructure. It is intended to be open and transparent, if you see any relevant information missing please open an issue.
+The Node.js Build Working Group maintains and controls infrastructure used for continuous integration (CI), releases, benchmarks, web hosting (of [nodejs.org](https://nodejs.org/) and other Node.js web properties) and more.
+
+Our mission is to provide Node.js Foundation projects with solid computing infrastructure in order improve the quality of the software itself by targeting correctness, speed and compatibility and to ensure streamlined delivery of binaries and source code to end-users.
+
+This repository contains information used to set up and maintain the various pieces of Node.js Foundation infrastructure managed by the Build Working Group. It is intended to be open and transparent, if you see any relevant information missing please open an issue.
 
 Infrastructure Providers
 ------------------------
@@ -19,9 +23,9 @@ The Node.js Foundation's tier-1 infrastructure providers contribute the largest 
 
 ![Tier 1 Infrastructure Providers](./provider-logos/tier-1-providers.png)
 
-**[DigitalOcean](http://digitalocean.com/)**, a popular cloud hosting service, provide a significant amount of the resources required to run the Node.js project including key CI infrastructure and servers required to host [nodejs.org](https://nodejs.org/).
+**[DigitalOcean](http://digitalocean.com/)**, a popular cloud hosting service, provides a significant amount of the resources required to run the Node.js project including key CI infrastructure and servers required to host [nodejs.org](https://nodejs.org/).
 
-**[Rackspace](https://www.rackspace.com/)**, a popular managed cloud company, provide significant resources used to power much of the Node.js project's CI system, including key Windows compilation servers, along with additional services such as object storage for backups via [Cloud Files](http://www.rackspace.com/en-au/cloud/files) and [Mailgun](http://www.mailgun.com/) for some [nodejs.org email](https://github.com/nodejs/email) services.
+**[Rackspace](https://www.rackspace.com/)**, a popular managed cloud company, provides significant resources used to power much of the Node.js project's CI system, including key Windows compilation servers, along with additional services such as object storage for backups via [Cloud Files](http://www.rackspace.com/en-au/cloud/files) and [Mailgun](http://www.mailgun.com/) for some [nodejs.org email](https://github.com/nodejs/email) services.
 
 ### Tier-2 Providers
 
@@ -29,18 +33,20 @@ The Node.js Foundation's tier-2 infrastructure providers fill essential gaps in 
 
 ![Tier 2 Infrastructure Providers](./provider-logos/tier-2-providers.png)
 
-**[Microsoft Azure](https://azure.microsoft.com/en-us/)**, a cloud services platform, provide Windows test infrastructure for the Node.js CI system.
+**[Microsoft Azure](https://azure.microsoft.com/en-us/)**, a cloud services platform, provides Windows test infrastructure for the Node.js CI system.
 
-**[Joyent](https://www.joyent.com/)**, a public/private cloud infrastructure company, provide SmartOS test and build resources for the Node.js CI system.
+**[Joyent](https://www.joyent.com/)**, a public/private cloud infrastructure company, provides SmartOS and other test and build resources for the Node.js CI system.
 
-**[IBM](https://www.ibm.com/)**, via their cloud company, [SoftLayer](https://www.softlayer.com/) and the [Oregon State University Open Source Lab](https://osuosl.org/services/powerdev) provide PPC-based test and build infrastructure and other key hardware for testing and benchmarking for the Node.js project's CI system.
+**[IBM](https://www.ibm.com/)**:
+  * Via their cloud company, [SoftLayer](https://www.softlayer.com/), provides hardware for testing and benchmarking for the Node.js project's CI system.
+  * Via the [Oregon State University Open Source Lab](https://osuosl.org/services/powerdev), provides PPC-based test and build infrastructure.
 
-**[Voxer](https://voxer.com/)**, a voice, text, photo and video messaging service and well-known Node.js early-adopter provide and host OS X hardware for building and testing via the Node.js project's CI 
+**[Voxer](https://voxer.com/)**, a voice, text, photo and video messaging service and well-known Node.js early-adopter donated and host OS X hardware for building and testing via the Node.js project's CI 
 system.
 
 **[Scaleway](https://www.scaleway.com/)**, a "BareMetal" SSD cloud server provider, contributes key ARMv7 hardware for test and build for the Node.js CI system.
 
-**[NodeSource](https://nodesource.com/)**, a Node.js enterprise products and services company, donate hardware and hosting for most of the Node.js project's ARM test and build infrastructure.
+**[NodeSource](https://nodesource.com/)**, a Node.js enterprise products and services company, donates hardware and hosting for most of the Node.js project's ARM test and build infrastructure.
 
 **[CloudFlare](https://www.cloudflare.com/)**, a CDN and internet traffic management provider, are responsible for providing fast and always-available access to [nodejs.org](https://nodejs.org).
 
@@ -67,3 +73,4 @@ People
 * Julien Gilli [@misterdjules](https://github.com/misterdjules)
 * Rich Trott [@trott](https://github.com/trott)
 * Myles Borins [@thealphanerd](https://github.com/thealphanerd)
+* Ryan Graham [@rmg](https://github.com/rmg)
