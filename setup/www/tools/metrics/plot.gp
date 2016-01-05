@@ -47,6 +47,7 @@ stats inputdir . "/total.csv" using 3 nooutput
 totalbytes = int(STATS_sum)
 
 set timefmt "%Y-%m-%d"
+set format x "%b-%Y"
 set xdata time
 set style data lines
 set key tc variable
