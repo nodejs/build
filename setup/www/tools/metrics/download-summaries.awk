@@ -3,9 +3,9 @@ BEGIN {
   FPAT = "([^,]*)|(\"[^\"]*\")"
 }
 
-# 1  ,2      ,3     ,4   ,5  ,6  ,7   ,8      ,9 ,10  ,11
-# day,country,region,city,lat,lon,path,version,os,arch,bytes
-# 2015-12-13,US,VA,Ashburn,39.0335,-77.4838,/dist/v0.10.33/node-v0.10.33-linux-x64.tar.gz,v0.10.33,linux,x64,5645609
+# 1  ,2      ,3     ,4   ,5      ,6 ,7   ,8
+# day,country,region,path,version,os,arch,bytes
+# 2015-12-13,US,VA,/dist/v0.10.33/node-v0.10.33-linux-x64.tar.gz,v0.10.33,linux,x64,5645609
 
 # skip headers
 /^day,/ { next }
@@ -16,11 +16,11 @@ BEGIN {
   country_names[$2]++
   countries[day][$2]++
   # take only the semver-minor for versions < 1 and only semver-major for >= 1
-  if ($8 == "") {
+  if ($5 == "") {
     version = "unknown"
   } else {
-    gsub("v", "", $8)
-    split($8, versionSplit, ".") 
+    gsub("v", "", $5)
+    split($5, versionSplit, ".")
     if (versionSplit[1] == 0) {
       version = "0." versionSplit[2]
     } else {
@@ -29,11 +29,11 @@ BEGIN {
   }
   version_names[version] = 1
   versions[day][version]++
-  os_names[$9] = 1
-  oss[day][$9]++
-  arch_names[$10] = 1
-  archs[day][$10]++
-  bytes[day] += $11 / 1024 / 1024
+  os_names[$6] = 1
+  oss[day][$6]++
+  arch_names[$7] = 1
+  archs[day][$7]++
+  bytes[day] += $8 / 1024 / 1024
 }
 
 
