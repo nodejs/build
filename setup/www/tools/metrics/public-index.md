@@ -16,9 +16,9 @@ Raw log files are available in the **[./logs/](./logs/)** sub-directory where ea
 
 There is always a [nodejs.org-access.log.csv](./logs/nodejs.org-access.log.csv) file which represents the _current day's_ data and **is not final**, i.e. it will change from update to update, either appending new data or starting again for a new day. The other log files can be considered final until we decide to adjust the format at some point in the future.
 
-The raw log files are comma-separated value format with the following columns: day, country, region, city, lat, lon, path, version, os, arch, bytes.
+The raw log files are comma-separated value format with the following columns: day, country, region, path, version, os, arch, bytes.
 
-***Country***, ***region***, ***city***, ***lat*** and ***lon*** are calculated by using MaxMind's [GeoLite2 City](http://dev.maxmind.com/geoip/geoip2/geolite2/) database and some entries may contain blank values where the look-up fails. `X-Forwarded-For` headers are used to determine the most likely origin IP address by parsing out the [leftmost non-private address](https://r.va.gg/2011/07/wrangling-the-x-forwarded-for-header.html).
+***Country*** and ***region*** are calculated by using MaxMind's [GeoLite2 City](http://dev.maxmind.com/geoip/geoip2/geolite2/) database and some entries may contain blank values where the look-up fails. `X-Forwarded-For` headers are used to determine the most likely origin IP address by parsing out the [leftmost non-private address](https://r.va.gg/2011/07/wrangling-the-x-forwarded-for-header.html).
 
 The ***path*** field contains the actual path that was requested by the client, with the ***version***, ***os*** and ***arch*** columns calculated from this value.
 
