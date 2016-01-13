@@ -11,7 +11,7 @@ Host iojs-ibm-ppcbe-fedora20-64-2
   HostName 140.211.168.191
   User root
 
-Host iojs-ibm-ppcbe-fedora20-release-64-1
+Host release-osuosl-ubuntu14-ppc64_be-1
   HostName 140.211.168.194
   User root
 ```

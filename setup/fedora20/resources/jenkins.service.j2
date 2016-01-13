@@ -8,16 +8,17 @@ WantedBy=multi-user.target
 
 [Service]
 Type=simple
-User={{user}}
-Environment="USER={{user}}" \
+User={{ server_user }}
+Environment="USER={{ server_user }}" \
             "SHELL=/bin/bash" \
-            "HOME=/home/{{user}}" \
+            "HOME=/home/{{ server_user }}" \
             "PATH=/usr/lib64/ccache:/usr/bin" \
-            "NODE_COMMON_PIPE=/home/{{user}}/test.pipe" \
+            "NODE_COMMON_PIPE=/home/{{ server_user }}/test.pipe" \
+            "JOBS=2" \
             "OSTYPE=linux-gnu"
 ExecStart=/usr/bin/java -Xmx128m \
-          -jar /home/{{user}}/slave.jar \
-          -jnlpUrl https://ci.nodejs.org/computer/{{id}}/slave-agent.jnlp \
+          -jar /home/{{ server_user }}/slave.jar \
+          -jnlpUrl https://ci.nodejs.org/computer/{{ inventory_hostname }}/slave-agent.jnlp \
           -secret {{secret}}
 Restart=always
 RestartSec=30

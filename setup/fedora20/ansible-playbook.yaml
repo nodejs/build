@@ -29,15 +29,6 @@
       service: name=ntpd state=started enabled=yes
       tags: ntp
 
-    - name: General | Increase file descriptor limits
-      lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
-      with_items:
-        - "*         hard    nofile      500000"
-        - "*         soft    nofile      500000"
-        - "root      hard    nofile      500000"
-        - "root      soft    nofile      500000"
-      tags: general
-
     - name: User | Add {{ server_user }} user
       user: name="{{ server_user }}" shell=/bin/bash
       tags: user
@@ -62,21 +53,8 @@
       command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
       tags: jenkins
 
-    - name: Jenkins | Copy jenkins.service systemd config
-      copy: src=./resources/jenkins.service dest=/usr/lib/systemd/system/jenkins.service mode=0644
-      tags: jenkins
-
-    - name: Jenkins | Copy server user to jenkins.service
-      replace: dest=/usr/lib/systemd/system/jenkins.service regexp="\{\{user\}\}" replace="{{ server_user }}"
-      tags: jenkins
-
-    - name: Jenkins | Copy secrets to jenkins.service
-      replace: dest=/usr/lib/systemd/system/jenkins.service regexp="\{\{secret\}\}" replace="{{ server_secret }}"
-      tags: jenkins
-
-    - name: Jenkins | Copy server ids to jenkins.service
-      replace: dest=/usr/lib/systemd/system/jenkins.service regexp="\{\{id\}\}" replace="{{ server_id }}"
-      tags: jenkins
+    - name: Jenkins | Install jenkins.service
+      template: src=./resources/jenkins.service.j2 dest=/lib/systemd/system/jenkins.service
 
     - name: Jenkins | Start Jenkins service
       service: name=jenkins state=started
