@@ -8,7 +8,7 @@ Wut?
 
 The Node.js Build Working Group maintains and controls infrastructure used for continuous integration (CI), releases, benchmarks, web hosting (of [nodejs.org](https://nodejs.org/) and other Node.js web properties) and more.
 
-Our mission is to provide Node.js Foundation projects with solid computing infrastructure in order improve the quality of the software itself by targeting correctness, speed and compatibility and to ensure streamlined delivery of binaries and source code to end-users.
+Our mission is to provide Node.js Foundation projects with solid computing infrastructure in order to improve the quality of the software itself by targeting correctness, speed and compatibility and to ensure streamlined delivery of binaries and source code to end-users.
 
 This repository contains information used to set up and maintain the various pieces of Node.js Foundation infrastructure managed by the Build Working Group. It is intended to be open and transparent, if you see any relevant information missing please open an issue.
 
@@ -33,7 +33,7 @@ The Node.js Foundation's tier-2 infrastructure providers fill essential gaps in 
 
 ![Tier 2 Infrastructure Providers](./provider-logos/tier-2-providers.png)
 
-**[Microsoft Azure](https://azure.microsoft.com/en-us/)**, a cloud services platform, provides Windows test infrastructure for the Node.js CI system.
+**[Microsoft](https://www.microsoft.com/)** provides Windows-related test infrastructure on [Azure](https://azure.microsoft.com) for the Node.js CI system.
 
 **[Joyent](https://www.joyent.com/)**, a public/private cloud infrastructure company, provides SmartOS and other test and build resources for the Node.js CI system.
 
