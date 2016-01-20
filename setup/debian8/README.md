@@ -7,6 +7,8 @@ Host test-rackspace-debian8-x64-1
   HostName 23.253.109.216
 Host test-rackspace-debian8-x64-2
   HostName 104.239.140.184
+Host test-softlayer-debian8-x86-1
+  Hostname 169.44.16.126
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.
