@@ -3,8 +3,8 @@
 For setting up a CentOS 5 box
 
 ```text
-Host iojs-build-centos5-32-1
-  HostName 104.236.81.117
+Host test-digitalocean-centos5-x86-1
+  HostName 192.241.250.186
   User root
 
 Host test-softlayer-centos5-x64-1
