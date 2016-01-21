@@ -7,8 +7,12 @@ Host iojs-build-centos5-32-1
   HostName 104.236.81.117
   User root
 
-Host test-softlayer-centos6-x64-1
+Host test-softlayer-centos5-x64-1
   HostName 50.23.85.252
+  User root
+
+Host test-softlayer-centos5-x64-2
+  Hostname 173.193.25.109
   User root
 
 Host release-softlayer-centos5-x86-1

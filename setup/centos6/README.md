@@ -6,6 +6,9 @@ For setting up a CentOS 6 box
 Host test-softlayer-centos6-x64-1
   HostName 50.23.85.251
   User root
+Host test-softlayer-centos6-x64-2
+  HostName 184.173.120.137
+  User root
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.

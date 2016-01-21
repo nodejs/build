@@ -31,7 +31,7 @@
       tags: vars
 
     - name: General | Download EPEL RPM
-      command: curl -sL http://dl.fedoraproject.org/pub/epel/5/{{ server_arch }}/epel-release-5-4.noarch.rpm -o /tmp/epel-release-5-4.noarch.rpm
+      command: curl -sL http://dl.fedoraproject.org/pub/epel/5/{{ ansible_architecture }}/epel-release-5-4.noarch.rpm -o /tmp/epel-release-5-4.noarch.rpm
       tags: general
 
     - name: General | Install EPEL RPM
@@ -51,7 +51,7 @@
       tags: general
 
     - name: General | Add SLC devtoolset repo GPG key
-      command: rpm --import http://ftp.scientificlinux.org/linux/scientific/5x/{{ server_arch }}/RPM-GPG-KEYs/RPM-GPG-KEY-cern
+      command: rpm --import http://ftp.scientificlinux.org/linux/scientific/5x/{{ ansible_architecture }}/RPM-GPG-KEYs/RPM-GPG-KEY-cern
       tags: general
 
     - name: General | Install required packages
@@ -120,7 +120,7 @@
       copy: src=./resources/jenkins.sysconfig dest=/etc/sysconfig/jenkins owner={{ server_user }} group={{ server_user }} mode=0400
 
     - name: Jenkins | Copy secret to environment
-      replace: dest=/etc/sysconfig/jenkins regexp="\{\{secret\}\}" replace="{{ server_secret }}"
+      replace: dest=/etc/sysconfig/jenkins regexp="\{\{secret\}\}" replace="{{ secret }}"
       tags: jenkins
 
     - name: Jenkins | Copy server id to environment
@@ -128,7 +128,7 @@
       tags: jenkins
 
     - name: Jenkins | Add server_arch to environment
-      replace: dest=/etc/sysconfig/jenkins regexp="\{\{arch\}\}" replace="{{ server_arch }}"
+      replace: dest=/etc/sysconfig/jenkins regexp="\{\{arch\}\}" replace="{{ ansible_architecture }}"
       tags: jenkins
 
     - name: Jenkins | Enable and start init scripts
