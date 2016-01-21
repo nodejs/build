@@ -83,7 +83,7 @@
       tags: jenkins
 
     - name: Jenkins | Copy secret to environment
-      replace: dest=/etc/sysconfig/jenkins regexp="\{\{secret\}\}" replace="{{ server_secret }}"
+      replace: dest=/etc/sysconfig/jenkins regexp="\{\{secret\}\}" replace="{{ secret }}"
       tags: jenkins
 
     - name: Jenkins | Copy server id to environment
