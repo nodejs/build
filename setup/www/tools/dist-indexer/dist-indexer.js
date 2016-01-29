@@ -313,7 +313,8 @@ function dirDate (dir, callback) {
     }
 
     function afterMap (err, mtimes) {
-      mtimes = mtimes.filter(Boolean).sort()
+      mtimes = mtimes.filter(Boolean)
+      mtimes.sort((d1, d2) => d1 < d2 ? -1 : d1 > d2 ? 1 : 0)
       callback(null, mtimes[0])
     }
   })
