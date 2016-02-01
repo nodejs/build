@@ -1,0 +1,25 @@
+#!/bin/ksh
+
+##################################################
+# name: S20jenkins
+# purpose: script that will start or stop jenkins
+##################################################
+
+case "$1" in
+start )
+        su - {{user}} -c 'ulimit -c 0; \
+              export LIBPATH=/opt/freeware/lib:$LIBPATH; \
+              export PATH=/usr/java71_64/jre/bin:$PATH; \
+              export HOME=/home/{{user}}; \
+              export NODE_COMMON_PIPE="$HOME/test.pipe"; \
+              export OSTYPE=AIX61; \
+        java -Xmx128m -jar "$HOME/slave.jar" \
+          -secret {{secret}} \
+          -jnlpUrl https://ci.nodejs.org/computer/{{id}}/slave-agent.jnlp &'
+        ;;
+stop )
+        ;;
+* )
+        echo "Usage: $0 (start | stop)"
+        exit 1
+esac
