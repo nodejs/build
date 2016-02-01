@@ -29,7 +29,7 @@ server {
 
     # let the blog.nodejs.org redirector handle this
     location ~ /blog(.*) {
-      rewrite ^/blog(.*) http://blog.nodejs.org/$1 permanent;
+        rewrite ^/blog(.*) http://blog.nodejs.org/$1 permanent;
     }
 
     location ~ ^/(?!(dist/|dist$|\.json$)) {
@@ -111,9 +111,9 @@ server {
     rewrite ^/2014/06/16/openssl-and-breaking-utf-8-change/$ https://nodejs.org/en/blog/vulnerability/openssl-and-utf8/ permanent;
     rewrite ^/2014/06/11/notes-from-the-road/$ https://nodejs.org/en/blog/uncategorized/notes-from-the-road/ permanent;
 
-    rewrite ^/((atom|feed|rss)(/|\.xml)|(feed))$ https://nodejs.org/en/feed/blog.xml permanent;
     rewrite ^/(feed/)?release/?$                 https://nodejs.org/en/feed/releases.xml permanent;
     rewrite ^/(feed/)?vulnerability/?$           https://nodejs.org/en/feed/vulnerability.xml permanent;
+    rewrite ^/(atom|feed|rss).*$                 https://nodejs.org/en/feed/blog.xml permanent;
 
     rewrite ^/(.*)$ https://nodejs.org/en/blog/ permanent;
 }
