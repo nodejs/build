@@ -1,0 +1,57 @@
+---
+- hosts: iojs-aix61
+
+  remote_user: root
+
+  tasks:
+
+    - include_vars: ansible-vars.yaml
+      tags: vars
+
+    - name: Shells | Add /bin/bash to valid shells
+      script: resources/add_bash.sh  creates=/etc/security/login.cfg.old
+      tags: user
+
+    - name: User | Add {{ server_user }} user
+      user: name="{{ server_user }}" shell=/bin/bash
+      tags: user
+
+    - name: User | Download pubkey(s)
+      get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
+      delegate_to: 127.0.0.1
+      with_items: ssh_users
+      tags: user
+
+    - name: General | Create authorized_keys for root
+      authorized_key: user="root" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+      with_items: ssh_users
+      tags: user
+
+    - name: General | Create authorized_keys for {{ server_user }}
+      authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+      with_items: ssh_users
+      tags: user
+
+    - name: Jenkins | Download Jenkins slave.jar
+      get_url: url=https://ci.nodejs.org/jnlpJars/slave.jar dest=/home/{{ server_user }}/slave.jar validate_certs=no
+      tags: jenkins
+
+    - name: Jenkins | Copy S20jenkins
+      copy: src=./resources/S20jenkins dest=/etc/rc.d/rc2.d
+      tags: jenkins
+
+    - name: Jenkins | Copy certs required to access jenkins/git
+      copy: src=./resources/ca-bundle.crt dest=/home/{{ server_user }}/ca-bundle.crt
+      tags: jenkins
+
+    - name: Jenkins | Copy server user to jenkins.service
+      replace: dest=/etc/rc.d/rc2.d/S20jenkins regexp="\{\{user\}\}" replace="{{ server_user }}"
+      tags: jenkins
+
+    - name: Jenkins | Copy secrets to jenkins.service
+      replace: dest=/etc/rc.d/rc2.d/S20jenkins regexp="\{\{secret\}\}" replace="{{ server_secret }}"
+      tags: jenkins
+
+    - name: Jenkins | Copy server ids to jenkins.service
+      replace: dest=/etc/rc.d/rc2.d/S20jenkins regexp="\{\{id\}\}" replace="{{ inventory_hostname }}"
+      tags: jenkins
