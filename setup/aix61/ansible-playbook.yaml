@@ -16,10 +16,6 @@
       user: name="{{ server_user }}" shell=/bin/bash
       tags: user
 
-    - name: Allow non verified certs for git (tempororary)
-      script: resources/set_git_config.sh
-      tags: user
-
     - name: User | Download pubkey(s)
       get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
       delegate_to: 127.0.0.1
@@ -42,6 +38,10 @@
 
     - name: Jenkins | Copy S20jenkins
       copy: src=./resources/S20jenkins dest=/etc/rc.d/rc2.d
+      tags: jenkins
+
+    - name: Jenkins | Copy certs required to access jenkins/git
+      copy: src=./resources/ca-bundle.crt dest=/home/{{ server_user }}/ca-bundle.crt
       tags: jenkins
 
     - name: Jenkins | Copy server user to jenkins.service
