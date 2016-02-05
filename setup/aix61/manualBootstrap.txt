@@ -20,3 +20,11 @@ installp -agXYd . Java71_64.jre 2>&1 | tee installp.log
 
 wget http://www.oss4aix.org/download/everything/RPMS/make-3.82-1.aix5.3.ppc.rpm
 rpm -i make-3.82-1.aix5.3.ppc.rpm
+
+http://www.bullfreeware.com/affichage.php?id=1458# - libtool and all dependencies
+3149libtool-2.2.7b-1.aix6.1.ppc.rpm-with-deps
+unzip 3149libtool-2.2.7b-1.aix6.1.ppc.rpm-with-deps
+http://www.bullfreeware.com/affichage.php?id=2048
+m4-1.4.17-1.aix6.1.ppc.rpm
+sh install-libtool-rpm.sh
+
