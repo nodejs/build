@@ -28,3 +28,8 @@ http://www.bullfreeware.com/affichage.php?id=2048
 m4-1.4.17-1.aix6.1.ppc.rpm
 sh install-libtool-rpm.sh
 
+Apply this APAR depending on your OS level http://www-01.ibm.com/support/docview.wss?uid=isg1IV46651
+In particular on the default siteox install it required:
+  bos.net.tcp.client 6.1.8.17               # TCP/IP Client Support
+It does have a number of dependencies so we needed the full set of downloads for TL 8 to be able
+to install.
