@@ -16,3 +16,4 @@ packages:
   - libtool
   - curl
   - ccache
+  - subversion

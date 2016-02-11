@@ -12,6 +12,7 @@ packages:
   - libtool
   - curl
   - monit
+  - subversion
 backports_packages:
   - git
   - gcc-4.8

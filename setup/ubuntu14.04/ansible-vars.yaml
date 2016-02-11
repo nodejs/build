@@ -16,3 +16,4 @@ packages:
   - curl
   - ntp
   - ccache
+  - subversion
