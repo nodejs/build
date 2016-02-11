@@ -16,3 +16,4 @@ packages:
   - libtool
   - make
   - ntp
+  - subversion
