@@ -266,6 +266,12 @@ server {
         default_type text/plain;
     }
 
+    location /metrics {
+        alias /home/dist/metrics/;
+        autoindex on;
+        default_type text/plain;
+    }
+
     rewrite ^/about/advisory-board(.*)$                           https://$server_name/en/about/organization/ permanent;
     rewrite ^/advisory-board(.*)$                                 https://$server_name/en/about/organization/ permanent;
     rewrite ^/about/organization/tsc-meetings/?$                  https://$server_name/en/foundation/tsc/minutes/ permanent;
