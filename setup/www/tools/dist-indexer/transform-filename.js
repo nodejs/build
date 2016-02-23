@@ -9,6 +9,7 @@ const assert = require('assert')
         , 'linux-armv6l'     : 'linux-armv6l'
         , 'linux-x64'        : 'linux-x64'
         , 'linux-x86'        : 'linux-x86'
+        , 'linux-ppc64le'    : 'linux-ppc64le'
         , 'sunos-x64'        : 'sunos-x64'
         , 'sunos-x86'        : 'sunos-x86'
         , 'x64.msi'          : 'win-x64-msi'
@@ -97,6 +98,8 @@ if (module === require.main) {
     , { file: 'iojs-v3.0.0-rc.1-linux-x64.tar.xz' }
     , { file: 'iojs-v3.0.0-rc.1-linux-x86.tar.gz', type: 'linux-x86' }
     , { file: 'iojs-v3.0.0-rc.1-linux-x86.tar.xz' }
+    , { file: 'iojs-v3.0.0-rc.1-linux-ppc64le.tar.gz', type: 'linux-ppc64le' }
+    , { file: 'iojs-v3.0.0-rc.1-linux-ppc64le.tar.xz' }
     , { file: 'iojs-v3.0.0-rc.1.pkg', type: 'osx-x64-pkg' }
     , { file: 'iojs-v3.0.0-rc.1.tar.gz', type: 'src' }
     , { file: 'iojs-v3.0.0-rc.1.tar.xz' }
