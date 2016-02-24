@@ -11,6 +11,7 @@ start )
               export LIBPATH=/opt/freeware/lib:$LIBPATH; \
               export PATH=/usr/java71_64/jre/bin:$PATH; \
               export HOME=/home/{{user}}; \
+              export NODE_TEST_DIR=$HOME/tmp; \
               export NODE_COMMON_PIPE="$HOME/test.pipe"; \
               export OSTYPE=AIX61; \
               export GIT_SSL_CAINFO="$HOME/ca-bundle.crt"; \
