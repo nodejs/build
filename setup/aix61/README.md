@@ -6,9 +6,7 @@ For setting up an AIX 61 box
 Host test-ibm-aix61-ppc64-1:18822
   HostName cloud.siteox.com
   User root
-  This machine is a temporary one until we get additional resources at osusol. It is some
-  sort of shared resource where we have to ssh in on a special port which is 18822 for this
-  machine
+  Port 18822
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.
