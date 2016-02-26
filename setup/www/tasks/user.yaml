@@ -93,6 +93,16 @@
     - iojs/docs
   tags: user
 
+- name: User | Insert benchmarking SSH config and key to nodejs
+  copy:
+    src: ./{{ item.src }}
+    dest: /home/nodejs/.ssh/{{ item.dest }}
+    mode: 0600
+  with_file:
+    - { src: resources/secrets/benchmark_id_rsa, dest: benchmark_id_rsa }
+    - { src: resources/config/nodejs_ssh_config, dest: config }
+  tags: user
+
 - name: User | Insert SSH public key to staging
   authorized_key:
     user: "staging"

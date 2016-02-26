@@ -13,6 +13,11 @@
       "event": "push",
       "match": "ref == \"refs/heads/master\" && repository.full_name == \"nodejs/iojs.org\"",
       "exec": "/home/nodejs/build-site.sh iojs"
+    },
+    {
+      "event": "push",
+      "match": "ref == \"refs/heads/master\" && repository.full_name == \"nodejs/benchmarking\"",
+      "exec": "/home/nodejs/build-benchmarking-site.sh"
     }
   ]
 }
