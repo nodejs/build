@@ -1,3 +1,4 @@
 *.crt
 *.key
 *.pem
+secrets/*

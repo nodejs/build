@@ -7,6 +7,7 @@
     - nodejs.org
     - iojs.org
     - libuv.org
+    - benchmarking.nodejs.org
   tags: nginx
 
 - name: nginx | Create nginx config symlinks
@@ -18,6 +19,7 @@
     - { src: nodejs.org, dest: 00-nodejs.org }
     - { src: iojs.org, dest: 01-iojs.org }
     - { src: libuv.org, dest: 02-libuv.org }
+    - { src: benchmarking.nodejs.org, dest: 03-benchmarking.nodejs.org }
   tags: nginx
 
 - name: nginx | Make /etc/nginx/ssl/
