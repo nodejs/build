@@ -15,4 +15,5 @@ git clean -fdx
 git fetch origin
 git checkout origin/master
 
-rsync -avz --delete ${clonedir}/${rsync_from} /home/www/${site}/
+rsync -avz --delete --exclude charts/ ${clonedir}/${rsync_from} /home/www/${site}/
+rsync -avz --delete benchmark:charts/ /home/www/${site}/charts/
