@@ -15,9 +15,6 @@
     - include: tasks/site-setup.yaml
       tags: setup
 
-    - include: tasks/cloudfuse.yaml
-      tags: cloudfuse
-
     - include: tasks/webhook.yaml
       tags: webhook
 
@@ -35,4 +32,3 @@
 
     - include: tasks/latest-linker.yaml
       tags: latest-linker
-
