@@ -62,6 +62,7 @@ iojs-build-containers-2
 iojs-build-armv7-wheezy-1
 iojs-build-armv7-wheezy-2
 iojs-release-armv7-wheezy-1
+release-scaleway-debian7-arm-1
 
 [iojs-raspbian]
 iojs-ns-pi1p-1
