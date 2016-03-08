@@ -28,6 +28,23 @@ http://www.bullfreeware.com/affichage.php?id=2048
 m4-1.4.17-1.aix6.1.ppc.rpm
 sh install-libtool-rpm.sh
 
+# install ccache based on these instructions ./setup/ansible-tasks/ccache.yaml
+# we should update that script so that it can be used on AIX as well
+# also currently requires the fix outlined here: https://bugzilla.samba.org/show_bug.cgi?id=11519
+# to be applied manually before the compile
+cd /tmp
+wget http://samba.org/ftp/ccache/ccache-3.2.4.tar.gz
+gunzip ccache-3.2.4.tar.gz
+tar -xvf ccache-3.2.4.tar.gz
+cd ccache-3.2.4
+gmake
+install -c -m 755 ccache /usr/lib
+ln -s /usr/lib/ccache/cc /usr/lib/ccache
+ln -s /usr/lib/ccache/g++ /usr/lib/ccache
+ln -s /usr/lib/ccache/gcc /usr/lib/ccache
+rm ccache-3.2.4.tar
+rm -rf ccache-3.2.4
+
 Apply this APAR depending on your OS level http://www-01.ibm.com/support/docview.wss?uid=isg1IV46651
 In particular on the default siteox install it required:
   bos.net.tcp.client 6.1.8.17               # TCP/IP Client Support

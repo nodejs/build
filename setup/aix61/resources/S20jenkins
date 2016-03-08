@@ -5,11 +5,13 @@
 # purpose: script that will start or stop jenkins
 ##################################################
 
+
 case "$1" in
 start )
         su - {{user}} -c 'ulimit -c 0; \
+              export jenkins_log_file="/home/{{user}}/jenkins_console.log"
               export LIBPATH=/opt/freeware/lib:$LIBPATH; \
-              export PATH=/usr/java71_64/jre/bin:$PATH; \
+              export PATH=/usr/lib/ccache:/usr/java71_64/jre/bin:$PATH; \
               export HOME=/home/{{user}}; \
               export NODE_TEST_DIR=$HOME/tmp; \
               export NODE_COMMON_PIPE="$HOME/test.pipe"; \
@@ -17,7 +19,7 @@ start )
               export GIT_SSL_CAINFO="$HOME/ca-bundle.crt"; \
         java -Xmx128m -jar "$HOME/slave.jar" \
           -secret {{secret}} \
-          -jnlpUrl https://ci.nodejs.org/computer/{{id}}/slave-agent.jnlp &'
+          -jnlpUrl https://ci.nodejs.org/computer/{{id}}/slave-agent.jnlp >$jenkins_log_file 2>&1 &'
         ;;
 stop )
         ;;
