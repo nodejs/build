@@ -16,3 +16,4 @@ packages:
   - ntp
   - ccache
   - which
+  - svn
