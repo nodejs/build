@@ -8,7 +8,7 @@
   register: ccache_version
 
 - name: CCache | Download ccache-{{ version }}
-  get_url: url=http://samba.org/ftp/ccache/ccache-{{ version }}.tar.gz dest=/tmp/
+  get_url: url=https://www.samba.org/ftp/ccache/ccache-{{ version }}.tar.gz dest=/tmp/
   register: new_archive
   when: ccache_version.stdout.find('{{ version }}') == -1
 

@@ -7,7 +7,7 @@ packages:
   - automake
   - libtool
   - curl
-  - gcc-4.8
-  - g++-4.8
+  - lsb-release
+  - vim
 nfs_server: 192.168.2.3
 nfs_share_root: /mnt/ssd-export/nodejs/pi

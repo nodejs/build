@@ -1,6 +1,6 @@
 ---
 - hosts: iojs-raspbian
-  sudo: yes
+  become: true
 
   tasks:
 
@@ -17,6 +17,33 @@
         upgrade: dist
       tags: general
 
+    # do this early to speed up login for subsequent actions
+    - name: SSH | Remove DNS lookup for login
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        line: "{{ item }}"
+      with_items:
+        - "VerifyReverseMapping no"
+        - "UseDNS no"
+      tags: ssh
+
+    - name: SSH | Restart ssh service
+      service: name=ssh state=restarted enabled=yes
+      tags: init
+
+    - name: General | Set up 1024M dphys-swapfile
+      lineinfile:
+        dest: /etc/dphys-swapfile
+        state: present
+        regexp: '^(\s*)CONF_SWAPSIZE=1024(\s*)$'
+        line: 'CONF_SWAPSIZE=1024'
+      tags: general
+
+    - name: General | Set up 1024M dphys-swapfile
+      shell: dphys-swapfile swapoff && dphys-swapfile setup && dphys-swapfile swapon
+      become_user: root
+      tags: general
+
     - name: General | Install required packages
       apt:
         name: "{{ item }}"
@@ -25,35 +52,65 @@
       with_items: packages
       tags: general
 
-    - name: General | update-alternatives for gcc
+    - name: gcc | Install gcc 4.8
+      when: ansible_distribution_release == 'wheezy'
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+        state: latest
+      with_items:
+        - gcc-4.8
+        - g++-4.8
+      tags: gcc
+
+    - name: gcc | Install gcc 4.9
+      when: ansible_distribution_release == 'jessie'
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+        state: latest
+      with_items:
+        - gcc-4.9
+        - g++-4.9
+      tags: gcc
+
+    - name: gcc | update-alternatives for gcc 4.8
+      when: ansible_distribution_release == 'wheezy'
       alternatives:
         name: "{{ item.link }}"
         link: "/usr/bin/{{ item.link }}"
         path: "/usr/bin/{{ item.path }}"
       with_items:
         - { link: 'gcc', path: 'gcc-4.8' }
-        - { link: 'cc', path: 'gcc-4.8' }
+        - { link: 'cc',  path: 'gcc-4.8' }
         - { link: 'g++', path: 'g++-4.8' }
         - { link: 'c++', path: 'g++-4.8' }
         - { link: 'cpp', path: 'g++-4.8' }
-      tags: general
+      tags: gcc
 
-    - name: General | Increase file descriptor limits
-      lineinfile:
-        dest: /etc/security/limits.conf
-        line: "{{ item }}"
+    - name: gcc | update-alternatives for gcc 4.9
+      when: ansible_distribution_release == 'jessie'
+      alternatives:
+        name: "{{ item.link }}"
+        link: "/usr/bin/{{ item.link }}"
+        path: "/usr/bin/{{ item.path }}"
       with_items:
-        - "*         hard    nofile      500000"
-        - "*         soft    nofile      500000"
-        - "root      hard    nofile      500000"
-        - "root      soft    nofile      500000"
-      tags: general
+        - { link: 'gcc', path: 'gcc-4.9' }
+        - { link: 'cc',  path: 'gcc-4.9' }
+        - { link: 'g++', path: 'g++-4.9' }
+        - { link: 'c++', path: 'g++-4.9' }
+        - { link: 'cpp', path: 'g++-4.9' }
+      tags: gcc
 
     - name: User | Add {{ server_user }} user
       user:
         name: "{{ server_user }}"
         shell: /bin/bash
       tags: user
+
+    - name: NFS | Enable rpcbind service
+      service: name=rpcbind state=started enabled=yes
+      tags: init
 
     - name: NFS | Make NFS mounted directories
       file:
@@ -67,48 +124,31 @@
       ignore_errors: True
       tags: nfs
 
-    - name: NFS | Add directories to /etc/fstab
-      lineinfile:
-        dest: /etc/fstab
-        line: "{{ item }}"
-      with_items:
-        - "{{ nfs_server }}:{{ nfs_share_root }}/.ccache /home/{{ server_user }}/.ccache nfs defaults 0 1"
-        - "{{ nfs_server }}:{{ nfs_share_root }}/{{ server_id }} /home/{{ server_user }}/build nfs defaults 0 1"
-      tags: nfs
-
     - name: NFS | Mount all
-      command: mount -a
+      mount:
+        name: "/home/{{ server_user }}/{{ item.dst }}"
+        src: "{{ nfs_server }}:{{ nfs_share_root }}/{{ item.src }}"
+        fstype: nfs
+        state: mounted
+      with_items:
+        - { src: '.ccache', dst: '.ccache' }
+        - { src: '{{ server_id }}', dst: 'build' }
       tags: nfs
-
-    - name: Jenkins | Download Jenkins' slave.jar to {{ server_user }}
-      command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
-      tags: jenkins
 
     - name: Jenkins | Copy start.sh script
-      copy:
-        src: "./resources/start.sh"
+      template:
+        src: "./resources/start.j2"
         dest: "/home/{{ server_user }}/start.sh"
         owner: "{{ server_user }}"
         group: "{{ server_user }}"
         mode: 0755
       tags: jenkins
 
-    - name: Jenkins | Copy variables to start.sh script
-      replace:
-        dest: "/home/{{ server_user }}/start.sh"
-        regexp: "{{ item.regexp }}"
-        replace: "{{ item.replace }}"
-      with_items:
-        - { regexp: '\{\{server_secret\}\}', replace: '{{ server_secret }}' }
-        - { regexp: '\{\{server_id\}\}', replace: '{{ server_id }}' }
-        - { regexp: '\{\{server_suffix\}\}', replace: '{{ server_suffix }}' }
-        - { regexp: '\{\{server_arch\}\}', replace: '{{ server_arch }}' }
-      tags: jenkins
-
-    - include: ../ansible-tasks/ccache.yaml version=3.2.3
+    - name: ccache | Install ccache
+      include: ../ansible-tasks/ccache.yaml version=3.2.4
       tags: ccache
 
-    - include: ../ansible-tasks/git.yaml version=2.5.0
+    - include: ../ansible-tasks/git.yaml version=2.8.1
       tags: git
 
     - include: ../ansible-tasks/monit.yaml monit_conf_file=../ansible-tasks/resources/monit-jenkins.conf
