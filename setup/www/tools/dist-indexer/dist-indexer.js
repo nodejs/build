@@ -28,7 +28,10 @@ const fs         = require('fs')
         , `${githubContentUrl}/deps/uv/src/version.c`
         , `${githubContentUrl}/deps/uv/include/uv.h`
       ]
-    , sslVersionUrl    = `${githubContentUrl}/deps/openssl/openssl/Makefile`
+    , sslVersionUrl    = [
+          `${githubContentUrl}/deps/openssl/openssl/include/openssl/opensslv.h`
+        , `${githubContentUrl}/deps/openssl/openssl/Makefile`
+      ]
     , zlibVersionUrl   = `${githubContentUrl}/deps/zlib/zlib.h`
     , modVersionUrl    = [
           `${githubContentUrl}/src/node_version.h`
@@ -71,8 +74,9 @@ function cacheGet (gitref, prop) {
 
 
 function cachePut (gitref, prop, value) {
-  if (prop && (value || value === false))
+  if (prop && (value || value === false)) {
     (versionCache[gitref] || (versionCache[gitref] = {}))[prop] = value
+  }
 }
 
 
@@ -215,15 +219,30 @@ function fetchSslVersion (gitref, callback) {
   if (version || (/^v0\.([01234]\.\d+|5\.[0-4])$/).test(gitref))
     return setImmediate(callback.bind(null, null, version))
 
-  fetch(sslVersionUrl, gitref, function (err, rawData) {
+  fetch(sslVersionUrl[0], gitref, function (err, rawData) {
     if (err)
       return callback(err)
 
-    var m = rawData.match(/^VERSION=(.+)$/m)
+    var m = rawData.match(/^#\s*define OPENSSL_VERSION_TEXT\s+"OpenSSL ([^\s]+)/m)
     version = m && m[1]
-    cachePut(gitref, 'ssl', version)
 
-    callback(null, version)
+    if (version) {
+      version = version.replace(/-fips$/, '')
+      cachePut(gitref, 'ssl', version)
+
+      return callback(null, version)
+    }
+
+    fetch(sslVersionUrl[1], gitref, function (err, rawData) {
+      if (err)
+        return callback(err)
+
+      var m = rawData.match(/^VERSION=(.+)$/m)
+      version = m && m[1]
+      cachePut(gitref, 'ssl', version)
+
+      callback(null, version)
+    })
   })
 }
 
