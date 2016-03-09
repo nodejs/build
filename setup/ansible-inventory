@@ -121,3 +121,6 @@ test-digitalocean-freebsd10-x64-2
 [iojs-linter]
 lint-joyent-freebsd10-x64-1
 lint-digitalocean-freebsd10-x64-1
+
+[iojs-aix61]
+test-ibm-aix61-ppc64-1:18822
