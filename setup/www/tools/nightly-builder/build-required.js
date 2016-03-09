@@ -13,7 +13,7 @@ function timeString () {
 }
 
 
-function buildRequired (type, ref, force, callback) {
+function buildRequired (type, ref, force, config, callback) {
   let done = after(2, onData)
     , build
     , commit
@@ -39,7 +39,7 @@ function buildRequired (type, ref, force, callback) {
     done(err)
   })
 
-  latestCommit(type, ref, function (err, data) {
+  latestCommit(type, ref, config, function (err, data) {
     commit = data
     done(err)
   })
