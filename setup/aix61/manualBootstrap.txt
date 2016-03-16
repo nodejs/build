@@ -45,6 +45,13 @@ ln -s /usr/lib/ccache/gcc /usr/lib/ccache
 rm ccache-3.2.4.tar
 rm -rf ccache-3.2.4
 
+# install svn, only needed for v8 testing
+http://www.bullfreeware.com/affichage.php?id=1810#
+subversion-1.8.0-1.aix6.1.ppc.rpm-with-deps.zip
+unzip subversion-1.8.0-1.aix6.1.ppc.rpm-with-deps.zip
+sh install-subversion-rpm.sh
+
+
 Apply this APAR depending on your OS level http://www-01.ibm.com/support/docview.wss?uid=isg1IV46651
 In particular on the default siteox install it required:
   bos.net.tcp.client 6.1.8.17               # TCP/IP Client Support
