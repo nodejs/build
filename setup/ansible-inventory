@@ -124,3 +124,7 @@ lint-digitalocean-freebsd10-x64-1
 
 [iojs-aix61]
 test-ibm-aix61-ppc64-1:18822
+
+[iojs-build-rhel72-linuxonecc]
+test-linuxonecc-rhel72-s390x-1
+test-linuxonecc-rhel72-s390x-2
