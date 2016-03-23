@@ -21,61 +21,18 @@
       command: ntpdate -u pool.ntp.org
       tags: ntp
 
-    - name: NTP | Enable NTP
-      command: chkconfig ntpd on
-      tags: ntp
-
     - name: NTP | Start NTP
       service: name=ntpd state=started enabled=yes
       tags: ntp
 
-    - name: General | Increase file descriptor limits
-      lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
-      with_items:
-        - "*         hard    nofile      500000"
-        - "*         soft    nofile      500000"
-        - "root      hard    nofile      500000"
-        - "root      soft    nofile      500000"
-      tags: general
+    - name: User | create file system on larger disk
+      filesystem: fstype=ext4 dev=/dev/dasdb1
+
+    - name: User | ensure larger disk is mounted
+      mount: name=/data src=/dev/dasdb1 fstype=ext4 state=mounted
 
     - name: User | Add {{ server_user }} user
-      user: name="{{ server_user }}" shell=/bin/bash
-      tags: user
-
-    - name: User | check if larger disk has file system 
-      command: file -s /dev/dasdb1
-      register: result
-      tags: user
-
-    - name: User | create file system on larger disk
-      command: mkfs.ext4 -L /data /dev/dasdb1
-      when: 'result.stdout == "/dev/dasdb1: data"'
-      tags: user
-
-    - name: User | create mount for larger disk
-      command: mkdir /data creates=/data
-      tags: user
-
-    - name: User | add mount to fstab
-      lineinfile: dest=/etc/fstab
-                  regexp='^'
-                  line='/dev/dasdb1                          /data                   ext4    defaults        0 0'
-                  state=present
-
-    - name: User | mount larger disk
-      command: mount /data creates=/data/mounted
-      tags: user
-
-    - name: User | create marker on mount so we can tell if mounted
-      command: mkdir /data/mounted creates=/data/mounted
-      tags: user
-
-    - name: User | move home directory over to new location
-      command: mv /home/iojs /data/iojs creates=/data/iojs
-      tags: user
-
-    - name: User | create symbolic link to new location
-      command: ln -s /data/iojs /home/iojs creates=/home/iojs
+      user: name="{{ server_user }}" shell=/bin/bash home=/data/iojs
       tags: user
 
     - name: User | Download pubkey(s)
@@ -94,26 +51,14 @@
       with_items: ssh_users
       tags: user
 
-    - name: Jenkins | Download Jenkins' slave.jar
-      command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
+    - name: Jenkins | Download Jenkins slave.jar
+      get_url: url=https://ci.nodejs.org/jnlpJars/slave.jar dest=/data/{{ server_user }}/slave.jar
       tags: jenkins
 
-    - name: Jenkins | Copy jenkins.service systemd config
-      copy: src=./resources/jenkins.service dest=/usr/lib/systemd/system/jenkins.service mode=0644
-      tags: jenkins
-
-    - name: Jenkins | Copy server user to jenkins.service
-      replace: dest=/usr/lib/systemd/system/jenkins.service regexp="\{\{user\}\}" replace="{{ server_user }}"
-      tags: jenkins
-
-    - name: Jenkins | Copy secrets to jenkins.service
-      replace: dest=/usr/lib/systemd/system/jenkins.service regexp="\{\{secret\}\}" replace="{{ server_secret }}"
-      tags: jenkins
-
-    - name: Jenkins | Copy server ids to jenkins.service
-      replace: dest=/usr/lib/systemd/system/jenkins.service regexp="\{\{id\}\}" replace="{{ server_id }}"
-      tags: jenkins
+    - name: Init | Generate and copy init script
+      template: src=./resources/jenkins.service.j2 dest=/usr/lib/systemd/system/jenkins.service mode=0644
+      tags: init
 
     - name: Jenkins | Start Jenkins service
-      service: name=jenkins state=started
+      service: name=jenkins state=started enabled=yes
       tags: jenkins
