@@ -1,0 +1,18 @@
+---
+server_user: iojs
+ssh_users:
+  - rvagg
+  - wblankenship
+  - jbergstroem
+  - joaocgreis
+packages:
+  - java-1.8.0-openjdk
+  - git
+  - gcc
+  - gcc-c++
+  - make
+  - automake
+  - libtool
+  - ntp
+  - svn
+additional_drive: /dev/dasdb1
