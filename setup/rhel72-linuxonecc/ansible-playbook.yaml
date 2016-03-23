@@ -26,10 +26,10 @@
       tags: ntp
 
     - name: User | create file system on larger disk
-      filesystem: fstype=ext4 dev=/dev/dasdb1
+      filesystem: fstype=ext4 dev={{ additional_drive }}
 
     - name: User | ensure larger disk is mounted
-      mount: name=/data src=/dev/dasdb1 fstype=ext4 state=mounted
+      mount: name=/data src={{ additional_drive }} fstype=ext4 state=mounted
 
     - name: User | Add {{ server_user }} user
       user: name="{{ server_user }}" shell=/bin/bash home=/data/iojs

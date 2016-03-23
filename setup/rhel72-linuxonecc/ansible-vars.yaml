@@ -15,3 +15,4 @@ packages:
   - libtool
   - ntp
   - svn
+additional_drive: /dev/dasdb1
