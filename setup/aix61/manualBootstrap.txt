@@ -51,6 +51,18 @@ subversion-1.8.0-1.aix6.1.ppc.rpm-with-deps.zip
 unzip subversion-1.8.0-1.aix6.1.ppc.rpm-with-deps.zip
 sh install-subversion-rpm.sh
 
+#enable the aha fs by adding the following to /etc/filesystems
+
+/aha:
+        dev             = /aha
+        vfs             = ahafs
+        mount           = true
+        vol             = /aha
+
+then either reboot or run
+
+mount /aha
+
 
 Apply this APAR depending on your OS level http://www-01.ibm.com/support/docview.wss?uid=isg1IV46651
 In particular on the default siteox install it required:
