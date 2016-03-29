@@ -41,6 +41,18 @@
       with_items: ssh_users
       tags: user
 
+    - name: Firewall | add basic rule to allow communication locally
+      lineinfile: dest=/etc/sysconfig/iptables insertafter=":OUTPUT ACCEPT.*]" line="-A INPUT -s 127.0.0.1/32 -d 127.0.0.1/32 -j ACCEPT"
+      tags: firewall
+
+    - name: Firewall | add additional rule to allow communication from 127.0.0.2
+      lineinfile: dest=/etc/sysconfig/iptables insertafter=":OUTPUT ACCEPT.*]" line="-A INPUT -s 127.0.0.2/32 -d 127.0.0.1/32 -j ACCEPT"
+      tags: firewall
+
+    - name: Firewall | make the new firewall rules take effect
+      command: systemctl restart iptables
+      tags: firewall
+
     - name: General | Create authorized_keys for root
       authorized_key: user="root" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
       with_items: ssh_users
