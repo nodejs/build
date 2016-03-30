@@ -12,7 +12,7 @@ User={{ server_user }}
 Environment="USER={{ server_user }}" \
             "SHELL=/bin/bash" \
             "HOME=/data/{{ server_user }}" \
-            "PATH=/usr/lib64/ccache:/usr/bin" \
+            "PATH=/usr/local/bin:/usr/bin" \
             "NODE_COMMON_PIPE=$HOME/test.pipe" \
             "NODE_TEST_DIR=$HOME/tmp" \
             "JOBS={{ ansible_processor_cores }}" \
