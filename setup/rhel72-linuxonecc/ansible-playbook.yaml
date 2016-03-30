@@ -17,6 +17,10 @@
       with_items: packages
       tags: general
 
+    - name: ccache | Install ccache
+      include: ../ansible-tasks/ccache.yaml version=3.2.4
+      tags: ccache
+
     - name: NTP | Run initial NTP
       command: ntpdate -u pool.ntp.org
       tags: ntp
