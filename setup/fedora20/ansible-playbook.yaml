@@ -33,22 +33,6 @@
       user: name="{{ server_user }}" shell=/bin/bash
       tags: user
 
-    - name: User | Download pubkey(s)
-      get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
-      delegate_to: 127.0.0.1
-      with_items: ssh_users
-      tags: user
-
-    - name: General | Create authorized_keys for root
-      authorized_key: user="root" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
-      with_items: ssh_users
-      tags: user
-
-    - name: General | Create authorized_keys for {{ server_user }}
-      authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
-      with_items: ssh_users
-      tags: user
-
     - name: Jenkins | Download Jenkins' slave.jar
       command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
       tags: jenkins

@@ -1,11 +1,5 @@
 ---
 server_user: iojs
-ssh_users:
-  - rvagg
-  - wblankenship
-  - jbergstroem
-  - kenperkins
-  - joaocgreis
 packages:
   - ntp
   - openjdk-7-jre

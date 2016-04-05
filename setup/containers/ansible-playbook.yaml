@@ -40,22 +40,6 @@
       user: name="{{ server_user }}" shell=/bin/bash
       tags: user
 
-    - name: User | Download pubkey(s)
-      get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
-      delegate_to: 127.0.0.1
-      with_items: ssh_users
-      tags: user
-
-    - name: General | Create authorized_keys for root
-      authorized_key: user="root" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
-      with_items: ssh_users
-      tags: user
-
-    - name: General | Create authorized_keys for {{ server_user }}
-      authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
-      with_items: ssh_users
-      tags: user
-
     - name: Docker | Set up docker.io
       command: sh -c 'curl -sL http://get.docker.io/ | bash -'
       tags: docker
@@ -76,12 +60,11 @@
       copy: src=./resources/start.sh dest=/home/{{ server_user }}/start.sh owner={{ server_user }} group={{ server_user }} mode=0755
       tags: jenkins
 
-    - name: Jenkins | Copy secrets to start.sh script 
+    - name: Jenkins | Copy secrets to start.sh script
       replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{iojs-{{ item.key }}-secret\}\}" replace="{{ item.value.secret }}"
       with_dict: distributions
       tags: jenkins
 
-    - name: Jenkins | Copy server ids to start.sh script 
+    - name: Jenkins | Copy server ids to start.sh script
       replace: dest=/home/{{ server_user }}/start.sh regexp="\{\{id\}\}" replace="{{ server_id }}"
       tags: jenkins
-

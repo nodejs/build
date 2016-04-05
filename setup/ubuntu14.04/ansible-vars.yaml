@@ -1,11 +1,5 @@
 ---
 server_user: iojs
-ssh_users:
-  - rvagg
-  - wblankenship
-  - ryanstevens
-  - mhdawson
-  - joaocgreis
 packages:
   - openjdk-7-jre
   - git
