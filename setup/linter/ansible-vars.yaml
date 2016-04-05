@@ -1,10 +1,6 @@
 ---
 server_user: iojs
 init_script_path: /usr/local/etc/rc.d/jenkins
-ssh_users:
-  - rvagg
-  - jbergstroem
-  - joaocgreis
 packages:
   - openjdk
   - git

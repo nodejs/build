@@ -55,22 +55,6 @@
         shell: /bin/bash
       tags: user
 
-    - name: User | Download pubkey(s)
-      get_url:
-        url: "https://github.com/{{ item }}.keys"
-        dest: "/tmp/{{ item }}.keys"
-      with_items: ssh_users
-      tags: user
-
-    - name: General | Create authorized_keys for {{ server_user }}
-      authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
-      with_items: ssh_users
-      tags: user
-
-    - name: Jenkins | Download Jenkins' slave.jar to {{ server_user }}
-      command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
-      tags: jenkins
-
     - name: NFS | Make NFS mounted directories
       file:
         path: "/home/{{ server_user }}/{{ item }}"
@@ -129,4 +113,3 @@
 
     - include: ../ansible-tasks/monit.yaml monit_conf_file=../ansible-tasks/resources/monit-jenkins.conf
       tags: monit
-

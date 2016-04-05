@@ -1,8 +1,2 @@
 ---
 server_user: iojs
-ssh_users:
-  - rvagg
-  - wblankenship
-  - ryanstevens
-  - joaocgreis
-  - mhdawson

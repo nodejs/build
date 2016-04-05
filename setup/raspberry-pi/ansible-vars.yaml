@@ -1,9 +1,5 @@
 ---
 server_user: iojs
-ssh_users:
-  - rvagg
-  - orangemocha
-  - jbergstroem
 packages:
   - openjdk-7-jre
   - python-all
