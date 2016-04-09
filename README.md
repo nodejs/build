@@ -3,8 +3,8 @@ Node.js Build Working Group
 
 Chat with us! We use IRC: [#node-build at Freenode](irc://irc.freenode.net/node-build)
 
-Wut?
-----
+Purpose
+-------
 
 The Node.js Build Working Group maintains and controls infrastructure used for continuous integration (CI), releases, benchmarks, web hosting (of [nodejs.org](https://nodejs.org/) and other Node.js web properties) and more.
 
