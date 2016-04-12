@@ -43,6 +43,8 @@ test-digitalocean-ubuntu14-x86-1
 test-digitalocean-ubuntu14-x64-1
 release-osuosl-ubuntu14-ppc64_le-1
 test-osuosl-ubuntu14-ppc64_be-1
+test-osuosl-ubuntu14-ppc64_be-2
+release-osuosl-ubuntu14-ppc64_be-1
 
 [iojs-build-ubuntu1204]
 test-digitalocean-ubuntu12-x64-1

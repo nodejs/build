@@ -24,6 +24,10 @@ Host release-osuosl-ubuntu14-ppc64_le-1
   HostName 140.211.168.188
 Host test-osuosl-ubuntu14-ppc64_be-1
   HostName 140.211.168.3
+Host test-osuosl-ubuntu14-ppc64_be-2
+  HostName 140.211.168.4
+Host release-osuosl-ubuntu14-ppc64_be-1
+  HostName 140.211.168.5
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.
