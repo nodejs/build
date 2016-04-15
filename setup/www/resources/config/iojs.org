@@ -8,25 +8,23 @@ server {
 server {
     listen [::]:443 ssl spdy;
     listen *:443 ssl spdy;
-    server_name iojs.org www.iojs.org;
+    server_name www.iojs.org;
 
     ssl_certificate ssl/iojs_chained.crt;
     ssl_certificate_key ssl/iojs.key;
     ssl_trusted_certificate ssl/iojs_chained.crt;
-    ssl_dhparam ssl/dhparam.pem;
 
-    ssl_ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS;
-    ssl_prefer_server_ciphers on;
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    return 301 https://iojs.org$request_uri;
+}
 
-    ssl_session_cache shared:iojs:10m;
-    ssl_session_timeout 24h;
+server {
+    listen [::]:443 ssl spdy;
+    listen *:443 ssl spdy;
+    server_name iojs.org;
 
-    ssl_stapling on;
-    ssl_stapling_verify on;
-
-    spdy_keepalive_timeout 300;
-    spdy_headers_comp 9;
+    ssl_certificate ssl/iojs_chained.crt;
+    ssl_certificate_key ssl/iojs.key;
+    ssl_trusted_certificate ssl/iojs_chained.crt;
 
     keepalive_timeout 60;
     server_tokens off;
@@ -45,10 +43,6 @@ server {
     gzip_static on;
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
-
-    if ($host ~* ^www\.){
-        rewrite ^(.*)$ https://iojs.org$1;
-    }
 
     root /home/www/iojs;
     default_type text/plain;

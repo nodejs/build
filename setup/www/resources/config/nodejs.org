@@ -62,7 +62,7 @@ server {
     listen [::]:80;
     server_name www.nodejs.org;
 
-    rewrite ^(.*)$ http://nodejs.org$1;
+    return 301 https://nodejs.org$request_uri;
 }
 
 server {
@@ -126,53 +126,51 @@ server {
     listen *:80;
     server_name doc.nodejs.org docs.nodejs.org;
 
-    rewrite ^/(.*)$ https://nodejs.org/en/docs/ permanent;
+    return 301 https://nodejs.org/en/docs/;
 }
 
 server {
     listen *:80;
     server_name api.nodejs.org;
 
-    rewrite ^/(.*)$ https://nodejs.org/api/ permanent;
+    return 301 https://nodejs.org/api/;
 }
 
 server {
     listen *:80;
     server_name dist.nodejs.org;
 
-    rewrite ^/(.*)$ https://nodejs.org/dist/ permanent;
+    return 301 https://nodejs.org/dist/;
 }
 
 server {
     listen *:80;
     server_name interactive.nodejs.org;
 
-    rewrite ^(.*)$ http://events.linuxfoundation.org/events/node-interactive permanent;
+    return 301 http://events.linuxfoundation.org/events/node-interactive;
+}
+
+server {
+    listen *:443 ssl spdy;
+    listen [::]:443 ssl spdy;
+    server_name www.nodejs.org;
+
+    return 301 https://nodejs.org$request_uri;
+}
+
+server {
+    listen *:443 ssl spdy;
+    listen [::]:443 ssl spdy;
+    server_name blog.nodejs.org;
+
+    return 301 http://blog.nodejs.org$request_uri;
 }
 
 server {
     listen *:443 default_server ssl spdy;
     listen [::]:443 default_server ipv6only=on ssl spdy;
 
-    server_name nodejs.org www.nodejs.org new.nodejs.org;
-
-    ssl_certificate ssl/nodejs_chained.crt;
-    ssl_certificate_key ssl/nodejs.key;
-    ssl_trusted_certificate ssl/nodejs_chained.crt;
-    ssl_dhparam ssl/dhparam.pem;
-
-    ssl_ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS;
-    ssl_prefer_server_ciphers on;
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-
-    ssl_session_cache shared:SSL:10m;
-    ssl_session_timeout 24h;
-
-    ssl_stapling on;
-    ssl_stapling_verify on;
-
-    spdy_keepalive_timeout 300;
-    spdy_headers_comp 9;
+    server_name nodejs.org;
 
     keepalive_timeout 60;
     server_tokens off;
@@ -194,24 +192,6 @@ server {
 
     error_page 404 /en/404.html;
 
-    if ($host ~* ^www\.) {
-        rewrite ^(.*)$ https://nodejs.org$1;
-    }
-
-    if ($host ~* ^new\.) {
-        rewrite ^(.*)$ https://nodejs.org$1;
-    }
-
-    if ($host ~* ^blog\.) {
-        # keep the blog rewrites in the blog.nodejs.org:80 config
-        # and shunt blog.nodejs.org:443 requests through there
-        rewrite ^(.*)$ http://blog.nodejs.org$1;
-    }
-
-    location /documentation/ {
-        rewrite ^/documentation/api(.*)$ /api$1 permanent;
-    }
-
     root /home/www/nodejs;
     default_type text/plain;
     index index.html;
@@ -222,6 +202,10 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+    }
+
+    location /documentation/ {
+        rewrite ^/documentation/api(.*)$ /api$1 permanent;
     }
 
     location /download {

@@ -41,6 +41,13 @@
     - dhparam.pem
   tags: nginx
 
+- name: nginx | Install shared ssl defaults
+  copy:
+    src: ./resources/config/ssl-defaults.conf
+    dest: /etc/nginx/conf.d/ssl-defaults.conf
+    mode: 0644
+  tags: nginx
+
 - name: nginx | Delete default config
   file:
     path: /etc/nginx/sites-enabled/default
