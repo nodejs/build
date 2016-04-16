@@ -1,6 +1,5 @@
 ---
 server_user: iojs
-init_script_path: /usr/local/etc/rc.d/jenkins
 packages:
   - openjdk-jre
   - git
