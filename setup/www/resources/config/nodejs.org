@@ -392,4 +392,5 @@ server {
     rewrite ^/images/(.*)                                         https://$server_name/static/images/$1 permanent;
 
     rewrite ^/windows-environment$                                https://github.com/nodejs/node/wiki/Windows-Environment permanent;
+    rewrite ^/en/docs/es6/                                        http://node.green permanent;
 }
