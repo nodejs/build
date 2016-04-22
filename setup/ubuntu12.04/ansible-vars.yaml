@@ -8,6 +8,8 @@ packages:
   - python-software-properties
   - automake
   - libtool
+  - lldb-3.6
+  - lldb-3.6-dev
   - curl
   - gcc-4.8
   - g++-4.8
