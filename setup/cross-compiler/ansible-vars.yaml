@@ -9,6 +9,8 @@ packages:
   - openjdk-7-jre
   - git
   - build-essential
+  - gcc-multilib
+  - g++-multilib
   - python-all
   - python-software-properties
   - automake
