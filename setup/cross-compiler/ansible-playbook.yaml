@@ -46,8 +46,12 @@
       git: repo=https://github.com/raspberrypi/tools.git dest=/opt/raspberrypi/tools
       tags: raspberry
 
-    - name: Raspberry | Copy set-rpi-cc.sh script
-      copy: src=./resources/set-rpi-cc.sh dest=/opt/raspberrypi/set-rpi-cc.sh mode=0755
+    - name: Raspberry | Copy cc-armv6.sh script
+      copy: src=./resources/cc-armv6.sh dest=/opt/raspberrypi/cc-armv6.sh mode=0755
+      tags: raspberry
+
+    - name: Raspberry | Copy cc-armv7.sh script
+      copy: src=./resources/cc-armv7.sh dest=/opt/raspberrypi/cc-armv7.sh mode=0755
       tags: raspberry
 
     - name: User | Download pubkey(s)
