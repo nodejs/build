@@ -394,5 +394,5 @@ server {
     rewrite ^/windows-environment$                                https://github.com/nodejs/node/wiki/Windows-Environment permanent;
 
     # Rename 'Stable' release to 'Current'
-    rewrite ^/(.*)/downloads/stable$                              https://$server_name/$1/downloads/current permanent;
+    rewrite ^/(.*)/download/stable$                               https://$server_name/$1/download/current permanent;
 }
