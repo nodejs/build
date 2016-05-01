@@ -45,6 +45,11 @@
   copy:
     src: ./resources/config/ssl-defaults.conf
     dest: /etc/nginx/conf.d/ssl-defaults.conf
+
+- name: nginx | Install open file cache config
+  copy:
+    src: ./resources/config/open-file-cache.conf
+    dest: /etc/nginx/conf.d/open-file-cache.conf
     mode: 0644
   tags: nginx
 
