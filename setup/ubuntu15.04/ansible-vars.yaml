@@ -6,6 +6,8 @@ packages:
   - build-essential
   - automake
   - libtool
+  - lldb-3.6
+  - lldb-3.6-dev
   - curl
   - ccache
   - subversion

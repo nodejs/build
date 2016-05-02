@@ -7,6 +7,8 @@ packages:
   - python-all
   - automake
   - libtool
+  - lldb-3.6
+  - lldb-3.6-dev
   - curl
   - ntp
   - ccache
