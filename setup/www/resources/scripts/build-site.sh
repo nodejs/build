@@ -17,10 +17,6 @@ clonedir=/home/www/github/${site}
 
 if [ ! -d "${clonedir}" ]; then
   repo="${site}.org"
-  #TODO: remove this when repo is renamed
-  if [ "$site" == "nodejs" ]; then
-    repo="new.${site}.org"
-  fi
   git clone https://github.com/nodejs/${repo}.git $clonedir
 fi
 
