@@ -10,8 +10,10 @@ WantedBy=multi-user.target
 Type=simple
 User={{ server_user }}
 Environment="USER={{ server_user }}" \
+            "JOBS={{ ansible_processor_vcpus }}" \
             "SHELL=/bin/bash" \
             "HOME=/home/{{ server_user }}" \
+            "NODE_TEST_DIR="/home/{{ server_user }}/tmp" \
             "PATH=/usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
             "NODE_COMMON_PIPE=/home/{{ server_user }}/test.pipe" \
             "OSTYPE=linux-gnu"

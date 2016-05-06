@@ -1,16 +1,26 @@
 ---
-- hosts: iojs-build-ubuntu1504
+- hosts: iojs-build-ubuntu1604
   remote_user: root
   gather_facts: False
 
   tasks:
+    - name: Check for python
+      raw: which python
+      register: python_exists
+      failed_when: python_exists.rc > 1
 
+    - name: Bootstrap for the apt package
+      raw: apt install -y python-minimal aptitude
+      tags: bootstrap
+      when: python_exists.rc == 1
+
+- hosts: iojs-build-ubuntu1604
+  remote_user: root
+  gather_facts: True
+
+  tasks:
     - include_vars: ansible-vars.yaml
       tags: vars
-
-    - name: Boostrap python
-      raw: apt-get install -y python
-      tags: bootstrap
 
     - name: General | APT Update and upgrade
       apt: update_cache=yes upgrade=full
@@ -19,10 +29,6 @@
     - name: General | Install required packages
       apt: name={{ item }} update_cache=yes state=latest
       with_items: packages
-      tags: general
-
-    - name: General | Update certificates
-      command: update-ca-certificates -f
       tags: general
 
     - name: User | Add {{ server_user }} user
