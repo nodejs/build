@@ -1,34 +1,26 @@
 ---
 
 - hosts: iojs-build-centos5
-  # This first set of tasks is to simply get python-simplejson onto
-  # the EL5 machine because it's needed by Ansible when using
-  # older versions of Python on the managed node
-
   gather_facts: False
 
-  remote_user: root
-
   tasks:
+    - name: Bootstrap | Check python version
+      raw: python -V
+      register: python_version
 
-    - include_vars: ansible-vars.yaml
-      tags: vars
-
-    - name: General | Bootstrap Python for Ansible
-      raw: yum -y install python-simplejson
-      tags: general
-
+    - name: Bootstrap | Install ansible requirements
+      raw: yum install -y python-simplejson
+      when: python_version.stdout|search("2.4")
 
 - hosts: iojs-build-centos5
-
   gather_facts: True
 
-  remote_user: root
-
   tasks:
-
     - include_vars: ansible-vars.yaml
       tags: vars
+
+    # no other option than calling curl here seeing how python26 or urllib2
+    # isn't available just yet
 
     - name: General | Download EPEL RPM
       command: curl -sL http://dl.fedoraproject.org/pub/epel/5/{{ ansible_architecture }}/epel-release-5-4.noarch.rpm -o /tmp/epel-release-5-4.noarch.rpm
@@ -36,14 +28,6 @@
 
     - name: General | Install EPEL RPM
       command: bash -c 'rpm -Uvh /tmp/epel-release-5-4.noarch.rpm || true'
-      tags: general
-
-    - name: General | yum Update
-      yum: name=* state=latest
-      tags: general
-
-    - name: General | Install python-hashlib
-      yum: name=python-hashlib state=latest
       tags: general
 
     - name: General | Add SLC devtoolset repo
@@ -55,44 +39,23 @@
       tags: general
 
     - name: General | Install required packages
-      yum: name={{ item }} state=latest
+      yum: name={{ item }} state=latest update_cache=yes
       with_items: packages
       tags: general
 
-    - name: NTP | Run initial NTP
-      command: ntpdate -u pool.ntp.org
-      tags: ntp
-
-    - name: NTP | Enable NTP
-      command: chkconfig ntpd on
-      tags: ntp
+    - name: General | Create python26 symlink
+      file: src=/usr/bin/python26 dest=/usr/local/bin/python state=link
+      tags: general
 
     - name: NTP | Start NTP
       service: name=ntpd state=started enabled=yes
       tags: ntp
 
-    - name: General | Increase file descriptor limits
-      lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
-      with_items:
-        - "*         hard    nofile      500000"
-        - "*         soft    nofile      500000"
-        - "root      hard    nofile      500000"
-        - "root      soft    nofile      500000"
-      tags: general
-
     - name: User | Add {{ server_user }} user
       user: name="{{ server_user }}" shell=/bin/bash
       tags: user
 
-    - name: General | Create python26 symlink
-      file: src=/usr/bin/python26 dest=/usr/local/bin/python owner={{ server_user }} state=link
-      tags: jenkins
-
-    - name: ccache | Install ccache
-      include: ../ansible-tasks/ccache.yaml version=3.2.4
-      tags: ccache
-
-    - name: Jenkins | Download Jenkins' slave.jar
+    - name: Jenkins | Download Jenkins slave.jar
       command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
       tags: jenkins
 
@@ -104,6 +67,13 @@
       template: src=./resources/jenkins.sysconfig.j2 dest=/etc/sysconfig/jenkins
       tags: jenkins
 
-    - name: Jenkins | Enable and start init scripts
+    - name: Jenkins | Enable and start Jenkins
       service: name=jenkins enabled=yes state=started
       tags: jenkins
+
+    - name: Jenkins | Copy Monit config
+      copy: src=./resources/jenkins.monitd dest=/etc/monit.d/jenkins
+      tags: jenkins
+
+    - name: General | Enable and start Monit
+      service: name=monit enabled=yes state=started

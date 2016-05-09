@@ -22,7 +22,7 @@ PIDFILE=/var/run/jenkins/$NAME.pid
 [ -f "$JENKINS_CONFIG" ] && . "$JENKINS_CONFIG"
 
 # Add python/ccache path as well as regular path
-JENKINS_PATH="/usr/local/bin:$JENKINS_PATH:$PATH"
+JENKINS_PATH="/usr/lib64/ccache:$JENKINS_PATH:$PATH"
 
 # Replace potentially double colons since they add cwd
 JENKINS_PATH="${JENKINS_PATH//::/:}"
