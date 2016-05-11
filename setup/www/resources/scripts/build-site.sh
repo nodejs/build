@@ -21,7 +21,7 @@ if [ ! -d "${clonedir}" ]; then
 fi
 
 if [ "$site" == "nodejs" ]; then
-  build_cmd="npm run build"
+  build_cmd="npm run deploy"
   rsync_from="build/"
 else
   build_cmd="node_modules/.bin/gulp build"
