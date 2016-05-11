@@ -9,14 +9,16 @@ WantedBy=multi-user.target
 [Service]
 Type=simple
 User={{ server_user }}
-Environment="USER={{ server_user }}" \
-            "JOBS={{ ansible_processor_vcpus }}" \
-            "SHELL=/bin/bash" \
-            "HOME=/home/{{ server_user }}" \
-            "NODE_TEST_DIR="/home/{{ server_user }}/tmp" \
-            "PATH=/usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
-            "NODE_COMMON_PIPE=/home/{{ server_user }}/test.pipe" \
-            "OSTYPE=linux-gnu"
+
+Environment="USER={{ server_user }}" 
+Environment="JOBS={{ ansible_processor_vcpus }}"
+Environment="SHELL=/bin/bash"
+Environment="HOME=/home/{{ server_user }}"
+Environment="NODE_TEST_DIR=/home/{{ server_user }}/tmp"
+Environment="PATH=/usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Environment="NODE_COMMON_PIPE=/home/{{ server_user }}/test.pipe"
+Environment="OSTYPE=linux-gnu"
+
 ExecStart=/usr/bin/java -Xmx128m \
           -jar /home/{{ server_user }}/slave.jar \
           -jnlpUrl https://ci.nodejs.org/computer/{{ inventory_hostname }}/slave-agent.jnlp \
