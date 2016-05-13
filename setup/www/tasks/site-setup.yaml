@@ -7,6 +7,7 @@
     group: nodejs
   with_items:
     - build-site.sh
+    - build-benchmarking-site.sh
     - check-build-site.sh
   tags: setup
 
@@ -41,6 +42,7 @@
     - '*  *    * * *   nodejs  /home/nodejs/check-build-site.sh nodejs'
     - '*  *    * * *   nodejs  /home/nodejs/check-build-site.sh iojs'
     - '*  *    * * *   root    /home/nodejs/cdn-purge.sh'
+    - '* */4   * * *   nodejs  rsync -avz --delete benchmark:charts/ /home/www/benchmarking/charts/'
   tags: setup
 
 - name: Site Setup | Copy queue-cdn-purge.sh script
@@ -63,6 +65,7 @@
     - /home/www/iojs
     - /home/www/nodejs
     - /home/www/github
+    - /home/www/benchmarking
   tags: setup
 
 - name: Site Setup | Make /home/nodejs/.npm
@@ -73,10 +76,11 @@
     owner: nodejs
   tags: setup
 
-- name: Site Setup | Initial nodejs and iojs clone and update
+- name: Site Setup | Initial nodejs, iojs and benchmarking clone and update
   remote_user: "nodejs"
   command: "{{ item }}"
   with_items:
     - "/home/nodejs/build-site.sh nodejs"
     - "/home/nodejs/build-site.sh iojs"
+    - "/home/nodejs/build-benchmarking-site.sh"
   tags: setup
