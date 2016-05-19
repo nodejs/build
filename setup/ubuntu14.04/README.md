@@ -20,14 +20,18 @@ Host test-digitalocean-ubuntu14-x86-1
   HostName 159.203.115.220
 Host test-digitalocean-ubuntu14-x64-1
   HostName 45.55.252.223
+Host test-osuosl-ubuntu14-ppc64_le-1
+  HostName 140.211.168.194
+Host test-osuosl-ubuntu14-ppc64_le-2
+  HostName 140.211.168.171
+Host test-osuosl-ubuntu14-ppc64_be-1
+  HostName 140.211.168.18
+Host test-osuosl-ubuntu14-ppc64_be-2
+  HostName 140.211.168.51
+Host release-osuosl-ubuntu14-ppc64_be-1
+  HostName 140.211.168.158
 Host release-osuosl-ubuntu14-ppc64_le-1
   HostName 140.211.168.188
-Host test-osuosl-ubuntu14-ppc64_be-1
-  HostName 140.211.168.3
-Host test-osuosl-ubuntu14-ppc64_be-2
-  HostName 140.211.168.4
-Host release-osuosl-ubuntu14-ppc64_be-1
-  HostName 140.211.168.5
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.
