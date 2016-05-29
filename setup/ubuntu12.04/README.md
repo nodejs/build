@@ -5,6 +5,9 @@ For setting up a Ubuntu 12.04 box
 ```text
 Host test-digitalocean-ubuntu12-x64-1
   HostName 104.236.234.182
+
+Host test-digitalocean-ubuntu12-x64-2
+  HostName 107.170.104.83
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.

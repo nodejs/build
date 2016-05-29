@@ -52,6 +52,7 @@ iojs-ns-xgene-3
 
 [iojs-build-ubuntu1204]
 test-digitalocean-ubuntu12-x64-1
+test-digitalocean-ubuntu12-x64-2
 
 [iojs-build-smartos]
 test-joyent-smartos14-x64-1
