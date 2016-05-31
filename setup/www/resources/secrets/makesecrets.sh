@@ -54,7 +54,7 @@ bash -c "$gpgcmd" < ${secretsdir}/build/release/star_iojs.org-AddTrustExternalCA
 echo "" >> ./nodejs_chained.crt
 
 echo "Extracting staging_id_rsa_public.key..."
-bash -c "$gpgcmd" < ${secretsdir}/build/release/staging_id_rsa_public.key 1>> ./staging_id_rsa_public.key 2> /dev/null || bork
+bash -c "$gpgcmd" < ${secretsdir}/build/release/staging_id_rsa_public.key 1> ./staging_id_rsa_public.key 2> /dev/null || bork
 echo "" >> ./staging_id_rsa_public.key
 
 
