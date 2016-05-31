@@ -11,7 +11,7 @@ Type=simple
 User={{ server_user }}
 
 Environment="USER={{ server_user }}" 
-Environment="JOBS={{ ansible_processor_vcpus }}"
+Environment="JOBS={{ server_jobs | default(ansible_processor_vcpus) }}"
 Environment="SHELL=/bin/bash"
 Environment="HOME=/home/{{ server_user }}"
 Environment="NODE_TEST_DIR=/home/{{ server_user }}/tmp"

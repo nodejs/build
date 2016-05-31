@@ -1,6 +1,8 @@
 ---
 - hosts: iojs-build-ubuntu1604
-  remote_user: root
+  remote_user: "{{ remote_user }}" # from inventory
+  become: yes
+  become_user: root
   gather_facts: False
 
   tasks:
@@ -9,20 +11,27 @@
       register: python_exists
       failed_when: python_exists.rc > 1
 
-    - name: Bootstrap for the apt package
+    - name: Check for aptitude
+      raw: which aptitude
+      register: aptitude_exists
+      failed_when: aptitude_exists.rc > 1
+
+    - name: Bootstrap python and aptitude
       raw: apt install -y python-minimal aptitude
       tags: bootstrap
-      when: python_exists.rc == 1
+      when: python_exists.rc == 1 or aptitude_exists.rc == 1
 
 - hosts: iojs-build-ubuntu1604
-  remote_user: root
+  remote_user: "{{ remote_user }}"
+  become: yes
+  become_user: root
   gather_facts: True
 
   tasks:
     - include_vars: ansible-vars.yaml
       tags: vars
 
-    - name: General | APT Update and upgrade
+    - name: General | APT update and upgrade
       apt: update_cache=yes upgrade=full
       tags: general
 
@@ -34,7 +43,6 @@
     - name: User | Add {{ server_user }} user
       user: name="{{ server_user }}" shell=/bin/bash
       tags: user
-
 
     - name: Jenkins | Download Jenkins slave.jar
       get_url: url=https://ci.nodejs.org/jnlpJars/slave.jar dest=/home/{{ server_user }}/slave.jar
