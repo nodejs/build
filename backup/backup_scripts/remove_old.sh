@@ -11,7 +11,7 @@ if [ "x" == "x$1" ]; then
 fi
 
 HOST=$1
-DAYS=30
+DAYS=20
 ROOTDIR=/var/lib/jenkins/jobs
 JOBS="$ROOTDIR/*/builds/"
 MULTIJOBS="$ROOTDIR/*/configurations/axis-nodes/*/builds/"
