@@ -25,5 +25,6 @@
 
 - name: dist-indexer | npm install
   shell: cd /home/dist/tools/dist-indexer/ && npm install
-  remote_user: dist
+  become: yes
+  become_user: dist
   tags: dist-indexer

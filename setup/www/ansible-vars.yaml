@@ -16,6 +16,6 @@ libuv_users:
   - piscisaureus
   - bnoordhuis
 packages:
-  - iojs
+  - nodejs
   - nginx
   - git

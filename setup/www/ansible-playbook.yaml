@@ -6,6 +6,9 @@
     - include_vars: ansible-vars.yaml
       tags: vars
 
+    - include: tasks/base.yaml
+      tags: base
+
     - include: tasks/user.yaml
       tags: user
 
