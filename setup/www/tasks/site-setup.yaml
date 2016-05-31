@@ -74,7 +74,8 @@
   tags: setup
 
 - name: Site Setup | Initial nodejs and iojs clone and update
-  remote_user: "nodejs"
+  become: yes
+  become_user: "nodejs"
   command: "{{ item }}"
   with_items:
     - "/home/nodejs/build-site.sh nodejs"

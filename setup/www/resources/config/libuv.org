@@ -1,6 +1,5 @@
 server {
-    listen 80;
-    listen dist.libuv.org:80;
+    listen *:80;
     server_name dist.libuv.org;
 
     keepalive_timeout 60;
@@ -20,7 +19,7 @@ server {
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
-    root /home/libuv/dist;
+    root /home/libuv/www/dist;
     default_type text/plain;
     index index.html;
     autoindex on;
