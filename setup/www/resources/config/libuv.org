@@ -19,7 +19,7 @@ server {
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
-    root /home/libuv/www/dist;
+    root /home/libuv/www;
     default_type text/plain;
     index index.html;
     autoindex on;
