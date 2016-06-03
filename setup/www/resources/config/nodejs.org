@@ -65,7 +65,7 @@ server {
         if ($uri ~* ^/(it|ko)/) {
             set $lang $1;
         }
-        rewrite ^/(it|ko)/(.*)$ http://nodejs.org/en/$2;
+        rewrite ^/(it|ko)/(.*)$ /en/$2;
     }
 
     # serve a localized 404 page if we've got $lang set from @english_fallback
@@ -228,7 +228,7 @@ server {
         if ($uri ~* ^/(it|ko)/) {
             set $lang $1;
         }
-        rewrite ^/(it|ko)/(.*)$ https://nodejs.org/en/$2;
+        rewrite ^/(it|ko)/(.*)$ /en/$2;
     }
 
     # serve a localized 404 page if we've got $lang set from @english_fallback
