@@ -41,7 +41,7 @@ The Node.js Foundation's tier-2 infrastructure providers fill essential gaps in 
   * Via their cloud company, [SoftLayer](https://www.softlayer.com/), provides hardware for testing and benchmarking for the Node.js project's CI system.
   * Via the [Oregon State University Open Source Lab](https://osuosl.org/services/powerdev), provides PPC-based test and build infrastructure.
 
-**[Voxer](https://voxer.com/)**, a voice, text, photo and video messaging service and well-known Node.js early-adopter donated and host OS X hardware for building and testing via the Node.js project's CI 
+**[Voxer](https://voxer.com/)**, a voice, text, photo and video messaging service and well-known Node.js early-adopter donated and host OS X hardware for building and testing via the Node.js project's CI
 system.
 
 **[Scaleway](https://www.scaleway.com/)**, a "BareMetal" SSD cloud server provider, contributes key ARMv7 hardware for test and build for the Node.js CI system.
@@ -97,3 +97,4 @@ People
 * Rich Trott [@trott](https://github.com/trott)
 * Myles Borins [@thealphanerd](https://github.com/thealphanerd)
 * Ryan Graham [@rmg](https://github.com/rmg)
+* Imran Iqbal [@iWuzHere](https://github.com/iWuzHere)
