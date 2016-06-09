@@ -2,11 +2,11 @@
 
 There are a number of cases were we would like to provide access to
 community machines and or jenkins jobs to people who are not part
-of the build working group.  Examples include:
+of the build working group. Examples include:
 
-* test working group team members so that they can add/debug tests to/on 
+* Test working group team members so that they can add/debug tests to/on
   community test infrastructure.
-* benchmark working group members so they can add benchmark jobs and
+* Benchmark working group members so they can add benchmark jobs and
   or experiement with benchmarking infrastructure in advance of the
   final configuration being added to ansible.
 * PR's authors so they can debug failures across platforms in cases
@@ -28,22 +28,22 @@ In these cases the following will be used to decide if ongoing access
 can be provided:
 
 * Does the scope and size of the need justify providing access.
-* Is the invidual a collaborator.  If so then access should be allowed
+* Is the invidual a collaborator. If so then access should be allowed
   provided the first point is satisfied.
-* Length and consistency of involvement with the working group or the
-  Node.js community.
-* Consequences to the invidudal in case of mis-bahaviour.  For example,
+* Length and consistency of involvement with Node.js working groups
+  and/or community.
+* Consequences to the invidudal in case of mis-bahaviour. For example,
   would they potentially lose their job if they were reported as 
-  mis-behaving to their employer ?  Would being banned from involvement
+  mis-behaving to their employer ? Would being banned from involvement
   in the Node.js community negatively affect them personally in some other
   way ?
 * Are there collaborators who work with the individual and can vouch for
   them.
 
 The build team will review such requests through an issue on the repo. 
-Once agreed the individual will be granted access through the secrets repo
-in a way that limits their access to the resources  required (for example
-test machines, or benchmarking machines).
+Once agreed and voted upon, the individual will be granted access
+through the secrets repo in a way that limits their access to the
+resources required (for example test machines, or benchmarking machines).
 
 ## Temporary access
 
