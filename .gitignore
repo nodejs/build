@@ -1,2 +1,5 @@
 node_modules
 **/host_vars/iojs-*
+**/host_vars/node-*
+**/host_vars/test-*
+**/host_vars/release-*
