@@ -196,3 +196,6 @@ node-win2012r2-x64-3.cloudapp.net
 
 [github-bot]
 infra-rackspace-debian8-x64-1
+
+[test-ubuntu1604_docker_alpine34]
+test-digitalocean-ubuntu1604_docker_alpine34-x64-1

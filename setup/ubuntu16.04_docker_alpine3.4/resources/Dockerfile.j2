@@ -1,0 +1,47 @@
+FROM alpine:3.4
+
+ENV LC_ALL C
+ENV USER {{ server_user }}
+ENV JOBS {{ server_jobs | default(ansible_processor_vcpus) }}
+ENV HOME /home/{{ server_user }}
+ENV NODE_TEST_DIR /home/{{ server_user }}/tmp
+ENV PATH /usr/lib/ccache/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV NODE_COMMON_PIPE /home/{{ server_user }}/test.pipe
+ENV OSTYPE linux-gnu
+ENV DESTCPU x64
+ENV ARCH x64
+
+RUN apk add --no-cache \
+        libstdc++ \
+    && apk add --no-cache --virtual .build-deps \
+        binutils-gold \
+        curl \
+        g++ \
+        gcc \
+        gnupg \
+        libgcc \
+        linux-headers \
+        make \
+        paxctl \
+        python \
+        tar \
+        ccache \
+        openjdk8 \
+        git \
+        procps \
+        openssh-client
+
+RUN addgroup -g 1000 {{ server_user }}
+
+RUN adduser -G {{ server_user }} -D -u 1000 {{ server_user }}
+
+VOLUME [ "/home/{{ server_user }}/" ]
+
+USER iojs
+
+CMD cd /home/iojs \
+  && curl https://ci.nodejs.org/jnlpJars/slave.jar -O \
+  && java \
+      -jar slave.jar \
+      -jnlpUrl https://ci.nodejs.org/computer/test-digitalocean-ubuntu1604_docker_alpine34-x64-1/slave-agent.jnlp \
+      -secret efbfadbf4807af0f1084a1e120ef5467b49432113661e11ce2ecc1ab71b96f38
