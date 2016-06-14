@@ -5,18 +5,15 @@ const hyperquest = require('hyperquest')
     , qs         = require('querystring')
 
 
-const urlbase    = 'https://ci.nodejs.org/job/iojs+release/build?token='
-    , repository = 'https://github.com/nodejs/node.git'
 
-
-function triggerBuild(token, options, callback) {
-  let url  = `${urlbase}${token}`
+function triggerBuild(options, callback) {
+  let url  = `${options.jenkinsJobUrl}/build?token=${options.jenkinsToken}`
     , data = {
-          token     : token
+          token     : options.jenkinsToken
         , parameter : [
               {
                   name  : 'repository'
-                , value : repository
+                , value : `${options.githubScheme}${options.githubOrg}/${options.githubRepo}.git`
               }
             , {
                   name  : 'commit'
@@ -32,7 +29,7 @@ function triggerBuild(token, options, callback) {
               }
             , {
                   name  : 'release_urlbase'
-                , value : `https://nodejs.org/download/${options.type}/`
+                , value : `${options.releaseUrlBase}${options.type}/`
               }
             , {
                   name  : 'rc'
@@ -41,13 +38,14 @@ function triggerBuild(token, options, callback) {
           ]
       }
     , post = qs.encode({
-          token : token
+          token : options.jenkinsToken
         , json  : JSON.stringify(data)
       })
 
   let req = hyperquest(url, {
-      method: 'post'
+      method:  'post'
     , headers: { 'content-type': 'application/x-www-form-urlencoded' }
+    , auth:    `${options.githubAuthUser}:${options.githubAuthToken}`
   })
   req.end(post)
   req.pipe(bl(callback))
