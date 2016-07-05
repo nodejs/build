@@ -1,9 +1,29 @@
-- hosts: iojs-build-fedora22
+---
+- hosts: iojs-build-fedora24
+  remote_user: root
+  gather_facts: False
+
+  tasks:
+    - name: Check for python
+      raw: which python
+      register: python_exists
+      failed_when: python_exists.rc > 1
+
+    - name: Bootstrap python
+      raw: dnf install -y python2 python2-dnf libselinux-python
+      tags: bootstrap
+      when: python_exists.rc == 1
+
+- hosts: iojs-build-fedora24
   remote_user: root
 
   tasks:
     - include_vars: ansible-vars.yaml
       tags: vars
+
+    - name: disable selinux
+      selinux: state=disabled
+      tags: general
 
     - name: General | Update all packages
       dnf: name=* state=latest

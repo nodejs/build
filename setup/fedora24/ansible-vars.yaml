@@ -1,13 +1,11 @@
 ---
 server_user: iojs
 packages:
-  - java-1.8.0-openjdk
+  - java-1.8.0-openjdk-headless
   - git
   - gcc
   - gcc-c++
   - make
   - automake
   - libtool
-  - ntp
   - ccache
-  - svn
