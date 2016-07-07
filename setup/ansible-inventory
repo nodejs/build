@@ -1,10 +1,6 @@
-[iojs-build-fedora22]
+[fedora]
 test-digitalocean-fedora22-x64-1
-
-[iojs-build-fedora23]
 test-digitalocean-fedora23-x64-1
-
-[iojs-build-fedora24]
 test-digitalocean-fedora24-x64-1
 
 [iojs-build-centos7]
