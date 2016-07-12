@@ -40,7 +40,11 @@ server {
     default_type text/plain;
     index index.html;
 
+    error_page 404 @localized_404;
+
     location / {
+        try_files $uri $uri/ @english_fallback;
+
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
@@ -54,6 +58,19 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+    }
+
+    # instead of serving a 404 page when a page hasn't been translated
+    location @english_fallback {
+        if ($uri ~* ^/(it|ko|zh-cn)/) {
+            set $lang $1;
+        }
+        rewrite ^/(it|ko|zh-cn)/(.*)$ /en/$2;
+    }
+
+    # serve a localized 404 page if we've got $lang set from @english_fallback
+    location @localized_404 {
+        try_files /$lang/404.html /en/404.html;
     }
 }
 
@@ -190,7 +207,7 @@ server {
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
-    error_page 404 /en/404.html;
+    error_page 404 @localized_404;
 
     root /home/www/nodejs;
     default_type text/plain;
@@ -199,9 +216,24 @@ server {
     location / {
         rewrite ^/$ /en/ redirect;
 
+        try_files $uri $uri/ @english_fallback;
+
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+    }
+
+    # instead of serving a 404 page when a page hasn't been translated
+    location @english_fallback {
+        if ($uri ~* ^/(it|ko|zh-cn)/) {
+            set $lang $1;
+        }
+        rewrite ^/(it|ko|zh-cn)/(.*)$ /en/$2;
+    }
+
+    # serve a localized 404 page if we've got $lang set from @english_fallback
+    location @localized_404 {
+        try_files /$lang/404.html /en/404.html;
     }
 
     location /documentation/ {
