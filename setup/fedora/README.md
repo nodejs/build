@@ -11,6 +11,12 @@ Host test-digitalocean-fedora23-x64-1
 
 Host test-digitalocean-fedora24-x64-1
   HostName 104.236.112.180
+
+Host test-rackspace-fedora22-x64-1
+  HostName 119.9.51.79
+
+Host test-rackspace-fedora23-x64-1
+  HostName 119.9.51.113
 ```
 
 Run playbook:

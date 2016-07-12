@@ -2,6 +2,8 @@
 test-digitalocean-fedora22-x64-1
 test-digitalocean-fedora23-x64-1
 test-digitalocean-fedora24-x64-1
+test-rackspace-fedora22-x64-1
+test-rackspace-fedora23-x64-1
 
 [iojs-build-centos7]
 test-digitalocean-centos7-x64-1
