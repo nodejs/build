@@ -1,6 +1,7 @@
 "use strict";
 
 const hyperquest = require('hyperquest')
+    , jsonist    = require('jsonist')
     , bl         = require('bl')
     , qs         = require('querystring')
 
@@ -8,6 +9,7 @@ const hyperquest = require('hyperquest')
 
 function triggerBuild(options, callback) {
   let url  = `${options.jenkinsJobUrl}/build?token=${options.jenkinsToken}`
+    , auth = `${options.githubAuthUser}:${options.githubAuthToken}`
     , data = {
           token     : options.jenkinsToken
         , parameter : [
@@ -37,18 +39,36 @@ function triggerBuild(options, callback) {
               }
           ]
       }
-    , post = qs.encode({
-          token : options.jenkinsToken
-        , json  : JSON.stringify(data)
-      })
 
-  let req = hyperquest(url, {
-      method:  'post'
-    , headers: { 'content-type': 'application/x-www-form-urlencoded' }
-    , auth:    `${options.githubAuthUser}:${options.githubAuthToken}`
+  if (!options.jenkinsCrumbUrl)
+    return requestTrigger()
+
+  jsonist.get(options.jenkinsCrumbUrl, { auth: auth }, function (err, data) {
+    if (err)
+      return callback(err)
+
+    requestTrigger(data)
   })
-  req.end(post)
-  req.pipe(bl(callback))
+
+  function requestTrigger (crumb) {
+    let postData = {
+            token    : options.jenkinsToken
+          , json     : JSON.stringify(data)
+        }
+      , post
+      , req
+
+    postData[crumb.crumbRequestField] = crumb.crumb
+    post = qs.encode(postData)
+    req = hyperquest(url, {
+        method   :  'post'
+      , headers  : { 'content-type' : 'application/x-www-form-urlencoded' }
+      , auth     : auth
+    })
+
+    req.end(post)
+    req.pipe(bl(callback))
+  }
 }
 
 
