@@ -98,3 +98,4 @@ People
 * Myles Borins [@thealphanerd](https://github.com/thealphanerd)
 * Ryan Graham [@rmg](https://github.com/rmg)
 * Imran Iqbal [@iWuzHere](https://github.com/iWuzHere)
+* Phillip Johnsen [@phillipj](https://github.com/phillipj)
