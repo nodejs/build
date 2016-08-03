@@ -62,10 +62,10 @@ server {
 
     # instead of serving a 404 page when a page hasn't been translated
     location @english_fallback {
-        if ($uri ~* ^/(es|it|ko|zh-cn)/) {
+        if ($uri ~* ^/(es|it|ko|zh-cn|uk)/) {
             set $lang $1;
         }
-        rewrite ^/(es|it|ko|zh-cn)/(.*)$ /en/$2;
+        rewrite ^/(es|it|ko|zh-cn|uk)/(.*)$ /en/$2;
     }
 
     # serve a localized 404 page if we've got $lang set from @english_fallback
@@ -225,10 +225,10 @@ server {
 
     # instead of serving a 404 page when a page hasn't been translated
     location @english_fallback {
-        if ($uri ~* ^/(es|it|ko|zh-cn)/) {
+        if ($uri ~* ^/(es|it|ko|zh-cn|uk)/) {
             set $lang $1;
         }
-        rewrite ^/(es|it|ko|zh-cn)/(.*)$ /en/$2;
+        rewrite ^/(es|it|ko|zh-cn|uk)/(.*)$ /en/$2;
     }
 
     # serve a localized 404 page if we've got $lang set from @english_fallback
