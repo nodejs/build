@@ -1,3 +1,14 @@
+NOTE: dependencies on AIX seem to make it hard to get the order correct
+so the scripts install-xxx.sh currently need to be run more than
+once and after some small number of runs (2-3) all of the required
+modules will be installed.
+
+
+1) increase the size of the /opt filesystem
+chfs -a size=+1300000 /opt
+
+2) Install required packages
+
 ftp://ftp.software.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/wget/wget-1.9.1-3.aix6.1.ppc.rpm
 rpm -i wget-1.9.1-3.aix6.1.ppc.rpm
 ftp://ftp.software.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/unzip/unzip-5.51-2.aix6.1.ppc.rpm
@@ -28,24 +39,28 @@ http://www.bullfreeware.com/affichage.php?id=2048
 m4-1.4.17-1.aix6.1.ppc.rpm
 sh install-libtool-rpm.sh
 
+4) install ccache
 # install ccache based on these instructions ./setup/ansible-tasks/ccache.yaml
 # we should update that script so that it can be used on AIX as well
 # also currently requires the fix outlined here: https://bugzilla.samba.org/show_bug.cgi?id=11519
 # to be applied manually before the compile
+# install on the new linux machines did not seem to work so use cp and chmod instead
 cd /tmp
 wget http://samba.org/ftp/ccache/ccache-3.2.4.tar.gz
 gunzip ccache-3.2.4.tar.gz
 tar -xvf ccache-3.2.4.tar.gz
 cd ccache-3.2.4
 gmake
-install -c -m 755 ccache /usr/lib
-ln -s /usr/lib/ccache/cc /usr/lib/ccache
-ln -s /usr/lib/ccache/g++ /usr/lib/ccache
-ln -s /usr/lib/ccache/gcc /usr/lib/ccache
+cp ccache /usr/lib
+chmod 755 /usr/lib
+
+ln -s /usr/lib/ccache /usr/lib/cc
+ln -s /usr/lib/ccache /usr/lib/g++
+ln -s /usr/lib/ccache /usr/lib/gcc
 rm ccache-3.2.4.tar
 rm -rf ccache-3.2.4
 
-# install svn, only needed for v8 testing
+5) install svn, only needed for v8 testing
 http://www.bullfreeware.com/affichage.php?id=1810#
 subversion-1.8.0-1.aix6.1.ppc.rpm-with-deps.zip
 unzip subversion-1.8.0-1.aix6.1.ppc.rpm-with-deps.zip
@@ -59,12 +74,23 @@ sh install-subversion-rpm.sh
         mount           = true
         vol             = /aha
 
+and then:
+
+ mkdir /aha
+
 then either reboot or run
 
 mount /aha
 
 
-Apply this APAR depending on your OS level http://www-01.ibm.com/support/docview.wss?uid=isg1IV46651
+6) setup bare git repo with the following:
+
+su - iojs
+mkdir git
+git clone -c http.sslVerify=false --mirror https://github.com/nodejs/node.git git/io.js.reference
+
+
+7) Apply this APAR depending on your OS level http://www-01.ibm.com/support/docview.wss?uid=isg1IV46651
 In particular on the default siteox install it required:
   bos.net.tcp.client 6.1.8.17               # TCP/IP Client Support
 It does have a number of dependencies so we needed the full set of downloads for TL 8 to be able
