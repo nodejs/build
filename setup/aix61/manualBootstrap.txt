@@ -51,12 +51,13 @@ gunzip ccache-3.2.4.tar.gz
 tar -xvf ccache-3.2.4.tar.gz
 cd ccache-3.2.4
 gmake
-cp ccache /usr/lib
-chmod 755 /usr/lib
+mkdir /opt/freeware/bin/ccache
+cp ccache /opt/freeware/bin/ccache/
+chmod 755 /opt/freeware/bin/ccache/ccache
 
-ln -s /usr/lib/ccache /usr/lib/cc
-ln -s /usr/lib/ccache /usr/lib/g++
-ln -s /usr/lib/ccache /usr/lib/gcc
+ln -s /opt/freeware/bin/ccache/ccache /opt/freeware/bin/ccache/cc
+ln -s /opt/freeware/bin/ccache/ccache /opt/freeware/bin/ccache/g++
+ln -s /opt/freeware/bin/ccache/ccache /opt/freeware/bin/ccache/gcc
 rm ccache-3.2.4.tar
 rm -rf ccache-3.2.4
 
