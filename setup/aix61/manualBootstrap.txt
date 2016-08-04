@@ -40,8 +40,6 @@ sh install-libtool-rpm.sh
 4) install ccache
 # install ccache based on these instructions ./setup/ansible-tasks/ccache.yaml
 # we should update that script so that it can be used on AIX as well
-# also currently requires the fix outlined here: https://bugzilla.samba.org/show_bug.cgi?id=11519
-# to be applied manually before the compile
 # install on the new linux machines did not seem to work so use cp and chmod instead
 mkdir tmp
 cd tmp
