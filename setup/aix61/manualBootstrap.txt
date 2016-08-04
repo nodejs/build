@@ -11,8 +11,8 @@ chfs -a size=+1300000 /opt
 
 ftp://ftp.software.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/wget/wget-1.9.1-3.aix6.1.ppc.rpm
 rpm -i wget-1.9.1-3.aix6.1.ppc.rpm
-ftp://ftp.software.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/unzip/unzip-5.51-2.aix6.1.ppc.rpm
-rpm -i unzip-5.51-2.aix6.1.ppc.rpm
+ftp://ftp.software.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/unzip/unzip-6.0-3.aix6.1.ppc.rpm
+rpm -i unzip-6.0-3.aix6.1.ppc.rpm 
 
 http://www.bullfreeware.com/affichage.php?id=2378 - gcc-c++ + all dependencies
 gcc-c++-4.8.5-1.aix6.1.ppc.rpm-with-deps.zip
