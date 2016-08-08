@@ -83,15 +83,34 @@ mount /aha
 
 6) run ansible script to complete base configuration
 
+7) edit  /etc/inetd.conf 
+and comment out default inbound services such as TELNET, FTP, RLOGIN, TALK etc. and then
+reload the configuration with
 
-7) NO LONGER REQUIRED ON OSUOSL MACHINES - SKIP - setup bare git repo with the following:
+ refresh -s inetd
+
+The only remaining services should be:
+
+daytime stream  tcp     nowait  root    internal
+time    stream  tcp     nowait  root    internal
+daytime dgram   udp     wait    root    internal
+time    dgram   udp     wait    root    internal
+caa_cfg stream  tcp6    nowait  root    /usr/sbin/clusterconf clusterconf >>/var/adm/ras/clusterconf.log 2>&1
+wsmserver       stream  tcp     nowait  root    /usr/websm/bin/wsmserver wsmserver -start
+xmquery dgram   udp6    wait    root    /usr/bin/xmtopas xmtopas -p3
+
+
+
+
+
+8) NO LONGER REQUIRED ON OSUOSL MACHINES - SKIP - setup bare git repo with the following:
 
 su - iojs
 mkdir git
 git clone --mirror -c http.sslVerify=false https://github.com/nodejs/node.git git/io.js.reference
 
 
-8) NO LONGER REQUIRED ON OSUOSL MACHINES - SKIP Apply this APAR depending on your OS level http://www-01.ibm.com/support/docview.wss?uid=isg1IV46651
+9) NO LONGER REQUIRED ON OSUOSL MACHINES - SKIP Apply this APAR depending on your OS level http://www-01.ibm.com/support/docview.wss?uid=isg1IV46651
 9n particular on the default siteox install it required:
   bos.net.tcp.client 6.1.8.17               # TCP/IP Client Support
 It does have a number of dependencies so we needed the full set of downloads for TL 8 to be able
