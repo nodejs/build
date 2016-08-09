@@ -1,0 +1,76 @@
+---
+
+#
+#
+#
+
+init: {
+  centos:  ['centos5', 'centos6'],
+  debian:  ['debian7', 'ubuntu1204'],
+  freebsd: 'freebsd',
+  openrc:  'alpine',
+  systemd: ['centos7', 'debian8', 'fedora', 'ubuntu1404', 'ubuntu1604',
+            'ubuntu1610'],
+  svc:     'smartos',
+  upstart: 'ubuntu12'
+  }
+
+jenkins_init: {
+  centos: {
+    dest: '/etc/init.d/jenkins',
+    src: 'centos.initd.j2',
+    mode: '0755'
+    },
+  debian: {
+    dest: '/etc/init.d/jenkins',
+    src: 'sysvinit.initd.j2',
+    mode: '0755'
+    },
+  freebsd: {
+    dest: '/usr/local/etc/rc.d/jenkins',
+    src: 'freebsd.initd.j2',
+    mode: '0755'
+    },
+  openrc: {
+    dest: '/etc/init.d/jenkins',
+    src: 'openrc.initd.j2',
+    mode: '0755'
+    },
+  svc: {
+    dest: '/home/{{ server_user }}/jenkins_manifest.xml',
+    src: 'jenkins_manifest.xml.j2'
+    },
+  systemd: {
+    dest: '/lib/systemd/system/jenkins.service',
+    src: 'systemd.service.j2'
+    },
+  upstart: {
+    dest: '/etc/init/jenkins.conf',
+    src: 'upstart.j2'
+    },
+  }
+
+# if you fail here, it means it cant map your os or os family to a init system
+# the best thing to do would be throwing, but the default case seems to be
+# called regardless of success.
+init_type: "{{ os|match_key(init, raise_error=False)|default(os|stripversion|match_key(init, raise_error=False)) }}"
+jenkins: "{{ jenkins_init[init_type] }}"
+
+needs_monit: [
+  'alpine34',
+  'centos5',
+  'centos6',
+  'debian7',
+  ]
+
+# some os'es needs different paths to java. add them here.
+java_path: {
+  'smartos14': '/opt/local/java/openjdk7/bin/java',
+  'smartos15': '/opt/local/java/openjdk8/bin/java',
+  'smartos16': '/opt/local/java/openjdk8/bin/java'
+  }
+
+# same for bash. will default to /bin/bash if you don't set it
+bash_path: {
+  freebsd: '/usr/local/bin/bash'
+  }

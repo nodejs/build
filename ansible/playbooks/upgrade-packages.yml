@@ -1,0 +1,9 @@
+---
+
+#
+# upgrade installed packages
+#
+
+- hosts: all
+  roles:
+    - package-upgrade

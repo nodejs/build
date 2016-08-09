@@ -1,0 +1,8 @@
+---
+
+#
+# generic handlers for baselayout stuff
+#
+
+- name: restart sshd
+  service: name=sshd state=restarted

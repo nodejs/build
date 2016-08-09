@@ -1,0 +1,11 @@
+---
+
+#
+# systemd-specific ntpd
+#
+
+- name: remove ntpd
+  package: name=ntp state=absent
+
+- name: enable timesyncd at boot
+  service: name=systemd-timesyncd enabled=yes state=started

@@ -1,0 +1,74 @@
+---
+
+#
+# updates an ssh key on the remote host
+#
+# the following assumptions are made:
+# 1. the keys available to you will be stored in ~/.ssh/
+#    and named accordingly:
+#
+#    `nodejs_build_$machine_type{,.pub}` where $machine_type correlates to
+#    machine prefix such as test-, infra- or release-.
+#
+# 2. pubkey needs the email suffixed to be formatted in a similar fashion:
+#
+#    `$machine_type@build.nodejs.org`
+#
+# 3. all keys needs to be rsa with at least a 4096 key length
+#
+# usage:
+#
+# you will be prompted a path to the new key - which means old keys should
+# still stay in place. the new key will not overwrite the old one locally,
+# so after the playbook has finished you need to manually replace the old
+# one to be able to connect to hosts.
+#
+
+- hosts: all
+
+  vars_prompt:
+    - name: key
+      prompt: path to new {,pub}key
+      private: false
+
+  tasks:
+    # this needs failed_when to properly throw
+    - name: verify that the new {,pub}key exists
+      local_action: stat path="{{ pubkey }}"
+      loop_control:
+        loop_var: pubkey
+      run_once: true
+      with_items:
+        - "{{ key }}"
+        - "{{ key }}.pub"
+
+
+    - name: validate new key length
+      local_action: raw ssh-keygen -lf {{ key }} | cut -f1 -d " "
+      run_once: true
+      register: key_length
+      failed_when: "key_length.stdout_lines[0]|int < 4096"
+
+    - name: verify new pubkey comment/email format
+      local_action: raw grep "{{ type }}@build.nodejs.org" {{ key }}.pub
+      run_once: true
+      register: verify_email
+      failed_when: "verify_email.rc != 0"
+
+    - name: read new pubkey
+      run_once: true
+      local_action:
+        set_fact pubkey="{{ lookup('file', '{{ key }}.pub' ) }}"
+
+    - name: assign path to authorized_keys
+      shell: "echo ~{{ ansible_user }}/.ssh/authorized_keys"
+      register: authorized_keys
+
+    - name: replace pubkey in authorized_keys
+      lineinfile:
+        dest: "{{ authorized_keys.stdout }}"
+        regexp: ".*{{ type }}@build.nodejs.org$"
+        line: "{{ pubkey }}"
+        owner: "{{ ansible_user }}"
+        mode: 0600
+        validate: "grep '{{ pubkey }}' %s"

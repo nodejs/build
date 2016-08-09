@@ -1,0 +1,18 @@
+---
+
+#
+# centos5 - the old stuff
+#
+
+- name: add scl repo
+  yum_repository:
+    name: slc5-devtoolset
+    baseurl: http://linuxsoft.cern.ch/cern/devtoolset/
+    gpgkey: http://ftp.scientificlinux.org/linux/scientific/5x/{{ ansible_architecture }}/RPM-GPG-KEYs/RPM-GPG-KEY-cern
+    gpgcheck: yes
+    description: cern scl repo
+
+- name: install epel
+  yum:
+    name: "http://dl.fedoraproject.org/pub/epel/5/{{ ansible_architecture }}/epel-release-5-4.noarch.rpm"
+    state: present

@@ -1,0 +1,89 @@
+#!/bin/sh
+
+#
+# PROVIDE: jenkins
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+#
+# Configuration settings for jenkins in /etc/rc.conf:
+#
+# jenkins_enable (bool):
+#   Set to "NO" by default.
+#   Set it to "YES" to enable jenkins
+#
+
+. /etc/rc.subr
+
+name="jenkins"
+rcvar="jenkins_enable"
+
+load_rc_config ${name}
+
+: ${jenkins_enable:=NO}
+
+jenkins_env=" \
+  HOME=/usr/home/{{ server_user }} \
+  OSTYPE=freebsd \
+  NODE_COMMON_PIPE=/home/{{ server_user }}/test.pipe \
+  NODE_TEST_DIR=/home/{{ server_user }}/tmp \
+  PATH=/usr/local/libexec/ccache:/usr/local/bin:${PATH} \
+  JOBS={{ server_jobs|default(ansible_processor_vcpus|default('2')) }} \
+  CC=cc \
+  CXX=c++"
+
+jenkins_jar="/home/{{ server_user }}/slave.jar"
+jenkins_log_file="/home/{{ server_user }}/${name}_console.log"
+jenkins_args="-Xmx{{ server_ram|default('128m') }} -jar ${jenkins_jar} \
+  -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp \
+  -secret {{ secret }}"
+jenkins_user="{{ server_user }}"
+jenkins_group="{{ server_user }}"
+
+# FreeBSD uses a java wrapper. Without full path pid monitoring won't work
+procname=$(cat /usr/local/etc/javavms | cut -d "#" -f 1)
+pidfile="/var/run/${name}/${name}.pid"
+monitor_pidfile="/var/run/${name}/${name}_monitor.pid"
+
+required_files="${procname} ${jenkins_jar}"
+
+command="/usr/sbin/daemon"
+command_args="-f -r -p ${pidfile} -P ${monitor_pidfile} \
+              ${procname} ${jenkins_args} -slaveLog ${jenkins_log_file}"
+
+start_precmd="jenkins_prestart"
+start_cmd="jenkins_start"
+stop_cmd="jenkins_stop"
+
+jenkins_prestart() {
+  if [ ! -f "${jenkins_log_file}" ]; then
+    touch "${jenkins_log_file}"
+    chown "{{ server_user }}:{{ server_user }}" "${jenkins_log_file}"
+    chmod 640 "${jenkins_log_file}"
+  fi
+  if [ ! -d $(dirname ${pidfile}) ]; then
+    install -d -o "{{ server_user }}" -g "{{ server_user }}" \
+            -m 755 $(dirname ${pidfile})
+  fi
+}
+
+# need to override _start since it doesn't seem to pass env in FreeBSD 11
+jenkins_start() {
+  echo "Starting service: ${name}."
+    su -l ${jenkins_user} -c "exec env ${jenkins_env} \
+                              ${command} ${command_args}"
+}
+
+# Kill monitor, not java since it would respawn
+jenkins_stop() {
+  if [ ! -f ${pidfile} -a ! -f ${monitor_pidfile} ]; then
+    echo "${name} isn't running."
+  else
+    echo -n "Stopping service: ${name}"
+    kill `cat ${monitor_pidfile}`
+    # files are removed on exit, but be extra sure
+    rm -f ${pidfile} ${monitor_pidfile}
+    echo .
+  fi
+}
+
+run_rc_command "$1"

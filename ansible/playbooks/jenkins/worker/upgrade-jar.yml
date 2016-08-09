@@ -1,0 +1,17 @@
+---
+
+#
+# upgrade `slave.jar` at jenkins workers
+#
+
+-  hosts: test
+
+   tasks:
+    - name: download slave.jar
+      get_url:
+        url: "{{ jenkins_worker_jar }}"
+        dest: /home/{{ server_user }}/slave.jar
+        mode: 0644
+
+    - name: restart jenkins
+      service: name=jenkins state=restarted

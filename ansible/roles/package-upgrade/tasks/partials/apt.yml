@@ -1,0 +1,12 @@
+---
+
+#
+# Updates all packages for debian-based distributions
+#
+
+- name: upgrade installed packages
+  apt: upgrade=dist update_cache=yes
+
+  # don't know how to use autoremove=yes for all packages
+- name: clean unwanted packages
+  command: apt-get -y autoremove warn=False

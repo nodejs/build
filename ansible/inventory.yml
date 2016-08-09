@@ -1,0 +1,213 @@
+---
+
+#
+# node.js hosts! check the readme on how to add more
+# (if its not obvious enough).
+#
+
+hosts:
+
+  - infra:
+
+    - digitalocean:
+        debian8-x64-1: {ip: 198.199.72.83, alias: collector}
+        ubuntu1404-x64-1: {ip: 107.170.240.62, alias: ci}
+        ubuntu1604-x64-1: {ip: 162.243.173.250, alias: www}
+
+    - joyent:
+        smartos15-x64-1: {ip: 72.2.118.125, alias: backup}
+        ubuntu1604-x64-1: {ip: 72.2.119.21, alias: unencrypted}
+
+    - rackspace:
+        debian8-x64-1: {ip: 23.253.100.79, alias: gh-bot}
+
+    - softlayer:
+        debian8-x64-1: {ip: 184.172.29.199, alias: registry-mirror}
+        ubuntu1404-x64-1: {ip: 169.44.16.104, alias: ci-release}
+
+
+  - release:
+
+    - digitalocean:
+        centos5-x64-1: {ip: 162.243.217.142}
+
+    - joyent:
+        smartos13-x64-1: {ip: 72.2.114.225}
+        smartos14-x64-1: {ip: 72.2.113.193}
+        smartos15-x64-1: {ip: 165.225.131.14}
+
+    - requireio:
+        andineck-debian7-arm_pi1p-1: {ip: 192.168.2.41, user: pi}
+        xgene-ubuntu1404-arm64-1: {ip: 192.168.2.3, user: ubuntu, alias: arm-nfshost}
+        rvagg-debian7-arm_pi1p-1: {ip: 192.168.2.40, user: pi}
+
+    - osuosl:
+        aix61-ppc64_be-1: {ip: 140.211.9.99}
+        ubuntu1404-ppc64_be-1: {ip: 140.211.168.76}
+        ubuntu1404-ppc64_le-1: {ip: 140.211.168.66}
+
+    - scaleway:
+        debian7-arm-1: {ip: 212.47.230.165}
+
+    - softlayer:
+        centos5-x86-1: {ip: 50.23.85.253}
+
+    - linuxonecc:
+        rhel72-s390x-1: {ip: 148.100.110.65}
+
+
+  - test:
+
+    - azure:
+        win10-x64-1: {ip: 40.114.4.213, port: 55646}
+        win10-x64-2: {ip: 40.76.31.157, port: 61279}
+        win10-x64-3: {ip: 40.76.25.231, port: 60033}
+        win10-x64-4: {ip: 40.76.23.22, port: 58919}
+        win10-x64-5: {ip: 40.76.19.120, port: 60486}
+        win2008r2-x64-1: {ip: 104.209.213.11, port: 55511}
+        win2008r2-x64-2: {ip: 104.209.209.74, port: 55516}
+        win2008r2-x64-3: {ip: 104.209.215.1, port: 54886}
+        win2012r2-x64-1: {ip: 104.209.213.170, port: 54633}
+        win2012r2-x64-2: {ip: 104.209.212.27, port: 61718}
+        win2012r2-x64-3: {ip: 104.209.210.218, port: 52109}
+
+    - digitalocean:
+        centos5-x86-1: {ip: 192.241.250.186}
+        centos7-x64-1: {ip: 162.243.244.241}
+        debian8-x64-1: {ip: 159.203.103.52}
+        fedora22-x64-1: {ip: 45.55.139.194}
+        fedora23-x64-1: {ip: 162.243.63.132}
+        fedora24-x64-1: {ip: 104.236.112.180}
+        fedora25-x64-1: {ip: 159.203.101.158}
+        fedora25-x64-2: {ip: 159.203.126.232}
+        freebsd10-x64-1: {ip: 162.243.204.248, user: freebsd}
+        freebsd11-x64-1: {ip: 45.55.90.237, user: freebsd}
+        freebsd11-x64-2: {ip: 107.170.28.213, user: freebsd}
+        ubuntu12-x64-1: {ip: 104.236.234.182}
+        ubuntu12-x64-2: {ip: 107.170.104.83}
+        ubuntu1404-x64-1: {ip: 45.55.252.223}
+        ubuntu1404-x86-1: {ip: 159.203.115.220}
+        ubuntu1604-x64-1: {ip: 104.236.89.53}
+        ubuntu1604_dockeralpine34-x64-1: {ip: 107.170.75.204}
+        ubuntu1610-x64-1: {ip: 45.55.83.154}
+        ubuntu1610-x64-2: {ip: 138.197.31.102}
+
+    - ibm:
+        aix61-ppc64-1: {ip: 50.200.166.131, port: 18822}
+
+    - joyent:
+        alpine34-x64-1: {ip: 72.2.114.80}
+        alpine34-x64-2: {ip: 72.2.115.165}
+        freebsd10-x64-1: {ip: 72.2.115.15}
+        freebsd10-x64-2: {ip: 72.2.114.23}
+        smartos14-x64-1: {ip: 72.2.114.47}
+        smartos14-x64-2: {ip: 72.2.115.156}
+        smartos14-x86-1: {ip: 72.2.112.239}
+        smartos14-x86-2: {ip: 72.2.112.29}
+        smartos15-x64-1: {ip: 165.225.137.117}
+        smartos15-x64-2: {ip: 165.225.139.77}
+        smartos16-x64-1: {ip: 72.2.115.252}
+        smartos16-x64-2: {ip: 72.2.113.74}
+
+    - linuxonecc:
+        rhel72-s390x-1: {ip: 148.100.110.63}
+        rhel72-s390x-2: {ip: 148.100.110.64}
+
+    - mininodes:
+        ubuntu1604-arm64_odroid_c2-1: {ip: 70.167.220.147}
+        ubuntu1604-arm64_odroid_c2-2: {ip: 70.167.220.148}
+        ubuntu1604-arm64_odroid_c2-3: {ip: 70.167.220.149}
+
+    - osuosl:
+        aix61-ppc64_be-1: {ip: 140.211.9.101}
+        aix61-ppc64_be-2: {ip: 140.211.9.100}
+        ubuntu1404-ppc64_be-1: {ip: 140.211.168.74}
+        ubuntu1404-ppc64_be-2: {ip: 140.211.168.75}
+        ubuntu1404-ppc64_le-1: {ip: 140.211.168.106}
+        ubuntu1404-ppc64_le-2: {ip: 140.211.168.94}
+
+    - rackspace:
+        centos7-x64-1: {ip: 23.253.249.127}
+        debian8-x64-1: {ip: 23.253.109.216}
+        debian8-x64-2: {ip: 104.239.140.184}
+        fedora22-x64-1: {ip: 119.9.51.79}
+        fedora23-x64-1: {ip: 119.9.51.113}
+        fedora24-x64-1: {ip: 119.9.51.165}
+        freebsd10-x64-1: {ip: 119.9.52.218}
+        ubuntu1204_clang341-x64-1: {ip: 119.9.51.210}
+        ubuntu1604-x64-1: {ip: 119.9.51.176}
+        ubuntu1604-x64-2: {ip: 104.130.124.194}
+        win2008r2-x64-1: {ip: 104.130.225.148}
+        win2008r2-x64-2: {ip: 23.253.254.31}
+        win2008r2-x64-3: {ip: 104.130.8.178}
+        win2008r2-x64-4: {ip: 104.239.156.73}
+        win2008r2-x64-5: {ip: 104.239.231.190}
+        win2008r2-x64-6: {ip: 23.253.107.98}
+        win2012r2-x64-1: {ip: 104.130.175.153}
+        win2012r2-x64-2: {ip: 23.253.249.139}
+        win2012r2-x64-3: {ip: 162.242.241.50}
+        win2012r2-x64-4: {ip: 67.192.246.240}
+        win2012r2-x64-5: {ip: 104.239.174.16}
+        win2012r2-x64-6: {ip: 23.253.234.112}
+        win2012r2-x64-7: {ip: 162.242.247.5}
+        win2012r2-x64-8: {ip: 104.239.151.28}
+        win2012r2-x64-9: {ip: 104.239.231.87}
+        win2012r2-x64-10: {ip: 162.242.156.145}
+        win2012r2-x64-11: {ip: 162.242.235.179}
+        win2012r2-x64-12: {ip: 104.239.150.105}
+
+    - requireio:
+        andineck-debian7-arm_pi1p-1: {ip: 192.168.2.42, user: pi}
+        bengl-debian7-arm_pi1p-1: {ip: 192.168.2.43, user: pi}
+        bengl-debian7-arm_pi1p-2: {ip: 192.168.2.44, user: pi}
+        ceejbot-debian7-arm_pi1p-1: {ip: 192.168.2.46, user: pi}
+        ceejbot-debian7-arm_pi2-1: {ip: 192.168.2.65, user: pi}
+        chrislea-debian7-arm_pi1p-1: {ip: 192.168.2.52, user: pi}
+        davglass-debian7-arm_pi1p-1: {ip: 192.168.2.53, user: pi}
+        davglass-debian8-arm_pi3-1: {ip: 192.168.2.83, user: pi}
+        indieisaconcept-debian7-arm_pi1p-1: {ip: 192.168.2.48, user: pi}
+        jasnell-debian7-arm_pi2-1: {ip: 192.168.2.71, user: pi}
+        joeyvandijk-debian7-arm_pi2-1: {ip: 192.168.2.61, user: pi}
+        joeyvandijk-debian7-arm_pi2-2: {ip: 192.168.2.62, user: pi}
+        louiscntr-debian7-arm_pi2-1: {ip: 192.168.2.68, user: pi}
+        kahwee-debian8-arm_pi3-1: {ip: 192.168.2.90, user: pi}
+        mcollina-debian7-arm_pi2-1: {ip: 192.168.2.64, user: pi}
+        mhdawson-debian7-arm_pi1p-1: {ip: 192.168.2.49, user: pi}
+        mininodes-debian7-arm_pi1p-1: {ip: 192.168.2.47, user: pi}
+        mininodes-debian7-arm_pi2-1: {ip: 192.168.2.66, user: pi}
+        notthetup_sayanee-debian8-arm_pi3-1: {ip: 192.168.2.88, user: pi}
+        piccoloaiutante-debian8-arm_pi3-1: {ip: 192.168.2.89, user: pi}
+        pivotalagency-debian8-arm_pi3-1: {ip: 192.168.2.84, user: pi}
+        pivotalagency-debian8-arm_pi3-2: {ip: 192.168.2.85, user: pi}
+        rvagg-debian7-arm_pi1p-1: {ip: 192.168.2.60, user: pi}
+        rvagg-ubuntu1404-arm_odroidxu3-1: {ip: 192.168.2.10, user: odroid}
+        rvagg-ubuntu1404-arm_odroidxu-1: {ip: 192.168.2.15}
+        rvagg-ubuntu1404-arm_odroidxu-2: {ip: 192.168.2.16}
+        sambthompson-debian7-arm_pi2-1: {ip: 192.168.2.67, user: pi}
+        securogroup-debian7-arm_pi1p-1: {ip: 192.168.2.50, user: pi}
+        securogroup-debian7-arm_pi1p-2: {ip: 192.168.2.51, user: pi}
+        svincent-debian7-arm_pi2-1: {ip: 192.168.2.63, user: pi}
+        svincent-debian7-arm_pi2-2: {ip: 192.168.2.69, user: pi}
+        svincent-debian7-arm_pi2-3: {ip: 192.168.2.70, user: pi}
+        securogroup-debian8-arm_pi3-1: {ip: 192.168.2.86, user: pi}
+        securogroup-debian8-arm_pi3-2: {ip: 192.168.2.87, user: pi}
+        williamkapke-debian8-arm_pi3-1: {ip: 192.168.2.80, user: pi}
+        williamkapke-debian8-arm_pi3-2: {ip: 192.168.2.81, user: pi}
+        williamkapke-debian8-arm_pi3-3: {ip: 192.168.2.82, user: pi}
+        xgene-ubuntu1404-arm64-1: {ip: 192.168.2.1, user: ubuntu}
+        xgene-ubuntu1404-arm64-2: {ip: 192.168.2.2, user: ubuntu}
+
+    - scaleway:
+        debian7-arm_armv7-1: {ip: 212.47.234.107}
+        debian7-arm_armv7-2: {ip: 212.47.245.242}
+        debian7-arm_armv7-3: {ip: 212.47.246.3}
+
+    - softlayer:
+        centos5-x64-1: {ip: 50.23.85.252}
+        centos5-x64-2: {ip: 173.193.25.109}
+        centos6-x64-1: {ip: 50.23.85.251}
+        centos6-x64-2: {ip: 184.173.120.137}
+        centos7-x64-1: {ip: 50.23.85.250}
+        debian8-x86-1: {ip: 169.44.16.126}
+        ubuntu1404-x64-1: {ip: 50.97.245.5}
+        ubuntu1404-x86-1: {ip: 50.97.245.9}

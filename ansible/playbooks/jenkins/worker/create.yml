@@ -1,0 +1,22 @@
+---
+
+#
+# set up a jenkins worker -- muy bueno!
+#
+
+- hosts:
+  - test
+  - release
+  - "!test-joyent-freebsd10-x64-2"
+  - "!test-rackspace-freebsd10-x64-1"
+
+  roles:
+    - bootstrap
+    - baselayout
+    - package-upgrade
+    - jenkins-worker
+
+  pre_tasks:
+    - name: check if secret is properly set
+      fail:
+      failed_when: not secret
