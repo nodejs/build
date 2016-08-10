@@ -16,7 +16,7 @@
       tags: bootstrap
 
     - name: Bootstrap python
-      raw: dnf install -y python2 python2-dnf
+      raw: dnf install -y python2 python2-dnf libselinux-python
       tags: bootstrap
       when: python_exists.rc == 1
 
