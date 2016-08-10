@@ -16,7 +16,7 @@
       tags: bootstrap
 
     - name: Bootstrap python
-      raw: dnf install -y python2 python2-dnf libselinux-python
+      raw: dnf install -y python2 python2-dnf
       tags: bootstrap
       when: python_exists.rc == 1
 
@@ -29,7 +29,7 @@
 
       # Fedora24 has issues running java from systemd using SElinux
     - name: Disable SELinux
-      selinux: state=disabled
+      lineinfile: dest=/etc/selinux/config regexp=^SELINUX= line=SELINUX=disabled
       when: ansible_distribution == "Fedora" and
             ansible_distribution_major_version == "24"
       tags: selinux
