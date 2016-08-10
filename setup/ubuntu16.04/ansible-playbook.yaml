@@ -1,8 +1,6 @@
 ---
 - hosts: iojs-build-ubuntu1604
-  remote_user: "{{ remote_user }}" # from inventory
-  become: yes
-  become_user: root
+  remote_user: root
   gather_facts: False
 
   tasks:
@@ -22,10 +20,7 @@
       when: python_exists.rc == 1 or aptitude_exists.rc == 1
 
 - hosts: iojs-build-ubuntu1604
-  remote_user: "{{ remote_user }}"
-  become: yes
-  become_user: root
-  gather_facts: True
+  remote_user: root
 
   tasks:
     - include_vars: ansible-vars.yaml
@@ -36,8 +31,12 @@
       tags: general
 
     - name: General | Install required packages
-      apt: name={{ item }} update_cache=yes state=latest
+      apt: name="{{ item }}" update_cache=yes state=latest
       with_items: packages
+      tags: general
+
+    - name: Enable time syncing
+      service: name=systemd-timesyncd state=started enabled=yes
       tags: general
 
     - name: User | Add {{ server_user }} user

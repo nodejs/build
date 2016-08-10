@@ -33,6 +33,7 @@ test-softlayer-debian8-x86-1
 [iojs-build-ubuntu1604]
 test-digitalocean-ubuntu1604-x64-1
 test-digitalocean-ubuntu1604-x86-1
+test-rackspace-ubuntu1604-x64-1
 
 [iojs-build-ubuntu1404]
 iojs-ibm-ppcle-ubuntu1404-64-1

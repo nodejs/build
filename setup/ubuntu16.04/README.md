@@ -23,6 +23,10 @@ Host test-mininodes-ubuntu1604-arm64_odroid_c2-3
   User odroid
   HostName 70.167.220.149
   # IdentityFile nodejs_build_test
+
+Host test-rackspace-ubuntu1604-x64-1
+  HostName 119.9.51.176
+
 ```
 
 Build the host_var config files for each host, including `server_jobs: 2` for the lower powered hosts, then run:
