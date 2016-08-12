@@ -1,0 +1,6 @@
+NODE_ENV=production
+PORT={{envs.port}}
+TRAVIS_TOKEN={{envs.travis_token}}
+GITHUB_TOKEN={{envs.github_token}}
+GITHUB_WEBHOOK_SECRET={{envs.github_webhook_secret}}
+LOGIN_CREDENTIALS={{envs.login_credentials}}

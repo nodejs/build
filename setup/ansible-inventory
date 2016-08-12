@@ -149,3 +149,6 @@ test-ibm-aix61-ppc64-1:18822
 [iojs-build-rhel72-linuxonecc]
 test-linuxonecc-rhel72-s390x-1
 test-linuxonecc-rhel72-s390x-2
+
+[github-bot]
+infra-rackspace-debian8-x64-1
