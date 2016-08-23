@@ -10,6 +10,15 @@
 * Myles Borins
 * Hans Kristian Flaatten
 
+### Agenda
+Extracted from `wg-agenda` [issues](https://github.com/nodejs/build/issues?q=is%3Aopen+is%3Aissue+label%3Awg-agenda) and [pull requests](https://github.com/nodejs/build/pulls?q=is%3Aopen+label%3Awg-agenda+is%3Apr) from this repo.
+
+* How can a project qualify for access to the build infrastructure? #448 
+* Run and deploy nodejs-github-bot #404
+* OS X buildbots/ci: call to action #367 
+* rsync endpoint to mirror the releases #55
+* Alpine Linux / Docker Build #75
+
 ## Standup
 
 * Johan Bergström
