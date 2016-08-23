@@ -40,6 +40,7 @@ The Node.js Foundation's tier-2 infrastructure providers fill essential gaps in 
 **[IBM](https://www.ibm.com/)**:
   * Via their cloud company, [SoftLayer](https://www.softlayer.com/), provides hardware for testing and benchmarking for the Node.js project's CI system.
   * Via the [Oregon State University Open Source Lab](https://osuosl.org/services/powerdev), provides PPC-based test and build infrastructure.
+  * Via the [IBM LinuxOne(TM) Community Cloud](https://developer.ibm.com/linuxone/), provides linuxOne based test and build infrastructure.
 
 **[Voxer](https://voxer.com/)**, a voice, text, photo and video messaging service and well-known Node.js early-adopter donated and host OS X hardware for building and testing via the Node.js project's CI
 system.
