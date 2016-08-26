@@ -1,0 +1,43 @@
+---
+- hosts: test-joyent-alpine34
+  remote_user: root
+  gather_facts: False
+
+  tasks:
+    - name: Check for python
+      raw: which python
+      register: python_exists
+      failed_when: python_exists.rc > 1
+
+    - name: Bootstrap python and aptitude
+      raw: apk add python
+      tags: bootstrap
+      when: python_exists.rc == 1
+
+- hosts: test-joyent-alpine34
+  remote_user: root
+
+  tasks:
+    - include_vars: ansible-vars.yaml
+      tags: vars
+
+    - name: General | APK repositories
+      template: src=resources/repositories.j2
+                dest=/etc/apk/repositories
+                owner=root
+                group=root
+                mode=0644
+                backup=yes
+      tags: general
+
+    - name: General | APK update
+      command: /sbin/apk update -U -a
+      tags: general
+
+    - name: General | APK upgrade
+      command: /sbin/apk upgrade -U -a
+      tags: general
+
+    - name: install java
+      command: /sbin/apk add openjdk8-jre-base
+      tags: general
