@@ -42,6 +42,32 @@
       user: name="{{ server_user }}" shell=/bin/bash
       tags: user
 
+    - name: Firewall | check basic rule to allow test port communication
+      command: iptables -C INPUT -p udp --dport 12346 -j ACCEPT
+      register: iptables_find_basic
+      ignore_errors: True
+      tags: firewall
+
+    - name: Firewall | add basic rule to allow test port communication
+      command: firewall-cmd --permanent --direct --passthrough ipv4 -I INPUT 1 -p udp --dport 12346 -j ACCEPT
+      when: iptables_find_basic|failed
+      tags: firewall
+
+    - name: Firewall | check rule to prevent external communication on test port
+      command: iptables -t nat -C PREROUTING -p udp --dport 12346 -j DNAT --to 127.0.0.1:12345
+      register: iptables_find_dnat
+      ignore_errors: True
+      tags: firewall
+
+    - name: Firewall | add rule to prevent external communication on test port
+      command: firewall-cmd --permanent --direct --passthrough ipv4 -t nat -I PREROUTING 1 -p udp --dport 12346 -j DNAT --to 127.0.0.1:12345
+      when: iptables_find_dnat|failed
+      tags: firewall
+
+    - name: Firewall | load the new permanent firewall configuration
+      command: firewall-cmd --reload
+      tags: firewall
+
     - name: Jenkins | Download Jenkins' slave.jar
       command: curl -sL https://ci.nodejs.org/jnlpJars/slave.jar -o /home/{{ server_user }}/slave.jar
       tags: jenkins

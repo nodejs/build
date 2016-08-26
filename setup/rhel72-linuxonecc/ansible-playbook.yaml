@@ -39,16 +39,52 @@
       user: name="{{ server_user }}" shell=/bin/bash home=/data/iojs
       tags: user
 
+    - name: Firewall | check basic rule to allow communication locally
+      command: iptables -C INPUT -s 127.0.0.1/32 -d 127.0.0.1/32 -j ACCEPT
+      register: iptables_find_local
+      ignore_errors: True
+      tags: firewall
+
     - name: Firewall | add basic rule to allow communication locally
-      lineinfile: dest=/etc/sysconfig/iptables insertafter=":OUTPUT ACCEPT.*]" line="-A INPUT -s 127.0.0.1/32 -d 127.0.0.1/32 -j ACCEPT"
+      command: iptables -I INPUT 1 -s 127.0.0.1/32 -d 127.0.0.1/32 -j ACCEPT
+      when: iptables_find_local|failed
+      tags: firewall
+
+    - name: Firewall | check additional rule to allow communication from 127.0.0.2
+      command: iptables -C INPUT -s 127.0.0.2/32 -d 127.0.0.1/32 -j ACCEPT
+      register: iptables_find_local2
+      ignore_errors: True
       tags: firewall
 
     - name: Firewall | add additional rule to allow communication from 127.0.0.2
-      lineinfile: dest=/etc/sysconfig/iptables insertafter=":OUTPUT ACCEPT.*]" line="-A INPUT -s 127.0.0.2/32 -d 127.0.0.1/32 -j ACCEPT"
+      command: iptables -I INPUT 1 -s 127.0.0.2/32 -d 127.0.0.1/32 -j ACCEPT
+      when: iptables_find_local2|failed
       tags: firewall
 
-    - name: Firewall | make the new firewall rules take effect
-      command: systemctl restart iptables
+    - name: Firewall | check basic rule to allow communication on test port
+      command: iptables -C INPUT -p udp --dport 12346 -j ACCEPT
+      register: iptables_find_testport
+      ignore_errors: True
+      tags: firewall
+
+    - name: Firewall | add basic rule to allow communication on test port
+      command: iptables -I INPUT 1 -p udp --dport 12346 -j ACCEPT
+      when: iptables_find_testport|failed
+      tags: firewall
+
+    - name: Firewall | check rule to prevent external communication to test port
+      command: iptables -t nat -C PREROUTING -p udp --dport 12346 -j DNAT --to 127.0.0.1:12345
+      register: iptables_find_nattestport
+      ignore_errors: True
+      tags: firewall
+
+    - name: Firewall | add rule to prevent external communication to test port
+      command: iptables -t nat -A PREROUTING -p udp --dport 12346 -j DNAT --to 127.0.0.1:12345
+      when: iptables_find_nattestport|failed
+      tags: firewall
+
+    - name: Firewall | add basic rule to allow communication locally
+      shell: iptables-save > /etc/sysconfig/iptables
       tags: firewall
 
     - name: Jenkins | Download Jenkins slave.jar
