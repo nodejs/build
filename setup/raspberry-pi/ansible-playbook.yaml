@@ -7,12 +7,21 @@
     - include_vars: ansible-vars.yaml
       tags: vars
 
-    - name: General | APT Update
+    - name: General | Setup APT proxy
+      template:
+        src: "./resources/02proxy.j2"
+        dest: "/etc/apt/apt.conf.d/02proxy"
+        owner: "root"
+        group: "root"
+        mode: 0644
+      tags: general
+
+    - name: General | APT update
       apt:
         update_cache: yes
       tags: general
 
-    - name: General | APT Upgrade
+    - name: General | APT upgrade
       apt:
         upgrade: dist
       tags: general
@@ -31,7 +40,7 @@
       service: name=ssh state=restarted enabled=yes
       tags: init
 
-    - name: General | Set up 1024M dphys-swapfile
+    - name: General | Configure 1024M dphys-swapfile
       lineinfile:
         dest: /etc/dphys-swapfile
         state: present
