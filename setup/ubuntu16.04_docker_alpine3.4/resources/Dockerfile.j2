@@ -29,7 +29,8 @@ RUN apk add --no-cache \
         openjdk8 \
         git \
         procps \
-        openssh-client
+        openssh-client \
+        bash
 
 RUN addgroup -g 1000 {{ server_user }}
 
