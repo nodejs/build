@@ -8,6 +8,7 @@ ENV NODE_TEST_DIR /home/{{ server_user }}/tmp
 ENV PATH /usr/lib/ccache/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV NODE_COMMON_PIPE /home/{{ server_user }}/test.pipe
 ENV OSTYPE linux-gnu
+ENV OSVARIANT docker
 ENV DESTCPU x64
 ENV ARCH x64
 
@@ -44,5 +45,5 @@ CMD cd /home/iojs \
   && curl https://ci.nodejs.org/jnlpJars/slave.jar -O \
   && java \
       -jar slave.jar \
-      -jnlpUrl https://ci.nodejs.org/computer/test-digitalocean-ubuntu1604_docker_alpine34-x64-1/slave-agent.jnlp \
-      -secret efbfadbf4807af0f1084a1e120ef5467b49432113661e11ce2ecc1ab71b96f38
+      -jnlpUrl https://{{ ci_host }}/computer/{{ image_type }}-digitalocean-ubuntu1604_docker_alpine34-x64-1/slave-agent.jnlp \
+      -secret {{ secret }}

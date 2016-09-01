@@ -1,0 +1,41 @@
+---
+# requires: @image_type
+# requires: @ci_host
+# requires: @secret
+
+- name: Docker | Make build directory
+  file:
+    path: /root/{{ image_type }}
+    state: directory
+  tags: docker_build
+
+- name: Docker | Generate Dockerfile
+  template:
+    src: ./resources/Dockerfile.j2
+    dest: /root/{{ image_type }}/Dockerfile
+  tags: docker_build
+
+- name: Docker | Build Alpine image
+  command: docker build -t node-ci:alpine-{{ image_type }} /root/{{ image_type }}/
+  tags: docker_build
+
+- name: Docker | Make mountable home directory
+  file:
+    path: "/home/{{ server_user }}/{{ image_type }}"
+    state: directory
+    mode: 0755
+    owner: "{{ server_user }}"
+  tags: docker_build
+
+- name: Init | Generate and copy init script
+  template:
+    src: ./resources/jenkins.service.j2
+    dest: /lib/systemd/system/jenkins-{{ image_type }}.service
+  tags: docker_init
+
+- name: Init | Start Jenkins
+  service:
+    name: jenkins-{{ image_type }}
+    state: started
+    enabled: yes
+  tags: docker_init

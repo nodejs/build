@@ -9,8 +9,8 @@ WantedBy=multi-user.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/bin/docker run --rm -v /home/{{ server_user }}:/home/{{ server_user }} --name node-ci-alpine node-ci:alpine-build
-ExecStop=/usr/bin/docker stop -t 5 node-ci-alpine
+ExecStart=/usr/bin/docker run --rm -v /home/{{ server_user }}/{{ image_type }}:/home/{{ server_user }} --name node-ci-alpine-{{ image_type }} node-ci:alpine-{{ image_type }}
+ExecStop=/usr/bin/docker stop -t 5 node-ci-alpine-{{ image_type }}
 Restart=always
 RestartSec=30
 StartLimitInterval=0

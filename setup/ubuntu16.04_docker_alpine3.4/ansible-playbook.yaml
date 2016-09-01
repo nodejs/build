@@ -22,7 +22,7 @@
     - include_vars: ansible-vars.yaml
       tags: vars
 
-    - name: General | APT Update and upgrade
+    - name: General | APT update and upgrade
       apt: update_cache=yes upgrade=full
       tags: general
 
@@ -60,17 +60,29 @@
   gather_facts: True
 
   tasks:
-    - name: Docker | Generate Dockerfile
-      template: src=./resources/Dockerfile.j2 dest=/root/Dockerfile
-      tags: docker
+    - include: tasks/setup-image.yaml image_type=test ci_host=ci.nodejs.org secret={{ test_secret }}
+    - include: tasks/setup-image.yaml image_type=release ci_host=ci-release.nodejs.org secret={{ release_secret }}
 
-    - name: Docker | Build Alpine image
-      command: docker build -t node-ci:alpine-build /root/
+    - name: SSH | Make release ssh config directory
+      file:
+        path: "/home/{{ server_user }}/release/.ssh/"
+        state: directory
+        mode: 0700
+        owner: "{{ server_user }}"
+      tags: docker_build
 
-    - name: Init | Generate and copy init script
-      template: src=./resources/jenkins.service.j2 dest=/lib/systemd/system/jenkins.service
-      tags: init
+    - name: SSH | Copy release ssh config
+      template:
+        src: ./resources/release_ssh_config
+        dest: "/home/{{ server_user }}/release/.ssh/config"
+        mode: 0600
+        owner: "{{ server_user }}"
+      tags: docker_init
 
-    - name: Init | Start Jenkins
-      service: name=jenkins state=started enabled=yes
-      tags: init
+    - name: SSH | Copy release ssh staging key
+      template:
+        src: ./resources/node-www-staging-key
+        dest: "/home/{{ server_user }}/release/.ssh/node-www-staging"
+        mode: 0600
+        owner: "{{ server_user }}"
+      tags: docker_init
