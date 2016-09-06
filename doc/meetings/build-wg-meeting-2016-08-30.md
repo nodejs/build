@@ -6,8 +6,9 @@
 ## Present
 
 * Hans Kristian Flaatten
-* JoãReis
-* Johan Bergströ Michael Dawson
+* João Reis
+* Johan Bergström
+* Michael Dawson
 * Rod Vagg
 * Phillip Jonsen
 * Myles Borins
@@ -31,12 +32,13 @@ Extracted from wg-agenda issues and pull requests from build repo:
   * started working on Ansible playbook for Alpine Linux
   * looked into adding offline reasons to Jenkins alerts
     * .Ping timeout., .Low disk space. etc.
-  * looked into moving Jenkins Monitor to Node.s infra
+  * looked into moving Jenkins Monitor to Node.js infra
     * currently on a personal DO droplet & Sendgrid account 
-* JoãReis
+* João Reis
   * Wave of windows failures
   * Release machines with VS2015
-* Johan Bergströ * redeployed f24 instance to run v8 tests
+* Johan Bergström
+  * redeployed f24 instance to run v8 tests
   * onboarded @phillipj and @starefossen
   * landed outline of onboarding documentation
   * new ubuntu16 slave and minor fixes to playbook
@@ -83,7 +85,6 @@ Extracted from wg-agenda issues and pull requests from build repo:
     to use foundation money.
   * We already have sign off to use foundation money to get this resolved.
 
-  
 * rsync endpoint to mirror the releases #55
   * no real discussion, just needs to be completed.
 
@@ -126,14 +127,10 @@ Extracted from wg-agenda issues and pull requests from build repo:
     * easier to dig through / debug
   * Myles volunteers to take a stab at converter to generate junit from the
     existing tap files
-  * Don't want to use the Node build under test to run the converter
-    because if you break Node bad enough you.ll end up not getting
-    any parsed output.
   * Johan says this can be done on Jenkins master by writing
     to artifacts files which are sent back to Jenkins for processing 
 
 ## Next meeting
 
 September 20th, 8pm UTC
-~
 
