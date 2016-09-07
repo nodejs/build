@@ -85,7 +85,7 @@
       template:
         src=./resources/deploy-github-bot.sh
         dest="/home/{{ server_user }}/bin/deploy-github-bot.sh"
-        mode=0744
+        mode=0755
         owner="{{ server_user }}"
       tags: deploy-webhook
 
