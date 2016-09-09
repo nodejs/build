@@ -1,7 +1,7 @@
 {
   "port": 9999,
   "path": "/deploy-webhook",
-  "secret": "{{ envs.github_webhook_secret }}",
+  "secret": "{{ conf.github_deploy_webhook_secret }}",
   "log": "/home/{{ server_user }}/logs/github-bot-webhook.log",
   "rules": [
     {
