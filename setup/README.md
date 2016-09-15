@@ -1,9 +1,9 @@
 # Ansible setup
 
-Servers in the Node.js infrastructure is provisioned with Ansible. This directory contains all
+Servers in the Node.js infrastructure are provisioned with Ansible. This directory contains all
 the related Ansible files.
 
-For more information and getting started with Ansible, please read [getting started on ansible.com].
+For more information and getting started with Ansible, please read [getting started on ansible.com](https://www.ansible.com/get-started).
 
 # Working with Ansible
 
