@@ -67,8 +67,9 @@ $ ssh -p 2200 root@127.0.0.1
 ## Edit ~/.ssh/config
 
 You will have to create an SSH alias for the hosts you're running the ansible playbook against.
-In this [github-bot](github-bot/ansible-playbook.yaml) example, that means `github-bot` which
-is defined as an ansible inventory group in our [inventory file](ansible-inventory).
+In this [github-bot](github-bot/ansible-playbook.yaml) example, that means `github-bot` because
+the first line in the playbook says `hosts: github-bot`, which normally means our ansible
+inventory group defined in our [inventory file](ansible-inventory).
 
 Add the following to your ~/.ssh/config:
 
