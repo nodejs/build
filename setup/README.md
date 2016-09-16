@@ -70,6 +70,21 @@ You will have to create an SSH alias for the hosts you're running the ansible pl
 In this [github-bot](github-bot/ansible-playbook.yaml) example, that means `github-bot` which
 is defined as an ansible inventory group in our [inventory file](ansible-inventory).
 
+Add the following to your ~/.ssh/config:
+
+```
+Host github-bot
+  HostName 127.0.0.1
+  Port 2200
+  User root
+```
+
+With that in place, it's even easier to connect to your virtual machine:
+
+```bash
+$ ssh github-bot
+```
+
 ## Run the playbook
 
 While in the github-bot directory, run the playbook overriding the inventory altogether:
