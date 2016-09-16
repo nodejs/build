@@ -15,6 +15,7 @@ Good luck, have fun!
 
 ## Prerequisites
 
+- Ansible: http://docs.ansible.com/ansible/intro_installation.html
 - Vagrant: https://www.vagrantup.com/downloads.html
 
 ## Create a Vagrantfile
