@@ -88,15 +88,12 @@ Build and test orchestration is performed by [Jenkins](http://jenkins-ci.org).
 People
 ------
 
+* Wyatt Preul [@geek](https://github.com/geek)
 * Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
 * João Reis [@joaocgreis](https://github.com/joaocgreis)
-* Rod Vagg [@rvagg](https://github.com/rvagg)
-* Alexis Campailla [@orangemocha](https://github.com/orangemocha)
 * Michael Dawson [@mhdawson](https://github.com/mhdawson)
-* Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
-* Julien Gilli [@misterdjules](https://github.com/misterdjules)
-* Rich Trott [@trott](https://github.com/trott)
-* Myles Borins [@thealphanerd](https://github.com/thealphanerd)
-* Ryan Graham [@rmg](https://github.com/rmg)
-* Imran Iqbal [@iWuzHere](https://github.com/iWuzHere)
 * Phillip Johnsen [@phillipj](https://github.com/phillipj)
+* Rod Vagg [@rvagg](https://github.com/rvagg)
+* Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
+* Myles Borins [@thealphanerd](https://github.com/thealphanerd)
+* Rich Trott [@trott](https://github.com/trott)
