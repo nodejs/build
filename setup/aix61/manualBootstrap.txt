@@ -9,6 +9,11 @@ chfs -a size=+1300000 /opt
 
 2) Install required packages
 
+ftp://ftp.software.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/curl/curl-7.44.0-2.aix6.1.ppc.rpm
+rpm -e git (if necessary)
+rpm -e curl (if necessary)
+rpm -ivh curl-7.44.0-2.aix6.1.ppc.rpm
+
 ftp://ftp.software.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/unzip/unzip-6.0-3.aix6.1.ppc.rpm
 rpm -i unzip-6.0-3.aix6.1.ppc.rpm 
 
@@ -17,10 +22,32 @@ gcc-c++-4.8.5-1.aix6.1.ppc.rpm-with-deps.zip
 unzip gcc-c++-4.8.5-1.aix6.1.ppc.rpm-with-deps.zip
 sh install-gcc-rpm.sh
 
-http://www.bullfreeware.com/affichage.php?id=2080  - git + all dependencies
-git-1.8.3.1-3.aix6.1.ppc.rpm-with-deps.zip
-unzip git-1.8.3.1-3.aix6.1.ppc.rpm-with-deps.zip
-sh install-git-tools-rpm.sh
+curl --insecure https://public.dhe.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/git/git-2.8.1-1.aix6.1.ppc.rpm >git-2.8.1-1.aix6.1.ppc.rpm
+rpm -ivh git-2.8.1-1.aix6.1.ppc.rpm
+
+Update openssl and openssh
+
+get  OpenSSH_6.0.0.6202.tar.Z and openssl-1.0.2.800.tar.Z from:
+https://www-01.ibm.com/marketing/iwm/iwm/web/reg/pick.do?source=aixbp&lang=en_US
+copy into directory fixup
+cd fixup
+uncompress OpenSSH_6.0.0.6202.tar.Z
+uncompress openssl-1.0.2.800.tar.Z
+tar -xvf OpenSSH_6.0.0.6202.tar.Z
+tar -xvf openssl-1.0.2.800.tar.Z
+copy contents of OpenSSH_6.0.0.6202  openssl-1.0.2.800 to fixup dir.
+inutoc .
+
+emgr -r -L IV80743m9a  (if necessary)
+emgr -r -L IV83169m9a  (if necessary)
+
+installp -Y -qaXgd . openssl openssh 
+
+curl --insecure https://public.dhe.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/gettext/gettext-
+0.19.7-1.aix6.1.ppc.rpm >gettext-0.19.7-1.aix6.1.ppc.rpm
+rpm -e gettext 
+rpm -hUv gettext-0.19.7-1.aix6.1.ppc.rpm
+
 
 Java7r1_64.jre.7.1.0.200.tar.gz
 gunzip Java7r1_64.jre.7.1.0.200.tar.gz
