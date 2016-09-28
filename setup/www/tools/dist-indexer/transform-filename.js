@@ -1,6 +1,7 @@
 const assert = require('assert')
     , types = {
           'tar.gz'           : 'src'
+        , 'aix-ppc64'        : 'aix-ppc64'
         , 'darwin-x64'       : 'osx-x64-tar'
         , 'darwin-x86'       : 'osx-x86-tar'
         , 'pkg'              : 'osx-x64-pkg'
@@ -35,6 +36,7 @@ module.exports = transformFilename
 if (module === require.main) {
   var tests = [
       { file: 'doc' }
+    , { file: 'node-v6.7.0-aix-ppc64.tar.gz', type: 'aix-ppc64'}
     , { file: 'iojs-v3.0.0-darwin-x64.tar.gz', type: 'osx-x64-tar' }
     , { file: 'iojs-v3.0.0-darwin-x64.tar.xz' }
     , { file: 'iojs-v3.0.0-headers.tar.gz', type: 'headers' }
