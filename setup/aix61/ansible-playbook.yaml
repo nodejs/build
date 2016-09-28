@@ -21,7 +21,7 @@
       tags: jenkins
 
     - name: Jenkins | Copy S20jenkins
-      copy: src=./resources/S20jenkins dest=/etc/rc.d/rc2.d mode=755
+      copy: src=./resources/S20jenkins dest=/etc/rc.d/rc2.d mode=0755
       tags: jenkins
 
     - name: Jenkins | Copy certs required to access jenkins/git
