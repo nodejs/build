@@ -10,6 +10,7 @@
 * Michael Dawson
 * João Reis
 * Gibson Fahnestock
+* Myles Borins
 
 ## Agenda 
 
@@ -63,8 +64,8 @@ Extracted from wg-agenda issues and pull requests from this repo.
 * TAP Plugin issues on Jenkins #453
 
   * Myles: we need to update the node test runner to report tap using
-  YAMLish for the stack traces. Once that is done the tap -> junit
-  converter should work using an off the shelf module.
+    YAMLish for the stack traces. Once that is done the tap -> junit
+    converter should work using an off the shelf module.
 
 * How can a project qualify for access to the build infrastructure? #448
 
