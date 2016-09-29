@@ -27,7 +27,6 @@
 - name: CCache | Install generated binary
   command: install -c -m 755 ccache /usr/local/bin
   args:
-    creates: /usr/local/bin/ccache
     chdir: /tmp/ccache-{{ version }}
   when: ccache_version.stdout.find('{{ version }}') == -1
 

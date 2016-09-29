@@ -39,7 +39,6 @@
 - name: Git | Install generated binary
   command: make install
   args:
-    creates: /usr/local/bin/git
     chdir: /tmp/git-{{ version }}
   when: git_version.stdout.find('{{ version }}') == -1
   tags: git
