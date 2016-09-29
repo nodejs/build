@@ -90,6 +90,8 @@ test-nodesource_indieisaconcept-debian7-arm_pi1p-1
 test-nodesource_mhdawson-debian7-arm_pi1p-1
 test-nodesource_securogroup-debian7-arm_pi1p-1
 test-nodesource_securogroup-debian7-arm_pi1p-2
+test-nodesource_chrislea-debian7-arm_pi1p-1
+test-nodesource_davglass-debian7-arm_pi1p-1
 test-nodesource_rvagg-debian7-arm_pi2-1
 test-nodesource_joeyvandijk-debian7-arm_pi2-1
 test-nodesource_joeyvandijk-debian7-arm_pi2-2
