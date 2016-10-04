@@ -100,3 +100,4 @@ People
 * Ryan Graham [@rmg](https://github.com/rmg)
 * Imran Iqbal [@iWuzHere](https://github.com/iWuzHere)
 * Phillip Johnsen [@phillipj](https://github.com/phillipj)
+* Rich Trott [@Trott](https://github.com/Trott)
