@@ -1,11 +1,4 @@
-# Ansible setup
-
-Servers in the Node.js infrastructure are provisioned with Ansible. This directory contains all
-the related Ansible files.
-
-For more information and getting started with Ansible, please read [getting started on ansible.com](https://www.ansible.com/get-started).
-
-# Working with Ansible
+# Working with Ansible locally
 
 While working with these ansible playbooks, there's great value in testing them locally first, before running
 them on one or more remote servers. The following section tries to describe how you would do just that
@@ -15,7 +8,6 @@ Good luck, have fun!
 
 ## Prerequisites
 
-- Ansible: http://docs.ansible.com/ansible/intro_installation.html
 - Vagrant: https://www.vagrantup.com/downloads.html
 
 ## Create a Vagrantfile
