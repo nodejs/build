@@ -9,4 +9,4 @@ if [ "X$site" != "Xiojs" ] && [ "X$site" != "Xnodejs" ]; then
   exit 1
 fi
 
-(cd /home/staging/${site}/release/ && /home/dist/tools/dist-indexer/ls-types.js -d *)
+(cd /home/staging/${site}/release/ && nodejs-ls-types -d *)

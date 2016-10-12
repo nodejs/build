@@ -34,6 +34,9 @@ git clean -fdx
 git fetch origin
 git checkout origin/master
 
+nodeuid=$(grep ^nodejs: /etc/passwd | awk -F: '{print $3}')
+nodegid=$(grep ^nodejs: /etc/passwd | awk -F: '{print $4}')
+
 docker pull node:latest
 docker run \
   --rm \
@@ -41,8 +44,8 @@ docker run \
   -v /home/nodejs/.npm:/npm/ \
   node:latest \
   bash -c " \
-    addgroup nodejs --gid 1000 && \
-    adduser nodejs --uid 1000 --gid 1000 --gecos nodejs --disabled-password && \
+    addgroup nodejs --gid ${nodeuid} && \
+    adduser nodejs --uid ${nodeuid} --gid ${nodegid} --gecos nodejs --disabled-password && \
     su nodejs -c ' \
       npm config set loglevel http && \
       npm config set cache /npm/ && \

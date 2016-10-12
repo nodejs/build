@@ -55,6 +55,8 @@ echo "" >> ./nodejs_chained.crt
 
 echo "Extracting staging_id_rsa_public.key..."
 bash -c "$gpgcmd" < ${secretsdir}/build/release/staging_id_rsa_public.key 1> ./staging_id_rsa_public.key 2> /dev/null || bork
-echo "" >> ./staging_id_rsa_public.key
+
+echo "Extracting nodejs_build_benchmark key..."
+bash -c "$gpgcmd" < ${secretsdir}/build/infra/nodejs_build_benchmark 1> ./benchmark_id_rsa.key 2> /dev/null || bork
 
 

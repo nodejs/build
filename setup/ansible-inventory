@@ -111,7 +111,7 @@ test-nodesource_piccoloaiutante-debian8-arm_pi3-1
 iojs-www
 
 [node-www]
-node-www
+infra-digitalocean-ubuntu1604-x64-1
 
 [iojs-jenkins]
 iojs-jenkins

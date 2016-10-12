@@ -1,20 +1,21 @@
-- name: Site Setup | Make /home/dist/tools/nightly-builder
-  file:
-    path: /home/dist/tools/nightly-builder
-    state: directory
-    mode: 0755
-    owner: dist
-    group: dist
+- name: nightly-builder | Install nightly-builder
+  command: "npm install nodejs-nightly-builder -g"
   tags: nightly-builder
 
-- name: nightly-builder | Copy source files
+- name: nightly-builder | Copy config
   copy:
-    src: tools/nightly-builder/
-    dest: /home/dist/tools/nightly-builder/
-    owner: dist
-    group: dist
+    src: ./resources/config/nightly-builder.json.j2
+    dest: /etc/nightly-builder.json
+    mode: 0644
   tags: nightly-builder
 
-- name: nightly-builder | npm install
-  shell: cd /home/dist/tools/nightly-builder/ && npm install
+  #TODO: the branches are hardwired here, they should be in vars somewhere
+- name: nightly-builder | Add periodic tasks to crontab
+  lineinfile:
+    dest: /etc/crontab
+    line: "{{ item }}"
+  with_items:
+    - '0 20    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/v6.x --config /etc/nightly-builder.json'
+    - '0 19    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/v7.x --config /etc/nightly-builder.json'
+    - '0 18    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/master --config /etc/nightly-builder.json'
   tags: nightly-builder

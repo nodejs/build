@@ -18,7 +18,6 @@ fi
 
 (cd "${dstdir}/${version}" && shasum -a256 $(ls node* iojs* win-*/* 2> /dev/null) > SHASUMS256.txt) || exit 1
 echo "${dstdir}/${version}/SHASUMS256.txt"
-/home/dist/tools/dist-indexer/dist-indexer.js --dist $dstdir --indexjson ${dstdir}/index.json  --indextab ${dstdir}/index.tab
+nodejs-dist-indexer --dist $dstdir --indexjson ${dstdir}/index.json  --indextab ${dstdir}/index.tab
 find "${dstdir}/${version}" -type f -exec chmod 644 '{}' \;
 find "${dstdir}/${version}" -type d -exec chmod 755 '{}' \;
-

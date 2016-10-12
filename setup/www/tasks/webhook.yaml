@@ -3,26 +3,21 @@
   tags: webhook
 
 - name: GitHub Webhook | Copy config
-  copy:
-    src: ./resources/config/github-webhook.json
+  template:
+    src: ./resources/config/github-webhook.json.j2
     dest: /etc/github-webhook.json
     mode: 0644
   tags: webhook
 
-- name: GitHub Webhook | Copy secret to config
-  replace:
-    dest: /etc/github-webhook.json
-    regexp: '\{\{github_secret\}\}'
-    replace: '{{ github_secret }}'
-  tags: webhook
-
-- name: GitHub Webhook | Copy Upstart config
-  copy:
-    src: ./resources/config/github-webhook.conf
-    dest: /etc/init/github-webhook.conf
-    mode: 0644
+- name: GitHub Webhook | Generate and copy init script
+  template:
+    src: ./resources/config/github-webhook.service.j2
+    dest: /lib/systemd/system/github-webhook.service
   tags: webhook
 
 - name: GitHub Webhook | Start service
-  service: name=github-webhook state=started
+  service:
+    name: github-webhook
+    state: restarted
+    enabled: yes
   tags: webhook

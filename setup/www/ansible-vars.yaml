@@ -1,16 +1,14 @@
 ---
 server_user: nodejs
-root_users:
-  - rvagg
-  - jbergstroem
-  - orangemocha
 dist_users:
-  - cjihrig
   - chrisdickinson
-  - sam-github
-  - fishrock123
+  - cjihrig
+  - evanlucas
   - jasnell
+  - fishrock123
+  - thealphanerd
   - rvagg
+  - sam-github
 libuv_users:
   - saghul
   - piscisaureus
@@ -19,3 +17,4 @@ packages:
   - nodejs
   - nginx
   - git
+benchmark_host: 50.97.245.4
