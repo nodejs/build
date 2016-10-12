@@ -63,7 +63,7 @@ function processsummaries {
 
 echo "Processing log files ..."
 
-for i in $(ls -r /var/log/nginx/nodejs.org-access.log*); do
+for i in $(ls -r /var/log/nginx/nodejs/nodejs.org-access.log*); do
   basename=$(basename $i | sed 's/\.[xg]z//')
   outfile=${logsoutputdir}/${basename}.csv
   summaryexists=true

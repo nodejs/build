@@ -35,3 +35,6 @@
 
     - include: tasks/latest-linker.yaml
       tags: latest-linker
+
+    - include: tasks/metrics.yaml
+      tags: metrics

@@ -1,0 +1,32 @@
+- name: Metrics | Make /home/nodejs/metrics-bin
+  file:
+    path: /home/nodejs/metrics-bin
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+  tags: metrics
+
+- name: Metrics | Copy source files
+  copy:
+    src: tools/metrics/
+    dest: /home/nodejs/metrics-bin/
+    owner: root
+    group: root
+    mode: 0750
+  tags: metrics
+
+- name: Metrics | Install geoip2 Python module
+  pip:
+    name: geoip2
+  tags: metrics
+
+- name: Metrics | Install latest GeoLite2 City database
+  command: "bash -c 'curl -sL http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz | gunzip -c - > /home/nodejs/metrics-bin/GeoLite2-City.mmdb'"
+  tags: metrics
+
+- name: Metrics | Add periodic task to crontab
+  lineinfile:
+    dest: /etc/crontab
+    line: "0 */4   * * *   root    /home/nodejs/metrics-bin/download-counts.sh"
+  tags: metrics
