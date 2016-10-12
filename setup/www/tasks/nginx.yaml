@@ -47,6 +47,14 @@
   copy:
     src: ./resources/config/ssl-defaults.conf
     dest: /etc/nginx/conf.d/ssl-defaults.conf
+  tags: nginx
+
+- name: nginx | Remove ssl_protocols from default nginx config
+  replace:
+    dest: /etc/nginx/nginx.conf
+    regexp: '^(\s+)ssl_protocols'
+    replace: '\1# ssl_protocols'
+  tags: nginx
 
 - name: nginx | Install open file cache config
   copy:
@@ -79,6 +87,20 @@
     mode: 0644
     owner: root
     group: root
+  tags: nginx
+
+- name: nginx | Make /var/log/nginx/ subdirectories
+  file:
+    path: '/var/log/nginx/{{ item }}'
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: adm
+  with_items:
+      - 'nodejs'
+      - 'iojs'
+      - 'libuv'
+      - 'benchmarking'
   tags: nginx
 
 - name: nginx | Restart service

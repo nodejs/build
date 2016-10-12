@@ -6,8 +6,8 @@ server {
 }
 
 server {
-    listen [::]:443 ssl spdy;
-    listen *:443 ssl spdy;
+    listen [::]:443 ssl http2;
+    listen *:443 ssl http2;
     server_name www.iojs.org;
 
     ssl_certificate ssl/iojs_chained.crt;
@@ -18,8 +18,8 @@ server {
 }
 
 server {
-    listen [::]:443 ssl spdy;
-    listen *:443 ssl spdy;
+    listen [::]:443 ssl http2;
+    listen *:443 ssl http2;
     server_name iojs.org;
 
     ssl_certificate ssl/iojs_chained.crt;
@@ -36,8 +36,8 @@ server {
     add_header X-Frame-Options DENY;
     add_header X-Content-Type-Options nosniff;
 
-    access_log /var/log/nginx/iojs.org-access.log nodejs;
-    error_log /var/log/nginx/iojs.org-error.log;
+    access_log /var/log/nginx/iojs/iojs.org-access.log nodejs;
+    error_log /var/log/nginx/iojs/iojs.org-error.log;
 
     gzip on;
     gzip_static on;
