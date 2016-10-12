@@ -1,0 +1,146 @@
+diff --git a/.gitignore b/.gitignore
+index c7361af80c79..e56b7f913845 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -21,6 +21,8 @@ node_g
+ icu_config.gypi
+
+ /out
++/coverage
++/lib_
+
+ # various stuff that VC++ produces/uses
+ Debug/
+diff --git a/lib/internal/bootstrap_node.js b/lib/internal/bootstrap_node.js
+index 27f05a4fcf14..ae0fed9e1c00 100644
+--- a/lib/internal/bootstrap_node.js
++++ b/lib/internal/bootstrap_node.js
+@@ -42,6 +42,7 @@
+     NativeModule.require('internal/process/stdio').setup();
+     _process.setupKillAndExit();
+     _process.setupSignalHandlers();
++    NativeModule.require('internal/process/write-coverage').setup();
+
+     // Do not initialize channel in debugger agent, it deletes env variable
+     // and the main thread won't see it.
+diff --git a/lib/internal/process/write-coverage.js b/lib/internal/process/write-coverage.js
+new file mode 100644
+index 000000000000..666939bc3389
+--- /dev/null
++++ b/lib/internal/process/write-coverage.js
+@@ -0,0 +1,46 @@
++'use strict';
++const process = require('process');
++const path = require('path');
++const fs = require('fs');
++const mkdirSync = fs.mkdirSync;
++const writeFileSync = fs.writeFileSync;
++
++var isWritingCoverage = false;
++function writeCoverage() {
++  if (isWritingCoverage || !global.__coverage__) {
++    return;
++  }
++  isWritingCoverage = true;
++
++  const dirname = path.join(path.dirname(process.execPath), '.coverage');
++  const filename = `coverage-${process.pid}-${Date.now()}.json`;
++  try {
++    mkdirSync(dirname);
++  } catch (err) {
++    if (err.code !== 'EEXIST') {
++      console.error(err);
++      return;
++    }
++  }
++
++  const target = path.join(dirname, filename);
++  const coverageInfo = JSON.stringify(global.__coverage__);
++  try {
++    writeFileSync(target, coverageInfo);
++  } catch (err) {
++    console.error(err);
++  }
++}
++
++function setup() {
++  var reallyReallyExit = process.reallyExit;
++
++  process.reallyExit = function(code) {
++    writeCoverage();
++    reallyReallyExit(code);
++  };
++
++  process.on('exit', writeCoverage);
++}
++
++exports.setup = setup;
+diff --git a/node.gyp b/node.gyp
+index 05a5530a2b14..fb8f865efe8a 100644
+--- a/node.gyp
++++ b/node.gyp
+@@ -80,6 +80,7 @@
+       'lib/internal/process/promises.js',
+       'lib/internal/process/stdio.js',
+       'lib/internal/process/warning.js',
++      'lib/internal/process/write-coverage.js',
+       'lib/internal/process.js',
+       'lib/internal/readline.js',
+       'lib/internal/repl.js',
+@@ -479,7 +480,13 @@
+         [ 'OS=="freebsd" or OS=="linux"', {
+           'ldflags': [ '-Wl,-z,noexecstack',
+                        '-Wl,--whole-archive <(V8_BASE)',
+-                       '-Wl,--no-whole-archive' ]
++                       '-Wl,--no-whole-archive',
++                       '--coverage',
++                       '-g',
++                       '-O0' ],
++          'cflags': [ '--coverage',
++                      '-g',
++                      '-O0' ]
+         }],
+         [ 'OS=="sunos"', {
+           'ldflags': [ '-Wl,-M,/usr/lib/ld/map.noexstk' ],
+diff --git a/test/common.js b/test/common.js
+index 5aefdc3bcee5..750c134d33ab 100644
+--- a/test/common.js
++++ b/test/common.js
+@@ -258,6 +258,9 @@ exports.platformTimeout = function(ms) {
+   if (process.config.target_defaults.default_configuration === 'Debug')
+     ms = 2 * ms;
+
++  if (global.__coverage__)
++    ms = 4 * ms;
++
+   if (exports.isAix)
+     return 2 * ms; // default localhost speed is slower on AIX
+
+@@ -348,7 +351,7 @@ function leakedGlobals() {
+     if (-1 === knownGlobals.indexOf(global[val]))
+       leaked.push(val);
+
+-  return leaked;
++  return leaked.filter((varname) => !/^__cov/.test(varname));
+ }
+ exports.leakedGlobals = leakedGlobals;
+
+diff --git a/test/parallel/test-fs-sync-fd-leak.js b/test/parallel/test-fs-sync-fd-leak.js
+index f7cfd25f4b9b..80ad8cf6b705 100644
+--- a/test/parallel/test-fs-sync-fd-leak.js
++++ b/test/parallel/test-fs-sync-fd-leak.js
+@@ -1,8 +1,13 @@
+ 'use strict';
+-require('../common');
++const common = require('../common');
+ var assert = require('assert');
+ var fs = require('fs');
+
++if (global.__coverage__) {
++  common.skip('Not working with coverage');
++  return;
++}
++
+ // ensure that (read|write|append)FileSync() closes the file descriptor
+ fs.openSync = function() {
+   return 42;
