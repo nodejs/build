@@ -11,7 +11,7 @@
   tags: nightly-builder
 
 - name: nightly-builder | Copy config
-  copy:
+  template:
     src: ./resources/config/nightly-builder.json.j2
     dest: /etc/nightly-builder.json
     mode: 0644
