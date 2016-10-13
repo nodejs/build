@@ -25,7 +25,7 @@ server {
     gzip on;
     gzip_static on;
     gzip_disable "MSIE [1-6]\.";
-    gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+    gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
 
     # let the blog.nodejs.org redirector handle this
     location ~ ^/blog(.*) {
@@ -205,7 +205,7 @@ server {
     gzip on;
     gzip_static on;
     gzip_disable "MSIE [1-6]\.";
-    gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+    gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
 
     error_page 404 @localized_404;
 
