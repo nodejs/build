@@ -24,17 +24,11 @@
     - include: tasks/nginx.yaml
       tags: nginx
 
-    - include: tasks/dist-indexer.yaml
-      tags: dist-indexer
-
-    - include: tasks/nightly-builder.yaml
-      tags: nightly-builder
-
     - include: tasks/promote.yaml
       tags: promote
 
-    - include: tasks/latest-linker.yaml
-      tags: latest-linker
+    - include: tasks/tools.yaml
+      tags: tools
 
     - include: tasks/metrics.yaml
       tags: metrics

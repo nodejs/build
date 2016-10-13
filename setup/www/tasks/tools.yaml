@@ -1,3 +1,11 @@
+- name: dist-indexer | Install dist-indexer
+  command: "npm install nodejs-dist-indexer -g"
+  tags: dist-indexer
+
+- name: latest-linker | Install latest-linker
+  command: "npm install nodejs-latest-linker -g"
+  tags: latest-linker
+
 - name: nightly-builder | Install nightly-builder
   command: "npm install nodejs-nightly-builder -g"
   tags: nightly-builder
@@ -10,7 +18,7 @@
   tags: nightly-builder
 
   #TODO: the branches are hardwired here, they should be in vars somewhere
-- name: nightly-builder | Add periodic tasks to crontab
+- name: tools | Add periodic tasks to crontab
   lineinfile:
     dest: /etc/crontab
     line: "{{ item }}"
@@ -18,4 +26,5 @@
     - '0 20    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/v6.x --config /etc/nightly-builder.json'
     - '0 19    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/v7.x --config /etc/nightly-builder.json'
     - '0 18    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/master --config /etc/nightly-builder.json'
-  tags: nightly-builder
+    - '1 0     * * *   root    npm update -g nodejs-latest-linker nodejs-dist-indexer nodejs-nightly-builder >& /dev/null'
+  tags: tools

@@ -1,3 +1,0 @@
-- name: dist-indexer | Install dist-indexer
-  command: "npm install nodejs-dist-indexer -g"
-  tags: dist-indexer

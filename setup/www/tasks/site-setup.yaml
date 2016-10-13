@@ -52,7 +52,7 @@
   tags: setup
 
 - name: Site Setup | Copy cdn-purge.sh script
-  copy:
+  template:
     src: ./resources/scripts/cdn-purge.sh.j2
     dest: /home/nodejs/cdn-purge.sh
     mode: 0700

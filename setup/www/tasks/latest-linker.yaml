@@ -1,3 +1,0 @@
-- name: latest-linker | Install latest-linker
-  command: "npm install nodejs-latest-linker -g"
-  tags: latest-linker
