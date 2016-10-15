@@ -1,4 +1,4 @@
-# Working with Ansible locally
+# Testing Ansible playbooks locally
 
 While working with these ansible playbooks, there's great value in testing them locally first, before running
 them on one or more remote servers. The following section tries to describe how you would do just that
