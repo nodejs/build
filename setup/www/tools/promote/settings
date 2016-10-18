@@ -3,12 +3,20 @@ dist_rootdir=/home/dist/${site}/
 
 release_srcdir=${staging_rootdir}release
 release_dstdir=${dist_rootdir}release
+release_dirmatch=.*
 
 rc_srcdir=${staging_rootdir}custom
 rc_dstdir=${dist_rootdir}rc
+rc_dirmatch="-rc\\."
+
+test_srcdir=${staging_rootdir}custom
+test_dstdir=${dist_rootdir}test
+test_dirmatch="-test[0-9]+"
 
 nightly_srcdir=${staging_rootdir}nightly
 nightly_dstdir=${dist_rootdir}nightly
+nightly_dirmatch=.*
 
 next_nightly_srcdir=${staging_rootdir}next-nightly
 next_nightly_dstdir=${dist_rootdir}next-nightly
+next_nightly_dirmatch=.*

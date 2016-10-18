@@ -20,6 +20,7 @@ fi
 
 srcdir=$release_srcdir
 dstdir=$release_dstdir
+dirmatch=$release_dirmatch
 
 . ${__dirname}/_promote.sh $site $2
 

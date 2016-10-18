@@ -15,15 +15,24 @@ fi
 
 srcdir=$nightly_srcdir
 dstdir=$nightly_dstdir
+dirmatch=$nightly_dirmatch
 
 . ${__dirname}/_promote.sh $site
 
 srcdir=$next_nightly_srcdir
 dstdir=$next_nightly_dstdir
+dirmatch=$next_nightly_dirmatch
 
 . ${__dirname}/_promote.sh $site
 
 srcdir=$rc_srcdir
 dstdir=$rc_dstdir
+dirmatch=$rc_dirmatch
+
+. ${__dirname}/_promote.sh $site
+
+srcdir=$test_srcdir
+dstdir=$test_dstdir
+dirmatch=$test_dirmatch
 
 . ${__dirname}/_promote.sh $site

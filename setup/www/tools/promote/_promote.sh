@@ -12,12 +12,17 @@ if [ -z ${dstdir+x} ]; then
   exit 1
 fi
 
+if [ -z ${dirmatch+x} ]; then
+  echo "\$dirmatch is not set"
+  exit 1
+fi
+
 site=$1
 version=$2
 
 for subdir in $(cd $srcdir && ls); do
 
-  if [ -d "${srcdir}/${subdir}" ]; then
+  if [ -d "${srcdir}/${subdir}" ] && [[ $subdir =~ $dirmatch ]]; then
     resha=no
 
     if [ "X${version}" != "X" ] && [ "X${version}" != "X${subdir}" ]; then
