@@ -14,7 +14,7 @@ Next meeting: November 1, 2016
 
 * Johan Bergström (@jbergstroem)
 * Michael Dawson (@mhdawson)
-* JoãReis (@joaocgreis)
+* João Reis (@joaocgreis)
 * Rich Trott (@Trott)
 * Michele Capra (listening in)
 * Gibson Fahnestock (@gibfahn)
@@ -22,7 +22,7 @@ Next meeting: November 1, 2016
 
 ## Standup
 
-* JoãReis
+* João Reis
   * Created a job to test ChakraCore (PR under review in 
     node-chakracore to mark failing tests as skip).
   * Dropped support for VS2013 in v6 onwards.
@@ -79,7 +79,7 @@ Next meeting: November 1, 2016
       of a specific platform.
    * links to other working groups like github bot.  If we can move more
      out of jenkins into bots.
-* Sounds like working on windows ansible scripts:
+* Sounds like Michele is going to work  on windows ansible scripts:
   * helping to add windows to refactor Johan is working on.
   * optimizing how we do certain things on windows.  
 * Discussion about our jenkins use and looking at how to optimize as being 
