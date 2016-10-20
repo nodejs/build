@@ -23,6 +23,7 @@
     - /home/www/nodejs
     - /home/www/github
     - /home/www/benchmarking
+    - /home/www/coverage
   tags: setup
 
 - name: Site Setup | Make /home/nodejs/.ssh
@@ -98,4 +99,5 @@
     - '*  *    * * *   nodejs  /home/nodejs/check-build-site.sh iojs'
     - '*  *    * * *   root    /home/nodejs/cdn-purge.sh'
     - '* */4   * * *   nodejs  rsync -aqz --delete benchmark:charts/ /home/www/benchmarking/charts/'
+    - '* */4   * * *   nodejs  rsync -aqz --delete benchmark:coverage-out/out/ /home/www/coverage/'
   tags: setup

@@ -8,6 +8,7 @@
     - iojs.org
     - libuv.org
     - benchmarking.nodejs.org
+    - coverage.nodejs.org
   tags: nginx
 
 - name: nginx | Create nginx config symlinks
@@ -20,6 +21,7 @@
     - { src: iojs.org, dest: 01-iojs.org }
     - { src: libuv.org, dest: 02-libuv.org }
     - { src: benchmarking.nodejs.org, dest: 03-benchmarking.nodejs.org }
+    - { src: coverage.nodejs.org, dest: 03-coverage.nodejs.org }
   tags: nginx
 
 - name: nginx | Make /etc/nginx/ssl/
@@ -101,6 +103,7 @@
       - 'iojs'
       - 'libuv'
       - 'benchmarking'
+      - 'coverage'
   tags: nginx
 
 - name: nginx | Restart service

@@ -1,4 +1,4 @@
-/var/log/nginx/*.log, /var/log/nginx/nodejs/*.log, /var/log/nginx/iojs/*.log, /var/log/nginx/libuv/*.log, /var/log/nginx/benchmarking/*.log {
+/var/log/nginx/*.log, /var/log/nginx/nodejs/*.log, /var/log/nginx/iojs/*.log, /var/log/nginx/libuv/*.log, /var/log/nginx/benchmarking/*.log, /var/log/nginx/coverage/*.log {
         daily
         missingok
         compresscmd /usr/bin/xz
