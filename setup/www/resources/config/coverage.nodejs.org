@@ -1,5 +1,6 @@
 server {
     listen *:80;
+    listen [::]:80;
     server_name coverage.nodejs.org;
 
     return 301 https://coverage.nodejs.org$request_uri;

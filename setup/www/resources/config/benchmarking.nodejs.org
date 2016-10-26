@@ -1,5 +1,6 @@
 server {
     listen *:80;
+    listen [::]:80;
     server_name benchmarking.nodejs.org;
 
     return 301 https://benchmarking.nodejs.org$request_uri;
