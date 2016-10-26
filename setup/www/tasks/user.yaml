@@ -97,7 +97,7 @@
   copy:
     src: ./{{ item.src }}
     dest: /home/nodejs/.ssh/{{ item.dest }}
-    mode: 0600
+    mode: 0400
   with_file:
     - { src: resources/secrets/benchmark_id_rsa, dest: benchmark_id_rsa }
     - { src: resources/config/nodejs_ssh_config, dest: config }
