@@ -10,39 +10,70 @@ with open('out/index.html', 'w') as out:
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <title>Node.js Code Coverage</title>
+
+    <link rel="dns-prefetch" href="http://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="http://fonts.gstatic.com">
+
+    <meta name="author" content="Node.js Foundation">
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Node.js Core Coverage</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.yellow-indigo.min.css" />
-    <style media="screen" type="text/css">
-      .table-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 50px;
-      }
+
+    <link rel="apple-touch-icon" href="https://nodejs.org/static/apple-touch-icon.png">
+    <link rel="icon" sizes="32x32" type="image/png" href="https://nodejs.org/static/favicon.png">
+
+    <link rel="stylesheet" href="https://nodejs.org/en/styles.css" media="all">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600">
+    <style>
+        #logo { margin-bottom: 1rem; }
+        #graphs {
+            overflow: hidden;
+            clear: both;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        #graphs li {
+            float: left;
+            border: 1px solid #999;
+            margin-left: 1%;
+            margin-bottom: 1rem;
+            padding: 0.25rem;
+            max-width: 48%;
+        }
+        #graphs li:nth-child(odd) {
+            clear: both;
+            margin-left: 0;
+        }
+        #graphs img {
+            max-width: 100%;
+        }
+        @media (max-width:850px) {
+            #graphs li {
+                float: none;
+                margin-left: 0;
+                max-width: 100%;
+            }
+        }
     </style>
   </head>
   <body>
-
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title">Node.js Core Coverage</span>
-      <!-- Add spacer, to align navigation to the right -->
-      <div class="mdl-layout-spacer"></div>
-      <!-- Navigation. We hide it in small screens. -->
-      <nav class="mdl-navigation mdl-layout--large-screen-only">
-        <a class="mdl-navigation__link" href="https://github.com/nodejs/node">Node.js Core</a>
-        <a class="mdl-navigation__link" href="https://github.com/addaleax/node-core-coverage">Project</a>
-      </nav>
-    </div>
+  <header>
+     <div class="container" id="logo">
+         <img src="https://nodejs.org/static/images/logos/nodejs-new-white-pantone.png" alt="node.js">
+     </div>
   </header>
+
+
+  <div id="main">
+      <div class="container">
+
+          <h1>Node.js Code Coverage</h1>
+
   <div class="mdl-layout__drawer">
     <nav class="mdl-navigation">
         <a class="mdl-navigation__link" href="https://github.com/nodejs/node">Node.js Core</a>
-        <a class="mdl-navigation__link" href="https://github.com/addaleax/node-core-coverage">Project</a>
     </nav>
   </div>
 
@@ -72,7 +103,21 @@ with open('out/index.html', 'w') as out:
           </tbody>
         </table>
       </div>
-    </main>
+   </div>
+ </div>
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <footer class="no-margin-top">
+
+        <div class="linuxfoundation-footer">
+            <div class="container">
+                <a class="linuxfoundation-logo" href="http://collabprojects.linuxfoundation.org">Linux Foundation Collaborative Projects</a>
+
+                <p>© 2016 Node.js Foundation. All Rights Reserved. Portions of this site originally © 2016 Joyent. </p>
+                <p>Node.js is a trademark of Joyent, Inc. and is used with its permission. Please review the <a href="https://nodejs.org/static/documents/trademark-policy.pdf">Trademark Guidelines of the Node.js Foundation</a>.</p>
+                <p>Linux Foundation is a registered trademark of The Linux Foundation.</p>
+                <p>Linux is a registered <a href="http://www.linuxfoundation.org/programs/legal/trademark" title="Linux Mark Institute">trademark</a> of Linus Torvalds.</p>
+            </div>
+        </div>
+    </footer>
   </body>
 </html>''')
