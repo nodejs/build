@@ -42,6 +42,10 @@ Required steps:
     * OS X 10.10: In Keychain Access, "Import Items" and add both the Installer and Application certificates to the "System" (not "login" which is default)
     * OS X 10.10: Find the private key for Node.js Foundation under System in Keychain Access, "Get Info" for it, switch to "Access Control" and allow access by all applications. This step requires a physical keyboard under El Capitan and onward.
     * Command line alternative (all OS X?): `sudo security import /path/to/id.p12 -k /Library/Keychains/System.keychain -T /usr/bin/codesign -T /usr/bin/productsign`
+  - Add `ssh_config` as `~iojs/.ssh/config`
+  - Install the staging key as `~/.ssh/id_rsa`
+  - Install a CI tunnel key as `~/.ssh/id_rsa_ci`
+  - Initialise a connection to both the staging server and the CI server via ssh to get host key sorted
 * Install `start.sh` and `tunnel.sh` to `/Users/iojs`
 * Install `org.nodejs.osx.jenkins.plist` and `org.nodejs.osx.tunnel.plist` to `/Library/LaunchDaemons`
 * As root (or using `sudo`), run:
@@ -49,6 +53,8 @@ Required steps:
   - `launchctl load /Library/LaunchDaemons/org.nodejs.osx.jenkins.plist`
   - `launchctl start org.nodejs.osx.tunnel`
   - `launchctl start org.nodejs.osx.jenkins`
+
+_(Note the tunnel components of this are only applicable for Voxer machines, ignore for others)_
 
 ## Operating
 
