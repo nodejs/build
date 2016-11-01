@@ -37,6 +37,7 @@ Required steps:
 * For release machines:
   - Install PackageMaker, download "Auxiliary Tools for Xcode - Late July 2012" from the Apple Developer site to get it, put it in ~iojs/PackageMaker.app
   - Install Packages from http://s.sudre.free.fr/Software/Packages/about.html
+  - Install xz utilities from http://macpkg.sourceforge.net/
   - Install Node.js Foundation code signing and package signing certificates
     * Available from either the secrets repository under "release" as a passwordless .p12 file
     * OS X 10.10: In Keychain Access, "Import Items" and add both the Installer and Application certificates to the "System" (not "login" which is default)
