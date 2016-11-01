@@ -32,11 +32,16 @@ Required steps:
 * Create user `iojs`
 * `xcode-select --install` to install XCode tools, or install from App Store
 * Sun Java (JDK)
-* `git clone http://git.chromium.org/external/gyp.git /Users/iojs/gyp`
+* `git clone https://chromium.googlesource.com/external/gyp /Users/iojs/gyp`
+* `git clone --mirror https://github.com/nodejs/node.git /Users/iojs/io.js.reference`
 * For release machines:
-  - Install PackageMaker, download "Auxiliary Tools for Xcode - Late July 2012" from the Apple Developer site to get it
+  - Install PackageMaker, download "Auxiliary Tools for Xcode - Late July 2012" from the Apple Developer site to get it, put it in ~iojs/PackageMaker.app
   - Install Packages from http://s.sudre.free.fr/Software/Packages/about.html
-  - Install Node.js Foundation code signing and package signing tools, available from the Node.js Foundation Apple Developer account (shared org, you need to be a member), `/usr/bin/codesign` and `/usr/bin/productsign` need to be able to use the keys non-interactively, Keychain Access may be able to be used for this except on El Capitain where you'll have to pull your hair out for a few hours before figuring it out (note that Keychain Access won't accept user/password for some actions unless your keyboard is connected directly to the physical computer) [TODO: insert instructions for doing this on El Capitain and prior versions next time hair pulling is performed and the magical incantation is figured out].
+  - Install Node.js Foundation code signing and package signing certificates
+    * Available from either the secrets repository under "release" as a passwordless .p12 file
+    * OS X 10.10: In Keychain Access, "Import Items" and add both the Installer and Application certificates to the "System" (not "login" which is default)
+    * OS X 10.10: Find the private key for Node.js Foundation under System in Keychain Access, "Get Info" for it, switch to "Access Control" and allow access by all applications. This step requires a physical keyboard under El Capitan and onward.
+    * Command line alternative (all OS X?): `sudo security import /path/to/id.p12 -k /Library/Keychains/System.keychain -T /usr/bin/codesign -T /usr/bin/productsign`
 * Install `start.sh` and `tunnel.sh` to `/Users/iojs`
 * Install `org.nodejs.osx.jenkins.plist` and `org.nodejs.osx.tunnel.plist` to `/Library/LaunchDaemons`
 * As root (or using `sudo`), run:
