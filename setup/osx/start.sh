@@ -9,5 +9,7 @@ CI_SERVER=ci.nodejs.org
 export JOBS=2
 export NODE_COMMON_PIPE=/Users/iojs/test.pipe
 export OSTYPE=osx
+export ARCH=x64
+export DESTCPU=x64
 
 java -jar slave.jar -jnlpUrl https://${CI_SERVER}/computer/${SERVER_ID}/slave-agent.jnlp -secret $SECRET
