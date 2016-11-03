@@ -26,6 +26,7 @@ missing please open an issue.
 ## People
 
 - Wyatt Preul [@geek](https://github.com/geek)
+- Gibson Fahnestock [@gibfahn](https://github.com/gibfahn)
 - Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
 - João Reis [@joaocgreis](https://github.com/joaocgreis)
 - Michael Dawson [@mhdawson](https://github.com/mhdawson)
