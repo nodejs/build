@@ -76,10 +76,10 @@ index 000000000000..666939bc3389
 +
 +exports.setup = setup;
 diff --git a/node.gyp b/node.gyp
-index 05a5530a2b14..fb8f865efe8a 100644
+index 2254a6e..2e91bd9 100644
 --- a/node.gyp
 +++ b/node.gyp
-@@ -80,6 +80,7 @@
+@@ -86,6 +86,7 @@
        'lib/internal/process/promises.js',
        'lib/internal/process/stdio.js',
        'lib/internal/process/warning.js',
@@ -87,21 +87,6 @@ index 05a5530a2b14..fb8f865efe8a 100644
        'lib/internal/process.js',
        'lib/internal/readline.js',
        'lib/internal/repl.js',
-@@ -479,7 +480,13 @@
-         [ 'OS=="freebsd" or OS=="linux"', {
-           'ldflags': [ '-Wl,-z,noexecstack',
-                        '-Wl,--whole-archive <(V8_BASE)',
--                       '-Wl,--no-whole-archive' ]
-+                       '-Wl,--no-whole-archive',
-+                       '--coverage',
-+                       '-g',
-+                       '-O0' ],
-+          'cflags': [ '--coverage',
-+                      '-g',
-+                      '-O0' ]
-         }],
-         [ 'OS=="sunos"', {
-           'ldflags': [ '-Wl,-M,/usr/lib/ld/map.noexstk' ],
 diff --git a/test/common.js b/test/common.js
 index 5aefdc3bcee5..750c134d33ab 100644
 --- a/test/common.js
