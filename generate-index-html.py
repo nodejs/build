@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import datetime
+
 with open('out/index.csv') as index:
   index_csv = filter(lambda line: line, index.read().split('\n'))
 
@@ -27,97 +29,70 @@ with open('out/index.html', 'w') as out:
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600">
     <style>
         #logo { margin-bottom: 1rem; }
-        #graphs {
-            overflow: hidden;
-            clear: both;
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
+        main { margin-bottom: 2rem; }
+        .table-header,
+        .table-row {
+          display: flex;
+          width: 100%;
+          padding: 2px 10px;
         }
-        #graphs li {
-            float: left;
-            border: 1px solid #999;
-            margin-left: 1%;
-            margin-bottom: 1rem;
-            padding: 0.25rem;
-            max-width: 48%;
+        .table-header { font-weight: bold; }
+        .table-header > div,
+        .table-row > div {
+          flex-grow: 1;
+          width: 100px;
         }
-        #graphs li:nth-child(odd) {
-            clear: both;
-            margin-left: 0;
-        }
-        #graphs img {
-            max-width: 100%;
-        }
-        @media (max-width:850px) {
-            #graphs li {
-                float: none;
-                margin-left: 0;
-                max-width: 100%;
-            }
-        }
+        .table-row:nth-child(even) { background-color: #eee; }
+        .sha { font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace; }
     </style>
   </head>
   <body>
   <header>
-     <div class="container" id="logo">
-         <img src="https://nodejs.org/static/images/logos/nodejs-new-white-pantone.png" alt="node.js">
-     </div>
+    <div class="container" id="logo">
+      <img src="https://nodejs.org/static/images/logos/nodejs-new-white-pantone.png" alt="node.js">
+    </div>
   </header>
-
-
   <div id="main">
-      <div class="container">
-
-          <h1>Node.js Code Coverage</h1>
-
-  <div class="mdl-layout__drawer">
-    <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="https://github.com/nodejs/node">Node.js Core</a>
-    </nav>
-  </div>
-
-  <main class="table-container mdl-layout__content">
-      <div class="page-content">
-      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>HEAD</th>
-            <th>JS Coverage</th>
-            <th>C++ Coverage</th>
-          </tr>
-        </thead>
-      <tbody>
+    <div class="container">
+      <h1>Node.js Nightly Code Coverage</h1>
+      <h3>
+        Node.js Core&nbsp;&nbsp;<a href="https://github.com/nodejs/node">&rarr;</a>
+      </h3>
+      <main>
+        <div class="page-content">
+          <div class="table">
+            <div class="table-header">
+              <div>Date</div>
+              <div>HEAD</div>
+              <div>JS Coverage</div>
+              <div>C++ Coverage</div>
+            </div>
 ''')
   for line in reversed(index_csv):
     jscov, cxxcov, date, sha = line.split(',')
+    date = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%S%fZ').strftime("%d/%m/%Y %H:%M")
     out.write('''
-          <tr>
-            <td>{0}</td>
-            <td><a href="https://github.com/nodejs/node/commit/{1}">{1}</a></td>
-            <td><a href="coverage-{1}/index.html">{2:05.2f}&nbsp;%</a></td>
-            <td><a href="coverage-{1}/cxxcoverage.html">{3:05.2f}&nbsp;%</a></td>
-          </tr>'''.format(date, sha, float(jscov), float(cxxcov)))
+            <div class="table-row">
+              <div>{0}</div>
+              <div class="sha"><a href="https://github.com/nodejs/node/commit/{1}">{1}</a></div>
+              <div><a href="coverage-{1}/index.html">{2:05.2f}&nbsp;%</a></div>
+              <div><a href="coverage-{1}/cxxcoverage.html">{3:05.2f}&nbsp;%</a></div>
+            </div>'''.format(date, sha, float(jscov), float(cxxcov)))
   out.write('''
-          </tbody>
-        </table>
-      </div>
-   </div>
- </div>
-    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-    <footer class="no-margin-top">
-
-        <div class="linuxfoundation-footer">
-            <div class="container">
-                <a class="linuxfoundation-logo" href="http://collabprojects.linuxfoundation.org">Linux Foundation Collaborative Projects</a>
-
-                <p>© 2016 Node.js Foundation. All Rights Reserved. Portions of this site originally © 2016 Joyent. </p>
-                <p>Node.js is a trademark of Joyent, Inc. and is used with its permission. Please review the <a href="https://nodejs.org/static/documents/trademark-policy.pdf">Trademark Guidelines of the Node.js Foundation</a>.</p>
-                <p>Linux Foundation is a registered trademark of The Linux Foundation.</p>
-                <p>Linux is a registered <a href="http://www.linuxfoundation.org/programs/legal/trademark" title="Linux Mark Institute">trademark</a> of Linus Torvalds.</p>
-            </div>
+          </div>
         </div>
+      </div>
+    </div>
+    <footer class="no-margin-top">
+      <div class="linuxfoundation-footer">
+        <div class="container">
+          <a class="linuxfoundation-logo" href="http://collabprojects.linuxfoundation.org">Linux Foundation Collaborative Projects</a>
+          <p>&copy; 2016 Node.js Foundation. All Rights Reserved. Portions of this site originally &copy; 2016 Joyent. </p>
+          <p>Node.js is a trademark of Joyent, Inc. and is used with its permission. Please review the <a href="https://nodejs.org/static/documents/trademark-policy.pdf">Trademark Guidelines of the Node.js Foundation</a>.</p>
+          <p>Linux Foundation is a registered trademark of The Linux Foundation.</p>
+          <p>Linux is a registered <a href="http://www.linuxfoundation.org/programs/legal/trademark" title="Linux Mark Institute">trademark</a> of Linus Torvalds.</p>
+        </div>
+      </div>
     </footer>
   </body>
 </html>''')
