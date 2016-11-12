@@ -42,12 +42,13 @@
       user: name="{{ server_user }}" shell=/bin/bash
       tags: user
 
-    - name: Init | Generate and copy init script
-      template: src=./resources/github-bot.service dest=/lib/systemd/system/github-bot.service
+    - name: Init | Create required directories
+      file: path="/home/{{ server_user }}/{{ item }}" state=directory mode=0755 owner="{{ server_user }}"
+      with_items: "{{ required_dirs }}"
       tags: init
 
-    - name: Init | Create directory for EnvironmentFile
-      file: path="/home/{{ server_user }}/environment" state=directory mode=0755 owner="{{ server_user }}"
+    - name: Init | Generate and copy init script
+      template: src=./resources/github-bot.service dest=/lib/systemd/system/github-bot.service
       tags: init
 
     - name: Init | Generate and copy systemd EnvironmentFile
@@ -63,9 +64,41 @@
     - name: Init | Install npm dependencies
       become: yes
       become_user: "{{ server_user }}"
-      npm: path="/home/{{ server_user }}/github-bot"
+      npm: path="/home/{{ server_user }}/github-bot" production=yes
       tags: init
 
     - name: Init | Start github-bot
       service: name=github-bot state=started enabled=yes
       tags: init
+
+    - name: GitHub Deploy Webhook | Install github-webhook
+      npm: name=github-webhook global=yes
+      tags: deploy-webhook
+
+    - name: GitHub Deploy Webhook | Copy config
+      template:
+        src=./resources/github-bot-deploy-webhook.json
+        dest="/home/{{ server_user }}/config/github-bot-deploy-webhook.json"
+      tags: deploy-webhook
+
+    - name: GitHub Deploy Webhook | Copy deploy script
+      template:
+        src=./resources/deploy-github-bot.sh
+        dest="/home/{{ server_user }}/bin/deploy-github-bot.sh"
+        mode=0755
+        owner="{{ server_user }}"
+      tags: deploy-webhook
+
+    - name: GitHub Deploy Webhook | Generate and copy service script
+      template:
+        src=./resources/github-bot-deploy-webhook.service
+        dest=/lib/systemd/system/github-bot-deploy-webhook.service
+      tags: deploy-webhook
+
+    - name: GitHub Deploy Webhook | Start service
+      service: name=github-bot-deploy-webhook state=started
+      tags: deploy-webhook
+
+    - name: GitHub Deploy Webhook | Allow user to restart github-bot
+      lineinfile: "dest=/etc/sudoers state=present regexp='^{{ server_user }}' line='{{ server_user }} ALL=(ALL) NOPASSWD: /bin/systemctl restart github-bot'"
+      tags: deploy-webhook
