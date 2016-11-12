@@ -4,3 +4,4 @@ TRAVIS_TOKEN={{envs.travis_token}}
 GITHUB_TOKEN={{envs.github_token}}
 GITHUB_WEBHOOK_SECRET={{envs.github_webhook_secret}}
 LOGIN_CREDENTIALS={{envs.login_credentials}}
+NODE_REPO_DIR=/home/{{server_user}}/repos/node
