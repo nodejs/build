@@ -17,18 +17,23 @@ Create a directory with a file named `Vagrantfile` inside it, somewhere outside 
 The `Vagrantfile` configures the virtual machine about to be created, with the following:
 
 1. Specify which OS we want
-2. Use root as user (rather than the default vagrant user)
-3. Prevent Vagrant from generating a random SSH key
-4. Copy your own public SSH key onto the machine
+2. Prevent Vagrant from generating a random SSH key
+3. Copy your own public SSH key onto the machine
+4. Use your SSH key for the root user as well
 
 ```ruby
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/jessie64"
 
-  config.ssh.username = 'root'
+  # the insecure key is needed for the first login attempt by vagrant itself
+  config.ssh.private_key_path = ["~/.ssh/id_rsa", "~/.vagrant.d/insecure_private_key"]
   config.ssh.insert_key = false
+  # fixes "stdin: is not a tty" error when provisioning
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
   config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
+  # allows us to ssh into the box as root
+  config.vm.provision "shell", inline: "mkdir /root/.ssh && cp /home/vagrant/.ssh/authorized_keys /root/.ssh/authorized_keys"
 end
 ```
 
