@@ -8,4 +8,4 @@ required_dirs:
   - config
   - environment
   - logs
-
+  - repos

@@ -102,3 +102,9 @@
     - name: GitHub Deploy Webhook | Allow user to restart github-bot
       lineinfile: "dest=/etc/sudoers state=present regexp='^{{ server_user }}' line='{{ server_user }} ALL=(ALL) NOPASSWD: /bin/systemctl restart github-bot'"
       tags: deploy-webhook
+
+    - name: Runtime dependencies | Clone node repo
+      become: yes
+      become_user: "{{ server_user }}"
+      git: repo=https://github.com/nodejs/node.git dest="/home/{{ server_user }}/repos/node"
+      tags: runtime-dependencies
