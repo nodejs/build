@@ -62,7 +62,7 @@ with open('out/index.html', 'w') as out:
         <div class="page-content">
           <div class="table">
             <div class="table-header">
-              <div>Date</div>
+              <div>Date (UTC)</div>
               <div>HEAD</div>
               <div>JS Coverage</div>
               <div>C++ Coverage</div>
