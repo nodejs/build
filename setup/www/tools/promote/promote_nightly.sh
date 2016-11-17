@@ -36,3 +36,9 @@ dstdir=$test_dstdir
 dirmatch=$test_dirmatch
 
 . ${__dirname}/_promote.sh $site
+
+srcdir=$chakracore_nightly_srcdir
+dstdir=$chakracore_nightly_dstdir
+dirmatch=$chakracore_nightly_dirmatch
+
+. ${__dirname}/_promote.sh $site
