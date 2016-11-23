@@ -5,7 +5,7 @@ Description=github-bot
 WantedBy=multi-user.target
 
 [Service]
-ExecStart=/usr/bin/node server.js
+ExecStart=/usr/bin/node server.js &> /home/{{server_user}}/logs/github-bot.log
 EnvironmentFile=/home/{{server_user}}/environment/github-bot
 WorkingDirectory=/home/{{server_user}}/github-bot
 Restart=always
