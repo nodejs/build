@@ -39,11 +39,13 @@ additions:
 
 
 1. Checkout of the scripts used to generate the coverage
-   These will be moved to https://github.com/nodejs/testing/coverage and the job
-   updated once that is complete:
+
    ```
-   if [ ! -d node-core-coverage ]; then
-     git clone --depth=10 --single-branch git://github.com/addaleax/node-core-coverage.git
+   if [ ! -d testing ]; then
+     git clone --depth=10 --single-branch https://github.com/nodejs/testing.git
+   else
+     cd testing
+     git pull
    fi
    ```
 
@@ -54,7 +56,7 @@ additions:
    # to work with Node.js.
    if [ ! -d gcovr ]; then
      git clone --depth=10 --single-branch git://github.com/gcovr/gcovr.git
-     (cd gcovr && patch -p1 < "../node-core-coverage/gcovr-patches.diff")
+     (cd gcovr && patch -p1 < "../testing/coverage/gcovr-patches.diff")
    fi
    ```
 
@@ -75,7 +77,7 @@ additions:
    ```
    #!/bin/bash
    # patch things up
-   patch -p1 < "./node-core-coverage/patches.diff"
+   patch -p1 < "./testing/coverage/patches.diff"
    export PATH="$(pwd):$PATH"
 
    # if we don't have our npm dependencies available, build node and fetch them
@@ -138,6 +140,7 @@ additions:
    COMMIT_ID=$(git rev-parse --short=16 HEAD)
 
    mkdir -p "$OUTDIR"
+   rm -rf "$OUTDIR/coverage-$COMMIT_ID" || true
    cp -rv coverage "$OUTDIR/coverage-$COMMIT_ID"
 
    JSCOVERAGE=$(grep -B1 Lines coverage/index.html | \
