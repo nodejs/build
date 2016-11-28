@@ -141,8 +141,19 @@ companies that have donated miscellaneous hardware:
 - Sam Thompson [@sambthompson](https://github.com/sambthompson) for a
   Raspberry Pi 2 B
 - Louis Center [@louiscntr](https://github.com/louiscntr) for a Raspberry Pi 2 B
-- Dav Glass [@davglass](https://github.com/davglass/) for 2 x ODROID-XU3
+- Dav Glass [@davglass](https://github.com/davglass/) for 2 x ODROID-XU3, Raspberry Pi 1 B+, Raspberry Pi 3, power, networking and other miscellaneous equipment
 - [Tessel][20] for a Tessel 2
+- KahWee Teng [@kahwee](https://github.com/kahwee) for a Raspberry Pi 3
+- Chinmay Pendharkar [@notthetup](https://github.com/notthetup) and Sayanee Basu [@sayanee](https://github.com/sayanee) for a Raspberry Pi 3
+- Michele Capra [@piccoloaiutante](https://github.com/piccoloaiutante) for a Raspberry Pi 3
+- [Pivotal Agency](pivotal) for two Raspberry Pi 3's
+- [SecuroGroup](securo) for two Raspberry Pi 1 B+'s and two Raspberry Pi 3's
+- William Kapke [@williamkapke](https://github.com/williamkapke) for three Raspberry Pi 3's and networking equipment
+- Jonathan Barnett [@indieisaconcept](https://github.com/indieisaconcept) for a Raspberry Pi B+
+- James Snell [@jasnell](https://github.com/jasnell) for a Raspberry Pi 2
+- Michael Dawson [@mhdawson](https://github.com/mhdawson) for a Raspberry Pi 1 B+
+- Chris Lea [@chrislea](https://github.com/chrislea) for a Raspberry Pi 1 B+
+
 
 If you would like to donate hardware to the Node.js Foundation, please
 reach out to the Build Working Group, via IRC (details at the top of this page)
@@ -188,3 +199,5 @@ Build and test orchestration is performed by [Jenkins][21].
 [19]:   http://techtribe.nl
 [20]:   https://tessel.io/
 [21]:   https://jenkins.io/
+[pivotal]: https://www.pivotalagency.com.au/
+[securo]: http://securogroup.com/
