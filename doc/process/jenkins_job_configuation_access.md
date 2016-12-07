@@ -1,6 +1,6 @@
 # Introduction
 
-There are a number of cases were we would like working group members
+There are a number of cases where we would like working group members
 to be able to run and or edit jobs within jenkins. Examples include
 the CITGM jobs and the Benchmarking jobs.
 
@@ -19,10 +19,12 @@ as allowing people who are not collaborators run specific jobs.
 Unfortunately jenkins does not allow us to easily delegate the
 creation of new jobs in an appropriate manner.
 As such, the creation of a new job will
-need to be requested through an issue in the build repo.  Any
+need to be requested through an issue in the build repo. Any
 build member can then create a blank job in the group for the
 working group which can then be edited by those with access
-to the jobs for that working group.
+to the jobs for that working group. As and when more jobs are
+needed, a build member can clone one of the workgroup's 
+existing jobs, which will preserve the right permissions.
 
 ## Ability to run/cancel jobs
 
@@ -44,7 +46,7 @@ rights have been set.
 
 Since the ability to modify jobs opens up new attack vectors,
 we ask that the workgroups limit this access to those
-individuals that require it, and when appropriate the length,
+individuals that require it, and when appropriate, the length
 of time access is granted.
 
 In the case of granting access to edit jobs the following
@@ -56,10 +58,10 @@ should be considered:
 * Length and consistency of involvement with Node.js working groups
   and/or community.
 * Consequences to the invidudal in case of mis-behaviour. For example,
-  would they potentially lose their job if they were reported as
-  mis-behaving to their employer ? Would being banned from involvement
+  would they potentially lose their job if they where reported as
+  mis-behaving to their employer? Would being banned from involvement
   in the Node.js community negatively affect them personally
-  in some other way ?
+  in some other way?
 * Are there collaborators who work with the individual and can vouch
   for them.
 
@@ -68,5 +70,5 @@ issue on the workgroups repo.
 
 Once approved by the working group and existing workgroup admins, one
 of the existing workgroup admins can then add the new individual to
-the github admin team for the workgroup (ex benchmarking-admins).
+the github admin team for the workgroup (e.g. benchmarking-admins).
 
