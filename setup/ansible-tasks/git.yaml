@@ -10,8 +10,11 @@
 - name: Git | Install required packages for git compile
   apt: name={{ item }} update_cache=yes state=latest
   with_items:
+    - gcc
+    - make
     - gettext
     - libcurl4-openssl-dev
+    - zlib1g-dev
   when: git_version.stdout.find('{{ version }}') == -1
   tags: git
 

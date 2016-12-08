@@ -34,6 +34,9 @@
       with_items: "{{ packages }}"
       tags: general
 
+    - include: ../ansible-tasks/git.yaml version=2.11.0
+      tags: git
+
     - name: General | Enable time syncing
       service: name=systemd-timesyncd state=started enabled=yes
       tags: general
