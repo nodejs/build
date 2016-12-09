@@ -32,18 +32,17 @@ existing jobs, which will preserve the right permissions.
 All members of a workgroup will be able to run and cancel
 the jobs tied to their workgroup. This will be accomplished
 by enabling project-based security for the jobs, and then
-giving the jenkins group corresponding to the github
-team for the workgroup admins
-Build/Cancel/Discover/Read/Delete/Update permissions.
+giving the jenkins group, corresponding to the github
+team for the workgroup, Build/Cancel permissions.
 
 ## Ability to modify jobs
 
 A subset of the members of a workgroup will be able to modify
-and delete jobs. This will be accomplished by enabling
-project-based security for the jobs and adding the group
-corresponding to the github team for the working group admins
-where there Build/Cancel/Discover/Read/Delete/Update
-rights have been set.
+and delete jobs.  This will be accomplished
+by enabling project-based security for the jobs, and then
+giving the jenkins group, corresponding to the github
+team for the workgroup admins,
+the Build/Cancel/Discover/Read/Delete/Update permissions.
 
 Since the ability to modify jobs opens up new attack vectors,
 we ask that the workgroups limit this access to those
@@ -54,11 +53,11 @@ In the case of granting access to edit jobs the following
 should be considered:
 
 * Does the scope and size of the need justify providing access.
-* Is the invidual a Node.js collaborator? If so then access should
+* Is the individual a Node.js collaborator? If so then access should
   be allowed provided the first point is satisfied.
 * Length and consistency of involvement with Node.js working groups
   and/or community.
-* Consequences to the invidudal in case of mis-behaviour. For example,
+* Consequences to the individual in case of mis-behaviour. For example,
   would they potentially lose their job if they were reported as
   mis-behaving to their employer? Would being banned from involvement
   in the Node.js community negatively affect them personally
