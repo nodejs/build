@@ -5,16 +5,17 @@ to be able to run and or edit jobs within jenkins. Examples include
 the CITGM jobs and the Benchmarking jobs.
 
 By default jobs can only be edited by members of the
-'nodejs/jenkins-admins' group which contains a subset of the build
+[@nodejs/jenkins-admins](https://github.com/orgs/nodejs/teams/jenkins-admins)
+group which contains a subset of the build
 workgroup members. We do not give access to
-everbody to run/edit as it would be a potential security issue,
+everybody to run/edit as it would be a potential security issue,
 both through the potential disclosure of secrets used as
 part of the builds, as well as a potential denial
 of service if jobs are launched maliciously.
 
 This document outlines the processes by which we will allow
 people outside the build working group to edit jobs as well
-as allowing people who are not collaborators run specific jobs.
+as allowing people who are not collaborators to run specific jobs.
 
 Unfortunately jenkins does not allow us to easily delegate the
 creation of new jobs in an appropriate manner.
@@ -29,11 +30,11 @@ existing jobs, which will preserve the right permissions.
 ## Ability to run/cancel jobs
 
 All members of a workgroup will be able to run and cancel
-the jobs tied to their workgroup.  This will be accomplished
-by enabling project-based security for the jobs and adding
-the group corresponding to the github team for the
-working group where the Build/Cancel rights have been
-enabled.
+the jobs tied to their workgroup. This will be accomplished
+by enabling project-based security for the jobs, and then
+giving the jenkins group corresponding to the github
+team for the workgroup admins
+Build/Cancel/Discover/Read/Delete/Update permissions.
 
 ## Ability to modify jobs
 
@@ -58,7 +59,7 @@ should be considered:
 * Length and consistency of involvement with Node.js working groups
   and/or community.
 * Consequences to the invidudal in case of mis-behaviour. For example,
-  would they potentially lose their job if they where reported as
+  would they potentially lose their job if they were reported as
   mis-behaving to their employer? Would being banned from involvement
   in the Node.js community negatively affect them personally
   in some other way?
