@@ -108,3 +108,19 @@
       become_user: "{{ server_user }}"
       git: repo=https://github.com/nodejs/node.git dest="/home/{{ server_user }}/repos/node"
       tags: runtime-dependencies
+
+    - name: Runtime dependencies | Config node repo author email
+      become: yes
+      become_user: "{{ server_user }}"
+      shell: git config user.email "github-bot@nodejs.org"
+      args:
+        chdir: "/home/{{ server_user }}/repos/node"
+      tags: runtime-dependencies
+
+    - name: Runtime dependencies | Config node repo author name
+      become: yes
+      become_user: "{{ server_user }}"
+      shell: git config user.name "nodejs-github-bot"
+      args:
+        chdir: "/home/{{ server_user }}/repos/node"
+      tags: runtime-dependencies
