@@ -48,7 +48,7 @@ Since the ability to modify jobs opens up new attack vectors,
 we ask that the working group limits this access to those
 individuals that require it, and when appropriate, the length
 of time access is granted. In addition, since build resources
-are finate we also ask that the working group members are
+are finite we also ask that the working group members are
 mindful of the number of long-running jobs that they start.
 In particular, spawning long-running jobs on arm and windows
 can easily pile up.
