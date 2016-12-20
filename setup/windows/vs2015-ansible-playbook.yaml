@@ -1,5 +1,5 @@
 ---
-- hosts: windows
+- hosts: node-windows
 
   tasks:
 
