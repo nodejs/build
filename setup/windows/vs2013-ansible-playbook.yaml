@@ -3,6 +3,14 @@
 
   tasks:
 
+    - name: Download and Install Windows Updates
+      win_updates:
+        register: update_result
+
+    - name: Reboot machine if necessary
+      win_reboot:
+        when: update_result.reboot_required
+
     - name: Create C:\TEMP directory
       win_file: path='C:\TEMP' state=directory
 
@@ -16,6 +24,9 @@
       raw: 'C:\TEMP\vs2013_community.exe /Silent /NoRestart
             /Log C:\TEMP\vs2013_install_log.txt'
       tags: [install, visualstudio]
+
+    - name: Reboot machine after Visual Studio installation
+      win_reboot:
 
     - include: ./common-ansible-playbook.yaml
       tags: common
