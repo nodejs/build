@@ -30,10 +30,10 @@ missing please open an issue.
 - Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
 - João Reis [@joaocgreis](https://github.com/joaocgreis)
 - Michael Dawson [@mhdawson](https://github.com/mhdawson)
+- Myles Borins [@mylesborins](https://github.com/mylesborins)
 - Phillip Johnsen [@phillipj](https://github.com/phillipj)
 - Rod Vagg [@rvagg](https://github.com/rvagg)
 - Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
-- Myles Borins [@thealphanerd](https://github.com/thealphanerd)
 - Rich Trott [@trott](https://github.com/trott)
 
 
