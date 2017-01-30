@@ -106,7 +106,7 @@
     - name: Runtime dependencies | Clone node repo
       become: yes
       become_user: "{{ server_user }}"
-      git: repo=https://github.com/nodejs/node.git dest="/home/{{ server_user }}/repos/node"
+      git: repo=https://github.com/nodejs/node.git dest="/home/{{ server_user }}/repos/node" update=no
       tags: runtime-dependencies
 
     - name: Runtime dependencies | Config node repo author email
