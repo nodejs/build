@@ -42,15 +42,11 @@ To test the connection to the hosts, run:
 $ ansible node-windows -i ../ansible-inventory -m win_ping -vvvv
 ```
 
-Make sure Windows Update has been run and the machines are updated with no reboot pending.
 To run the Ansible playbook to setup the machines run:
 
 ```text
 $ ansible-playbook -i ../ansible-inventory ansible-playbook.yaml -vv
 ```
-
-Note: Visual Studio installation can fail if it must reboot during install.
-In this case, install Visual Studio manually and re-run Ansible.
 
 The servers should logon automatically at boot and start the Jenkins slave, but there is no automatic restart procedure for crashes (for now).
 Hence, to start Jenkins after running `ansible-playbook`, the server must be restarted or the slave must be manually started with RDP.
