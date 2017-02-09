@@ -22,7 +22,7 @@
   tags: [download, java]
 
 - name: Java | Install Java 8
-  raw: 'C:\TEMP\java.exe /s SPONSORS=0'
+  raw: 'C:\TEMP\java.exe /s SPONSORS=0 /l*v C:\TEMP\java_install_log.txt'
   tags: [install, java]
 
 - name: Git | Download Git
