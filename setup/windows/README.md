@@ -49,7 +49,6 @@ Below command setup the machine with VS2015.
 $ ansible-playbook -i ../ansible-inventory vs2015-ansible-playbook.yaml -vv
 ```
 
-The servers should logon automatically at boot and start the Jenkins slave, but there is no automatic restart procedure for crashes (for now).
-Hence, to start Jenkins after running `ansible-playbook`, the server must be restarted or the slave must be manually started with RDP.
+The servers should logon automatically at boot and start the Jenkins slave.
 
 The release servers need to have the WiX Toolset and 7-Zip installed and in the path (not part of this script).
