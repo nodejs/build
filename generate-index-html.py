@@ -32,18 +32,36 @@ with open('out/index.html', 'w') as out:
         main { margin-bottom: 2rem; }
         .table-header,
         .table-row {
+          box-sizing: border-box;
           display: flex;
           width: 100%;
           padding: 2px 10px;
         }
-        .table-header { font-weight: bold; }
+        .table-header { font-weight: bold;}
         .table-header > div,
         .table-row > div {
           flex-grow: 1;
           width: 100px;
         }
         .table-row:nth-child(even) { background-color: #eee; }
-        .sha { font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+        .sha .cell-value { font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+        .cell-header { display: none; }
+        @media screen and (min-width: 690px) and (max-width: 850px) {
+          .table-header > div:nth-child(n+3),
+          .table-row > div:nth-child(n+3) {
+            flex-grow: 0.2;
+          }
+          .table-header > div:first-child,
+          .table-row > div:first-child {
+            flex-grow: 0.4;
+          }
+        }
+        @media screen and (max-width: 690px) {
+          .cell-header { display: block; font-weight: bold; }
+          .table-header { display: none; }
+          .table-row { display: block; }
+          .table-row > div { width: 100%; text-align: center; margin-bottom: 12px;}
+        }
     </style>
   </head>
   <body>
@@ -73,10 +91,10 @@ with open('out/index.html', 'w') as out:
     date = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%S%fZ').strftime("%d/%m/%Y %H:%M")
     out.write('''
             <div class="table-row">
-              <div>{0}</div>
-              <div class="sha"><a href="https://github.com/nodejs/node/commit/{1}">{1}</a></div>
-              <div><a href="coverage-{1}/index.html">{2:05.2f}&nbsp;%</a></div>
-              <div><a href="coverage-{1}/cxxcoverage.html">{3:05.2f}&nbsp;%</a></div>
+              <div><div class="cell-header">Date (UTC)</div><div class="cell-value">{0}</div></div>
+              <div class="sha"><div class="cell-header">HEAD</div><div class="cell-value"><a href="https://github.com/nodejs/node/commit/{1}">{1}</a></div></div>
+              <div><div class="cell-header">JS Coverage</div><div class="cell-value"><a href="coverage-{1}/index.html">{2:05.2f}&nbsp;%</a></div></div>
+              <div><div class="cell-header">C++ Coverage</div><div class="cell-value"><a href="coverage-{1}/cxxcoverage.html">{3:05.2f}&nbsp;%</a></div></div>
             </div>'''.format(date, sha, float(jscov), float(cxxcov)))
   out.write('''
           </div>
