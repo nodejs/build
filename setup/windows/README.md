@@ -48,7 +48,6 @@ To run the Ansible playbook to setup the machines run:
 $ ansible-playbook -i ../ansible-inventory ansible-playbook.yaml -vv
 ```
 
-The servers should logon automatically at boot and start the Jenkins slave, but there is no automatic restart procedure for crashes (for now).
-Hence, to start Jenkins after running `ansible-playbook`, the server must be restarted manually so Jenkins script finds the required tools (`java` and `curl`) in the path.
+The servers should logon automatically at boot and start the Jenkins slave.
 
 The release servers need to have the WiX Toolset and 7-Zip installed and in the path (not part of this script).
