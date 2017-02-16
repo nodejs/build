@@ -94,3 +94,6 @@
 - name: Automatic Logon | Setup Automatic Logon
   script: "./resources/Enable-Autologon.ps1 -UserName {{ ansible_ssh_user }} -Password {{ ansible_ssh_pass }}"
   tags: [setup, autologon]
+  
+- name: Reboot machine after Automatic Logon Setup
+  win_reboot:
