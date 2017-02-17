@@ -31,131 +31,50 @@ Generation/publication of the code coverage results consists of the following:
   us to minimize who can modify the nodejs.org website as no additional
   access is required.
 
-# Benchmark Job
+# Coverage Job
 
-The benchmark job follows the same pattern as our other build jobs in order
+The coverage job follows the same pattern as our other build jobs in order
 to check out the version of node to be build/tested. It requires the following
 additions:
 
-
-1. Checkout of the scripts used to generate the coverage
-
-   ```
-   if [ ! -d testing ]; then
-     git clone --depth=10 --single-branch https://github.com/nodejs/testing.git
-   else
-     cd testing
-     git pull
-   fi
-   ```
-
-2. Get a copy of gcov:
+1. Build/test with the coverage targets.  This is currently:
 
    ```
-   # get gcov if required and then apply patches that are required for it
-   # to work with Node.js.
-   if [ ! -d gcovr ]; then
-     git clone --depth=10 --single-branch git://github.com/gcovr/gcovr.git
-     (cd gcovr && patch -p1 < "../testing/coverage/gcovr-patches.diff")
-   fi
+   ./configure --coverage
+   make coverage-clean
+   NODE_TEST_DIR=${HOME}/node-tmp PYTHON=python COVTESTS=test-ci make coverage -j $(getconf _NPROCESSORS_ONLN)
    ```
 
-3. Install the npm modules that we use to instrument Node.js and
-   generate JavaScript coverage, instrument Node.js
-   (both JavaScript and c++) and remove any
-   old coverage files. This requires first building Node.js without
-   coverage so we can install the npm modules and then use those npms to do
-   the instrumentation. A later step will then rebuild as we would in the
-   normal build/test jobs resulting in an instrumented binary.  The step
-   that instruments for C++ currently requires patching the Node.js source
-   tree (patches.diff).  We will work to build those changes into the Makefile
-   so that there are additional targets that can be used for code coverage
-   runs and that patching the source is no longer required.  This will
-   reduce the likelihood/frequency of conflicts causing the code
-   coverage job to fail due to conflicts.
-
-   ```
-   #!/bin/bash
-   # patch things up
-   patch -p1 < "./testing/coverage/patches.diff"
-   export PATH="$(pwd):$PATH"
-
-   # if we don't have our npm dependencies available, build node and fetch them
-   # with npm
-   if [ ! -x "./node_modules/.bin/nyc" ] || \
-      [ ! -x "./node_modules/.bin/istanbul-merge" ]; then
-     echo "Building, without lib/ coverage..." >&2
-     ./configure
-     make -j $(getconf _NPROCESSORS_ONLN) node
-     ./node -v
-
-
-     # get nyc + istanbul-merge
-     "./node" "./deps/npm" install istanbul-merge@1.1.0
-     "./node" "./deps/npm" install nyc@8.0.0-candidate
-
-     test -x "./node_modules/.bin/nyc"
-     test -x "./node_modules/.bin/istanbul-merge"
-   fi
-
-
-   echo "Instrumenting code in lib/..."
-   "./node_modules/.bin/nyc" instrument lib/ lib_/
-   sed -e s~"'"lib/~"'"lib_/~g -i~ node.gyp
-
-   echo "Removing old coverage files"
-   rm -rf coverage
-   rm -rf out/Release/.coverage
-   rm -f out/Release/obj.target/node/src/*.gcda
-   ```
-
-4. Build/test as per normal build/test job.  This is currently:
-
-   ```
-   NODE_TEST_DIR=${HOME}/node-tmp PYTHON=python FLAKY_TESTS=$FLAKY_TESTS_MODE make run-ci -j $(getconf _NPROCESSORS_ONLN)
-   ```
-
-   but modified for that test failures don't stop the rest of the process as the
-   instrumentation seems to have introduced a couple of failures.
-
-5. Gather coverage and push to the benchmarking data machine:
+2. Generate html summary page and push results to the benchmarking data machine:
 
    ```
    #!/bin/bash
 
+   # copy the coverage results to the directory where we keep them
+   # generate the summaries and transfer to the benchmarking data
+   # machine from which the website will pull them
+
    export PATH="$(pwd):$PATH"
-   echo "Gathering coverage..." >&2
 
-   mkdir -p coverage .cov_tmp
-   "$WORKSPACE/node_modules/.bin/istanbul-merge" --out .cov_tmp/libcov.json \
-     'out/Release/.coverage/coverage-*.json'
-   (cd lib && "$WORKSPACE/node_modules/.bin/nyc" report \
-     --temp-directory "$(pwd)/../.cov_tmp" -r html --report-dir "../coverage")
-   (cd out && "$WORKSPACE/gcovr/scripts/gcovr" --gcov-exclude='.*deps' --gcov-exclude='.*usr' -v \
-     -r Release/obj.target/node --html --html-detail \
-     -o ../coverage/cxxcoverage.html)
-
+   # copy over results
+   COMMIT_ID=$(git rev-parse --short=16 HEAD)
    mkdir -p "$HOME/coverage-out"
    OUTDIR="$HOME/coverage-out/out"
-   COMMIT_ID=$(git rev-parse --short=16 HEAD)
-
    mkdir -p "$OUTDIR"
    rm -rf "$OUTDIR/coverage-$COMMIT_ID" || true
-   cp -rv coverage "$OUTDIR/coverage-$COMMIT_ID"
+   cp -r coverage "$OUTDIR/coverage-$COMMIT_ID"
 
+   # add entry into the index and generate the html version
    JSCOVERAGE=$(grep -B1 Lines coverage/index.html | \
      head -n1 | grep -o '[0-9\.]*')
    CXXCOVERAGE=$(grep -A3 Lines coverage/cxxcoverage.html | \
-     grep style | grep -o '[0-9]\{1,3\}\.[0-9]\{1,2\}')
-
-   echo "JS Coverage: $JSCOVERAGE %"
-   echo "C++ Coverage: $CXXCOVERAGE %"
-
+    grep style | grep -o '[0-9]\{1,3\}\.[0-9]\{1,2\}')
    NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
    echo "$JSCOVERAGE,$CXXCOVERAGE,$NOW,$COMMIT_ID" >> "$OUTDIR/index.csv"
+
    cd $OUTDIR/..
-   $HOME/coverage-out/generate-index-html.py
+   $WORKSPACE/testing/coverage/generate-index-html.py
 
    # transfer results to machine where coverage data is staged.
    rsync -r out coveragedata:coverage-out
