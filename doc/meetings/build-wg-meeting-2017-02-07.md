@@ -20,7 +20,7 @@
 * João Reis 
   * Added shared library for engines test to package
     used in fanned jobs - https://github.com/nodejs/build/issues/596
-  * Working with Kunal Pathak to add Windows Server 2016
+  * Working with Kunal Pathak (@kunalspathak) to add Windows Server 2016
 * Michael Dawson
   * Work on smartos release and test jobs to accommodate new version of V8
   * Creation of CI jobs for CIGTM, node-report and abi-stable-node
@@ -40,29 +40,39 @@
 
 ## Agenda
 
-### file and directory names for downloads:#515
+* file and directory names for downloads:[#515](https://github.com/nodejs/build/issues/515)
+* Draft text for HSTS communication [#484](https://github.com/nodejs/build/issues/484)
+* TAP Plugin issues on Jenkins: [#453](https://github.com/nodejs/build/issues/453)
+* rsync endpoint to mirror the releases: [#55](https://github.com/nodejs/build/issues/55)
+* Document nightly [592](https://github.com/nodejs/build/issues/593)
+* Reproducable builds: [#589](https://github.com/nodejs/build/issues/589)
+* Cache CI downloads: [#599](https://github.com/nodejs/build/issues/599)
+
+## Minutes
+
+### file and directory names for downloads:[#515](https://github.com/nodejs/build/issues/515)
 * Needs more discussion in github, remove agenda tag
 
-### Draft text for HSTS communication #484
+### Draft text for HSTS communication [#484](https://github.com/nodejs/build/issues/484)
 * Johan hopes to push this to March
 
-### TAP Plugin issues on Jenkins: #453
+### TAP Plugin issues on Jenkins: [#453](https://github.com/nodejs/build/issues/453)
 * Johan has put together python script to push this along,
   next step is to get it onto all of the workers, needs to
   be tested on all machines. Johan will add more
   info in the issue.
 
-### rsync endpoint to mirror the releases: #55
+### rsync endpoint to mirror the releases: [#55](https://github.com/nodejs/build/issues/55)
 * Waiting on 484, remove from agenda
 
-### Document nightly https://github.com/nodejs/build/issues/593
+### Document nightly [592](https://github.com/nodejs/build/issues/593)
 * some discussion of how it works
-* JoãReis will add links to scripts into issue, Michael to submit PR with doc
+* JoãR will add links to scripts into issue, Michael to submit PR with doc
 
-### Reproducable builds: #589
+### Reproducable builds: [#589](https://github.com/nodejs/build/issues/589)
 * Waiting on availability of somebody to have enough time to tackle it
 
-### Cache CI downloads: #599 https://github.com/nodejs/build/issues/599
+### Cache CI downloads: [#599](https://github.com/nodejs/build/issues/599)
 * still in agreement with approach in issue
 
 # other issues/topics
