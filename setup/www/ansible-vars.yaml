@@ -1,12 +1,12 @@
 ---
 server_user: nodejs
 dist_users:
-  - chrisdickinson
   - cjihrig
   - evanlucas
+  - Fishrock123
+  - italoacasas
   - jasnell
-  - fishrock123
-  - thealphanerd
+  - MylesBorins
   - rvagg
   - sam-github
 libuv_users:
