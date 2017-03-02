@@ -67,7 +67,7 @@
 
 ### Document nightly [592](https://github.com/nodejs/build/issues/593)
 * some discussion of how it works
-* JoãR will add links to scripts into issue, Michael to submit PR with doc
+* JoãRwill add links to scripts into issue, Michael to submit PR with doc
 
 ### Reproducable builds: [#589](https://github.com/nodejs/build/issues/589)
 * Waiting on availability of somebody to have enough time to tackle it
