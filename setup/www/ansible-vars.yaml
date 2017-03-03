@@ -10,9 +10,10 @@ dist_users:
   - rvagg
   - sam-github
 libuv_users:
-  - saghul
-  - piscisaureus
   - bnoordhuis
+  - cjihrig
+  - piscisaureus
+  - saghul
 packages:
   - nodejs
   - nginx
