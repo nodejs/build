@@ -1,13 +1,10 @@
-[iojs-build-fedora20]
-iojs-ibm-ppcbe-fedora20-64-1
-iojs-ibm-ppcbe-fedora20-64-2
-release-osuosl-fedora20-ppc64_be-1
-
-[iojs-build-fedora21]
-iojs-build-fedora21-1
-
-[iojs-build-fedora22]
-iojs-build-fedora22-1
+[fedora]
+test-digitalocean-fedora22-x64-1
+test-digitalocean-fedora23-x64-1
+test-digitalocean-fedora24-x64-1
+test-rackspace-fedora22-x64-1
+test-rackspace-fedora23-x64-1
+test-rackspace-fedora24-x64-1
 
 [iojs-build-centos7]
 test-digitalocean-centos7-x64-1
@@ -130,8 +127,6 @@ iojs-armv7-wheezy
 iojs-build-centos7
 iojs-build-centos6
 iojs-build-centos5
-iojs-build-fedora21
-iojs-build-fedora22
 
 [iojs-smartos:children]
 iojs-build-smartos

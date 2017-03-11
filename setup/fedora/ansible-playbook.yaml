@@ -1,0 +1,87 @@
+---
+- hosts: fedora
+  remote_user: root
+  gather_facts: False
+
+  tasks:
+      # `which` is not installed in Fedora 22
+    - name: Install which
+      raw: dnf install -y which
+      tags: bootstrap
+
+    - name: Check for python
+      raw: which python
+      register: python_exists
+      failed_when: python_exists.rc > 1
+      tags: bootstrap
+
+    - name: Bootstrap python
+      raw: dnf install -y python2 python2-dnf libselinux-python
+      tags: bootstrap
+      when: python_exists.rc == 1
+
+- hosts: fedora
+  remote_user: root
+
+  tasks:
+    - include_vars: ansible-vars.yaml
+      tags: vars
+
+      # Fedora24 has issues running java from systemd using SElinux
+    - name: Disable SELinux
+      lineinfile: dest=/etc/selinux/config regexp=^SELINUX= line=SELINUX=disabled
+      when: ansible_distribution == "Fedora" and
+            ansible_distribution_major_version == "24"
+      tags: selinux
+      register: selinux_state
+
+    - name: SELinux state checks
+      when: ansible_distribution == "Fedora" and
+            ansible_distribution_major_version == "24" and
+            selinux_state|changed
+      debug: msg="You have to restart {{ inventory_hostname }} in order for SELinux changes to be in effect"
+
+# Bug in recent versions of ansible wrt rebooting, just notify for now.
+#    - name: Reboot the system when package is upgraded
+#      poll: 0
+#      async: 0
+#      command: /sbin/shutdown -r now "Ansible system package upgraded"
+#      when: ansible_distribution == "Fedora" and
+#            ansible_distribution_major_version == "24" and
+#            selinux_state|changed
+#      register: rebooted
+#      tags: selinux
+#
+#    - name: Wait for server come back
+#      when: not rebooted.skipped
+#      local_action: wait_for host="{{ inventory_hostname }}"
+#                    state=started port=22 delay=10 timeout=60
+#      tags: selinux
+
+    - name: Update all packages
+      dnf: name=* state=latest
+      tags: general
+
+    - name: Install required packages
+      dnf: name="{{ packages }}" state=latest
+      tags: general
+
+    - name: Enable time syncing
+      service: name=systemd-timesyncd state=started enabled=yes
+      tags: general
+
+    - name: Add running user
+      user: name="{{ server_user }}" shell=/bin/bash
+      tags: general
+
+    - name: Download Jenkins slave.jar
+      get_url: url=https://ci.nodejs.org/jnlpJars/slave.jar dest=/home/{{ server_user }}/slave.jar
+      tags: jenkins
+
+    - name: Generate and copy init script
+      template: src=./resources/jenkins.service.j2 dest=/lib/systemd/system/jenkins.service
+      tags: init
+
+    - name: Start (and enable at boot) Jenkins
+      service: name=jenkins state=started enabled=yes
+      tags: init
