@@ -8,12 +8,14 @@ BEGIN {
   printf fmt, "ip", "day", "path", "version", "os", "arch", "bytes"
 }
 
+#{print $0}
+
 (!($6 == "\"GET" || $6 == "GET")) { next } # non-GET requests
 
 ($10 < 1000) { next } # unreasonably small download
 
-!/\.(tar\.gz|tar\.xz|pkg|msi|exe)(\?[^ ]+)? HTTP\/[12]\.[10][" ]/ {
-  #print "Skipping:", $0
+!/\.(tar\.gz|tar\.xz|pkg|msi|exe|zip|7z)(\?[^ ]+)? HTTP\/[12]\.[10][" ]/ {
+  print "Skipping:", $0
   #check we're not missing anything with: grep Skipping /tmp/_var_log_nginx_nodejs.org-access.log | awk '{print $10 $8}'| grep -v '/$\|html$\|png$\|svg$\|json\|jpg$\|xml$\|txt$\|jar$\|js$\|pom$\|css$\|ico$\|zip$\|lib$\|exp$\|^40\|^30\|tab$\|eps$\|asc$\|gpg$\|pdf$\|tgz$\|\?\|\#\|pdb$\|rtf$\|md$\|SHASUMS'
   next
 }
@@ -63,7 +65,9 @@ BEGIN {
       os = "osx"
     } else if (match(fileType, /^sunos-/)) {
       os = "sunos"
-    } else if (match(fileType, /msi$/) || match(file, /node\.exe$/)) {
+    } else if (match(fileType, /^aix-/)) {
+      os = "aix"
+    } else if (match(fileType, /msi$/) || match(file, /node\.exe$/) || match(fileType, /^win-/)) {
       os = "win"
     } else if (match(fileType, /^tar\..z$/) || match(path, /\/node-latest\.tar\.gz$/)) {
       os = "src"
@@ -82,6 +86,12 @@ BEGIN {
       arch = "armv7l"
     } else if (index(fileType, "arm64") > 0) {
       arch = "arm64"
+    } else if (index(fileType, "ppc64") > 0) {
+      arch = "ppc64"
+    } else if (index(fileType, "ppc64le") > 0) {
+      arch = "ppc64le"
+    } else if (index(fileType, "s390x") > 0) {
+      arch = "s390x"
     } else if (os == "win") {
       # we get here for older .msi files and node.exe files
       if (index(winArch, "x64") > 0) {
