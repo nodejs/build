@@ -15,7 +15,7 @@ BEGIN {
 ($10 < 1000) { next } # unreasonably small download
 
 !/\.(tar\.gz|tar\.xz|pkg|msi|exe|zip|7z)(\?[^ ]+)? HTTP\/[12]\.[10][" ]/ {
-  print "Skipping:", $0
+  #print "Skipping:", $0
   #check we're not missing anything with: grep Skipping /tmp/_var_log_nginx_nodejs.org-access.log | awk '{print $10 $8}'| grep -v '/$\|html$\|png$\|svg$\|json\|jpg$\|xml$\|txt$\|jar$\|js$\|pom$\|css$\|ico$\|zip$\|lib$\|exp$\|^40\|^30\|tab$\|eps$\|asc$\|gpg$\|pdf$\|tgz$\|\?\|\#\|pdb$\|rtf$\|md$\|SHASUMS'
   next
 }
