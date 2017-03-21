@@ -8,8 +8,6 @@ BEGIN {
   printf fmt, "ip", "day", "path", "version", "os", "arch", "bytes"
 }
 
-#{print $0}
-
 (!($6 == "\"GET" || $6 == "GET")) { next } # non-GET requests
 
 ($10 < 1000) { next } # unreasonably small download
