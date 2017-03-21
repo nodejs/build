@@ -86,10 +86,10 @@ BEGIN {
       arch = "armv7l"
     } else if (index(fileType, "arm64") > 0) {
       arch = "arm64"
-    } else if (index(fileType, "ppc64") > 0) {
-      arch = "ppc64"
     } else if (index(fileType, "ppc64le") > 0) {
       arch = "ppc64le"
+    } else if (index(fileType, "ppc64") > 0) {
+      arch = "ppc64"
     } else if (index(fileType, "s390x") > 0) {
       arch = "s390x"
     } else if (os == "win") {
