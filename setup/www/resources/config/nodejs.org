@@ -307,8 +307,8 @@ server {
         default_type text/plain;
     }
 
-    rewrite ^/about/advisory-board(.*)$                           https://$server_name/en/about/organization/ permanent;
-    rewrite ^/advisory-board(.*)$                                 https://$server_name/en/about/organization/ permanent;
+    rewrite ^/about/advisory-board(.*)$                           https://$server_name/en/foundation/tsc/ permanent;
+    rewrite ^/advisory-board(.*)$                                 https://$server_name/en/foundation/tsc/ permanent;
     rewrite ^/about/organization/tsc-meetings/?$                  https://$server_name/en/foundation/tsc/minutes/ permanent;
     rewrite ^/about/organization/tsc-meetings/(.*?)/minutes.html$ https://$server_name/en/foundation/tsc/minutes/$1/ permanent;
     rewrite ^/about/security/?$                                   https://$server_name/en/security/ permanent;
@@ -333,9 +333,9 @@ server {
     rewrite ^/(20\d\d/\d\d/\d\d/.*)$                              http://blog.nodejs.org/$1 permanent;
 
     rewrite ^/about/?$                                            https://$server_name/en/about/ permanent;
-    rewrite ^/about/advisory-board/?$                             https://$server_name/en/about/organization/ permanent;
-    rewrite ^/about/advisory-board/members/?$                     https://$server_name/en/about/organization/ permanent;
-    rewrite ^/about/organization/?$                               https://$server_name/en/about/organization/ permanent;
+    rewrite ^/about/advisory-board/?$                             https://$server_name/en/foundation/tsc/ permanent;
+    rewrite ^/about/advisory-board/members/?$                     https://$server_name/en/foundation/tsc/ permanent;
+    rewrite ^/about/organization/?$                               https://$server_name/en/foundation/tsc/ permanent;
     rewrite ^/about/organization/tsc-meetings/(\d\d\d\d-\d\d-\d\d)/?$ https://$server_name/en/foundation/tsc/minutes/$1/ permanent;
     rewrite ^/about/organization/tsc-meetings/(\d\d\d\d-\d\d-\d\d)/minutes.html$ https://$server_name/en/foundation/tsc/minutes/$1/ permanent;
     rewrite ^/about/releases/?$                                   https://$server_name/en/about/releases/ permanent;
