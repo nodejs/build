@@ -8,8 +8,8 @@
 ## Present
 * @mhdawson   Michael Dawson
 * @joaocgreis João Reis
-* @jgergstroem Johan Bergström
-* @gibfan Gibson Fahnestock
+* @jbergstroem Johan Bergström
+* @gibfahn Gibson Fahnestock
 
 ## Standup
 * Michael Dawson
@@ -41,19 +41,21 @@
 
 ### Draft text for HSTS communication [#484](https://github.com/nodejs/build/issues/484)
 
-* Either remove from agenda or set a date (for change) we work against! (Doesn.t seem to be a high prio for anyone)
+* Either remove from agenda or set a date (for change) we work against!
+  (Doesn't seem to be a high prio for anyone)
 
 ### TAP Plugin issues on Jenkins [#453](https://github.com/nodejs/build/issues/453)
 
-* No progress afaik (johan)
+* No progress afaik (Johan)
 * Johan will try to test out a bit more fully by running on a broader set of machines. 
 * Gibson will also try to use it in some of the other projects like node-report.
 
 ## other issues/topics
-  * Did supported platforms PR land ? - No - nodejs/node#8922
+  * Did supported platforms PR land ?
+    - No - [nodejs/node#8922](https://github.com/nodejs/node/pull/8922)
     *  not yet, lets try to make sure it lands this week or so.
   * look into rewriting jenkins host init script in systemd for
-    auto-restarting after oom.s
-    * create issue, and mark as .good first contribution (johan) 
+    auto-restarting after OOMs
+    * create issue, and mark as good first contribution (Johan) 
 
 
