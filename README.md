@@ -35,6 +35,7 @@ missing please open an issue.
 - Rod Vagg [@rvagg](https://github.com/rvagg)
 - Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
 - Rich Trott [@trott](https://github.com/trott)
+- Kunal Pathak [@kunalspathak](https://github.com/kunalspathak)
 
 
 
