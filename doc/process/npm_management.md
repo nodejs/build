@@ -1,33 +1,34 @@
-We have a number of modules under the node.js foundation including:
+# NPM Management
 
-* node-report
-* node-inspect
-* citgm
+We have a number of modules under the Node.js Foundation including:
 
-We need to make sure that we have continuity in terms of being able to
-publish and update these modules.
+* [node-report](https://github.com/nodejs/node-report)
+* [node-inspect](https://github.com/nodejs/node-inspect)
+* [citgm](https://github.com/nodejs/citgm)
+
+We need to make sure that we have continuity in terms of being able to publish
+and update these modules.
 
 We have decided to manage these modules as follows:
 
-* Create a user called "nodejs-foundation" who we always
-  add as one of the collaborators with admin rights and for which the
-  password is maintained by the build workgroup.
-* We would then add individuals as collaborators who can also
-  publish. Generally, a module push could be done by
-  the additional collaborators.
-* In the cases were collaborators other than "nodejs-foundation"
-  cease to be active, the build workgroup would provide
-  continuity by using the node-foundation user to add additional
-  collaborators who would have the ability to push the module.
-  The node-foundation user could also be used to
+* Create a user called [`nodejs-foundation`][] who we always add as one of the
+  collaborators with admin rights and for which the password is maintained by
+  the build workgroup.
+* We would then add individuals as collaborators who can also publish.
+  Generally, a module push can be done by the additional collaborators.
+* In the cases where collaborators other than `nodejs-foundation`
+  cease to be active, the build workgroup would provide continuity by using the
+  `node-foundation` user to add additional collaborators who would have the
+  ability to push the module. The `node-foundation` user could also be used to
   remove collaborators if that was ever necessary.
 
-This approach is consistent with how npm modules have been managed
-by a number of the companies who are foundation members and reports
-are that it has worked well.
+This approach is consistent with how npm modules have been managed by a number
+of the companies who are foundation members and reports are that it has worked
+well.
 
-The creditials required for the nodejs-foundation user are maintained
-in encrypted form the secrets repo within the
-test/test_credentials.md file.
+The credentials required for the `nodejs-foundation` user are maintained in
+encrypted form in the [secrets repo][].
 
 
+[`nodejs-foundation`]: https://www.npmjs.com/~nodejs-foundation
+[secrets repo]: https://github.com/nodejs/secrets/tree/master/test/test_credentials.md
