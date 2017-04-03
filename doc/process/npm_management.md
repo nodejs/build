@@ -15,12 +15,17 @@ We have decided to manage these modules as follows:
   collaborators with admin rights and for which the password is maintained by
   the build workgroup.
 * We would then add individuals as collaborators who can also publish.
-  Generally, a module push can be done by the additional collaborators.
+  Generally, a module push will be done by the additional collaborators.
+  The `nodejs-foundation` user is intended to be used as a backup as opposed
+  to being part of the regular publishing flow.
 * In the cases where collaborators other than `nodejs-foundation`
   cease to be active, the build workgroup would provide continuity by using the
   `node-foundation` user to add additional collaborators who would have the
   ability to push the module. The `node-foundation` user could also be used to
   remove collaborators if that was ever necessary.
+* The purpose of the `nodejs-foundation` user is not to enable Build
+  Workgroup members to publish npm modules, that should be left to the
+  module collaborators.
 
 This approach is consistent with how npm modules have been managed by a number
 of the companies who are foundation members and reports are that it has worked
