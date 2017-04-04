@@ -5,6 +5,7 @@ We have a number of modules under the Node.js Foundation including:
 * [node-report](https://github.com/nodejs/node-report)
 * [node-inspect](https://github.com/nodejs/node-inspect)
 * [citgm](https://github.com/nodejs/citgm)
+* [llnode](https://github.com/nodejs/llnode)
 
 We need to make sure that we have continuity in terms of being able to publish
 and update these modules.
