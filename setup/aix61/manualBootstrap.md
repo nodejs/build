@@ -4,10 +4,11 @@ once and after some small number of runs (2-3) all of the required
 modules will be installed.
 
 
-## Increase the size of the /opt filesystem
+## Increase the size of the /opt and / filesystems
 
 ```bash
 chfs -a size=+1300000 /opt
+chfs -a size=+250000 /
 ```
 
 ## Install required packages
