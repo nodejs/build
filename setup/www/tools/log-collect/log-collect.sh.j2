@@ -1,0 +1,65 @@
+#!/bin/bash
+
+set -e
+
+export TZ=UTC
+
+__dirname="$(CDPATH= cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+zone="nodejs.org"
+apikey="{{ cdn_api_key }}"
+apiemail="{{ cdn_api_email }}"
+logregex='^.*\.(tar\.xz|tar\.gz|exe|msi|pkg|7z|zip|lib|pdb|exp)(\?.*)?$'
+logdir="/home/logs/$zone"
+logshare="/usr/local/go/bin/logshare-cli"
+xz="xz -z -9 -e"
+
+fmt="%b %e %H:00:00 UTC %Y"
+earliest=$(date --date="72 hours ago" +"%s")
+end=$(date --date="+1 hour" +"$fmt")
+overwritecount=0
+
+mkdir -p $logdir
+
+while true; do
+  # file format is <start timestamp>-<end timestamp>.log.xz and there's one per hour
+  # we start from the current hour, knowing that it's not yet complete, and work back
+  # until 72 hours from now, which is how long CloudFlare stores logs for
+  start=$(date --date="${end}-1 hour" +"$fmt")
+  startts=$(date --date="$start" +"%s")
+  endts=$(date --date="$end" +"%s")
+  if (( $startts < $earliest )); then break; fi
+
+  filename="${startts}-${endts}.log.xz"
+  tmpfile="/tmp/${filename}"
+  outfile="${logdir}/${filename}"
+  # we allow overwriting of the most recent 2 files, assuming that the last file wasn't
+  # complete and there's a possibility the second last one wasn't complete
+  # it's also possible that older files were not properly fetched or have been removed
+  # by the sanity checker so we make sure we redo any that are missing
+  if (( $overwritecount < 2 )) || [ ! -f $outfile ]; then
+    echo "Fetching ${filename}..."
+    # Filter the entries from CloudFlare so we only keep the download asset entries
+    $logshare --count=-1 --api-key="$apikey" --api-email="$apiemail" --zone-name="$zone" --start-time="$startts" --end-time="$endts" \
+      | ${__dirname}/json-log-filter.js "${logregex}" \
+      | $xz > $tmpfile
+    if (( $? != 0 )); then
+      echo "Failed to fetch logs"
+      exit 1
+    fi
+    # check file size as a sanity check, it should be in the range of 3-4Mb, it's possible
+    # to get a bad set from CloudFlare so we won't bother keeping files that are sufficiently
+    # suspicious
+    # bad reads should be rectified in the next run since this is run every hour
+    fsize=$(stat -c '%s' $tmpfile)
+    if (( $fsize < 500000 )); then
+      echo "Unsuccessful fetch of $filename"
+      rm "$tmpfile"
+    else
+      mv $tmpfile $outfile
+      overwritecount=$(expr $overwritecount + 1)
+    fi
+  fi
+
+  end="$start"
+done

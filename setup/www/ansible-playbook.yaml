@@ -32,3 +32,6 @@
 
     - include: tasks/metrics.yaml
       tags: metrics
+
+    - include: tasks/log-collect.yaml
+      tags: log-collect

@@ -1,0 +1,50 @@
+- name: log-collect | Make /home/logs/log-collect
+  file:
+    path: /home/logs/log-collect
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+  tags: log-collect
+
+- name: log-collect | Copy source files
+  copy:
+    src: tools/log-collect/{{ item }}
+    dest: /home/logs/log-collect/{{ item }}
+    owner: root
+    group: root
+    mode: 0750
+  with_items:
+    - json-log-filter.js
+    - package.json
+    - sanity-check-logs.sh
+  tags: log-collect
+
+- name: log-collect | Copy source template
+  template:
+    src: tools/log-collect/log-collect.sh.j2
+    dest: /home/logs/log-collect/log-collect.sh
+    mode: 0750
+  tags: log-collect
+
+- name: log-collect | Install Node.js dependencies for JSON filter
+  command: "npm install"
+  args:
+    chdir: /home/logs/log-collect/
+  tags: log-collect
+
+- name: log-collect | Install CloudFlare logshare
+  shell: "GOPATH=/usr/local/go/ go get github.com/cloudflare/logshare/..."
+  tags: log-collect
+
+- name: log-collect | Add log-collect to crontab
+  lineinfile:
+    dest: /etc/crontab
+    line: "55 *    * * *   root    /home/logs/log-collect/log-collect.sh"
+  tags: log-collect
+
+- name: log-collect | Add sanity-check-logs to crontab
+  lineinfile:
+    dest: /etc/crontab
+    line: "30 1,13 * * *   root    /home/logs/log-collect/sanity-check-logs.sh"
+  tags: log-collect
