@@ -424,6 +424,7 @@ server {
 
     rewrite ^/windows-environment$                                https://github.com/nodejs/node/wiki/Windows-Environment permanent;
     rewrite ^/calendar$                                           https://calendar.google.com/calendar/embed?src=nodejs.org_nr77ama8p7d7f9ajrpnu506c98%40group.calendar.google.com;
+    rewrite ^/calendar.ics$                                       https://calendar.google.com/calendar/ical/nodejs.org_nr77ama8p7d7f9ajrpnu506c98%40group.calendar.google.com/public/basic.ics
 
     # Rename 'Stable' release to 'Current'
     rewrite ^/(.*)/download/stable$                               https://$server_name/$1/download/current permanent;
