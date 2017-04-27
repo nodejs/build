@@ -77,6 +77,10 @@ iojs-release-armv7-wheezy-1
 release-scaleway-debian7-arm-1
 
 [iojs-raspbian]
+test-requireio_joeyvandijk-debian7-arm_pi2-1
+test-requireio_svincent-debian7-arm_pi2-2
+
+[xiojs-raspbian]
 release-requireio_rvagg-debian7-arm_pi1p-1
 release-requireio_andineck-debian7-arm_pi1p-1
 test-requireio_andineck-debian7-arm_pi1p-1
