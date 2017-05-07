@@ -6,8 +6,11 @@
 # expects a list of sites to install into `sites-enabled`
 #
 
-- name: install
-  package: name=nginx state=present
+- name: install required packages
+  package: name="{{ item }}" state=present
+  with_items:
+      - nginx
+      - logrotate
 
 - name: copy site configs to `sites-available`
   template:
