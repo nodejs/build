@@ -23,7 +23,7 @@ running one (or multiple) of below playbooks. If you're adding a new host,
 limiting ansible to just running on that host is probably quicker:
 
 ```console
-$ ansible-playbook playbooks/create-jenkins-worker.yml \
+$ ansible-playbook playbooks/jenkins/worker/create.yml \
     --limit "test-digitalocean-debian8-x64-1"
 ```
 
@@ -43,7 +43,8 @@ These playbooks are available to you:
   - **jenkins/linter.yml**: Sets up the code linters (flavour of a worker).
 
   - **create-webhost.yml**: Configures the server(s) that host nodejs.org,
-                            iojs.org and dist.libuv.org among other things.
+                            iojs.org and dist.libuv.org among other things
+                            (only works on Ubuntu boxes).
 
   - **create-unencrypted.yml**: Configures unencrypted.nodejs.org.
 
