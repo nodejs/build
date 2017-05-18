@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+
+jenkins_jnlpurl="https://ci.nodejs.org/computer/{{ inventory_hostname }}/slave-agent.jnlp"
+jenkins_secret="{{ secret | default('potato')}}"
+jenkins_user="{{ server_user | default('potato')}}"
+jenkins_group="{{ server_user | default('potato')}}"
+jenkins_env=" \
+	OSTYPE=openbsd \
+	NODE_COMMON_PIPE=/home/${jenkins_user}/test.pipe \
+	PATH=/usr/local/bin:${PATH} \
+	JOBS=$(sysctl -n hw.ncpu) \
+	CC=ecc \
+	CXX=ec++"
+jenkins_jar="/home/${jenkins_user}/slave.jar"
+jenkins_log_file="/home/${jenkins_user}/${name}_console.log"
+jenkins_args="-jar ${jenkins_jar} \
+	-jnlpUrl ${jenkins_jnlpurl} \
+	-secret ${jenkins_secret}"
+
+daemon="$(/usr/local/bin/javaPathHelper -c jenkins)"
+daemon_flags="${jenkins_args}"
+daemon_user="_jenkins"
+
+. /etc/rc.d/rc.subr
+
+rc_bg=YES
+rc_reload=NO
+
+rc_start() {
+	${rcexec} ${jenkins_env} ${daemon} ${daemon_flags} ${_bg}
+}
+
+rc_cmd $1
+

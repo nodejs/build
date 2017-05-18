@@ -1,0 +1,12 @@
+---
+server_user: iojs
+packages:
+  - automake-1.15p0
+  - bash
+  - ccache
+  - git
+  - gmake
+  - jenkins-1.656p2
+  - libtool--
+  - subversion
+  - sudo--
