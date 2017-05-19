@@ -124,6 +124,12 @@ cd ../..
 rm -rf tmp
 ```
 
+## Add ::1 to /etc/hosts
+
+```bash
+echo "::1 localhost" >>/etc/hosts
+```
+
 ## Enable the AHA fs
 
 Add the following to /etc/filesystems:
