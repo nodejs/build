@@ -14,6 +14,7 @@ packages: {
   'freebsd': 'openjdk8-jre',
   'smartos': 'openjdk8',
   'ubuntu': 'openjdk-8-jre-headless',
+  'ubuntu1404': 'openjdk-7-jre-headless',
   }
 
 java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default('missing') }}"
