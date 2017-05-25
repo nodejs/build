@@ -4,8 +4,7 @@
 # installs java
 #
 
-- name: install java
-  package: name="{{ java_package_name }}" state=present
 # if this fails you want to check in vars/main.yml and add package name
 # as appropriate -- try to use generic os family if available.
-  failed_when: "'{{ java_package_name }}' == 'missing'"
+- name: install java
+  package: name="{{ java_package_name }}" state=present
