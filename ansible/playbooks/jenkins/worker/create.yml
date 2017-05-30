@@ -20,3 +20,5 @@
     - name: check if secret is properly set
       fail:
       failed_when: not secret
+
+  environment: '{{remote_env}}'

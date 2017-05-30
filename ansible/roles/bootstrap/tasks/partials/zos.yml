@@ -1,0 +1,10 @@
+---
+
+#
+# Python should be pre-installed, validate it is
+#
+
+- name: check for python
+  shell: "python --version"
+  register: has_python
+  failed_when: has_python.rc > 1

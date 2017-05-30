@@ -1,0 +1,21 @@
+secret:
+remote_env:
+  FFI_LIB: /NODEJS2/python-2017-04-12-py27/python27/lib/ffi
+  PYTHON_ENV: python27
+  PATH: /NODEJS2/python-2017-04-12-py27/python27/bin:/bin:/NODEJS2/bin:/NODEJS/bin
+  GIT_EXEC_PATH: /NODEJS/libexec/git-core
+  BASH_PREFIX: /NODEJS2/bin/bash
+  GIT_SHELL: /NODEJS/bin/bash
+  CURL_CA_BUNDLE: /NODEJS2/python-2017-04-12-py27/python27/etc/ssl/cacert.pem
+  PYTHON_HOME: /NODEJS2/python-2017-04-12-py27/python27
+  PKGS_BASE: /NODEJS2/python-2017-04-12-py27/pkgs
+  RELEASE_NAME: python-2017-04-12
+  _CEE_RUNOPTS: POSIX(ON)
+  STEPLIB: none
+  PERL_PREFIX: /NODEJS2/bin/perl
+  PKG_CONFIG_PATH: /NODEJS2/python-2017-04-12-py27/python27/lib/pkgconfig:/NODEJS2/python-2017-04-12-py27/python27/share/pkg
+  LIBPATH: /lib:/usr/lib:.:/NODEJS2/lib/perl5/5.24.0/os390/CORE.pod:/NODEJS2/python-2017-04-12-py27/python27/lib/
+  RELEASE_DIR: /NODEJS2/python-2017-04-12-py27
+  RELEASE_TYPE: py27
+  GIT_TEMPLATE_DIR: /NODEJS/share/git-core/templates
+server_jobs: 4

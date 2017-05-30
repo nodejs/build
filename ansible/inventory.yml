@@ -61,6 +61,8 @@ hosts:
     - packetnet:
         centos7-arm64-1: {ip: 147.75.111.18}
 
+    - marist:
+        zos13-s390x-1: {ip: 148.100.36.135, user: Unix1}
 
   - test:
 
@@ -113,6 +115,10 @@ hosts:
         smartos15-x64-2: {ip: 165.225.139.77}
         smartos16-x64-1: {ip: 72.2.115.252}
         smartos16-x64-2: {ip: 72.2.113.74}
+
+    - marist:
+        zos13-s390x-1: {ip: 148.100.36.133, user: Unix1}
+        zos13-s390x-2: {ip: 148.100.36.134, user: Unix1}
 
     - linuxonecc:
         rhel72-s390x-1: {ip: 148.100.110.63}
