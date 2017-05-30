@@ -13,6 +13,7 @@
 # also, some os:es complain about underscores in hostnames
 - name: set hostname
   when: not os|startswith("alpine") and not os|startswith("smartos")
+        and not os|startswith("zos")
   hostname: name="{{ inventory_hostname|replace('_', '-') }}"
 
 - name: disable joyent smartconnect
@@ -50,6 +51,7 @@
   register: has_git
 
 - name: install packages
+  when: not os|startswith("zos")
   package: name="{{ package }}" state=present
   loop_control:
     loop_var: package

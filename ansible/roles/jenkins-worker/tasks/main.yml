@@ -5,15 +5,18 @@
 #
 
 - name: create group
+  when: not os|startswith("zos")
   group: name="{{ server_user }}"
 
 - name: create user
+  when: not os|startswith("zos")
   user:
     name: "{{ server_user }}"
     group: "{{ server_user }}"
     shell: "{{ bash_path[os|stripversion]|default('/bin/bash') }}"
 
 - name: add ::1 to /etc/hosts for ipv6 compat
+  when: not os|startswith("zos")
   lineinfile:
     dest: /etc/hosts
     state: present
@@ -30,7 +33,7 @@
     mode: 0755
 
 - name: prepare installing tap2junit
-  when: type != "release"
+  when: type != "release" and not os|startswith("zos")
   include: "{{ pip_include }}"
   loop_control:
     loop_var: pip_include
@@ -44,9 +47,38 @@
 - name: download slave.jar
   get_url:
     url: "{{ jenkins_worker_jar }}"
-    dest: /home/{{ server_user }}/slave.jar
+    dest: '{{ home }}/{{ server_user }}/slave.jar'
     mode: 0644
     timeout: 60
+    validate_certs: no
+
+- name: render git wrapper into place
+  when: os|startswith("zos")
+  template:
+    src: "{{ role_path }}/templates/git-wrapper.j2"
+    dest: "{{ home }}/{{ server_user }}/git-wrapper"
+    mode: "{{ jenkins.mode|default('0655') }}"
+
+- stat: path={{ home }}/{{ server_user }}/runAsciiBash
+  register: runAsciiBashExists
+
+- name: render runAsciiBash into place - part 1
+  when: os|startswith("zos")
+  template:
+    src: "{{ role_path }}/templates/runAsciiBash.c.j2"
+    dest: "{{ home }}/{{ server_user }}/runAsciiBash.c"
+    mode: "{{ jenkins.mode|default('0644') }}"
+
+- name: render runAsciiBash into place - part 2
+  when: os|startswith("zos")
+  template:
+    src: "{{ role_path }}/templates/gen_runAsciiBash.j2"
+    dest: "{{ home }}/{{ server_user }}/gen_runAsciiBash.sh"
+    mode: "{{ jenkins.mode|default('0655') }}"
+
+- name: render runAsciiBash into place - part 3
+  when: os|startswith("zos") and runAsciiBashExists.stat.exists == False
+  shell: "sh {{ home }}/{{ server_user }}/gen_runAsciiBash.sh"
 
 - name: render init script into place
   template:
@@ -58,8 +90,31 @@
   when: os|startswith("smartos")
   raw: "svccfg import {{ jenkins.dest }}"
 
-- name: enable jenkins at startup
+- name: enable jenkins at startup - general
+  when: not os|startswith("zos")
   service: name=jenkins state=started enabled=yes
+
+# lineinfile does not work on zos due to character conversions
+# the inserted line ends up in the wrong character set. We
+# tried a few variations to work around this without
+# success so for now do it the hard way.
+- name: enable jenkins at startup - zos - part 1
+  when: os|startswith("zos")
+  template:
+    src: "{{ role_path }}/templates/zos_rc_patch.j2"
+    dest: "{{ home }}/{{ server_user }}/rc_patch"
+    mode: "{{ jenkins.mode|default('0644') }}"
+
+- name: enable jenkins at startup - zos - part 2
+  when: os|startswith("zos")
+  template:
+    src: "{{ role_path }}/templates/zos_rc_patch_apply.j2"
+    dest: "{{ home }}/{{ server_user }}/rc_patch_apply.sh"
+    mode: "{{ jenkins.mode|default('0655') }}"
+
+- name: enable jenkins at startup - zos - part 3
+  when: os|startswith("zos")
+  shell: "sh {{ home }}/{{ server_user }}/rc_patch_apply.sh"
 
 - name: install monit
   when: os in needs_monit

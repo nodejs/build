@@ -1,3 +1,4 @@
 jenkins_url: "https://ci.nodejs.org"
 jenkins_worker_jar: "{{ jenkins_url }}/jnlpJars/slave.jar"
 server_user: iojs
+home: "/users"

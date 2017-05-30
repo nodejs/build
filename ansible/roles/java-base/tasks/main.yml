@@ -7,4 +7,5 @@
 # if this fails you want to check in vars/main.yml and add package name
 # as appropriate -- try to use generic os family if available.
 - name: install java
+  when: not os|startswith("zos")
   package: name="{{ java_package_name }}" state=present
