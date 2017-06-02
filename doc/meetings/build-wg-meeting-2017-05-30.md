@@ -35,11 +35,11 @@ Next meeting: 20 June 2017
 * Michele Capra
   * Testing ansible refactor on windows
 * Johan Bergström 
- * merging ansible refactor
- * minor review
- * going to update clang version of our freebsd builders to address v8 build issues
+  * merging ansible refactor
+  * minor review
+  * going to update clang version of our freebsd builders to address v8 build issues
 *Kyle/Kunal
- * trying to get chakracore builds working for ubuntu 14
+  * trying to get chakracore builds working for ubuntu 14
 * Rod Vagg
   * brought up 2 new centos 6 build machines, attached to ci release
   * set jenkins to choose those nodes if building node 8 and above
@@ -57,8 +57,7 @@ Next meeting: 20 June 2017
   do updates required to add.  A bit more complicated due to the new naming in
   the download structure.  So might take a bit longer.
  
-### New meeting time for build WG [#
-8 698](https://github.com/nodejs/build/issues/698)
+### New meeting time for build WG [#98](https://github.com/nodejs/build/issues/698)
  
 * We agreed to alternate between 20 and 22 UTC going forward.  Next meeting
   will be at 20 UTC.
