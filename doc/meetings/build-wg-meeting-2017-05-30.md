@@ -1,7 +1,7 @@
 # Node.js Foundation Build WG Meeting 2017-05-30
  
-[GitHub issue](https://github.com/nodejs/build/issues/737)
-[Meeting video](https://www.youtube.com/watch?v=5WV7TjUww-w)
+* [GitHub issue](https://github.com/nodejs/build/issues/737)
+* [Meeting video](https://www.youtube.com/watch?v=5WV7TjUww-w)
  
 Next meeting: 20 June 2017
  
