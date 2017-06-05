@@ -7,7 +7,7 @@ Next meeting: 20 June 2017
  
 ## Present
 * Michael Dawson (@mhdawson)
-* JoãReis (@joaocgreis)
+* João Reis (@joaocgreis)
 * Gibson Fahnestock (@gibfahn)
 * Rod Vagg (@rvagg)
 * Michele Capra (@piccoloaiutante)
@@ -25,7 +25,7 @@ Next meeting: 20 June 2017
 * João Reis 
   * Addedd Ubuntu and OSX to Node-ChakraCore test job
   * Changed the Node-ChakraCore nightlies release server to
-   Ubuntu 14.04, opened PR with Ansible changes
+    Ubuntu 14.04, opened PR with Ansible changes
   * Added VS2017 to the CI test matrix
   * Fixed rebasing in the CitGM job
   * Working on a new job to replace node-stress-single-test
@@ -38,7 +38,7 @@ Next meeting: 20 June 2017
   * merging ansible refactor
   * minor review
   * going to update clang version of our freebsd builders to address v8 build issues
-*Kyle/Kunal
+* Kyle/Kunal
   * trying to get chakracore builds working for ubuntu 14
 * Rod Vagg
   * brought up 2 new centos 6 build machines, attached to ci release
@@ -48,7 +48,7 @@ Next meeting: 20 June 2017
 ## Minutes
  
 ### Add Michele Capra (@piccoloaiutante) to the Build WG [#711](https://github.com/nodejs/build/issues/711)
- * No objections. Welcome Michele.
+* No objections. Welcome Michele.
  
 ### Make regular canary builds with V8 lkgr [#626](https://github.com/nodejs/build/issues/626)
 * Any objections? No.
@@ -58,7 +58,6 @@ Next meeting: 20 June 2017
   the download structure.  So might take a bit longer.
  
 ### New meeting time for build WG [#98](https://github.com/nodejs/build/issues/698)
- 
 * We agreed to alternate between 20 and 22 UTC going forward.  Next meeting
   will be at 20 UTC.
 * Michael to contact William to get calendar updated.
@@ -83,7 +82,7 @@ Next meeting: 20 June 2017
  
 ### Solution to vendors to rsync securely [#55](https://github.com/nodejs/build/issues/55)
 * @ofrobots a better/more secure solution for downloads ?
-* Rodd: We.ve looked at it but no great answers.  
+* Rod: We've looked at it but no great answers.  
 * Johan any suggestions ?
 * Ali: if there was a json page we could just directly parse it
   without worrying about nginx updates breaking html parsing
