@@ -20,7 +20,7 @@ setgid iojs
 setuid iojs
 
 script
-  exec java -Xmx128m -jar "$HOME/slave.jar" \
+  exec java -Xmx256m -jar "$HOME/slave.jar" \
 	-secret {{ secret }} \
 	-jnlpUrl https://ci.nodejs.org/computer/{{ inventory_hostname }}/slave-agent.jnlp
 end script
