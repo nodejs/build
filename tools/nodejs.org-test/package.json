@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "nodejs.org-test",
+  "description": "Tests for nodejs.org",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "mocha index.js"
+  },
+  "dependencies": {
+    "lodash.merge": "^3.3.2",
+    "mocha": "^2.3.2",
+    "semver": "^5.0.1"
+  }
+}
