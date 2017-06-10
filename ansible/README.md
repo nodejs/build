@@ -168,6 +168,8 @@ Unsorted stuff of things we need to do/think about
       setup/raspberry-pi/README.md, some of these can be automated)
 - [ ] epel-release for centos - required for centos7 on packet.net arm64
       before ccache can be installed
+- [ ] make .ssh/config and .ssh/id_rsa for release machines, adding config
+      for `node-www` and record host key for node-www
 
 [callback]: plugins/inventory/nodejs_yaml.py
 
