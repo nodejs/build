@@ -40,6 +40,7 @@ hosts:
         andineck-debian7-arm_pi1p-1: {ip: 192.168.2.41, user: pi}
         xgene-ubuntu1404-arm64-1: {ip: 192.168.2.3, user: ubuntu, alias: arm-nfshost}
         rvagg-debian7-arm_pi1p-1: {ip: 192.168.2.40, user: pi}
+        osx1010-x64-1: {ip: 192.168.2.211, user: iojs}
 
     - osuosl:
         aix61-ppc64_be-1: {ip: 140.211.9.99}
@@ -176,6 +177,7 @@ hosts:
         mininodes-debian7-arm_pi1p-1: {ip: 192.168.2.47, user: pi}
         mininodes-debian7-arm_pi2-1: {ip: 192.168.2.66, user: pi}
         notthetup_sayanee-debian8-arm_pi3-1: {ip: 192.168.2.88, user: pi}
+        osx1010-x64-1: {ip: 192.168.2.210, user: iojs}
         piccoloaiutante-debian8-arm_pi3-1: {ip: 192.168.2.89, user: pi}
         pivotalagency-debian8-arm_pi3-1: {ip: 192.168.2.84, user: pi}
         pivotalagency-debian8-arm_pi3-2: {ip: 192.168.2.85, user: pi}
