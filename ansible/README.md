@@ -170,6 +170,9 @@ Unsorted stuff of things we need to do/think about
       before ccache can be installed
 - [ ] make .ssh/config and .ssh/id_rsa for release machines, adding config
       for `node-www` and record host key for node-www
+- [ ] add explicit ARCH and DESTCPU for release machines (RV: I'm adding
+      "arm64" manually for both to force the right thing, from memory I've
+      needed to do this on x86 and x64, best be explicit to be sure)
 
 [callback]: plugins/inventory/nodejs_yaml.py
 
