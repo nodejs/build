@@ -161,9 +161,11 @@ Unsorted stuff of things we need to do/think about
 - [ ] assign 192/256mb ram to the jenkins instances that requires it:
       - aix
       - TBD
-- [ ] centos5 and 6 repositories for rhel* stuff is broken
+- [ ] centos5 and 6 repositories for rhel\* stuff is broken
 - [ ] remove native alpine34 vm's on joyent since the joyent host
       is not mature enough to provide linux emulation. use docker instead.
+- [ ] automate more items in initial Raspberry Pi setup (see bottom of
+      setup/raspberry-pi/README.md, some of these can be automated)
 
 [callback]: plugins/inventory/nodejs_yaml.py
 
