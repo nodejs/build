@@ -55,6 +55,8 @@
     - nodejs/rc
     - nodejs/release
     - nodejs/test
+    - nodejs/v8-canary
+    - nodejs/chakracore-nightly
     - nodejs/docs
     - iojs/next-nightly
     - iojs/nightly
