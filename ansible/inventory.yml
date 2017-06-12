@@ -56,7 +56,7 @@ hosts:
         rhel72-s390x-1: {ip: 148.100.110.65}
 
     - packetnet:
-        centos7-arm64-1: {ip: 147.75.203.166}
+        centos7-arm64-1: {ip: 147.75.111.18}
 
   - test:
 
@@ -216,7 +216,7 @@ hosts:
 
     - packetnet:
         centos7-arm64-1: {ip: 147.75.68.82}
-        centos7-arm64-2: {ip: 147.75.203.122}
+        centos7-arm64-2: {ip: 147.75.111.34}
         ubuntu1604-arm64-1: {ip: 147.75.203.102}
         ubuntu1604-arm64-2: {ip: 147.75.88.10}
 
