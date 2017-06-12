@@ -106,4 +106,8 @@ packages: {
     'gcc',
     'git',
     ]
+
+  ubuntu1404: [
+    'ntp',
+    ]
   }

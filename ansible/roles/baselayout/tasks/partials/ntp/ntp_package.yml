@@ -6,8 +6,5 @@
 # package and service are 'ntp' but 'ntpd' is started
 #
 
-- name: install ntpd
-  package: name=ntp state=present
-
 - name: start ntpd
   service: name=ntp state=started enabled=yes
