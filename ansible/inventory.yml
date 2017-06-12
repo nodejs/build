@@ -126,6 +126,11 @@ hosts:
         ubuntu1404-ppc64_le-1: {ip: 140.211.168.106}
         ubuntu1404-ppc64_le-2: {ip: 140.211.168.94}
 
+    - packetnet:
+        centos7-arm64-2: {ip: 147.75.68.82}
+        ubuntu1604-arm64-1: {ip: 147.75.203.102}
+        ubuntu1604-arm64-2: {ip: 147.75.88.10}
+
     - rackspace:
         centos7-x64-1: {ip: 23.253.249.127}
         debian8-x64-1: {ip: 23.253.109.216}
