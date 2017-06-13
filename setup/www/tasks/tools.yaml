@@ -17,6 +17,13 @@
     mode: 0644
   tags: nightly-builder
 
+- name: nightly-builder-chakracore | Copy config
+  template:
+    src: ./resources/config/nightly-builder-chakracore.json.j2
+    dest: /etc/nightly-builder-chakracore.json
+    mode: 0644
+  tags: nightly-builder
+
   #TODO: the branches are hardwired here, they should be in vars somewhere
 - name: tools | Add periodic tasks to crontab
   lineinfile:
@@ -26,5 +33,7 @@
     - '0 20    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/v6.x --config /etc/nightly-builder.json'
     - '0 19    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/v7.x --config /etc/nightly-builder.json'
     - '0 18    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/master --config /etc/nightly-builder.json'
+    - '0 11    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/v8.x --config /etc/nightly-builder-chakracore.json'
+    - '0 10    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/master --config /etc/nightly-builder-chakracore.json'
     - '1 0     * * *   root    npm update -g nodejs-latest-linker nodejs-dist-indexer nodejs-nightly-builder >& /dev/null'
   tags: tools
