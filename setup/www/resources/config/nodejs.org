@@ -432,4 +432,7 @@ server {
     # Fix underscores vs. dashes
     rewrite ^/en/docs/guides/debugging_getting_started/           https://$server_name/en/docs/guides/debugging-getting-started/ permanent;
     rewrite ^/ko/docs/guides/debugging_getting_started/           https://$server_name/ko/docs/guides/debugging-getting-started/ permanent;
+    
+    # Fix https://github.com/nodejs/node/issues/13667
+    rewrite ^/download//v8.1.1/node-v8.1.1-headers.tar.gz         https://$server_name/download/release/v8.1.1/node-v8.1.1-headers.tar.gz permanent;
 }
