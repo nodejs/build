@@ -13,7 +13,6 @@ Next meeting: 11 July 2017
 * Michele Capra (@piccoloaiutante)
 * Kunal Pathak (@kunalspathak)
 * Kyle Farnung (@kfarnung)
-* Ali Iyaz Sheikh (@ofrobots)
 
 ## Standup
 * Michael
@@ -26,10 +25,10 @@ Next meeting: 11 July 2017
 * João Reis
   * Added chakracore-nightly support to nodejs-nightly-builder
 * Gibson
- * Looked at the 8.1.1 issue
- * Raised issue on nodejs.org re/ sponsorship page
- * Working on getting AIX ansible scripts
- * Added some new machines to the Ansible inventory.yml
+  * Looked at the 8.1.1 issue
+  * Raised issue on nodejs.org re/ sponsorship page
+  * Working on getting AIX ansible scripts
+  * Added some new machines to the Ansible inventory.yml
 * Michele
   * getting setup with secrets and machine access
   * getting up to speed on existing issue
