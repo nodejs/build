@@ -48,7 +48,8 @@ Next meeting: 11 July 2017
 ### VS2015 and VS2017 install issues [nodejs/node#13641](https://github.com/nodejs/node/issues/13641)
 
 - Gibson: maybe we should have a machine in CI with multiple VS versions installed.
-- Joao: I can take a look at getting machines with each, but I don’t think we need one with both. This is a very specific edge case.
+- João: This is a very specific edge case that does not affect end users. I don't think we
+need to add this configuration to CI just for this. I will take a better look at the issue.
 
 ## Questions
 
