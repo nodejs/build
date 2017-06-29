@@ -28,8 +28,8 @@ jenkins_env=" \
   NODE_TEST_DIR=/home/{{ server_user }}/tmp \
   PATH=/usr/local/libexec/ccache:/usr/local/bin:${PATH} \
   JOBS={{ server_jobs|default(ansible_processor_vcpus|default('2')) }} \
-  CC={{ custom_cc_command|default('cc') }} \
-  CXX={{ custom_cxx_command|default('c++') }}"
+  CC={{ 'clang38' if os == 'freebsd10' else 'cc' }} \
+  CXX={{ 'clang++38' if os == 'freebsd10' else 'c++' }}"
 
 jenkins_jar="/home/{{ server_user }}/slave.jar"
 jenkins_log_file="/home/{{ server_user }}/${name}_console.log"
