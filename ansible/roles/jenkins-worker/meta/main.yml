@@ -1,0 +1,8 @@
+---
+
+#
+# this role depends on java-base
+#
+
+dependencies:
+- { 'role': 'java-base' }

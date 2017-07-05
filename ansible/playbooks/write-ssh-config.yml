@@ -1,0 +1,13 @@
+---
+
+#
+# writes inventory to your ssh config if your
+# config contains the proper stub -- see README.md
+#
+
+- hosts: localhost
+
+  tasks:
+
+    - name: write hosts to ssh config
+      ssh_config: path="~/.ssh/config" hostinfo="{{ hostvars }}"

@@ -1,0 +1,60 @@
+---
+
+#
+# installs and configures nginx
+#
+# expects a list of sites to install into `sites-enabled`
+#
+
+- name: install required packages
+  package: name="{{ item }}" state=present
+  with_items:
+      - nginx
+      - logrotate
+
+- name: copy site configs to `sites-available`
+  template:
+    src: "{{ site }}.conf.j2"
+    dest: "/etc/nginx/sites-available/{{ site }}.conf"
+    mode: 0644
+  loop_control:
+    loop_var: site
+  with_items: "{{ sites }}"
+
+- name: symlink sites to `sites-enabled`
+  file:
+    src: "/etc/nginx/sites-available/{{ site.1 }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ '%02d-%s.conf'|format(site.0, site.1) }}"
+    state: link
+  loop_control:
+    loop_var: site
+  with_indexed_items: "{{ sites }}"
+
+- name: remove default site
+  file:
+    path: "etc/nginx/sites-{{ pathname }}/"
+    state: absent
+  loop_control:
+    loop_var: pathname
+  with_items: [ 'available', 'enabled' ]
+
+- name: update logrotate config
+  copy:
+    src: logrotate
+    dest: /etc/logrotate.d/nginx
+    mode: 0644
+
+- name: add additional mime-types
+  lineinfile:
+    dest: /etc/nginx/mime.types
+    line: '{{ mimetype }}'
+    insertafter: '^types.*'
+  loop_control:
+    loop_var: mimetype
+  with_items:
+    - 'application/octet-stream pkg;'
+    - 'application/x-xz xz;'
+    - 'application/gzip gz;'
+
+- name: enable at boot
+  service: name=nginx state=started enabled=yes

@@ -1,0 +1,19 @@
+---
+
+#
+# different os'es have different names for java
+#
+
+packages: {
+  'alpine34': 'openjdk8-jre-base',
+  'centos5': 'java-1.7.0-openjdk',
+  'centos': 'java-1.8.0-openjdk-headless',
+  'debian7': 'openjdk-7-jre-headless',
+  'debian8': 'openjdk-8-jre-headless',
+  'fedora': 'java-1.8.0-openjdk-headless',
+  'freebsd': 'openjdk8-jre',
+  'smartos': 'openjdk8',
+  'ubuntu': 'openjdk-8-jre-headless',
+  }
+
+java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default('missing') }}"

@@ -1,0 +1,15 @@
+---
+
+#
+# bootstrap packages required for ansible to work
+#
+
+  - name: run os-specific bootstrap
+    include: "{{ bootstrap_include }}"
+    loop_control:
+      loop_var: bootstrap_include
+    with_first_found:
+      - files:
+        - "{{ role_path }}/tasks/partials/{{ os }}.yml"
+        - "{{ role_path }}/tasks/partials/{{ os|stripversion }}.yml"
+        skip: true

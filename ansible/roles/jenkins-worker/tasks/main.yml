@@ -1,0 +1,56 @@
+---
+
+#
+# fetches jenkins and make sure it is started properly
+#
+
+- name: create group
+  group: name="{{ server_user }}"
+
+- name: create user
+  user:
+    name: "{{ server_user }}"
+    group: "{{ server_user }}"
+    shell: "{{ bash_path[os|stripversion]|default('/bin/bash') }}"
+
+- name: add ::1 to /etc/hosts for ipv6 compat
+  lineinfile:
+    dest: /etc/hosts
+    state: present
+    line: ::1 localhost.localdomain localhost
+
+- name: prepare installing tap2junit
+  when: type != "release"
+  include: "{{ pip_include }}"
+  loop_control:
+    loop_var: pip_include
+  with_first_found:
+    - files:
+        - "{{ role_path }}/tasks/partials/tap2junit/{{ os }}.yml"
+        - "{{ role_path }}/tasks/partials/tap2junit/{{ os|stripversion }}.yml"
+        - "{{ role_path }}/tasks/partials/tap2junit/pip.yml"
+      skip: true
+
+- name: download slave.jar
+  get_url:
+    url: "{{ jenkins_worker_jar }}"
+    dest: /home/{{ server_user }}/slave.jar
+    mode: 0644
+
+- name: render init script into place
+  template:
+    src: "{{ jenkins.src }}"
+    dest: "{{ jenkins.dest }}"
+    mode: "{{ jenkins.mode|default('0644') }}"
+
+- name: import manifest to svcadm
+  when: os|startswith("smartos")
+  raw: "svccfg import {{ jenkins.dest }}"
+
+- name: enable jenkins at startup
+  service: name=jenkins state=started enabled=yes
+
+- name: install monit
+  when: os in needs_monit
+  include: monit.yml
+  static: false

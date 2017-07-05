@@ -1,0 +1,62 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<service_bundle type='manifest' name='jenkins'>
+  <service name='application/jenkins' type='service' version='1'>
+
+      <create_default_instance enabled='true' />
+
+      <single_instance />
+
+      <dependency name='network' grouping='require_all' restart_on='error' type='service'>
+        <service_fmri value='svc:/milestone/network:default' />
+      </dependency>
+      <dependency name='filesystem' grouping='require_all' restart_on='error' type='service'>
+        <service_fmri value='svc:/system/filesystem/local' />
+      </dependency>
+
+      <method_context working_directory="/home/{{ server_user }}">
+        <method_credential user='{{ server_user }}' group='{{ server_user }}' privileges='basic' />
+        <method_environment>
+          <envvar name='NODE_COMMON_PIPE' value='/home/{{ server_user }}/test.pipe' />
+          <envvar name='NODE_TEST_DIR' value='/home/{{ server_user }}/tmp' />
+          <envvar name='OSTYPE' value='solaris' />
+          <envvar name='HOME' value='/home/{{ server_user }}' />
+          <envvar name='JOBS' value='{{ server_jobs|default(ansible_processor_vcpus|default("4")) }}' />
+          <envvar name='PATH' value='/usr/local/bin:/usr/local/sbin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin' />
+        </method_environment>
+      </method_context>
+
+      <exec_method type='method'
+                   name='start'
+                   exec='{{ java_path[os] }} -Dsun.security.pkcs11.enable-solaris=false -Xmx{{ server_ram|default('128m') }} -jar /home/{{ server_user }}/slave.jar -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp -secret {{ secret }}'
+                   timeout_seconds='30' />
+
+      <exec_method type="method"
+                   name="stop"
+                   exec=":kill"
+                   timeout_seconds="30" />
+
+      <exec_method name='refresh'
+                   type='method'
+                   exec=':kill -HUP'
+                   timeout_seconds='30' />
+
+      <property_group name="startd" type="framework">
+          <propval name="duration" type="astring" value="child"/>
+          <propval name="ignore_error" type="astring" value="core,signal"/>
+      </property_group>
+
+      <property_group name="application" type="application"></property_group>
+
+      <stability value='Evolving' />
+
+      <template>
+        <common_name>
+          <loctext xml:lang='C'>Jenkins Continuous Build Server</loctext>
+        </common_name>
+        <documentation>
+          <doc_link name='hudson.dev.java.net' uri='http://jenkins.io/' />
+        </documentation>
+      </template>
+  </service>
+</service_bundle>

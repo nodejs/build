@@ -1,0 +1,98 @@
+---
+
+#
+# common tasks suitable for all machines
+#
+
+- name: gather facts
+  setup:
+
+# setting hostname is not supported for all os:es. see
+# https://github.com/ansible/ansible-modules-core/issues/4818
+# https://github.com/ansible/ansible-modules-core/issues/4782
+# also, some os:es complain about underscores in hostnames
+- name: set hostname
+  when: not os|startswith("alpine") and not os|startswith("smartos")
+  hostname: name="{{ inventory_hostname|replace('_', '-') }}"
+
+- name: disable joyent smartconnect
+  when: os|startswith("smartos")
+  notify: restart sshd
+  lineinfile: state=absent dest="{{ ssh_config }}" regexp=libsmartsshd.so
+
+- name: change default coredump folder
+  when: os|startswith("smartos")
+  shell: coreadm -g /home/iojs/cores/core.%f.%p -e global
+
+- name: disable sftp
+  when: not os|startswith("win")
+  notify: restart sshd
+  lineinfile: state=absent dest="{{ ssh_config }}" regexp=^Subsystem(\s+)sftp
+
+- name: add os-specific repos
+  include: "{{ repos_include }}"
+  loop_control:
+    loop_var: repos_include
+  with_first_found:
+    - files:
+        - "{{ role_path }}/tasks/partials/repo/{{ os }}.yml"
+        - "{{ role_path }}/tasks/partials/repo/{{ os|stripversion }}.yml"
+      skip: true
+
+- name: check for a recent enough ccache
+  when: os in ccache_no_binpkg
+  stat: path="{{ binary_dest }}"
+  register: has_ccache
+
+- name: check for a recent enough git
+  when: os in git_no_binpkg
+  stat: path="{{ binary_dest }}"
+  register: has_git
+
+- name: install packages
+  package: name="{{ package }}" state=present
+  loop_control:
+    loop_var: package
+  with_items:
+    # ansible doesn't like empty lists
+    - "{{ packages[os]|default('[]') }}"
+    - "{{ packages[os|stripversion]|default('[]') }}"
+    - "{{ common_packages|default('[]') }}"
+
+#- name: update package alteratives
+#  when: os == debian7
+#  alterantives:
+#  loop_control:
+#    loop_var: gcc
+#  with_items:
+#    - gcc
+#    - g++
+#    - cc
+
+- name: remove fortune from login shells
+  when: os|stripversion == 'freebsd'
+  lineinfile:
+    dest: "/home/{{ server_user }}/{{ login_item }}"
+    state: absent
+    regexp: fortune freebsd
+  loop_control:
+    loop_var: login_item
+  with_items: [ '.login', '.profile' ]
+
+- name: run ccache installer
+  when: os in ccache_no_binpkg and not has_ccache.stat.exists
+  include: ccache.yml
+  static: false
+  vars:
+    - version: 3.3.3
+
+- name: set up ntp
+  include: "{{ ntp_include }}"
+  loop_control:
+    loop_var: ntp_include
+  with_first_found:
+    - files:
+        - "{{ role_path }}/tasks/partials/ntp/{{ os }}.yml"
+        - "{{ role_path }}/tasks/partials/ntp/{{ os|stripversion }}.yml"
+        - "{{ role_path }}/tasks/partials/ntp/{{ os|match_key(ntp_service, raise_error=False) }}.yml"
+      skip: true

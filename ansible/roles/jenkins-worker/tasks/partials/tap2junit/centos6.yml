@@ -1,0 +1,17 @@
+---
+
+#
+# centos6: python2.6 is default
+#
+
+- name: install required packages
+  package: name="{{ package }}" state=present
+  loop_control:
+    loop_var: package
+  with_items:
+    - python-setuptools
+    - python-argparse
+
+- name: install tap2junit
+  raw: easy_install tap2junit
+

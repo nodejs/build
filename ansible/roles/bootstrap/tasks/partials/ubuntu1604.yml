@@ -1,0 +1,19 @@
+---
+
+#
+#  ubuntu 16.04
+#
+
+- name: check for python
+  raw: stat /usr/bin/python
+  failed_when: has_python.rc > 1
+  register: has_python
+
+- name: check for aptitude
+  raw: stat /usr/bin/aptitude
+  failed_when: has_aptitude.rc > 1
+  register: has_aptitude
+
+- name: install python and aptitude
+  when: has_python.rc == 1 or has_aptitude.rc == 1
+  raw: apt install -y python-minimal aptitude

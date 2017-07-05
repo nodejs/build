@@ -1,0 +1,11 @@
+---
+
+#
+# freebsd: python2.7
+#
+
+- name: install pip
+  package: name=py27-pip state=present
+
+- name: install tap2junit
+  pip: name=tap2junit state=present

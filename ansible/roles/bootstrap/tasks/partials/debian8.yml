@@ -1,0 +1,14 @@
+---
+
+#
+# debian 8
+#
+
+- name: check for apt-transport-https
+  raw: stat /usr/lib/apt/methods/https
+  register: has_apt_transport
+  failed_when: has_apt_transport.rc > 1
+
+- name: install apt-transport-https
+  when: has_apt_transport.rc == 1
+  raw: apt-get install -y apt-transport-https

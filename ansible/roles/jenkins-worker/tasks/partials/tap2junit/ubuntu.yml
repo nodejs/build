@@ -1,0 +1,11 @@
+---
+
+#
+# ubuntu series: python 2.7
+#
+
+- name: install pip
+  package: name=python-pip state=present
+
+- name: install tap2junit
+  pip: name=tap2junit state=present

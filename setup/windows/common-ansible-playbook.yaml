@@ -22,7 +22,7 @@
   tags: [download, java]
 
 - name: Java | Install Java 8
-  raw: 'C:\TEMP\java.exe /s SPONSORS=0'
+  raw: 'C:\TEMP\java.exe /s SPONSORS=0 /l*v C:\TEMP\java_install_log.txt'
   tags: [install, java]
 
 - name: Git | Download Git
@@ -94,3 +94,6 @@
 - name: Automatic Logon | Setup Automatic Logon
   script: "./resources/Enable-Autologon.ps1 -UserName {{ ansible_ssh_user }} -Password {{ ansible_ssh_pass }}"
   tags: [setup, autologon]
+  
+- name: Reboot Machine
+  win_reboot:

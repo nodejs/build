@@ -35,6 +35,7 @@ missing please open an issue.
 - Rod Vagg [@rvagg](https://github.com/rvagg)
 - Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
 - Rich Trott [@trott](https://github.com/trott)
+- Kunal Pathak [@kunalspathak](https://github.com/kunalspathak)
 
 
 
@@ -78,7 +79,7 @@ and speed in our CI system.
 ![Tier 2 Infrastructure Providers](./static-assets/tier-2-providers.png)
 
 - **[Microsoft][7]**: provides Windows-related test infrastructure
-  on [Azure][8]for the Node.js CI system.
+  on [Azure][8] for the Node.js CI system.
 
 - **[Joyent][9]**:, a public/private cloud infrastructure company,
   provides SmartOS and other test/build resources for the Node.js CI system.

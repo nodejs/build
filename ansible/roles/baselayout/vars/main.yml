@@ -1,0 +1,108 @@
+---
+
+#
+# variables shared in baselayout
+#
+
+binary_dest: '/usr/local/bin/ccache'
+
+ccache_no_binpkg: ['smartos14', 'smartos15', 'smartos16']
+ccache_version: 3.3.2
+
+git_no_binpkg: ['debian7']
+git_version: 2.10.2
+
+ssh_config: /etc/ssh/sshd_config
+
+ntp_service: {
+  systemd: ['debian8', 'ubuntu1404', 'ubuntu1604', 'ubuntu1610']
+  }
+
+common_packages: [
+  'automake',
+  'bash',
+  'libtool',
+  'sudo',
+  ]
+
+# you can either add os family or os to this list (see smartos)
+# but the playbook chooses os over family - not both
+packages: {
+  alpine: [
+    'autoconf',
+    'ccache',
+    'g++',
+    'gcc',
+    'git',
+    'linux-headers',
+    'm4',
+    'make',
+    'procps',
+    'xz'
+  ],
+
+  centos: [
+    'ccache',
+    'git',
+    ],
+
+  centos7: [
+    'gcc-c++',
+    ],
+
+  debian7: [
+    'gcc-4.8',
+    'g++-4.8',
+    ],
+
+  debian8: [
+    'ccache',
+    'git',
+    ],
+
+  fedora: [
+    'ccache',
+    'gcc-c++',
+    'git',
+  ],
+
+  freebsd: [
+    'ccache',
+    'git',
+    'gmake'
+  ],
+
+  smartos14: [
+    'gcc48',
+    'gcc48-libs',
+    'gccmakedep',
+    'git',
+    'gmake',
+    'xz'
+    ],
+
+  smartos15: [
+    'gcc49',
+    'gcc49-libs',
+    'gccmakedep',
+    'git',
+    'gmake',
+    'xz'
+    ],
+
+  smartos16: [
+    'gcc49',
+    'gcc49-libs',
+    'gccmakedep',
+    'git',
+    'gmake',
+    'xz'
+    ],
+
+  ubuntu: [
+    'ccache',
+    'g++',
+    'gcc',
+    'git',
+    ]
+  }

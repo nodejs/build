@@ -1,0 +1,83 @@
+---
+
+#
+# sets up the host that runs nodejs.org, iojs.org and dist.libuv.org
+#
+# note: you have to account for a lot of storage in /home - it is
+#       currently using block storage from digitalocean which you will
+#       have to set up manually and have mounted to /home
+#       before proceeding
+
+- hosts: infra-digitalocean-ubuntu1604-x64-1
+  roles:
+    - bootstrap
+    - baselayout
+    - package-upgrade
+    - { role: nginx, sites: [ 'nodejs.org', 'iojs.org', 'dist.libuv.org' ] }
+
+  pre_tasks:
+    - name: check if secrets are properly set
+      fail:
+      failed_when: not {{ secret }}
+      loop_control:
+        loop_var: secret
+      with_items:
+        - github_secret
+        - cdn_api_key
+        - cdn_api_email
+        - cdn_api_iojs_id
+        - cdn_api_nodejs_id
+        - cloudfuse_user
+        - cloudfuse_key
+
+  tasks:
+    - name: add nodesource signing key
+      apt_key:
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        state: present
+    - name: add nodesource repo
+      apt_repository:
+        repo: "{{ repo }}"
+        state: present
+        update_cache: yes
+      loop_control:
+        loop_var: repo
+      with_items:
+        - deb https://deb.nodesource.com/node_6.x xenial main
+        - deb-src https://deb.nodesource.com/node_6.x xenial main
+
+    - name: install node.js
+      apt: name=nodejs state=present
+
+    - name: add users
+      user:
+        name: "{{ user.name }}"
+        shell: /bin/bash
+        append: yes
+        groups: "{{ user.extra_group if 'extra_group' in user else '' }}"
+      loop_control:
+        loop_var: user
+      with_items:
+        - { name: libuv }
+        - { name: nodejs }
+        - { name: staging }
+        - { name: dist, extra_group: staging }
+
+    - name: create folder structure
+      file:
+        path: "/home/{{ folder[0] }}/{{ folder[1] }}/{{ folder[2] }}"
+        state: directory
+        mode: 0755
+        owner: "{{ folder[0] }}"
+        group: "{{ folder[0] }}"
+      loop_control:
+        loop_var: folder
+    # old structure looks like this
+      when: not('{{ folder[0] }}' == 'dist' and '{{ folder[2] }}' == 'custom')
+            and not('{{ folder[0] }}' == 'staging' and
+                    '{{ folder[2] }}' in ['test', 'docs', 'rc'])
+      with_nested:
+        - [ 'dist', 'staging' ]
+        - [ 'nodejs', 'iojs' ]
+        - [ 'custom', 'docs', 'next-nightly', 'nightly',
+            'rc', 'release', 'test' ]

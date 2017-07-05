@@ -1,0 +1,7 @@
+set logfile syslog
+set daemon 30
+
+check process jenkins
+  matching slave.jar
+  start program = "/sbin/rc-service -q jenkins zap && /sbin/rc-service -q jenkins start"
+  stop program  = "/sbin/rc-service -q jenkins stop"

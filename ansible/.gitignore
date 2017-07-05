@@ -1,0 +1,3 @@
+*.pyc
+host_vars/*
+!host_vars/README.md

@@ -1,0 +1,9 @@
+---
+
+#
+# upgrade all installed packages for a host
+#
+
+  - name: include package manager tasks
+    include: "partials/{{ template }}.yml"
+    failed_when: template is False

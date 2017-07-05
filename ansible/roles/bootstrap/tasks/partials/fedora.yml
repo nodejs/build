@@ -1,0 +1,33 @@
+---
+
+#
+# a fedora bootstrap - similar between majors which is why its merged
+# @TODO: figure out which version requires what and make it conditional
+# @TODO: important: we don't have ansible os facts gathered yet, we need to
+#        use our own logic. Perhaps better to avoid ansible facts altogether?
+#
+
+- name: check for python
+  raw: stat /usr/bin/python
+  register: has_python
+  failed_when: has_python.rc > 1
+
+- name: install python
+  when: has_python.rc == 1
+  raw: dnf install -y python2 python2-dnf
+
+- name: check for libselinux-python bindings
+  when: os in ("fedora24", "fedora25")
+  raw: dnf info libselinux-python | grep Installed
+  register: has_libselinux
+  failed_when:  has_libselinux.rc > 1
+
+- name: install libselinux-python bindings
+  when: os in ("fedora24", "fedora25") and has_libselinux.rc == 1
+  raw: dnf install -y libselinux-python
+
+- name: disable selinux
+  when: os in ("fedora24", "fedora25")
+  selinux: state=disabled
+  # this should be done. not sure how to make it properly/gracefully
+  # notify: reboot host

@@ -4,10 +4,11 @@ once and after some small number of runs (2-3) all of the required
 modules will be installed.
 
 
-## Increase the size of the /opt filesystem
+## Increase the size of the /opt and / filesystems
 
 ```bash
 chfs -a size=+1300000 /opt
+chfs -a size=+250000 /
 ```
 
 ## Install required packages
@@ -23,7 +24,6 @@ rpm -e git  # If necessary
 rpm -e curl # If necessary
 rpm -ivh curl-7.44.0-2.aix6.1.ppc.rpm
 rpm -i unzip-6.0-3.aix6.1.ppc.rpm
-export LIBPATH=/usr/lib # Needed to get curl to work
 ```
 
 #### gcc
@@ -40,7 +40,7 @@ sh install-gcc-rpm.sh
 #### git
 
 ```bash
-curl --insecure -O https://public.dhe.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/git/git-2.8.1-1.aix6.1.ppc.rpm
+LIBPATH=/usr/lib curl --insecure -O https://public.dhe.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/git/git-2.8.1-1.aix6.1.ppc.rpm
 rpm -ivh git-2.8.1-1.aix6.1.ppc.rpm
 ```
 
@@ -66,7 +66,7 @@ installp -Y -qaXgd . openssl openssh
 #### gettext, java, make
 
 ```bash
-curl --insecure -O https://public.dhe.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/gettext/gettext-0.19.7-1.aix6.1.ppc.rpm
+LIBPATH=/usr/lib curl --insecure -O https://public.dhe.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/gettext/gettext-0.19.7-1.aix6.1.ppc.rpm
 rpm -e gettext
 rpm -hUv gettext-0.19.7-1.aix6.1.ppc.rpm
 
@@ -75,7 +75,7 @@ gunzip Java7r1_64.jre.7.1.0.200.tar.gz
 tar -xvf Java7r1_64.jre.7.1.0.200.tar
 installp -agXYd . Java71_64.jre 2>&1 | tee installp.log
 
-curl --insecure -O http://www.oss4aix.org/download/everything/RPMS/make-3.82-1.aix5.3.ppc.rpm
+LIBPATH=/usr/lib curl --insecure -O http://www.oss4aix.org/download/everything/RPMS/make-3.82-1.aix5.3.ppc.rpm
 rpm -i make-3.82-1.aix5.3.ppc.rpm
 ```
 
@@ -94,7 +94,7 @@ sh install-libtool-rpm.sh
 #### pip
 
 ```bash
-curl https://bootstrap.pypa.io/get-pip.py | python
+LIBPATH=/usr/lib curl https://bootstrap.pypa.io/get-pip.py | python
 ln -s /opt/freeware/bin/pip /usr/bin/pip
 ```
 
@@ -107,7 +107,7 @@ Install on the new linux machines did not seem to work so use cp and chmod inste
 ```bash
 mkdir tmp
 cd tmp
-curl --insecure -O https://www.samba.org/ftp/ccache/ccache-3.2.7.tar.gz
+LIBPATH=/usr/lib curl --insecure -O https://www.samba.org/ftp/ccache/ccache-3.2.7.tar.gz
 gunzip ccache-3.2.7.tar.gz
 tar -xvf ccache-3.2.7.tar
 cd ccache-3.2.7
@@ -122,6 +122,12 @@ ln -s /opt/freeware/bin/ccache/ccache /opt/freeware/bin/ccache/g++
 ln -s /opt/freeware/bin/ccache/ccache /opt/freeware/bin/ccache/gcc
 cd ../..
 rm -rf tmp
+```
+
+## Add ::1 to /etc/hosts
+
+```bash
+echo "::1 localhost" >>/etc/hosts
 ```
 
 ## Enable the AHA fs
