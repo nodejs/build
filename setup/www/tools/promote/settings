@@ -24,3 +24,7 @@ next_nightly_dirmatch=.*
 chakracore_nightly_srcdir=${staging_rootdir}chakracore-nightly
 chakracore_nightly_dstdir=${dist_rootdir}chakracore-nightly
 chakracore_nightly_dirmatch=.*
+
+chakracore_release_srcdir=${staging_rootdir}chakracore-release
+chakracore_release_dstdir=${dist_rootdir}chakracore-release
+chakracore_release_dirmatch=.*
