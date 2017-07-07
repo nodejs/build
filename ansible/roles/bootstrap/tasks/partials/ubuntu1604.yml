@@ -18,5 +18,5 @@
   when: has_python.rc == 1 or has_aptitude.rc == 1
   raw: apt install -y python-minimal aptitude
 
-- name: Creates NODE_TEST_DIR directory
+- name: create NODE_TEST_DIR directory
   file: path=/home/{{ server_user }}/tmp state=directory
