@@ -1,0 +1,99 @@
+# Some RHEL machines require that the system is registered to Red Hat Subscription Management service before you can download packages.
+
+- hosts: all
+  remote_user: root
+  become: yes
+
+  tasks:
+  - block:
+
+  # TODO: Install yum if not already
+
+  #- name: "Change filesystem size"
+  #  shell: |
+  #    chfs -a size=+1300000 /opt
+  #    chfs -a size=+250000 /
+
+    - name: yum upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Install Build tools
+      yum: name={{item}} state=installed update_cache=yes
+      with_items:
+        - curl
+        - bash
+        - unzip
+        - git
+        - make
+        - gcc-c++
+        - gcc
+        - tar
+        - libtool
+
+    #- name: Download Java
+    #  get_url:
+    #    url: #https://ci.adoptopenjdk.net/job/openjdk_build_ppc64_aix/lastSuccessfulBuild/artifact/OpenJDK8_ppc64_AIX_2017270602#15.tar.gz
+    #    dest: /tmp/
+    #    mode: 0440
+    #    timeout: 25
+
+    - name: Extract Java
+      unarchive:
+        src: /tmp/OpenJDK8_ppc64_AIX_201727060215.tar.gz
+        dest: /tmp/
+        copy: False
+
+    - name: Download ccache
+      get_url:
+        url: https://www.samba.org/ftp/ccache/ccache-3.3.4.tar.gz
+        dest: /tmp/
+        mode: 0440
+        timeout: 25
+
+    - name: Extract ccache
+      unarchive:
+        src: /tmp/ccache-3.3.4.tar.gz
+        dest: /tmp/
+        copy: False
+
+    - name: config ccache
+      shell: ./configure -q
+      args:
+        chdir: "/tmp/ccache-3.3.4"
+
+    - name: "ccache : compile"
+      shell: |
+         cd /tmp/ccache-3.3.4 && gmake && mkdir -p /opt/freeware/bin/ccache
+
+    - name: "ccache : install"
+      copy:
+        dest: "/opt/freeware/bin/ccache/"
+        mode: 0755
+        remote_src: yes
+        src: "/tmp/ccache-3.3.4/ccache"
+
+    - name: "ccache : create symlinks"
+      loop_control:
+        loop_var: destination
+      with_items: [ 'gcc', 'cc', 'g++', 'c++' ]
+      file:
+        dest: "/opt/freeware/bin/ccache/{{ destination }}"
+        src: /opt/freeware/bin/ccache/ccache
+        state: link
+
+    - name: "ccache : cleanup"
+      file: path="/tmp/ccache-3.3.4" state=absent
+
+    - name: "Add ::1 to /etc/hosts"
+      shell: |
+           echo "::1 localhost" >>/etc/hosts
+
+    #- name: "Enable the AHA fs: part2"
+    #  shell: |
+    #    mkdir /aha && mount /aha
+
+    - name: "Optimisation"
+      shell: |
+            ioo -o j2_maxRandomWrite=32
