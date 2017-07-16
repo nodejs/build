@@ -115,5 +115,7 @@ packages: {
 
   ubuntu1404: [
     'ntp',
+    'g++-4.9',
+    'gcc-4.9',
     ]
   }
