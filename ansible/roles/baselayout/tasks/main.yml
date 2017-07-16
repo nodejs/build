@@ -61,15 +61,14 @@
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"
 
-#- name: update package alteratives
-#  when: os == debian7
-#  alterantives:
-#  loop_control:
-#    loop_var: gcc
-#  with_items:
-#    - gcc
-#    - g++
-#    - cc
+- name: update package alternatives
+  when: os == "ubuntu1404"
+  alternatives: link=/usr/bin/{{ gcc }} name={{ gcc }} path=/usr/bin/{{ gcc }}-4.9
+  loop_control:
+    loop_var: gcc
+  with_items:
+    - gcc
+    - g++
 
 - name: remove fortune from login shells
   when: os|stripversion == 'freebsd'
