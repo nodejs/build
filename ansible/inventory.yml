@@ -222,3 +222,6 @@ hosts:
         ubuntu1604-arm64-1: {ip: 147.75.203.102}
         ubuntu1604-arm64-2: {ip: 147.75.88.10}
 
+    - nearform:
+        intel-ubuntu1604-x64-1: {ip: 92.51.196.114}
+        intel-ubuntu1604-x64-2: {ip: 92.51.196.115}

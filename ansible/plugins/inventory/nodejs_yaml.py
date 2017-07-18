@@ -48,7 +48,7 @@ valid = {
   # providers - validated for consistency
   'provider': ('azure', 'digitalocean', 'joyent', 'ibm', 'linuxonecc',
                'mininodes', 'msft', 'osuosl', 'rackspace', 'requireio',
-               'scaleway', 'softlayer', 'voxer', 'packetnet')
+               'scaleway', 'softlayer', 'voxer', 'packetnet', 'nearform')
 }
 
 # customisation options per host:
