@@ -27,7 +27,7 @@
 
     - name: VCBT2015 | Download Visual C++ Build Tools 2015 Setup
       win_get_url:
-        url: 'https://go.microsoft.com/fwlink/?LinkId=691126&__hstc=268264337.ac84b29e86c2d7ca8d7b5d72067568e7.1497344355585.1497344355585.1497859835361.2&__hssc=268264337.1.1497859835361&__hsfp=589409609&fixForIE=.exe'
+        url: 'https://go.microsoft.com/fwlink/?LinkId=691126'
         dest: 'C:\TEMP\vcbt2015.exe'
       tags: [download, visualstudio]
 
