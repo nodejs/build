@@ -4,7 +4,7 @@ JENKINS_SLAVE_LOG="/home/iojs/$NAME.log"
 JENKINS_SECRET="{{ secret }}"
 JENKINS_SLAVE_ARGS="-jnlpUrl https://{{ ci_server }}/computer/{{ ansible_hostname }}/slave-agent.jnlp -secret $JENKINS_SECRET"
 JENKINS_ENV="OSTYPE=linux-gnu NODE_COMMON_PIPE=/home/iojs/test.pipe"
-JENKINS_PATH="/opt/rh/devtoolset-2/root/usr/bin"
+JENKINS_PATH="/opt/rh/devtoolset-6/root/usr/bin"
 JENKINS_ENV="JOBS={{ ansible_processor_vcpus }} \
   HOME=/home/{{ server_user }} \
   NODE_TEST_DIR=$HOME/tmp \
