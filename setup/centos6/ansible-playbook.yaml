@@ -17,7 +17,7 @@
       tags: general
 
     - name: General | Add SLC devtoolset repo GPG key
-      command: rpm --import http://ftp.scientificlinux.org/linux/scientific/5x/x86_64/RPM-GPG-KEYs/RPM-GPG-KEY-cern
+      command: rpm --import http://linuxsoft.cern.ch/cern/slc6X/x86_64/RPM-GPG-KEY-cern
       tags: general
 
     - name: General | Download SLC SCL repo config
@@ -26,7 +26,7 @@
 
     - name: General | Install required packages
       yum: name={{ item }} state=latest
-      with_items: packages
+      with_items: "{{ packages }}"
       tags: general
 
     - name: NTP | Run initial NTP
@@ -38,7 +38,7 @@
       tags: ntp
 
     - name: ccache | Install ccache
-      include: ../ansible-tasks/ccache.yaml version=3.2.4
+      include: ../ansible-tasks/ccache.yaml version=3.3.4
       tags: ccache
 
     - name: General | Increase file descriptor limits
@@ -63,15 +63,7 @@
       tags: jenkins
 
     - name: Jenkins | Copy environment files
-      copy: src=./resources/jenkins.sysconfig dest=/etc/sysconfig/jenkins owner={{ server_user }} group={{ server_user }} mode=0400
-      tags: jenkins
-
-    - name: Jenkins | Copy secret to environment
-      replace: dest=/etc/sysconfig/jenkins regexp="\{\{secret\}\}" replace="{{ secret }}"
-      tags: jenkins
-
-    - name: Jenkins | Copy server id to environment
-      replace: dest=/etc/sysconfig/jenkins regexp="\{\{id\}\}" replace="{{ inventory_hostname }}"
+      template: src=./resources/jenkins.sysconfig.j2 dest=/etc/sysconfig/jenkins owner={{ server_user }} group={{ server_user }} mode=0400
       tags: jenkins
 
     - name: Jenkins | Enable and start init scripts
