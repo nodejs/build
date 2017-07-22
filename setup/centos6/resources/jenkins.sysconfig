@@ -1,7 +1,0 @@
-JENKINS_SLAVE_USER="iojs"
-JENKINS_SLAVE_JAR="/home/iojs/slave.jar"
-JENKINS_SLAVE_LOG="/home/iojs/$NAME.log"
-JENKINS_SECRET="{{secret}}"
-JENKINS_SLAVE_ARGS="-jnlpUrl https://ci.nodejs.org/computer/{{id}}/slave-agent.jnlp -secret $JENKINS_SECRET"
-JENKINS_ENV="OSTYPE=linux-gnu NODE_COMMON_PIPE=/home/iojs/test.pipe"
-JENKINS_PATH="/opt/rh/devtoolset-2/root/usr/bin"

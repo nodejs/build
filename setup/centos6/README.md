@@ -9,6 +9,12 @@ Host test-softlayer-centos6-x64-1
 Host test-softlayer-centos6-x64-2
   HostName 184.173.120.137
   User root
+Host release-softlayer-centos6-x64-1
+  HostName 50.97.245.10
+  User root
+Host release-digitalocean-centos6-x86-1
+  HostName 162.243.248.28
+  User root
 ```
 
 Note that these hostnames are also used in the *ansible-inventory* file. The IP addresses will need to be updated each time the servers are reprovisioned.
