@@ -12,16 +12,8 @@
       yum: name=* state=latest
       tags: general
 
-    - name: General | Add SLC devtoolset repo
-      command: curl -sL http://linuxsoft.cern.ch/cern/devtoolset/slc6-devtoolset.repo -o /etc/yum.repos.d/slc6-devtoolset.repo
-      tags: general
-
-    - name: General | Add SLC devtoolset repo GPG key
-      command: rpm --import http://linuxsoft.cern.ch/cern/slc6X/x86_64/RPM-GPG-KEY-cern
-      tags: general
-
-    - name: General | Download SLC SCL repo config
-      command: curl http://linuxsoft.cern.ch/cern/scl/slc6-scl.repo -o /etc/yum.repos.d/slc6-scl.repo
+    - name: General | Add SCL repo
+      yum: name=centos-release-scl state=latest
       tags: general
 
     - name: General | Install required packages

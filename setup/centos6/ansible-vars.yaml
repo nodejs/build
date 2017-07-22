@@ -3,7 +3,7 @@ server_user: iojs
 packages:
   - git
   - java-1.8.0-openjdk
-  - devtoolset-2
+  - devtoolset-6
   - git19
   - libtool
   - make
