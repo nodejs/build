@@ -19,6 +19,9 @@
     state: present
     line: ::1 localhost.localdomain localhost
 
+- name: create NODE_TEST_DIR directory
+  file: path=/home/{{ server_user }}/tmp state=directory
+
 - name: prepare installing tap2junit
   when: type != "release"
   include: "{{ pip_include }}"
