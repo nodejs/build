@@ -1,4 +1,6 @@
-# Introduction
+# Jenkins Job Configuration Access
+
+## Introduction
 
 There are a number of cases where we would like working group members
 to be able to run and or edit jobs within jenkins. Examples include
@@ -76,4 +78,3 @@ Once approved by the working group and existing working group admins,
 one of the existing working group admins can then add the new
 individual to the github admin team for the working group
 (e.g. benchmarking-admins).
-
