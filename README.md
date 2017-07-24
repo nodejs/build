@@ -37,6 +37,8 @@ missing please open an issue.
 - Rich Trott [@trott](https://github.com/trott)
 - Kunal Pathak [@kunalspathak](https://github.com/kunalspathak)
 
+Note that different groups within the build WG have different access. For more
+information see [access.md][].
 
 
 ## Infrastructure Providers
@@ -202,3 +204,4 @@ Build and test orchestration is performed by [Jenkins][21].
 [21]:   https://jenkins.io/
 [pivotal]: https://www.pivotalagency.com.au/
 [securo]: http://securogroup.com/
+[access.md]: ./doc/access.md
