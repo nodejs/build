@@ -27,7 +27,7 @@
     path: /home/{{ server_user }}/tmp
     owner: "{{ server_user }}"
     group: "{{ server_user }}"
-    mode: 0655
+    mode: 0755
 
 - name: prepare installing tap2junit
   when: type != "release"
