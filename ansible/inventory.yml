@@ -220,7 +220,7 @@ hosts:
         centos7-arm64-1: {ip: 147.75.68.82}
         centos7-arm64-2: {ip: 147.75.111.34}
         ubuntu1604-arm64-1: {ip: 147.75.203.102}
-        ubuntu1604-arm64-2: {ip: 147.75.88.10}
+        ubuntu1604-arm64-2: {ip: 147.75.111.186}
 
     - nearform:
         intel-ubuntu1604-x64-1: {ip: 92.51.196.114}
