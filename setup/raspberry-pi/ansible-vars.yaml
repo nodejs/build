@@ -1,7 +1,7 @@
 ---
 server_user: iojs
 packages:
-  - openjdk-7-jre
+  - oracle-java8-jdk
   - python-all
   - python-software-properties
   - automake
@@ -9,6 +9,6 @@ packages:
   - curl
   - lsb-release
   - vim
-nfs_server: 192.168.2.3
-apt_proxy: http://192.168.2.1:3142
-nfs_share_root: /mnt/ssd-export/nodejs/pi
+nfs_server: 192.168.1.2
+apt_proxy: http://192.168.2.4:3142
+nfs_share_root: /mnt/internal_ssd/nfs/nodejs/pi

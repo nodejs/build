@@ -30,6 +30,7 @@ hosts:
 
     - digitalocean:
         centos5-x64-1: {ip: 162.243.217.142}
+        centos6-x86-1: {ip: 162.243.248.28}
 
     - joyent:
         smartos13-x64-1: {ip: 72.2.114.225}
@@ -52,6 +53,7 @@ hosts:
 
     - softlayer:
         centos5-x86-1: {ip: 50.23.85.253}
+        centos6-x64-1: {ip: 50.97.245.10}
 
     - linuxonecc:
         rhel72-s390x-1: {ip: 148.100.110.65}
