@@ -27,8 +27,22 @@
 
 - name: Git | Download Git
   win_get_url:
-    url: 'https://github.com/git-for-windows/git/releases/download/v2.6.0.windows.1/Git-2.6.0-64-bit.exe'
+    url: 'https://github.com/git-for-windows/git/releases/download/v2.14.1.windows.1/Git-2.14.1-64-bit.exe'
     dest: 'C:\TEMP\git.exe'
+  tags: [download, git]
+
+- name: Git | Stat Downloaded Git
+  win_stat:
+    path: 'C:\TEMP\git.exe'
+    get_checksum: yes
+    checksum_algorithm: sha256
+  register: git_stat
+  tags: [download, git]
+
+- name: Git | Fail if downloaded Git checksum is not correct
+  fail:
+    msg: "Downloaded Git checksum is not correct"
+  when: git_stat.stat.checksum != '0dc556503e3ce4699228fc910a8e4a8d81172635ac8e8e16a11be107254c4901'
   tags: [download, git]
 
 - name: Git | Copy Git Install Configuration
@@ -94,6 +108,6 @@
 - name: Automatic Logon | Setup Automatic Logon
   script: "./resources/Enable-Autologon.ps1 -UserName {{ ansible_ssh_user }} -Password {{ ansible_ssh_pass }}"
   tags: [setup, autologon]
-  
+
 - name: Reboot Machine
   win_reboot:
