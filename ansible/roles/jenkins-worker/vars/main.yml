@@ -5,7 +5,7 @@
 #
 
 init: {
-  centos:  ['centos5', 'centos6'],
+  centos:  ['centos5', 'centos6','centos7'],
   debian:  ['debian7', 'ubuntu1204'],
   freebsd: 'freebsd',
   openrc:  'alpine',
