@@ -14,5 +14,5 @@
 
 - name: install epel
   yum:
-    name: "http://dl.fedoraproject.org/pub/epel/5/{{ ansible_architecture }}/epel-release-5-4.noarch.rpm"
+    name: "http://archives.fedoraproject.org/pub/archive/epel/epel-release-latest-5.noarch.rpm"
     state: present
