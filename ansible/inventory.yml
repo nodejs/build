@@ -220,7 +220,7 @@ hosts:
         ubuntu1404-x86-1: {ip: 50.97.245.9}
 
     - packetnet:
-        centos7-arm64-1: {ip: 147.75.68.82}
+        centos7-arm64-1: {ip: 147.75.64.198}
         centos7-arm64-2: {ip: 147.75.111.34}
         ubuntu1604-arm64-1: {ip: 147.75.203.102}
         ubuntu1604-arm64-2: {ip: 147.75.111.186}
