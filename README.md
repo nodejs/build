@@ -36,6 +36,7 @@ missing please open an issue.
 - Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
 - Rich Trott [@trott](https://github.com/trott)
 - Kunal Pathak [@kunalspathak](https://github.com/kunalspathak)
+- Refael Ackermann [@refack](https://github.com/refack)
 
 Note that different groups within the build WG have different access. For more
 information see [access.md][].
