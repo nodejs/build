@@ -19,9 +19,8 @@ delivery of binaries and source code to end-users.
 This repository contains information used to set up and maintain the various
 pieces of Node.js Foundation infrastructure managed by the Build Working Group.
 It is intended to be open and transparent, if you see any relevant information
-missing please open an issue.
-
-
+missing please open an issue. If you are interested in joining check out
+[this][Joining the Build WG].
 
 ## Build WG Members
 
@@ -220,6 +219,7 @@ Build and test orchestration is performed by [Jenkins][21].
 [19]:   http://techtribe.nl
 [20]:   https://tessel.io/
 [21]:   https://jenkins.io/
+[Joining the Build WG]: /doc/process/joining_the_build_wg.md
 [access.md]: ./doc/access.md
 [node]: https://nodejs.org/
 [ns]:   https://nodesource.com/

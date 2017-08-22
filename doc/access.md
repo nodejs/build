@@ -55,11 +55,11 @@ configure machines).
 
 - [@nodejs/jenkins-admins][] have admin access.
 
-### [Github Bot][]
+### [GitHub Bot][]
 
-Those with `github-bot` access have access to the Github Bot's configuration,
-including Github and Jenkins secrets. The list of members is
-[here][Github Bot Admins].
+Those with `github-bot` access have access to the GitHub Bot's configuration,
+including GitHub and Jenkins secrets. The list of members is
+[here][GitHub Bot Admins].
 
 
 [@nodejs/build]: https://github.com/orgs/nodejs/teams/build/members
@@ -69,11 +69,11 @@ including Github and Jenkins secrets. The list of members is
 [@nodejs/post-mortem]: https://github.com/orgs/nodejs/teams/post-mortem/members
 [@nodejs/release]: https://github.com/orgs/nodejs/teams/release/members
 [Build WG Members]: /README.md#build-wg-members
-[Github Bot Admins]: /README.md#github-bot-admins
+[GitHub Bot Admins]: /README.md#github-bot-admins
 [Infra Admins]: /README.md#infra-admins
 [Jenkins access doc]: /doc/process/jenkins_job_configuration_access.md
 [Release Admins]: /README.md#release-admins
-[github-bot]: https://github.com/nodejs/github-bot
+[GitHub Bot]: https://github.com/nodejs/github-bot
 [inventory.yml]: /ansible/inventory.yml
 [org owners]: https://github.com/orgs/nodejs/people?utf8=%E2%9C%93&query=%20role%3Aowner
 [post-mortem jobs]: https://ci.nodejs.org/view/post-mortem/
