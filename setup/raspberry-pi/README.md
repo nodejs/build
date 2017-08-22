@@ -158,33 +158,4 @@ To set up a host, run:
 $ ansible-playbook -i ../ansible-inventory ansible-playbook.yaml
 ```
 
-## Raspbian
-
-Raspbery Pi B+ and Raspberry Pi 2 boxes used in the cluster run Raspbian Wheezy, based on Debian 7 (Wheezy). This distribution is no longer supported so an older version must be used. The last build based on Wheezy was raspbian-2015-05-07, which is available at <http://downloads.raspberrypi.org/raspbian/images/raspbian-2015-05-07/>. Unfortunately, for recent versions of the hardware (verified with B+, the newer version 2 boards are likely the same), they will not boot with the stock raspbian-2015-05-07 image. To fix this image, download the latest Jessie image (verified with raspbian-2016-05-31), extract the first partition of the image (the small FAT32 partition), copy the complete contents of this partition on to the first partition of an SD card that has the Wheezy image ***but*** keep the `cmdline.txt` from the Wheezy version.
-
-Raspberry Pi 3 boxes use the latest Raspbian Jessie, based on Debian 8 (Wheezy). As of writing this is raspbian-2016-05-31, available from <http://downloads.raspberrypi.org/raspbian/images/>.
-
-### Manual provisioning steps
-
-Set up SD card:
-
-* Copy image, e.g. `dd if=/tmp/2015-05-05-raspbian-wheezy.img of=/dev/sdh bs=1M conv=fsync` for Pi1's and 2's
-* For Wheezy:
-  - mount partition 1 of the card
-  - remove contents
-  - copy in the contents of the Jessie SD image partition 1
-  - replace `cmdline.txt` from the Wheezy SD image (which simply contains `dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait`)
-  - unmount and sync
-
-Set up running system, steps to execute in `raspi-config`:
-
-* Expand Filesystem
-* Change User Password
-* Internationalisation Options - Change Keyboard Layout - Generic non-Intl, English (US)
-* Overclock Pi 1 B+ to High
-* Advanced - Hostname, replace `_` with `--`
-* Advanced - Enable SSH
-
-Then, manually:
-
-* Set up .ssh/authorized_keys as appropriate for running Ansible
+See the [manual setup instructions](../../docs/non-ansible-configuration-notes.md) for how to provision new hosts or reprovision existing hosts.
