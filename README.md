@@ -23,7 +23,7 @@ missing please open an issue.
 
 
 
-## People
+## Build WG Members
 
 - Wyatt Preul [@geek](https://github.com/geek)
 - Gibson Fahnestock [@gibfahn](https://github.com/gibfahn)
@@ -38,9 +38,28 @@ missing please open an issue.
 - Kunal Pathak [@kunalspathak](https://github.com/kunalspathak)
 - Refael Ackermann [@refack](https://github.com/refack)
 
-Note that different groups within the build WG have different access. For more
-information see [access.md][].
+### Infra Admins
 
+- Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
+- João Reis [@joaocgreis](https://github.com/joaocgreis)
+- Michael Dawson [@mhdawson](https://github.com/mhdawson)
+- Rod Vagg [@rvagg](https://github.com/rvagg)
+
+### Release Admins
+
+- Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
+- João Reis [@joaocgreis](https://github.com/joaocgreis)
+- Rod Vagg [@rvagg](https://github.com/rvagg)
+
+### Github Bot Admins
+
+- Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
+- João Reis [@joaocgreis](https://github.com/joaocgreis)
+- Rod Vagg [@rvagg](https://github.com/rvagg)
+- Phillip Johnsen [@phillipj](https://github.com/phillipj)
+- Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
+
+For more information about accesses and team roles see [access.md][].
 
 ## Infrastructure Providers
 
@@ -180,8 +199,6 @@ Build and test orchestration is performed by [Jenkins][21].
 
 
 
-[node]: https://nodejs.org/
-[ns]:   https://nodesource.com/
 [1]:    irc://irc.freenode.net/node-build
 [2]:    https://digitalocean.com/
 [3]:    https://www.rackspace.com/
@@ -203,6 +220,8 @@ Build and test orchestration is performed by [Jenkins][21].
 [19]:   http://techtribe.nl
 [20]:   https://tessel.io/
 [21]:   https://jenkins.io/
+[access.md]: ./doc/access.md
+[node]: https://nodejs.org/
+[ns]:   https://nodesource.com/
 [pivotal]: https://www.pivotalagency.com.au/
 [securo]: http://securogroup.com/
-[access.md]: ./doc/access.md
