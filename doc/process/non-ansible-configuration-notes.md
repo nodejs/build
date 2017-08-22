@@ -4,11 +4,11 @@ There are a number of infrastructure setup tasks that are not currently automate
 
 ## Windows / Azure
 
-TODO
+TODO: Update and copy notes from <https://github.com/nodejs/build/tree/master/setup/windows>
 
 ## macOS
 
-TODO
+TODO: Update and copy notes from <https://github.com/nodejs/build/tree/master/setup/osx>
 
 ## jenkins-workspace
 
