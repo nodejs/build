@@ -11,8 +11,8 @@
 - hosts: infra-digitalocean-ubuntu1604-x64-1
   roles:
     - bootstrap
-    - baselayout
     - package-upgrade
+    - baselayout
     - { role: nginx, sites: [ 'nodejs.org', 'iojs.org', 'dist.libuv.org' ] }
 
   pre_tasks:

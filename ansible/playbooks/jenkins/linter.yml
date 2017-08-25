@@ -10,8 +10,8 @@
 
   roles:
     - bootstrap
-    - baselayout
     - package-upgrade
+    - baselayout
     - jenkins-worker
 
   vars:
