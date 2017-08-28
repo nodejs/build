@@ -20,7 +20,7 @@ It has the following build parameters:
   If you select a fully qualified version (ex v8.4.0) then that specific
   release will be validated.
 * `DownloadLocation`: This controls whether the release or nightly download
-  location is used. For example f you want to validate the latest v8 nightly
+  location is used. For example if you want to validate the latest v8 nightly
   you would set StreamAndVersion to 'v8' and DownloadLocation to 'nightly'.
 
 If validation fails an email notification is sent to the
