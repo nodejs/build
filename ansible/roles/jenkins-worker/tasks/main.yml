@@ -36,6 +36,7 @@
     url: "{{ jenkins_worker_jar }}"
     dest: /home/{{ server_user }}/slave.jar
     mode: 0644
+    timeout: 60
 
 - name: render init script into place
   template:

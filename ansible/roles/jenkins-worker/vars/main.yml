@@ -9,10 +9,10 @@ init: {
   debian:  ['debian7', 'ubuntu1204'],
   freebsd: 'freebsd',
   openrc:  'alpine',
-  systemd: ['centos7', 'debian8', 'fedora', 'ubuntu1404', 'ubuntu1604',
+  systemd: ['centos7', 'debian8', 'fedora', 'ubuntu1604',
             'ubuntu1610'],
   svc:     'smartos',
-  upstart: 'ubuntu12'
+  upstart: ['ubuntu12', 'ubuntu1404']
   }
 
 jenkins_init: {
