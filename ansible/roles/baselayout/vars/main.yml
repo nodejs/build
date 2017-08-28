@@ -104,5 +104,12 @@ packages: {
     'g++',
     'gcc',
     'git',
+    ],
+
+  ubuntu12: [
+    'ccache',
+    'g++-4.9',
+    'gcc-4.9',
+    'git'
     ]
   }
