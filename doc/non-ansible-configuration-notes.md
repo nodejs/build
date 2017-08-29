@@ -4,48 +4,52 @@ There are a number of infrastructure setup tasks that are not currently automate
 
 ## Windows (Azure/Rackspace)
 
-Currently the Windows configuration is [stand-alone](https://github.com/nodejs/build/tree/master/setup/windows) and not part of the [newer Ansible configuration](https://github.com/nodejs/build/tree/master/ansible), however it is up to date.
+Currently the Windows configuration is [stand-alone][] and not part of the [newer Ansible configuration][], however it is up to date.
 
-In order to get Windows machines to a state where they Ansible can be run against them, some manual steps need to be taken so that Ansible can connect.
+In order to get Windows machines to a state where Ansible can be run against them, some manual steps need to be taken so that Ansible can connect.
 
 Machines should have:
   - Remote Desktop (RDP) enabled, the port should be listed with the access credentials if it is not the default (3389).
   - PowerShell access enabled, the port should be listed with the access credentials if it is not the default (5986).
 
-To use Ansible for Windows, PowerShell access should be enabled as described in http://docs.ansible.com/ansible/intro_windows.html .
+To use Ansible for Windows, PowerShell access should be enabled as described in [`ansible.intro_windows`][].
 
 ### Control machine (where Ansible is run)
 
 Install the `pywinrm` pip module.
 
-Create a file `../host_vars/node-win10-1.cloudapp.net` (`host_vars` in the same directory as `ansible-inventory`)
+Create a file `host_vars/node-win10-1.cloudapp.net` (`host_vars` in the same directory as `ansible-inventory`)
 for each host and change the variables as necessary:
 
 ```yaml
 ---
 server_id: node-msft-win10-1
 server_secret: SECRET
-ansible_ssh_user: USERNAME
-ansible_ssh_pass: PASSWORD
-ansible_ssh_port: 5986
+ansible_user: USERNAME
+ansible_password: PASSWORD
+ansible_port: 5986
 ansible_connection: winrm
+ansible_winrm_server_cert_validation: ignore
 ```
 
 ### Target machines
 
-Ensure PowerShell v3 is installed, refer to http://docs.ansible.com/ansible/intro_windows.html if not.
+Ensure PowerShell v3 or higher is installed (`$PSVersionTable.PSVersion`), refer to [`ansible.intro_windows`][] if not.
 
 Before running the preparation script, the network location must be set to Private (not necessary for Azure).
-This can be done in Windows 10 by going to `Settings`, `Network`, `Ethernet`, click the connection name (usually `Ethernet`, next to the icon)
-and change `Find devices and content` to on.
+This can be done in Windows 10 by going to `Settings`, `Network`, `Ethernet`, click the connection name
+(usually `Ethernet`, next to the icon) and change `Find devices and content` to on.
 
-The preparation script can be manually downloaded from http://docs.ansible.com/ansible/intro_windows.html and run, or automatically by running
+The preparation script can be manually downloaded from [`ansible.intro_windows`][] and run, or automatically by running
 this in PowerShell (run as Administrator):
 
 ```powershell
 Set-ExecutionPolicy -Force -Scope CurrentUser Unrestricted
-Invoke-WebRequest https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 -OutFile ConfigureRemotingForAnsible.ps1
+$ansibleURL = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
+Invoke-WebRequest $ansibleURL -OutFile ConfigureRemotingForAnsible.ps1
 .\ConfigureRemotingForAnsible.ps1
+# Optional
+rm ConfigureRemotingForAnsible.ps1
 ```
 
 
@@ -114,3 +118,8 @@ Then, manually:
 * Update <https://github.com/nodejs/build/blob/master/setup/ansible-inventory> to include any new hosts under `[iojs-raspbian]`
 * Update <https://github.com/nodejs/build/blob/master/ansible/inventory.yml> to reflect any host additions or changes (this is primarily for automatic .ssh/config setup purposes currently)
 * Run Ansible from <https://github.com/nodejs/build/tree/master/setup/raspberry-pi>
+
+
+[`ansible.intro_windows`]: http://docs.ansible.com/ansible/intro_windows.html
+[newer Ansible configuration]: https://github.com/nodejs/build/tree/master/ansible
+[stand-alone]: https://github.com/nodejs/build/tree/master/setup/windows
