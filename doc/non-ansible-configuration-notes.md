@@ -2,9 +2,52 @@
 
 There are a number of infrastructure setup tasks that are not currently automated by Ansible, either for technical reasons or due to lack of time available by the individuals involved in these processes. This document is intended to collect that information, to serve as a task list for additional Ansible work and as a central place to note special tasks.
 
-## Windows / Azure
+## Windows (Azure/Rackspace)
 
-TODO: Update and copy notes from <https://github.com/nodejs/build/tree/master/setup/windows>
+Currently the Windows configuration is [stand-alone](https://github.com/nodejs/build/tree/master/setup/windows) and not part of the [newer Ansible configuration](https://github.com/nodejs/build/tree/master/ansible), however it is up to date.
+
+In order to get Windows machines to a state where they Ansible can be run against them, some manual steps need to be taken so that Ansible can connect.
+
+Machines should have:
+  - Remote Desktop (RDP) enabled, the port should be listed with the access credentials if it is not the default (3389).
+  - PowerShell access enabled, the port should be listed with the access credentials if it is not the default (5986).
+
+To use Ansible for Windows, PowerShell access should be enabled as described in http://docs.ansible.com/ansible/intro_windows.html .
+
+### Control machine (where Ansible is run)
+
+Install the `pywinrm` pip module.
+
+Create a file `../host_vars/node-win10-1.cloudapp.net` (`host_vars` in the same directory as `ansible-inventory`)
+for each host and change the variables as necessary:
+
+```yaml
+---
+server_id: node-msft-win10-1
+server_secret: SECRET
+ansible_ssh_user: USERNAME
+ansible_ssh_pass: PASSWORD
+ansible_ssh_port: 5986
+ansible_connection: winrm
+```
+
+### Target machines
+
+Ensure PowerShell v3 is installed, refer to http://docs.ansible.com/ansible/intro_windows.html if not.
+
+Before running the preparation script, the network location must be set to Private (not necessary for Azure).
+This can be done in Windows 10 by going to `Settings`, `Network`, `Ethernet`, click the connection name (usually `Ethernet`, next to the icon)
+and change `Find devices and content` to on.
+
+The preparation script can be manually downloaded from http://docs.ansible.com/ansible/intro_windows.html and run, or automatically by running
+this in PowerShell (run as Administrator):
+
+```powershell
+Set-ExecutionPolicy -Force -Scope CurrentUser Unrestricted
+Invoke-WebRequest https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 -OutFile ConfigureRemotingForAnsible.ps1
+.\ConfigureRemotingForAnsible.ps1
+```
+
 
 ## macOS
 
