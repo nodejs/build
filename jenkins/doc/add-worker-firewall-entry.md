@@ -4,7 +4,7 @@ Workers must be added to the firewall config before they will be able
 to connect to the jenkins master.
 
 You must be part of the infra group and have setup the ssh
-keys and config file before hand.
+keys and config file beforehand.
 
 To add an entry do the following:
 
