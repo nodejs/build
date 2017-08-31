@@ -45,6 +45,16 @@
       skip: true
 
 - name: download slave.jar
+  when: not os|startswith("zos")
+  get_url:
+    url: "{{ jenkins_worker_jar }}"
+    dest: '{{ home }}/{{ server_user }}/slave.jar'
+    mode: 0644
+    timeout: 60
+
+# temporary until we get the righ cert bundles
+- name: download slave.jar -zos
+  when: os|startswith("zos")
   get_url:
     url: "{{ jenkins_worker_jar }}"
     dest: '{{ home }}/{{ server_user }}/slave.jar'

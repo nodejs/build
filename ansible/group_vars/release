@@ -3,3 +3,4 @@ jenkins_url: "https://ci-release.nodejs.org"
 jenkins_worker_jar: "https://ci.nodejs.org/jnlpJars/slave.jar"
 server_user: "iojs"
 home: "/users"
+remote_env: {}
