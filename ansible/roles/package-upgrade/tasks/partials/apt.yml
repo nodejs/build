@@ -4,6 +4,9 @@
 # Updates all packages for debian-based distributions
 #
 
+- name: update repositories
+  raw: apt-get update -y
+
 - name: upgrade installed packages
   apt: upgrade=dist update_cache=yes
 
