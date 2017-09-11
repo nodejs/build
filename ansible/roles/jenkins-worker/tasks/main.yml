@@ -19,6 +19,16 @@
     state: present
     line: ::1 localhost.localdomain localhost
 
+- name: create NODE_TEST_DIR directory
+  file: path=/home/{{ server_user }}/tmp state=directory
+
+- name: set NODE_TEST_DIR permission and owner
+  file:
+    path: /home/{{ server_user }}/tmp
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: 0755
+
 - name: prepare installing tap2junit
   when: type != "release"
   include: "{{ pip_include }}"
