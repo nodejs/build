@@ -120,9 +120,9 @@ hosts:
         rhel72-s390x-2: {ip: 148.100.110.64}
 
     - mininodes:
-        ubuntu1604-arm64_odroid_c2-1: {ip: 70.167.220.147}
-        ubuntu1604-arm64_odroid_c2-2: {ip: 70.167.220.148}
-        ubuntu1604-arm64_odroid_c2-3: {ip: 70.167.220.149}
+        ubuntu1604-arm64_odroid_c2-1: {ip: 70.167.220.147, user: odroid}
+        ubuntu1604-arm64_odroid_c2-2: {ip: 70.167.220.148, user: odroid}
+        ubuntu1604-arm64_odroid_c2-3: {ip: 70.167.220.149, user: odroid}
 
     - osuosl:
         aix61-ppc64_be-1: {ip: 140.211.9.101}
@@ -222,7 +222,7 @@ hosts:
     - packetnet:
         centos7-arm64-1: {ip: 147.75.64.198}
         centos7-arm64-2: {ip: 147.75.111.34}
-        ubuntu1604-arm64-1: {ip: 147.75.203.102}
+        ubuntu1604-arm64-1: {ip: 147.75.105.54}
         ubuntu1604-arm64-2: {ip: 147.75.111.186}
         ubuntu1604-x64-1: {ip: 147.75.69.113, alias: jenkins-workspace-1}
         ubuntu1604-x64-2: {ip: 147.75.73.189, alias: jenkins-workspace-2}
