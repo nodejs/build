@@ -1,7 +1,6 @@
 ---
 server_user: iojs
 packages:
-  - git
   - nodejs
 required_dirs:
   - bin
