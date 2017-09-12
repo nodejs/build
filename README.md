@@ -131,6 +131,11 @@ and speed in our CI system.
 - **[ARM][17]**: semiconductor intellectual property supplier, have donated
   ARMv8 hardware used by the Node.js CI system for build and testing Node.js.
 
+- **[Intel][22]**: provides hardware used for benchmarking in the
+  Node.js project's CI system.
+
+- **[MacStadium][23]**: Managed hosting provider for Mac. Provides Mac
+  hardware used for testing in the Node.js project's CI system.
 
 ### Community Donations
 
@@ -219,6 +224,8 @@ Build and test orchestration is performed by [Jenkins][21].
 [19]:   http://techtribe.nl
 [20]:   https://tessel.io/
 [21]:   https://jenkins.io/
+[22]:   https://www.intel.com/
+[23]:   https://www.macstadium.com/
 [Joining the Build WG]: /doc/process/joining_the_build_wg.md
 [access.md]: ./doc/access.md
 [node]: https://nodejs.org/
