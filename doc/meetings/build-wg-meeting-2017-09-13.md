@@ -41,8 +41,7 @@ Extracted from `wg-agenda` [issues](https://github.com/nodejs/build/issues?q=is%
 - Michael Dawson (@mhdawson)
   - Some work to keep benchmarking jobs runs running
   - Adding graphics for new donators
-  - Work to get ok to get Ok for George to help on Mac install, and will do bootstrap later
-     this week.
+  - Work to get Ok for George to help on Mac install, and will do bootstrap later this week.
   - Continuing to work on z/OS machine setup and ansible script
 - George
   - initial discussion with Michael on the Mac OS setup
@@ -64,12 +63,12 @@ Extracted from `wg-agenda` [issues](https://github.com/nodejs/build/issues?q=is%
   - George: Anything that can run an ssh server is fine, we've got it working on
     Windows, z/OS etc.
 - Rod: Is there a backup in case this goes wrong?
-- George: We have another root user that isn't managed by Keybox, so if it goes
-  wrong we can still use that user to log on.
+  - George: We have another root user that isn't managed by Keybox, so if it goes
+    wrong we can still use that user to log on.
   - Gibson: Still sounds like it'd be better than our current setup.
   - Rod: Most of our machines can be reprovisioned if there's a problem.
 - Gibson: Can you backup the config?
-  - It has a set of config files you can just backup.
+  - George: It has a set of config files you can just backup.
 - Rod: How does it handle more complex setups, e.g. jump boxes?
   - George: It doesn't as yet, but the devs are open to improvements (and it's
     OSS).
@@ -142,7 +141,7 @@ Extracted from `wg-agenda` [issues](https://github.com/nodejs/build/issues?q=is%
 ### Store resources for Ansible on jenkins ci master [#871](https://github.com/nodejs/build/issues/871)
 
 - Rod: What would this be for?
-  - Just things we'd need to set up machines that aren't easy to get from other
+  - Michael: Just things we'd need to set up machines that aren't easy to get from other
     sites.
 - Rod: I'd like to put my custom-built ARM gcc on there as well.
 - Rod: Could it just be a simple http static file server with NGINX?
