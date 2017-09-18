@@ -24,18 +24,20 @@ missing please open an issue. If you are interested in joining check out
 
 ## Build WG Members
 
+- George Adams [@gdams](https://github.com/gdams)
 - Wyatt Preul [@geek](https://github.com/geek)
 - Gibson Fahnestock [@gibfahn](https://github.com/gibfahn)
 - Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
 - João Reis [@joaocgreis](https://github.com/joaocgreis)
+- Kunal Pathak [@kunalspathak](https://github.com/kunalspathak)
 - Michael Dawson [@mhdawson](https://github.com/mhdawson)
 - Myles Borins [@mylesborins](https://github.com/mylesborins)
 - Phillip Johnsen [@phillipj](https://github.com/phillipj)
+- Michele Capra [@piccoloaiutante](https://github.com/piccoloaiutante)
+- Refael Ackermann [@refack](https://github.com/refack)
 - Rod Vagg [@rvagg](https://github.com/rvagg)
 - Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
 - Rich Trott [@trott](https://github.com/trott)
-- Kunal Pathak [@kunalspathak](https://github.com/kunalspathak)
-- Refael Ackermann [@refack](https://github.com/refack)
 
 ### Infra Admins
 
