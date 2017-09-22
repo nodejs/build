@@ -100,6 +100,44 @@
   when: os|startswith("smartos")
   raw: "svccfg import {{ jenkins.dest }}"
 
+- name: render gyp into place - Create directory - part 1
+  when: os|startswith("zos")
+  file:
+    path: "{{ home }}/{{ server_user }}/gyp"
+    state: directory
+
+# zos does not support https:// with git and chromium
+# only provides an https endpoint.  We store on ci
+# instead
+- name: render gyp into place - get the zip - part 2
+  when: os|startswith("zos")
+  uri:
+    url: "http://ci.nodejs.org/downloads/zos/gyp.tar.gz"
+    dest: "{{ home }}/{{ server_user }}/gyp/gyp.tar.gz"
+    creates: "{{ home }}/{{ server_user }}/gyp/gyp.tar.gz"
+
+# note that unarchive does not work (does not like version
+# of tar) so just execute commands directly
+- name: render gyp into place - decompress - part 3
+  when: os|startswith("zos")
+  command: "gunzip gyp.tar.gz"
+  args:
+    chdir: "{{ home }}/{{ server_user }}/gyp"
+    creates:  "{{ home }}/{{ server_user }}/gyp/gyp.tar"
+
+# the user option does not seem to work so
+# do that change in separate step below
+- name: render gyp into place - extract - part 4
+  when: os|startswith("zos")
+  command: "tar -xvf gyp.tar "
+  args:
+    chdir: "{{ home }}/{{ server_user }}/gyp"
+    creates:  "{{ home }}/{{ server_user }}/gyp/LICENSE"
+
+- name: render gyp into place - fix up ownership - part 5
+  when: os|startswith("zos")
+  command: "chown -R {{ server_user }} {{ home }}/{{ server_user }}/gyp"
+
 - name: enable jenkins at startup - general
   when: not os|startswith("zos")
   service: name=jenkins state=started enabled=yes
