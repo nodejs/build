@@ -129,7 +129,7 @@
 # do that change in separate step below
 - name: render gyp into place - extract - part 4
   when: os|startswith("zos")
-  command: "tar -xvf gyp.tar "
+  command: "pax -rf gyp.tar -o from=iso8859-1,to=ibm-1047"
   args:
     chdir: "{{ home }}/{{ server_user }}/gyp"
     creates:  "{{ home }}/{{ server_user }}/gyp/LICENSE"
