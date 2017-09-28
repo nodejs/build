@@ -114,7 +114,7 @@
   uri:
     url: "http://ci.nodejs.org/downloads/zos/gyp.tar.gz"
     dest: "{{ home }}/{{ server_user }}/gyp/gyp.tar.gz"
-    creates: "{{ home }}/{{ server_user }}/gyp/gyp.tar.gz"
+    creates: "{{ home }}/{{ server_user }}/gyp/gyp.tar"
 
 # note that unarchive does not work (does not like version
 # of tar) so just execute commands directly
