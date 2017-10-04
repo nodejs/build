@@ -70,9 +70,26 @@
     group: root
   tags: setup
 
+- name: Site Setup | Copy sync-benchmarking.sh script
+  copy:
+    src: ./resources/scripts/sync-benchmarking.sh
+    dest: /home/nodejs/sync-benchmarking.sh
+    mode: 0755
+    owner: root
+    group: root
+  tags: setup
+
 - name: Site Setup | Make /home/nodejs/.npm
   file:
     path: /home/nodejs/.npm
+    state: directory
+    mode: 0755
+    owner: nodejs
+  tags: setup
+
+- name: Site Setup | Make /var/run/nodejs
+  file:
+    path: /var/run/nodejs
     state: directory
     mode: 0755
     owner: nodejs
@@ -98,6 +115,5 @@
     - '*  *    * * *   nodejs  /home/nodejs/check-build-site.sh nodejs'
     - '*  *    * * *   nodejs  /home/nodejs/check-build-site.sh iojs'
     - '*  *    * * *   root    /home/nodejs/cdn-purge.sh'
-    - '* */4   * * *   nodejs  rsync -aqz --delete benchmark:charts/ /home/www/benchmarking/charts/'
-    - '* */4   * * *   nodejs  rsync -aqz --delete benchmark:coverage-out/out/ /home/www/coverage/'
+    - '* */4   * * *   nodejs  /home/nodejs/sync-benchmarking.sh'
   tags: setup
