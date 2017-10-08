@@ -25,10 +25,11 @@ for each host and change the variables as necessary:
 ---
 server_id: node-msft-win10-1
 server_secret: SECRET
-ansible_ssh_user: USERNAME
-ansible_ssh_pass: PASSWORD
-ansible_ssh_port: 5986
+ansible_user: USERNAME
+ansible_password: PASSWORD
+ansible_port: 5986
 ansible_connection: winrm
+ansible_winrm_server_cert_validation: ignore
 ```
 
 ### Target machines
