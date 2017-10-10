@@ -133,7 +133,10 @@ and speed in our CI system.
 - **[ARM][17]**: semiconductor intellectual property supplier, have donated
   ARMv8 hardware used by the Node.js CI system for build and testing Node.js.
 
-- **[Intel][22]**: provides hardware used for benchmarking in the
+- **[Intel][22]**: "the world leader in silicon innovation," contributes
+  hardware used for benchmarking in the Node.js project's CI system to advance
+  and accelerate Node.js performance.
+
   Node.js project's CI system.
 
 - **[MacStadium][23]**: Managed hosting provider for Mac. Provides Mac
