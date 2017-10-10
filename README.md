@@ -140,8 +140,8 @@ and speed in our CI system.
   hardware used for testing in the Node.js project's CI system.
 
 - **[Packet][24]**: Bare metal cloud for developers. Through their
-  [Works on Arm partnership](https://www.worksonarm.com/),
-  Packet provides Armv8 build infrastructure.
+  [Works on arm partnership](https://www.worksonarm.com/),
+  Packet provides ARM64 build infrastructure.
 
 ### Community Donations
 
