@@ -111,7 +111,7 @@ and speed in our CI system.
   - Via their cloud company, [SoftLayer][11], provides hardware for
     testing and benchmarking for the Node.js project's CI system.
   - Via the [Oregon State University Open Source Lab][12], provides
-   PPC-based test and build infrastructure.
+    PPC-based test and build infrastructure.
   - Via the [IBM LinuxOne(TM) Community Cloud][13], provides linuxOne
     based test and build infrastructure.
 
@@ -138,6 +138,10 @@ and speed in our CI system.
 
 - **[MacStadium][23]**: Managed hosting provider for Mac. Provides Mac
   hardware used for testing in the Node.js project's CI system.
+
+- **[Packet}[24]**: Bare metal cloud for developers. Through their
+  [Works on Arm partnership](https://www.worksonarm.com/),
+  Packet provides Armv8 build infrastructure.
 
 ### Community Donations
 
@@ -228,6 +232,7 @@ Build and test orchestration is performed by [Jenkins][21].
 [21]:   https://jenkins.io/
 [22]:   https://www.intel.com/
 [23]:   https://www.macstadium.com/
+[24]:   https://https://www.packet.net/
 [Joining the Build WG]: /doc/process/joining_the_build_wg.md
 [access.md]: ./doc/access.md
 [node]: https://nodejs.org/
