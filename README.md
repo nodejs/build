@@ -232,7 +232,7 @@ Build and test orchestration is performed by [Jenkins][21].
 [21]:   https://jenkins.io/
 [22]:   https://www.intel.com/
 [23]:   https://www.macstadium.com/
-[24]:   https://https://www.packet.net/
+[24]:   https://www.packet.net/
 [Joining the Build WG]: /doc/process/joining_the_build_wg.md
 [access.md]: ./doc/access.md
 [node]: https://nodejs.org/
