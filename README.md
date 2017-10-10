@@ -139,7 +139,7 @@ and speed in our CI system.
 - **[MacStadium][23]**: Managed hosting provider for Mac. Provides Mac
   hardware used for testing in the Node.js project's CI system.
 
-- **[Packet}[24]**: Bare metal cloud for developers. Through their
+- **[Packet][24]**: Bare metal cloud for developers. Through their
   [Works on Arm partnership](https://www.worksonarm.com/),
   Packet provides Armv8 build infrastructure.
 
