@@ -79,6 +79,7 @@ release-scaleway-debian7-arm-1
 [iojs-raspbian]
 release-requireio_rvagg-debian7-arm_pi1p-1
 release-requireio_andineck-debian7-arm_pi1p-1
+release-devrus_mhdawson-debian7-arm_pi1p-1
 test-requireio_andineck-debian7-arm_pi1p-1
 test-requireio_bengl-debian7-arm_pi1p-1
 test-requireio_bengl-debian7-arm_pi1p-2
