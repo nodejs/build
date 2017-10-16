@@ -18,6 +18,7 @@
         owner: "root"
         group: "root"
         mode: 0644
+      when: pi_local is undefined
       tags: general
 
     - name: General | Configure APT sources
@@ -85,7 +86,7 @@
         name: "{{ item }}"
         update_cache: yes
         state: latest
-      with_items: "{{packages}}"
+      with_items: "{{ packages }}"
       tags: general
 
     - name: gcc | Install gcc 4.8
@@ -201,3 +202,21 @@
     - name: monit | Install monit
       import_tasks: ../ansible-tasks/monit.yaml monit_conf_file=../ansible-tasks/resources/monit-jenkins.conf
       tags: monit
+
+    - name: Tunnel | Copy start_tunnel.sh script
+      when: pi_local is defined
+      template:
+        src: "./resources/start_tunnel.j2"
+        dest: "/usr/local/sbin/start_tunnel.sh"
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: 0755
+      tags: tunnel
+
+    - name: Tunnel | crontab entry
+      when: pi_local is defined
+      cron:
+        name: 'start ssh tunnel on reboot'
+        special_time: reboot
+        job: "/usr/local/sbin/start_tunnel.sh"
+      tags: tunnel
