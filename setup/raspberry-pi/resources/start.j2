@@ -9,7 +9,7 @@ PATH=/usr/lib/ccache/:$PATH \
 JOBS=1 \
 NODE_COMMON_PIPE=/home/iojs/test.pipe \
 OSTYPE=linux-gnu \
-nohup java \
+nohup /usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt/jre/bin/java \
   -jar slave.jar \
   -jnlpUrl https://{{ ci_host }}/computer/{{ server_id }}/slave-agent.jnlp \
   -secret {{ server_secret }} &
