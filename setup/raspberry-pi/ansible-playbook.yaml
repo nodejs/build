@@ -151,7 +151,7 @@
     - name: NFS | Copy do_mount.sh script
       template:
         src: "./resources/do_mount.j2"
-        dest: "/home/{{ server_user }}/do_mount.sh"
+        dest: "/usr/local/sbin/do_mount.sh"
         owner: "{{ server_user }}"
         group: "{{ server_user }}"
         mode: 0755
@@ -161,7 +161,7 @@
       cron:
         name: 'mount nfs on reboot'
         special_time: reboot
-        job: "/home/{{ server_user }}/do_mount.sh"
+        job: "/usr/local/sbin/do_mount.sh"
       tags: nfs
 
     - name: Jenkins | Copy start.sh script
@@ -187,7 +187,7 @@
       when: pi_local is defined
       template:
         src: "./resources/start_tunnel.j2"
-        dest: "/home/{{ server_user }}/start_tunnel.sh"
+        dest: "/usr/local/sbin/start_tunnel.sh"
         owner: "{{ server_user }}"
         group: "{{ server_user }}"
         mode: 0755
@@ -198,5 +198,5 @@
       cron:
         name: 'start ssh tunnel on reboot'
         special_time: reboot
-        job: "/home/{{ server_user }}/start_tunnel.sh"
+        job: "/usr/local/sbin/start_tunnel.sh"
       tags: tunnel
