@@ -5,15 +5,18 @@
 #
 
 - name: create group
+  when: not os|startswith("zos")
   group: name="{{ server_user }}"
 
 - name: create user
+  when: not os|startswith("zos")
   user:
     name: "{{ server_user }}"
     group: "{{ server_user }}"
     shell: "{{ bash_path[os|stripversion]|default('/bin/bash') }}"
 
 - name: add ::1 to /etc/hosts for ipv6 compat
+  when: not os|startswith("zos")
   lineinfile:
     dest: /etc/hosts
     state: present
@@ -29,8 +32,9 @@
     group: "{{ server_user }}"
     mode: 0755
 
+# @TODO(mhdawson): get tap2junit working on zOS
 - name: prepare installing tap2junit
-  when: type != "release"
+  when: type != "release" and not os|startswith("zos")
   include: "{{ pip_include }}"
   loop_control:
     loop_var: pip_include
@@ -42,11 +46,50 @@
       skip: true
 
 - name: download slave.jar
+  when: not os|startswith("zos")
   get_url:
     url: "{{ jenkins_worker_jar }}"
-    dest: /home/{{ server_user }}/slave.jar
+    dest: '{{ home }}/{{ server_user }}/slave.jar'
     mode: 0644
     timeout: 60
+
+# temporary until we get the righ cert bundles
+- name: download slave.jar -zos
+  when: os|startswith("zos")
+  get_url:
+    url: "{{ jenkins_worker_jar }}"
+    dest: '{{ home }}/{{ server_user }}/slave.jar'
+    mode: 0644
+    timeout: 60
+    validate_certs: no
+
+- name: render git wrapper into place
+  when: os|startswith("zos")
+  template:
+    src: "{{ role_path }}/templates/git-wrapper.j2"
+    dest: "{{ home }}/{{ server_user }}/git-wrapper"
+    mode: "{{ jenkins.mode|default('0655') }}"
+
+- stat: path={{ home }}/{{ server_user }}/runAsciiBash
+  register: runAsciiBashExists
+
+- name: render runAsciiBash into place - part 1
+  when: os|startswith("zos")
+  template:
+    src: "{{ role_path }}/templates/runAsciiBash.c.j2"
+    dest: "{{ home }}/{{ server_user }}/runAsciiBash.c"
+    mode: "{{ jenkins.mode|default('0644') }}"
+
+- name: render runAsciiBash into place - part 2
+  when: os|startswith("zos")
+  template:
+    src: "{{ role_path }}/templates/gen_runAsciiBash.j2"
+    dest: "{{ home }}/{{ server_user }}/gen_runAsciiBash.sh"
+    mode: "{{ jenkins.mode|default('0655') }}"
+
+- name: render runAsciiBash into place - part 3
+  when: os|startswith("zos") and runAsciiBashExists.stat.exists == False
+  shell: "sh {{ home }}/{{ server_user }}/gen_runAsciiBash.sh"
 
 - name: render init script into place
   template:
@@ -58,8 +101,69 @@
   when: os|startswith("smartos")
   raw: "svccfg import {{ jenkins.dest }}"
 
-- name: enable jenkins at startup
+- name: render gyp into place - Create directory - part 1
+  when: os|startswith("zos")
+  file:
+    path: "{{ home }}/{{ server_user }}/gyp"
+    state: directory
+
+# zos does not support https:// with git and chromium
+# only provides an https endpoint.  We store on ci
+# instead
+- name: render gyp into place - get the zip - part 2
+  when: os|startswith("zos")
+  uri:
+    url: "http://ci.nodejs.org/downloads/zos/gyp.tar.gz"
+    dest: "{{ home }}/{{ server_user }}/gyp/gyp.tar.gz"
+    creates: "{{ home }}/{{ server_user }}/gyp/gyp.tar"
+
+# note that unarchive does not work (does not like version
+# of tar) so just execute commands directly
+- name: render gyp into place - decompress - part 3
+  when: os|startswith("zos")
+  command: "gunzip gyp.tar.gz"
+  args:
+    chdir: "{{ home }}/{{ server_user }}/gyp"
+    creates:  "{{ home }}/{{ server_user }}/gyp/gyp.tar"
+
+# the user option does not seem to work so
+# do that change in separate step below
+- name: render gyp into place - extract - part 4
+  when: os|startswith("zos")
+  command: "pax -rf gyp.tar -o from=iso8859-1,to=ibm-1047"
+  args:
+    chdir: "{{ home }}/{{ server_user }}/gyp"
+    creates:  "{{ home }}/{{ server_user }}/gyp/LICENSE"
+
+- name: render gyp into place - fix up ownership - part 5
+  when: os|startswith("zos")
+  command: "chown -R {{ server_user }} {{ home }}/{{ server_user }}/gyp"
+
+- name: enable jenkins at startup - general
+  when: not os|startswith("zos")
   service: name=jenkins state=started enabled=yes
+
+# lineinfile does not work on zos due to character conversions
+# the inserted line ends up in the wrong character set. We
+# tried a few variations to work around this without
+# success so for now do it the hard way.
+- name: enable jenkins at startup - zos - part 1
+  when: os|startswith("zos")
+  template:
+    src: "{{ role_path }}/templates/zos_rc_patch.j2"
+    dest: "{{ home }}/{{ server_user }}/rc_patch"
+    mode: "{{ jenkins.mode|default('0644') }}"
+
+- name: enable jenkins at startup - zos - part 2
+  when: os|startswith("zos")
+  template:
+    src: "{{ role_path }}/templates/zos_rc_patch_apply.j2"
+    dest: "{{ home }}/{{ server_user }}/rc_patch_apply.sh"
+    mode: "{{ jenkins.mode|default('0655') }}"
+
+- name: enable jenkins at startup - zos - part 3
+  when: os|startswith("zos")
+  shell: "sh {{ home }}/{{ server_user }}/rc_patch_apply.sh"
 
 - name: install monit
   when: os in needs_monit

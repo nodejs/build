@@ -1,0 +1,7 @@
+#!/NODEJS2/bin/bash
+PRESENT=`cat /etc/rc |grep JENKINS`
+if [ "X$PRESENT" = "X" ]
+then
+  echo "applying patch"
+  patch -N /etc/rc <{{ home }}/{{ server_user }}/rc_patch
+fi

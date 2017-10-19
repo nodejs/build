@@ -12,7 +12,8 @@ init: {
   systemd: ['centos7', 'debian8', 'fedora', 'ubuntu1604',
             'ubuntu1610'],
   svc:     'smartos',
-  upstart: ['ubuntu12', 'ubuntu1404']
+  upstart: ['ubuntu12', 'ubuntu1404'],
+  start:   'zos'
   }
 
 jenkins_init: {
@@ -48,6 +49,10 @@ jenkins_init: {
     dest: '/etc/init/jenkins.conf',
     src: 'upstart.j2'
     },
+  start: {
+    dest: '{{ home }}/{{ server_user }}/start.sh',
+    src: 'start.j2'
+    },
   }
 
 # if you fail here, it means it cant map your os or os family to a init system
@@ -67,10 +72,12 @@ needs_monit: [
 java_path: {
   'smartos14': '/opt/local/java/openjdk7/bin/java',
   'smartos15': '/opt/local/java/openjdk8/bin/java',
-  'smartos16': '/opt/local/java/openjdk8/bin/java'
+  'smartos16': '/opt/local/java/openjdk8/bin/java',
+  'zos13': '/usr/lpp/java/J8.0_64/bin/java'
   }
 
 # same for bash. will default to /bin/bash if you don't set it
 bash_path: {
-  freebsd: '/usr/local/bin/bash'
+  freebsd: '/usr/local/bin/bash',
+  zos: 'bash'
   }
