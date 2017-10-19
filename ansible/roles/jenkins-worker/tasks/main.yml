@@ -32,6 +32,7 @@
     group: "{{ server_user }}"
     mode: 0755
 
+# @TODO(mhdawson): get tap2junit working on zOS
 - name: prepare installing tap2junit
   when: type != "release" and not os|startswith("zos")
   include: "{{ pip_include }}"
