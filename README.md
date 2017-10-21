@@ -30,6 +30,7 @@ missing please open an issue. If you are interested in joining check out
 - Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
 - João Reis [@joaocgreis](https://github.com/joaocgreis)
 - Kunal Pathak [@kunalspathak](https://github.com/kunalspathak)
+- Jon Moss [@maclover7](https://github.com/maclover7)
 - Michael Dawson [@mhdawson](https://github.com/mhdawson)
 - Myles Borins [@mylesborins](https://github.com/mylesborins)
 - Phillip Johnsen [@phillipj](https://github.com/phillipj)
