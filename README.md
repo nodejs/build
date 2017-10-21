@@ -32,6 +32,7 @@ missing please open an issue. If you are interested in joining check out
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 - [@kunalspathak](https://github.com/kunalspathak) - Kunal Pathak
+- [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@mylesborins](https://github.com/mylesborins) - Myles Borins
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
