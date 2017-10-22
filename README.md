@@ -24,6 +24,7 @@ missing please open an issue. If you are interested in joining check out
 
 ## Build WG Members
 
+- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@gdams](https://github.com/gdams) - George Adams
 - [@geek](https://github.com/geek) - Wyatt Preul
 - [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
@@ -36,7 +37,6 @@ missing please open an issue. If you are interested in joining check out
 - [@piccoloaiutante](https://github.com/piccoloaiutante) - Michele Capra
 - [@refack](https://github.com/refack) - Refael Ackermann
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@trott](https://github.com/trott) - Rich Trott
 
 ### Infra Admins
@@ -54,11 +54,11 @@ missing please open an issue. If you are interested in joining check out
 
 ### Github Bot Admins
 
+- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
-- [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
-- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+- [@rvagg](https://github.com/rvagg) - Rod Vagg
 
 For more information about accesses and team roles see [access.md][].
 
