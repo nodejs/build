@@ -12,7 +12,7 @@ hosts:
     - digitalocean:
         debian8-x64-1: {ip: 198.199.72.83, alias: collector}
         ubuntu1404-x64-1: {ip: 107.170.240.62, alias: ci}
-        ubuntu1604-x64-1: {ip: 162.243.173.250, alias: www}
+        ubuntu1604-x64-1: {ip: 138.197.224.240, alias: www}
 
     - joyent:
         smartos15-x64-1: {ip: 72.2.118.125, alias: backup}
