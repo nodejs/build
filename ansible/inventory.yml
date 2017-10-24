@@ -59,7 +59,7 @@ hosts:
         rhel72-s390x-1: {ip: 148.100.110.65}
 
     - packetnet:
-        centos7-arm64-1: {ip: 147.75.111.18}
+        centos7-arm64-1: {ip: 147.75.104.218}
 
     - marist:
         zos13-s390x-1: {ip: 148.100.36.135, user: Unix1}
@@ -225,10 +225,10 @@ hosts:
         ubuntu1404-x86-1: {ip: 50.97.245.9}
 
     - packetnet:
-        centos7-arm64-1: {ip: 147.75.64.198}
-        centos7-arm64-2: {ip: 147.75.111.34}
-        ubuntu1604-arm64-1: {ip: 147.75.105.54}
-        ubuntu1604-arm64-2: {ip: 147.75.111.186}
+        centos7-arm64-1: {ip: 147.75.193.230}
+        centos7-arm64-2: {ip: 147.75.74.254}
+        ubuntu1604-arm64-1: {ip: 147.75.77.130}
+        ubuntu1604-arm64-2: {ip: 147.75.74.174}
         ubuntu1604-x64-1: {ip: 147.75.69.113, alias: jenkins-workspace-1}
         ubuntu1604-x64-2: {ip: 147.75.73.189, alias: jenkins-workspace-2}
 
