@@ -32,7 +32,7 @@ can be provided:
   provided the first point is satisfied.
 * Length and consistency of involvement with Node.js working groups
   and/or community.
-* Consequences to the individual in case of mis-bahaviour. For example,
+* Consequences to the individual in case of misbehaviour. For example,
   would they potentially lose their job if they were reported as
   mis-behaving to their employer ? Would being banned from involvement
   in the Node.js community negatively affect them personally in some other
