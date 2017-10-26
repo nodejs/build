@@ -47,7 +47,7 @@ resources required (for example test machines, or benchmarking machines).
 
 ## Temporary access
 
-In this case temporary access to one of the test/bechmarking machines is
+In this case temporary access to one of the test/benchmarking machines is
 needed to investigate a specific issue.
 
 Collaborators can be given access without further process using a
