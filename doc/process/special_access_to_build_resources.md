@@ -7,7 +7,7 @@ of the build working group. Examples include:
 * Test working group team members so that they can add/debug tests to/on
   community test infrastructure.
 * Benchmark working group members so they can add benchmark jobs and
-  or experiement with benchmarking infrastructure in advance of the
+  or experiment with benchmarking infrastructure in advance of the
   final configuration being added to ansible.
 * PR's authors so they can debug failures across platforms in cases
   where they man not personally have access to the all the different
@@ -28,11 +28,11 @@ In these cases the following will be used to decide if ongoing access
 can be provided:
 
 * Does the scope and size of the need justify providing access.
-* Is the invidual a collaborator. If so then access should be allowed
+* Is the individual a collaborator. If so then access should be allowed
   provided the first point is satisfied.
 * Length and consistency of involvement with Node.js working groups
   and/or community.
-* Consequences to the invidudal in case of mis-bahaviour. For example,
+* Consequences to the individual in case of misbehaviour. For example,
   would they potentially lose their job if they were reported as
   mis-behaving to their employer ? Would being banned from involvement
   in the Node.js community negatively affect them personally in some other
@@ -47,7 +47,7 @@ resources required (for example test machines, or benchmarking machines).
 
 ## Temporary access
 
-In this case temporary access to one of the test/bechmarking machines is
+In this case temporary access to one of the test/benchmarking machines is
 needed to investigate a specific issue.
 
 Collaborators can be given access without further process using a
