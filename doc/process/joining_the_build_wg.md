@@ -24,3 +24,4 @@ request.
 [IRC]: /README.md#nodejs-build-working-group
 [the Readme]: /README.md
 [the onboarding doc]: /ONBOARDING.md
+[access.md]: /doc/access.md
