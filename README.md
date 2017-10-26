@@ -179,8 +179,8 @@ companies that have donated miscellaneous hardware:
 - KahWee Teng [@kahwee](https://github.com/kahwee) for a Raspberry Pi 3
 - Chinmay Pendharkar [@notthetup](https://github.com/notthetup) and Sayanee Basu [@sayanee](https://github.com/sayanee) for a Raspberry Pi 3
 - Michele Capra [@piccoloaiutante](https://github.com/piccoloaiutante) for a Raspberry Pi 3
-- [Pivotal Agency](pivotal) for two Raspberry Pi 3's
-- [SecuroGroup](securo) for two Raspberry Pi 1 B+'s and two Raspberry Pi 3's
+- [Pivotal Agency][pivotal] for two Raspberry Pi 3's
+- [SecuroGroup][securo] for two Raspberry Pi 1 B+'s and two Raspberry Pi 3's
 - William Kapke [@williamkapke](https://github.com/williamkapke) for three Raspberry Pi 3's and networking equipment
 - Jonathan Barnett [@indieisaconcept](https://github.com/indieisaconcept) for a Raspberry Pi B+
 - James Snell [@jasnell](https://github.com/jasnell) for a Raspberry Pi 2
