@@ -7,7 +7,7 @@ of the build working group. Examples include:
 * Test working group team members so that they can add/debug tests to/on
   community test infrastructure.
 * Benchmark working group members so they can add benchmark jobs and
-  or experiement with benchmarking infrastructure in advance of the
+  or experiment with benchmarking infrastructure in advance of the
   final configuration being added to ansible.
 * PR's authors so they can debug failures across platforms in cases
   where they man not personally have access to the all the different
