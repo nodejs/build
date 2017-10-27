@@ -1,5 +1,14 @@
-node_modules
-**/host_vars/iojs-*
-**/host_vars/node-*
-**/host_vars/test-*
-**/host_vars/release-*
+# tools/jenkins-status:
+node_modules/
+package-lock.json
+# setup secrets files, delete with setup/:
+setup/*/host_vars/iojs-*
+setup/*/host_vars/node-*
+setup/*/host_vars/test-*
+setup/*/host_vars/release-*
+
+# ansible/ secrets files (except templates).
+*.pyc
+ansible/host_vars/*
+!ansible/host_vars/README.md
+!ansible/host_vars/*-template
