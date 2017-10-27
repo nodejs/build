@@ -24,41 +24,41 @@ missing please open an issue. If you are interested in joining check out
 
 ## Build WG Members
 
-- George Adams [@gdams](https://github.com/gdams)
-- Wyatt Preul [@geek](https://github.com/geek)
-- Gibson Fahnestock [@gibfahn](https://github.com/gibfahn)
-- Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
-- João Reis [@joaocgreis](https://github.com/joaocgreis)
-- Kunal Pathak [@kunalspathak](https://github.com/kunalspathak)
-- Michael Dawson [@mhdawson](https://github.com/mhdawson)
-- Myles Borins [@mylesborins](https://github.com/mylesborins)
-- Phillip Johnsen [@phillipj](https://github.com/phillipj)
-- Michele Capra [@piccoloaiutante](https://github.com/piccoloaiutante)
-- Refael Ackermann [@refack](https://github.com/refack)
-- Rod Vagg [@rvagg](https://github.com/rvagg)
-- Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
-- Rich Trott [@trott](https://github.com/trott)
+- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+- [@gdams](https://github.com/gdams) - George Adams
+- [@geek](https://github.com/geek) - Wyatt Preul
+- [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
+- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+- [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@kunalspathak](https://github.com/kunalspathak) - Kunal Pathak
+- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+- [@mylesborins](https://github.com/mylesborins) - Myles Borins
+- [@phillipj](https://github.com/phillipj) - Phillip Johnsen
+- [@piccoloaiutante](https://github.com/piccoloaiutante) - Michele Capra
+- [@refack](https://github.com/refack) - Refael Ackermann
+- [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@trott](https://github.com/trott) - Rich Trott
 
 ### Infra Admins
 
-- Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
-- João Reis [@joaocgreis](https://github.com/joaocgreis)
-- Michael Dawson [@mhdawson](https://github.com/mhdawson)
-- Rod Vagg [@rvagg](https://github.com/rvagg)
+- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+- [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+- [@rvagg](https://github.com/rvagg) - Rod Vagg
 
 ### Release Admins
 
-- Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
-- João Reis [@joaocgreis](https://github.com/joaocgreis)
-- Rod Vagg [@rvagg](https://github.com/rvagg)
+- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+- [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@rvagg](https://github.com/rvagg) - Rod Vagg
 
 ### Github Bot Admins
 
-- Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
-- João Reis [@joaocgreis](https://github.com/joaocgreis)
-- Rod Vagg [@rvagg](https://github.com/rvagg)
-- Phillip Johnsen [@phillipj](https://github.com/phillipj)
-- Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
+- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+- [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@phillipj](https://github.com/phillipj) - Phillip Johnsen
+- [@rvagg](https://github.com/rvagg) - Rod Vagg
 
 For more information about accesses and team roles see [access.md][].
 
