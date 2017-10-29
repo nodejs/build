@@ -149,7 +149,6 @@ e.x. citgm omg-i-pass # this too shall pass</description>
         <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
       </matrixOptions>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.6.0">
@@ -310,41 +309,42 @@ $MAKE install
 </command>
         </hudson.tasks.Shell>
         <hudson.tasks.Shell>
-          <command>export PATH=$(pwd)/smoker/bin:$PATH
-cd smoker
+          <command>cd smoker
+
+export PATH=$(pwd)/bin:$PATH
+
 node -v
 npm -v
 npm set progress=false
-ls 
+npm set cache=&quot;$WORKSPACE/npm_cache&quot;
+
 if [ `uname -s`	 = &quot;AIX&quot; ]; then
     export npm_config_tmp=&apos;/ramdisk0/citgm&apos;
     export npm_config_nodedir=&apos;/ramdisk0/citgm&apos;
 fi
+
 npm install --prefix=$(pwd) --global --loglevel=error $CITGM
 </command>
         </hudson.tasks.Shell>
         <hudson.tasks.Shell>
-          <command>export PATH=$(pwd)/smoker/bin:$PATH
-export npm_loglevel=error
+          <command>cd smoker
+
+export PATH=$(pwd)/bin:$PATH
 retval=0
-npm set progress=false
 
 export npm_loglevel=error
 export npm_config_nodedir=&quot;$WORKSPACE/node&quot;
 
+temp=&quot;$WORKSPACE&quot;/citgm_tmp
 if [ `uname -s`	 = &quot;AIX&quot; ]; then
 	temp=/ramdisk0/citgm
     export npm_config_tmp=&apos;/ramdisk0/citgm&apos;
     unset LIBPATH
 	echo $LIBPATH
     export CC=gcc
-else 
-    temp=&quot;$WORKSPACE&quot;/citgm_tmp
-    rm -rf $temp
-	mkdir $temp || true
 fi
-
-cd smoker
+rm -rf $temp || true
+mkdir $temp || true
 
 [ &quot;$DISABLE_READABLE_STREAM&quot; == &quot;true&quot; ] &amp;&amp; export READABLE_STREAM=disable
 
