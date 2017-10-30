@@ -1,0 +1,83 @@
+#!/usr/bin/env groovy
+
+pipeline {
+  agent any
+
+  parameters {
+    string(defaultValue: "nodejs/node-inspect", description: 'The Github repository to build', name: 'projectRepo')
+    string(defaultValue: "master", description: 'The remote ref to build', name: 'projectRef')
+    booleanParam(defaultValue: false, description: 'Treat PROJECT_REF as a pull request id', name: 'isPR')
+    string(defaultValue: '8', description: 'The node version to build against', name: 'nodeVersion')
+    string(
+      defaultValue: 'all',
+      description: 'Space-separated list of nodes, e.g. debian8-64 fedora22 fedora23 osx1010 ppcle-ubuntu1404 ubuntu1204-64 ubuntu1404-64 ubuntu1604-64 rhel72-s390x aix61-ppc64 ppcbe-ubuntu1404 smartos16-64 smartos15-64 win10 win2012r2',
+      name: 'machines'
+    )
+  }
+
+  stages {
+    stage("Build") {
+      parallel {
+        stage('ubuntu1404-64') {
+          when {
+            expression { params.machines =~ /^all$|\bubuntu1404-64\b/ }
+          }
+
+          agent any
+
+          steps {
+            doCheckout()
+            runWithNodeVersionLinux('ubuntu1404-64')
+          }
+
+          post {
+            always { collectTestResults() }
+          }
+        }
+
+        stage('ubuntu1604-64') {
+          when {
+            expression { params.machines =~ /^all$|\bubuntu1604-64\b/ }
+          }
+
+          agent any
+
+          steps {
+            doCheckout()
+            runWithNodeVersionLinux('ubuntu1604-64')
+          }
+
+          post {
+            always { collectTestResults() }
+          }
+        }
+      }
+    }
+  }
+}
+
+def doCheckout() {
+  checkout(poll: false, scm: [
+    $class: 'GitSCM',
+    branches: [[
+      name: (params.isPR ? "pr/${params.projectRef}/head" : params.projectRef)
+    ]],
+    userRemoteConfigs: [[
+      url: "https://github.com/${params.projectRepo}",
+      refspec: '+refs/pull/*:refs/remotes/origin/pr/* +refs/heads/*:refs/remotes/origin/*',
+    ]],
+  ])
+}
+
+def runWithNodeVersionLinux(archName) {
+  withEnv(["NVM_DIR=${pwd(tmp: true)}/.nvm"]) {
+    sh 'echo \$NVM_DIR && rm -rf test/*.tap'
+    sh 'curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash'
+    sh "bash -c '. $NVM_DIR/nvm.sh && nvm install ${params.nodeVersion} && npm install && npm test -- --output-file=test/${archName}.tap'"
+  }
+}
+
+def collectTestResults() {
+  archive 'test/*.tap'
+  step([$class: "TapPublisher", testResults: "test/*.tap"])
+}
