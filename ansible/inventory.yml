@@ -87,6 +87,7 @@ hosts:
         fedora24-x64-1: {ip: 104.236.112.180}
         fedora25-x64-1: {ip: 159.203.101.158}
         fedora25-x64-2: {ip: 159.203.126.232}
+        fedora26-x64-1: {ip: 178.62.236.249}
         freebsd10-x64-1: {ip: 159.203.59.134, user: freebsd}
         freebsd11-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd11-x64-2: {ip: 107.170.28.213, user: freebsd}
@@ -144,6 +145,7 @@ hosts:
         fedora22-x64-1: {ip: 119.9.51.79}
         fedora23-x64-1: {ip: 119.9.51.113}
         fedora24-x64-1: {ip: 119.9.51.165}
+        fedora26-x64-1: {ip: 119.9.52.113}
         freebsd10-x64-1: {ip: 119.9.52.218}
         ubuntu1204_clang341-x64-1: {ip: 119.9.51.210}
         ubuntu1604-x64-1: {ip: 119.9.51.176}
