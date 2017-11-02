@@ -206,7 +206,7 @@ hosts:
         williamkapke-debian8-arm_pi3-1: {ip: 192.168.2.80, user: pi}
         williamkapke-debian8-arm_pi3-2: {ip: 192.168.2.81, user: pi}
         williamkapke-debian8-arm_pi3-3: {ip: 192.168.2.82, user: pi}
-        xgene-ubuntu1404-arm64-1: {ip: 192.168.2.1, user: ubuntu}
+        xgene-ubuntu1404-arm64-1: {ip: 192.168.2.4, user: ubuntu}
         xgene-ubuntu1404-arm64-2: {ip: 192.168.2.2, user: ubuntu}
 
     - scaleway:
