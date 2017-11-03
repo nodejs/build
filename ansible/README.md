@@ -5,8 +5,10 @@
 
 ## Getting started
 
-1. Install Ansible 2.2.0 or newer: `pip install ansible`. **Note**: if you're
-   using homebrew you'll have to manage dependencies such as `PyAML` yourself.
+1. Install Ansible 2.2.0 or newer: `pip install ansible`. If you use brew, then
+   `brew install python2 ansible`, and then run
+   `export PYTHONPATH=$(pip2 show pyyaml | grep Location | awk '{print $2}') `
+   before you use `ansible-playbook`.
 2. Read this document.
 3. Clone the node secrets repository (if you don't have access ask anyone
    in the [build group](https://github.com/nodejs/build#people).
