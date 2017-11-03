@@ -1,4 +1,4 @@
-# Fixing Machine Failures
+# Fixing machines
 
 A basic guide to troubleshooting machine issues.
 
@@ -87,16 +87,17 @@ Most machines have a service to restart the Jenkins agent. Try one of:
 
 ```bash
 # Systemd init (some newer Linux distros):
-systemctl start jenkins.service
+systemctl jenkins start
 # System V init (older Linux distros):
 /etc/init.d/jenkins start
 # AIX:
 /etc/rc.d/rc2.d/S20jenkins start
 # Things we don't have a service for yet:
-/home/iojs/start.sh
+~iojs/start.sh
 ```
 
-Service files should be stored [here][Jenkins Worker Template].
+Service files should be stored [here][Jenkins Worker Template], if none of these
+work look for the relevant file there.
 
 ## Problems with non-test machines
 
