@@ -1,0 +1,23 @@
+---
+
+#
+#  ubuntu 17.10
+#
+
+- name: check for python
+  raw: stat /usr/bin/python
+  failed_when: has_python.rc > 1
+  register: has_python
+
+- name: check for aptitude
+  raw: stat /usr/bin/aptitude
+  failed_when: has_aptitude.rc > 1
+  register: has_aptitude
+
+- name: update repositories
+  when: has_python.rc == 1 or has_aptitude.rc == 1
+  raw: apt-get update -y
+
+- name: install python and aptitude
+  when: has_python.rc == 1 or has_aptitude.rc == 1
+  raw: apt-get install -y python-minimal aptitude

@@ -97,8 +97,6 @@ hosts:
         ubuntu1404-x86-1: {ip: 159.203.115.220}
         ubuntu1604-x86-1: {ip: 159.203.77.233}
         ubuntu1604_dockeralpine34-x64-1: {ip: 107.170.75.204}
-        ubuntu1610-x64-1: {ip: 45.55.83.154}
-        ubuntu1610-x64-2: {ip: 138.197.31.102}
 
     - ibm:
         aix61-ppc64-1: {ip: 50.200.166.131, port: 18822}
@@ -116,6 +114,8 @@ hosts:
         smartos15-x64-2: {ip: 165.225.139.77}
         smartos16-x64-1: {ip: 72.2.115.252}
         smartos16-x64-2: {ip: 72.2.113.74}
+        ubuntu1710-x64-1: {ip: 37.153.110.33, user: ubuntu}
+        ubuntu1710-x64-2: {ip: 8.19.32.121, user: ubuntu}
 
     - marist:
         zos13-s390x-1: {ip: 148.100.36.133, user: Unix1}

@@ -10,7 +10,7 @@ init: {
   freebsd: 'freebsd',
   openrc:  'alpine',
   systemd: ['centos7', 'debian8', 'fedora', 'ubuntu1604',
-            'ubuntu1610'],
+            'ubuntu1610', 'ubuntu1710'],
   svc:     'smartos',
   upstart: ['ubuntu12', 'ubuntu1404'],
   start:   'zos'
