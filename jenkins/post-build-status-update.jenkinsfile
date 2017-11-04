@@ -11,7 +11,7 @@ pipeline {
 
     parameters {
         string(defaultValue: '', description: 'test/aix, linter, etc.', name: 'IDENTIFIER')
-        string(defaultValue: '', description: 'pending, success, failure', name: 'STATUS')
+        string(defaultValue: '', description: 'pending, success, unstable, failure', name: 'STATUS')
         string(defaultValue: '', description: 'URL for upstream Jenkins job', name: 'URL')
         string(defaultValue: '', description: 'Current commit being tested in upstream Jenkins job', name: 'COMMIT')
         string(defaultValue: '', description: 'Current branch being tested in upstream Jenkins job', name: 'REF')
@@ -40,6 +40,9 @@ def sendBuildStatus(identifier, status, url, commit, ref) {
     } else if (status == "failure") {
         path = "end"
         message = "tests failed"
+    } else if (status == "unstable") {
+        path = "end"
+        message = "flaky tests failed"
     } else if (status == "success") {
         path = "end"
         message = "tests passed"
