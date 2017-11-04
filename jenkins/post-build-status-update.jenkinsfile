@@ -1,5 +1,9 @@
 #!/usr/bin/env groovy
 
+// DESCRIPTION:
+// Sends the status of a node-test-commit-* sub build to the Github Bot, which
+// then updates the corresponding PR's CI status on github.com.
+
 import groovy.json.JsonOutput
 
 pipeline {
@@ -16,7 +20,11 @@ pipeline {
     stages {
         stage('Send status report') {
             steps {
-                sendBuildStatus(params.IDENTIFIER, params.STATUS, params.URL, params.COMMIT, params.REF)
+                if (validParams(params)) {
+                  sendBuildStatus(params.IDENTIFIER, params.STATUS, params.URL, params.COMMIT, params.REF)
+                } else {
+                  error('All parameter fields are required.)
+                }
             }
         }
     }
@@ -46,5 +54,14 @@ def sendBuildStatus(identifier, status, url, commit, ref) {
         'message': message
         ])
 
-    sh(returnStdout: true, script: "curl -s -o /dev/null --connect-timeout 5 -X POST -H 'Content-Type: application/json' -d '${buildPayload}' http://github-bot.nodejs.org:3333/node/jenkins/${path}")
+    def script = "curl -s -o /dev/null --connect-timeout 5 -X POST " +
+        "-H 'Content-Type: application/json' -d '${buildPayload}' " +
+        "http://github-bot.nodejs.org:3333/node/jenkins/${path}"
+
+    sh(returnStdout: true, script: script)
+}
+
+def validParams(params) {
+    params.IDENTIFIER != '' || params.STATUS != '' || params.URL != '' ||
+        params.COMMIT != '' || params.REF != ''
 }
