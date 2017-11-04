@@ -20,11 +20,8 @@ pipeline {
     stages {
         stage('Send status report') {
             steps {
-                if (validParams(params)) {
-                  sendBuildStatus(params.IDENTIFIER, params.STATUS, params.URL, params.COMMIT, params.REF)
-                } else {
-                  error('All parameter fields are required.)
-                }
+                validateParams(params)
+                sendBuildStatus(params.IDENTIFIER, params.STATUS, params.URL, params.COMMIT, params.REF)
             }
         }
     }
@@ -65,7 +62,9 @@ def sendBuildStatus(identifier, status, url, commit, ref) {
     sh(returnStdout: true, script: script)
 }
 
-def validParams(params) {
-    params.IDENTIFIER != '' || params.STATUS != '' || params.URL != '' ||
-        params.COMMIT != '' || params.REF != ''
+def validateParams(params) {
+    if (params.IDENTIFIER == '' || params.STATUS == '' || params.URL == '' ||
+        params.COMMIT == '' || params.REF == '') {
+        error('All parameter fields are required.')
+    }
 }
