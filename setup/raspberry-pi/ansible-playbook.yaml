@@ -14,6 +14,7 @@
         owner: "root"
         group: "root"
         mode: 0644
+      when: pi_local is undefined
       tags: general
 
     - name: General | APT update
@@ -58,7 +59,7 @@
         name: "{{ item }}"
         update_cache: yes
         state: latest
-      with_items: packages
+      with_items: "{{ packages }}"
       tags: general
 
     - name: gcc | Install gcc 4.8
@@ -139,11 +140,28 @@
         name: "/home/{{ server_user }}/{{ item.dst }}"
         src: "{{ nfs_server }}:{{ nfs_share_root }}/{{ item.src }}"
         fstype: nfs
+        opts: noauto
         state: mounted
       with_items:
         - { src: '.ccache', dst: '.ccache' }
         - { src: 'io.js.reference', dst: 'io.js.reference' }
         - { src: '{{ server_id }}', dst: 'build' }
+      tags: nfs
+
+    - name: NFS | Copy do_mount.sh script
+      template:
+        src: "./resources/do_mount.j2"
+        dest: "/usr/local/sbin/do_mount.sh"
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: 0755
+      tags: nfs
+
+    - name: NFS | crontab entry to mount nfs on reboot
+      cron:
+        name: 'mount nfs on reboot'
+        special_time: reboot
+        job: "/usr/local/sbin/do_mount.sh"
       tags: nfs
 
     - name: Jenkins | Copy start.sh script
@@ -164,3 +182,21 @@
 
     - include: ../ansible-tasks/monit.yaml monit_conf_file=../ansible-tasks/resources/monit-jenkins.conf
       tags: monit
+
+    - name: Tunnel | Copy start_tunnel.sh script
+      when: pi_local is defined
+      template:
+        src: "./resources/start_tunnel.j2"
+        dest: "/usr/local/sbin/start_tunnel.sh"
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: 0755
+      tags: tunnel
+
+    - name: Tunnel | crontab entry
+      when: pi_local is defined
+      cron:
+        name: 'start ssh tunnel on reboot'
+        special_time: reboot
+        job: "/usr/local/sbin/start_tunnel.sh"
+      tags: tunnel
