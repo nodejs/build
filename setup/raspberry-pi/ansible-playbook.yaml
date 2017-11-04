@@ -7,6 +7,21 @@
     - include_vars: ansible-vars.yaml
       tags: vars
 
+    - name: Init | Discover Pi type
+      set_fact:
+        pi_type: "{{ inventory_hostname | regex_replace('^.+_(pi[^-]+)-\\d+$', '\\1') }}"
+      tags: vars
+
+    - name: Init | Discover worker type
+      set_fact:
+        worker_type: "{{ inventory_hostname | regex_replace('^(test|release)-.+$', '\\1') }}"
+      tags: vars
+
+    - name: Init | Generate hostname
+      set_fact:
+        safe_hostname: "{{ inventory_hostname | regex_replace('_', '--') }}"
+      tags: vars
+
     - name: General | Setup APT proxy
       template:
         src: "./resources/02proxy.j2"
@@ -14,6 +29,17 @@
         owner: "root"
         group: "root"
         mode: 0644
+      when: pi_local is undefined
+      tags: general
+
+    - name: General | Configure APT sources
+      template:
+        src: "./resources/sources.list.j2"
+        dest: "/etc/apt/sources.list"
+        owner: "root"
+        group: "root"
+        mode: 0644
+      when: pi_local is undefined
       tags: general
 
     - name: General | APT update
@@ -34,11 +60,69 @@
       with_items:
         - "VerifyReverseMapping no"
         - "UseDNS no"
+      register: ssh_remove_dns
       tags: ssh
 
     - name: SSH | Restart ssh service
       service: name=ssh state=restarted enabled=yes
+      when: ssh_remove_dns.changed
       tags: init
+
+    - name: General | Setup keyboard config
+      template:
+        src: "./resources/keyboard-defaults.j2"
+        dest: "/etc/default/keyboard"
+        owner: "root"
+        group: "root"
+        mode: 0644
+      register: keyboard_config
+      tags: general
+
+    - name: General | Setup keyboard config
+      shell: dpkg-reconfigure -f noninteractive keyboard-configuration && invoke-rc.d keyboard-setup start
+      when: keyboard_config.changed
+      tags: general
+
+    - name: General | Setup locale
+      shell:
+        cmd: |
+          cat << EOF | debconf-set-selections
+          locales   locales/locales_to_be_generated multiselect     en_US.UTF-8 UTF-8
+          EOF
+          rm /etc/locale.gen
+          dpkg-reconfigure -f noninteractive locales
+          update-locale LANG="en_US.UTF-8"
+          cat << EOF | debconf-set-selections
+          locales   locales/default_environment_locale select       en_US.UTF-8
+          EOF
+      tags: general
+
+    - name: General | Expand root disk
+      shell:
+        cmd: |
+          ROOT_PART=$(readlink /dev/root)
+          PART_NUM=${ROOT_PART#mmcblk0p}
+          PART_START=$(parted /dev/mmcblk0 -ms unit s p | grep "^${PART_NUM}" | cut -f 2 -d:)
+          fdisk /dev/mmcblk0 << EOF || true
+          p
+          d
+          $PART_NUM
+          n
+          p
+          $PART_NUM
+          $PART_START
+
+          p
+          w
+          EOF
+      tags: general
+
+    - name: General | Set hostname
+      shell:
+        cmd: |
+          echo {{ safe_hostname }} > /etc/hostname
+          sed -i "s/127.0.1.1.*{{ safe_hostname }}/127.0.1.1\t{{ safe_hostname }}/g" /etc/hosts
+      tags: general
 
     - name: General | Configure 1024M dphys-swapfile
       lineinfile:
@@ -46,11 +130,23 @@
         state: present
         regexp: '^(\s*)CONF_SWAPSIZE=1024(\s*)$'
         line: 'CONF_SWAPSIZE=1024'
+      register: dphys_swapfile
       tags: general
 
     - name: General | Set up 1024M dphys-swapfile
       shell: dphys-swapfile swapoff && dphys-swapfile setup && dphys-swapfile swapon
       become_user: root
+      when: dphys_swapfile.changed
+      tags: general
+
+    - name: General | Configure overclocking speed
+      template:
+        src: "./resources/boot-config.{{pi_type}}.txt.j2"
+        dest: "/boot/config.txt"
+        owner: "root"
+        group: "root"
+        mode: 0755
+      when: pi_type in ("pi1p", "pi2")
       tags: general
 
     - name: General | Install required packages
@@ -58,7 +154,7 @@
         name: "{{ item }}"
         update_cache: yes
         state: latest
-      with_items: packages
+      with_items: "{{ packages }}"
       tags: general
 
     - name: gcc | Install gcc 4.8
@@ -134,16 +230,24 @@
       ignore_errors: True
       tags: nfs
 
-    - name: NFS | Mount all
+    - name: NFS | Configure mount options
       mount:
         name: "/home/{{ server_user }}/{{ item.dst }}"
         src: "{{ nfs_server }}:{{ nfs_share_root }}/{{ item.src }}"
         fstype: nfs
+        opts: defaults,noauto
         state: mounted
       with_items:
         - { src: '.ccache', dst: '.ccache' }
         - { src: 'io.js.reference', dst: 'io.js.reference' }
         - { src: '{{ server_id }}', dst: 'build' }
+      tags: nfs
+
+    - name: NFS | Mount at end of boot sequence
+      lineinfile:
+        path: /etc/rc.local
+        insertbefore: '^exit 0'
+        line: 'grep nfs /etc/fstab | cut -d" " -f 2 | xargs -l mount'
       tags: nfs
 
     - name: Jenkins | Copy start.sh script
@@ -155,12 +259,38 @@
         mode: 0755
       tags: jenkins
 
+    - name: Tunnel | Copy start_tunnel.sh script
+      template:
+        src: "./resources/start_tunnel.j2"
+        dest: "/usr/local/sbin/start_tunnel.sh"
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: 0755
+      when: pi_local is defined
+      tags: tunnel
+
+    - name: Tunnel | crontab entry
+      cron:
+        name: 'start ssh tunnel on reboot'
+        special_time: reboot
+        job: "/usr/local/sbin/start_tunnel.sh"
+      when: pi_local is defined
+      tags: tunnel
+
     - name: ccache | Install ccache
-      include: ../ansible-tasks/ccache.yaml version=3.3
+      import_tasks: ../ansible-tasks/ccache.yaml
+      vars:
+        version: 3.3.4
       tags: ccache
 
-    - include: ../ansible-tasks/git.yaml version=2.10.0
+    - name: git | Install git
+      import_tasks: ../ansible-tasks/git.yaml
+      vars:
+        version: 2.15.0
       tags: git
 
-    - include: ../ansible-tasks/monit.yaml monit_conf_file=../ansible-tasks/resources/monit-jenkins.conf
+    - name: monit | Install monit
+      import_tasks: ../ansible-tasks/monit.yaml
+      vars:
+        monit_conf_file: ../ansible-tasks/resources/monit-jenkins.conf.j2
       tags: monit
