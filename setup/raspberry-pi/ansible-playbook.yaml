@@ -7,10 +7,23 @@
     - include_vars: ansible-vars.yaml
       tags: vars
 
+    - name: Init | Discover Pi type
+      set_fact:
+        pi_type: "{{ inventory_hostname | regex_replace('^.+_(pi[^-]+)-\\d+$', '\\1') }}"
+
     - name: General | Setup APT proxy
       template:
         src: "./resources/02proxy.j2"
         dest: "/etc/apt/apt.conf.d/02proxy"
+        owner: "root"
+        group: "root"
+        mode: 0644
+      tags: general
+
+    - name: General | Configure APT sources
+      template:
+        src: "./resources/sources.list.j2"
+        dest: "/etc/apt/sources.list"
         owner: "root"
         group: "root"
         mode: 0644
@@ -34,10 +47,12 @@
       with_items:
         - "VerifyReverseMapping no"
         - "UseDNS no"
+      register: ssh_remove_dns
       tags: ssh
 
     - name: SSH | Restart ssh service
       service: name=ssh state=restarted enabled=yes
+      when: ssh_remove_dns.changed
       tags: init
 
     - name: General | Configure 1024M dphys-swapfile
@@ -46,11 +61,23 @@
         state: present
         regexp: '^(\s*)CONF_SWAPSIZE=1024(\s*)$'
         line: 'CONF_SWAPSIZE=1024'
+      register: dphys_swapfile
       tags: general
 
     - name: General | Set up 1024M dphys-swapfile
       shell: dphys-swapfile swapoff && dphys-swapfile setup && dphys-swapfile swapon
       become_user: root
+      when: dphys_swapfile.changed
+      tags: general
+
+    - name: General | Configure overclocking speed
+      template:
+        src: "./resources/boot-config.{{pi_type}}.txt.j2"
+        dest: "/boot/config.txt"
+        owner: "root"
+        group: "root"
+        mode: 0755
+      when: pi_type in ("pi1p", "pi2")
       tags: general
 
     - name: General | Install required packages
@@ -58,7 +85,7 @@
         name: "{{ item }}"
         update_cache: yes
         state: latest
-      with_items: packages
+      with_items: "{{packages}}"
       tags: general
 
     - name: gcc | Install gcc 4.8
@@ -134,16 +161,24 @@
       ignore_errors: True
       tags: nfs
 
-    - name: NFS | Mount all
+    - name: NFS | Configure mount options
       mount:
         name: "/home/{{ server_user }}/{{ item.dst }}"
         src: "{{ nfs_server }}:{{ nfs_share_root }}/{{ item.src }}"
         fstype: nfs
+        opts: defaults,noauto
         state: mounted
       with_items:
         - { src: '.ccache', dst: '.ccache' }
         - { src: 'io.js.reference', dst: 'io.js.reference' }
         - { src: '{{ server_id }}', dst: 'build' }
+      tags: nfs
+
+    - name: NFS | Mount at end of boot sequence
+      lineinfile:
+        path: /etc/rc.local
+        insertbefore: '^exit 0'
+        line: 'grep nfs /etc/fstab | cut -d" " -f 2 | xargs -l mount'
       tags: nfs
 
     - name: Jenkins | Copy start.sh script
@@ -156,11 +191,13 @@
       tags: jenkins
 
     - name: ccache | Install ccache
-      include: ../ansible-tasks/ccache.yaml version=3.3
+      import_tasks: ../ansible-tasks/ccache.yaml version=3.3.4
       tags: ccache
 
-    - include: ../ansible-tasks/git.yaml version=2.10.0
+    - name: git | Install git
+      import_tasks: ../ansible-tasks/git.yaml version=2.15.0
       tags: git
 
-    - include: ../ansible-tasks/monit.yaml monit_conf_file=../ansible-tasks/resources/monit-jenkins.conf
+    - name: monit | Install monit
+      import_tasks: ../ansible-tasks/monit.yaml monit_conf_file=../ansible-tasks/resources/monit-jenkins.conf
       tags: monit
