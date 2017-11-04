@@ -43,6 +43,7 @@ def sendBuildStatus(identifier, status, url, commit, ref) {
     } else if (status == "unstable") {
         path = "end"
         message = "flaky tests failed"
+        status = "success"
     } else if (status == "success") {
         path = "end"
         message = "tests passed"
