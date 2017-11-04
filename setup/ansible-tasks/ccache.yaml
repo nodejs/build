@@ -5,34 +5,43 @@
 - name: CCache | Check ccache --version
   shell: ccache --version
   ignore_errors: True
-  register: ccache_version
+  register: installed_version
+  tags: ccache
 
 - name: CCache | Compare installed version matches
   set_fact:
-    ccache_proceed: ccache_version.stdout.find('{{ version }}') == -1
+    ccache_proceed: "{{ installed_version.stdout.find(version) == -1 }}"
+  tags: ccache
 
 - name: CCache | Download ccache-{{ version }}
   get_url: url=https://www.samba.org/ftp/ccache/ccache-{{ version }}.tar.gz dest=/tmp/
   register: new_archive
   when: ccache_proceed
+  tags: ccache
 
 - name: CCache | Extract ccache-{{ version }}
   unarchive: src=/tmp/ccache-{{ version }}.tar.gz dest=/tmp/ copy=no
   when: ccache_proceed and new_archive|changed
+  tags: ccache
 
 - name: CCache | Prepare for compilation by running configure
   shell: ./configure chdir=/tmp/ccache-{{ version }} >> /dev/null
   when: ccache_proceed
+  tags: ccache
 
 - name: CCache | Compile ccache
-  shell: make chdir=/tmp/ccache-{{ version }} >> /dev/null
+  shell: make -j{{ ansible_processor_vcpus }}
+  args:
+    chdir: /tmp/ccache-{{ version }}
   when: ccache_proceed
+  tags: ccache
 
 - name: CCache | Install generated binary
   command: install -c -m 755 ccache /usr/local/bin
   args:
     chdir: /tmp/ccache-{{ version }}
   when: ccache_proceed
+  tags: ccache
 
 - name: CCache | Create symlinks in /usr/local/bin/
   file: src=/usr/local/bin/ccache dest=/usr/local/bin/{{ item }} state=link
@@ -42,6 +51,7 @@
     - g++
     - c++
   when: ccache_proceed
+  tags: ccache
 
 - name: CCache | Cleanup
   file: path="{{ item }}" state=absent
@@ -49,3 +59,4 @@
     - /tmp/ccache-{{ version }}.tar.gz
     - /tmp/ccache-{{ version }}
   when: ccache_proceed
+  tags: ccache

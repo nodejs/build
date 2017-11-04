@@ -2,22 +2,34 @@
 # Installs and configures monit for Debian based systems.
 # @requires: monit_conf_file=../ansible-tasks/resources/monit-jenkins.conf
 
-- name: Monit | Install deb package
-  apt: name=monit update_cache=yes state=latest
+- name: Monit | Install monit
+  apt:
+    name: monit
+    update_cache: yes
+    state: latest
   tags: monit
 
 - name: Monit | Set the cycle length to 15 seconds
-  lineinfile: dest=/etc/monit/monitrc state=present regexp="^(\s*)set(\s+)daemon" line="set daemon 15"
+  lineinfile:
+    dest: /etc/monit/monitrc
+    state: present
+    regexp: "^(\\s*)set(\\s+)daemon"
+    line: "set daemon 15"
   tags: monit
 
 - name: Monit | Copy monit config
-  copy: src={{ monit_conf_file }} dest=/etc/monit/conf.d/jenkins owner=root group=root mode=0644
-  tags: monit
-
-- name: Monit | Copy server user name to monit config
-  replace: dest=/etc/monit/conf.d/jenkins regexp="\{\{server_user\}\}" replace="{{ server_user }}"
+  template:
+    src: "./resources/monit-jenkins.conf.j2"
+    dest: "/etc/monit/conf.d/jenkins"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  register: monit_config
   tags: monit
 
 - name: Monit | Restart service
-  service: name=monit state=restarted
+  service:
+    name: monit
+    state: restarted
+  when: monit_config.changed
   tags: monit
