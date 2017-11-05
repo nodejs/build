@@ -1,8 +1,8 @@
 #!/usr/bin/env groovy
 
 // DESCRIPTION:
-// Sends the status of a node-test-commit-* sub build to the Github Bot, which
-// then updates the corresponding PR's CI status on github.com.
+// Updates the status of a GitHub pull request via the Github Bot. Primarily
+// used for node-test-commit-* sub builds.
 
 import groovy.json.JsonOutput
 
@@ -10,6 +10,7 @@ pipeline {
     agent { label 'jenkins-workspace' }
 
     parameters {
+        string(defaultValue: 'node', description: 'GitHub repository', name: 'REPO')
         string(defaultValue: '', description: 'test/aix, linter, etc.', name: 'IDENTIFIER')
         string(defaultValue: '', description: 'pending, success, unstable, failure', name: 'STATUS')
         string(defaultValue: '', description: 'URL for upstream Jenkins job', name: 'URL')
@@ -21,13 +22,13 @@ pipeline {
         stage('Send status report') {
             steps {
                 validateParams(params)
-                sendBuildStatus(params.IDENTIFIER, params.STATUS, params.URL, params.COMMIT, params.REF)
+                sendBuildStatus(params.REPO, params.IDENTIFIER, params.STATUS, params.URL, params.COMMIT, params.REF)
             }
         }
     }
 }
 
-def sendBuildStatus(identifier, status, url, commit, ref) {
+def sendBuildStatus(repo, identifier, status, url, commit, ref) {
     def path = ""
     def message = ""
 
@@ -57,7 +58,7 @@ def sendBuildStatus(identifier, status, url, commit, ref) {
 
     def script = "curl -s -o /dev/null --connect-timeout 5 -X POST " +
         "-H 'Content-Type: application/json' -d '${buildPayload}' " +
-        "http://github-bot.nodejs.org:3333/node/jenkins/${path}"
+        "http://github-bot.nodejs.org:3333/${repo}/jenkins/${path}"
 
     sh(returnStdout: true, script: script)
 }
