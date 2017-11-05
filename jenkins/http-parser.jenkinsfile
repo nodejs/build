@@ -32,7 +32,7 @@ pipeline {
                 echo "Testing: ${sh(returnStdout: true, script: 'git log -1 --oneline').trim()}"
 
                 sh 'gcc --version'
-                sendBuildStatus("pending", env.PR_ID, env.BUILD_URL)
+                sendBuildStatus("pending", env.PR_ID, env.BUILD_URL, env.GIT_COMMIT)
             }
         }
 
@@ -45,40 +45,23 @@ pipeline {
 
     post {
         success {
-            sendBuildStatus("success", env.PR_ID, env.BUILD_URL)
+            sendBuildStatus("success", env.PR_ID, env.BUILD_URL, env.GIT_COMMIT)
         }
 
         failure {
-            sendBuildStatus("failure", env.PR_ID, env.BUILD_URL)
+            sendBuildStatus("failure", env.PR_ID, env.BUILD_URL, env.GIT_COMMIT)
         }
     }
 }
 
-def sendBuildStatus(status, prId, buildUrl) {
+def sendBuildStatus(status, prId, buildUrl, commit) {
     if (!prId) { return }
 
-    def path = ""
-    def message = ""
-
-    if (status == "success") {
-        message = "tests passed"
-        path = "end"
-    } else if (status == "failure") {
-        message = "tests failed"
-        path = "end"
-    } else if (status == "pending") {
-        message = "checking for errors"
-        path = "start"
-    }
-
-    def buildPayload = JsonOutput.toJson([
-        'identifier': 'test',
-        'status': status,
-        'message': message,
-        'commit': sh(returnStdout: true, script: 'git rev-parse HEAD').trim(),
-        'url': buildUrl,
-        'ref': "refs/pull/${env.PR_ID}/head"
-        ])
-
-    sh(returnStdout: true, script: "curl -H 'Content-Type: application/json' -X POST -d '${buildPayload}' http://9d7d96c6.ngrok.io/http-parser/jenkins/${path}")
+    build job: 'post-build-status-update', parameters: [
+              string(name: 'REPO', value: 'http-parser'),
+              string(name: 'IDENTIFIER', value: 'test'),
+              string(name: 'URL', value: buildUrl),
+              string(name: 'COMMIT', value: commit),
+              string(name: 'REF', value: "refs/pull/${env.PR_ID}/head"),
+          ]
 }
