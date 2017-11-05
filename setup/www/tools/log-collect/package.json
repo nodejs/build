@@ -1,0 +1,14 @@
+{
+  "name": "json-log-filter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "json-log-filter.js",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "glob": "^7.1.1",
+    "split2": "^2.1.1",
+    "strftime": "^0.10.0",
+    "through2": "^2.0.3"
+  }
+}

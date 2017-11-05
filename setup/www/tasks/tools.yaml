@@ -24,6 +24,48 @@
     mode: 0644
   tags: nightly-builder
 
+- name: log-collect | Make /home/logs/log-collect/
+  file:
+    path: /home/logs/log-collect/
+    state: directory
+    mode: 0750
+    owner: root
+  tags: log-collect
+
+- name: log-collect | Copy log-collect.sh script
+  template:
+    src: ./resources/scripts/log-collect.sh.j2
+    dest: /home/logs/log-collect/log-collect.sh
+    mode: 0700
+    owner: root
+    group: root
+  tags: log-collect
+
+- name: log-collect | Install Cloudflare logshare-cli
+  command: "go get github.com/cloudflare/logshare/..."
+  tags: log-collect
+
+- name: log-collect | Install log-collect Node dependencies
+  command: "npm install"
+  args:
+    chdir: /home/logs/log-collect/
+  tags: log-collect
+
+- name: log-collect | Copy remaining log-collect components
+  copy:
+    src: './tools/log-collect/{{ item }}'
+    dest: '/home/logs/log-collect/{{ item }}'
+    mode: 0755
+    owner: root
+    group: root
+  with_items:
+    - json-log-filter.js
+    - json-to-nginx.js
+    - nginxify.sh
+    - package.json
+    - sanity-check-logs.sh
+  tags: log-collect
+
   #TODO: the branches are hardwired here, they should be in vars somewhere
 - name: tools | Add periodic tasks to crontab
   lineinfile:
@@ -35,4 +77,6 @@
     - '0 18    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/master --config /etc/nightly-builder.json'
     - '0 11    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/v9.x --config /etc/nightly-builder-chakracore.json'
     - '0 10    * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/master --config /etc/nightly-builder-chakracore.json'
+    - '55 *    * * *   root    /home/logs/log-collect/log-collect.sh'
+    - '30 1,13 * * *   root    /home/logs/log-collect/sanity-check-logs.sh'
   tags: tools

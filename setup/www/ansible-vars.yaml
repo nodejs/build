@@ -19,4 +19,5 @@ packages:
   - git
   - python-pip
   - gnuplot
+  - golang-go
 benchmark_host: 50.97.245.4
