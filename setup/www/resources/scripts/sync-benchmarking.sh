@@ -3,7 +3,8 @@
 pidfile=/var/run/nodejs/sync-benchmarking.pid
 cmd="
   rsync -aqz --delete benchmark:charts/ /home/www/benchmarking/charts/ &&
-  rsync -aqz --delete benchmark:coverage-out/out/ /home/www/coverage/
+  rsync -aqz --delete benchmark:coverage-out/out/ /home/www/coverage/ &&
+  scp benchmark:benchmarking/www/index.html /home/www/benchmarking/
 "
 
 if [ -a "$pidfile" -a -r "$pidfile" ]; then
