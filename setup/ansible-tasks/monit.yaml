@@ -5,8 +5,7 @@
 - name: Monit | Install monit
   apt:
     name: monit
-    update_cache: yes
-    state: latest
+    state: present
   tags: monit
 
 - name: Monit | Set the cycle length to 15 seconds

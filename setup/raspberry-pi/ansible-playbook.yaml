@@ -78,7 +78,7 @@
       register: keyboard_config
       tags: general
 
-    - name: General | Setup keyboard config
+    - name: General | Configure keyboard
       shell: dpkg-reconfigure -f noninteractive keyboard-configuration && invoke-rc.d keyboard-setup start
       when: keyboard_config.changed
       tags: general
@@ -118,10 +118,18 @@
       tags: general
 
     - name: General | Set hostname
-      shell:
-        cmd: |
-          echo {{ safe_hostname }} > /etc/hostname
-          sed -i "s/127.0.1.1.*{{ safe_hostname }}/127.0.1.1\t{{ safe_hostname }}/g" /etc/hosts
+      copy:
+        content: |
+          {{ safe_hostname }}
+        dest: /etc/hostname
+      tags: general
+
+    - name: General | Set hostname resolver
+      lineinfile:
+        dest: /etc/hosts
+        state: present
+        regexp: '^127\.0\.1\.1\s+\w.+$'
+        line: '127.0.1.1        {{safe_hostname}}'
       tags: general
 
     - name: General | Configure 1024M dphys-swapfile
@@ -234,8 +242,8 @@
       mount:
         name: "/home/{{ server_user }}/{{ item.dst }}"
         src: "{{ nfs_server }}:{{ nfs_share_root }}/{{ item.src }}"
-        fstype: nfs
-        opts: defaults,noauto
+        fstype: nfs4
+        opts: rw,exec,async,noauto
         state: mounted
       with_items:
         - { src: '.ccache', dst: '.ccache' }
@@ -247,7 +255,11 @@
       lineinfile:
         path: /etc/rc.local
         insertbefore: '^exit 0'
-        line: 'grep nfs /etc/fstab | cut -d" " -f 2 | xargs -l mount'
+        line: '{{ item }}'
+      with_items:
+        - '/etc/init.d/rpcbind start'
+        - '/etc/init.d/nfs-common start'
+        - 'sleep 10 && (grep nfs /etc/fstab | cut -d" " -f 2 | xargs -l mount) &'
       tags: nfs
 
     - name: Jenkins | Copy start.sh script
