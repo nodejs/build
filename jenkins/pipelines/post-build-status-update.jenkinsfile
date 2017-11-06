@@ -29,6 +29,14 @@ pipeline {
 }
 
 def sendBuildStatus(repo, identifier, status, url, commit, ref) {
+
+    // Fail quietly if upstream job shouldn't be posting to GitHub.
+    if (!PR.isInteger() || POST_STATUS_TO_PR != 'true') {
+        println "Skipping status update (PR.isInteger(): ${PR.isInteger}, " +
+            "POST_STATUS_TO_PR: ${POST_STATUS_TO_PR}."
+        return
+    }
+
     def path = ""
     def message = ""
 
@@ -64,6 +72,7 @@ def sendBuildStatus(repo, identifier, status, url, commit, ref) {
 }
 
 def validateParams(params) {
+    // Fail loudly if upstream job is configured wrong.
     if (params.IDENTIFIER == '' || params.STATUS == '' || params.URL == '' ||
         params.COMMIT == '' || params.REF == '') {
         error('All parameter fields are required.')
