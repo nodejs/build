@@ -16,30 +16,37 @@ pipeline {
         string(name: 'URL, 'defaultValue: '', description: 'URL for upstream Jenkins job')
         string(name: 'COMMIT, 'defaultValue: '', description: 'Current commit being tested in upstream Jenkins job')
         string(name: 'REF, 'defaultValue: '', description: 'Current branch being tested in upstream Jenkins job')
+        booleanParam(name: 'POST_STATUS_TO_PR', defaultValue: 'false', description: 'Whether the PR should be updated.')
     }
 
     stages {
         stage('Send status report') {
             steps {
-                validateParams(params)
-                sendBuildStatus(params.REPO, params.IDENTIFIER, params.STATUS, params.URL, params.COMMIT, params.REF)
+                sendBuildStatus(params)
             }
         }
     }
 }
 
-def sendBuildStatus(repo, identifier, status, url, commit, ref) {
+def sendBuildStatus(params) {
+    // Fail loudly if upstream job is configured wrong.
+    for (def i in params) {
+        if (i.value == '') {
+            error('All parameter fields are required, ${i.key} was blank.')
+        }
+    }
 
     // Fail quietly if upstream job shouldn't be posting to GitHub.
-    if (ref.contains('refs/pull/') || POST_STATUS_TO_PR != 'true') {
-        println "Skipping status update (ref: ${ref}, " +
-            "POST_STATUS_TO_PR: ${POST_STATUS_TO_PR})."
+    if (params.REF.contains('refs/pull/') || params.POST_STATUS_TO_PR != 'true') {
+        println "Skipping status update (REF: ${params.REF}, " +
+            "POST_STATUS_TO_PR: ${params.POST_STATUS_TO_PR})."
         return
     }
 
     def path = ""
     def message = ""
 
+    def status = params.STATUS
     if (status == "pending") {
         path = "start"
         message = "running tests"
@@ -56,25 +63,17 @@ def sendBuildStatus(repo, identifier, status, url, commit, ref) {
     }
 
     def buildPayload = JsonOutput.toJson([
-        'identifier': identifier,
-        'status': status,
-        'url': url,
-        'commit': commit,
-        'ref': ref,
+        'identifier': params.IDENTIFIER,
+        'status': params.STATUS,
+        'url': params.URL,
+        'commit': params.COMMIT,
+        'ref': params.REF,
         'message': message
         ])
 
     def script = "curl -s -o /dev/null --connect-timeout 5 -X POST " +
         "-H 'Content-Type: application/json' -d '${buildPayload}' " +
-        "http://github-bot.nodejs.org:3333/${repo}/jenkins/${path}"
+        "http://github-bot.nodejs.org:3333/${params.REPO}/jenkins/${path}"
 
     sh(returnStdout: true, script: script)
-}
-
-def validateParams(params) {
-    // Fail loudly if upstream job is configured wrong.
-    if (params.IDENTIFIER == '' || params.STATUS == '' || params.URL == '' ||
-        params.COMMIT == '' || params.REF == '') {
-        error('All parameter fields are required.')
-    }
 }
