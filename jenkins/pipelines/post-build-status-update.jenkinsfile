@@ -35,7 +35,7 @@ def sendBuildStatus(params) {
     }
 
     // Fail quietly if upstream job shouldn't be posting to GitHub.
-    if (params.REF.contains('refs/pull/') || params.POST_STATUS_TO_PR != 'true') {
+    if (!params.REF.contains('refs/pull/') || params.POST_STATUS_TO_PR != 'true') {
         println "Skipping status update (REF: ${params.REF}, " +
             "POST_STATUS_TO_PR: ${params.POST_STATUS_TO_PR})."
         return
