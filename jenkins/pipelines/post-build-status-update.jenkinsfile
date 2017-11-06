@@ -30,10 +30,8 @@ pipeline {
 
 def sendBuildStatus(params) {
     // Fail loudly if upstream job is configured wrong.
-    for (def i in params) {
-        if (i.value == '') {
-            error('All parameter fields are required, ${i.key} was blank.')
-        }
+    if (params.any{ it.value == '' }) {
+        error('All parameter fields are required.')
     }
 
     // Fail quietly if upstream job shouldn't be posting to GitHub.
