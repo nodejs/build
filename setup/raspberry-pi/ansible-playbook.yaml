@@ -97,26 +97,6 @@
           EOF
       tags: general
 
-    - name: General | Expand root disk
-      shell:
-        cmd: |
-          ROOT_PART=$(readlink /dev/root)
-          PART_NUM=${ROOT_PART#mmcblk0p}
-          PART_START=$(parted /dev/mmcblk0 -ms unit s p | grep "^${PART_NUM}" | cut -f 2 -d:)
-          fdisk /dev/mmcblk0 << EOF || true
-          p
-          d
-          $PART_NUM
-          n
-          p
-          $PART_NUM
-          $PART_START
-
-          p
-          w
-          EOF
-      tags: general
-
     - name: General | Set hostname
       copy:
         content: |

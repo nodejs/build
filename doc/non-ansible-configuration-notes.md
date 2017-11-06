@@ -103,6 +103,7 @@ Set up SD card:
 
 Set up running system, steps to execute in `raspi-config`:
 
+* Expand Filesystem
 * Change User Password
 * Advanced - Enable SSH
 
