@@ -105,19 +105,15 @@ Set up running system, steps to execute in `raspi-config`:
 
 * Expand Filesystem
 * Change User Password
-* Internationalisation Options - Change Locale to en_US.UTF8
-* Internationalisation Options - Change Keyboard Layout - Generic non-Intl, English (US)
-* Overclock Pi 1 B+ to Medium
-* Advanced - Hostname, replace `_` with `--`
 * Advanced - Enable SSH
 
 Then, manually:
 
-* Set up .ssh/authorized_keys as appropriate for running Ansible (Insert the `nodejs_build_test` key or the `nodejs_build_release` key as appropriate)
+* Set up ~pi/.ssh/authorized_keys as appropriate for running Ansible (Insert the `nodejs_build_test` key or the `nodejs_build_release` key as appropriate). Set ~pi/.ssh to mode 755 and ~pi/.ssh/authorized_keys to mode 644.
 * Ensure that it can boot on the network and local SSH configuration matches the host (reprovisioned hosts will need a replacement of your `known_hosts` entry for it)
 * Update <https://github.com/nodejs/build/blob/master/setup/ansible-inventory> to include any new hosts under `[iojs-raspbian]`
 * Update <https://github.com/nodejs/build/blob/master/ansible/inventory.yml> to reflect any host additions or changes (this is primarily for automatic .ssh/config setup purposes currently)
-* Run Ansible from <https://github.com/nodejs/build/tree/master/setup/raspberry-pi>
+* Run Ansible from <https://github.com/nodejs/build/tree/master/setup/raspberry-pi> with `ansible-playbook ansible-playbook.yaml -i ../ansible-inventory --limit <hostname>`
 
 
 [`ansible.intro_windows`]: http://docs.ansible.com/ansible/intro_windows.html

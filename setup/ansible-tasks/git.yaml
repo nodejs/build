@@ -5,7 +5,13 @@
 - name: Git | Check git --version
   shell: git --version
   ignore_errors: True
-  register: git_version
+  register: installed_version
+  tags: git
+
+- name: Git | Compare installed version matches
+  set_fact:
+    git_proceed: "{{ installed_version.stdout.find(version) == -1 }}"
+  tags: git
 
 - name: Git | Install required packages for git compile
   apt: name={{ item }} update_cache=yes state=latest
@@ -15,35 +21,37 @@
     - gettext
     - libcurl4-openssl-dev
     - zlib1g-dev
-  when: git_version.stdout.find('{{ version }}') == -1
+  when: git_proceed
   tags: git
 
 - name: Git | Download git-{{ version }}
   get_url: url=https://www.kernel.org/pub/software/scm/git/git-{{ version }}.tar.xz dest=/tmp/
   register: new_archive
-  when: git_version.stdout.find('{{ version }}') == -1
+  when: git_proceed
   tags: git
 
 - name: Git | Extract git-{{ version }}
   unarchive: src=/tmp/git-{{ version }}.tar.xz dest=/tmp/ copy=no
-  when: git_version.stdout.find('{{ version }}') == -1 and new_archive|changed
+  when: git_proceed and new_archive|changed
   tags: git
 
 - name: Git | Prepare for compilation by running configure
   shell: ./configure --prefix=/usr --with-gitconfig=/etc/gitconfig chdir=/tmp/git-{{ version }} >> /dev/null
-  when: git_version.stdout.find('{{ version }}') == -1
+  when: git_proceed
   tags: git
 
 - name: Git | Compile git
-  shell: make chdir=/tmp/git-{{ version }} >> /dev/null
-  when: git_version.stdout.find('{{ version }}') == -1
+  shell: make -j{{ ansible_processor_vcpus }}
+  args:
+    chdir: /tmp/git-{{ version }}
+  when: git_proceed
   tags: git
 
 - name: Git | Install generated binary
   command: make install
   args:
     chdir: /tmp/git-{{ version }}
-  when: git_version.stdout.find('{{ version }}') == -1
+  when: git_proceed
   tags: git
 
 - name: Git | Cleanup
@@ -51,5 +59,5 @@
   with_items:
     - /tmp/git-{{ version }}.tar.gz
     - /tmp/git-{{ version }}
-  when: git_version.stdout.find('{{ version }}') == -1
+  when: git_proceed
   tags: git
