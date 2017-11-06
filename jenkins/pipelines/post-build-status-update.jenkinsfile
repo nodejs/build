@@ -10,12 +10,12 @@ pipeline {
     agent { label 'jenkins-workspace' }
 
     parameters {
-        string(defaultValue: 'node', description: 'GitHub repository', name: 'REPO')
-        string(defaultValue: '', description: 'test/aix, linter, etc.', name: 'IDENTIFIER')
-        string(defaultValue: '', description: 'pending, success, unstable, failure', name: 'STATUS')
-        string(defaultValue: '', description: 'URL for upstream Jenkins job', name: 'URL')
-        string(defaultValue: '', description: 'Current commit being tested in upstream Jenkins job', name: 'COMMIT')
-        string(defaultValue: '', description: 'Current branch being tested in upstream Jenkins job', name: 'REF')
+        string(name: 'REPO', defaultValue: 'node', description: 'GitHub repository')
+        string(name: 'IDENTIFIER', defaultValue: '', description: 'test/aix, linter, etc.')
+        string(name: 'STATUS, 'defaultValue: '', description: 'pending, success, unstable, failure')
+        string(name: 'URL, 'defaultValue: '', description: 'URL for upstream Jenkins job')
+        string(name: 'COMMIT, 'defaultValue: '', description: 'Current commit being tested in upstream Jenkins job')
+        string(name: 'REF, 'defaultValue: '', description: 'Current branch being tested in upstream Jenkins job')
     }
 
     stages {
@@ -31,9 +31,9 @@ pipeline {
 def sendBuildStatus(repo, identifier, status, url, commit, ref) {
 
     // Fail quietly if upstream job shouldn't be posting to GitHub.
-    if (!PR.isInteger() || POST_STATUS_TO_PR != 'true') {
-        println "Skipping status update (PR.isInteger(): ${PR.isInteger}, " +
-            "POST_STATUS_TO_PR: ${POST_STATUS_TO_PR}."
+    if (ref.contains('refs/pull/') || POST_STATUS_TO_PR != 'true') {
+        println "Skipping status update (ref: ${ref}, " +
+            "POST_STATUS_TO_PR: ${POST_STATUS_TO_PR})."
         return
     }
 
