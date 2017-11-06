@@ -22,26 +22,6 @@
         safe_hostname: "{{ inventory_hostname | regex_replace('_', '--') }}"
       tags: vars
 
-    - name: General | Setup APT proxy
-      template:
-        src: "./resources/02proxy.j2"
-        dest: "/etc/apt/apt.conf.d/02proxy"
-        owner: "root"
-        group: "root"
-        mode: 0644
-      when: pi_local is undefined
-      tags: general
-
-    - name: General | Configure APT sources
-      template:
-        src: "./resources/sources.list.j2"
-        dest: "/etc/apt/sources.list"
-        owner: "root"
-        group: "root"
-        mode: 0644
-      when: pi_local is undefined
-      tags: general
-
     - name: General | APT update
       apt:
         update_cache: yes
@@ -61,12 +41,12 @@
         - "VerifyReverseMapping no"
         - "UseDNS no"
       register: ssh_remove_dns
-      tags: ssh
+      tags: general
 
     - name: SSH | Restart ssh service
       service: name=ssh state=restarted enabled=yes
       when: ssh_remove_dns.changed
-      tags: init
+      tags: general
 
     - name: General | Setup keyboard config
       template:
@@ -135,6 +115,26 @@
         group: "root"
         mode: 0755
       when: pi_type in ("pi1p", "pi2")
+      tags: general
+
+    - name: General | Setup APT proxy
+      template:
+        src: "./resources/02proxy.j2"
+        dest: "/etc/apt/apt.conf.d/02proxy"
+        owner: "root"
+        group: "root"
+        mode: 0644
+      when: pi_local is undefined
+      tags: general
+
+    - name: General | Configure APT sources
+      template:
+        src: "./resources/sources.list.j2"
+        dest: "/etc/apt/sources.list"
+        owner: "root"
+        group: "root"
+        mode: 0644
+      when: pi_local is undefined
       tags: general
 
     - name: General | Install required packages
