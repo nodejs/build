@@ -7,8 +7,8 @@ pipeline {
 
     parameters {
         booleanParam(name: 'CERTIFY_SAFE', defaultValue: false, description: 'I have reviewed *the latest version of* these changes and I am sure that they don’t contain any code that could compromise the security of the CI infrastructure.')
-        string(defaultValue: "", description: 'The numeric ID of the pull request (from GitHub URL)', name: 'PR_ID')
-        string(defaultValue: 'master', description: 'Git branch to use for testing (ignore this value for PRs)', name: 'BRANCH')
+        string(name: 'PR_ID', defaultValue: "", description: 'The numeric ID of the pull request (from GitHub URL)')
+        string(name: 'BRANCH', defaultValue: 'master', description: 'Git branch to use for testing (ignore this value for PRs)')
     }
 
     stages {
