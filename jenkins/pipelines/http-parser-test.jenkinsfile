@@ -63,5 +63,6 @@ def sendBuildStatus(status, prId, buildUrl, commit) {
               string(name: 'URL', value: buildUrl),
               string(name: 'COMMIT', value: commit),
               string(name: 'REF', value: "refs/pull/${env.PR_ID}/head"),
+              string(name: 'STATUS', value: status)
           ]
 }
