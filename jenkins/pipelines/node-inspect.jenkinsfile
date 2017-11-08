@@ -72,7 +72,7 @@ def doCheckout() {
 def runWithNodeVersionLinux(archName) {
   withEnv(["NVM_DIR=${pwd(tmp: true)}/.nvm"]) {
     sh 'echo \$NVM_DIR && rm -rf test/*.tap'
-    sh 'curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash'
+    sh 'if [ ! -d "$NVM_DIR/.git" ]; then mkdir -p "$NVM_DIR" && git init "$NVM_DIR"; fi && cd "$NVM_DIR" && git fetch https://github.com/creationix/nvm.git v0.33.6 && git reset --hard FETCH_HEAD'
     sh "bash -c '. $NVM_DIR/nvm.sh && nvm install ${params.nodeVersion} && npm install && npm test -- --output-file=test/${archName}.tap'"
   }
 }
