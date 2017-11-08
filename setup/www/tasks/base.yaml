@@ -1,5 +1,5 @@
 - name: Base | Add the NodeSource Node.js repo
-  command: "bash -c 'curl -sL https://deb.nodesource.com/setup_6.x | bash -'"
+  command: "bash -c 'curl -sL https://deb.nodesource.com/setup_8.x | bash -'"
   tags: base
 
 - name: Base | APT Update
