@@ -199,3 +199,6 @@ node-win2016-62910.cloudapp.net
 
 [github-bot]
 infra-rackspace-debian8-x64-1
+
+[test-ubuntu1604_docker_alpine34]
+test-digitalocean-ubuntu1604_docker_alpine34-x64-1

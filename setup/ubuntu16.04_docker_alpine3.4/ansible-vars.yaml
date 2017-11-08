@@ -1,0 +1,4 @@
+---
+server_user: iojs
+packages:
+  - curl

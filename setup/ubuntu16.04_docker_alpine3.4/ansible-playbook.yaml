@@ -1,0 +1,88 @@
+---
+- hosts: test-ubuntu1604_docker_alpine34
+  remote_user: root
+  gather_facts: False
+
+  tasks:
+    - name: Check for python
+      raw: which python
+      register: python_exists
+      failed_when: python_exists.rc > 1
+
+    - name: Bootstrap for the apt package
+      raw: apt install -y python-minimal aptitude
+      tags: bootstrap
+      when: python_exists.rc == 1
+
+- hosts: test-ubuntu1604_docker_alpine34
+  remote_user: root
+  gather_facts: True
+
+  tasks:
+    - include_vars: ansible-vars.yaml
+      tags: vars
+
+    - name: General | APT update and upgrade
+      apt: update_cache=yes upgrade=full
+      tags: general
+
+    - name: General | Install required packages
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items: packages
+      tags: general
+
+    - name: User | Add {{ server_user }} user
+      user: name="{{ server_user }}" shell=/bin/bash
+      tags: user
+
+    - name: User | Make work directories
+      file:
+        path: "/home/{{ server_user }}/{{ item }}"
+        state: directory
+        mode: 0755
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+      with_items:
+        - build
+        - tmp
+      tags: user
+
+- name: Docker | Install Docker
+  hosts: test-ubuntu1604_docker_alpine34
+  remote_user: root
+  gather_facts: True
+  roles:
+    - angstwad.docker_ubuntu
+  tags: docker
+
+- hosts: test-ubuntu1604_docker_alpine34
+  remote_user: root
+  gather_facts: True
+
+  tasks:
+    - include: tasks/setup-image.yaml image_type=test ci_host=ci.nodejs.org secret={{ test_secret }}
+    - include: tasks/setup-image.yaml image_type=release ci_host=ci-release.nodejs.org secret={{ release_secret }}
+
+    - name: SSH | Make release ssh config directory
+      file:
+        path: "/home/{{ server_user }}/release/.ssh/"
+        state: directory
+        mode: 0700
+        owner: "{{ server_user }}"
+      tags: docker_build
+
+    - name: SSH | Copy release ssh config
+      template:
+        src: ./resources/release_ssh_config
+        dest: "/home/{{ server_user }}/release/.ssh/config"
+        mode: 0600
+        owner: "{{ server_user }}"
+      tags: docker_init
+
+    - name: SSH | Copy release ssh staging key
+      template:
+        src: ./resources/node-www-staging-key
+        dest: "/home/{{ server_user }}/release/.ssh/node-www-staging"
+        mode: 0600
+        owner: "{{ server_user }}"
+      tags: docker_init

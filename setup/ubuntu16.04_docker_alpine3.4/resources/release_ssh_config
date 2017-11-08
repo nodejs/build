@@ -1,0 +1,4 @@
+Host iojs-www node-www
+  HostName direct.nodejs.org
+  User staging
+  IdentityFile ~/.ssh/node-www-staging
