@@ -232,6 +232,8 @@ hosts:
         centos7-arm64-2: {ip: 147.75.74.254}
         ubuntu1604-arm64-1: {ip: 147.75.77.130}
         ubuntu1604-arm64-2: {ip: 147.75.74.174}
+# when adding, removing or changing the IPs below,
+# remember to update Jenkins worker IP whitelist in github-bot
         ubuntu1604-x64-1: {ip: 147.75.69.113, alias: jenkins-workspace-1}
         ubuntu1604-x64-2: {ip: 147.75.73.189, alias: jenkins-workspace-2}
 
