@@ -1,0 +1,22 @@
+{
+  "name": "download-render",
+  "version": "1.0.0",
+  "description": "",
+  "main": "download-render.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "stylus dist.styl"
+  },
+  "author": "Rod <rod@vagg.org> (http://r.va.gg/)",
+  "license": "MIT",
+  "dependencies": {
+    "after": "~0.8.1",
+    "map-async": "~0.1.1",
+    "strftime": "~0.9.2"
+  },
+  "devDependencies": {
+    "stylus": "~0.51.1"
+  }
+}
