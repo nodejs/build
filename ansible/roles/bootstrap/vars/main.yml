@@ -5,7 +5,7 @@
 #
 
 
-alpine34_repos: [
+alpine3_repos: [
   'https://dl-3.alpinelinux.org/alpine/edge/main',
   'https://dl-3.alpinelinux.org/alpine/edge/community' # java lives here
   ]

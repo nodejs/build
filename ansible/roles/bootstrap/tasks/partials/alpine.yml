@@ -1,7 +1,7 @@
 ---
 
 #
-#  alpine 3.4
+#  alpine 3.x
 #
 
 - name: check for python
@@ -24,11 +24,11 @@
     create: yes
     line: "{{ item }}"
     state: present
-  with_items: "{{ alpine34_repos }}"
+  with_items: "{{ alpine3_repos }}"
   register: has_added_package_repo
 
 - name: check for shadow
-  raw: apk info -q shadow
+  raw: apk info | grep shadow
   failed_when: has_shadow.rc > 1
   register: has_shadow
 

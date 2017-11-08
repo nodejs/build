@@ -63,6 +63,7 @@ jenkins: "{{ jenkins_init[init_type] }}"
 
 needs_monit: [
   'alpine34',
+  'alpine35',
   'centos5',
   'centos6',
   'debian7',

@@ -6,6 +6,7 @@
 
 packages: {
   'alpine34': 'openjdk8-jre-base',
+  'alpine35': 'openjdk8-jre-base',
   'centos5': 'java-1.7.0-openjdk',
   'centos': 'java-1.8.0-openjdk-headless',
   'debian7': 'openjdk-7-jre-headless',

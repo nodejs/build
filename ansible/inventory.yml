@@ -104,6 +104,8 @@ hosts:
     - joyent:
         alpine34-x64-1: {ip: 72.2.114.80}
         alpine34-x64-2: {ip: 72.2.115.165}
+        alpine35-x64-1: {ip: }
+        alpine35-x64-2: {ip: }
         freebsd10-x64-1: {ip: 72.2.115.15}
         freebsd10-x64-2: {ip: 72.2.114.23}
         smartos14-x64-1: {ip: 72.2.114.47}
