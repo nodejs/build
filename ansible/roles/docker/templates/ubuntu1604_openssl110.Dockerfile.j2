@@ -1,0 +1,48 @@
+FROM ubuntu:16.04
+
+ENV LC_ALL C
+ENV USER {{ server_user }}
+ENV JOBS {{ server_jobs | default(ansible_processor_vcpus) }}
+ENV SHELL /bin/bash
+ENV HOME /home/{{ server_user }}
+ENV PATH /usr/lib/ccache/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV NODE_COMMON_PIPE /home/{{ server_user }}/test.pipe
+ENV NODE_TEST_DIR /home/{{ server_user }}/tmp
+ENV OSTYPE linux-gnu
+ENV OSVARIANT docker
+ENV DESTCPU x64
+ENV ARCH x64
+
+RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
+    ccache \
+    g++ \
+    gcc \
+    git \
+    openjdk-8-jre-headless \
+    curl \
+    python-pip \
+    libfontconfig1
+
+RUN pip install tap2junit
+
+RUN addgroup --gid 1000 {{ server_user }}
+
+RUN adduser --gid 1000 --uid 1000 --disabled-password --gecos {{ server_user }} {{ server_user }}
+
+RUN mkdir -p /tmp/openssl_1.1.0g && \
+    cd /tmp/openssl_1.1.0g && \
+    curl -sL https://github.com/openssl/openssl/archive/OpenSSL_1_1_0g.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=/opt/openssl && \
+    make -j 6 && \
+    make install
+
+VOLUME [ "/home/{{ server_user }}/" ]
+
+USER iojs:iojs
+
+CMD cd /home/iojs \
+  && curl https://ci.nodejs.org/jnlpJars/slave.jar -O \
+  && java -Xmx{{ server_ram|default('128m') }} \
+          -jar /home/{{ server_user }}/slave.jar \
+          -jnlpUrl {{ jenkins_url }}/computer/{{ item.name }}/slave-agent.jnlp \
+          -secret {{ item.secret }}
