@@ -12,7 +12,7 @@
   args:
     src: "{{ monitrc }}"
     dest: "/etc/monitrc"
-    mode: 0440
+    mode: 0400
   loop_control:
     loop_var: monitrc
   with_first_found:

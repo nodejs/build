@@ -1,7 +1,7 @@
 ---
 
 #
-# alpine34 repos - these are required in bootstrap so they're probably in place
+# alpine3 repos - these are required in bootstrap so they're probably in place
 #
 
 - name: "repos : add alpine edge package repos"

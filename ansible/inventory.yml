@@ -102,8 +102,10 @@ hosts:
         aix61-ppc64-1: {ip: 50.200.166.131, port: 18822}
 
     - joyent:
-        alpine34-x64-1: {ip: 72.2.114.80}
-        alpine34-x64-2: {ip: 72.2.115.165}
+        alpine34-x64-1: {ip: 72.2.114.80, server_jobs: 2}
+        alpine34-x64-2: {ip: 72.2.115.165, server_jobs: 2}
+        alpine35-x64-1: {ip: 72.2.119.198, server_jobs: 2}
+        alpine35-x64-2: {ip: 72.2.118.27, server_jobs: 2}
         freebsd10-x64-1: {ip: 72.2.115.15}
         freebsd10-x64-2: {ip: 72.2.114.23}
         smartos14-x64-1: {ip: 72.2.114.47}

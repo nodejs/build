@@ -1,7 +1,7 @@
 ---
 
 #
-#  alpine 3.4
+#  alpine 3.x
 #
 
 - name: check for python
@@ -24,14 +24,20 @@
     create: yes
     line: "{{ item }}"
     state: present
-  with_items: "{{ alpine34_repos }}"
+  with_items: "{{ alpine3_repos }}"
   register: has_added_package_repo
 
 - name: check for shadow
-  raw: apk info -q shadow
+  raw: apk info | grep shadow
   failed_when: has_shadow.rc > 1
   register: has_shadow
 
 - name: install shadow
   when: has_shadow.rc == 1
   raw: apk add shadow
+
+# required for bug on Joyent for Alpine 3.4 using OpenSSL 7.5+
+# discussio @ https://github.com/nodejs/build/pull/989
+- name: fix openssl to < 7.5
+  raw: apk add 'openssh<7.5'
+
