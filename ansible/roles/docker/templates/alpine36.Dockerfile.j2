@@ -1,0 +1,57 @@
+FROM alpine:3.6
+
+ENV LC_ALL C
+ENV USER {{ server_user }}
+ENV JOBS {{ server_jobs | default(ansible_processor_vcpus) }}
+ENV SHELL /bin/bash
+ENV HOME /home/{{ server_user }}
+ENV PATH /usr/lib/ccache/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV NODE_COMMON_PIPE /home/{{ server_user }}/test.pipe
+ENV NODE_TEST_DIR /home/{{ server_user }}/tmp
+ENV OSTYPE linux-gnu
+ENV OSVARIANT docker
+ENV DESTCPU x64
+ENV ARCH x64
+
+RUN echo 'https://dl-3.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories && \
+    echo 'https://dl-3.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
+
+RUN apk add --no-cache \
+        libstdc++ \
+    && apk add --no-cache --virtual .build-deps \
+        shadow \
+        binutils-gold \
+        curl \
+        g++ \
+        gcc \
+        gnupg \
+        libgcc \
+        linux-headers \
+        make \
+        paxctl \
+        python \
+        tar \
+        ccache \
+        openjdk8 \
+        git \
+        procps \
+        openssh-client \
+        py2-pip \
+        bash
+
+RUN pip install tap2junit
+
+RUN addgroup -g 1000 {{ server_user }}
+
+RUN adduser -G {{ server_user }} -D -u 1000 {{ server_user }}
+
+VOLUME [ "/home/{{ server_user }}/" ]
+
+USER iojs:iojs
+
+CMD cd /home/iojs \
+  && curl https://ci.nodejs.org/jnlpJars/slave.jar -O \
+  && java -Xmx{{ server_ram|default('128m') }} \
+          -jar /home/{{ server_user }}/slave.jar \
+          -jnlpUrl {{ jenkins_url }}/computer/{{ item.name }}/slave-agent.jnlp \
+          -secret {{ item.secret }}
