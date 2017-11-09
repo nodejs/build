@@ -42,6 +42,8 @@ These playbooks are available to you:
 
   - **jenkins/worker/upgrade-jar.yml**: Upgrades the worker jar file.
 
+  - **jenkins/docker-host.yml**: Sets up a host to run Docker workers.
+
   - **jenkins/linter.yml**: Sets up the code linters (flavour of a worker).
 
   - **create-webhost.yml**: Configures the server(s) that host nodejs.org,
@@ -66,7 +68,6 @@ These playbooks are available to you:
 If something isn't working, you will likely get a warning or error.
 Have a look at the playbooks or roles. They are well documented and should
 (hopefully) be easy to improve.
-
 
 ## Adding a new host to inventory.yml
 
@@ -99,7 +100,6 @@ $type-$provider(_$optionalmeta)-$os-$architecture(_$optionalmeta)-$uid
 For more information refer to other hosts in `inventory.yml` or the
 [ansible callback that is responsible for parsing it][callback].
 
-
 ### Metadata
 
 Each host needs a bit of metadata:
@@ -130,7 +130,29 @@ ansible_python_interpreter: /usr/local/bin/python
           since that will enable the `paramiko` connection plugin, disregard
           other ssh-specific options.
 
+### Docker host configuration options
 
+When configuring a Docker host using the `jenkins/docker-host.yml` playbook,
+your host_vars file for the new host(s) will need to have a special set of
+options to configure the containers run on the host. It should look something
+like this:
+
+```yaml
+containers:
+  - { name: 'test-digitalocean-alpine34_container-x64-1', os: 'alpine34', secret: 'abc123' }
+  - { name: 'test-digitalocean-alpine35_container-x64-1', os: 'alpine35', secret: 'abc456' }
+  - { name: 'test-digitalocean-alpine36_container-x64-1', os: 'alpine36', secret: 'abc567' }
+  - { name: 'test-digitalocean-ubuntu1604_container-x64-1', os: 'ubuntu1604', secret: 'abc890' }
+```
+
+Where each item corresponds to a container to be set up and run on the host.
+
+Each `name` should exist as a node in Jenkins and the corresponding `secret`
+should be given. The `os` determines the `Dockerfile` to use to build the host.
+The templates for these can be found in `roles/docker/templates/`.
+
+Note that the Docker host itself doesn't need to be known by Jenkins, just the
+containers that are managed there.
 
 ### TODO
 
