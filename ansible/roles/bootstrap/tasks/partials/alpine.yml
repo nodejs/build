@@ -35,3 +35,9 @@
 - name: install shadow
   when: has_shadow.rc == 1
   raw: apk add shadow
+
+# required for bug on Joyent for Alpine 3.4 using OpenSSL 7.5+
+# discussio @ https://github.com/nodejs/build/pull/989
+- name: fix openssl to < 7.5
+  raw: apk add 'openssh<7.5'
+

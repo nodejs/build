@@ -57,6 +57,7 @@ valid = {
 # - ip [string] (required): ip address of host
 # - alias [string]: 'nickname', will be used in ssh config
 # - labels [sequence]: passed to jenkins
+# - server_jobs [cpus]: passed as JOBS to jenkins
 #
 # parsing done on host naming:
 #
@@ -134,6 +135,9 @@ def main():
 
                         if 'alias' in metadata:
                             c.update({'alias': metadata['alias']})
+
+                        if 'server_jobs' in metadata:
+                            c.update({'server_jobs': metadata['server_jobs']})
 
                         if 'win' in hostname:
                             c.update({'is_win': True})

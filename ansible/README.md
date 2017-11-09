@@ -104,12 +104,13 @@ For more information refer to other hosts in `inventory.yml` or the
 
 Each host needs a bit of metadata:
 
-  - (required) `ip`: used both by ansible and placed in your ssh config.
-  - `user`: only provide if ssh requires a non-root login. Passing this
+  - (required) `ip`: used both by ansible and placed in your ssh config
+  - `user`: only provide if ssh requires a non-root login—passing this
              will additionally make ansible try to become root for all
-             commands executed.
-  - `alias`: creates shorthand names for ssh convenience.
-  - `labels`: Each host can also labels. More on that below.
+             commands executed
+  - `alias`: creates shorthand names for ssh convenience
+  - `labels`: each host can also labels, more on that below
+  - `server_jobs`: fix the number of parallel compile and test processes
 
 ### Adding extra options to a host
 
