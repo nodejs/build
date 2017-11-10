@@ -136,7 +136,7 @@ hosts:
         ubuntu1404-ppc64_le-2: {ip: 140.211.168.94}
 
     - rackspace:
-        centos7-x64-1: {ip: 23.253.249.127}
+        centos7-x64-1: {ip: 119.9.27.82}
         debian8-x64-1: {ip: 23.253.109.216}
         debian8-x64-2: {ip: 104.239.140.184}
         fedora22-x64-1: {ip: 119.9.51.79}
