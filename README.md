@@ -43,6 +43,7 @@ missing please open an issue. If you are interested in joining check out
 
 ### Infra Admins
 
+- [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
@@ -50,6 +51,7 @@ missing please open an issue. If you are interested in joining check out
 
 ### Release Admins
 
+- [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
