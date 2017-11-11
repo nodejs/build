@@ -22,6 +22,10 @@ of members is [here][Build WG Members].
 A subsection of build members have access to infra machines
 (`infra-*`). The list of members is [here][Infra Admins].
 
+The infra group also have access to:
+- [DigitalOcean Droplets][]
+- [Packet.net][]
+
 ### Release machines
 
 A subsection of build members have access to release machines
@@ -78,3 +82,5 @@ including GitHub and Jenkins secrets. The list of members is
 [org owners]: https://github.com/orgs/nodejs/people?utf8=%E2%9C%93&query=%20role%3Aowner
 [post-mortem jobs]: https://ci.nodejs.org/view/post-mortem/
 [secrets repo]: https://github.com/nodejs/secrets
+[DigitalOcean Droplets]: https://cloud.digitalocean.com/droplets
+[Packet.net]: https://app.packet.net/portal
