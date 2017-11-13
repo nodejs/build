@@ -205,7 +205,6 @@ while not used actively in the CI infrastructure, is used from time to time for
 R&D purposes by the project.
 
 
-
 ## CI Software
 
 Build and test orchestration is performed by [Jenkins][21].
@@ -214,6 +213,9 @@ Build and test orchestration is performed by [Jenkins][21].
 - A listing of connected servers for testing, building and benchmarking
   can be found at: <https://ci.nodejs.org/computer/>
 
+The Build WG will keep build configuration required for a release line for 6
+months after the release goes End-of-Life, in case further build or test runs
+are required. After that the configuration will be removed.
 
 
 [1]:    irc://irc.freenode.net/node-build
