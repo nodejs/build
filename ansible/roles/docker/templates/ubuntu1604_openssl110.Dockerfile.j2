@@ -12,16 +12,18 @@ ENV OSTYPE linux-gnu
 ENV OSVARIANT docker
 ENV DESTCPU x64
 ENV ARCH x64
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
-    ccache \
-    g++ \
-    gcc \
-    git \
-    openjdk-8-jre-headless \
-    curl \
-    python-pip \
-    libfontconfig1
+RUN apt-get update && apt-get install apt-utils -y && \
+    apt-get dist-upgrade -y && apt-get install -y \
+      ccache \
+      g++ \
+      gcc \
+      git \
+      openjdk-8-jre-headless \
+      curl \
+      python-pip \
+      libfontconfig1
 
 RUN pip install tap2junit
 
@@ -29,12 +31,25 @@ RUN addgroup --gid 1000 {{ server_user }}
 
 RUN adduser --gid 1000 --uid 1000 --disabled-password --gecos {{ server_user }} {{ server_user }}
 
+ENV OPENSSL110DIR /opt/openssl-1.1.0g
+
 RUN mkdir -p /tmp/openssl_1.1.0g && \
     cd /tmp/openssl_1.1.0g && \
     curl -sL https://github.com/openssl/openssl/archive/OpenSSL_1_1_0g.tar.gz | tar zxv --strip=1 && \
-    ./config --prefix=/opt/openssl && \
+    ./config --prefix=$OPENSSL110DIR && \
     make -j 6 && \
-    make install
+    make install && \
+    rm -rf /tmp/openssl_1.1.0g
+
+ENV FIPS20DIR /opt/openssl-fips_2.0.16
+
+RUN FIPSDIR=$FIPS20DIR mkdir -p /tmp/openssl-fips_2.0.16 && \
+    cd /tmp/openssl-fips_2.0.16 && \
+    curl -sL https://openssl.org/source/openssl-fips-2.0.16.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$FIPS20DIR && \
+    make && \
+    make install && \
+    rm -rf /tmp/openssl-fips_2.0.16
 
 VOLUME [ "/home/{{ server_user }}/" ]
 
