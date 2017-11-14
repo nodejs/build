@@ -5,7 +5,7 @@ ENV USER {{ server_user }}
 ENV JOBS {{ server_jobs | default(ansible_processor_vcpus) }}
 ENV SHELL /bin/bash
 ENV HOME /home/{{ server_user }}
-ENV PATH /usr/lib/ccache/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH /usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV NODE_COMMON_PIPE /home/{{ server_user }}/test.pipe
 ENV NODE_TEST_DIR /home/{{ server_user }}/tmp
 ENV OSTYPE linux-gnu
