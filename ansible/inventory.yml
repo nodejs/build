@@ -113,6 +113,7 @@ hosts:
         smartos15-x64-2: {ip: 165.225.139.77}
         smartos16-x64-1: {ip: 72.2.115.252}
         smartos16-x64-2: {ip: 72.2.113.74}
+        ubuntu1604_docker-x64-1: {ip: 72.2.118.27, user: ubuntu}
         ubuntu1710-x64-1: {ip: 37.153.110.33, user: ubuntu}
         ubuntu1710-x64-2: {ip: 8.19.32.121, user: ubuntu}
 
@@ -224,6 +225,7 @@ hosts:
         debian8-x86-1: {ip: 169.44.16.126}
         ubuntu1404-x64-1: {ip: 50.97.245.5}
         ubuntu1404-x86-1: {ip: 50.97.245.9}
+        ubuntu1604_docker-x64-1: {ip: 130.198.66.50}
 
     - packetnet:
         centos7-arm64-1: {ip: 147.75.193.230}
