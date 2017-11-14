@@ -40,9 +40,9 @@ RUN apk add --no-cache \
 
 RUN pip install tap2junit
 
-RUN addgroup -g 1000 {{ server_user }}
+RUN addgroup -g {{ server_user_gid.stdout_lines[0] }} {{ server_user }}
 
-RUN adduser -G {{ server_user }} -D -u 1000 {{ server_user }}
+RUN adduser -G {{ server_user }} -D -u {{ server_user_uid.stdout_lines[0] }} {{ server_user }}
 
 VOLUME [ "/home/{{ server_user }}/" ]
 

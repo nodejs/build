@@ -97,6 +97,14 @@
   with_items:
     - "{{ containers }}"
 
+- name: register {{ server_user }} GID
+  raw: "grep ^{{ server_user }} /etc/passwd | awk -F: '{print $4}'"
+  register: server_user_gid
+
+- name: register {{ server_user }} UID
+  raw: "grep ^{{ server_user }} /etc/passwd | awk -F: '{print $3}'"
+  register: server_user_uid
+
 - name: "docker : make build directory"
   file:
     path: /root/docker-container-{{ item.name }}
