@@ -70,6 +70,7 @@ packages: {
   ],
 
   fedora: [
+    'bzip2',
     'ccache',
     'gcc-c++',
     'git',
