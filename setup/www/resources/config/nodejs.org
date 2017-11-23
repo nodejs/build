@@ -399,22 +399,19 @@ server {
     rewrite ^/download/v8.1.1/SHASUMS256.txt$                    https://$server_name/download/release/v8.1.1/SHASUMS256.txt permanent;
 
     # Rewrite resources to new Foundation website
-    rewrite ^/advisory-board(.*)$                                 https://github.com/nodejs/TSC permanent;
-    rewrite ^/about/advisory-board(.*)$                           https://github.com/nodejs/TSC permanent;
-    rewrite ^/about/advisory-board/?$                             https://github.com/nodejs/TSC permanent;
-    rewrite ^/about/advisory-board/members/?$                     https://github.com/nodejs/TSC permanent;
+    rewrite ^/advisory-board                                      https://github.com/nodejs/TSC permanent;
+    rewrite ^/about/advisory-board                                https://github.com/nodejs/TSC permanent;
     rewrite ^/about/organization/?$                               https://github.com/nodejs/TSC permanent;
-    rewrite ^/about/organization/tsc-meetings/(.*)$               https://github.com/nodejs/TSC/tree/master/meetings permanent;
-    rewrite ^/about/organization/tsc-meetings/?$                  https://github.com/nodejs/TSC/tree/master/meetings permanent;
-    rewrite ^/en/foundation                                       https://foundation.nodejs.org/ permanent;
-    rewrite ^/en/foundation/case-studies                          https://foundation.nodejs.org/resources permanent;
-    rewrite ^/en/foundation/members                               https://foundation.nodejs.org/about/members permanent;
-    rewrite ^/en/foundation/board                                 https://foundation.nodejs.org/about/leadership permanent;
-    rewrite ^/en/foundation/tsc                                   https://github.com/nodejs/TSC permanent;
-    rewrite ^/en/foundation/certification                         https://foundation.nodejs.org/resources/certification permanent;
-    rewrite ^/en/foundation/in-the-news                           https://foundation.nodejs.org/news/in-the-news permanent;
-    rewrite ^/en/foundation/announcements                         https://foundation.nodejs.org/news/announcements permanent;
-    rewrite ^/en/foundation/education                             https://foundation.nodejs.org/resources/certification permanent;
+    rewrite ^/about/organization/tsc-meetings                     https://github.com/nodejs/TSC/tree/master/meetings permanent;
+    rewrite ^/en/foundation/?$                                    https://foundation.nodejs.org/ permanent;
+    rewrite ^/en/foundation/case-studies/?$                       https://foundation.nodejs.org/resources permanent;
+    rewrite ^/en/foundation/members/?$                            https://foundation.nodejs.org/about/members permanent;
+    rewrite ^/en/foundation/board/?$                              https://foundation.nodejs.org/about/leadership permanent;
+    rewrite ^/en/foundation/tsc/?$                                https://github.com/nodejs/TSC permanent;
+    rewrite ^/en/foundation/certification/?$                      https://foundation.nodejs.org/resources/certification permanent;
+    rewrite ^/en/foundation/in-the-news/?$                        https://foundation.nodejs.org/news/in-the-news permanent;
+    rewrite ^/en/foundation/announcements/?$                      https://foundation.nodejs.org/news/announcements permanent;
+    rewrite ^/en/foundation/education/?$                          https://foundation.nodejs.org/resources/certification permanent;
     rewrite ^/foundation/?$                                       https://foundation.nodejs.org/ permanent;
     rewrite ^/foundation/members.html$                            https://foundation.nodejs.org/about/members permanent;
 }
