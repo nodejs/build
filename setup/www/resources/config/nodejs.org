@@ -394,6 +394,10 @@ server {
     rewrite ^/en/docs/guides/debugging_getting_started/           https://$server_name/en/docs/guides/debugging-getting-started/ permanent;
     rewrite ^/ko/docs/guides/debugging_getting_started/           https://$server_name/ko/docs/guides/debugging-getting-started/ permanent;
 
+    # Fix borked process.release in 8.1.1
+    rewrite ^/download/v8.1.1/node-v8.1.1-headers.tar.gz$        https://$server_name/download/release/v8.1.1/node-v8.1.1-headers.tar.gz permanent;
+    rewrite ^/download/v8.1.1/SHASUMS256.txt$                    https://$server_name/download/release/v8.1.1/SHASUMS256.txt permanent;
+
     # Rewrite resources to new Foundation website
     rewrite ^/advisory-board(.*)$                                 https://github.com/nodejs/TSC permanent;
     rewrite ^/about/advisory-board(.*)$                           https://github.com/nodejs/TSC permanent;
