@@ -41,6 +41,16 @@ RUN mkdir -p /tmp/openssl_1.1.0g && \
     make install && \
     rm -rf /tmp/openssl_1.1.0g
 
+ENV OPENSSL102DIR /opt/openssl-1.0.2m
+
+RUN mkdir -p /tmp/openssl_1.0.2m && \
+    cd /tmp/openssl_1.0.2m && \
+    curl -sL https://github.com/openssl/openssl/archive/OpenSSL_1_0_2m.tar.gz | tar zxv --strip=1 && \
+    ./Configure shared linux-x86_64 --prefix=$OPENSSL102DIR -fPIC && \
+    make -j 6 && \
+    make install && \
+    rm -rf /tmp/openssl_1.0.2m
+
 ENV FIPS20DIR /opt/openssl-fips_2.0.16
 
 RUN FIPSDIR=$FIPS20DIR mkdir -p /tmp/openssl-fips_2.0.16 && \
@@ -50,6 +60,16 @@ RUN FIPSDIR=$FIPS20DIR mkdir -p /tmp/openssl-fips_2.0.16 && \
     make && \
     make install && \
     rm -rf /tmp/openssl-fips_2.0.16
+
+ENV ZLIB12DIR /opt/zlib_1.2.11
+
+RUN mkdir -p /tmp/zlib_1.2.11 && \
+    cd /tmp/zlib_1.2.11 && \
+    curl -sL https://zlib.net/zlib-1.2.11.tar.gz | tar zxv --strip=1 && \
+    ./configure --prefix=$ZLIB12DIR && \
+    make -j 6 && \
+    make install && \
+    rm -rf /tmp/zlib_1.2.11
 
 VOLUME [ "/home/{{ server_user }}/" ]
 
