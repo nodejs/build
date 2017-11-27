@@ -126,8 +126,8 @@ hosts:
         rhel72-s390x-2: {ip: 148.100.110.64}
 
     - mininodes:
-        ubuntu1604-arm64_odroid_c2-1: {ip: 70.167.220.147, user: root}
-        ubuntu1604-arm64_odroid_c2-2: {ip: 70.167.220.148, user: root}
+        ubuntu1604-arm64_odroid_c2-1: {ip: 70.167.220.147}
+        ubuntu1604-arm64_odroid_c2-2: {ip: 70.167.220.148}
         ubuntu1604-arm64_odroid_c2-3: {ip: 70.167.220.149, user: odroid}
 
     - osuosl:
