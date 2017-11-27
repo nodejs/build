@@ -395,23 +395,26 @@ server {
     rewrite ^/ko/docs/guides/debugging_getting_started/           https://$server_name/ko/docs/guides/debugging-getting-started/ permanent;
 
     # Fix borked process.release in 8.1.1
-    rewrite ^/download/v8.1.1/node-v8.1.1-headers.tar.gz$        https://$server_name/download/release/v8.1.1/node-v8.1.1-headers.tar.gz permanent;
-    rewrite ^/download/v8.1.1/SHASUMS256.txt$                    https://$server_name/download/release/v8.1.1/SHASUMS256.txt permanent;
+    rewrite ^/download/v8.1.1/node-v8.1.1-headers.tar.gz$         https://$server_name/download/release/v8.1.1/node-v8.1.1-headers.tar.gz permanent;
+    rewrite ^/download/v8.1.1/SHASUMS256.txt$                     https://$server_name/download/release/v8.1.1/SHASUMS256.txt permanent;
 
     # Rewrite resources to new Foundation website
     rewrite ^/advisory-board                                      https://github.com/nodejs/TSC permanent;
     rewrite ^/about/advisory-board                                https://github.com/nodejs/TSC permanent;
     rewrite ^/about/organization/?$                               https://github.com/nodejs/TSC permanent;
     rewrite ^/about/organization/tsc-meetings                     https://github.com/nodejs/TSC/tree/master/meetings permanent;
-    rewrite ^/en/foundation/?$                                    https://foundation.nodejs.org/ permanent;
-    rewrite ^/en/foundation/case-studies/?$                       https://foundation.nodejs.org/resources permanent;
-    rewrite ^/en/foundation/members/?$                            https://foundation.nodejs.org/about/members permanent;
-    rewrite ^/en/foundation/board/?$                              https://foundation.nodejs.org/about/leadership permanent;
-    rewrite ^/en/foundation/tsc/?$                                https://github.com/nodejs/TSC permanent;
-    rewrite ^/en/foundation/certification/?$                      https://foundation.nodejs.org/resources/certification permanent;
-    rewrite ^/en/foundation/in-the-news/?$                        https://foundation.nodejs.org/news/in-the-news permanent;
-    rewrite ^/en/foundation/announcements/?$                      https://foundation.nodejs.org/news/announcements permanent;
-    rewrite ^/en/foundation/education/?$                          https://foundation.nodejs.org/resources/certification permanent;
+    rewrite ^/(en|es|uk)/foundation/?$                            https://foundation.nodejs.org/ permanent;
+    rewrite ^/(en|uk)/foundation/case-studies/?$                  https://foundation.nodejs.org/resources permanent;
+    rewrite ^/(en|uk)/foundation/members/?$                       https://foundation.nodejs.org/about/members permanent;
+    rewrite ^/(en|uk)/foundation/board/?$                         https://foundation.nodejs.org/about/leadership permanent;
+    rewrite ^/(en|uk)/foundation/tsc/?$                           https://github.com/nodejs/TSC permanent;
+    rewrite ^/(en|uk)/foundation/certification/?$                 https://foundation.nodejs.org/resources/certification permanent;
+    rewrite ^/(en|uk)/foundation/in-the-news/?$                   https://foundation.nodejs.org/news/in-the-news permanent;
+    rewrite ^/(en|uk)/foundation/announcements/?$                 https://foundation.nodejs.org/news/announcements permanent;
+    rewrite ^/(en|uk)/foundation/education/?$                     https://foundation.nodejs.org/resources/certification permanent;
     rewrite ^/foundation/?$                                       https://foundation.nodejs.org/ permanent;
     rewrite ^/foundation/members.html$                            https://foundation.nodejs.org/about/members permanent;
+
+    redirect ^/static/documents/casestudies/(.*)$                                    https://foundation.nodejs.org/wp-content/uploads/sites/50/2017/09/$1 permanent;
+    redirect ^/static/documents/minutes/nodejs-foundation-board-meeting-(.*).pdf$    https://github.com/nodejs/board/blob/master/minutes/$1.md permanent;
 }
