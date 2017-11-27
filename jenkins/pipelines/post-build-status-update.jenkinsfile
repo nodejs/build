@@ -56,7 +56,7 @@ def sendBuildStatus(repo, identifier, status, url, commit, ref) {
         'message': message
         ])
 
-    def script = "curl -s -o /dev/null --connect-timeout 5 -X POST " +
+    def script = "curl --ipv4 -s -o /dev/null --connect-timeout 5 -X POST " +
         "-H 'Content-Type: application/json' -d '${buildPayload}' " +
         "http://github-bot.nodejs.org:3333/${repo}/jenkins/${path}"
 
