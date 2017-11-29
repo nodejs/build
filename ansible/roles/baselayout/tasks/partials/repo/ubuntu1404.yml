@@ -4,7 +4,6 @@
 # add PPA for gcc 4.9
 #
 
-
 - name: "repo : add Ubuntu Toolchain PPA"
   apt_repository:
     repo: 'ppa:ubuntu-toolchain-r/test'

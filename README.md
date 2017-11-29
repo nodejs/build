@@ -19,28 +19,52 @@ delivery of binaries and source code to end-users.
 This repository contains information used to set up and maintain the various
 pieces of Node.js Foundation infrastructure managed by the Build Working Group.
 It is intended to be open and transparent, if you see any relevant information
-missing please open an issue.
+missing please open an issue. If you are interested in joining check out
+[this][Joining the Build WG].
 
+## Build WG Members
 
+- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+- [@gdams](https://github.com/gdams) - George Adams
+- [@geek](https://github.com/geek) - Wyatt Preul
+- [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
+- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+- [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
+- [@kunalspathak](https://github.com/kunalspathak) - Kunal Pathak
+- [@maclover7](https://github.com/maclover7) - Jon Moss
+- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+- [@mylesborins](https://github.com/mylesborins) - Myles Borins
+- [@phillipj](https://github.com/phillipj) - Phillip Johnsen
+- [@piccoloaiutante](https://github.com/piccoloaiutante) - Michele Capra
+- [@refack](https://github.com/refack) - Refael Ackermann
+- [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@trott](https://github.com/trott) - Rich Trott
 
-## People
+### Infra Admins
 
-- Wyatt Preul [@geek](https://github.com/geek)
-- Gibson Fahnestock [@gibfahn](https://github.com/gibfahn)
-- Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
-- João Reis [@joaocgreis](https://github.com/joaocgreis)
-- Michael Dawson [@mhdawson](https://github.com/mhdawson)
-- Myles Borins [@mylesborins](https://github.com/mylesborins)
-- Phillip Johnsen [@phillipj](https://github.com/phillipj)
-- Rod Vagg [@rvagg](https://github.com/rvagg)
-- Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
-- Rich Trott [@trott](https://github.com/trott)
-- Kunal Pathak [@kunalspathak](https://github.com/kunalspathak)
-- Refael Ackermann [@refack](https://github.com/refack)
+- [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
+- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+- [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+- [@rvagg](https://github.com/rvagg) - Rod Vagg
 
-Note that different groups within the build WG have different access. For more
-information see [access.md][].
+### Release Admins
 
+- [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
+- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+- [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@rvagg](https://github.com/rvagg) - Rod Vagg
+
+### Github Bot Admins
+
+- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+- [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@phillipj](https://github.com/phillipj) - Phillip Johnsen
+- [@rvagg](https://github.com/rvagg) - Rod Vagg
+
+For more information about accesses and team roles see [access.md][].
 
 ## Infrastructure Providers
 
@@ -91,7 +115,7 @@ and speed in our CI system.
   - Via their cloud company, [SoftLayer][11], provides hardware for
     testing and benchmarking for the Node.js project's CI system.
   - Via the [Oregon State University Open Source Lab][12], provides
-   PPC-based test and build infrastructure.
+    PPC-based test and build infrastructure.
   - Via the [IBM LinuxOne(TM) Community Cloud][13], provides linuxOne
     based test and build infrastructure.
 
@@ -113,6 +137,18 @@ and speed in our CI system.
 - **[ARM][17]**: semiconductor intellectual property supplier, have donated
   ARMv8 hardware used by the Node.js CI system for build and testing Node.js.
 
+- **[Intel][22]**: "the world leader in silicon innovation," contributes
+  hardware used for benchmarking in the Node.js project's CI system to advance
+  and accelerate Node.js performance.
+
+  Node.js project's CI system.
+
+- **[MacStadium][23]**: Managed hosting provider for Mac. Provides Mac
+  hardware used for testing in the Node.js project's CI system.
+
+- **[Packet][24]**: Bare metal cloud for developers. Through their
+  [Works on Arm](https://www.worksonarm.com/),
+  Packet provides ARM64 build infrastructure.
 
 ### Community Donations
 
@@ -150,8 +186,8 @@ companies that have donated miscellaneous hardware:
 - KahWee Teng [@kahwee](https://github.com/kahwee) for a Raspberry Pi 3
 - Chinmay Pendharkar [@notthetup](https://github.com/notthetup) and Sayanee Basu [@sayanee](https://github.com/sayanee) for a Raspberry Pi 3
 - Michele Capra [@piccoloaiutante](https://github.com/piccoloaiutante) for a Raspberry Pi 3
-- [Pivotal Agency](pivotal) for two Raspberry Pi 3's
-- [SecuroGroup](securo) for two Raspberry Pi 1 B+'s and two Raspberry Pi 3's
+- [Pivotal Agency][pivotal] for two Raspberry Pi 3's
+- [SecuroGroup][securo] for two Raspberry Pi 1 B+'s and two Raspberry Pi 3's
 - William Kapke [@williamkapke](https://github.com/williamkapke) for three Raspberry Pi 3's and networking equipment
 - Jonathan Barnett [@indieisaconcept](https://github.com/indieisaconcept) for a Raspberry Pi B+
 - James Snell [@jasnell](https://github.com/jasnell) for a Raspberry Pi 2
@@ -180,8 +216,6 @@ Build and test orchestration is performed by [Jenkins][21].
 
 
 
-[node]: https://nodejs.org/
-[ns]:   https://nodesource.com/
 [1]:    irc://irc.freenode.net/node-build
 [2]:    https://digitalocean.com/
 [3]:    https://www.rackspace.com/
@@ -203,6 +237,12 @@ Build and test orchestration is performed by [Jenkins][21].
 [19]:   http://techtribe.nl
 [20]:   https://tessel.io/
 [21]:   https://jenkins.io/
+[22]:   https://www.intel.com/
+[23]:   https://www.macstadium.com/
+[24]:   https://www.packet.net/
+[Joining the Build WG]: /doc/process/joining_the_build_wg.md
+[access.md]: ./doc/access.md
+[node]: https://nodejs.org/
+[ns]:   https://nodesource.com/
 [pivotal]: https://www.pivotalagency.com.au/
 [securo]: http://securogroup.com/
-[access.md]: ./doc/access.md

@@ -36,11 +36,11 @@ function onData (err, computers) {
                rnd(c.monitorData['hudson.node_monitors.TemporarySpaceMonitor'].size / 1024 / 1024 / 1024)
 
     log('title', c.displayName)
-    log('plain', `\t               Idle: ${c.idle}`)
+    //log('plain', `\t               Idle: ${c.idle}`)
     log(c.offline ? 'bad' : 'good', `\t            Offline: ${c.offline}`)
     log(c.temporarilyOffline ? 'bad' : 'good', `\tTemporarily offline: ${c.temporarilyOffline}`)
-    log('plain', `\t               Disk: ${disk || '?'} G`)
-    log('plain', `\t     Temporary disk: ${temp || '?'} G`)
+    //log('plain', `\t               Disk: ${disk || '?'} G`)
+    //log('plain', `\t     Temporary disk: ${temp || '?'} G`)
   })
 }
 

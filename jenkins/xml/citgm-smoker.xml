@@ -1,0 +1,459 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<matrix-project plugin="matrix-project@1.12">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.security.AuthorizationMatrixProperty>
+      <inheritanceStrategy class="org.jenkinsci.plugins.matrixauth.inheritance.InheritParentStrategy"/>
+      <permission>hudson.model.Item.Build:nodejs*citgm</permission>
+      <permission>hudson.model.Item.Build:nodejs*citgm-admins</permission>
+      <permission>hudson.model.Item.Cancel:nodejs*citgm</permission>
+      <permission>hudson.model.Item.Cancel:nodejs*citgm-admins</permission>
+      <permission>hudson.model.Item.Configure:nodejs*citgm-admins</permission>
+      <permission>hudson.model.Item.Delete:nodejs*citgm-admins</permission>
+      <permission>hudson.model.Item.Discover:nodejs*citgm</permission>
+      <permission>hudson.model.Item.Discover:nodejs*citgm-admins</permission>
+      <permission>hudson.model.Item.Move:nodejs*citgm-admins</permission>
+      <permission>hudson.model.Item.Read:nodejs*citgm</permission>
+      <permission>hudson.model.Item.Read:nodejs*citgm-admins</permission>
+      <permission>hudson.model.Item.Workspace:nodejs*citgm</permission>
+      <permission>hudson.model.Item.Workspace:nodejs*citgm-admins</permission>
+      <permission>hudson.model.Run.Delete:nodejs*citgm-admins</permission>
+      <permission>hudson.model.Run.Replay:nodejs*citgm</permission>
+      <permission>hudson.model.Run.Replay:nodejs*citgm-admins</permission>
+      <permission>hudson.model.Run.Update:nodejs*citgm</permission>
+      <permission>hudson.model.Run.Update:nodejs*citgm-admins</permission>
+    </hudson.security.AuthorizationMatrixProperty>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.28.1">
+      <projectUrl>https://github.com/nodejs/node/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>GITHUB_ORG</name>
+          <description>The user/org of the GitHub repo</description>
+          <defaultValue>nodejs</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REPO_NAME</name>
+          <description>The name of the repo</description>
+          <defaultValue>node</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GIT_REMOTE_REF</name>
+          <description>The remote portion of the Git refspec to fetch and test |
+examples:
+refs/heads/:branch |
+refs/pull/:pr-number/head</description>
+          <defaultValue>refs/heads/master</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REBASE_ONTO</name>
+          <description>Optionally, rebase onto the given ref before testing. Leave blank to skip rebasing. |
+examples:
+origin/master</description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>NODES_SUBSET</name>
+          <description>The subset of nodes to run tests on</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>io.js</string>
+              <string>0.12</string>
+              <string>0.10</string>
+              <string>pure_docs_change</string>
+              <string>all_nodes</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>GIT_ORIGIN_SCHEME</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>https://github.com/</string>
+              <string>git@github.com:</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>CITGM_LOGLEVEL</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>verbose</string>
+              <string>silly</string>
+              <string>info</string>
+              <string>warn</string>
+              <string>error</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>NPM_LOGLEVEL</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>error</string>
+              <string>warn</string>
+              <string>info</string>
+              <string>verbose</string>
+              <string>silly</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>CITGM</name>
+          <description>what citgm should npm install
+
+npm install -g $CITGM
+
+Can be replaced with any npm compatible path</description>
+          <defaultValue>citgm</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>CITGM_COMMAND</name>
+          <description>Command to be executed
+
+For parallel
+e.x. citgm-all -J
+
+If you want to test a specific module
+
+e.x. citgm omg-i-pass # this too shall pass</description>
+          <defaultValue>citgm-all -J</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>DISABLE_READABLE_STREAM</name>
+          <description>export READABLE_STREAM=disable (defaults to not exporting)</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <matrixOptions>
+        <throttleMatrixBuilds>true</throttleMatrixBuilds>
+        <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
+      </matrixOptions>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.6.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name>origin</name>
+        <refspec>+refs/heads/*:refs/remotes/origin/* +$GIT_REMOTE_REF:refs/remotes/origin/_jenkins_local_branch</refspec>
+        <url>$GIT_ORIGIN_SCHEME$GITHUB_ORG/$REPO_NAME.git</url>
+        <credentialsId>96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>refs/heads/_jenkins_local_branch</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GithubWeb">
+      <url>https://github.com/nodejs/node</url>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanCheckout/>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>false</shallow>
+        <noTags>false</noTags>
+        <reference>/home/iojs/git/io.js.reference</reference>
+        <timeout>20</timeout>
+        <depth>0</depth>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
+      <hudson.plugins.git.extensions.impl.ChangelogToBranch>
+        <options>
+          <compareRemote>origin</compareRemote>
+          <compareTarget>_jenkins_local_branch~1</compareTarget>
+        </options>
+      </hudson.plugins.git.extensions.impl.ChangelogToBranch>
+      <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+        <relativeTargetDir>node</relativeTargetDir>
+      </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+    </extensions>
+  </scm>
+  <assignedNode>jenkins-workspace</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <axes>
+    <hudson.matrix.LabelAxis>
+      <name>nodes</name>
+      <values>
+        <string>aix61-ppc64</string>
+        <string>debian8-64</string>
+        <string>fedora22</string>
+        <string>fedora23</string>
+        <string>osx1010</string>
+        <string>ppcbe-ubuntu1404</string>
+        <string>ppcle-ubuntu1404</string>
+        <string>rhel72-s390x</string>
+        <string>ubuntu1204-64</string>
+        <string>ubuntu1404-64</string>
+        <string>ubuntu1604-64</string>
+        <string>win-vs2015</string>
+      </values>
+    </hudson.matrix.LabelAxis>
+  </axes>
+  <combinationFilter>NODES_SUBSET==&quot;all_nodes&quot; || NODES_SUBSET==&quot;io.js&quot; || (NODES_SUBSET==&quot;0.12&quot; &amp;&amp; [&quot;centos5-32&quot;,&quot;centos5-64&quot;,&quot;centos6-64&quot;,&quot;centos7-64&quot;,&quot;debian8-64&quot;,&quot;ubuntu1204-64&quot;,&quot;ubuntu1404-32&quot;,&quot;ubuntu1404-64&quot;,&quot;ubuntu1504-64&quot;,&quot;fedora21&quot;,&quot;fedora22&quot;,&quot;fedora23&quot;,&quot;osx1010&quot;].contains(nodes)) || (NODES_SUBSET==&quot;0.10&quot; &amp;&amp; [&quot;centos5-32&quot;,&quot;centos5-64&quot;,&quot;centos6-64&quot;,&quot;centos7-64&quot;,&quot;debian8-64&quot;,&quot;ubuntu1204-64&quot;,&quot;ubuntu1404-32&quot;,&quot;ubuntu1404-64&quot;,&quot;ubuntu1504-64&quot;,&quot;fedora21&quot;,&quot;fedora22&quot;,&quot;fedora23&quot;,&quot;osx1010&quot;].contains(nodes))</combinationFilter>
+  <builders>
+    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.0">
+        <expression>(?!Windows_NT)</expression>
+        <label>${ENV, var=&quot;OS&quot;}</label>
+      </runCondition>
+      <conditionalbuilders>
+        <hudson.tasks.Shell>
+          <command>cd node
+if [ -n &quot;${REBASE_ONTO}&quot; ]; then
+  git --version
+  git status
+  git rev-parse HEAD
+  git rev-parse $REBASE_ONTO
+
+  git config --replace-all user.name Dummy
+  git config --replace-all user.email dummy@dummy.com
+  git config user.name
+  git config user.email
+  echo $GIT_COMMITTER_NAME
+  echo $GIT_AUTHOR_NAME
+
+  git rebase --abort || true
+  git checkout -B _jenkins_rebase_branch
+  git rebase --committer-date-is-author-date $REBASE_ONTO
+
+  git status
+  git rev-parse HEAD
+fi
+</command>
+        </hudson.tasks.Shell>
+        <hudson.tasks.Shell>
+          <command># Diagnostics
+set +x
+DIAGFILE=${HOME}/jenkins_diagnostics.txt
+echo &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+TS=&quot;`date`&quot;
+echo $TS
+echo $TS &gt;&gt; ${DIAGFILE}
+echo &quot;Before building&quot; &gt;&gt; ${DIAGFILE}
+echo $BUILD_TAG &gt;&gt; ${DIAGFILE}
+echo $BUILD_URL &gt;&gt; ${DIAGFILE}
+echo $NODE_NAME &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;netstat -anp&quot; &gt;&gt; ${DIAGFILE}
+netstat -anp &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;netstat -gn&quot; &gt;&gt; ${DIAGFILE}
+netstat -gn &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;ps auxww&quot; &gt;&gt; ${DIAGFILE}
+ps auxww &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+mv ${DIAGFILE} ${DIAGFILE}-OLD || true
+tail -c 20000000 ${DIAGFILE}-OLD &gt; ${DIAGFILE} || true
+rm ${DIAGFILE}-OLD || true
+set -x
+pgrep node || true
+</command>
+        </hudson.tasks.Shell>
+        <hudson.tasks.Shell>
+          <command>#!/bin/bash -x
+cd node
+NODE_VERSION=$(python tools/getnodeversion.py)
+
+CONFIG_FLAGS=&quot;--with-intl=small-icu --download=all --download-path=${HOME}/node-icu/&quot;
+mkdir -p ${HOME}/node-icu/
+if [[ $NODE_VERSION =~ ^0\.10 ]]; then
+  CONFIG_FLAGS=&quot;&quot;
+fi
+rm -rf &quot;$WORKSPACE&quot;/smoker
+mkdir &quot;$WORKSPACE&quot;/smoker
+
+if [ `uname -s`	 = &quot;AIX&quot; ]; then
+    MAKE=gmake
+    unset LIBPATH
+	echo $LIBPATH
+    export CC=gcc
+else 
+    MAKE=make
+fi
+
+python ./configure --prefix=&quot;$WORKSPACE&quot;/smoker $CONFIG_FLAGS
+$MAKE -j $(getconf _NPROCESSORS_ONLN 2&gt;/dev/null || echo 20)
+$MAKE install
+</command>
+        </hudson.tasks.Shell>
+        <hudson.tasks.Shell>
+          <command>cd smoker
+
+export PATH=$(pwd)/bin:$PATH
+
+node -v
+npm -v
+npm set progress=false
+npm set cache=&quot;$WORKSPACE/npm_cache&quot;
+
+if [ `uname -s`	 = &quot;AIX&quot; ]; then
+    export npm_config_tmp=&apos;/ramdisk0/citgm&apos;
+    export npm_config_nodedir=&apos;/ramdisk0/citgm&apos;
+fi
+
+npm install --prefix=$(pwd) --global --loglevel=error $CITGM
+</command>
+        </hudson.tasks.Shell>
+        <hudson.tasks.Shell>
+          <command>cd smoker
+
+export PATH=$(pwd)/bin:$PATH
+retval=0
+
+export npm_loglevel=error
+export npm_config_nodedir=&quot;$WORKSPACE/node&quot;
+
+temp=&quot;$WORKSPACE&quot;/citgm_tmp
+if [ `uname -s`	 = &quot;AIX&quot; ]; then
+	temp=/ramdisk0/citgm
+    export npm_config_tmp=&apos;/ramdisk0/citgm&apos;
+    unset LIBPATH
+	echo $LIBPATH
+    export CC=gcc
+fi
+rm -rf $temp || true
+mkdir $temp || true
+
+[ &quot;$DISABLE_READABLE_STREAM&quot; == &quot;true&quot; ] &amp;&amp; export READABLE_STREAM=disable
+
+$CITGM_COMMAND --nodedir=$npm_config_nodedir -v $CITGM_LOGLEVEL -x $PWD/report.xml -q $NPM_LOGLEVEL --tmpDir $temp
+</command>
+        </hudson.tasks.Shell>
+      </conditionalbuilders>
+    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.0">
+        <expression>Windows_NT</expression>
+        <label>${ENV, var=&quot;OS&quot;}</label>
+      </runCondition>
+      <conditionalbuilders>
+        <hudson.tasks.BatchFile>
+          <command>TASKKILL /F /IM node.exe /T || TRUE&#xd;
+TASKKILL /F /IM cctest.exe /T || TRUE&#xd;
+TASKKILL /F /IM run-tests.exe /T || TRUE&#xd;
+&#xd;
+:: smoker dir is only for the report, Release is used to run because there&apos;s no make install&#xd;
+rm -rf smoker&#xd;
+mkdir smoker&#xd;
+if %errorlevel% neq 0 exit /b %errorlevel%&#xd;
+&#xd;
+cd node&#xd;
+IF DEFINED REBASE_ONTO (&#xd;
+  git --version&#xd;
+  git status&#xd;
+  git rev-parse HEAD&#xd;
+  git rev-parse %REBASE_ONTO%&#xd;
+&#xd;
+  git config --replace-all user.name Dummy&#xd;
+  git config --replace-all user.email dummy@dummy.com&#xd;
+  git config user.name&#xd;
+  git config user.email&#xd;
+  echo %GIT_COMMITTER_NAME%&#xd;
+  echo %GIT_AUTHOR_NAME%&#xd;
+&#xd;
+  git rebase --abort&#xd;
+  git checkout -B _jenkins_rebase_branch&#xd;
+  git rebase --committer-date-is-author-date %REBASE_ONTO%&#xd;
+&#xd;
+  git status&#xd;
+  git rev-parse HEAD&#xd;
+)&#xd;
+call vcbuild release nosign x64&#xd;
+if %errorlevel% neq 0 exit /b %errorlevel%&#xd;
+echo on&#xd;
+&#xd;
+set &quot;PATH=%WORKSPACE%\node\Release;%PATH%&quot;&#xd;
+&#xd;
+mkdir Release\node_modules&#xd;
+robocopy /e deps\npm Release\node_modules\npm&#xd;
+copy deps\npm\bin\npm.cmd Release&#xd;
+cd ..&#xd;
+&#xd;
+SET &quot;npm_config_userconfig=%WORKSPACE%\node\Release\npmrc&quot;&#xd;
+SET &quot;npm_config_cache=%WORKSPACE%\node\Release\npm-cache&quot;&#xd;
+SET &quot;npm_config_progress=false&quot;&#xd;
+SET &quot;npm_config_nodedir=%WORKSPACE%\node&quot;&#xd;
+SET &quot;npm_config_python=python2.7&quot;&#xd;
+SET &quot;npm_loglevel=error&quot;&#xd;
+&#xd;
+echo Node version:&#xd;
+call node -v&#xd;
+echo NPM version:&#xd;
+call npm -v&#xd;
+echo on&#xd;
+&#xd;
+::call npm config list -l&#xd;
+::echo on&#xd;
+&#xd;
+cd node\Release&#xd;
+ls&#xd;
+&#xd;
+call npm install --prefix=%WORKSPACE%\node\Release --global --loglevel=error %CITGM%&#xd;
+if %errorlevel% neq 0 exit /b %errorlevel%&#xd;
+echo on&#xd;
+&#xd;
+if %DISABLE_READABLE_STREAM% equ true set &quot;READABLE_STREAM=disable&quot;&#xd;
+&#xd;
+call %CITGM_COMMAND% -v %CITGM_LOGLEVEL% -x %WORKSPACE%/smoker/report.xml -q %NPM_LOGLEVEL%&#xd;
+if %errorlevel% neq 0 exit /b %errorlevel%&#xd;
+echo on&#xd;
+&#xd;
+TASKKILL /F /IM node.exe /T || TRUE&#xd;
+TASKKILL /F /IM cctest.exe /T || TRUE&#xd;
+TASKKILL /F /IM run-tests.exe /T || TRUE&#xd;
+</command>
+        </hudson.tasks.BatchFile>
+      </conditionalbuilders>
+    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+  </builders>
+  <publishers>
+    <hudson.tasks.junit.JUnitResultArchiver plugin="junit@1.21">
+      <testResults>smoker/report.xml</testResults>
+      <keepLongStdio>false</keepLongStdio>
+      <healthScaleFactor>1.0</healthScaleFactor>
+      <allowEmptyResults>false</allowEmptyResults>
+    </hudson.tasks.junit.JUnitResultArchiver>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+  </buildWrappers>
+  <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
+    <runSequentially>false</runSequentially>
+  </executionStrategy>
+</matrix-project>
+    

@@ -1,0 +1,141 @@
+---
+
+#
+# common tasks suitable for all machines
+#
+
+- name: gather facts
+  setup:
+
+- name: set hostname
+  hostname:
+    name: "{{ inventory_hostname|replace('_', '-') }}"
+
+- name: disable sftp
+  when: not os|startswith("win")
+  notify: restart sshd
+  lineinfile:
+    state: absent
+    dest: "{{ ssh_config }}"
+    regexp: ^Subsystem(\s+)sftp
+
+- name: add os-specific repos
+  include: "{{ repos_include }}"
+  loop_control:
+    loop_var: repos_include
+  with_first_found:
+    - files:
+        - "{{ role_path }}/tasks/partials/repo/{{ os }}.yml"
+        - "{{ role_path }}/tasks/partials/repo/{{ os|stripversion }}.yml"
+      skip: true
+
+- name: install packages
+  package:
+    name: "{{ package }}"
+    state: present
+  loop_control:
+    loop_var: package
+  with_items:
+    # ansible doesn't like empty lists
+    - "{{ packages[os]|default('[]') }}"
+    - "{{ packages[os|stripversion]|default('[]') }}"
+    - "{{ common_packages|default('[]') }}"
+
+- name: remove fortune from login shells
+  when: os|stripversion == 'freebsd'
+  lineinfile:
+    dest: "/home/{{ server_user }}/{{ login_item }}"
+    state: absent
+    regexp: fortune freebsd
+  loop_control:
+    loop_var: login_item
+  with_items: [ '.login', '.profile' ]
+
+- name: set up ntp
+  include: "{{ ntp_include }}"
+  loop_control:
+    loop_var: ntp_include
+  with_first_found:
+    - files:
+        - "{{ role_path }}/../baselayout/tasks/partials/ntp/{{ os }}.yml"
+        - "{{ role_path }}/../baselayout/tasks/partials/ntp/{{ os|stripversion }}.yml"
+        - "{{ role_path }}/../baselayout/tasks/partials/ntp/{{ os|match_key(ntp_service, raise_error=False) }}.yml"
+      skip: true
+
+- name: create group
+  group:
+    name: "{{ server_user }}"
+
+- name: create user
+  user:
+    name: "{{ server_user }}"
+    group: "{{ server_user }}"
+
+- name: add ::1 to /etc/hosts for ipv6 compat
+  lineinfile:
+    dest: /etc/hosts
+    state: present
+    line: ::1 localhost.localdomain localhost
+
+- name: create worker directory
+  file:
+    path: "/home/{{ server_user }}/{{ item.name }}/"
+    state: directory
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: 0755
+  with_items:
+    - "{{ containers }}"
+
+- name: create NODE_TEST_DIR directory
+  file:
+    path: "/home/{{ server_user }}/{{ item.name }}/tmp"
+    state: directory
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: 0755
+  with_items:
+    - "{{ containers }}"
+
+- name: register {{ server_user }} GID
+  raw: "grep ^{{ server_user }} /etc/passwd | awk -F: '{print $4}'"
+  register: server_user_gid
+
+- name: register {{ server_user }} UID
+  raw: "grep ^{{ server_user }} /etc/passwd | awk -F: '{print $3}'"
+  register: server_user_uid
+
+- name: "docker : make build directory"
+  file:
+    path: /root/docker-container-{{ item.name }}
+    state: directory
+  with_items:
+    - "{{ containers }}"
+
+- name: "docker : generate Dockerfile"
+  template:
+    src: "{{ role_path }}/templates/{{ item.os }}.Dockerfile.j2"
+    dest: /root/docker-container-{{ item.name }}/Dockerfile
+    mode: "0644"
+  with_items:
+    - "{{ containers }}"
+
+- name: "docker : build image"
+  command: docker build -t node-ci:{{ item.name }} /root/docker-container-{{ item.name }}/
+  with_items:
+    - "{{ containers }}"
+
+- name: "docker : generate and copy init script"
+  template:
+    src: "{{ role_path }}/templates/jenkins.service.j2"
+    dest: "/lib/systemd/system/jenkins-{{ item.name }}.service"
+  with_items:
+    - "{{ containers }}"
+
+- name: "docker : start Jenkins"
+  service:
+    name: "jenkins-{{ item.name }}"
+    state: started
+    enabled: yes
+  with_items:
+    - "{{ containers }}"

@@ -307,10 +307,6 @@ server {
         default_type text/plain;
     }
 
-    rewrite ^/about/advisory-board(.*)$                           https://$server_name/en/foundation/tsc/ permanent;
-    rewrite ^/advisory-board(.*)$                                 https://$server_name/en/foundation/tsc/ permanent;
-    rewrite ^/about/organization/tsc-meetings/?$                  https://$server_name/en/foundation/tsc/minutes/ permanent;
-    rewrite ^/about/organization/tsc-meetings/(.*?)/minutes.html$ https://$server_name/en/foundation/tsc/minutes/$1/ permanent;
     rewrite ^/about/security/?$                                   https://$server_name/en/security/ permanent;
     rewrite ^/contribute/?$                                       https://$server_name/en/get-involved/ permanent;
     rewrite ^/contribute/accepting_contributions.html$            https://github.com/nodejs/dev-policy permanent;
@@ -319,7 +315,6 @@ server {
     rewrite ^/contribute/code_contributions/workflow.html$        https://$server_name/en/get-involved/ permanent;
     rewrite ^/documentation(.*)$                                  https://$server_name/en/docs/ permanent;
     rewrite ^/foundation/blog.html$                               https://$server_name/en/blog/ permanent;
-    rewrite ^/foundation/members.html$                            https://$server_name/en/foundation/members/ permanent;
     rewrite ^/images/foundation-visual-guidelines.pdf$            https://$server_name/static/documents/foundation-visual-guidelines.pdf permanent;
     rewrite ^/images/logos/js-black(.*)$                          https://$server_name/static/images/logos/js-black$1 permanent;
     rewrite ^/images/logos/nodejs-(.*)$                           https://$server_name/static/images/logos/nodejs-$1 permanent;
@@ -333,18 +328,12 @@ server {
     rewrite ^/(20\d\d/\d\d/\d\d/.*)$                              http://blog.nodejs.org/$1 permanent;
 
     rewrite ^/about/?$                                            https://$server_name/en/about/ permanent;
-    rewrite ^/about/advisory-board/?$                             https://$server_name/en/foundation/tsc/ permanent;
-    rewrite ^/about/advisory-board/members/?$                     https://$server_name/en/foundation/tsc/ permanent;
-    rewrite ^/about/organization/?$                               https://$server_name/en/foundation/tsc/ permanent;
-    rewrite ^/about/organization/tsc-meetings/(\d\d\d\d-\d\d-\d\d)/?$ https://$server_name/en/foundation/tsc/minutes/$1/ permanent;
-    rewrite ^/about/organization/tsc-meetings/(\d\d\d\d-\d\d-\d\d)/minutes.html$ https://$server_name/en/foundation/tsc/minutes/$1/ permanent;
     rewrite ^/about/releases/?$                                   https://$server_name/en/about/releases/ permanent;
     rewrite ^/about/resources/?$                                  https://$server_name/en/about/resources/ permanent;
     rewrite ^/about/security/?$                                   https://$server_name/en/security/ permanent;
     rewrite ^/about/trademark/?$                                  https://$server_name/en/about/trademark/ permanent;
     rewrite ^/blog/?$                                             https://$server_name/en/blog/ permanent;
     rewrite ^/community/?$                                        https://$server_name/en/get-involved/ permanent;
-    rewrite ^/foundation/?$                                       https://$server_name/en/foundation/ permanent;
 
     rewrite ^/dist/staging/(.*)$                                  https://$server_name/dist/$1 permanent;
 
@@ -361,34 +350,6 @@ server {
     rewrite ^/logos/                                              https://$server_name/static/images/logos/ permanent;
     rewrite ^/logos/monitor.png                                   https://$server_name/static/images/logos/monitor.png permanent;
     rewrite ^/logos/nodejs(.*)$                                   https://$server_name/static/images/logos/nodejs$1 permanent;
-
-    # Foundation member logos
-    rewrite ^/images/logos/apigee_logo_md.png$                    https://$server_name/static/images/foundation/apigee_logo_md.png permanent;
-    rewrite ^/images/logos/codefreshLogo.png$                     https://$server_name/static/images/foundation/codefreshLogo.png permanent;
-    rewrite ^/images/logos/codefreshLogo2.png$                    https://$server_name/static/images/foundation/codefreshLogo2.png permanent;
-    rewrite ^/images/logos/digitaloceanLogo.png$                  https://$server_name/static/images/foundation/digitaloceanLogo.png permanent;
-    rewrite ^/images/logos/famousLogo.jpg$                        https://$server_name/static/images/foundation/famousLogo.jpg permanent;
-    rewrite ^/images/logos/famousLogo.png$                        https://$server_name/static/images/foundation/famousLogo.png permanent;
-    rewrite ^/images/logos/fidelityLogo.png$                      https://$server_name/static/images/foundation/fidelityLogo.png permanent;
-    rewrite ^/images/logos/godaddyLogo.png$                       https://$server_name/static/images/foundation/godaddyLogo.png permanent;
-    rewrite ^/images/logos/grouponLogo.png$                       https://$server_name/static/images/foundation/grouponLogo.png permanent;
-    rewrite ^/images/logos/ibmLogo.png$                           https://$server_name/static/images/foundation/ibmLogo.png permanent;
-    rewrite ^/images/logos/intelLogo.png$                         https://$server_name/static/images/foundation/intelLogo.png permanent;
-    rewrite ^/images/logos/joyentLogo.svg$                        https://$server_name/static/images/foundation/joyentLogo.svg permanent;
-    rewrite ^/images/logos/microsoftLogo.png$                     https://$server_name/static/images/foundation/microsoftLogo.png permanent;
-    rewrite ^/images/logos/microsoftLogo2.png$                    https://$server_name/static/images/foundation/microsoftLogo2.png permanent;
-    rewrite ^/images/logos/modulusLogo.png$                       https://$server_name/static/images/foundation/modulusLogo.png permanent;
-    rewrite ^/images/logos/nearformLogo.png$                      https://$server_name/static/images/foundation/nearformLogo.png permanent;
-    rewrite ^/images/logos/nearformLogo2.png$                     https://$server_name/static/images/foundation/nearformLogo2.png permanent;
-    rewrite ^/images/logos/nodesourceLogo.png$                    https://$server_name/static/images/foundation/nodesourceLogo.png permanent;
-    rewrite ^/images/logos/npmLogo.png$                           https://$server_name/static/images/foundation/npmLogo.png permanent;
-    rewrite ^/images/logos/paypalLogo.png$                        https://$server_name/static/images/foundation/paypalLogo.png permanent;
-    rewrite ^/images/logos/sapLogo.png$                           https://$server_name/static/images/foundation/sapLogo.png permanent;
-    rewrite ^/images/logos/saucelabsLogo.png$                     https://$server_name/static/images/foundation/saucelabsLogo.png permanent;
-    rewrite ^/images/logos/saucelabsLogo2.png$                    https://$server_name/static/images/foundation/saucelabsLogo2.png permanent;
-    rewrite ^/images/logos/strongloopLogo.png$                    https://$server_name/static/images/foundation/strongloopLogo.png permanent;
-    rewrite ^/images/logos/yldLogo.png$                           https://$server_name/static/images/foundation/yldLogo.png permanent;
-    rewrite ^/images/logos/yldLogo2.png$                          https://$server_name/static/images/foundation/yldLogo2.png permanent;
 
     # legacy v0.12.x docs/ html
     rewrite ^/lfcollab.css$                                       https://$server_name/static/legacy/lfcollab.css permanent;
@@ -432,4 +393,28 @@ server {
     # Fix underscores vs. dashes
     rewrite ^/en/docs/guides/debugging_getting_started/           https://$server_name/en/docs/guides/debugging-getting-started/ permanent;
     rewrite ^/ko/docs/guides/debugging_getting_started/           https://$server_name/ko/docs/guides/debugging-getting-started/ permanent;
+
+    # Fix borked process.release in 8.1.1
+    rewrite ^/download/v8.1.1/node-v8.1.1-headers.tar.gz$         https://$server_name/download/release/v8.1.1/node-v8.1.1-headers.tar.gz permanent;
+    rewrite ^/download/v8.1.1/SHASUMS256.txt$                     https://$server_name/download/release/v8.1.1/SHASUMS256.txt permanent;
+
+    # Rewrite resources to new Foundation website
+    rewrite ^/advisory-board                                      https://github.com/nodejs/TSC permanent;
+    rewrite ^/about/advisory-board                                https://github.com/nodejs/TSC permanent;
+    rewrite ^/about/organization/?$                               https://github.com/nodejs/TSC permanent;
+    rewrite ^/about/organization/tsc-meetings                     https://github.com/nodejs/TSC/tree/master/meetings permanent;
+    rewrite ^/(en|es|uk)/foundation/?$                            https://foundation.nodejs.org/ permanent;
+    rewrite ^/(en|uk)/foundation/case-studies/?$                  https://foundation.nodejs.org/resources permanent;
+    rewrite ^/(en|uk)/foundation/members/?$                       https://foundation.nodejs.org/about/members permanent;
+    rewrite ^/(en|uk)/foundation/board/?$                         https://foundation.nodejs.org/about/leadership permanent;
+    rewrite ^/(en|uk)/foundation/tsc/?$                           https://github.com/nodejs/TSC permanent;
+    rewrite ^/(en|uk)/foundation/certification/?$                 https://foundation.nodejs.org/resources/certification permanent;
+    rewrite ^/(en|uk)/foundation/in-the-news/?$                   https://foundation.nodejs.org/news/in-the-news permanent;
+    rewrite ^/(en|uk)/foundation/announcements/?$                 https://foundation.nodejs.org/news/announcements permanent;
+    rewrite ^/(en|uk)/foundation/education/?$                     https://foundation.nodejs.org/resources/certification permanent;
+    rewrite ^/foundation/?$                                       https://foundation.nodejs.org/ permanent;
+    rewrite ^/foundation/members.html$                            https://foundation.nodejs.org/about/members permanent;
+
+    rewrite ^/static/documents/casestudies/(.*)$                                    https://foundation.nodejs.org/wp-content/uploads/sites/50/2017/09/$1 permanent;
+    rewrite ^/static/documents/minutes/nodejs-foundation-board-meeting-(.*).pdf$    https://github.com/nodejs/board/blob/master/minutes/$1.md permanent;
 }

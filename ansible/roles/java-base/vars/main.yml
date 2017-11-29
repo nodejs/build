@@ -9,12 +9,13 @@ packages: {
   'centos5': 'java-1.7.0-openjdk',
   'centos': 'java-1.8.0-openjdk-headless',
   'debian7': 'openjdk-7-jre-headless',
-  'debian8': 'openjdk-8-jre-headless',
+  'debian8': 'oracle-java8-installer',
   'fedora': 'java-1.8.0-openjdk-headless',
   'freebsd': 'openjdk8-jre',
   'smartos': 'openjdk8',
   'ubuntu': 'openjdk-8-jre-headless',
-  'ubuntu1404': 'openjdk-7-jre-headless',
+  'ubuntu1404': 'oracle-java8-installer',
+  'ubuntu1204': 'oracle-java8-installer',
   }
 
 java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default('missing') }}"

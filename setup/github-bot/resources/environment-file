@@ -6,3 +6,7 @@ GITHUB_WEBHOOK_SECRET={{envs.github_webhook_secret}}
 LOGIN_CREDENTIALS={{envs.login_credentials}}
 NODE_REPO_DIR=/home/{{server_user}}/repos/node
 LOGS_DIR=/home/{{server_user}}/logs
+JENKINS_API_CREDENTIALS={{envs.jenkins_api_credentials}}
+JENKINS_JOB_URL_CITGM={{envs.jenkins_job_url_citgm}}
+JENKINS_BUILD_TOKEN_CITGM={{envs.jenkins_build_token_citgm}}
+JENKINS_WORKER_IPS=147.75.69.113,147.75.73.189

@@ -158,33 +158,48 @@ To set up a host, run:
 $ ansible-playbook -i ../ansible-inventory ansible-playbook.yaml
 ```
 
-## Raspbian
+See the [manual setup instructions](../../docs/non-ansible-configuration-notes.md) for how to provision new hosts or reprovision existing hosts.
 
-Raspbery Pi B+ and Raspberry Pi 2 boxes used in the cluster run Raspbian Wheezy, based on Debian 7 (Wheezy). This distribution is no longer supported so an older version must be used. The last build based on Wheezy was raspbian-2015-05-07, which is available at <http://downloads.raspberrypi.org/raspbian/images/raspbian-2015-05-07/>. Unfortunately, for recent versions of the hardware (verified with B+, the newer version 2 boards are likely the same), they will not boot with the stock raspbian-2015-05-07 image. To fix this image, download the latest Jessie image (verified with raspbian-2016-05-31), extract the first partition of the image (the small FAT32 partition), copy the complete contents of this partition on to the first partition of an SD card that has the Wheezy image ***but*** keep the `cmdline.txt` from the Wheezy version.
+## ARM machines outside core cluster
 
-Raspberry Pi 3 boxes use the latest Raspbian Jessie, based on Debian 8 (Wheezy). As of writing this is raspbian-2016-05-31, available from <http://downloads.raspberrypi.org/raspbian/images/>.
+### nfs_server parameters
 
-### Manual provisioning steps
+For machines outside the core cluser the nfs details are likely
+to be different that the defaults in ansible-vars. Update these
+2 to match your configuration.
 
-Set up SD card:
+```
+nfs_server:
+nfs_share_root:
+```
 
-* Copy image, e.g. `dd if=/tmp/2015-05-05-raspbian-wheezy.img of=/dev/sdh bs=1M conv=fsync` for Pi1's and 2's
-* For Wheezy:
-  - mount partition 1 of the card
-  - remove contents
-  - copy in the contents of the Jessie SD image partition 1
-  - replace `cmdline.txt` from the Wheezy SD image (which simply contains `dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait`)
-  - unmount and sync
+### ssh tunnel
 
-Set up running system, steps to execute in `raspi-config`:
+For machines that do not have a static IP address, a connection can
+be made through an SSH tunnel.
 
-* Expand Filesystem
-* Change User Password
-* Internationalisation Options - Change Keyboard Layout - Generic non-Intl, English (US)
-* Overclock Pi 1 B+ to High
-* Advanced - Hostname, replace `_` with `--`
-* Advanced - Enable SSH
+The following entries need to be added to the host_vars for the host
+in order enable the tunnel on the machine when it is configured
+by ansible:
 
-Then, manually:
+```
+ci_port: XXXXX
+pi_local: "true"
+```
 
-* Set up .ssh/authorized_keys as appropriate for running Ansible
+were XXXXX is the port used by the release ci for jnlp (see
+`Jenkins->Manage Jenkins->Configure Global Security-> TCP port for JNLP agents`
+in jenkins UI.
+
+
+In addition, the ssh private key for the `tunnel` user on the test ci
+must be added as `id_rsa` for the root user on the raspberry pi in
+the .ssh directory.
+
+Finally, the slave must be configured in jenkins for tunneling.
+In the configuration for the machine in the jenkins UI, select the
+`Advanced` button under the Launch method section.  For the
+"Tunnel connection through" parameter set the value to
+`127.0.0.1:XXXXX` were the port is the port used by the
+release ci for jnlp as above.
+

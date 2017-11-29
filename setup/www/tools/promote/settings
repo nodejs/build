@@ -13,6 +13,10 @@ test_srcdir=${staging_rootdir}custom
 test_dstdir=${dist_rootdir}test
 test_dirmatch="-test[0-9]+"
 
+v8_canary_srcdir=${staging_rootdir}custom
+v8_canary_dstdir=${dist_rootdir}v8-canary
+v8_canary_dirmatch="-v8-canary[0-9]+"
+
 nightly_srcdir=${staging_rootdir}nightly
 nightly_dstdir=${dist_rootdir}nightly
 nightly_dirmatch=.*
@@ -20,3 +24,11 @@ nightly_dirmatch=.*
 next_nightly_srcdir=${staging_rootdir}next-nightly
 next_nightly_dstdir=${dist_rootdir}next-nightly
 next_nightly_dirmatch=.*
+
+chakracore_nightly_srcdir=${staging_rootdir}chakracore-nightly
+chakracore_nightly_dstdir=${dist_rootdir}chakracore-nightly
+chakracore_nightly_dirmatch=.*
+
+chakracore_release_srcdir=${staging_rootdir}chakracore-release
+chakracore_release_dstdir=${dist_rootdir}chakracore-release
+chakracore_release_dirmatch=.*

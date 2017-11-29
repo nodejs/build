@@ -4,7 +4,38 @@
 # installs java
 #
 
+- name: install add-apt-repostory
+  when: os in ("ubuntu1204", "ubuntu1404")
+  package: name=software-properties-common state=present
+
+- name: add webupd8 oracle java repository
+  when: os in ("ubuntu1204", "ubuntu1404")
+  apt_repository: repo='ppa:webupd8team/java'
+
+- name: add webupd8team oracle java repository
+  when: os == "debian8"
+  lineinfile:
+    dest: /etc/apt/sources.list
+    state: present
+    line: deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main
+
+- name: add webupd8team oracle java repository key
+  when: os == "debian8"
+  shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+
+- name: accept webupd8 oracle java 8 license
+  when: os in ("ubuntu1204", "ubuntu1404") or os == "debian8"
+  debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
 # if this fails you want to check in vars/main.yml and add package name
 # as appropriate -- try to use generic os family if available.
 - name: install java
+  when: not os|startswith("zos")
   package: name="{{ java_package_name }}" state=present
+
+- name: install webupd8 oracle java 8 extras
+  when: os in ("ubuntu1204", "ubuntu1404")
+  package: name="{{item}}" state=present
+  with_items:
+    - ca-certificates
+    - oracle-java8-set-default

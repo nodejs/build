@@ -1,0 +1,13 @@
+#define _POSIX_SOURCE
+#include <unistd.h>
+extern char **environ;
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/wait.h>
+int main(int argc, char* argv[])
+{
+        char buf[200];
+        sprintf(buf, "cat %s | iconv -t IBM-1047 -f ISO8859-1 | grep -v 'runAsciiBash' | bash", argv[1]);
+        int rc = system(buf);
+        return WEXITSTATUS(rc);
+}

@@ -1,0 +1,68 @@
+#!/usr/bin/env groovy
+
+import groovy.json.JsonOutput
+
+pipeline {
+    agent { label 'jenkins-workspace' }
+
+    parameters {
+        booleanParam(name: 'CERTIFY_SAFE', defaultValue: false, description: 'I have reviewed *the latest version of* these changes and I am sure that they don’t contain any code that could compromise the security of the CI infrastructure.')
+        string(name: 'PR_ID', defaultValue: "", description: 'The numeric ID of the pull request (from GitHub URL)')
+        string(name: 'BRANCH', defaultValue: 'master', description: 'Git branch to use for testing (ignore this value for PRs)')
+    }
+
+    stages {
+        stage("Setup repository") {
+            steps {
+                checkout(poll: false, scm: [
+                    $class: 'GitSCM',
+                    branches: [[
+                        name: (params.PR_ID ? "pr/${params.PR_ID}/head" : params.BRANCH)
+                    ]],
+                    userRemoteConfigs: [[
+                        url: "https://github.com/nodejs/http-parser",
+                        refspec: '+refs/pull/*:refs/remotes/origin/pr/* +refs/heads/*:refs/remotes/origin/*',
+                    ]]
+                ])
+            }
+        }
+
+        stage('Setup build dependencies') {
+            steps {
+                echo "Testing: ${sh(returnStdout: true, script: 'git log -1 --oneline').trim()}"
+
+                sh 'gcc --version'
+                sendBuildStatus("pending", env.PR_ID, env.BUILD_URL, env.GIT_COMMIT)
+            }
+        }
+
+        stage('Run tests') {
+            steps {
+                sh 'make'
+            }
+        }
+    }
+
+    post {
+        success {
+            sendBuildStatus("success", env.PR_ID, env.BUILD_URL, env.GIT_COMMIT)
+        }
+
+        failure {
+            sendBuildStatus("failure", env.PR_ID, env.BUILD_URL, env.GIT_COMMIT)
+        }
+    }
+}
+
+def sendBuildStatus(status, prId, buildUrl, commit) {
+    if (!prId) { return }
+
+    build job: 'post-build-status-update', parameters: [
+              string(name: 'REPO', value: 'http-parser'),
+              string(name: 'IDENTIFIER', value: 'test'),
+              string(name: 'URL', value: buildUrl),
+              string(name: 'COMMIT', value: commit),
+              string(name: 'REF', value: "refs/pull/${env.PR_ID}/head"),
+              string(name: 'STATUS', value: status)
+          ]
+}

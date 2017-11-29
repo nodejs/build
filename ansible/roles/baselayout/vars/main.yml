@@ -16,21 +16,22 @@ ssh_config: /etc/ssh/sshd_config
 
 sshd_service_map: {
   'ubuntu1404': 'ssh',
-  }
+  'ubuntu1204': 'ssh',
+}
 
 sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripversion])|default('sshd') }}"
 
 ntp_service: {
-  systemd: ['debian8', 'ubuntu1604', 'ubuntu1610'],
+  systemd: ['debian8', 'ubuntu1604', 'ubuntu1610', 'ubuntu1710'],
   ntp_package: ['ubuntu1404']
-  }
+}
 
 common_packages: [
   'automake',
   'bash',
   'libtool',
   'sudo',
-  ]
+]
 
 # you can either add os family or os to this list (see smartos)
 # but the playbook chooses os over family - not both
@@ -51,26 +52,29 @@ packages: {
   centos: [
     'ccache',
     'git',
-    ],
+  ],
 
   centos7: [
     'gcc-c++',
-    ],
+  ],
 
   debian7: [
     'gcc-4.8',
     'g++-4.8',
-    ],
+  ],
 
   debian8: [
     'ccache',
     'git',
-    ],
+    'libfontconfig1',
+  ],
 
   fedora: [
+    'bzip2',
     'ccache',
     'gcc-c++',
     'git',
+    'fontconfig',
   ],
 
   freebsd: [
@@ -86,7 +90,7 @@ packages: {
     'git',
     'gmake',
     'xz'
-    ],
+  ],
 
   smartos15: [
     'gcc49',
@@ -95,7 +99,7 @@ packages: {
     'git',
     'gmake',
     'xz'
-    ],
+  ],
 
   smartos16: [
     'gcc49',
@@ -104,18 +108,19 @@ packages: {
     'git',
     'gmake',
     'xz'
-    ],
+  ],
 
   ubuntu: [
     'ccache',
     'g++',
     'gcc',
     'git',
-    ],
+    'libfontconfig1',
+  ],
 
   ubuntu1404: [
     'ntp',
     'g++-4.9',
     'gcc-4.9',
-    ]
-  }
+  ]
+}

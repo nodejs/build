@@ -14,26 +14,18 @@ give access to any of the secrets within. For more info see the repo's README.
 
 ### Test machines
 
-[@nodejs/build][] have root access to the test CI machines (`test-*`).
+[@nodejs/build][] have root access to the test CI machines (`test-*`). The list
+of members is [here][Build WG Members].
 
 ### Infra machines
 
 A subsection of build members have access to infra machines
-(`infra-*`). The current list is:
-
-- Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
-- João Reis [@joaocgreis](https://github.com/joaocgreis)
-- Michael Dawson [@mhdawson](https://github.com/mhdawson)
-- Rod Vagg [@rvagg](https://github.com/rvagg)
+(`infra-*`). The list of members is [here][Infra Admins].
 
 ### Release machines
 
-A subsection of build members have access to infra machines
-(`infra-*`). The current list is:
-
-- Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
-- João Reis [@joaocgreis](https://github.com/joaocgreis)
-- Rod Vagg [@rvagg](https://github.com/rvagg)
+A subsection of build members have access to release machines
+(`release-*`). The list of members is [here][Release Admins].
 
 ## Infra Access
 
@@ -63,18 +55,11 @@ configure machines).
 
 - [@nodejs/jenkins-admins][] have admin access.
 
-### [github-bot][]
+### [GitHub Bot][]
 
-Those with `github-bot` access have access to the Github Bot's configuration,
-including Github and Jenkins secrets.
-
-The following have access:
-
-- Johan Bergström [@jbergstroem](https://github.com/jbergstroem)
-- João Reis [@joaocgreis](https://github.com/joaocgreis)
-- Rod Vagg [@rvagg](https://github.com/rvagg)
-- Phillip Johnsen [@phillipj](https://github.com/phillipj)
-- Hans Kristian Flaatten [@Starefossen](https://github.com/Starefossen)
+Those with `github-bot` access have access to the GitHub Bot's configuration,
+including GitHub and Jenkins secrets. The list of members is
+[here][GitHub Bot Admins].
 
 
 [@nodejs/build]: https://github.com/orgs/nodejs/teams/build/members
@@ -83,8 +68,12 @@ The following have access:
 [@nodejs/post-mortem-admins]: https://github.com/orgs/nodejs/teams/post-mortem-admins/members
 [@nodejs/post-mortem]: https://github.com/orgs/nodejs/teams/post-mortem/members
 [@nodejs/release]: https://github.com/orgs/nodejs/teams/release/members
+[Build WG Members]: /README.md#build-wg-members
+[GitHub Bot Admins]: /README.md#github-bot-admins
+[Infra Admins]: /README.md#infra-admins
 [Jenkins access doc]: /doc/process/jenkins_job_configuration_access.md
-[github-bot]: https://github.com/nodejs/github-bot
+[Release Admins]: /README.md#release-admins
+[GitHub Bot]: https://github.com/nodejs/github-bot
 [inventory.yml]: /ansible/inventory.yml
 [org owners]: https://github.com/orgs/nodejs/people?utf8=%E2%9C%93&query=%20role%3Aowner
 [post-mortem jobs]: https://ci.nodejs.org/view/post-mortem/

@@ -12,7 +12,7 @@ hosts:
     - digitalocean:
         debian8-x64-1: {ip: 198.199.72.83, alias: collector}
         ubuntu1404-x64-1: {ip: 107.170.240.62, alias: ci}
-        ubuntu1604-x64-1: {ip: 162.243.173.250, alias: www}
+        ubuntu1604-x64-1: {ip: 138.197.224.240, alias: www}
 
     - joyent:
         smartos15-x64-1: {ip: 72.2.118.125, alias: backup}
@@ -59,8 +59,10 @@ hosts:
         rhel72-s390x-1: {ip: 148.100.110.65}
 
     - packetnet:
-        centos7-arm64-1: {ip: 147.75.111.18}
+        centos7-arm64-1: {ip: 147.75.104.218}
 
+    - marist:
+        zos13-s390x-1: {ip: 148.100.36.135, user: Unix1}
 
   - test:
 
@@ -79,31 +81,28 @@ hosts:
 
     - digitalocean:
         centos5-x86-1: {ip: 192.241.250.186}
-        centos7-x64-1: {ip: 162.243.244.241}
         debian8-x64-1: {ip: 159.203.103.52}
         fedora22-x64-1: {ip: 45.55.139.194}
         fedora23-x64-1: {ip: 162.243.63.132}
         fedora24-x64-1: {ip: 104.236.112.180}
         fedora25-x64-1: {ip: 159.203.101.158}
         fedora25-x64-2: {ip: 159.203.126.232}
+        fedora26-x64-1: {ip: 178.62.236.249}
         freebsd10-x64-1: {ip: 159.203.59.134, user: freebsd}
         freebsd11-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd11-x64-2: {ip: 107.170.28.213, user: freebsd}
-        ubuntu12-x64-1: {ip: 104.236.234.182}
-        ubuntu12-x64-2: {ip: 107.170.104.83}
+        ubuntu1204-x64-1: {ip: 104.236.234.182}
+        ubuntu1204-x64-2: {ip: 107.170.104.83}
         ubuntu1404-x64-1: {ip: 45.55.252.223}
         ubuntu1404-x86-1: {ip: 159.203.115.220}
-        ubuntu1604-x64-1: {ip: 104.236.89.53}
-        ubuntu1604_dockeralpine34-x64-1: {ip: 107.170.75.204}
-        ubuntu1610-x64-1: {ip: 45.55.83.154}
-        ubuntu1610-x64-2: {ip: 138.197.31.102}
+        ubuntu1604-x86-1: {ip: 159.203.77.233}
+        ubuntu1604_docker-x64-1: {ip: 128.199.198.56}
+        ubuntu1604_docker-x64-2: {ip: 138.68.241.115}
 
     - ibm:
         aix61-ppc64-1: {ip: 50.200.166.131, port: 18822}
 
     - joyent:
-        alpine34-x64-1: {ip: 72.2.114.80}
-        alpine34-x64-2: {ip: 72.2.115.165}
         freebsd10-x64-1: {ip: 72.2.115.15}
         freebsd10-x64-2: {ip: 72.2.114.23}
         smartos14-x64-1: {ip: 72.2.114.47}
@@ -114,6 +113,13 @@ hosts:
         smartos15-x64-2: {ip: 165.225.139.77}
         smartos16-x64-1: {ip: 72.2.115.252}
         smartos16-x64-2: {ip: 72.2.113.74}
+        ubuntu1604_docker-x64-1: {ip: 72.2.118.27, user: ubuntu}
+        ubuntu1710-x64-1: {ip: 37.153.110.33, user: ubuntu}
+        ubuntu1710-x64-2: {ip: 8.19.32.121, user: ubuntu}
+
+    - marist:
+        zos13-s390x-1: {ip: 148.100.36.133, user: Unix1}
+        zos13-s390x-2: {ip: 148.100.36.134, user: Unix1}
 
     - linuxonecc:
         rhel72-s390x-1: {ip: 148.100.110.63}
@@ -122,7 +128,7 @@ hosts:
     - mininodes:
         ubuntu1604-arm64_odroid_c2-1: {ip: 70.167.220.147}
         ubuntu1604-arm64_odroid_c2-2: {ip: 70.167.220.148}
-        ubuntu1604-arm64_odroid_c2-3: {ip: 70.167.220.149}
+        ubuntu1604-arm64_odroid_c2-3: {ip: 70.167.220.149, user: odroid}
 
     - osuosl:
         aix61-ppc64_be-1: {ip: 140.211.9.101}
@@ -133,12 +139,13 @@ hosts:
         ubuntu1404-ppc64_le-2: {ip: 140.211.168.94}
 
     - rackspace:
-        centos7-x64-1: {ip: 23.253.249.127}
+        centos7-x64-1: {ip: 119.9.27.82}
         debian8-x64-1: {ip: 23.253.109.216}
         debian8-x64-2: {ip: 104.239.140.184}
         fedora22-x64-1: {ip: 119.9.51.79}
         fedora23-x64-1: {ip: 119.9.51.113}
         fedora24-x64-1: {ip: 119.9.51.165}
+        fedora26-x64-1: {ip: 119.9.52.113}
         freebsd10-x64-1: {ip: 119.9.52.218}
         ubuntu1204_clang341-x64-1: {ip: 119.9.51.210}
         ubuntu1604-x64-1: {ip: 119.9.51.176}
@@ -201,7 +208,7 @@ hosts:
         williamkapke-debian8-arm_pi3-1: {ip: 192.168.2.80, user: pi}
         williamkapke-debian8-arm_pi3-2: {ip: 192.168.2.81, user: pi}
         williamkapke-debian8-arm_pi3-3: {ip: 192.168.2.82, user: pi}
-        xgene-ubuntu1404-arm64-1: {ip: 192.168.2.1, user: ubuntu}
+        xgene-ubuntu1404-arm64-1: {ip: 192.168.2.4, user: ubuntu}
         xgene-ubuntu1404-arm64-2: {ip: 192.168.2.2, user: ubuntu}
 
     - scaleway:
@@ -218,12 +225,15 @@ hosts:
         debian8-x86-1: {ip: 169.44.16.126}
         ubuntu1404-x64-1: {ip: 50.97.245.5}
         ubuntu1404-x86-1: {ip: 50.97.245.9}
+        ubuntu1604_docker-x64-1: {ip: 130.198.66.50}
 
     - packetnet:
-        centos7-arm64-1: {ip: 147.75.64.198}
-        centos7-arm64-2: {ip: 147.75.111.34}
-        ubuntu1604-arm64-1: {ip: 147.75.203.102}
-        ubuntu1604-arm64-2: {ip: 147.75.111.186}
+        centos7-arm64-1: {ip: 147.75.193.230}
+        centos7-arm64-2: {ip: 147.75.74.254}
+        ubuntu1604-arm64-1: {ip: 147.75.77.130}
+        ubuntu1604-arm64-2: {ip: 147.75.74.174}
+# when adding, removing or changing the IPs below,
+# remember to update Jenkins worker IP whitelist in github-bot
         ubuntu1604-x64-1: {ip: 147.75.69.113, alias: jenkins-workspace-1}
         ubuntu1604-x64-2: {ip: 147.75.73.189, alias: jenkins-workspace-2}
 
