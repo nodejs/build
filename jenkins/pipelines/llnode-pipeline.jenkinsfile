@@ -1,17 +1,29 @@
 #!/usr/bin/env groovy
 
+properties([
+  parameters([
+    string(name: 'GIT_REPO', defaultValue: 'nodejs/llnode', description: 'Fetch from this repo (e.g. gibfahn/llnode)'),
+    string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'Branch to test (e.g. master, refs/pull/999/head).'),
+    string(name: 'NODE_VERSIONS', defaultValue: 'v6 v8 v9 v10', description: 'Space separated list of NODE_VERSIONS to pass to llnode-continuous-integration.'),
+    string(name: 'MACHINES', defaultValue: 'all', description: '''Can be "all" or a space-separated list of nodes, eg:
+      debian8-64 fedora22 fedora23 osx1010 ppcle-ubuntu1404 ubuntu1204-64 ubuntu1404-64 ubuntu1604-64 rhel72-s390x aix61-ppc64 ppcbe-ubuntu1404 smartos16-64 smartos15-64 win10 win2012r2'''),
+  ]),
+])
+
+if (!params['GIT_REPO']) { error("You didn't define a GIT_REPO.") }
+
 def pr = [] // Mutable parameter set to pass to jobs. I know this is crazy.
 String printParams = '' // String of params to print
 for (param in params) {
     printParams += param.toString() + '\n'
-    if (param.key != 'NODE_VERSIONs') {
+    if (param.key != 'NODE_VERSIONS') {
         pr.push(string(name: param.key, value: param.value))
     }
 }
 println "\n### BUILD PARAMETERS ###\n${printParams}"
 
 stage('Test llnode') {
-    def versions = params['NODE_VERSIONs'].split()
+    def versions = params['NODE_VERSIONS'].split()
     def buildJobs = [:]
     for (int i = 0; i < versions.length; i++) {
         int index = i // locally scoped copy.

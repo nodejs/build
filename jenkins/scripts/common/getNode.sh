@@ -9,24 +9,21 @@
 sep="${MAGENTA}:${NC}" # Separator to use in help text.
 helpText="Download the node binary for your machine from nodejs.org.
   ${CYAN}USAGE:${NC}
-  $0 8.9.1 [-m ubuntu1604-64] [-c Carbon] [-b v8.x] [-d 2017-11-20] [-m] [-r /path/to/node/]
+  $0 8.9.1
 
   8.9.0            $sep Node to download (8.9.0, master, 8, 8.9.0-nightly, latest, 6.2.)
-                        Inexact values get most recent from range.
-  -p 8.9.0         $sep Previous version in this release line
-  -m ubuntu1604-64 $sep The jenkins machine label."
+                        Inexact values get most recent from range."
 
 ################################################################################
 ## Parse parameters
 
-unset VERSION
-while getopts ":b:c:d:p:hm" option; do
+unset NODE_VERSION
+while getopts ":h" option; do
   case "${option}" in
-     b) BRANCH="$OPTARG" ;;
      h) echo -e "$helpText"; exit 0;;
     \?) echo "Invalid option -$OPTARG."; exit 1 ;;
      :) echo "Option -$OPTARG takes a parameter."; exit 1 ;;
-     *) echo "getopts gave me: ($OPTIND) $OPTARG"; exit 1 ;;
+     *) echo "Script doesn't catch the parameter at $OPTIND, $OPTARG."; exit 1 ;;
   esac
 done
 shift $((OPTIND-1))
@@ -36,7 +33,10 @@ error() { echo -e "${BRED}ERROR:${NC} $1"; exit 1; }
 [ -z "$1" ] && error "Must provide a node version to download"
 NODE_VERSION="${1#v}"; shift # If node version has a v, drop it.
 
-rm -rf ./node-*
+################################################################################
+## Work out version to download
+
+rm -rf node-bin/
 
 DOWNLOAD_DIR="https://nodejs.org/download/release/"
 case $NODE_VERSION in
@@ -54,22 +54,26 @@ else
     sort -n -t . -k 1.2 -k 2 -k 3 | tail -1)
 fi
 
-# Calculate OS and ARCH.
-OS="$(uname | tr '[:upper:]' '[:lower:]')"
-ARCH=$(uname -m)
+# Calculate os and arch.
+os="$(uname | tr '[:upper:]' '[:lower:]')"
+arch=$(uname -m)
 
-case $OS in
-  *nt*|*NT*) OS=win EXT=zip;;
-  aix) ARCH=ppc64 ;;
+case $os in
+  *nt*|*NT*) os=win ext=zip;;
+  aix) arch=ppc64 ;;
 esac
-[ "$OS" != win ] && EXT=tar.gz
+[ "$os" != win ] && ext=tar.gz
 
 # TODO(gib): Handle x86 SmartOS (currently uses x64).
 # TODO(gib): Handle arm64 machines.
-case $ARCH in
-  x86_64|i86pc) ARCH=x64 ;; # i86pc is SmartOS.
-  i686) ARCH=x86 ;;
+case $arch in
+  x86_64|i86pc) arch=x64 ;; # i86pc is SmartOS.
+  i686) arch=x86 ;;
 esac
 
-curl -O "$DOWNLOAD_DIR$LINK/node-$LINK-$OS-$ARCH.$EXT"
-gzip -cd node-$LINK-$OS-$ARCH.$EXT | tar xf - # Non-GNU tar can't handle gzips.
+################################################################################
+## Download and extract Node
+
+curl "$DOWNLOAD_DIR$version/node-$version-$os-$arch.$ext" |
+  gzip -cd | tar xf - # Non-GNU tar can't handle gzips.
+mv node-$version-$os-$arch node-bin/
