@@ -17,17 +17,17 @@
   raw: dnf install -y python2 python2-dnf
 
 - name: check for libselinux-python bindings
-  when: os in ("fedora24", "fedora25", "fedora26")
+  when: os in ("fedora24", "fedora25", "fedora26", "fedora27")
   raw: dnf info libselinux-python | grep Installed
   register: has_libselinux
   failed_when:  has_libselinux.rc > 1
 
 - name: install libselinux-python bindings
-  when: os in ("fedora24", "fedora25", "fedora26") and has_libselinux.rc == 1
+  when: os in ("fedora24", "fedora25", "fedora26", "fedora27") and has_libselinux.rc == 1
   raw: dnf install -y libselinux-python
 
 - name: disable selinux
-  when: os in ("fedora24", "fedora25", "fedora26")
+  when: os in ("fedora24", "fedora25", "fedora26", "fedora27")
   selinux: state=disabled
   # this should be done. not sure how to make it properly/gracefully
   # notify: reboot host
