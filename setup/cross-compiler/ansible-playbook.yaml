@@ -1,0 +1,87 @@
+---
+- hosts: nodejs-cross-compiler
+
+  remote_user: azureuser
+  sudo: yes
+
+  tasks:
+
+    - include_vars: ansible-vars.yaml
+      tags: vars
+
+    - name: General | Install updated git PPA
+      apt_repository: repo='ppa:git-core/ppa'
+      tags: general
+
+    - name: General | APT Update
+      apt: update_cache=yes
+      tags: general
+
+    - name: General | APT Upgrade
+      apt: upgrade=full
+      tags: general
+
+    - name: General | Install required packages
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items: packages
+      tags: general
+
+    - name: General | Increase file descriptor limits
+      lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
+      with_items:
+        - "*         hard    nofile      500000"
+        - "*         soft    nofile      500000"
+        - "root      hard    nofile      500000"
+        - "root      soft    nofile      500000"
+      tags: general
+
+    - include: ../ansible-tasks/ccache.yaml version=3.2.3
+      tags: ccache
+
+    - name: User | Add {{ server_user }} user
+      user: name="{{ server_user }}" shell=/bin/bash
+      tags: user
+
+    - name: Raspberry | Clone raspberry tools repository
+      git: repo=https://github.com/raspberrypi/tools.git dest=/opt/raspberrypi/tools
+      tags: raspberry
+
+    - name: Raspberry | Copy cc-armv6.sh script
+      copy: src=./resources/cc-armv6.sh dest=/opt/raspberrypi/cc-armv6.sh mode=0755
+      tags: raspberry
+
+    - name: Raspberry | Copy cc-armv7.sh script
+      copy: src=./resources/cc-armv7.sh dest=/opt/raspberrypi/cc-armv7.sh mode=0755
+      tags: raspberry
+
+    - name: User | Download pubkey(s)
+      get_url: url=https://github.com/{{ item }}.keys dest=/tmp/{{ item }}.keys
+      delegate_to: 127.0.0.1
+      become: no
+      with_items: ssh_users
+      tags: user
+
+    - name: General | Create authorized_keys for root
+      authorized_key: user="root" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+      with_items: ssh_users
+      tags: user
+
+    - name: General | Create authorized_keys for azureuser
+      authorized_key: user="azureuser" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+      with_items: ssh_users
+      tags: user
+
+    - name: General | Create authorized_keys for {{ server_user }}
+      authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/' + item + '.keys') }}"
+      with_items: ssh_users
+      tags: user
+
+    - name: User | Download Jenkins pubkey
+      get_url: url=https://gist.githubusercontent.com/nodejs-ci/cea606894437b45e99d0/raw/ci-iojs-org-id_rsa-slaves.pub dest=/tmp/nodejs-ci.keys
+      delegate_to: 127.0.0.1
+      become: no
+      tags: user
+
+    - name: General | Add Jenkins to authorized_keys for {{ server_user }}
+      authorized_key: user="{{ server_user }}" key="{{ lookup('file', '/tmp/nodejs-ci.keys') }}"
+      tags: user
