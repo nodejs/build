@@ -61,6 +61,7 @@ missing please open an issue. If you are interested in joining check out
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 
