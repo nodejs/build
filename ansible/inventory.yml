@@ -226,6 +226,7 @@ hosts:
         ubuntu1404-x64-1: {ip: 50.97.245.5}
         ubuntu1404-x86-1: {ip: 50.97.245.9}
         ubuntu1604_docker-x64-1: {ip: 130.198.66.50}
+        ubuntu1604-x64-1: {ip: 169.60.150.88}
 
     - packetnet:
         centos7-arm64-1: {ip: 147.75.193.230}
