@@ -1,0 +1,23 @@
+diff --git a/scripts/gcovr b/scripts/gcovr
+index 034779c86d29..e68b239c424f 100755
+--- a/scripts/gcovr
++++ b/scripts/gcovr
+@@ -496,7 +496,7 @@ def process_gcov_data(data_fname, covdata, options):
+     if filtered_fname is None:
+         if options.verbose:
+             sys.stdout.write("  Filtering coverage data for file %s\n" % fname)
+-        return
++        #return
+     #
+     # Return if the filename matches the exclude pattern
+     #
+@@ -2141,6 +2141,9 @@ if options.objdir:
+ for i in range(0, len(options.exclude)):
+     options.exclude[i] = re.compile(options.exclude[i])
+
++if options.output is not None:
++    options.output = os.path.abspath(options.output)
++
+ if options.root is not None:
+     if not options.root:
+         sys.stderr.write(
