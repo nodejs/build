@@ -36,7 +36,6 @@ function processfile {
     | gawk -f ${__dirname}/download-counts.awk \
     | ${__dirname}/country-lookup.py \
     > $tmpout
-
   echo "Moving data to ${outfile} ..."
   mv $tmpout $outfile
 }
@@ -63,32 +62,37 @@ function processsummaries {
 
 echo "Processing log files ..."
 
-for i in $(ls -r /var/log/nginx/nodejs/nodejs.org-access.log*); do
+for i in $(ls /var/log/nginx/nodejs*/nodejs.org-access.log* | grep -v orig); do
   basename=$(basename $i | sed 's/\.[xg]z//')
-  outfile=${logsoutputdir}/${basename}.csv
+  basenameout=$basename
+  if [[ $i =~ nodejs-backup ]]; then
+    basenameout="${basename}b"
+  fi
+  outfile=${logsoutputdir}/${basenameout}.csv
   summaryexists=true
 
   #if [ ! -f ${outfile} ]; then
-  if [[ $i =~ nodejs\.org-access\.log$ ]] || [ ! -f ${outfile} ]; then
+  if [[ $i =~ nodejs\.org-access\.log$ ]] || [ ! -f ${outfile} -a ! -f ${outfile}.gz ]; then
     processfile $basename $i $outfile
     summaryexists=false
   fi
 
   for type in $summarytypes; do
-    if [ ! -f ${summariesoutputdir}/${type}/${basename}.csv ]; then
+    if [ ! -f ${summariesoutputdir}/${type}/${basenameout}.csv ]; then
       summaryexists=false
     fi
   done
 
   #summaryexists=true
   if [ "$summaryexists" = "false" ]; then
-    processsummaries $basename $outfile
+    processsummaries $basenameout $outfile
   fi
 done;
 
 echo "Processing final summaries ..."
 
 for type in $summarytypes; do
+  echo "  ... $type"
   gawk -f ${__dirname}/summary-${type}.awk ${summariesoutputdir}/${type}/*.csv > ${summariesoutputdir}/${type}.csv
 done
 

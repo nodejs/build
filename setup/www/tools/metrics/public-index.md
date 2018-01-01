@@ -12,7 +12,7 @@ IP addresses and exact times are not reported, only days and geolocation data fo
 
 ## What format is the data in?
 
-Raw log files are available in the **[./logs/](./logs/)** sub-directory where each file's name takes the form: `nodejs.org-access.log.YYYYMMDD.TTTTTTTTTT.csv`, where the last entry in the file is used to create the string `YYYYMMDD` from the year, month and day of the month respectively and `TTTTTTTTTT` as the unix epoch timestamp. There may zero, one or two log files for a given day. However, when stitched together they should form a continuous record of the downloads from nodejs.org.
+Raw log files are available in the **[./logs/](./logs/)** sub-directory where each file's name takes the form: `nodejs.org-access.log.YYYYMMDD.TTTTTTTTTT.csv`, where the last entry in the file is used to create the string `YYYYMMDD` from the year, month and day of the month respectively and `TTTTTTTTTT` as the unix epoch timestamp. In addition, there are some files of the format `nodejs.org-access.log.YYYYMMDD.TTTTTTTTTTb.csv` (note the addition of the **b** in the filename) that source from a backup nodejs.org server, the dates will overlap with other log files. There may zero, one or more files for a given day. However, when stitched together they should form a continuous record of the downloads from nodejs.org.
 
 There is always a [nodejs.org-access.log.csv](./logs/nodejs.org-access.log.csv) file which represents the _current day's_ data and **is not final**, i.e. it will change from update to update, either appending new data or starting again for a new day. The other log files can be considered final until we decide to adjust the format at some point in the future.
 
