@@ -1,8 +1,3 @@
-[iojs-build-fedora20]
-iojs-ibm-ppcbe-fedora20-64-1
-iojs-ibm-ppcbe-fedora20-64-2
-release-osuosl-fedora20-ppc64_be-1
-
 [iojs-build-fedora22]
 iojs-build-fedora22-1
 
