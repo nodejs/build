@@ -62,6 +62,7 @@ missing please open an issue. If you are interested in joining check out
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
+- [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 
