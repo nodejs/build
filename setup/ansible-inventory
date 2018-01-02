@@ -58,10 +58,6 @@ test-joyent-smartos14-x86-2
 release-joyent-smartos13-x64-1
 release-joyent-smartos14-x64-1
 
-[iojs-build-containers]
-iojs-build-containers-1
-iojs-build-containers-2
-
 [iojs-armv7-wheezy]
 iojs-build-armv7-wheezy-1
 iojs-build-armv7-wheezy-2
@@ -124,7 +120,6 @@ iojs-jenkins
 iojs-build-ubuntu1404
 iojs-build-ubuntu1204
 iojs-build-debian8
-iojs-build-containers
 iojs-www
 node-www
 iojs-jenkins
