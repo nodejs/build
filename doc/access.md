@@ -23,8 +23,25 @@ A subsection of build members have access to infra machines
 (`infra-*`). The list of members is [here][Infra Admins].
 
 The infra group also have access to:
-- [DigitalOcean Droplets][]
-- [Packet.net][]
+
+#### Servers:
+- [DigitalOcean Droplets][] (individual accounts)
+- [Joyent][]
+- [MacStadium][]
+- [Packet.net][] (individual accounts)
+- [Rackspace][] (individual accounts)
+- [Scaleway][]
+- [SoftLayer][] (individual accounts)
+- [linuxOne][]
+
+#### Certificates
+- [Apple][]
+- [Digicert for Authenticode][]
+- [GoGetSSL for SSL][]
+
+#### Other
+- [Cloudflare][]
+- [Mailgun email][] (uses Rackspace login)
 
 ### Release machines
 
@@ -84,3 +101,14 @@ including GitHub and Jenkins secrets. The list of members is
 [secrets repo]: https://github.com/nodejs/secrets
 [DigitalOcean Droplets]: https://cloud.digitalocean.com/droplets
 [Packet.net]: https://app.packet.net/portal
+[Joyent]: https://www.joyent.com/
+[MacStadium]: https://www.macstadium.com/
+[Rackspace]: https://www.rackspace.com/
+[Scaleway]: https://www.scaleway.com/
+[SoftLayer]: https://control.softlayer.com/
+[linuxOne]: https://www.ibm.com/linuxone
+[Apple]: https://developer.apple.com/support/certificates/
+[Digicert for Authenticode]: https://www.digicert.com/code-signing/microsoft-authenticode.htm
+[GoGetSSL for SSL]: https://www.gogetssl.com/
+[Cloudflare]: https://www.cloudflare.com/
+[Mailgun email]: https://www.mailgun.com/
