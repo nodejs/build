@@ -41,6 +41,9 @@ These playbooks are available to you:
 
   - **jenkins/linter.yml**: Sets up the code linters (flavour of a worker).
 
+  - **create-github-bot.yml**: Configures the server that hosts the
+    [github-bot][].
+
   - **create-webhost.yml**: Configures the server(s) that host nodejs.org,
                             iojs.org and dist.libuv.org among other things
                             (only works on Ubuntu boxes).
@@ -192,4 +195,4 @@ Unsorted stuff of things we need to do/think about
       python
 
 [callback]: plugins/inventory/nodejs_yaml.py
-
+[github-bot]: https://github.com/nodejs/github-bot
