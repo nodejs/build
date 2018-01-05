@@ -136,6 +136,7 @@ hosts:
         ubuntu1404-ppc64_be-2: {ip: 140.211.168.75}
         ubuntu1404-ppc64_le-1: {ip: 140.211.168.106}
         ubuntu1404-ppc64_le-2: {ip: 140.211.168.94}
+        ubuntu1404-ppc64_le-3: {ip: 140.211.168.221, user: root}
 
     - rackspace:
         centos7-x64-1: {ip: 119.9.27.82}

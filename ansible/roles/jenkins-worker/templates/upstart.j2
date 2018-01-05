@@ -23,6 +23,11 @@ setgid iojs
 setuid iojs
 
 script
+
+  if [ $(uname -i) = "ppc64le" ]; then
+    export PATH=/home/iojs/jdk8u144-b01/bin:$PATH;
+  fi
+
   exec java -Xmx{{ server_ram|default('128m') }} \
         -jar /home/{{ server_user }}/slave.jar -secret {{ secret }} \
         -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp
