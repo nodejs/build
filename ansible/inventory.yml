@@ -39,7 +39,6 @@ hosts:
 
     - requireio:
         andineck-debian7-arm_pi1p-1: {ip: 192.168.2.41, user: pi}
-        xgene-ubuntu1404-arm64-1: {ip: 192.168.2.3, user: ubuntu, alias: arm-nfshost}
         rvagg-debian7-arm_pi1p-1: {ip: 192.168.2.40, user: pi}
         osx1010-x64-1: {ip: 192.168.2.211, user: iojs}
 
@@ -208,8 +207,6 @@ hosts:
         williamkapke-debian8-arm_pi3-1: {ip: 192.168.2.80, user: pi}
         williamkapke-debian8-arm_pi3-2: {ip: 192.168.2.81, user: pi}
         williamkapke-debian8-arm_pi3-3: {ip: 192.168.2.82, user: pi}
-        xgene-ubuntu1404-arm64-1: {ip: 192.168.2.4, user: ubuntu}
-        xgene-ubuntu1404-arm64-2: {ip: 192.168.2.2, user: ubuntu}
 
     - scaleway:
         debian7-arm_armv7-1: {ip: 212.47.234.107}
