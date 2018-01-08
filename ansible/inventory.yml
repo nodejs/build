@@ -211,7 +211,6 @@ hosts:
     - scaleway:
         debian7-arm_armv7-1: {ip: 212.47.234.107}
         debian7-arm_armv7-2: {ip: 212.47.245.242}
-        debian7-arm_armv7-3: {ip: 212.47.246.3}
 
     - softlayer:
         centos5-x64-1: {ip: 50.23.85.252}
