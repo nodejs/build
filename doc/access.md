@@ -22,6 +22,27 @@ of members is [here][Build WG Members].
 A subsection of build members have access to infra machines
 (`infra-*`). The list of members is [here][Infra Admins].
 
+The infra group also have access to:
+
+#### Servers:
+- [DigitalOcean Droplets][] (individual accounts)
+- [Joyent][]
+- [MacStadium][]
+- [Packet.net][] (individual accounts)
+- [Rackspace][] (individual accounts)
+- [Scaleway][]
+- [SoftLayer][] (individual accounts)
+- [linuxOne][]
+
+#### Certificates
+- [Apple][]
+- [Digicert for Authenticode][]
+- [GoGetSSL for SSL][]
+
+#### Other
+- [Cloudflare][]
+- [Mailgun email][] (uses Rackspace login)
+
 ### Release machines
 
 A subsection of build members have access to release machines
@@ -78,3 +99,16 @@ including GitHub and Jenkins secrets. The list of members is
 [org owners]: https://github.com/orgs/nodejs/people?utf8=%E2%9C%93&query=%20role%3Aowner
 [post-mortem jobs]: https://ci.nodejs.org/view/post-mortem/
 [secrets repo]: https://github.com/nodejs/secrets
+[DigitalOcean Droplets]: https://cloud.digitalocean.com/droplets
+[Packet.net]: https://app.packet.net/portal
+[Joyent]: https://www.joyent.com/
+[MacStadium]: https://www.macstadium.com/
+[Rackspace]: https://www.rackspace.com/
+[Scaleway]: https://www.scaleway.com/
+[SoftLayer]: https://control.softlayer.com/
+[linuxOne]: https://www.ibm.com/linuxone
+[Apple]: https://developer.apple.com/support/certificates/
+[Digicert for Authenticode]: https://www.digicert.com/code-signing/microsoft-authenticode.htm
+[GoGetSSL for SSL]: https://www.gogetssl.com/
+[Cloudflare]: https://www.cloudflare.com/
+[Mailgun email]: https://www.mailgun.com/
