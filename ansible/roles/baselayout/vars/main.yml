@@ -83,6 +83,10 @@ packages: {
     'gmake'
   ],
 
+  freebsd10: [
+    'clang38'
+  ],
+
   smartos14: [
     'gcc48',
     'gcc48-libs',
