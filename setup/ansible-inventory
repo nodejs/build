@@ -124,10 +124,6 @@ iojs-build-centos5
 [iojs-smartos:children]
 iojs-build-smartos
 
-[iojs-freebsd10]
-test-digitalocean-freebsd10-x64-1
-test-digitalocean-freebsd10-x64-2
-
 [iojs-aix61]
 test-ibm-aix61-ppc64-1:18822
 
