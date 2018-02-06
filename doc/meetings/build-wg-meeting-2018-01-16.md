@@ -37,32 +37,32 @@ No accouncements this week
   have all been patched to make sure other VMs on the same hosts can.t break into our machines.
 * Not that we don.t want to remove the older ones.
 
-### CI statuses not posting [#1045](https://github.com/nodejs/build/issues/1045)
+#### CI statuses not posting [#1045](https://github.com/nodejs/build/issues/1045)
 * Discussion was about rackspace outtage.
 * All machines are back now, remaining issue may be just to make sure emails
   go to a broader group.
 * Gibson to open new issue to continue discussion and get to close.
 
-### New OSX infra walkthrough [#1026](https://github.com/nodejs/build/issues/1026)
+#### New OSX infra walkthrough [#1026](https://github.com/nodejs/build/issues/1026)
 * Defer until we have more people in the meeting and George to help do it.
 
-### Ubuntu non-LTS strategy [#967](https://github.com/nodejs/build/issues/967)
+#### Ubuntu non-LTS strategy [#967](https://github.com/nodejs/build/issues/967)
 * Discussed, no objections, removed agenda tag.
 
-### Remove Fedora 22, 23, 24 [#962](https://github.com/nodejs/build/issues/962)
+#### Remove Fedora 22, 23, 24 [#962](https://github.com/nodejs/build/issues/962)
 * Looked at issue, waiting on Rod for proposal, removed agenda tag until thats ready.
 
-### Remove Ubuntu 12.04 [#961](https://github.com/nodejs/build/issues/961)
+#### Remove Ubuntu 12.04 [#961](https://github.com/nodejs/build/issues/961)
 * Waiting on update from @rvagg, removing agenda tag until there is one.
 
-### Make it easier for people to join the Build WG [#941](https://github.com/nodejs/build/issues/941)
+#### Make it easier for people to join the Build WG [#941](https://github.com/nodejs/build/issues/941)
 * If we make existing privileges (access to test machines) separate from joining WG, would
   be easier to add people.
 * I think we discussed in earlier meeting and no objections
 * No objections in this meeting, let.s make it so.  Gibson to raise PR that updates
   our doc to explain new approach.
 
-### file and directory names for downloads [#515](https://github.com/nodejs/build/issues/515)
+#### file and directory names for downloads [#515](https://github.com/nodejs/build/issues/515)
 * Asked ljharb in issue if he can attend next meeting (We want at least him and @rvagg in the
   discussion)
 
