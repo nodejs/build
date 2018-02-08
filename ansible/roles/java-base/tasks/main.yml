@@ -28,6 +28,7 @@
   debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
 
 - name: update packages
+  when: arch != "ppc64"
   include_role:
     name: package-upgrade
 
@@ -53,7 +54,7 @@
 # if this fails you want to check in vars/main.yml and add package name
 # as appropriate -- try to use generic os family if available.
 - name: install java
-  when: not os|startswith("zos")
+  when: not os|startswith("zos") and arch != "ppc64"
   package: name="{{ java_package_name }}" state=present
 
 - name: install webupd8 oracle java 8 extras
