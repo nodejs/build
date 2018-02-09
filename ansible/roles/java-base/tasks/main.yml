@@ -46,11 +46,6 @@
     dest: /home/iojs
   tags: java
 
-- name: add jdk to PATH
-  when: os in "ubuntu1404" and arch == "ppc64"
-  shell: grep -s -q "export PATH=/home/iojs/jdk8u144-b01/bin:\$PATH" /home/iojs/.profile || echo "export PATH=/home/iojs/jdk8u144-b01/bin:\$PATH" >> /home/iojs/.profile
-  tags: java
-
 # if this fails you want to check in vars/main.yml and add package name
 # as appropriate -- try to use generic os family if available.
 - name: install java
