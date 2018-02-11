@@ -1,0 +1,10 @@
+---
+
+packages:
+  - gcc-multilib
+  - g++-multilib
+  - python-all
+  - python-software-properties
+  - curl
+  - monit
+server_user: iojs

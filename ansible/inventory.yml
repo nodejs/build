@@ -78,6 +78,9 @@ hosts:
         win2012r2-x64-2: {ip: 104.209.212.27, port: 61718}
         win2012r2-x64-3: {ip: 104.209.210.218, port: 52109}
 
+    - cloudapp:
+        ubuntu1404-x64-1: {ip: node-msft-cross-compiler-1.cloudapp.net}
+
     - digitalocean:
         centos5-x86-1: {ip: 192.241.250.186}
         debian8-x64-1: {ip: 159.203.103.52}
