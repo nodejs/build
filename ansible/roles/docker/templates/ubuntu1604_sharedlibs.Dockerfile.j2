@@ -41,15 +41,15 @@ RUN mkdir -p /tmp/openssl_1.1.0g && \
     make install && \
     rm -rf /tmp/openssl_1.1.0g
 
-ENV OPENSSL102DIR /opt/openssl-1.0.2m
+ENV OPENSSL102DIR /opt/openssl-1.0.2n
 
-RUN mkdir -p /tmp/openssl_1.0.2m && \
-    cd /tmp/openssl_1.0.2m && \
-    curl -sL https://github.com/openssl/openssl/archive/OpenSSL_1_0_2m.tar.gz | tar zxv --strip=1 && \
+RUN mkdir -p /tmp/openssl_1.0.2n && \
+    cd /tmp/openssl_1.0.2n && \
+    curl -sL https://github.com/openssl/openssl/archive/OpenSSL_1_0_2n.tar.gz | tar zxv --strip=1 && \
     ./Configure shared linux-x86_64 --prefix=$OPENSSL102DIR -fPIC && \
     make -j 6 && \
     make install && \
-    rm -rf /tmp/openssl_1.0.2m
+    rm -rf /tmp/openssl_1.0.2n
 
 ENV FIPS20DIR /opt/openssl-fips_2.0.16
 
