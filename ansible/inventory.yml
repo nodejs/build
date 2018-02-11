@@ -66,6 +66,7 @@ hosts:
   - test:
 
     - azure:
+        msft-ubuntu1404-x64-1: {ip: node-msft-cross-compiler-1.cloudapp.net}
         win10-x64-1: {ip: 40.114.4.213, port: 55646}
         win10-x64-2: {ip: 40.76.31.157, port: 61279}
         win10-x64-3: {ip: 40.76.25.231, port: 60033}
