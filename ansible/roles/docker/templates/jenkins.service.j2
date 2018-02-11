@@ -9,7 +9,7 @@ WantedBy=multi-user.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/bin/docker run --rm -v /home/{{ server_user }}/{{ item.name }}/:/home/{{ server_user }} --name node-ci-{{ item.name }} node-ci:{{ item.name }}
+ExecStart=/usr/bin/docker run --rm -v /home/{{ server_user }}/{{ item.name }}/:/home/{{ server_user }} -v /home/{{ server_user }}/.ccache/:/home/{{ server_user }}/.ccache --name node-ci-{{ item.name }} node-ci:{{ item.name }}
 ExecStop=/usr/bin/docker stop -t 5 node-ci-{{ item.name }}
 Restart=always
 RestartSec=30

@@ -71,7 +71,7 @@ RUN mkdir -p /tmp/zlib_1.2.11 && \
     make install && \
     rm -rf /tmp/zlib_1.2.11
 
-VOLUME [ "/home/{{ server_user }}/" ]
+VOLUME /home/{{ server_user }}/ /home/{{ server_user }}/.ccache
 
 USER iojs:iojs
 
