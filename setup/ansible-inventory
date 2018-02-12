@@ -91,9 +91,6 @@ test-requireio_securogroup-debian8-arm_pi3-2
 test-requireio_notthetup_sayanee-debian8-arm_pi3-1
 test-requireio_piccoloaiutante-debian8-arm_pi3-1
 
-[nodejs-cross-compiler]
-node-msft-cross-compiler-1.cloudapp.net
-
 [iojs-www]
 iojs-www
 
