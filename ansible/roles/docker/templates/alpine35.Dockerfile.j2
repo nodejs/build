@@ -49,6 +49,8 @@ VOLUME /home/{{ server_user }}/ /home/{{ server_user }}/.ccache
 
 USER iojs:iojs
 
+ENV CCACHE_TEMPDIR /home/iojs/.ccache/{{ item.name }}
+
 CMD cd /home/iojs \
   && curl https://ci.nodejs.org/jnlpJars/slave.jar -O \
   && java -Xmx{{ server_ram|default('128m') }} \

@@ -48,6 +48,7 @@ RUN adduser -G {{ server_user }} -D -u {{ server_user_uid.stdout_lines[0] }} {{ 
 VOLUME /home/{{ server_user }}/ /home/{{ server_user }}/.ccache
 
 USER iojs:iojs
+ENV CCACHE_TEMPDIR /home/iojs/.ccache/{{ item.name }}
 
 CMD cd /home/iojs \
   && curl https://ci.nodejs.org/jnlpJars/slave.jar -O \
