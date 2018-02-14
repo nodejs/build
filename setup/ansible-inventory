@@ -29,14 +29,6 @@ test-requireio-rvagg-ubuntu1404-arm-odroid_xu3-1
 test-requireio_davglass-ubuntu1404-arm_odroid_xu-1
 test-requireio_davglass-ubuntu1404-arm_odroid_xu-2
 
-[iojs-build-smartos]
-test-joyent-smartos14-x64-1
-test-joyent-smartos14-x64-2
-test-joyent-smartos14-x86-1
-test-joyent-smartos14-x86-2
-release-joyent-smartos13-x64-1
-release-joyent-smartos14-x64-1
-
 [iojs-armv7-wheezy]
 iojs-build-armv7-wheezy-1
 iojs-build-armv7-wheezy-2
@@ -102,9 +94,6 @@ iojs-armv7-wheezy
 [iojs-centos:children]
 iojs-build-centos6
 iojs-build-centos5
-
-[iojs-smartos:children]
-iojs-build-smartos
 
 [iojs-aix61]
 test-ibm-aix61-ppc64-1:18822

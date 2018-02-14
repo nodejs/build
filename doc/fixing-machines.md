@@ -90,6 +90,8 @@ Most machines have a service to restart the Jenkins agent. Try one of:
 systemctl jenkins start
 # System V init (older Linux distros):
 /etc/init.d/jenkins start
+# SmartOS:
+svcadm restart svc:/application/jenkins:default
 # AIX:
 /etc/rc.d/rc2.d/S20jenkins start
 # Things we don't have a service for yet:
