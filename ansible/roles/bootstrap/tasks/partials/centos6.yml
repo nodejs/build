@@ -1,0 +1,21 @@
+---
+
+#
+# a centos6 bootstrap - copied from fedora
+#
+
+- name: check for python
+  raw: stat /usr/bin/python
+  register: has_python
+  failed_when: has_python.rc > 1
+
+- name: check for libselinux-python bindings
+  raw: yum info libselinux-python | grep Installed
+  register: has_libselinux
+  failed_when:  has_libselinux.rc > 1
+
+- name: install libselinux-python bindings
+  raw: yum install -y libselinux-python
+
+- name: disable selinux
+  selinux: state=disabled

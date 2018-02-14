@@ -52,7 +52,7 @@ hosts:
 
     - softlayer:
         centos5-x86-1: {ip: 50.23.85.253}
-        centos6-x64-1: {ip: 50.97.245.10}
+        centos6-x64-1: {ip: 169.62.77.228}
 
     - linuxonecc:
         rhel72-s390x-1: {ip: 148.100.110.65}
@@ -217,8 +217,8 @@ hosts:
     - softlayer:
         centos5-x64-1: {ip: 50.23.85.252}
         centos5-x64-2: {ip: 173.193.25.109}
-        centos6-x64-1: {ip: 50.23.85.251}
-        centos6-x64-2: {ip: 184.173.120.137}
+        centos6-x64-1: {ip: 169.61.75.51}
+        centos6-x64-2: {ip: 169.61.75.58}
         centos7-x64-1: {ip: 50.23.85.250}
         debian8-x86-1: {ip: 169.44.16.126}
         ubuntu1404-x64-1: {ip: 50.97.245.5}

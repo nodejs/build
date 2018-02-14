@@ -13,5 +13,5 @@
     - python-argparse
 
 - name: install tap2junit
-  raw: easy_install tap2junit
+  raw: easy_install --index-url https://pypi.python.org/pypi tap2junit
 

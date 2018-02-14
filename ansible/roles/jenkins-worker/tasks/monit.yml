@@ -11,7 +11,7 @@
   copy:
   args:
     src: "{{ monitrc }}"
-    dest: "/etc/monitrc"
+    dest: "/etc/monit.d/jenkins"
     mode: 0440
   loop_control:
     loop_var: monitrc
