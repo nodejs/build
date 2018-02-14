@@ -97,6 +97,22 @@
   with_items:
     - "{{ containers }}"
 
+- name: create worker ccache directory
+  file:
+    path: "/home/{{ server_user }}/.ccache/"
+    state: directory
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: 0755
+
+- name: generate ccache config
+  template:
+    src: "{{ role_path }}/templates/ccache_config.j2"
+    dest: "/home/{{ server_user }}/.ccache/ccache.conf"
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: "0644"
+
 - name: register {{ server_user }} GID
   raw: "grep ^{{ server_user }} /etc/passwd | awk -F: '{print $4}'"
   register: server_user_gid

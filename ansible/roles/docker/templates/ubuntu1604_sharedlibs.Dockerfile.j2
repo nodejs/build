@@ -31,6 +31,16 @@ RUN addgroup --gid {{ server_user_gid.stdout_lines[0] }} {{ server_user }}
 
 RUN adduser --gid {{ server_user_gid.stdout_lines[0] }} --uid {{ server_user_uid.stdout_lines[0] }} --disabled-password --gecos {{ server_user }} {{ server_user }}
 
+ENV OPENSSL102DIR /opt/openssl-1.0.2n
+
+RUN mkdir -p /tmp/openssl_1.0.2n && \
+    cd /tmp/openssl_1.0.2n && \
+    curl -sL https://github.com/openssl/openssl/archive/OpenSSL_1_0_2n.tar.gz | tar zxv --strip=1 && \
+    ./Configure shared linux-x86_64 --prefix=$OPENSSL102DIR -fPIC && \
+    make -j 6 && \
+    make install && \
+    rm -rf /tmp/openssl_1.0.2n
+
 ENV OPENSSL110DIR /opt/openssl-1.1.0g
 
 RUN mkdir -p /tmp/openssl_1.1.0g && \
@@ -40,6 +50,16 @@ RUN mkdir -p /tmp/openssl_1.1.0g && \
     make -j 6 && \
     make install && \
     rm -rf /tmp/openssl_1.1.0g
+
+ENV OPENSSL111DIR /opt/openssl-1.1.1-pre1
+
+RUN mkdir -p /tmp/openssl_1.1.1-pre1 && \
+    cd /tmp/openssl_1.1.1-pre1 && \
+    curl -sL https://github.com/openssl/openssl/archive/OpenSSL_1_1_1-pre1.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$OPENSSL111DIR && \
+    make -j 6 && \
+    make install && \
+    rm -rf /tmp/openssl_1.1.1-pre1
 
 ENV FIPS20DIR /opt/openssl-fips_2.0.16
 
@@ -51,9 +71,21 @@ RUN FIPSDIR=$FIPS20DIR mkdir -p /tmp/openssl-fips_2.0.16 && \
     make install && \
     rm -rf /tmp/openssl-fips_2.0.16
 
-VOLUME [ "/home/{{ server_user }}/" ]
+ENV ZLIB12DIR /opt/zlib_1.2.11
+
+RUN mkdir -p /tmp/zlib_1.2.11 && \
+    cd /tmp/zlib_1.2.11 && \
+    curl -sL https://zlib.net/zlib-1.2.11.tar.gz | tar zxv --strip=1 && \
+    ./configure --prefix=$ZLIB12DIR && \
+    make -j 6 && \
+    make install && \
+    rm -rf /tmp/zlib_1.2.11
+
+VOLUME /home/{{ server_user }}/ /home/{{ server_user }}/.ccache
 
 USER iojs:iojs
+
+ENV CCACHE_TEMPDIR /home/iojs/.ccache/{{ item.name }}
 
 CMD cd /home/iojs \
   && curl https://ci.nodejs.org/jnlpJars/slave.jar -O \
