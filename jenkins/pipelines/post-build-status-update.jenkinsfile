@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 // DESCRIPTION:
-// Updates the status of a GitHub pull request via the Github Bot. Primarily
+// Updates the status of a GitHub pull request via the GitHub Bot. Primarily
 // used for node-test-commit-* sub builds.
 
 import groovy.json.JsonOutput

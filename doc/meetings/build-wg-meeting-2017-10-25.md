@@ -79,7 +79,7 @@ Oct 24, 2017 22:00 UTC
 - Refael: Part of the problem is that you need the Jenkins secret to run the
   current Ansible scripts
 - Rod: For me the biggest problem is how to prioritise the work queue, and I
-  think the Github project is a good start
+  think the GitHub project is a good start
 - Michael: Part of the problem is that we’re mid migration between ansible
   scripts
 - Refael: I think it’s a combination of the two
@@ -139,7 +139,7 @@ Oct 24, 2017 22:00 UTC
 - Michael: What if two companies want to make the same claims?
 - Gibson: I don't think that's a problem.
 - Rod: That's why it's in quotes right?
-- Gibson: Take back to Github?
+- Gibson: Take back to GitHub?
 - All: Sure.
 
 ### ansible: use gcc 4.9 on CentOS 6 [#809](https://github.com/nodejs/build/pull/809)

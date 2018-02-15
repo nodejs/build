@@ -78,7 +78,7 @@ Next meeting: 18 April 2017
     github
 ### TAP Plugin issues on Jenkins [#453](https://github.com/nodejs/build/issues/453)
   * We agreed last meeting we should remove the agenda tag and discuss in
-    Github
+    GitHub
 
 ### Adding macOS workers.
   * Johan: We had an interesting opportunity which led into
