@@ -6,7 +6,7 @@
 
   pm: {
     'apk': 'alpine',
-    'yum': 'centos',
+    'yum': ['centos', 'rhel72'],
     'apt': ['debian', 'ubuntu'],
     'dnf': 'fedora',
     'pkg': 'freebsd',

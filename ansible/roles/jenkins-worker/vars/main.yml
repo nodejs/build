@@ -9,6 +9,7 @@ init: {
   debian:  ['debian7', 'ubuntu1204'],
   freebsd: 'freebsd',
   openrc:  'alpine',
+  rhel72: 'rhel72',
   systemd: ['centos7', 'debian8', 'fedora', 'ubuntu1604',
             'ubuntu1610', 'ubuntu1710'],
   svc:     'smartos',
@@ -36,6 +37,11 @@ jenkins_init: {
     dest: '/etc/init.d/jenkins',
     src: 'openrc.initd.j2',
     mode: '0755'
+    },
+  rhel72: {
+    dest: '/usr/lib/systemd/system/jenkins.service',
+    src: 'systemd.service.j2',
+    mode: '0644'
     },
   svc: {
     dest: '/home/{{ server_user }}/jenkins_manifest.xml',
