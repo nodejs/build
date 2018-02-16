@@ -40,7 +40,6 @@ jenkins_init: {
     },
   rhel72: {
     dest: '/usr/lib/systemd/system/jenkins.service',
-    #src: './files/rhel.service',
     src: 'systemd.service.j2',
     mode: '0644'
     },
