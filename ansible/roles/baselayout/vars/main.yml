@@ -83,6 +83,10 @@ packages: {
     'gmake'
   ],
 
+  rhel72: [
+    'gcc-c++',
+  ],
+
   smartos14: [
     'gcc48',
     'gcc48-libs',
