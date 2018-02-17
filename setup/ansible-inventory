@@ -29,10 +29,6 @@ test-requireio-rvagg-ubuntu1404-arm-odroid_xu3-1
 test-requireio_davglass-ubuntu1404-arm_odroid_xu-1
 test-requireio_davglass-ubuntu1404-arm_odroid_xu-2
 
-[iojs-build-ubuntu1204]
-test-digitalocean-ubuntu12-x64-1
-test-digitalocean-ubuntu12-x64-2
-
 [iojs-build-smartos]
 test-joyent-smartos14-x64-1
 test-joyent-smartos14-x64-2
@@ -98,7 +94,6 @@ iojs-jenkins
 
 [iojs-ubuntu:children]
 iojs-build-ubuntu1404
-iojs-build-ubuntu1204
 iojs-www
 node-www
 iojs-jenkins
