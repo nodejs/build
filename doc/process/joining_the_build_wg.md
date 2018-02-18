@@ -1,7 +1,7 @@
 # Joining the Build Working Group
 
 Anyone interested in helping out with the Build WG can reach out to existing
-members to let us know, for example via a Github Issue on this repo or through
+members to let us know, for example via a GitHub Issue on this repo or through
 [IRC][].
 
 Membership of the Build WG involves granting infrastructure access, so full

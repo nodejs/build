@@ -44,7 +44,7 @@ the road.
 
 ### Communication
 
-  - Github: PR/Issue workflow: committing/merging
+  - GitHub: PR/Issue workflow: committing/merging
   - IRC
   - `ci-alert@` and general email
   - Build group meetings

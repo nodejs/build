@@ -92,4 +92,4 @@ everything.  ETA to be back online: Wednesday.
 * [ ] Connectivity to Jenkins Slaves
 * [ ] We need to secure testing of private repo. Don’t push sources to binary repo.
 * [ ] Build 0.10, 0.12 binaries.
-* [ ] Github API status.. reporting flaky tests #236
+* [ ] GitHub API status.. reporting flaky tests #236

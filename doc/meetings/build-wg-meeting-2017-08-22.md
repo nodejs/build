@@ -67,7 +67,7 @@ Extracted from `wg-agenda` [issues](https://github.com/nodejs/build/issues?q=is%
 ### Create subteams to document release/infra/github-bot access [#826](https://github.com/nodejs/build/issues/826)
 
 - Gibson: worried about things getting out of sync
-- Michael: Github teams are private though
+- Michael: GitHub teams are private though
 - Gibson: Yeah, not the best solution
 - Rod: How about we put it in the Readme
 - Refael: Or maybe the wiki, it’s easier to update
@@ -100,7 +100,7 @@ Extracted from `wg-agenda` [issues](https://github.com/nodejs/build/issues?q=is%
 ### Migrate job configuration to pipeline files [#838](https://github.com/nodejs/build/issues/838)
 
 - Gibson: Would be good to get stuff out of the config.xml Jenkins files and
-  into Github
+  into GitHub
 - Michael: Could you quickly cover the benefits of pipelines
 - Gibson: Basically write your config as a Groovy file, rather than as options
   in the GUI. It should also allow a lot more flexibility.

@@ -66,7 +66,7 @@ Oct 12, 2017 10 PM UTC
 ### https://github.com/nodejs/build/pull/912
 
 - Refael, one sentence which providers provide is ok.
-- Take back to Github and if not resolved discuss next meeting.
+- Take back to GitHub and if not resolved discuss next meeting.
 
 ## Questions
 

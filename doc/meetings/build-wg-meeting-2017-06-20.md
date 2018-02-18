@@ -53,7 +53,7 @@ need to add this configuration to CI just for this. I will take a better look at
 
 ## Questions
 
-- Gibson: Can anyone think of any issues with keeping the Jenkins configuration scripts in a Github repo rather than just in Jenkins xml files?
+- Gibson: Can anyone think of any issues with keeping the Jenkins configuration scripts in a GitHub repo rather than just in Jenkins xml files?
 - Michael: No, there shouldn’t be anything special in the files. Doing it has been brought up before. The important thing would be to make sure only the right people have push access.
 - Joao: The problem previously is that there is no really good way to store and view/review config.xml files.
 - Gibson: I’ll raise an issue.
