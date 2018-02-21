@@ -41,6 +41,11 @@ git cherry-pick --abort || true
 # Canary-base is the last good version of canary, and is manually updated with any V8 patches or backports
 git cherry-pick `git log origin/canary-base -1 --format=format:%H --grep "src: update NODE_MODULE_VERSION"`...origin/canary-base
 
+# Verify that Node can be compiled and executed
+python ./configure
+make V=
+out/Release/node test/parallel/test-process-versions.js
+
 # Force-push to the canary branch as the nodejs-ci user if PUSH_TO_GITHUB set.
 if [ "$PUSH_TO_GITHUB" = true ]; then
   ssh-agent sh -c "ssh-add $NODEJS_CI_SSH_KEY && git push --force git@github.com:nodejs/node-v8.git HEAD:canary"
