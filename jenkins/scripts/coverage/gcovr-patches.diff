@@ -1,23 +1,26 @@
-diff --git a/scripts/gcovr b/scripts/gcovr
-index 034779c86d29..e68b239c424f 100755
---- a/scripts/gcovr
-+++ b/scripts/gcovr
-@@ -496,7 +496,7 @@ def process_gcov_data(data_fname, covdata, options):
+diff --git a/gcovr/__main__.py b/gcovr/__main__.py
+index 1d2bff2..ebc79f8 100755
+--- a/gcovr/__main__.py
++++ b/gcovr/__main__.py
+@@ -352,6 +352,8 @@ def main(args=None):
+             sys.exit(1)
+ 
+     options.starting_dir = os.path.abspath(os.getcwd())
++    if options.output is not None:
++        options.output = os.path.abspath(options.output)
+     if not options.root:
+         sys.stderr.write(
+             "(ERROR) empty --root option.\n"
+diff --git a/gcovr/gcov.py b/gcovr/gcov.py
+index f30215a..7fb0db2 100644
+--- a/gcovr/gcov.py
++++ b/gcovr/gcov.py
+@@ -156,7 +156,7 @@ def process_gcov_data(data_fname, covdata, source_fname, options):
      if filtered_fname is None:
          if options.verbose:
              sys.stdout.write("  Filtering coverage data for file %s\n" % fname)
 -        return
-+        #return
++        # return
      #
      # Return if the filename matches the exclude pattern
      #
-@@ -2141,6 +2141,9 @@ if options.objdir:
- for i in range(0, len(options.exclude)):
-     options.exclude[i] = re.compile(options.exclude[i])
-
-+if options.output is not None:
-+    options.output = os.path.abspath(options.output)
-+
- if options.root is not None:
-     if not options.root:
-         sys.stderr.write(
