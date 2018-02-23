@@ -10,6 +10,6 @@ packages:
   - lsb-release
   - vim
   - autossh
-nfs_server: 192.168.1.2 
+nfs_server: 192.168.1.10
 apt_proxy: http://192.168.2.100:3142
-nfs_share_root: /mnt/internal_ssd/nfs/nodejs/pi
+nfs_share_root: /exports/nodejs/pi

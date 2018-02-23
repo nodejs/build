@@ -1,6 +1,6 @@
 ---
 # Downloads and installs ccache
-# @requires: version=3.2.4
+# @requires: version=3.4.1
 
 - name: CCache | Check ccache --version
   shell: ccache --version

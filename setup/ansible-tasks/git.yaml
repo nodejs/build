@@ -1,6 +1,6 @@
 ---
 # Downloads and installs git
-# @requires: version=2.5.0
+# @requires: version=2.9.5
 
 - name: Git | Check git --version
   shell: git --version
