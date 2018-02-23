@@ -275,6 +275,13 @@
         version: 3.4.1
       tags: ccache
 
+    - name: git | Remove git package
+      apt:
+        name: git
+        update_cache: yes
+        state: absent
+      tags: git
+
     - name: git | Install git
       import_tasks: ../ansible-tasks/git.yaml
       vars:
