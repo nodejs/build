@@ -271,8 +271,6 @@
 
     - name: ccache | Install ccache
       import_tasks: ../ansible-tasks/ccache.yaml
-      vars:
-        version: 3.4.1
       tags: ccache
 
     - name: git | Remove git package
@@ -284,8 +282,6 @@
 
     - name: git | Install git
       import_tasks: ../ansible-tasks/git.yaml
-      vars:
-        version: 2.16.2
       tags: git
 
     - name: monit | Install monit
