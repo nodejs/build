@@ -1,16 +1,3 @@
-diff --git a/gcovr/__main__.py b/gcovr/__main__.py
-index 1d2bff2..ebc79f8 100755
---- a/gcovr/__main__.py
-+++ b/gcovr/__main__.py
-@@ -352,6 +352,8 @@ def main(args=None):
-             sys.exit(1)
- 
-     options.starting_dir = os.path.abspath(os.getcwd())
-+    if options.output is not None:
-+        options.output = os.path.abspath(options.output)
-     if not options.root:
-         sys.stderr.write(
-             "(ERROR) empty --root option.\n"
 diff --git a/gcovr/gcov.py b/gcovr/gcov.py
 index f30215a..7fb0db2 100644
 --- a/gcovr/gcov.py
