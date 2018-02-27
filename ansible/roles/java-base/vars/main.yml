@@ -10,6 +10,7 @@ packages: {
   'centos': 'java-1.8.0-openjdk-headless',
   'debian7': 'openjdk-7-jre-headless',
   'debian8': 'oracle-java8-installer',
+  'debian9': 'openjdk-8-jre-headless',
   'fedora': 'java-1.8.0-openjdk-headless',
   'freebsd': 'openjdk8-jre',
   'rhel72': 'java-1.8.0-openjdk',

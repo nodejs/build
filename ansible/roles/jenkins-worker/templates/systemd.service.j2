@@ -12,6 +12,7 @@ User={{ server_user }}
 Restart=always
 RestartSec=30
 StartLimitInterval=0
+WorkingDirectory=/home/{{ server_user }}
 
 Environment="USER={{ server_user }}"
 Environment="JOBS={{ server_jobs | default(ansible_processor_vcpus) }}"
