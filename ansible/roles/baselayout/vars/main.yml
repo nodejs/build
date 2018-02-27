@@ -52,10 +52,7 @@ packages: {
   centos: [
     'ccache',
     'git',
-  ],
-
-  centos7: [
-    'gcc-c++',
+    'gcc-c++', # even need this on centos6 so ccache has symlinks
   ],
 
   debian7: [
