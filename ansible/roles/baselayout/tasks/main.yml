@@ -44,7 +44,7 @@
       skip: true
 
 - name: check for a recent enough ccache
-  when: os in ccache_no_binpkg
+  when: os in ccache_no_binpkg or 'rhel72-s390x' in inventory_hostname
   stat: path="{{ binary_dest }}"
   register: has_ccache
 
@@ -97,6 +97,13 @@
     state: present
     regexp: '^127\.0\.1\.1\s+\w.+$'
     line: '127.0.1.1        {{safe_hostname}}'
+
+- name: run ccache installer
+  when: os == "rhel72" and arch == "s390x" and not has_ccache.stat.exists
+  include: ccache.yml
+  static: false
+  vars:
+    - version: 3.3.3
 
 - name: run ccache installer
   when: os in ccache_no_binpkg and not has_ccache.stat.exists
