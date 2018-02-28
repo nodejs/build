@@ -81,7 +81,7 @@ for (param in pr) {
   p.push(string(name: param.key, value: "${param.value}"))
 }
 
-println "Running ci on this Pull Request:\n${printParams}\n"
+// println "Running ci on this Pull Request:\n${printParams}\n"
 
 // Set the description that shows up next to the build number.
 currentBuild.description = "${pr['TARGET_GITHUB_ORG']}/${pr['TARGET_REPO_NAME']}#${pr['PR_ID']}"
@@ -91,8 +91,7 @@ currentBuild.description = "${pr['TARGET_GITHUB_ORG']}/${pr['TARGET_REPO_NAME']}
 
 // stage('Abort existing rebase') { timeout(60) {
 //   node('jenkins-workspace') {
-//     withEnv(["IBM_VERSION=${pr['IBM_VERSION']}", "ORG=runtimes", "REPO=squad-node-dragons",
-//           "BRANCH=${BRANCH}", "USERNAME=jtcpoly1", "EMAIL=jtcpoly1@ca.ibm.com", "MSG=${MSG}"]) {
+//     withEnv(["REPO_NAME=${pr['REPO_NAME']}", "GIT_REMOTE_REF=${GIT_REMOTE_REF}"]) {
 //     def ret = sh(
 //       script: '''
 //       git rebase --abort || true
@@ -110,23 +109,23 @@ def statusOptions = [
   STATUS: "pending",
 ]
 
-println "Pre Build Status Update Params:\n${statusOptions}"
+// println "Pre Build Status Update Params:\n${statusOptions}"
 
 def statusParams = []
 statusOptions.each{key, value -> statusParams.push(string(name: key, value: value)) }
 
-stage('Pre Build Status Update') { timeout(60) {
+stage('Pre Build Status Update') { // timeout(60) {
   build(job: 'post-build-status-update', parameters: statusParams)
-}}
+} //}
 
 /*
  * Run node-test-commit with the correct parameters.
  */
 
-stage('node-test-commit') { timeout(300) {
+stage('node-test-commit') { // timeout(300) {
   def buildStatus = build(job: "node-test-commit", parameters: p, propagate: false)
   currentBuild.result = buildStatus.result
-}}
+} // }
 
 /*
  * Run post-build-status-update again with STATUS set to the return code
@@ -136,10 +135,10 @@ statusOptions.STATUS = currentBuild.result.toString().toLowerCase()
 statusParams = []
 statusOptions.each{key, value -> statusParams.push(string(name: key, value: value)) }
 
-println "Post Build Status Update Params:\n${statusOptions}"
+// println "Post Build Status Update Params:\n${statusOptions}"
 
-stage('Post Build Status Update') { timeout(60) {
+stage('Post Build Status Update') { // timeout(60) {
   build(job: 'post-build-status-update', parameters: statusParams)
-}}
+} // }
 
-println "\n\n \\(• ◡ •)/  FLOW COMPLETE  \\(• ◡ •)/\n\n"
+// println "\n\n \\(• ◡ •)/  FLOW COMPLETE  \\(• ◡ •)/\n\n"
