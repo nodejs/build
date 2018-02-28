@@ -1,0 +1,145 @@
+#!/usr/bin/env groovy
+
+properties([
+  parameters([
+    booleanParam(name: 'CERTIFY_SAFE', defaultValue: false, description: 'I have reviewed *the latest version of* these changes and I am sure that they don’t contain any code that could compromise the security of the CI infrastructure.'),
+    string(name: 'TARGET_GITHUB_ORG', defaultValue: 'nodejs', description: 'The user/org of the GitHub repo targeted by the PR'),
+    string(name: 'TARGET_REPO_NAME', defaultValue: 'node', description: 'The name of the repo targeted by the PR'),
+    string(name: 'PR_ID', defaultValue: '', description: 'The numeric ID of the pull request (from GitHub URL)'),
+    booleanParam(name: 'POST_STATUS_TO_PR', defaultValue: true, description: 'Posts build status updates to a nodejs/node PR.'),
+    choice(name: 'REBASE_ONTO', choices: '''<pr base branch>
+master
+next
+next+1
+v4.x
+v3.x
+v0.12
+v0.10
+<no rebasing>''', description: 'Branch to rebase onto before building'),
+  ]),
+])
+
+// TODO(gib): Enable the "Trigger builds remotely (e.g., from scripts)" option.
+
+/*
+ * I know this is awful, but the params dict we get (`params`) is immutable. So
+ * we need to copy it to a mutable dict (`pr`), modify it, and then create
+ * another immutable set of parameters (`p`). It also creates a Stringified
+ * version (`printParams`) for pretty-printing.
+ */
+
+def pr = [:] // Mutable copy of params.
+params.each{ key, value -> pr.put(key, value) }
+
+/*
+ * Validate sane parameters were passed.
+ */
+
+if (pr['CERTIFY_SAFE'] == "false") {
+  error("Please certify that you have reviewed the changes to be tested, by ticking the CERTIFY_SAFE checkbox on the job launch page.")
+}
+if (!pr['TARGET_GITHUB_ORG']) { error("You didn't define the target GitHub org, bailing.") }
+if (!pr['TARGET_REPO_NAME'])  { error("You didn't define a target repo name, bailing.") }
+if (!pr['PR_ID'])             { error("You didn't define a PR to clone, bailing.") }
+
+/*
+ * Work out which branch to rebase onto.
+ */
+
+if (pr['REBASE_ONTO'] == "<pr base branch>") {
+  def jsonResponse = new URL(
+      "https://api.github.com/repos/${TARGET_GITHUB_ORG}/${TARGET_REPO_NAME}/pulls/${PR_ID}"
+    ).getText()
+  def json = new groovy.json.JsonSlurper().parseText(jsonResponse)
+  pr['PR_BASE_BRANCH'] = json.base.ref
+  pr['GIT_SHA'] = json.head.sha
+
+  if (!pr['PR_BASE_BRANCH']) { error("Failed to detect PR base branch.") }
+
+  pr['REBASE_ONTO']="origin/${pr['PR_BASE_BRANCH']}"
+} else if (pr['REBASE_ONTO'] == "<no rebasing>") {
+  pr['REBASE_ONTO']=""
+} else {
+  pr['REBASE_ONTO']="origin/${pr['REBASE_ONTO']}"
+}
+
+/*
+ * Add other needed parameters.
+ */
+
+pr['NODES_SUBSET'] = "auto"
+pr['IGNORE_FLAKY_TESTS'] = "true"
+pr['REPO_NAME'] = pr['TARGET_REPO_NAME']
+pr['GIT_REMOTE_REF'] = "refs/pull/${pr['PR_ID']}/head"
+
+
+def p = [] // Parameter class to pass to jobs.
+String printParams = '' // String of params to print
+
+for (param in pr) {
+  printParams += param.toString() + '\n'
+  p.push(string(name: param.key, value: "${param.value}"))
+}
+
+println "Running ci on this Pull Request:\n${printParams}\n"
+
+// Set the description that shows up next to the build number.
+currentBuild.description = "${pr['TARGET_GITHUB_ORG']}/${pr['TARGET_REPO_NAME']}#${pr['PR_ID']}"
+
+
+// TODO(gib): Is this needed in this job?
+
+// stage('Abort existing rebase') { timeout(60) {
+//   node('jenkins-workspace') {
+//     withEnv(["IBM_VERSION=${pr['IBM_VERSION']}", "ORG=runtimes", "REPO=squad-node-dragons",
+//           "BRANCH=${BRANCH}", "USERNAME=jtcpoly1", "EMAIL=jtcpoly1@ca.ibm.com", "MSG=${MSG}"]) {
+//     def ret = sh(
+//       script: '''
+//       git rebase --abort || true
+//       git checkout -f refs/remotes/origin/_jenkins_local_branch
+//       '''
+//     )
+//   }
+// }}
+
+def statusOptions = [
+  IDENTIFIER: "node-test-pull-request",
+  URL: env.BUILD_URL,
+  COMMIT: pr['GIT_SHA'],
+  REF: pr['GIT_REMOTE_REF'],
+  STATUS: "pending",
+]
+
+println "Pre Build Status Update Params:\n${statusOptions}"
+
+def statusParams = []
+statusOptions.each{key, value -> statusParams.push(string(name: key, value: value)) }
+
+stage('Pre Build Status Update') { timeout(60) {
+  build(job: 'post-build-status-update', parameters: statusParams)
+}}
+
+/*
+ * Run node-test-commit with the correct parameters.
+ */
+
+stage('node-test-commit') { timeout(300) {
+  def buildStatus = build(job: "node-test-commit", parameters: p, propagate: false)
+  currentBuild.result = buildStatus.result
+}}
+
+/*
+ * Run post-build-status-update again with STATUS set to the return code
+ */
+
+statusOptions.STATUS = currentBuild.result.toString().toLowerCase()
+statusParams = []
+statusOptions.each{key, value -> statusParams.push(string(name: key, value: value)) }
+
+println "Post Build Status Update Params:\n${statusOptions}"
+
+stage('Post Build Status Update') { timeout(60) {
+  build(job: 'post-build-status-update', parameters: statusParams)
+}}
+
+println "\n\n \\(• ◡ •)/  FLOW COMPLETE  \\(• ◡ •)/\n\n"
