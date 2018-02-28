@@ -53,8 +53,15 @@ echo $BUILD_TAG >> ${DIAGFILE}
 echo $BUILD_URL >> ${DIAGFILE}
 echo $NODE_NAME >> ${DIAGFILE}
 echo >> ${DIAGFILE}
-echo "netstat -anp" >> ${DIAGFILE}
-netstat -anp >> ${DIAGFILE} 2>&1 || true
+
+case "$(uname)" in
+  Darwin|FreeBSD) FLAG=p ;;
+  *)              FLAG=  ;;
+esac
+echo "netstat -an$FLAG" >> ${DIAGFILE}
+netstat -an$FLAG >> ${DIAGFILE} 2>&1 || true
+unset FLAG
+
 echo >> ${DIAGFILE}
 echo "netstat -gn" >> ${DIAGFILE}
 netstat -gn >> ${DIAGFILE} 2>&1 || true
