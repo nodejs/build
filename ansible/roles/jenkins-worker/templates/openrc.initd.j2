@@ -5,7 +5,7 @@ description="Start a Jenkins slave"
 name="java"
 command="/usr/bin/java"
 command_args="-Xmx{{ server_ram|default('128m') }} \
-  -jar /home/{{ server_user }}/slave.jar -secret {{ secret }} \
+  -jar /home/{{ server_user }}/agent.jar -secret {{ secret }} \
   -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp \
   -slaveLog /home/{{ server_user }}/slave.log"
 

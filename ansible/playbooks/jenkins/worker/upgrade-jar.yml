@@ -1,16 +1,16 @@
 ---
 
 #
-# upgrade `slave.jar` at jenkins workers
+# upgrade `agent.jar` at jenkins workers
 #
 
 -  hosts: test
 
    tasks:
-    - name: download slave.jar
+    - name: download agent.jar
       get_url:
         url: "{{ jenkins_worker_jar }}"
-        dest: /home/{{ server_user }}/slave.jar
+        dest: /home/{{ server_user }}/agent.jar
         mode: 0644
 
     - name: restart jenkins

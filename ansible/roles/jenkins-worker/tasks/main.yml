@@ -77,20 +77,20 @@
   command: systemctl restart iptables
   when: "'rhel72-s390x' in inventory_hostname"
 
-- name: download slave.jar
+- name: download agent.jar
   when: not os|startswith("zos")
   get_url:
     url: "{{ jenkins_worker_jar }}"
-    dest: '{{ home }}/{{ server_user }}/slave.jar'
+    dest: '{{ home }}/{{ server_user }}/agent.jar'
     mode: 0644
     timeout: 60
 
 # temporary until we get the righ cert bundles
-- name: download slave.jar -zos
+- name: download agent.jar -zos
   when: os|startswith("zos")
   get_url:
     url: "{{ jenkins_worker_jar }}"
-    dest: '{{ home }}/{{ server_user }}/slave.jar'
+    dest: '{{ home }}/{{ server_user }}/agent.jar'
     mode: 0644
     timeout: 60
     validate_certs: no

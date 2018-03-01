@@ -1,6 +1,6 @@
 jenkins_url: "https://ci-release.nodejs.org"
-# intentionally fetching `slave.jar` from ci.nodejs.org to avoid auth problems
-jenkins_worker_jar: "https://ci.nodejs.org/jnlpJars/slave.jar"
+# intentionally fetching `agent.jar` from ci.nodejs.org to avoid auth problems
+jenkins_worker_jar: "https://ci.nodejs.org/jnlpJars/agent.jar"
 server_user: "iojs"
 home: "/home"
 remote_env: {}

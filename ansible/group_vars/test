@@ -1,5 +1,5 @@
 jenkins_url: "https://ci.nodejs.org"
-jenkins_worker_jar: "{{ jenkins_url }}/jnlpJars/slave.jar"
+jenkins_worker_jar: "{{ jenkins_url }}/jnlpJars/agent.jar"
 server_user: iojs
 home: "/home"
 remote_env: {}

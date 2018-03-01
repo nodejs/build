@@ -24,6 +24,6 @@ Environment="NODE_TEST_DIR=/home/{{ server_user }}/tmp"
 Environment="OSTYPE=linux-gnu"
 
 ExecStart=/usr/bin/java -Xmx{{ server_ram|default('128m') }} \
-          -jar /home/{{ server_user }}/slave.jar \
+          -jar /home/{{ server_user }}/agent.jar \
           -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp \
           -secret {{ secret }}
