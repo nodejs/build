@@ -1,8 +1,0 @@
----
-
-#
-# start busybox ntpd in alpine
-#
-
-- name: start ntpd
-  service: name=ntpd state=started enabled=yes

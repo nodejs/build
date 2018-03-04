@@ -12,8 +12,7 @@
 # https://github.com/ansible/ansible-modules-core/issues/4782
 # also, some os:es complain about underscores in hostnames
 - name: set hostname
-  when: not os|startswith("alpine") and not os|startswith("smartos")
-        and not os|startswith("zos")
+  when: not os|startswith("smartos") and not os|startswith("zos")
   hostname: name="{{ inventory_hostname|replace('_', '-') }}"
 
 - name: disable joyent smartconnect

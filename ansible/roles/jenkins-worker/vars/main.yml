@@ -8,7 +8,6 @@ init: {
   centos:  ['centos5', 'centos6','centos7'],
   debian:  ['debian7', 'ubuntu1204'],
   freebsd: 'freebsd',
-  openrc:  'alpine',
   rhel72: 'rhel72',
   systemd: ['centos7', 'debian8', 'debian9', 'fedora', 'ubuntu1604', 'ubuntu1610', 'ubuntu1710'],
   svc:     'smartos',
@@ -67,7 +66,6 @@ init_type: "{{ os|match_key(init, raise_error=False)|default(os|stripversion|mat
 jenkins: "{{ jenkins_init[init_type] }}"
 
 needs_monit: [
-  'alpine34',
   'centos5',
   'centos6',
   'debian7',
