@@ -8,7 +8,11 @@
 
 ## Present
 
-Michael Dawson (@mhdawson)
+* Michael Dawson (@mhdawson)
+* Gibson Fahnestock (@gibfahn)
+* João Reis (@joaocgreis)
+* Rich Trott (@trott)
+* Rod Vagg (@rvagg)
 
 
 ### Standup
@@ -52,10 +56,9 @@ Michael Dawson (@mhdawson)
 * Rod: Would be good to get a release machine
 
 ### Use Foundation resources to support build [1154](https://github.com/nodejs/build/issues/1154)
-* Rod: I.m not sure this is a good idea, 
+* Rod: I.m not sure this is a good idea.
 
 ### A novel approach to trimming Jenkins nodes by Node.js version [#1153](https://github.com/nodejs/build/issues/1153)
-
 * ran out of time, discuss through github
 
 ## Q&A, Other
