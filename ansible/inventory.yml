@@ -55,7 +55,7 @@ hosts:
         centos6-x64-1: {ip: 50.97.245.10}
 
     - linuxonecc:
-        rhel72-s390x-1: {ip: 148.100.110.65}
+        rhel74-s390x-1: {ip: 148.100.110.65}
 
     - packetnet:
         centos7-arm64-1: {ip: 147.75.104.218}
@@ -122,8 +122,8 @@ hosts:
         zos13-s390x-2: {ip: 148.100.36.134, user: Unix1}
 
     - linuxonecc:
-        rhel72-s390x-1: {ip: 148.100.110.63}
-        rhel72-s390x-2: {ip: 148.100.110.64}
+        rhel74-s390x-1: {ip: 148.100.110.63}
+        rhel74-s390x-2: {ip: 148.100.110.64}
 
     - mininodes:
         ubuntu1604-arm64_odroid_c2-1: {ip: 70.167.220.147}
