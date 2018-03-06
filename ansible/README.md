@@ -169,15 +169,13 @@ Unsorted stuff of things we need to do/think about
 - [ ] [unencrypted host](https://git.io/v6H1z)
 - [ ] when creating additional jenkins labels based on `labels=` add os/arch
       as part of hte label (ref: rvagg long irc talk see 2016-08-29 logs)
-- [ ] follow up ansible upstream wrt hostname support for smartos/alpine
+- [ ] follow up ansible upstream wrt hostname support for smartos
 - [ ] callback plugin: make `nodejs_yaml` a class and support `--host`
 - [ ] add label support to jenkins
 - [ ] move all service-related stuff to handlers
 - [ ] find a nicer way of adding proxyhosts to iptables
 - [ ] add clang/clang++ symlinks for ccache
 - [ ] centos7 needs different ccache path
-- [ ] fedora 24 and 25 needs to either handle selinux or just disable it
-- [ ] fedora 24 and 25: ccache lives in /usr/lib64/ccache
 - [ ] debian7 needs to update alternative gcc/g++
 - [ ] adding scl stuff on centos5/6 is broken
 - [ ] verify that /usr/local/bin works as ccache install path
@@ -186,8 +184,6 @@ Unsorted stuff of things we need to do/think about
       - aix
       - TBD
 - [ ] centos5 and 6 repositories for rhel\* stuff is broken
-- [ ] remove native alpine34 vm's on joyent since the joyent host
-      is not mature enough to provide linux emulation. use docker instead.
 - [ ] automate more items in initial Raspberry Pi setup (see bottom of
       setup/raspberry-pi/README.md, some of these can be automated)
 - [ ] epel-release for centos - required for centos7 on packet.net arm64

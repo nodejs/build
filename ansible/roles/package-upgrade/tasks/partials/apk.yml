@@ -1,8 +1,0 @@
----
-
-#
-# Updates all packages for alpine-based distributions
-#
-
- - name: upgrade installed packages
-   raw: apk -U -q upgrade

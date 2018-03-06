@@ -5,7 +5,6 @@
 #
 
   pm: {
-    'apk': 'alpine',
     'yum': ['centos', 'rhel72'],
     'apt': ['debian', 'ubuntu'],
     'dnf': 'fedora',
