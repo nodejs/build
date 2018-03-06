@@ -2,10 +2,10 @@
 
 
 case $NODE_NAME in
-  *ppc64_le* ) ARCH=PPC64LE ;;
+  *ppc64_le* ) SELECT_ARCH=PPC64LE ;;
 esac
 
-if [ "$ARCH" = "PPC64LE" ]; then
+if [ "$SELECT_ARCH" = "PPC64LE" ]; then
   # set default
   export COMPILER_LEVEL="4.8"
 
