@@ -7,6 +7,8 @@
 - hosts:
   - test
   - release
+  # Benchmarking machine
+  - infra-softlayer-ubuntu1404-x64-2
   - "!test-joyent-freebsd10-x64-2"
   - "!test-rackspace-freebsd10-x64-1"
 
@@ -14,6 +16,8 @@
     - bootstrap
     - package-upgrade
     - baselayout
+    - { role: 'benchmarking',
+        when: is_benchmark is defined and is_benchmark|bool == True }
     - jenkins-worker
 
   pre_tasks:
