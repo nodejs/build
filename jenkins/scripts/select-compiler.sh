@@ -19,9 +19,9 @@ if [ "$SELECT_ARCH" = "PPC64LE" ]; then
   fi
 
   # select the appropriate compiler
-  export CC=/usr/bin/gcc-${COMPILER_LEVEL}
-  export CXX=/usr/bin/g++-${COMPILER_LEVEL}
-  export LINK=/usr/bin/g++-${COMPILER_LEVEL}
+  export CC=gcc-${COMPILER_LEVEL}
+  export CXX=g++-${COMPILER_LEVEL}
+  export LINK=g++-${COMPILER_LEVEL}
   export LDFLAGS="-Wl,-rpath,$(dirname $($CC --print-file-name libgcc_s.so))"
 
   echo "Set compiler to $COMPILER_LEVEL"
