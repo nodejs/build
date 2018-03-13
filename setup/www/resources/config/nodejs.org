@@ -301,6 +301,16 @@ server {
         default_type text/plain;
     }
 
+    location /security.txt {
+        alias /home/www/nodejs/static/security.txt;
+        default_type text/plain;
+    }
+
+    location /.well-known/security.txt {
+        alias /home/www/nodejs/static/security.txt;
+        default_type text/plain;
+    }
+
     location /metrics {
         alias /home/dist/metrics/;
         autoindex on;
