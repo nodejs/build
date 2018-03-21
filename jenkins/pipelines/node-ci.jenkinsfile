@@ -3,9 +3,8 @@
 properties([
   parameters([
     booleanParam(name: 'CERTIFY_SAFE', defaultValue: false, description: 'I have reviewed *the latest version of* these changes and I am sure that they don’t contain any code that could compromise the security of the CI infrastructure.'),
-    string(name: 'TARGET_GITHUB_ORG', defaultValue: 'nodejs', description: 'The user/org of the GitHub repo targeted by the PR'),
-    string(name: 'TARGET_REPO_NAME', defaultValue: 'node', description: 'The name of the repo targeted by the PR'),
-    string(name: 'PR_ID', defaultValue: '', description: 'The numeric ID of the pull request (from GitHub URL)'),
+    string(name: 'GITHUB_REPO', defaultValue: 'nodejs/node', description: 'The user/repo targeted by the PR'),
+    string(name: 'GIT_REF', defaultValue: 'refs/pull/XXX/head', description: 'The ref to build (branch name or "refs/pull/<PR number>/head"'),
     booleanParam(name: 'POST_STATUS_TO_PR', defaultValue: true, description: 'Posts build status updates to a nodejs/node PR.'),
     choice(name: 'REBASE_ONTO', choices: '''<pr base branch>
 master
@@ -38,9 +37,8 @@ params.each{ key, value -> pr.put(key, value) }
 if (pr['CERTIFY_SAFE'] == "false") {
   error("Please certify that you have reviewed the changes to be tested, by ticking the CERTIFY_SAFE checkbox on the job launch page.")
 }
-if (!pr['TARGET_GITHUB_ORG']) { error("You didn't define the target GitHub org, bailing.") }
-if (!pr['TARGET_REPO_NAME'])  { error("You didn't define a target repo name, bailing.") }
-if (!pr['PR_ID'])             { error("You didn't define a PR to clone, bailing.") }
+if (!pr['GITHUB_REPO']) { error("You didn't define the target GitHub repo, bailing.") }
+if (!pr['GIT_REF'])             { error("You didn't define a ref to clone, bailing.") }
 
 /*
  * Work out which branch to rebase onto.
@@ -70,7 +68,7 @@ if (pr['REBASE_ONTO'] == "<pr base branch>") {
 pr['NODES_SUBSET'] = "auto"
 pr['IGNORE_FLAKY_TESTS'] = "true"
 pr['REPO_NAME'] = pr['TARGET_REPO_NAME']
-pr['GIT_REMOTE_REF'] = "refs/pull/${pr['PR_ID']}/head"
+pr['GIT_REMOTE_REF'] = pr['GIT_REF']
 
 
 def p = [] // Parameter class to pass to jobs.
@@ -114,18 +112,18 @@ def statusOptions = [
 def statusParams = []
 statusOptions.each{key, value -> statusParams.push(string(name: key, value: value)) }
 
-stage('Pre Build Status Update') { // timeout(60) {
+stage('Pre Build Status Update') {
   build(job: 'post-build-status-update', parameters: statusParams)
-} //}
+}
 
 /*
  * Run node-test-commit with the correct parameters.
  */
 
-stage('node-test-commit') { // timeout(300) {
+stage('node-test-commit') {
   def buildStatus = build(job: "node-test-commit", parameters: p, propagate: false)
   currentBuild.result = buildStatus.result
-} // }
+}
 
 /*
  * Run post-build-status-update again with STATUS set to the return code
@@ -137,8 +135,8 @@ statusOptions.each{key, value -> statusParams.push(string(name: key, value: valu
 
 // println "Post Build Status Update Params:\n${statusOptions}"
 
-stage('Post Build Status Update') { // timeout(60) {
+stage('Post Build Status Update') {
   build(job: 'post-build-status-update', parameters: statusParams)
-} // }
+}
 
 // println "\n\n \\(• ◡ •)/  FLOW COMPLETE  \\(• ◡ •)/\n\n"
