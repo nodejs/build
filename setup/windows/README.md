@@ -1,6 +1,6 @@
 # Node.js Build Windows Setup for Jenkins Test Machines
 
-See the [manual setup instructions](../../docs/non-ansible-configuration-notes.md) for how to prepare both the control and target machines to run the commands below.
+See the [manual setup instructions](../../doc/non-ansible-configuration-notes.md) for how to prepare both the control and target machines to run the commands below.
 
 To test the connection to the hosts, run:
 
