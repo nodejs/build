@@ -9,6 +9,9 @@
   - release
   - "!test-joyent-freebsd10-x64-2"
   - "!test-rackspace-freebsd10-x64-1"
+  - "!test-packetnet-ubuntu1604-x64-1"
+  - "!test-packetnet-ubuntu1604-x64-2"
+  - "!test-softlayer-ubuntu1604-x64-1"
 
   roles:
     - bootstrap

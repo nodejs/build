@@ -1,0 +1,24 @@
+---
+
+#
+# Set up a Jenkins Workspace server
+#
+
+- hosts:
+  - test-packetnet-ubuntu1604-x64-1
+  - test-packetnet-ubuntu1604-x64-2
+  - test-softlayer-ubuntu1604-x64-1
+
+  roles:
+    - bootstrap
+    - package-upgrade
+    - baselayout
+    - jenkins-worker
+    - jenkins-workspace
+
+  pre_tasks:
+    - name: check if secret is properly set
+      fail:
+      failed_when: not secret
+
+  environment: '{{remote_env}}'
