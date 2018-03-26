@@ -9,9 +9,6 @@
   - release
   - "!test-joyent-freebsd10-x64-2"
   - "!test-rackspace-freebsd10-x64-1"
-  - "!test-packetnet-ubuntu1604-x64-1"
-  - "!test-packetnet-ubuntu1604-x64-2"
-  - "!test-softlayer-ubuntu1604-x64-1"
 
   roles:
     - bootstrap
@@ -29,3 +26,16 @@
       when: "'rhel72-s390x' in inventory_hostname"
 
   environment: '{{remote_env}}'
+
+
+#
+# Set up Jenkins Workspace servers
+#
+
+- hosts:
+    - test-packetnet-ubuntu1604-x64-1
+    - test-packetnet-ubuntu1604-x64-2
+    - test-softlayer-ubuntu1604-x64-1
+
+  roles:
+    - jenkins-workspace
