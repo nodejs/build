@@ -54,6 +54,8 @@ packages: {
   ],
 
   debian9: [
+    'gcc-6',
+    'g++-6',
     'ccache',
     'git',
     'curl',

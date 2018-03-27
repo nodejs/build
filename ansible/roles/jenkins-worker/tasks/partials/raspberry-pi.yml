@@ -1,0 +1,126 @@
+---
+
+# For Raspberry Pis of any type, assumed to be running Debian 9
+
+- name: pi | enable rpcbind service
+  service: name=rpcbind state=started enabled=yes
+  tags: init
+
+- name: pi | make nfs mounted directories
+  file:
+    path: "/home/{{ server_user }}/.ccache"
+    state: directory
+    mode: 0755
+    owner: "{{ server_user }}"
+  ignore_errors: True
+  tags: nfs
+
+- name: pi | configure mount options
+  mount:
+    name: "/home/{{ server_user }}/.ccache"
+    src: "{{ raspberry_pi.nfs_server }}:{{ raspberry_pi.nfs_share_root }}/.ccache"
+    fstype: nfs4
+    opts: rw,exec,async,noauto
+    state: mounted
+  tags: nfs
+
+- name: pi | mount at end of boot sequence
+  lineinfile:
+    path: /etc/rc.local
+    insertbefore: '^exit 0'
+    line: '{{ item }}'
+  with_items:
+    - '/etc/init.d/rpcbind start'
+    - '/etc/init.d/nfs-common start'
+    - 'sleep 10 && (grep nfs /etc/fstab | cut -d" " -f 2 | xargs -l mount) &'
+  tags: nfs
+
+- name: pi | copy start_tunnel.sh script
+  template:
+    src: "./resources/start_tunnel.j2"
+    dest: "/usr/local/sbin/start_tunnel.sh"
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: 0755
+  when: pi_local is defined
+  tags: tunnel
+
+- name: pi | crontab entry
+  cron:
+    name: 'start ssh tunnel on reboot'
+    special_time: reboot
+    job: "/usr/local/sbin/start_tunnel.sh"
+  when: pi_local is defined
+  tags: tunnel
+
+- name: pi | docker | register {{ server_user }} GID
+  shell: "grep ^{{ server_user }} /etc/group | awk -F: '{print $3}'"
+  register: server_user_gid
+
+- name: pi | docker | register {{ server_user }} UID
+  shell: "grep ^{{ server_user }} /etc/passwd | awk -F: '{print $4}'"
+  register: server_user_uid
+
+- name: pi | docker | fetch latest ccache release version
+  local_action: shell curl -sL https://www.samba.org/ftp/ccache/ | awk '{ if (match($0, />ccache-(([0-9]+)\.([0-9]+)\.?([0-9]+)?)\.tar\.gz</, a)) { if (a[2]+0 > maxmaj || (a[2]+0 == maxmaj && a[3]+0 > maxmin) || (a[2]+0 == maxmaj && a[3]+0 == maxmin && a[4]+0 > maxpat)) { maxmaj = a[2]+0; maxmin = a[3]+0; maxpat = a[4]+0; } } } END { printf "%s.%s.%s\n", maxmaj, maxmin, maxpat }'
+  register: ccache_latest_result
+
+- name: pi | docker | register ccache version
+  set_fact:
+    ccache_latest: "{{ ccache_latest_result.stdout }}"
+
+- name: pi | docker | install docker from docker.com
+  raw: curl -fsSL get.docker.com | sudo bash -
+
+- name: pi | docker | add pi user to docker group
+  user:
+    name: "pi"
+    groups: "docker"
+    append: yes
+
+- name: pi | docker | make build directory
+  file:
+    path: /root/docker-container-{{ item }}
+    state: directory
+  with_items:
+    - "{{ raspberry_pi.containers[arch] }}"
+
+- name: pi | docker | generate Dockerfile
+  template:
+    src: "{{ role_path }}/templates/rpi_{{ item }}.Dockerfile.j2"
+    dest: /root/docker-container-{{ item }}/Dockerfile
+    mode: "0644"
+  with_items:
+    - "{{ raspberry_pi.containers[arch] }}"
+
+- name: pi | docker | build image
+  command: docker build -t node-ci:{{ item }} /root/docker-container-{{ item }}/
+  with_items:
+    - "{{ raspberry_pi.containers[arch] }}"
+
+- name: pi | docker | generate and copy init script
+  template:
+    src: "{{ role_path }}/templates/rpi_docker-jenkins.service.j2"
+    dest: "/lib/systemd/system/docker-jenkins-{{ item }}.service"
+  with_items:
+    - "{{ raspberry_pi.containers[arch] }}"
+
+- name: pi | docker | start containers
+  service:
+    name: "docker-jenkins-{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - "{{ raspberry_pi.containers[arch] }}"
+
+- name: pi | docker | copy docker-exec script
+  template:
+    src: "{{ role_path }}/templates/rpi_docker-node-exec.sh.j2"
+    dest: "/usr/local/bin/docker-node-exec.sh"
+    mode: 0755
+
+- name: pi | docker | give {{ server_user }} sudoers access to docker-exec script
+  lineinfile:
+    line: "{{ server_user }} ALL=(ALL) NOPASSWD: /usr/local/bin/docker-node-exec.sh"
+    dest: "/etc/sudoers"
+    regexp: docker-node-exec.sh$

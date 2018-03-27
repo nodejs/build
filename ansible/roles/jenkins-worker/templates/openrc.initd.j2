@@ -17,7 +17,7 @@ depend() {
 
 start() {
         export PATH="/usr/lib/ccache/bin:$PATH"
-        export JOBS={{ server_jobs | default(ansible_processor_vcpus) }}
+        export JOBS={{ jobs_env }}
         export HOME=/home/{{ server_user }}
         export NODE_TEST_DIR=${HOME}/tmp
         export NODE_COMMON_PIPE=/home/{{ server_user }}/test.pipe

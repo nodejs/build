@@ -11,9 +11,13 @@
 # https://github.com/ansible/ansible-modules-core/issues/4818
 # https://github.com/ansible/ansible-modules-core/issues/4782
 # also, some os:es complain about underscores in hostnames
+- name: generate hostname
+  set_fact:
+    safe_hostname: "{{ inventory_hostname | regex_replace('_', '--') }}"
+
 - name: set hostname
   when: not os|startswith("smartos") and not os|startswith("zos")
-  hostname: name="{{ inventory_hostname|replace('_', '-') }}"
+  hostname: name="{{ safe_hostname }}"
 
 - name: disable joyent smartconnect
   when: os|startswith("smartos")
@@ -78,6 +82,21 @@
   loop_control:
     loop_var: login_item
   with_items: [ '.login', '.profile' ]
+
+- name: pi | set hostname
+  when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
+  copy:
+    content: |
+      {{ safe_hostname }}
+    dest: /etc/hostname
+
+- name: pi | set hostname resolver
+  when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
+  lineinfile:
+    dest: /etc/hosts
+    state: present
+    regexp: '^127\.0\.1\.1\s+\w.+$'
+    line: '127.0.1.1        {{safe_hostname}}'
 
 - name: run ccache installer
   when: os in ccache_no_binpkg and not has_ccache.stat.exists

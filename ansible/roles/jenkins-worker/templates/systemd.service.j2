@@ -13,9 +13,10 @@ Restart=always
 RestartSec=30
 StartLimitInterval=0
 WorkingDirectory=/home/{{ server_user }}
+LimitCORE=unlimited
 
 Environment="USER={{ server_user }}"
-Environment="JOBS={{ server_jobs | default(ansible_processor_vcpus) }}"
+Environment="JOBS={{ jobs_env }}"
 Environment="SHELL=/bin/bash"
 Environment="HOME=/home/{{ server_user }}"
 Environment="PATH=/usr/lib/ccache:/usr/lib64/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"

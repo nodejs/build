@@ -4,27 +4,35 @@
 # @requires: version=3.2.4
 #
 
+- name: "ccache : latest ccache release version"
+  local_action: shell curl -sL https://www.samba.org/ftp/ccache/ | awk '{ if (match($0, />ccache-(([0-9]+)\.([0-9]+)\.?([0-9]+)?)\.tar\.gz</, a)) { if (a[2]+0 > maxmaj || (a[2]+0 == maxmaj && a[3]+0 > maxmin) || (a[2]+0 == maxmaj && a[3]+0 == maxmin && a[4]+0 > maxpat)) { maxmaj = a[2]+0; maxmin = a[3]+0; maxpat = a[4]+0; } } } END { printf "%s.%s.%s\n", maxmaj, maxmin, maxpat }'
+  register: ccache_latest_result
+
+- name: "ccache : extract version string"
+  set_fact:
+    ccache_latest: "{{ ccache_latest_result.stdout }}"
+
 - name: "ccache : download and extract"
   unarchive:
     dest: /tmp/
     remote_src: yes
-    src: "https://www.samba.org/ftp/ccache/ccache-{{ version }}.tar.gz"
+    src: "https://www.samba.org/ftp/ccache/ccache-{{ ccache_latest }}.tar.gz"
   register: new_archive
 
 - name: "ccache : prepare for compilation"
   shell: ./configure -q
   args:
-    chdir: "/tmp/ccache-{{ version }}"
+    chdir: "/tmp/ccache-{{ ccache_latest }}"
 
 - name: "ccache : compile"
-  make: chdir="/tmp/ccache-{{ version }}"
+  make: chdir="/tmp/ccache-{{ ccache_latest }}"
 
 - name: "ccache : install"
   copy:
     dest: "/usr/local/bin"
     mode: 0755
     remote_src: yes
-    src: "/tmp/ccache-{{ version }}/ccache"
+    src: "/tmp/ccache-{{ ccache_latest }}/ccache"
 
 - name: "ccache : create symlinks"
   loop_control:
@@ -36,4 +44,4 @@
     state: link
 
 - name: "ccache : cleanup"
-  file: path="/tmp/ccache-{{ version }}" state=absent
+  file: path="/tmp/ccache-{{ ccache_latest }}" state=absent

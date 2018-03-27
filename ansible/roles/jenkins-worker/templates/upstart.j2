@@ -13,7 +13,7 @@ console log
 env HOME=/home/iojs
 env NODE_COMMON_PIPE="$HOME/test.pipe"
 env NODE_TEST_DIR="$HOME/tmp"
-env JOBS="{{ server_jobs | default(ansible_processor_vcpus) }}"
+env JOBS="{{ jobs_env }}"
 env OSTYPE=linux-gnu
 
 # default path in ubuntu 1404 plus ccache

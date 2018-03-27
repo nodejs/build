@@ -22,7 +22,7 @@ JENKINS_ENV="JOBS={{ ansible_processor_vcpus }} \
   HOME=/home/{{ server_user }} \
   DESTCPU={{ ansible_architecture }} \
   ARCH={{ ansible_architecture }} \
-  JOBS={{ server_jobs | default(ansible_processor_vcpus) }} \
+  JOBS={{ jobs_env }} \
   OSTYPE=linux-gnu \
   NODE_TEST_DIR=$HOME/tmp \
   NODE_COMMON_PIPE=/home/iojs/test.pipe"

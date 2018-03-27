@@ -49,7 +49,7 @@
 # if this fails you want to check in vars/main.yml and add package name
 # as appropriate -- try to use generic os family if available.
 - name: install java
-  when: not os|startswith("zos") and arch != "ppc64"
+  when: not os|startswith("zos") and arch != "ppc64" and not inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')
   package: name="{{ java_package_name }}" state=present
 
 - name: install webupd8 oracle java 8 extras
@@ -58,3 +58,11 @@
   with_items:
     - ca-certificates
     - oracle-java8-set-default
+
+- name: pi | uninstall stock java
+  when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
+  package: name="openjdk-8-jre-headless" state=absent
+
+- name: pi | install java
+  when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
+  package: name="oracle-java8-jdk" state=present

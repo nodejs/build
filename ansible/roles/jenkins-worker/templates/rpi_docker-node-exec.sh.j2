@@ -1,0 +1,74 @@
+#!/bin/bash
+
+set -e
+
+OPTIND=1
+mode=js
+flaky=run
+subsets=
+run=
+version=
+
+while getopts "afs:r:v:" opt; do
+    case "$opt" in
+    a)
+        mode=addons
+        ;;
+    f)
+        flaky=dontcare
+        ;;
+    s)
+        if [[ "$OPTARG" =~ ^[0-9]+$ ]]; then
+          subsets=$OPTARG
+        else
+          echo "Bad -s value"
+          exit 1
+        fi
+        ;;
+    r)
+        if [[ "$OPTARG" =~ ^[0-9]+$ ]]; then
+          run=$OPTARG
+        else
+          echo "Bad -r value"
+          exit 1
+        fi
+        ;;
+    v)
+        if [[ "$OPTARG" =~ ^[a-z]+$ ]]; then
+          version=$OPTARG
+        else
+          echo "Bad -v value"
+          exit 1
+        fi
+        ;;
+    esac
+done
+
+if test "$version" = ""; then
+  echo "Did not provide the Raspbian version [-v]"
+  exit 1
+fi
+
+if test "$mode" != "addons"; then
+  if test "$run" = ""; then
+    echo "Did not provide the subset number of this run [-r]"
+    exit 1
+  fi
+
+  if test "$subsets" = ""; then
+    echo "Did not provide number of subsets [-s]"
+    exit 1
+  fi
+fi
+
+echo "Running on $version with mode=$mode, run=$run/$subsets and flaky=$flaky"
+dir=$(pwd)
+
+if test "$mode" = "addons"; then
+  set -x
+  docker exec node-ci-$version /bin/sh -c "cd $dir && PYTHON=python FLAKY_TESTS=$flaky make test-ci-native"
+else
+  set -x
+  docker exec node-ci-$version /bin/sh -c "cd $dir && CC=should-not-compile CXX=should-not-compile PYTHON=python FLAKY_TESTS=$flaky TEST_CI_ARGS=--run=${run},${subsets} make test-ci-js"
+fi
+

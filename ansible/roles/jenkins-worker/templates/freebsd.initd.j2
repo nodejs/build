@@ -27,7 +27,7 @@ jenkins_env=" \
   NODE_COMMON_PIPE=/home/{{ server_user }}/test.pipe \
   NODE_TEST_DIR=/home/{{ server_user }}/tmp \
   PATH=/usr/local/libexec/ccache:/usr/local/bin:${PATH} \
-  JOBS={{ server_jobs|default(ansible_processor_vcpus|default('2')) }} \
+  JOBS={{ jobs_env|default('2')) }} \
   CC=cc \
   CXX=c++"
 
