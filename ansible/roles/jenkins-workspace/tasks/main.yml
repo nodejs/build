@@ -42,7 +42,7 @@
 # free space might be mounted in a way that does not include /home/binary_tmp
 - name: Create repository directory
   file:
-    path: "~iojs/build/binary_tmp.git"
+    path: "{{ home }}/{{ server_user }}/build/binary_tmp.git"
     state: directory
     owner: "binary_tmp"
     group: "binary_tmp"
@@ -50,7 +50,7 @@
 
 - name: Link to repository directory from bintmp home
   file:
-    src: "~iojs/build/binary_tmp.git"
+    src: "{{ home }}/{{ server_user }}/build/binary_tmp.git"
     dest: "~binary_tmp/binary_tmp.git"
     state: link
     owner: "binary_tmp"
@@ -61,7 +61,7 @@
   become: true
   become_user: binary_tmp
   git:
-    repo: "https://www.github.com/nodejs/node.git"
+    repo: "https://github.com/nodejs/node"
     dest: "~binary_tmp/binary_tmp.git"
     bare: yes
 
