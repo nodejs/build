@@ -1,6 +1,8 @@
 ---
 
 packages:
+  - gcc-4.8-multilib
+  - g++-4.8-multilib
   - gcc-4.9-multilib
   - g++-4.9-multilib
   - python-all
