@@ -14,7 +14,7 @@ if [ "$SELECT_ARCH" = "PPC64LE" ]; then
   NODE_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
   echo "Setting compiler for Node version $NODE_MAJOR_VERSION on ppc64le"
 
-  if [ "$NODE_MAJOR_VERSION" -gt "8" ]; then
+  if [ "$NODE_MAJOR_VERSION" -gt "9" ]; then
     export COMPILER_LEVEL="4.9"
   fi
 
