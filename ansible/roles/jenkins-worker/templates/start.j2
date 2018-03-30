@@ -6,7 +6,7 @@ export PATH=/NODEJS/bin:$PATH
 export HOME={{ home }}/{{ server_user }}
 export NODE_COMMON_PIPE="$HOME/test.pipe"
 export NODE_TEST_DIR="$HOME/tmp"
-export JOBS="{{ server_jobs | default(ansible_processor_vcpus) }}"
+export JOBS="{{ jobs_env }}"
 export OSTYPE=zos
 
 export _BPXK_AUTOCVT=ON

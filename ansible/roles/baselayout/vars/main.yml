@@ -54,10 +54,7 @@ packages: {
   ],
 
   debian9: [
-    'ccache',
-    'git',
-    'curl',
-    'libfontconfig1',
+    'gcc-6,g++-6,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates',
   ],
 
   fedora: [

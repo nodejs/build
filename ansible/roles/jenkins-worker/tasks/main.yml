@@ -4,6 +4,16 @@
 # fetches jenkins and make sure it is started properly
 #
 
+- name: set jobs_env from jobs_variants.{{ arch }}
+  set_fact:
+    jobs_env: "{{ jobs_variants[arch] }}"
+  when: jobs_env is undefined and server_jobs is undefined and arch in jobs_variants
+
+- name: set jobs_env from server_jobs or ansible_processor_vcpus
+  set_fact:
+    jobs_env: "{{ server_jobs|default(ansible_processor_vcpus) }}"
+  when: jobs_env is undefined
+
 - name: create group
   when: not os|startswith("zos")
   group: name="{{ server_user }}"
@@ -45,6 +55,10 @@
     owner: "{{ server_user }}"
     group: "{{ server_user }}"
     mode: 0755
+
+- name: run raspberry pi jenkins-worker setup
+  when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
+  include: "{{ role_path }}/tasks/partials/raspberry-pi.yml"
 
 # @TODO(mhdawson): get tap2junit working on zOS
 - name: prepare installing tap2junit

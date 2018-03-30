@@ -84,3 +84,21 @@ bash_path: {
   freebsd: '/usr/local/bin/bash',
   zos: 'bash'
   }
+
+raspberry_pi: {
+  nfs_server: '192.168.1.10',
+  nfs_share_root: '/exports/nodejs/pi',
+  containers: {
+    armv6l: [ 'wheezy', 'jessie' ],
+    armv7l: [ 'wheezy', 'jessie', 'stretch' ],
+    arm64: [ 'jessie', 'stretch' ]
+  }
+}
+
+# primarily for raspberry pi workers, some arm64 workers may need `server_jobs` defined in host_vars
+# to override these low numbers
+jobs_variants: {
+  armv6l: '1',
+  armv7l: '2',
+  arm64: '3'
+}

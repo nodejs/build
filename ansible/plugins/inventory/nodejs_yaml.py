@@ -39,8 +39,8 @@ import sys
 
 valid = {
   # taken from nodejs/node.git: ./configure
-  'arch': ('arm', 'arm64', 'ia32', 'mips', 'mipsel', 'ppc', 'ppc64', 'x32',
-           'x64', 'x86', 's390', 's390x'),
+  'arch': ('armv6l', 'armv7l', 'arm64', 'ia32', 'mips', 'mipsel', 'ppc',
+           'ppc64', 'x32', 'x64', 'x86', 's390', 's390x'),
 
   # valid roles - add as necessary
   'type': ('infra', 'release', 'test'),
