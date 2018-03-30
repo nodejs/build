@@ -160,8 +160,17 @@ LDFLAGS="-L/usr/local/ssl/lib/ -L/usr/local/lib" ./configure --with-openssl=/usr
 LDFLAGS="-L/usr/local/ssl/lib/ -L/usr/local/lib" make -j4
 make install
 
+cd ..
+/usr/local/bin/curl -sLO https://cloudflare.cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.6p1.tar.gz
+tar zxvf openssh-7.6p1.tar.gz && cd openssh-7.6p1
+LDFLAGS="-L/usr/local/ssl/lib/" ./configure --with-ssl-dir=/usr/local/ssl/ --prefix=/usr/local/
+LDFLAGS="-L/usr/local/ssl/lib/" make -j4
+make install
+
 # test with: cd /tmp/ && git clone https://github.com/nodejs/node
 ```
+
+Also ensure that /usr/local/bin is included in the `JENKINS_PATH` set in /etc/init.d/jenkins
 
 [`ansible.intro_windows`]: http://docs.ansible.com/ansible/intro_windows.html
 [newer Ansible configuration]: https://github.com/nodejs/build/tree/master/ansible
