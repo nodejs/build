@@ -24,7 +24,8 @@ missing please open an issue. If you are interested in joining check out
 
 ## Build WG Members
 
-- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+<!-- ncu-team-sync.team(nodejs/build) -->
+
 - [@gdams](https://github.com/gdams) - George Adams
 - [@geek](https://github.com/geek) - Wyatt Preul
 - [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
@@ -34,12 +35,15 @@ missing please open an issue. If you are interested in joining check out
 - [@kunalspathak](https://github.com/kunalspathak) - Kunal Pathak
 - [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
-- [@mylesborins](https://github.com/mylesborins) - Myles Borins
+- [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 - [@piccoloaiutante](https://github.com/piccoloaiutante) - Michele Capra
 - [@refack](https://github.com/refack) - Refael Ackermann
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@trott](https://github.com/trott) - Rich Trott
+- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+- [@Trott](https://github.com/Trott) - Rich Trott
+
+<!-- ncu-team-sync end -->
 
 ### Infra Admins
 
@@ -58,13 +62,18 @@ missing please open an issue. If you are interested in joining check out
 
 ### GitHub Bot Admins
 
-- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+<!-- ncu-team-sync.team(nodejs/github-bot) -->
+
+- [@Fishrock123](https://github.com/Fishrock123) - Jeremiah Senkpiel
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
-- [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 - [@maclover7](https://github.com/maclover7) - Jon Moss
+- [@mscdex](https://github.com/mscdex) - mscdex
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
-- [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+- [@williamkapke](https://github.com/williamkapke) - William Kapke
+
+<!-- ncu-team-sync end -->
 
 For more information about accesses and team roles see [access.md][].
 
