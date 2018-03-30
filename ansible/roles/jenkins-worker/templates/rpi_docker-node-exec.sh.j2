@@ -27,12 +27,12 @@ if test "$version" = ""; then
 fi
 
 dir=$(pwd)
-exec_script="$(pwd)/out/node-ci-exec"
+exec_script="$(pwd)/node-ci-exec"
 
 if [ ! -f "$exec_script" ]; then
-  echo "Did not provide a out/node-ci-exec script"
+  echo "Did not provide a node-ci-exec script"
   exit 1
 fi
 
 set -x
-docker exec node-ci-$version /bin/sh -c "cd $dir && . ./out/node-ci-exec"
+docker exec node-ci-$version /bin/sh -c "cd $dir && . $exec_script"
