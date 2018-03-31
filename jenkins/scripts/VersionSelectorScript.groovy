@@ -22,6 +22,11 @@ def canBuild(nodeMajorVersion, builderLabel) {
   if (builderLabel.indexOf('smartos15') == 0 && nodeMajorVersion < 8)
     return false
 
+  // ARMv7
+  if (builderLabel.equals('armv7-wheezy-release') && nodeMajorVersion >= 10)
+    return false
+  if (builderLabel.equals('armv7-jessie-release') && nodeMajorVersion < 10)
+    return false
 
   // PPC BE
   if (builderLabel.indexOf('ppcbe-ubuntu') == 0 && nodeMajorVersion >= 8)
