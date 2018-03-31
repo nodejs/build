@@ -16,10 +16,14 @@ ENV ARCH {{ arch }}
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
       g++-6 \
       gcc-6 \
+      make \
       ccache \
       git \
       python2.7 \
       python \
+      openssh-client \
+      gzip \
+      xz-utils \
       curl && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*

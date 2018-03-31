@@ -22,6 +22,9 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
       zlib1g-dev \
       python2.7 \
       python \
+      openssh-client \
+      gzip \
+      xz-utils \
       curl && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
