@@ -4,18 +4,6 @@
 # centos6 - almost getting there
 #
 
-- name: "repo : add scl devtoolset"
-  yum_repository:
-    baseurl: http://linuxsoft.cern.ch/cern/devtoolset/slc6-devtoolset.repo
-    gpgkey: http://ftp.scientificlinux.org/linux/scientific/5x/{{ ansible_architecture }}/RPM-GPG-KEYs/RPM-GPG-KEY-cern
-    gpgcheck: yes
-
-- name: "repo : add scl"
-  yum_repository:
-    baseurl: http://linuxsoft.cern.ch/cern/scl/slc6-scl.repo
-    gpgkey: http://ftp.scientificlinux.org/linux/scientific/5x/{{ ansible_architecture }}/RPM-GPG-KEYs/RPM-GPG-KEY-cern
-    gpgcheck: yes
-
 - name: install epel
   yum:
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm"

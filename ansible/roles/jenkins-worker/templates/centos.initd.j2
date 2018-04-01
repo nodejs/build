@@ -32,7 +32,7 @@ JENKINS_ENV="JOBS={{ ansible_processor_vcpus }} \
 . /etc/rc.d/init.d/functions
 
 # Add python/ccache path as well as regular path
-JENKINS_PATH="/usr/lib64/ccache:/opt/rh/devtoolset-2/root/usr/bin:$PATH"
+JENKINS_PATH="/usr/lib64/ccache:/opt/rh/devtoolset-6/root/usr/bin:$PATH"
 
 # Replace potentially double colons since they add cwd
 JENKINS_PATH="${JENKINS_PATH//::/:}"

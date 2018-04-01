@@ -42,6 +42,11 @@ packages: {
     'gcc-c++', # even need this on centos6 so ccache has symlinks
   ],
 
+  centos6: [
+    'centos-release-scl',
+    'devtoolset-6'
+  ],
+
   debian7: [
     'gcc-4.8,g++-4.8',
   ],
