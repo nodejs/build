@@ -50,6 +50,8 @@ packages: {
   debian8: [
     'ccache',
     'git',
+    'gcc',
+    'g++',
     'libfontconfig1',
   ],
 
