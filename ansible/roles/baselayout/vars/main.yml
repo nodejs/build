@@ -43,16 +43,11 @@ packages: {
   ],
 
   debian7: [
-    'gcc-4.8',
-    'g++-4.8',
+    'gcc-4.8,g++-4.8',
   ],
 
   debian8: [
-    'ccache',
-    'git',
-    'gcc',
-    'g++',
-    'libfontconfig1',
+    'ccache,git,gcc-4.9,g++-4.9,libfontconfig1',
   ],
 
   debian9: [
@@ -105,18 +100,10 @@ packages: {
   ],
 
   ubuntu: [
-    'ccache',
-    'g++',
-    'gcc',
-    'git',
-    'libfontconfig1',
+    'ccache,g++,gcc,git,libfontconfig1',
   ],
 
   ubuntu1404: [
-    'ntp',
-    'g++-4.8',
-    'gcc-4.8',
-    'g++-4.9',
-    'gcc-4.9',
+    'ntp,g++-4.8,gcc-4.8,g++-4.9,gcc-4.9',
   ]
 }
