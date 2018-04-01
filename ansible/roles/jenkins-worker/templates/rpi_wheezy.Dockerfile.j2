@@ -1,17 +1,18 @@
 FROM resin/rpi-raspbian:wheezy
 
-ENV LC_ALL C
-ENV USER {{ server_user }}
-ENV JOBS {{ jobs_env }}
-ENV SHELL /bin/bash
-ENV HOME /home/{{ server_user }}
-ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ENV NODE_COMMON_PIPE /home/{{ server_user }}/test.pipe
-ENV NODE_TEST_DIR /home/{{ server_user }}/tmp
-ENV OSTYPE linux-gnu
-ENV OSVARIANT docker
-ENV DESTCPU {{ arch }}
-ENV ARCH {{ arch }}
+ENV LC_ALL=C \
+    USER={{ server_user }} \
+    JOBS={{ jobs_env }} \
+    SHELL=/bin/bash \
+    HOME=/home/{{ server_user }} \
+    PATH=/usr/lib/ccache/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    NODE_COMMON_PIPE=/home/{{ server_user }}/test.pipe \
+    NODE_TEST_DIR=/home/{{ server_user }}/tmp \
+    OSTYPE=linux-gnu \
+    OSVARIANT=docker \
+    DESTCPU=arm \
+    ARCH={{ arch }} \
+    CCACHE_TEMPDIR/home/{{ server_user }}/.ccache/{{ inventory_hostname }}
 
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
       g++-4.8 \
@@ -60,7 +61,5 @@ RUN curl -sL https://www.samba.org/ftp/ccache/ccache-{{ ccache_latest }}.tar.gz 
 VOLUME /home/{{ server_user }}/
 
 USER iojs:iojs
-
-ENV CCACHE_TEMPDIR /home/{{ server_user }}/.ccache/{{ inventory_hostname }}
 
 ENTRYPOINT [ "tail", "-f", "/dev/null" ]
