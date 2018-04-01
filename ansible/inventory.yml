@@ -38,7 +38,8 @@ hosts:
         smartos15-x64-1: {ip: 165.225.131.14}
 
     - requireio:
-        rvagg-debian7-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi}
+        #rvagg-debian7-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi}
+        rvagg-debian9-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi}
         #andineck-debian7-armv6l_pi1p-1: {ip: 192.168.2.41, user: pi}
         andineck-debian9-armv6l_pi1p-1: {ip: 192.168.2.41, user: pi}
         osx1010-x64-1: {ip: 192.168.2.211, user: iojs}
@@ -50,6 +51,7 @@ hosts:
 
     - scaleway:
         debian7-armv7l-1: {ip: 212.47.230.165}
+        debian8-armv7l-1: {ip: 51.15.132.25}
 
     - softlayer:
         centos5-x86-1: {ip: 50.23.85.253}
