@@ -1,0 +1,7 @@
+---
+
+- name: scaleway armv7 | configure containers
+  set_fact:
+    docker_containers: "{{ scaleway_armv7.containers }}"
+
+- import_tasks: "{{ role_path }}/tasks/partials/docker-host.yml"

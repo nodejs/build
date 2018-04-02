@@ -53,6 +53,10 @@
   when: pi_local is defined
   tags: tunnel
 
+- name: pi | configure containers
+  set_fact:
+    docker_containers: raspberry_pi.containers[arch]
+
 - include: "{{ role_path }}/tasks/partials/docker-host.yml"
 
 - name: pi | docker | add pi user to docker group
@@ -60,50 +64,3 @@
     name: "pi"
     groups: "docker"
     append: yes
-
-- name: pi | docker | make build directory
-  file:
-    path: /root/docker-container-{{ item }}
-    state: directory
-  with_items:
-    - "{{ raspberry_pi.containers[arch] }}"
-
-- name: pi | docker | generate Dockerfile
-  template:
-    src: "{{ role_path }}/templates/rpi_{{ item }}.Dockerfile.j2"
-    dest: /root/docker-container-{{ item }}/Dockerfile
-    mode: "0644"
-  with_items:
-    - "{{ raspberry_pi.containers[arch] }}"
-
-- name: pi | docker | build image
-  command: docker build -t node-ci:{{ item }} /root/docker-container-{{ item }}/
-  with_items:
-    - "{{ raspberry_pi.containers[arch] }}"
-
-- name: pi | docker | generate and copy init script
-  template:
-    src: "{{ role_path }}/templates/rpi_docker-jenkins.service.j2"
-    dest: "/lib/systemd/system/docker-jenkins-{{ item }}.service"
-  with_items:
-    - "{{ raspberry_pi.containers[arch] }}"
-
-- name: pi | docker | start containers
-  service:
-    name: "docker-jenkins-{{ item }}"
-    state: started
-    enabled: yes
-  with_items:
-    - "{{ raspberry_pi.containers[arch] }}"
-
-- name: pi | docker | copy docker-exec script
-  template:
-    src: "{{ role_path }}/templates/rpi_docker-node-exec.sh.j2"
-    dest: "/usr/local/bin/docker-node-exec.sh"
-    mode: 0755
-
-- name: pi | docker | give {{ server_user }} sudoers access to docker-exec script
-  lineinfile:
-    line: "{{ server_user }} ALL=(ALL) NOPASSWD: /usr/local/bin/docker-node-exec.sh"
-    dest: "/etc/sudoers"
-    regexp: docker-node-exec.sh$

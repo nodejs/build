@@ -1,0 +1,16 @@
+[Unit]
+Description=Jenkins Slave in Docker for {{ item.name }}
+Wants=network.target
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/docker run --rm -v /home/{{ server_user }}:/home/{{ server_user }} --name node-ci-{{ item.name }} node-ci:{{ item.name }}
+ExecStop=/usr/bin/docker stop -t 5 node-ci-{{ item.name }}
+Restart=always
+RestartSec=30
+StartLimitInterval=0

@@ -89,10 +89,28 @@ raspberry_pi: {
   nfs_server: '192.168.1.10',
   nfs_share_root: '/exports/nodejs/pi',
   containers: {
-    armv6l: [ 'wheezy', 'jessie' ],
-    armv7l: [ 'wheezy', 'jessie', 'stretch' ],
-    arm64: [ 'jessie', 'stretch' ]
+    armv6l: [
+      { name: 'wheezy', template: 'rpi_wheezy.Dockerfile.j2' },
+      { name: 'jessie', template: 'rpi_jessie.Dockerfile.j2' }
+    ],
+    armv7l: [
+      { name: 'wheezy', template: 'rpi_wheezy.Dockerfile.j2' },
+      { name: 'jessie', template: 'rpi_jessie.Dockerfile.j2' },
+      { name: 'stretch', template: 'rpi_stretch.Dockerfile.j2' }
+    ],
+    arm64: [
+      { name: 'jessie', template: 'rpi_jessie.Dockerfile.j2' },
+      { name: 'stretch', template: 'rpi_stretch.Dockerfile.j2' }
+    ]
   }
+}
+
+scaleway_armv7: {
+  containers: [
+      { name: 'wheezy', template: 'armv7_wheezy.Dockerfile.j2' },
+      { name: 'jessie', template: 'armv7_jessie.Dockerfile.j2' },
+      { name: 'stretch', template: 'armv7_stretch.Dockerfile.j2' }
+  ]
 }
 
 # primarily for raspberry pi workers, some arm64 workers may need `server_jobs` defined in host_vars

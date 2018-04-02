@@ -1,4 +1,4 @@
-FROM resin/rpi-raspbian:stretch
+FROM arm32v7/debian:jessie
 
 ENV LC_ALL=C \
     USER={{ server_user }} \
@@ -16,11 +16,12 @@ ENV LC_ALL=C \
     DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
-      g++-6 \
-      gcc-6 \
+      g++-4.9 \
+      gcc-4.9 \
       git \
       make \
-      ccache \
+      zlib1g \
+      zlib1g-dev \
       python2.7 \
       python \
       openssh-client \
@@ -30,11 +31,11 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
 
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 50 && \
-    update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-6 50 && \
-    update-alternatives --install /usr/bin/cpp cpp /usr/bin/gcc-6 50 && \
-    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 && \
-    update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-6 50
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 50 && \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-4.9 50 && \
+    update-alternatives --install /usr/bin/cpp cpp /usr/bin/gcc-4.9 50 && \
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 50 && \
+    update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-4.9 50
 
 RUN addgroup \
       --gid {{ server_user_gid.stdout_lines[0] }} \
@@ -45,6 +46,18 @@ RUN addgroup \
       --disabled-password \
       --gecos {{ server_user }} \
       {{ server_user }}
+
+RUN curl -sL https://www.samba.org/ftp/ccache/ccache-{{ ccache_latest }}.tar.gz | tar zxv -C /tmp/ && \
+    cd /tmp/ccache-{{ ccache_latest }} && \
+    ./configure && \
+    make -j {{ jobs_env }} && \
+    install -c -m 755 ccache /usr/local/bin && \
+    ln -s /usr/local/bin/ccache /usr/local/bin/gcc && \
+    ln -s /usr/local/bin/ccache /usr/local/bin/cc && \
+    ln -s /usr/local/bin/ccache /usr/local/bin/g++ && \
+    ln -s /usr/local/bin/ccache /usr/local/bin/c++ && \
+    ln -s /usr/local/bin/ccache /usr/local/bin/cpp && \
+    rm -rf /tmp/ccache-{{ ccache_latest }}
 
 VOLUME /home/{{ server_user }}/
 
