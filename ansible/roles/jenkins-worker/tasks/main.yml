@@ -60,6 +60,10 @@
   when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
   include: "{{ role_path }}/tasks/partials/raspberry-pi.yml"
 
+- name: run scaleway armv7 jenkins-worker setup
+  when: "'scaleway-ubuntu1604-armv7l' in inventory_hostname"
+  include: "{{ role_path }}/tasks/partials/scaleway-armv7.yml"
+
 # @TODO(mhdawson): get tap2junit working on zOS
 - name: prepare installing tap2junit
   when: type != "release" and not os|startswith("zos")

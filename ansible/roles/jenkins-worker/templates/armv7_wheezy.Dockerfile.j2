@@ -1,4 +1,4 @@
-FROM resin/rpi-raspbian:jessie
+FROM arm32v7/debian:wheezy-backports
 
 ENV LC_ALL=C \
     USER={{ server_user }} \
@@ -12,12 +12,16 @@ ENV LC_ALL=C \
     OSVARIANT=docker \
     DESTCPU=arm \
     ARCH={{ arch }} \
-    CCACHE_TEMPDIR=/home/{{ server_user }}/.ccache/{{ inventory_hostname }} \
+    CCACHE_TEMPDIR=/home/{{ server_user }}/.ccache/{{ item.name }} \
     DEBIAN_FRONTEND=noninteractive
 
+RUN apt-get update && apt-get install curl -y && curl -sL http://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add -
+
+RUN echo "deb http://archive.raspberrypi.org/debian/ wheezy main" >> /etc/apt/sources.list
+
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
-      g++-4.9 \
-      gcc-4.9 \
+      g++-4.8 \
+      gcc-4.8 \
       git \
       make \
       zlib1g \
@@ -31,11 +35,11 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
 
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 50 && \
-    update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-4.9 50 && \
-    update-alternatives --install /usr/bin/cpp cpp /usr/bin/gcc-4.9 50 && \
-    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 50 && \
-    update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-4.9 50
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50 && \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-4.8 50 && \
+    update-alternatives --install /usr/bin/cpp cpp /usr/bin/gcc-4.8 50 && \
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50 && \
+    update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-4.8 50
 
 RUN addgroup \
       --gid {{ server_user_gid.stdout_lines[0] }} \
