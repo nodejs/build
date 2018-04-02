@@ -27,6 +27,10 @@ def canBuild(nodeMajorVersion, builderLabel) {
     return false
   if (builderLabel.equals('armv7-jessie-release') && nodeMajorVersion < 10)
     return false
+  if (builderLabel.equals('debian7-docker-armv7') && nodeMajorVersion >= 10)
+    return false
+  if (builderLabel.equals('debian9-docker-armv7') && nodeMajorVersion < 10)
+    return false
 
   // PPC BE
   if (builderLabel.indexOf('ppcbe-ubuntu') == 0 && nodeMajorVersion >= 8)
