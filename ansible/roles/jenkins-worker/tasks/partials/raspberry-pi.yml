@@ -55,9 +55,9 @@
 
 - name: pi | configure containers
   set_fact:
-    docker_containers: raspberry_pi.containers[arch]
+    docker_containers: "{{ raspberry_pi.containers[arch] }}"
 
-- include: "{{ role_path }}/tasks/partials/docker-host.yml"
+- import_tasks: "{{ role_path }}/tasks/partials/docker-host.yml"
 
 - name: pi | docker | add pi user to docker group
   user:
