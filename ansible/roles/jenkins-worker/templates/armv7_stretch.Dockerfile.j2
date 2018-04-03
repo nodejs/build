@@ -26,6 +26,7 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
       openssh-client \
       gzip \
       xz-utils \
+      procps \
       curl && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
