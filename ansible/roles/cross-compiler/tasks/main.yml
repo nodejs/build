@@ -31,16 +31,28 @@
     repo: https://github.com/raspberrypi/tools.git
     dest: /opt/raspberrypi/tools
 
-- name: Raspberry | Copy cc-armv6.sh script
+- name: Raspberry | Copy cc-armv6-4.8.sh script
   copy:
-    src: ./files/cc-armv6.sh
-    dest: /opt/raspberrypi/cc-armv6.sh
+    src: ./files/cc-armv6-4.8.sh
+    dest: /opt/raspberrypi/cc-armv6-4.8.sh
     mode: 0755
 
-- name: Raspberry | Copy cc-armv7.sh script
+- name: Raspberry | Copy cc-armv7-4.8.sh script
   copy:
-    src: ./files/cc-armv7.sh
-    dest: /opt/raspberrypi/cc-armv7.sh
+    src: ./files/cc-armv7-4.8.sh
+    dest: /opt/raspberrypi/cc-armv7-4.8.sh
+    mode: 0755
+
+- name: Raspberry | Copy cc-armv6-4.9.sh script
+  copy:
+    src: ./files/cc-armv6-4.9.sh
+    dest: /opt/raspberrypi/cc-armv6-4.9.sh
+    mode: 0755
+
+- name: Raspberry | Copy cc-armv7-4.9.sh script
+  copy:
+    src: ./files/cc-armv7-4.9.sh
+    dest: /opt/raspberrypi/cc-armv7-4.9.sh
     mode: 0755
 
 - name: User | Download Jenkins pubkey
