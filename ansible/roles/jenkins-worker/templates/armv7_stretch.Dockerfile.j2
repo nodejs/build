@@ -5,7 +5,7 @@ ENV LC_ALL=C \
     JOBS={{ jobs_env }} \
     SHELL=/bin/bash \
     HOME=/home/{{ server_user }} \
-    PATH=/usr/lib/ccache/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    PATH=/usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     NODE_COMMON_PIPE=/home/{{ server_user }}/test.pipe \
     NODE_TEST_DIR=/home/{{ server_user }}/tmp \
     OSTYPE=linux-gnu \
@@ -35,6 +35,12 @@ RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 50 && \
     update-alternatives --install /usr/bin/cpp cpp /usr/bin/gcc-6 50 && \
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 && \
     update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-6 50
+
+RUN ln -sf /usr/bin/ccache /usr/lib/ccache/gcc && \
+    ln -sf /usr/bin/ccache /usr/lib/ccache/cc && \
+    ln -sf /usr/bin/ccache /usr/lib/ccache/g++ && \
+    ln -sf /usr/bin/ccache /usr/lib/ccache/c++ && \
+    ln -sf /usr/bin/ccache /usr/lib/ccache/cpp
 
 RUN addgroup \
       --gid {{ server_user_gid.stdout_lines[0] }} \
