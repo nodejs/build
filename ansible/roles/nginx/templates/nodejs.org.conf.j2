@@ -411,4 +411,6 @@ server {
 
     # Rename 'Stable' release to 'Current'
     rewrite ^/(.*)/download/stable$                               https://$server_name/$1/download/current permanent;
+
+    rewrite ^/en/docs/inspector/$                                 https://$server_name/en/docs/guides/debugging-getting-started/ permanent;
 }
