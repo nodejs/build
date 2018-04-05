@@ -423,4 +423,6 @@ server {
 
     rewrite ^/static/documents/casestudies/(.*)$                                    https://foundation.nodejs.org/wp-content/uploads/sites/50/2017/09/$1 permanent;
     rewrite ^/static/documents/minutes/nodejs-foundation-board-meeting-(.*).pdf$    https://github.com/nodejs/board/blob/master/minutes/$1.md permanent;
+
+    rewrite ^/en/docs/inspector/$                                 https://$server_name/en/docs/guides/debugging-getting-started/ permanent;
 }
