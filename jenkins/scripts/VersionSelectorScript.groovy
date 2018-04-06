@@ -1,9 +1,9 @@
-def canBuild(nodeMajorVersion, builderLabel) {
+def canBuild(nodeMajorVersion, builderLabel, buildType='release') {
 
   // Linux
   if (builderLabel.indexOf('centos5') == 0 && nodeMajorVersion >= 8)
     return false
-  if (builderLabel.indexOf('centos6') == 0 && nodeMajorVersion < 8)
+  if (buildType == 'release' && builderLabel.indexOf('centos6') == 0 && nodeMajorVersion < 8)
     return false
 
   // Windows
@@ -42,6 +42,18 @@ def canBuild(nodeMajorVersion, builderLabel) {
 
   // AIX61
   if (builderLabel.indexOf('aix61') > -1 && nodeMajorVersion < 6)
+    return false
+
+  // sharedlibs containered
+  if (builderLabel.indexOf('sharedlibs_openssl111') > -1 && nodeMajorVersion < 9)
+    return false
+  if (builderLabel.indexOf('sharedlibs_openssl110') > -1 && nodeMajorVersion < 9)
+    return false
+  if (builderLabel.indexOf('sharedlibs_openssl102') > -1 && nodeMajorVersion > 9)
+    return false
+  if (builderLabel.indexOf('sharedlibs_fips20') > -1 && nodeMajorVersion > 9)
+    return false
+  if (builderLabel.indexOf('sharedlibs_withoutintl') > -1 && nodeMajorVersion < 9)
     return false
 
   return true
