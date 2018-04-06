@@ -13,7 +13,6 @@ Restart=always
 RestartSec=30
 StartLimitInterval=0
 WorkingDirectory=/home/{{ server_user }}
-LimitCORE=unlimited
 
 Environment="USER={{ server_user }}"
 Environment="JOBS={{ jobs_env }}"

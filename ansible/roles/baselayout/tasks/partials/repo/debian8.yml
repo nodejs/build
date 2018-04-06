@@ -1,0 +1,22 @@
+---
+
+#
+# add backports for systemd-coredump
+#
+
+
+- name: "repo : add debian-backports"
+  apt_repository:
+    repo: 'deb http://ftp.debian.org/debian jessie-backports main'
+    state: present
+    update_cache: yes
+  register: has_updated_package_repo
+
+- name: "repo : add git-core trusty ppa"
+  apt_repository:
+    repo: ppa:git-core/ppa
+    codename: trusty
+    state: present
+    update_cache: yes
+  register: has_updated_package_repo
+
