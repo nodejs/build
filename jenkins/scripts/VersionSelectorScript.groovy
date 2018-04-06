@@ -73,7 +73,7 @@ def _buildType
 try {
   _buildType = buildType
 } catch (groovy.lang.MissingPropertyException e) {
-  _buildType = 'release'
+  _buildType = 'test'
 }
 
 combinations.each{
