@@ -1,4 +1,4 @@
-def canBuild(nodeMajorVersion, builderLabel, buildType='release') {
+def canBuild(nodeMajorVersion, builderLabel, buildType) {
 
   // Linux
   if (builderLabel.indexOf('centos5') == 0 && nodeMajorVersion >= 8)
@@ -69,10 +69,17 @@ println 'Node.js version: ' + parameters['NODEJS_VERSION']
 
 result['nodes'] = []
 
+def _buildType
+try {
+  _buildType = buildType
+} catch (groovy.lang.MissingPropertyException e) {
+  _buildType = 'release'
+}
+
 combinations.each{
   def builderLabel = it.nodes
   if (nodeMajorVersion >= 4) {
-    if (!canBuild(nodeMajorVersion, builderLabel)) {
+    if (!canBuild(nodeMajorVersion, builderLabel, _buildType)) {
       println 'Skipping ' + builderLabel + ' for Node.js ' + nodeMajorVersion
       return
     }
