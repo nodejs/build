@@ -27,19 +27,18 @@ ntp_service: {
 }
 
 common_packages: [
-  'automake',
-  'bash',
-  'libtool',
-  'sudo',
+  'automake,bash,libtool,sudo',
 ]
 
 # you can either add os family or os to this list (see smartos)
 # but the playbook chooses os over family - not both
 packages: {
-  centos: [
-    'ccache',
-    'git',
-    'gcc-c++', # even need this on centos6 so ccache has symlinks
+  centos6: [
+    'ccache,git2u,gcc-c++', # even need gcc on centos6 so ccache has symlinks
+  ],
+
+  centos7: [
+    'ccache,git,gcc-c++',
   ],
 
   debian7: [
