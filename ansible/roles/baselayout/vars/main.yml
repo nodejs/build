@@ -34,7 +34,8 @@ common_packages: [
 # but the playbook chooses os over family - not both
 packages: {
   centos6: [
-    'ccache,git2u,gcc-c++', # even need gcc on centos6 so ccache has symlinks
+    'centos-release-scl',
+    'ccache,git2u,gcc-c++,centos-release-scl,devtoolset-6', # even need gcc on centos6 so ccache has symlinks
   ],
 
   centos7: [
@@ -54,17 +55,11 @@ packages: {
   ],
 
   fedora: [
-    'bzip2',
-    'ccache',
-    'gcc-c++',
-    'git',
-    'fontconfig',
+    'bzip2,ccache,gcc-c++,git,fontconfig',
   ],
 
   freebsd: [
-    'ccache',
-    'git',
-    'gmake'
+    'ccache,git,gmake'
   ],
 
   rhel72: [

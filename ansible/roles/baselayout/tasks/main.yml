@@ -88,6 +88,13 @@
     - cpp
     - c++
 
+- name: centos6 | install devtoolset-2
+  when: "os == 'centos6'"
+  yum:
+    disable_gpg_check: true
+    name: "devtoolset-2-gcc,devtoolset-2-gcc-c++"
+    state: present
+
 - name: remove fortune from login shells
   when: os|stripversion == 'freebsd'
   lineinfile:
