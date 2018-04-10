@@ -1,0 +1,8 @@
+---
+
+- name: "repo : add git-core ppa"
+  apt_repository:
+    repo: ppa:git-core/ppa
+    state: present
+    update_cache: yes
+  register: has_updated_package_repo

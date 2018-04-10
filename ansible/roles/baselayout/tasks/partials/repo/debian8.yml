@@ -1,10 +1,5 @@
 ---
 
-#
-# add backports for systemd-coredump
-#
-
-
 - name: "repo : add debian-backports"
   apt_repository:
     repo: 'deb http://ftp.debian.org/debian jessie-backports main'
@@ -19,4 +14,3 @@
     state: present
     update_cache: yes
   register: has_updated_package_repo
-
