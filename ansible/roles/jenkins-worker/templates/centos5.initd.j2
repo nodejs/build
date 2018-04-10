@@ -17,7 +17,7 @@ PIDFILE=/var/run/jenkins/$NAME.pid
 JENKINS_SLAVE_USER="iojs"
 JENKINS_SLAVE_JAR="/home/{{ server_user }}/slave.jar"
 JENKINS_SLAVE_LOG="/home/{{ server_user }}/$NAME.log"
-JENKINS_SLAVE_ARGS="-Xmx{{ server_ram|default('128m') }} -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp -secret {{ secret }}"
+JENKINS_SLAVE_ARGS="-jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp -secret {{ secret }}"
 JENKINS_ENV="JOBS={{ ansible_processor_vcpus }} \
   HOME=/home/{{ server_user }} \
   DESTCPU={{ ansible_architecture }} \

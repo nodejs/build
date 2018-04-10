@@ -1,0 +1,13 @@
+JENKINS_SLAVE_USER="iojs"
+JENKINS_SLAVE_JAR="/home/iojs/slave.jar"
+JENKINS_SLAVE_LOG="/home/iojs/$NAME.log"
+JENKINS_SECRET="{{ secret }}"
+JENKINS_SLAVE_ARGS="-jnlpUrl {{ jenkins_url }}/computer/{{ ansible_hostname }}/slave-agent.jnlp -secret $JENKINS_SECRET"
+JENKINS_PATH=""
+JENKINS_ENV="JOBS={{ ansible_processor_vcpus }} \
+  HOME=/home/{{ server_user }} \
+  NODE_TEST_DIR=$HOME/tmp \
+  DESTCPU={{ arch }} \
+  ARCH={{ arch }} \
+  OSTYPE=linux-gnu \
+  NODE_COMMON_PIPE=/home/iojs/test.pipe"

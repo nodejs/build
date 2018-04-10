@@ -5,7 +5,8 @@
 #
 
 init: {
-  centos:  ['centos5', 'centos6','centos7'],
+  centos5:  'centos5',
+  centos6:  'centos6',
   debian:  ['debian7', 'ubuntu1204'],
   freebsd: 'freebsd',
   rhel72: 'rhel72',
@@ -16,9 +17,14 @@ init: {
   }
 
 jenkins_init: {
-  centos: {
+  centos5: {
     dest: '/etc/init.d/jenkins',
-    src: 'centos.initd.j2',
+    src: 'centos5.initd.j2',
+    mode: '0755'
+    },
+  centos6: {
+    dest: '/etc/init.d/jenkins',
+    src: 'centos6.initd.j2',
     mode: '0755'
     },
   debian: {
