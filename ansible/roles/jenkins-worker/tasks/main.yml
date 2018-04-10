@@ -147,6 +147,13 @@
     dest: "{{ jenkins.dest }}"
     mode: "{{ jenkins.mode|default('0644') }}"
 
+- name: centos6 | render sysconfig into place
+  when: "os == 'centos6'"
+  template:
+    src: "{{ role_path }}/templates/centos6.sysconfig.j2"
+    dest: "/etc/sysconfig/jenkins"
+    mode: "0644"
+
 - name: import manifest to svcadm
   when: os|startswith("smartos")
   raw: "svccfg import {{ jenkins.dest }}"
