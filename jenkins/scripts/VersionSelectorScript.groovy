@@ -9,6 +9,8 @@ def canBuild(nodeMajorVersion, builderLabel, buildType) {
     return false
   if (builderLabel =~ /centos[67]-(arm)?(64|32)-gcc6/ && nodeMajorVersion < 10)
     return false
+  if (builderLabel.indexOf('ubuntu1804') == 0 && nodeMajorVersion < 10) // probably temporary
+    return false
 
   // Windows
   if (builderLabel.indexOf('vs2013-') == 0 && nodeMajorVersion >= 6)
