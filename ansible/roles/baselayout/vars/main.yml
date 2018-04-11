@@ -35,11 +35,14 @@ common_packages: [
 packages: {
   centos6: [
     'centos-release-scl',
-    'ccache,git2u,gcc-c++,centos-release-scl,devtoolset-6', # even need gcc on centos6 so ccache has symlinks
+    'ccache,git2u,gcc-c++,devtoolset-6', # even need gcc on centos6 so ccache has symlinks
   ],
 
+  centos7_arm64: ['git'], # git2u not available for aarch64 (yet)
+  centos7_x64: ['git2u','centos-release-scl'], # centos-release-scl is required to enable SCLo
+                                               # but we do it manually in partials/repo/centos7.yml for arm64
   centos7: [
-    'ccache,git,gcc-c++',
+    'ccache,gcc-c++,devtoolset-6',
   ],
 
   debian7: [
