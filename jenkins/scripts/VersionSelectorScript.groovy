@@ -5,9 +5,9 @@ def canBuild(nodeMajorVersion, builderLabel, buildType) {
     return false
   if (buildType == 'release' && builderLabel.indexOf('centos6') == 0 && nodeMajorVersion < 8)
     return false
-  if (buildType != 'release' && builderLabel == "centos6-64-gcc48" && nodeMajorVersion >= 10)
+  if (buildType != 'release' && builderLabel =~ /centos[67]-(arm)?64-gcc48/ && nodeMajorVersion >= 10)
     return false
-  if (buildType != 'release' && builderLabel == "centos6-64-gcc6" && nodeMajorVersion < 10)
+  if (buildType != 'release' && builderLabel =~ /centos[67]-(arm)?64-gcc6/ && nodeMajorVersion < 10)
     return false
 
   // Windows
