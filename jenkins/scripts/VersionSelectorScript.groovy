@@ -11,6 +11,8 @@ def canBuild(nodeMajorVersion, builderLabel, buildType) {
     return false
   if (builderLabel.indexOf('ubuntu1804') == 0 && nodeMajorVersion < 10) // probably temporary
     return false
+  if (builderLabel.indexOf('ubuntu1204') == 0 && nodeMajorVersion >= 10)
+    return false
 
   // Windows
   if (builderLabel.indexOf('vs2013-') == 0 && nodeMajorVersion >= 6)
