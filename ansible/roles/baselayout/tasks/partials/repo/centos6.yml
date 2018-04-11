@@ -15,3 +15,10 @@
     url: http://people.centos.org/tru/devtools-2/devtools-2.repo
     dest: /etc/yum.repos.d/devtools-2.repo
     mode: 0644
+
+- name: centos6 | install devtoolset-6 for i686
+  when: "arch == 'x86'"
+  get_url:
+    url: "https://copr.fedorainfracloud.org/coprs/mlampe/devtoolset-6.1/repo/epel-6/mlampe-devtoolset-6.1-epel-6.repo"
+    dest: "/etc/yum.repos.d/mlampe-devtoolset-6.1-epel-6.repo"
+    mode: 0644

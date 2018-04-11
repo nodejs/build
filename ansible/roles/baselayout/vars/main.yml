@@ -33,8 +33,8 @@ common_packages: [
 # you can either add os family or os to this list (see smartos)
 # but the playbook chooses os over family - not both
 packages: {
+  centos6_x64: ['centos-release-scl'], # only available on x86_64, 32-bit is from https://copr.fedorainfracloud.org/coprs/mlampe
   centos6: [
-    'centos-release-scl',
     'ccache,git2u,gcc-c++,devtoolset-6', # even need gcc on centos6 so ccache has symlinks
   ],
 
