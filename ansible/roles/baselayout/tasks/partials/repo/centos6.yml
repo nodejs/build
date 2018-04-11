@@ -7,7 +7,7 @@
 
 - name: centos6 | install ius
   yum:
-    name: "https://centos6.iuscommunity.org/ius-release.rpm"
+    name: "https://centos{{ ansible_distribution_major_version }}.iuscommunity.org/ius-release.rpm"
     state: present
 
 - name: centos6 | install devtoolset-2 repo

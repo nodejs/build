@@ -53,6 +53,12 @@
   stat: path="{{ binary_dest }}"
   register: has_git
 
+- name: centos | remove existing git package
+  when: "(os == 'centos6' or os == 'centos7') and arch != 'arm64'"
+  yum:
+    name: "git"
+    state: absent
+
 - name: install packages
   when: not os|startswith("zos")
   package: name="{{ package }}" state=present
@@ -60,6 +66,7 @@
     loop_var: package
   with_items:
     # ansible doesn't like empty lists
+    - "{{ packages[os+'_'+arch]|default('[]') }}"
     - "{{ packages[os]|default('[]') }}"
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"

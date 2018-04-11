@@ -1,6 +1,26 @@
 ---
 
-- name: install epel
+- name: centos7 | install epel
   yum:
-    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
     state: present
+
+- name: centos7 | install ius
+  when: "arch != 'arm64'"
+  yum:
+    name: "https://centos{{ ansible_distribution_major_version }}.iuscommunity.org/ius-release.rpm"
+    state: present
+
+- name: centos7 | aarch64 | install sclo repo
+  when: "arch == 'arm64'"
+  copy:
+    src: "{{ role_path }}/files/centos-aarch-sclo.repo"
+    dest: "/etc/yum.repos.d/centos-aarch-sclo.repo"
+    mode: 0644
+
+- name: centos7 | aarch64 | install sclo repo key
+  when: "arch == 'arm64'"
+  get_url:
+    url: "https://www.centos.org/keys/RPM-GPG-KEY-CentOS-SIG-SCLo"
+    dest: "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
+    mode: 0644
