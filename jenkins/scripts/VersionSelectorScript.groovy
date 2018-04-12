@@ -31,6 +31,8 @@ def canBuild(nodeMajorVersion, builderLabel, buildType) {
     return false
   if (buildType == 'release' && builderLabel.indexOf('smartos15') == 0 && nodeMajorVersion >= 10)
     return false
+  if (builderLabel.indexOf('smartos16') == 0 && nodeMajorVersion < 8)
+    return false
   if (builderLabel.indexOf('smartos17') == 0 && nodeMajorVersion < 10)
     return false
 
