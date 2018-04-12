@@ -9,7 +9,7 @@ def canBuild(nodeMajorVersion, builderLabel, buildType) {
     return false
   if (builderLabel =~ /centos[67]-(arm)?(64|32)-gcc6/ && nodeMajorVersion < 10)
     return false
-  if (builtType == 'release' && builderLabel =~ /centos6-32-gcc6/ && nodeMajorVersion >= 10) // 32-bit linux for <10 only
+  if (buildType == 'release' && builderLabel =~ /centos6-32-gcc6/ && nodeMajorVersion >= 10) // 32-bit linux for <10 only
     return false
   if (builderLabel.indexOf('ubuntu1804') == 0 && nodeMajorVersion < 10) // probably temporary
     return false
