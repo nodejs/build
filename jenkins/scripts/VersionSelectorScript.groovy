@@ -1,75 +1,62 @@
-def canBuild(nodeVersion, builderLabel, buildType) {
-  def isRelease = buildType == 'release'
-  def matches = { match -> builderLabel =~ match }
+def gte = { v -> { nodeVersion -> nodeVersion >= v} }
+def lt = { v -> { nodeVersion -> nodeVersion < v} }
+def releaseType = { buildType -> buildType == 'release' }
+def anyType = { buildType -> true }
 
+def buildExclusions = [
   // Linux
-  if (matches(/^centos5/) && nodeVersion >= 8)
-    return false
-  if (isRelease && matches(/^centos6/) && nodeVersion < 8)
-    return false
-  if (matches(/centos[67]-(arm)?(64|32)-gcc48/) && nodeVersion >= 10)
-    return false
-  if (matches(/centos[67]-(arm)?(64|32)-gcc6/) && nodeVersion < 10)
-    return false
-  if (isRelease && matches(/centos6-32-gcc6/) && nodeVersion >= 10) // 32-bit linux for <10 only
-    return false
-  if (matches(/^ubuntu1804/) && nodeVersion < 10) // probably temporary
-    return false
-  if (matches(/^ubuntu1204/) && nodeVersion >= 10)
-    return false
+  [ /^centos5/,                       anyType,     gte(8)  ],
+  [ /^centos6/,                       releaseType, lt(8)   ],
+  [ /centos[67]-(arm)?(64|32)-gcc48/, anyType,     gte(10) ],
+  [ /centos[67]-(arm)?(64|32)-gcc6/,  anyType,     lt(10)  ],
+  [ /centos6-32-gcc6/,                releaseType, gte(10) ], // 32-bit linux for <10 only
+  [ /^ubuntu1804/,                    anyType,     lt(10)  ], // probably temporary
+  [ /^ubuntu1204/,                    anyType,     gte(10) ],
 
   // Windows
-  if (matches(/^vs2013-/) && nodeVersion >= 6)
-    return false
-  if (matches(/^vs2015-/) && (nodeVersion < 6 || nodeVersion >= 10))
-    return false
-  if (matches(/^vs2017-/) && nodeVersion < 10)
-    return false
+  [ /^vs2013-/,                       anyType,     gte(6)  ],
+  [ /^vs2015-/,                       anyType,     lt(6)   ],
+  [ /^vs2015-/,                       anyType,     gte(10) ],
+  [ /^vs2017-/,                       anyType,     lt(10)  ],
 
   // SmartOS
-  if (matches(/^smartos14/) && nodeVersion >= 8)
-    return false
-  if (matches(/^smartos15/) && nodeVersion < 8)
-    return false
-  if (isRelease && matches(/^smartos15/) && nodeVersion >= 10)
-    return false
-  if (matches(/^smartos16/) && nodeVersion < 8)
-    return false
-  if (matches(/^smartos17/) && nodeVersion < 10)
-    return false
+  [ /^smartos14/,                     anyType,     gte(8)  ],
+  [ /^smartos15/,                     anyType,     lt(8)   ],
+  [ /^smartos15/,                     releaseType, gte(10) ],
+  [ /^smartos16/,                     anyType,     lt(8)   ],
+  [ /^smartos17/,                     anyType,     lt(10)  ],
 
-  if (matches(/^debian7-docker-armv7$/) && nodeVersion >= 10)
-    return false
-  if (isRelease && matches(/^debian8-docker-armv7$/) && nodeVersion < 10)
-    return false
-  if (matches(/^debian9-docker-armv7$/) && nodeVersion < 10)
-    return false
+  [ /^debian7-docker-armv7$/,         anyType,     gte(10) ],
+  [ /^debian8-docker-armv7$/,         releaseType, lt(10)  ],
+  [ /^debian9-docker-armv7$/,         anyType,     lt(10)  ],
 
   // PPC BE
-  if (matches(/^ppcbe-ubuntu/) && nodeVersion >= 8)
-    return false
+  [ /^ppcbe-ubuntu/,                  anyType,     gte(8)  ],
 
   // s390x
-  if (matches(/s390x/) && nodeVersion < 6)
-    return false
+  [ /s390x/,                          anyType,     lt(6)   ],
 
   // AIX61
-  if (matches(/aix61/) && nodeVersion < 6)
-    return false
+  [ /aix61/,                          anyType,     lt(6)   ],
 
   // sharedlibs containered
-  if (matches(/sharedlibs_openssl111/) && nodeVersion < 9)
-    return false
-  if (matches(/sharedlibs_openssl110/) && nodeVersion < 9)
-    return false
-  if (matches(/sharedlibs_openssl102/) && nodeVersion > 9)
-    return false
-  if (matches(/sharedlibs_fips20/) && nodeVersion > 9)
-    return false
-  if (matches(/sharedlibs_withoutintl/) && nodeVersion < 9)
-    return false
+  [ /sharedlibs_openssl111/,          anyType,     lt(9)   ],
+  [ /sharedlibs_openssl110/,          anyType,     lt(9)   ],
+  [ /sharedlibs_openssl102/,          anyType,     gte(10) ],
+  [ /sharedlibs_fips20/,              anyType,     gte(10) ],
+  [ /sharedlibs_withoutintl/,         anyType,     lt(9)   ],
+]
 
-  return true
+def canBuild = { nodeVersion, builderLabel, buildType ->
+  buildExclusions.findResult(true) { // this works like an array.contains(), returns true (default) or false
+    def match = it[0]
+    def type = it[1]
+    def version = it[2]
+
+    if (version(nodeVersion) && type(buildType) && builderLabel =~ match)
+      return false
+    return null
+  }
 }
 
 // setup for execution of the above rules
