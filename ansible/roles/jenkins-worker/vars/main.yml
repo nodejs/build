@@ -76,6 +76,7 @@ java_path: {
   'smartos14': '/opt/local/java/openjdk8/bin/java',
   'smartos15': '/opt/local/java/openjdk8/bin/java',
   'smartos16': '/opt/local/java/openjdk8/bin/java',
+  'smartos17': '/opt/local/java/openjdk8/bin/java',
   'zos13': '/usr/lpp/java/J8.0_64/bin/java'
   }
 
@@ -118,5 +119,6 @@ scaleway_armv7: {
 jobs_variants: {
   armv6l: '1',
   armv7l: '2',
-  arm64: '3'
+  arm64: '3',
+  smartos: '2'
 }

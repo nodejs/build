@@ -64,7 +64,7 @@
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"
 
-- name: update package alternatives
+- name: ubuntu1404 | update package alternatives
   when: os == "ubuntu1404"
   alternatives: link=/usr/bin/{{ gcc }} name={{ gcc }} path=/usr/bin/{{ gcc }}-4.9
   loop_control:
@@ -72,6 +72,21 @@
   with_items:
     - gcc
     - g++
+
+- name: smartos17 | update gcc symlinks
+  when: os == "smartos17"
+  file:
+    src: "/opt/local/gcc7/bin/{{ gcc }}"
+    dest: "/opt/local/bin/{{ gcc }}"
+    state: link
+  loop_control:
+    loop_var: gcc
+  with_items:
+    - gcc
+    - cc
+    - g++
+    - cpp
+    - c++
 
 - name: remove fortune from login shells
   when: os|stripversion == 'freebsd'
@@ -102,8 +117,6 @@
   when: os in ccache_no_binpkg and not has_ccache.stat.exists
   include: ccache.yml
   static: false
-  vars:
-    - version: 3.3.3
 
 - name: set up ntp
   include: "{{ ntp_include }}"
