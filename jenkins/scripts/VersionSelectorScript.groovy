@@ -1,72 +1,72 @@
-def canBuild(nodeMajorVersion, builderLabel, buildType) {
+def canBuild(nodeVersion, builderLabel, buildType) {
+  def isRelease = buildType == 'release'
+  def matches = { match -> builderLabel =~ match }
 
   // Linux
-  if (builderLabel.indexOf('centos5') == 0 && nodeMajorVersion >= 8)
+  if (matches(/^centos5/) && nodeVersion >= 8)
     return false
-  if (buildType == 'release' && builderLabel.indexOf('centos6') == 0 && nodeMajorVersion < 8)
+  if (isRelease && matches(/^centos6/) && nodeVersion < 8)
     return false
-  if (builderLabel =~ /centos[67]-(arm)?(64|32)-gcc48/ && nodeMajorVersion >= 10)
+  if (matches(/centos[67]-(arm)?(64|32)-gcc48/) && nodeVersion >= 10)
     return false
-  if (builderLabel =~ /centos[67]-(arm)?(64|32)-gcc6/ && nodeMajorVersion < 10)
+  if (matches(/centos[67]-(arm)?(64|32)-gcc6/) && nodeVersion < 10)
     return false
-  if (buildType == 'release' && builderLabel =~ /centos6-32-gcc6/ && nodeMajorVersion >= 10) // 32-bit linux for <10 only
+  if (isRelease && matches(/centos6-32-gcc6/) && nodeVersion >= 10) // 32-bit linux for <10 only
     return false
-  if (builderLabel.indexOf('ubuntu1804') == 0 && nodeMajorVersion < 10) // probably temporary
+  if (matches(/^ubuntu1804/) && nodeVersion < 10) // probably temporary
     return false
-  if (builderLabel.indexOf('ubuntu1204') == 0 && nodeMajorVersion >= 10)
+  if (matches(/^ubuntu1204/) && nodeVersion >= 10)
     return false
 
   // Windows
-  if (builderLabel.indexOf('vs2013-') == 0 && nodeMajorVersion >= 6)
+  if (matches(/^vs2013-/) && nodeVersion >= 6)
     return false
-  if (builderLabel.indexOf('vs2015-') == 0 && (nodeMajorVersion < 6 || nodeMajorVersion >= 10))
+  if (matches(/^vs2015-/) && (nodeVersion < 6 || nodeVersion >= 10))
     return false
-  if (builderLabel.indexOf('vs2017-') == 0 && nodeMajorVersion < 10)
+  if (matches(/^vs2017-/) && nodeVersion < 10)
     return false
 
   // SmartOS
-  if (builderLabel.indexOf('smartos13') == 0) // Node.js 0.x
+  if (matches(/^smartos14/) && nodeVersion >= 8)
     return false
-  if (builderLabel.indexOf('smartos14') == 0 && nodeMajorVersion >= 8)
+  if (matches(/^smartos15/) && nodeVersion < 8)
     return false
-  if (builderLabel.indexOf('smartos15') == 0 && nodeMajorVersion < 8)
+  if (isRelease && matches(/^smartos15/) && nodeVersion >= 10)
     return false
-  if (buildType == 'release' && builderLabel.indexOf('smartos15') == 0 && nodeMajorVersion >= 10)
+  if (matches(/^smartos16/) && nodeVersion < 8)
     return false
-  if (builderLabel.indexOf('smartos16') == 0 && nodeMajorVersion < 8)
-    return false
-  if (builderLabel.indexOf('smartos17') == 0 && nodeMajorVersion < 10)
+  if (matches(/^smartos17/) && nodeVersion < 10)
     return false
 
-  if (builderLabel.equals('debian7-docker-armv7') && nodeMajorVersion >= 10)
+  if (matches(/^debian7-docker-armv7$/) && nodeVersion >= 10)
     return false
-  if (buildType == 'release' && builderLabel.equals('debian8-docker-armv7') && nodeMajorVersion < 10)
+  if (isRelease && matches(/^debian8-docker-armv7$/) && nodeVersion < 10)
     return false
-  if (builderLabel.equals('debian9-docker-armv7') && nodeMajorVersion < 10)
+  if (matches(/^debian9-docker-armv7$/) && nodeVersion < 10)
     return false
 
   // PPC BE
-  if (builderLabel.indexOf('ppcbe-ubuntu') == 0 && nodeMajorVersion >= 8)
+  if (matches(/^ppcbe-ubuntu/) && nodeVersion >= 8)
     return false
 
   // s390x
-  if (builderLabel.indexOf('s390x') > -1 && nodeMajorVersion < 6)
+  if (matches(/s390x/) && nodeVersion < 6)
     return false
 
   // AIX61
-  if (builderLabel.indexOf('aix61') > -1 && nodeMajorVersion < 6)
+  if (matches(/aix61/) && nodeVersion < 6)
     return false
 
   // sharedlibs containered
-  if (builderLabel.indexOf('sharedlibs_openssl111') > -1 && nodeMajorVersion < 9)
+  if (matches(/sharedlibs_openssl111/) && nodeVersion < 9)
     return false
-  if (builderLabel.indexOf('sharedlibs_openssl110') > -1 && nodeMajorVersion < 9)
+  if (matches(/sharedlibs_openssl110/) && nodeVersion < 9)
     return false
-  if (builderLabel.indexOf('sharedlibs_openssl102') > -1 && nodeMajorVersion > 9)
+  if (matches(/sharedlibs_openssl102/) && nodeVersion > 9)
     return false
-  if (builderLabel.indexOf('sharedlibs_fips20') > -1 && nodeMajorVersion > 9)
+  if (matches(/sharedlibs_fips20/) && nodeVersion > 9)
     return false
-  if (builderLabel.indexOf('sharedlibs_withoutintl') > -1 && nodeMajorVersion < 9)
+  if (matches(/sharedlibs_withoutintl/) && nodeVersion < 9)
     return false
 
   return true
@@ -77,8 +77,8 @@ def canBuild(nodeMajorVersion, builderLabel, buildType) {
 int nodeMajorVersion = -1
 if (parameters['NODEJS_MAJOR_VERSION'])
   nodeMajorVersion = parameters['NODEJS_MAJOR_VERSION'].toString().toInteger()
-println 'Node.js major version: ' + nodeMajorVersion
-println 'Node.js version: ' + parameters['NODEJS_VERSION']
+println "Node.js major version: $nodeMajorVersion"
+println "Node.js version: ${parameters['NODEJS_VERSION']}"
 
 result['nodes'] = []
 
@@ -93,10 +93,10 @@ combinations.each{
   def builderLabel = it.nodes
   if (nodeMajorVersion >= 4) {
     if (!canBuild(nodeMajorVersion, builderLabel, _buildType)) {
-      println 'Skipping ' + builderLabel + ' for Node.js ' + nodeMajorVersion
+      println "Skipping $builderLabel for Node.js $nodeMajorVersion"
       return
     }
   }
-  result['nodes'] << it
+  result['nodes'].add(it)
 }
 
