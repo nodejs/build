@@ -24,6 +24,10 @@ def buildExclusions = [
   [ /^debian7-docker-armv7$/,         anyType,     gte(10) ],
   [ /^debian8-docker-armv7$/,         releaseType, lt(10)  ],
   [ /^debian9-docker-armv7$/,         anyType,     lt(10)  ],
+  [ /^cross-compiler-armv[67]-gcc-4.8$/, anyType,  gte(10) ],
+  [ /^cross-compiler-armv[67]-gcc-4.8$/, anyType,  gte(10) ],
+  [ /^cross-compiler-armv[67]-gcc-4.9$/, anyType,  lt(10) ],
+  [ /^cross-compiler-armv[67]-gcc-4.9$/, anyType,  lt(10) ],
 
   // Windows -----------------------------------------------
   [ /^vs2013-/,                       anyType,     gte(6)  ],
