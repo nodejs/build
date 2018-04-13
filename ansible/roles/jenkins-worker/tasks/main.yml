@@ -9,6 +9,11 @@
     jobs_env: "{{ jobs_variants[arch] }}"
   when: jobs_env is undefined and server_jobs is undefined and arch in jobs_variants
 
+- name: set jobs_env from jobs_variants.{{ os|stripversion }}
+  set_fact:
+    jobs_env: "{{ jobs_variants[os|stripversion] }}"
+  when: jobs_env is undefined and server_jobs is undefined and os|stripversion in jobs_variants
+
 - name: set jobs_env from server_jobs or ansible_processor_vcpus
   set_fact:
     jobs_env: "{{ server_jobs|default(ansible_processor_vcpus) }}"
