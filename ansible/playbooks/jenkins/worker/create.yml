@@ -39,3 +39,15 @@
 
   roles:
     - jenkins-workspace
+
+#
+# Set up ARM cross compiler servers
+#
+
+- hosts:
+    - test-azure_msft-ubuntu1404-x64-1
+    - test-joyent-ubuntu1604_arm_cross-x64-1
+    - release-joyent-ubuntu1604_arm_cross-x64-1
+
+  roles:
+    - cross-compiler

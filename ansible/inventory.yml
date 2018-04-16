@@ -33,10 +33,10 @@ hosts:
         centos6-x86-1: {ip: 162.243.248.28}
 
     - joyent:
-        smartos13-x64-1: {ip: 72.2.114.225}
         smartos14-x64-1: {ip: 72.2.113.193}
         smartos15-x64-1: {ip: 165.225.131.14}
         smartos17-x64-1: {ip: 72.2.114.225}
+        ubuntu1604_arm_cross-x64-1: {ip: 72.2.114.100, user: ubuntu}
 
     - requireio:
         rvagg-debian9-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi}
@@ -118,6 +118,7 @@ hosts:
         ubuntu1604_docker-x64-1: {ip: 165.225.138.30, user: ubuntu}
         ubuntu1710-x64-1: {ip: 37.153.110.33, user: ubuntu}
         ubuntu1710-x64-2: {ip: 8.19.32.121, user: ubuntu}
+        ubuntu1604_arm_cross-x64-1: {ip: 165.225.136.6, user: ubuntu}
 
     - marist:
         zos13-s390x-1: {ip: 148.100.36.133, user: Unix1}
