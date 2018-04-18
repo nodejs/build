@@ -38,7 +38,7 @@ def buildExclusions = [
   // SmartOS -----------------------------------------------
   [ /^smartos14/,                     anyType,     gte(8)  ],
   [ /^smartos15/,                     anyType,     lt(8)   ],
-  [ /^smartos15/,                     releaseType, gte(10) ],
+  [ /^smartos15/,                     anyType,     gte(10) ],
   [ /^smartos16/,                     anyType,     lt(8)   ],
   [ /^smartos17/,                     anyType,     lt(10)  ],
 
