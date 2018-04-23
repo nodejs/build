@@ -56,9 +56,9 @@
     - nodejs/release
     - nodejs/test
     - nodejs/v8-canary
-    - nodejs/chakracore-nightly
     - nodejs/docs
     - nodejs/chakracore-nightly
+    - nodejs/chakracore-rc
     - nodejs/chakracore-release
     - iojs/next-nightly
     - iojs/nightly
@@ -99,6 +99,7 @@
     - nodejs/release
     - nodejs/v8-canary
     - nodejs/chakracore-nightly
+    - nodejs/chakracore-rc
     - nodejs/chakracore-release
     - iojs/custom
     - iojs/next-nightly
