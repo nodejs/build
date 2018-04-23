@@ -4,14 +4,22 @@
 # sets up cross compiler machine
 #
 
-- name: General | Install required packages
+- name: add ubuntu toolchain ppa
+  apt_repository:
+    repo: ppa:ubuntu-toolchain-r/test
+
+- name: upgrade installed packages
   apt:
-    name: "{{ item }}"
+    upgrade: dist
+    update_cache: yes
+
+- name: install required packages
+  apt:
+    name: "{{ packages }}"
     update_cache: yes
     state: latest
-  with_items: "{{ packages }}"
 
-- name: General | Increase file descriptor limits
+- name: increase file descriptor limits
   lineinfile:
     dest: /etc/security/limits.conf
     line: "{{ item }}"
@@ -21,48 +29,18 @@
     - "root      hard    nofile      500000"
     - "root      soft    nofile      500000"
 
-- name: User | Add "{{ server_user }}" user
-  user:
-    name: "{{ server_user }}"
-    shell: /bin/bash
-
-- name: Raspberry | Clone raspberry tools repository
+- name: clone raspberry tools repository
   git:
     repo: https://github.com/raspberrypi/tools.git
     dest: /opt/raspberrypi/tools
 
-- name: Raspberry | Copy cc-armv6-4.8.sh script
+- name: clone newer raspberry tools repository
+  git:
+    repo: https://github.com/rvagg/rpi-newer-crosstools.git
+    dest: /opt/raspberrypi/rpi-newer-crosstools
+
+- name: copy cc-selector.sh script
   copy:
-    src: ./files/cc-armv6-4.8.sh
-    dest: /opt/raspberrypi/cc-armv6-4.8.sh
+    src: ./files/cc-selector.sh
+    dest: /opt/raspberrypi/cc-selector.sh
     mode: 0755
-
-- name: Raspberry | Copy cc-armv7-4.8.sh script
-  copy:
-    src: ./files/cc-armv7-4.8.sh
-    dest: /opt/raspberrypi/cc-armv7-4.8.sh
-    mode: 0755
-
-- name: Raspberry | Copy cc-armv6-4.9.sh script
-  copy:
-    src: ./files/cc-armv6-4.9.sh
-    dest: /opt/raspberrypi/cc-armv6-4.9.sh
-    mode: 0755
-
-- name: Raspberry | Copy cc-armv7-4.9.sh script
-  copy:
-    src: ./files/cc-armv7-4.9.sh
-    dest: /opt/raspberrypi/cc-armv7-4.9.sh
-    mode: 0755
-
-- name: User | Download Jenkins pubkey
-  get_url:
-    url: https://gist.githubusercontent.com/nodejs-ci/cea606894437b45e99d0/raw/ci-iojs-org-id_rsa-slaves.pub
-    dest: /tmp/nodejs-ci.keys
-  delegate_to: 127.0.0.1
-  become: no
-
-- name: General | Add Jenkins to authorized_keys for "{{ server_user }}"
-  authorized_key:
-    user: "{{ server_user }}"
-    key: "{{ lookup('file', '/tmp/nodejs-ci.keys') }}"
