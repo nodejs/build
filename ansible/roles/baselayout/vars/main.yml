@@ -50,7 +50,7 @@ packages: {
   ],
 
   debian8: [
-    'ccache,git,gcc-4.9,g++-4.9,libfontconfig1',
+    'ccache,git,gcc-4.9,g++-4.9,libfontconfig1,binutils-2.26',
   ],
 
   debian9: [
