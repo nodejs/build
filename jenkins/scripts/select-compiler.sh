@@ -26,7 +26,6 @@ if [ "$SELECT_ARCH" = "PPC64LE" ]; then
   export CC="gcc-${COMPILER_LEVEL}"
   export CXX="g++-${COMPILER_LEVEL}"
   export LINK="g++-${COMPILER_LEVEL}"
-  export LDFLAGS="-Wl,-rpath,$(dirname $($CC --print-file-name libgcc_s.so))"
 
   echo "Compiler set to $COMPILER_LEVEL"
 
@@ -43,6 +42,7 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
 
   if [ "$NODE_MAJOR_VERSION" -gt "9" ]; then
     export PATH="/data/gcc-4.9/bin:$PATH"
+    export LD_LIBRARY_PATH="/data/gcc-4.9/lib64:$LD_LIBRARY_PATH"
     export COMPILER_LEVEL="-4.9"
   fi
 
@@ -50,7 +50,6 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
   export CC="ccache gcc${COMPILER_LEVEL}"
   export CXX="ccache g++${COMPILER_LEVEL}"
   export LINK="g++${COMPILER_LEVEL}"
-  export LDFLAGS="-Wl,-rpath,$(dirname $($CC --print-file-name libgcc_s.so))"
 
   echo "Compiler set to $COMPILER_LEVEL"
 
