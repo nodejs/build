@@ -87,7 +87,7 @@ in the other sections, the job is pegged to run on:
 [iojs-softlayer-benchmark](https://ci.nodejs.org/computer/iojs-softlayer-benchmark/)
 
 
-# Tranfer to benchmarking data machine
+# Transfer to benchmarking data machine
 The rsync from the machine on which the job runs to the benchmarking
 data machine requires an ssh key.  Currently we have pegged the job to the
 benchmarking machine
