@@ -10,6 +10,7 @@
     'dnf': 'fedora',
     'pkg': 'freebsd',
     'pkgin': 'smartos',
+    'brew': 'macos'
     }
 
   # see plugins/filter/filters.py -- second arg is just feedback

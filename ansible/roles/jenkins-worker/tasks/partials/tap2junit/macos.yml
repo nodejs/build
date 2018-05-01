@@ -1,0 +1,10 @@
+---
+
+#
+# macos: python2.7
+#
+
+- name: install pip
+  pip:
+    name: tap2junit
+    executable: /usr/local/bin/pip2

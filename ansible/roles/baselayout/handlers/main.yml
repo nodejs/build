@@ -5,4 +5,5 @@
 #
 
 - name: restart sshd
+  when: not os|startswith("macos")
   service: name="{{ sshd_service_name }}" state=restarted

@@ -17,6 +17,7 @@
 
 - name: set hostname
   when: not os|startswith("smartos") and not os|startswith("zos")
+        and not os|startswith("macos")
   hostname: name="{{ safe_hostname }}"
 
 - name: disable joyent smartconnect
@@ -60,7 +61,19 @@
     state: absent
 
 - name: install packages
-  when: not os|startswith("zos")
+  when: not os|startswith("zos") and not os|startswith("macos")
+  package: name="{{ package }}" state=present
+  loop_control:
+    loop_var: package
+  with_items:
+    # ansible doesn't like empty lists
+    - "{{ packages[os]|default('[]') }}"
+    - "{{ packages[os|stripversion]|default('[]') }}"
+    - "{{ common_packages|default('[]') }}"
+
+- name: install packages (macos)
+  when: os|startswith("macos")
+  become_user: administrator
   package: name="{{ package }}" state=present
   loop_control:
     loop_var: package
@@ -70,6 +83,20 @@
     - "{{ packages[os]|default('[]') }}"
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"
+
+- name: Check whether /etc/paths contains "/usr/localopt/ccache/libexec" (macos)
+  when: os|startswith("macos")
+  command: grep -Fxq "/usr/localopt/ccache/libexec" /etc/paths
+  register: ccache_mac
+  check_mode: no
+  ignore_errors: yes
+  changed_when: no
+
+- name: add ccache to the path (macos)
+  when: ccache_mac.rc == 1
+  lineinfile: dest=/etc/paths
+    insertbefore=BOF
+    line='/usr/localopt/ccache/libexec'
 
 - name: ubuntu1404 | update package alternatives
   when: os == "ubuntu1404"

@@ -27,7 +27,7 @@ ntp_service: {
 }
 
 common_packages: [
-  'automake,bash,libtool,sudo',
+  'automake,bash,libtool',
 ]
 
 # you can either add os family or os to this list (see smartos)
@@ -35,45 +35,46 @@ common_packages: [
 packages: {
   centos6_x64: ['centos-release-scl'], # only available on x86_64, 32-bit is from https://copr.fedorainfracloud.org/coprs/mlampe
   centos6: [
-    'ccache,git2u,gcc-c++,devtoolset-6', # even need gcc on centos6 so ccache has symlinks
+    'ccache,git2u,gcc-c++,devtoolset-6,sudo', # even need gcc on centos6 so ccache has symlinks
   ],
 
   centos7_arm64: ['git'], # git2u not available for aarch64 (yet)
-  centos7_x64: ['git2u','centos-release-scl'], # centos-release-scl is required to enable SCLo
+  centos7_x64: ['git2u','centos-release-scl',], # centos-release-scl is required to enable SCLo
                                                # but we do it manually in partials/repo/centos7.yml for arm64
   centos7: [
-    'ccache,gcc-c++,devtoolset-6',
+    'ccache,gcc-c++,devtoolset-6,sudo',
   ],
 
   debian7: [
-    'gcc-4.8,g++-4.8',
+    'gcc-4.8,g++-4.8,sudo',
   ],
 
   debian8: [
-    'ccache,git,gcc-4.9,g++-4.9,libfontconfig1,binutils-2.26',
+    'ccache,git,gcc-4.9,g++-4.9,libfontconfig1,binutils-2.26,sudo',
   ],
 
   debian9: [
-    'gcc-6,g++-6,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates',
+    'gcc-6,g++-6,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo',
   ],
 
   fedora: [
-    'bzip2,ccache,gcc-c++,git,fontconfig',
+    'bzip2,ccache,gcc-c++,git,fontconfig,sudo',
   ],
 
   freebsd: [
-    'ccache,git,gmake'
+    'ccache,git,gmake,sudo'
   ],
 
   rhel72: [
-    'gcc-c++',
+    'gcc-c++,sudo',
   ],
 
   smartos: [
     'gccmakedep',
     'git',
     'gmake',
-    'xz'
+    'xz',
+    'sudo',
   ],
 
   smartos14: [
@@ -96,7 +97,7 @@ packages: {
   ],
 
   ubuntu: [
-    'ccache,g++,gcc,git,libfontconfig1',
+    'ccache,g++,gcc,git,libfontconfig1,sudo',
   ],
 
   ubuntu1404: [
