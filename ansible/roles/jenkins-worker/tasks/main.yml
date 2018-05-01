@@ -67,11 +67,11 @@
     line: ::1 localhost.localdomain localhost
 
 - name: create NODE_TEST_DIR directory
-  file: path=/home/{{ server_user }}/tmp state=directory
+  file: path="{{ home }}/{{ server_user }}/tmp" state=directory
 
 - name: set NODE_TEST_DIR permission and owner
   file:
-    path: /home/{{ server_user }}/tmp
+    path: "{{ home }}/{{ server_user }}/tmp"
     owner: "{{ server_user }}"
     group: "{{ server_user }}"
     mode: 0755
@@ -124,7 +124,7 @@
     timeout: 60
     force: yes
 
-# temporary until we get the righ cert bundles
+# temporary until we get the right cert bundles
 - name: download slave.jar -zos
   when: os|startswith("zos")
   get_url:
@@ -176,6 +176,14 @@
     dest: "/etc/sysconfig/jenkins"
     mode: "0644"
 
+# TODO - Should this run on every machine?
+- name: copy start.sh to {{ home }}/{{ server_user }}/start.sh
+  when: os|startswith("macos")
+  template:
+    src: "start.j2"
+    dest: "{{ home }}/{{ server_user }}/start.sh"
+    mode: "0755"
+
 - name: import manifest to svcadm
   when: os|startswith("smartos")
   raw: "svccfg import {{ jenkins.dest }}"
@@ -219,8 +227,16 @@
   command: "chown -R {{ server_user }} {{ home }}/{{ server_user }}/gyp"
 
 - name: enable jenkins at startup - general
-  when: not os|startswith("zos")
+  when: not os|startswith("zos") and not os|startswith("macos")
   service: name=jenkins state=started enabled=yes
+
+- name: Load org.nodejs.osx.jenkins.plist into launchctl
+  when: os|startswith("macos")
+  command: launchctl load /Library/LaunchDaemons/org.nodejs.osx.jenkins.plist
+
+- name: Start org.nodejs.osx.jenkins.plist
+  when: os|startswith("macos")
+  command: launchctl start org.nodejs.osx.jenkins
 
 # lineinfile does not work on zos due to character conversions
 # the inserted line ends up in the wrong character set. We

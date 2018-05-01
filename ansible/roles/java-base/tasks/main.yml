@@ -48,12 +48,18 @@
 
 # if this fails you want to check in vars/main.yml and add package name
 # as appropriate -- try to use generic os family if available.
+
+- name: Check if java is already installed
+  raw: java -version
+  register: java
+  ignore_errors: yes
+
 - name: install java
-  when: not os|startswith("zos") and arch != "ppc64" and not inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')
+  when: java.rc > 0 and not os|startswith("zos") and arch != "ppc64" and not inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')
   package: name="{{ java_package_name }}" state=present
 
 - name: install webupd8 oracle java 8 extras
-  when: os in ("ubuntu1204", "ubuntu1404") and arch != "ppc64"
+  when: java.rc > 0 and os in ("ubuntu1204", "ubuntu1404") and arch != "ppc64"
   package: name="{{item}}" state=present
   with_items:
     - ca-certificates

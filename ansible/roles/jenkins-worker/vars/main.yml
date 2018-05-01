@@ -9,11 +9,12 @@ init: {
   centos6:  'centos6',
   debian:  ['debian7', 'ubuntu1204'],
   freebsd: 'freebsd',
+  macos:   'macos',
   rhel72: 'rhel72',
   systemd: ['centos7', 'debian8', 'debian9', 'fedora', 'ubuntu1604', 'ubuntu1610', 'ubuntu1710'],
   svc:     'smartos',
   upstart: ['ubuntu12', 'ubuntu1404'],
-  start:   'zos'
+  zos_start:   'zos'
   }
 
 jenkins_init: {
@@ -35,6 +36,11 @@ jenkins_init: {
   freebsd: {
     dest: '/usr/local/etc/rc.d/jenkins',
     src: 'freebsd.initd.j2',
+    mode: '0755'
+    },
+  macos: {
+    dest: '/Library/LaunchDaemons/org.nodejs.osx.jenkins.plist',
+    src: 'org.nodejs.osx.jenkins.plist',
     mode: '0755'
     },
   openrc: {
@@ -59,9 +65,9 @@ jenkins_init: {
     dest: '/etc/init/jenkins.conf',
     src: 'upstart.j2'
     },
-  start: {
+  zos_start: {
     dest: '{{ home }}/{{ server_user }}/start.sh',
-    src: 'start.j2'
+    src: 'zos_start.j2'
     },
   }
 
