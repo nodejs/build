@@ -38,7 +38,7 @@
   when: "'rhel72-s390x' in inventory_hostname"
 
 - name: create user
-  when: not os|startswith("zos") and not "'rhel72-s390x' in inventory_hostname"
+  when: "not os|startswith('zos') and not 'rhel72-s390x' in inventory_hostname"
   user:
     name: "{{ server_user }}"
     group: "{{ server_user }}"

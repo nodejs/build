@@ -12,7 +12,7 @@ packages: {
   'debian9': 'openjdk-8-jre-headless',
   'fedora': 'java-1.8.0-openjdk-headless',
   'freebsd': 'openjdk8-jre',
-  'macos': 'adoptopenjdk-openjdk8'
+  'macos': 'adoptopenjdk-openjdk8',
   'rhel72': 'java-1.8.0-openjdk',
   'smartos': 'openjdk8',
   'ubuntu': 'openjdk-8-jre-headless',

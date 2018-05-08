@@ -93,7 +93,7 @@
   changed_when: no
 
 - name: add ccache to the path (macos)
-  when: ccache_mac.rc == 1
+  when: os|startswith("macos") and ccache_mac.rc == 1
   lineinfile: dest=/etc/paths
     insertbefore=BOF
     line='/usr/localopt/ccache/libexec'
