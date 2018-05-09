@@ -152,8 +152,6 @@ and speed in our CI system.
   hardware used for benchmarking in the Node.js project's CI system to advance
   and accelerate Node.js performance.
 
-  Node.js project's CI system.
-
 - **[MacStadium][23]**: Managed hosting provider for Mac. Provides Mac
   hardware used for testing in the Node.js project's CI system.
 
