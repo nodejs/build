@@ -60,7 +60,7 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
   echo "Setting compiler for Node version $NODE_MAJOR_VERSION on AIX"
 
   if [ "$NODE_MAJOR_VERSION" -gt "9" ]; then
-    export LIBPATH=/home/iojs/gmake/opt/freeware/lib:/home/iojs/gcc-6.3.0-1/opt/freeware/lib
+    export LIBPATH=/home/iojs/gmake/opt/freeware/lib:/home/iojs/gcc-6.3.0-1/opt/freeware/lib:/home/iojs/gcc-6.3.0-1/opt/freeware/lib/gcc/powerpc-ibm-aix6.1.0.0/6.3.0/pthread/ppc64
     export PATH="/home/iojs/gcc-6.3.0-1/opt/freeware/bin:$PATH"
     export CC="ccache `which gcc`" CXX="ccache `which g++`" CXX_host="ccache `which g++`"
     echo "Compiler set to 6.3"
