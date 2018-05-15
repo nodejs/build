@@ -180,3 +180,16 @@ caa_cfg stream  tcp6    nowait  root    /usr/sbin/clusterconf clusterconf >>/var
 wsmserver       stream  tcp     nowait  root    /usr/websm/bin/wsmserver wsmserver -start
 xmquery dgram   udp6    wait    root    /usr/bin/xmtopas xmtopas -p3
 ```
+
+
+## Install the 6.3.x compiler
+
+* log into the machine
+* su - iojs
+* copy these two files into /home/iojs
+  * https://ci.nodejs.org/downloads/aix/V2-gcc-6.3.0-1.tar.gz
+  * https://ci.nodejs.org/downloads/aix/gmake-dep.tar.gz
+* gunzip the 2 files
+* untar the 2 files
+
+
