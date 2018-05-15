@@ -58,6 +58,7 @@ def buildExclusions = [
   [ /sharedlibs_fips20/,              anyType,     gte(10) ],
   [ /sharedlibs_withoutintl/,         anyType,     lt(9)   ],
   [ /sharedlibs_withoutssl/,          anyType,     lt(10)  ],
+  [ /sharedlibs_shared/,              anyType,     lt(9)   ],
 
   // -------------------------------------------------------
 
