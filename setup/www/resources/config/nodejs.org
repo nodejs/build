@@ -55,9 +55,24 @@ server {
         autoindex on;
         default_type text/plain;
 
-        location ~ \.json$ {
-            add_header access-control-allow-origin *;
+        # Make it possible for javascript on any website to download the installer files and use the data.
+        # (As of Nginx 1.7.5, add_header supports an "always" parameter which
+        # allows CORS to work if the backend returns 4xx or 5xx status code.)
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, HEAD, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Range,Content-Type' always;
+        if ($request_method = 'OPTIONS') {
+            # Tell client that this pre-flight info is valid for 10 minutes
+            add_header 'Access-Control-Max-Age' 600;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
         }
+
+        # JSON files are now covered by the general CORS settings directly above
+        #location ~ \.json$ {
+        #    add_header access-control-allow-origin *;
+        #}
     }
 
     # instead of serving a 404 page when a page hasn't been translated
