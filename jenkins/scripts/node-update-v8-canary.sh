@@ -7,7 +7,7 @@
 rm -rf "$WORKSPACE"/node-*
 
 # Download a node tarball from nodejs.org
-NODE_VERSION=v8
+NODE_VERSION=v10
 DOWNLOAD_DIR="https://nodejs.org/download/release/"
 LINK=`curl $DOWNLOAD_DIR | grep $NODE_VERSION | sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -1 | cut -d\" -f 2 | tr -d /`
 OS=linux; ARCH=x64; EXT=tar.gz
@@ -19,7 +19,7 @@ gzip -cd node-$LINK-$OS-$ARCH.$EXT | tar xf -
 cd node-*/bin && export PATH="$PWD:$PATH" && cd -
 which node
 node --version
-npm install -g update-v8
+npm install -g node-core-utils
 
 cd node
 git config --replace-all user.name "Node.js Jenkins CI"
@@ -32,7 +32,7 @@ git add README.md
 git commit -m"doc: update README for node-v8 repository"
 
 # Clones V8 into base-dir and updates to specified branch
-update-v8 major --branch=lkgr --base-dir="$WORKSPACE" --node-dir="$WORKSPACE"/node
+git-node v8 major --branch=lkgr --base-dir="$WORKSPACE" --node-dir="$WORKSPACE"/node
 
 # Cancel any cherry-pick in progress from an earlier failed run
 git cherry-pick --abort || true
