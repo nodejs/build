@@ -1,0 +1,39 @@
+---
+- hosts: iojs-openbsd
+
+  remote_user: root
+  #remote_user: puffy
+  #become: True
+
+  vars:
+    - ansible_python_interpreter: "/usr/local/bin/python2.7"
+
+  tasks:
+    - include_vars: ./ansible-vars.yaml
+      tags: vars
+
+    - name: General | Install required packages
+      openbsd_pkg: name="{{ item }}" state=present # build=yes
+      with_items:
+        - "{{ packages }}"
+      tags: general
+
+    - name: User | Add {{ server_user }} group
+      group: name="{{ server_user }}" state=present
+      tags: user
+
+    - name: User | Add {{ server_user }} user
+      user: name="{{ server_user }}" append=yes groups={{ server_user }}
+      tags: user
+
+    - name: Jenkins | Download Jenkins' slave.jar
+      get_url: url=https://ci.nodejs.org/jnlpJars/slave.jar dest=/home/{{ server_user }}
+      tags: jenkins
+
+    - name: Init | Generate and copy init script
+      template: src=./resources/jenkins.j2 dest=/etc/rc.d/jenkins
+      tags: init
+
+    - name: Init | Start Jenkins
+      service: name=jenkins state=started enabled=yes
+      tags: init
