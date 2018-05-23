@@ -1,0 +1,11 @@
+---
+server_user: iojs
+packages:
+  - openjdk-8-jre
+  - git
+  - build-essential
+  - automake
+  - libtool
+  - curl
+  - ccache
+  - subversion
