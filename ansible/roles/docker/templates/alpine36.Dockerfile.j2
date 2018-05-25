@@ -37,7 +37,10 @@ RUN apk add --no-cache \
         procps \
         openssh-client \
         py2-pip \
-        bash
+        bash \
+        automake \
+        libtool \
+        autoconf
 
 RUN pip install tap2junit
 

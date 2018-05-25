@@ -151,7 +151,7 @@
 - name: "docker : start Jenkins"
   service:
     name: "jenkins-{{ item.name }}"
-    state: started
+    state: restarted
     enabled: yes
   with_items:
     - "{{ containers }}"
