@@ -4,7 +4,8 @@ properties([
   parameters([
     string(name: 'GIT_REPO', defaultValue: 'nodejs/llnode', description: 'Fetch from this repo (e.g. gibfahn/llnode)'),
     string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'Branch to test (e.g. master, refs/pull/999/head).'),
-    string(name: 'NODE_VERSIONS', defaultValue: 'v6 v8 v9 v10', description: 'Space separated list of NODE_VERSIONS to pass to llnode-continuous-integration.'),
+    string(name: 'NODE_VERSIONS', defaultValue: 'v6 v8 v9 v10 nightly canary', description: 'Space separated list of NODE_VERSIONS to pass to llnode-continuous-integration.'),
+    string(name: 'LLDB_VERSIONS', defaultValue: '3.9.0 4.0.1 5.0.2 6.0.0', description: 'Space separated list of LLDB_VERSIONS to pass to llnode-continuous-integration.'),
     string(name: 'MACHINES', defaultValue: 'all', description: '''Can be "all" or a space-separated list of nodes, eg:
       debian8-64 fedora22 fedora23 osx1010 ppcle-ubuntu1404 ubuntu1204-64 ubuntu1404-64 ubuntu1604-64 rhel72-s390x aix61-ppc64 ppcbe-ubuntu1404 smartos16-64 smartos15-64 win10 win2012r2'''),
   ]),
@@ -23,13 +24,18 @@ for (param in params) {
 println "\n### BUILD PARAMETERS ###\n${printParams}"
 
 stage('Test llnode') {
-    def versions = params['NODE_VERSIONS'].split()
+    def nodeVersions = params['NODE_VERSIONS'].split()
+    def lldbVersions = params['LLDB_VERSIONS'].split()
     def buildJobs = [:]
-    for (int i = 0; i < versions.length; i++) {
-        int index = i // locally scoped copy.
-        def p = pr.collect() // local copy of params
-        p.push(string(name: 'NODE_VERSION', value: versions[index]))
-        buildJobs["${versions[index]}"] = { build(job: 'llnode-continuous-integration', parameters: p) }
+    for (int i = 0; i < nodeVersions.length; i++) {
+        int nodeIndex = i // locally scoped copy.
+        for (int j = 0; j < lldbVersions.length; j++) {
+            int lldbIndex = j // locally scoped copy.
+            def p = pr.collect() // local copy of params
+            p.push(string(name: 'NODE_VERSION', value: nodeVersions[nodeIndex]))
+            p.push(string(name: 'LLDB_VERSION', value: lldbVersions[lldbIndex]))
+            buildJobs["Node.js ${nodeVersions[nodeIndex]} lldb ${lldbVersions[lldbIndex]}"] = { build(job: 'llnode-continuous-integration', parameters: p) }
+        }
     }
 
     println buildJobs

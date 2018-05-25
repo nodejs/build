@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 # This script downloads the relevant Node binary for the arch from nodejs.org.
-# Download the latest master/v6/v4 build from nodejs.org
+# Download the latest v10/v9/v8/v6/v4 build from nodejs.org
 
 . "$(dirname $0)"/colors.sh # Load colors.
 
@@ -40,7 +40,8 @@ rm -rf node-bin/
 
 DOWNLOAD_DIR="https://nodejs.org/download/release/"
 case $NODE_VERSION in
-  *-nightly*) DOWNLOAD_DIR="https://nodejs.org/download/nightly/" ;;
+  *nightly*) DOWNLOAD_DIR="https://nodejs.org/download/nightly/" ;;
+  *canary*) DOWNLOAD_DIR="https://nodejs.org/download/v8-canary/" ;;
 esac
 
 # Get available versions, grep for NODE_VERSION, and sort by biggest version number.
@@ -50,7 +51,7 @@ availableVersions=$(curl "$DOWNLOAD_DIR" | grep "^<a href="| cut -d \" -f 2 | tr
 if $(echo "$availableVersions" | grep -q "^v\?$nodeGrep$"); then
   version="$NODE_VERSION"
 else
-  version=$(echo "$availableVersions" | grep "^v$nodeGrep" |
+  version=$(echo "$availableVersions" | grep "$nodeGrep" |
     sort -n -t . -k 1.2 -k 2 -k 3 | tail -1)
 fi
 
