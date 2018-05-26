@@ -68,11 +68,6 @@ server {
             add_header 'Content-Length' 0;
             return 204;
         }
-
-        # JSON files are now covered by the general CORS settings directly above
-        #location ~ \.json$ {
-        #    add_header access-control-allow-origin *;
-        #}
     }
 
     # instead of serving a 404 page when a page hasn't been translated
