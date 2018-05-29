@@ -1,8 +1,0 @@
----
-
-#
-# debian 7 -- some systems will 404 on sources unless updated
-#
-
-- name: update repositories
-  raw: apt-get update -y
