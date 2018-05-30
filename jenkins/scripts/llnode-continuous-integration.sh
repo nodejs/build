@@ -12,8 +12,10 @@ bash -$- "$(dirname $0)"/common/getNode.sh ${NODE_VERSION:? Undefined.}
 bash -$- "$(dirname $0)"/common/getLLDB.sh ${LLDB_VERSION:? Undefined.}
 
 export PATH="$PWD/node-bin/bin:$PATH"
+export PATH="$PWD/lldb-bin/usr/bin:$PATH"
 
-[ -d "$PWD/llvm-bin/bin" ] && export PATH="$PWD/llvm-bin/bin:$PATH"
+arch=$(uname -m)
+export LD_LIBRARY_PATH="$PWD/lldb-bin/usr/lib/${arch}-linux-gnu/"
 
 export npm_config_userconfig="$PWD"/npm/npmrc
 mkdir -p npm/{cache,devdir,tmp}
