@@ -18,12 +18,14 @@ case $arch in
   x86_64) arch=amd64;;
 esac
 
-debFilename=$(curl "$DOWNLOAD_DIR" grep "^<a href=" | cut -d \" -f 2 |
-              tr -d / | grep "^lldb-$LLDB_VERSION.*$arch.deb")
+files=$(curl --compressed -L -s "$DOWNLOAD_DIR" | grep "^<a href=" | cut -d \" -f 2)
+debFilename=$(echo "$files" | grep "^lldb-$LLDB_VERSION.*$arch.deb")
+debFilename2=$(echo "$files" | grep "^libllvm$LLDB_VERSION.*$arch.deb")
 
 mkdir lldb-bin
 
-dpkg-deb -xv <(curl "${DOWNLOAD_DIR}${debFilename}") lldb-bin/
-dpkg-deb -xv <(curl "${DOWNLOAD_DIR}lib${debFilename}") lldb-bin/
+dpkg-deb -xv <(curl -L -s "${DOWNLOAD_DIR}${debFilename}") lldb-bin/
+dpkg-deb -xv <(curl -L -s "${DOWNLOAD_DIR}lib${debFilename}") lldb-bin/
+dpkg-deb -xv <(curl -L -s "${DOWNLOAD_DIR}${debFilename2}") lldb-bin/
 
 ln -s $(pwd)/lldb-bin/usr/bin/lldb-${LLDB_VERSION} $(pwd)/lldb-bin/usr/bin/lldb

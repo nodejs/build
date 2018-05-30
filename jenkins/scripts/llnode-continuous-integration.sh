@@ -32,6 +32,7 @@ node -v
 npm -v
 ls
 
+rm -Rf llnode
 git clone --depth=1 -b ${GIT_BRANCH:?Undefined.} https://github.com/${GIT_REPO:?Undefined.}.git llnode
 cd llnode
 
