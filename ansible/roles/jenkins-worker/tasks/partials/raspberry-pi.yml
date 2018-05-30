@@ -6,7 +6,23 @@
   service: name=rpcbind state=started enabled=yes
   tags: init
 
-- name: pi | make nfs mounted directories
+- name: pi | test if nfs-root
+  shell: |
+    test -n "$(grep ' / ' /proc/mounts | grep -E '^[0-9\.]+:/')"
+  register: nfs_root_check_result
+  ignore_errors: true
+
+- name: pi | mount /boot/ via nfs
+  mount:
+    name: "/boot"
+    src: "{{ raspberry_pi.nfs_boot_server }}:{{ raspberry_pi.nfs_boot_share_root }}/{{ inventory_hostname }}"
+    fstype: nfs4
+    opts: nfsvers=3,rw,noexec,async,noauto
+    state: mounted
+  when: nfs_root_check_result.rc == 0
+  tags: nfs
+
+- name: pi | make .ccache
   file:
     path: "/home/{{ server_user }}/.ccache"
     state: directory
@@ -15,29 +31,27 @@
   ignore_errors: True
   tags: nfs
 
-- name: pi | configure mount options
+- name: pi | mount .ccache via nfs
   mount:
     name: "/home/{{ server_user }}/.ccache"
-    src: "{{ raspberry_pi.nfs_server }}:{{ raspberry_pi.nfs_share_root }}/.ccache"
+    src: "{{ raspberry_pi.nfs_root_server }}:{{ raspberry_pi.nfs_root_share_root }}/.ccache"
     fstype: nfs4
     opts: rw,exec,async,noauto
     state: mounted
   tags: nfs
 
-- name: pi | mount at end of boot sequence
-  lineinfile:
-    path: /etc/rc.local
-    insertbefore: '^exit 0'
-    line: '{{ item }}'
-  with_items:
-    - '/etc/init.d/rpcbind start'
-    - '/etc/init.d/nfs-common start'
-    - 'sleep 10 && (grep nfs /etc/fstab | cut -d" " -f 2 | xargs -l mount) &'
+- name: pi | copy rc.local to mount nfs post boot
+  template:
+    src: "./templates/rpi_rc.local.j2"
+    dest: "/etc/rc.local"
+    owner: "root"
+    group: "root"
+    mode: 0755
   tags: nfs
 
 - name: pi | copy start_tunnel.sh script
   template:
-    src: "./resources/start_tunnel.j2"
+    src: "./templates/rpi_start_tunnel.j2"
     dest: "/usr/local/sbin/start_tunnel.sh"
     owner: "{{ server_user }}"
     group: "{{ server_user }}"

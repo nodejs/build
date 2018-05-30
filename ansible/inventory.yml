@@ -195,8 +195,8 @@ hosts:
         mhdawson-debian9-armv6l_pi1p-1:         {ip: 192.168.2.49, user: pi}
         securogroup-debian9-armv6l_pi1p-1:      {ip: 192.168.2.50, user: pi}
         securogroup-debian9-armv6l_pi1p-2:      {ip: 192.168.2.51, user: pi}
-        chrislea-debian7-armv6l_pi1p-1:         {ip: 192.168.2.52, user: pi}
-        davglass-debian7-armv6l_pi1p-1:         {ip: 192.168.2.53, user: pi}
+        chrislea-debian9-armv6l_pi1p-1:         {ip: 192.168.2.52, user: pi}
+        davglass-debian9-armv6l_pi1p-1:         {ip: 192.168.2.53, user: pi}
 
         rvagg-debian9-armv7l_pi2-1:        {ip: 192.168.2.60, user: pi}
         joeyvandijk-debian9-armv7l_pi2-1:  {ip: 192.168.2.61, user: pi}
@@ -208,8 +208,8 @@ hosts:
         sambthompson-debian9-armv7l_pi2-1: {ip: 192.168.2.67, user: pi}
         louiscntr-debian9-armv7l_pi2-1:    {ip: 192.168.2.68, user: pi}
         svincent-debian9-armv7l_pi2-2:     {ip: 192.168.2.69, user: pi}
-        svincent-debian7-armv7l_pi2-3:     {ip: 192.168.2.70, user: pi}
-        jasnell-debian7-armv7l_pi2-1:      {ip: 192.168.2.71, user: pi}
+        svincent-debian9-armv7l_pi2-3:     {ip: 192.168.2.70, user: pi}
+        jasnell-debian9-armv7l_pi2-1:      {ip: 192.168.2.71, user: pi}
 
         williamkapke-debian9-arm64_pi3-1:      {ip: 192.168.2.80, user: pi}
         williamkapke-debian9-arm64_pi3-2:      {ip: 192.168.2.81, user: pi}
@@ -221,7 +221,7 @@ hosts:
         securogroup-debian9-arm64_pi3-2:       {ip: 192.168.2.87, user: pi}
         notthetup_sayanee-debian9-arm64_pi3-1: {ip: 192.168.2.88, user: pi}
         piccoloaiutante-debian9-arm64_pi3-1:   {ip: 192.168.2.89, user: pi}
-        kahwee-debian8-arm64_pi3-1:            {ip: 192.168.2.90, user: pi}
+        kahwee-debian9-arm64_pi3-1:            {ip: 192.168.2.90, user: pi}
 
         rvagg-ubuntu1404-arm64_odroidxu3-1: {ip: 192.168.2.10, user: odroid}
         rvagg-ubuntu1404-arm64_odroidxu-1: {ip: 192.168.2.15}
