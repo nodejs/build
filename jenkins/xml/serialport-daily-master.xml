@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<com.tikal.jenkins.plugins.multijob.MultiJobProject plugin="jenkins-multijob-plugin@1.28">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.28.0">
+      <projectUrl>https://github.com/nodejs/node/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>1</maxConcurrentPerNode>
+      <maxConcurrentTotal>1</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>jenkins-workspace</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>true</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>0 5 * * *</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
+  <concurrentBuild>true</concurrentBuild>
+  <builders>
+    <com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
+      <phaseName></phaseName>
+      <phaseJobs>
+        <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+          <jobName>serialport-test-commit-windows</jobName>
+          <currParams>false</currParams>
+          <exposedSCM>false</exposedSCM>
+          <disableJob>false</disableJob>
+          <parsingRulesPath></parsingRulesPath>
+          <maxRetries>0</maxRetries>
+          <enableRetryStrategy>false</enableRetryStrategy>
+          <enableCondition>false</enableCondition>
+          <abortAllJob>true</abortAllJob>
+          <condition></condition>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
+              <properties>NODE_EXE=http://nodejs.org/dist/latest-v0.10.x/node.exe
+NPM_ZIP=https://github.com/npm/npm/archive/v2.15.3.zip</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <killPhaseOnJobResultCondition>NEVER</killPhaseOnJobResultCondition>
+          <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
+          <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
+        </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+        <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+          <jobName>serialport-test-commit-windows</jobName>
+          <currParams>false</currParams>
+          <exposedSCM>false</exposedSCM>
+          <disableJob>false</disableJob>
+          <parsingRulesPath></parsingRulesPath>
+          <maxRetries>0</maxRetries>
+          <enableRetryStrategy>false</enableRetryStrategy>
+          <enableCondition>false</enableCondition>
+          <abortAllJob>true</abortAllJob>
+          <condition></condition>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
+              <properties>NODE_EXE=http://nodejs.org/dist/latest-v0.12.x/node.exe
+NPM_ZIP=https://github.com/npm/npm/archive/v2.15.3.zip</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <killPhaseOnJobResultCondition>NEVER</killPhaseOnJobResultCondition>
+          <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
+          <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
+        </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+        <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+          <jobName>serialport-test-commit-windows</jobName>
+          <currParams>false</currParams>
+          <exposedSCM>false</exposedSCM>
+          <disableJob>false</disableJob>
+          <parsingRulesPath></parsingRulesPath>
+          <maxRetries>0</maxRetries>
+          <enableRetryStrategy>false</enableRetryStrategy>
+          <enableCondition>false</enableCondition>
+          <abortAllJob>true</abortAllJob>
+          <condition></condition>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
+              <properties>NODE_EXE=http://nodejs.org/dist/latest-v4.x/win-x86/node.exe
+NPM_ZIP=https://github.com/npm/npm/archive/v2.15.3.zip</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <killPhaseOnJobResultCondition>NEVER</killPhaseOnJobResultCondition>
+          <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
+          <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
+        </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+        <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+          <jobName>serialport-test-commit-windows</jobName>
+          <currParams>false</currParams>
+          <exposedSCM>false</exposedSCM>
+          <disableJob>false</disableJob>
+          <parsingRulesPath></parsingRulesPath>
+          <maxRetries>0</maxRetries>
+          <enableRetryStrategy>false</enableRetryStrategy>
+          <enableCondition>false</enableCondition>
+          <abortAllJob>true</abortAllJob>
+          <condition></condition>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
+              <properties>NODE_EXE=http://nodejs.org/dist/latest-v5.x/win-x86/node.exe
+NPM_ZIP=https://github.com/npm/npm/archive/v3.8.7.zip</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <killPhaseOnJobResultCondition>NEVER</killPhaseOnJobResultCondition>
+          <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
+          <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
+        </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+        <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+          <jobName>serialport-test-commit-windows</jobName>
+          <currParams>false</currParams>
+          <exposedSCM>false</exposedSCM>
+          <disableJob>false</disableJob>
+          <parsingRulesPath></parsingRulesPath>
+          <maxRetries>0</maxRetries>
+          <enableRetryStrategy>false</enableRetryStrategy>
+          <enableCondition>false</enableCondition>
+          <abortAllJob>true</abortAllJob>
+          <condition></condition>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
+              <properties>NODE_EXE=http://nodejs.org/dist/latest/win-x86/node.exe
+NPM_ZIP=https://github.com/npm/npm/archive/v3.8.7.zip</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <killPhaseOnJobResultCondition>NEVER</killPhaseOnJobResultCondition>
+          <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
+          <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
+        </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+        <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+          <jobName>serialport-test-commit-windows</jobName>
+          <currParams>false</currParams>
+          <exposedSCM>false</exposedSCM>
+          <disableJob>false</disableJob>
+          <parsingRulesPath></parsingRulesPath>
+          <maxRetries>0</maxRetries>
+          <enableRetryStrategy>false</enableRetryStrategy>
+          <enableCondition>false</enableCondition>
+          <abortAllJob>true</abortAllJob>
+          <condition></condition>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
+              <properties>NODE_EXE=http://nodejs.org/dist/latest/win-x64/node.exe
+NPM_ZIP=https://github.com/npm/npm/archive/v3.8.7.zip</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <killPhaseOnJobResultCondition>NEVER</killPhaseOnJobResultCondition>
+          <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
+          <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
+        </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+      </phaseJobs>
+      <continuationCondition>UNSTABLE</continuationCondition>
+      <executionType>PARALLEL</executionType>
+    </com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
+  </builders>
+  <publishers>
+    <hudson.tasks.test.AggregatedTestResultPublisher plugin="junit@1.21">
+      <includeFailedBuilds>true</includeFailedBuilds>
+    </hudson.tasks.test.AggregatedTestResultPublisher>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+  </buildWrappers>
+  <pollSubjobs>false</pollSubjobs>
+</com.tikal.jenkins.plugins.multijob.MultiJobProject>

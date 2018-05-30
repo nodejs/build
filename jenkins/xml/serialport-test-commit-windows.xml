@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<matrix-project plugin="matrix-project@1.11">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.28.0">
+      <projectUrl>https://github.com/voodootikigod/node-serialport/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>GITHUB_ORG</name>
+          <description>The user/org of the GitHub repo</description>
+          <defaultValue>EmergingTechnologyAdvisors</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REPO_NAME</name>
+          <description>The name of the repo</description>
+          <defaultValue>node-serialport</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GIT_REMOTE_REF</name>
+          <description>The remote portion of the Git refspec to fetch and test</description>
+          <defaultValue>refs/heads/master</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REBASE_ONTO</name>
+          <description>Optionally, rebase onto the given ref before testing. Leave blank to skip rebasing.</description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>POST_REBASE_SHA1_CHECK</name>
+          <description>After rebasing, check that the resulting commit sha1 matches the given one. If left blank, no check is performed.</description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>NODE_EXE</name>
+          <description>Node executable to download and use. Select one from https://nodejs.org/dist/ .</description>
+          <defaultValue>https://nodejs.org/dist/v0.10.40/node.exe</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>NPM_ZIP</name>
+          <description>Npm release to download and use. Select one from https://github.com/npm/npm/releases .</description>
+          <defaultValue>https://github.com/npm/npm/archive/v1.4.28.zip</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TEST_PORT</name>
+          <description></description>
+          <defaultValue>COM6</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <matrixOptions>
+        <throttleMatrixBuilds>true</throttleMatrixBuilds>
+        <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
+      </matrixOptions>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.5.1">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name>origin</name>
+        <refspec>+$GIT_REMOTE_REF:refs/remotes/origin/_jenkins_local_branch</refspec>
+        <url>https://github.com/$GITHUB_ORG/$REPO_NAME.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>refs/heads/_jenkins_local_branch</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GithubWeb">
+      <url></url>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.WipeWorkspace/>
+    </extensions>
+  </scm>
+  <assignedNode>jenkins-workspace</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <axes>
+    <hudson.matrix.LabelAxis>
+      <name>nodes</name>
+      <values>
+        <string>serialport-win10</string>
+      </values>
+    </hudson.matrix.LabelAxis>
+  </axes>
+  <builders>
+    <hudson.tasks.BatchFile>
+      <command>REM Name and email in git config need to be the same across all jobs&#xd;
+REM so that git rebase --committer-date-is-author-date will produce &#xd;
+REM the same commit SHA1&#xd;
+git config --replace-all user.name Dummy&#xd;
+git config --replace-all user.email dummy@dummy.com&#xd;
+&#xd;
+git rebase --abort&#xd;
+git checkout -f refs/remotes/origin/_jenkins_local_branch&#xd;
+&#xd;
+git status&#xd;
+git rev-parse HEAD&#xd;
+git rev-parse %REBASE_ONTO%&#xd;
+&#xd;
+if &quot;%REBASE_ONTO%&quot; NEQ &quot;&quot; (&#xd;
+  git rebase --committer-date-is-author-date %REBASE_ONTO%&#xd;
+)&#xd;
+&#xd;
+set check_sha1=%POST_REBASE_SHA1_CHECK%&#xd;
+for /f %%i in (&apos;git rev-parse HEAD&apos;) do set head_sha1=%%i&#xd;
+&#xd;
+if &quot;%POST_REBASE_SHA1_CHECK%&quot; == &quot;&quot; goto post_rebase_check_done&#xd;
+&#xd;
+if &quot;%head_sha1%&quot; NEQ &quot;%check_sha1%&quot; exit /b 1&#xd;
+&#xd;
+:post_rebase_check_done</command>
+    </hudson.tasks.BatchFile>
+    <hudson.tasks.BatchFile>
+      <command>taskkill /im node.exe /f || true&#xd;
+taskkill /im python.exe /f || true&#xd;
+&#xd;
+devcon status * | grep -A1 Arduino || true&#xd;
+&#xd;
+::devcon disable USB\VID_2341*PID_8036*MI_00* || true&#xd;
+::devcon disable &quot;@USB\VID_2341&amp;PID_8036&amp;MI_00\6&amp;56F6AA7&amp;0&amp;0000&quot; || true&#xd;
+&#xd;
+::setlocal EnableDelayedExpansion&#xd;
+::set /a EnableRetries=10&#xd;
+:::EnableRetry&#xd;
+::if !EnableRetries! EQU 0 (&#xd;
+::  echo Could not enable serial port.&#xd;
+::  exit /b 1&#xd;
+::)&#xd;
+::set /a EnableRetries-=1&#xd;
+::sleep 6&#xd;
+::devcon enable &quot;@USB\VID_2341&amp;PID_8036&amp;MI_00\6&amp;56F6AA7&amp;0&amp;0000&quot; || true&#xd;
+::if %errorlevel% NEQ 0 goto EnableRetry&#xd;
+&#xd;
+::devcon status * | grep -A1 Arduino || true&#xd;
+&#xd;
+::sleep 120&#xd;
+</command>
+    </hudson.tasks.BatchFile>
+    <hudson.tasks.BatchFile>
+      <command>mkdir local_node&#xd;
+cd local_node&#xd;
+&#xd;
+curl -L -o npm.zip %NPM_ZIP%&#xd;
+unzip -x npm.zip&#xd;
+del npm.zip&#xd;
+mkdir node_modules&#xd;
+mv npm* node_modules/npm&#xd;
+copy node_modules\npm\bin\npm.cmd .&#xd;
+&#xd;
+curl -L -o node.exe %NODE_EXE%&#xd;
+&#xd;
+mkdir npm-cache&#xd;
+npm config set cache &quot;%CD%\npm-cache&quot;&#xd;
+</command>
+    </hudson.tasks.BatchFile>
+    <hudson.tasks.BatchFile>
+      <command>SET &quot;PATH=%CD%\local_node;%PATH%&quot;&#xd;
+&#xd;
+echo Node version:&#xd;
+call node -v&#xd;
+&#xd;
+echo NPM version:&#xd;
+call npm -v&#xd;
+echo on&#xd;
+&#xd;
+call npm install --build-from-source&#xd;
+if %errorlevel% neq 0 exit /b %errorlevel%&#xd;
+echo on&#xd;
+::call npm install colors&#xd;
+::if %errorlevel% neq 0 exit /b %errorlevel%&#xd;
+::echo on&#xd;
+::call npm install memwatch-next --msvs_version=2013&#xd;
+::if %errorlevel% neq 0 exit /b %errorlevel%&#xd;
+::echo on&#xd;
+&#xd;
+call npm run arduino:load || true&#xd;
+echo on&#xd;
+&#xd;
+call npm test&#xd;
+if %errorlevel% neq 0 exit /b %errorlevel%&#xd;
+echo on&#xd;
+&#xd;
+::call npm run stress&#xd;
+::if %errorlevel% neq 0 exit /b %errorlevel%&#xd;
+::echo on&#xd;
+</command>
+    </hudson.tasks.BatchFile>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.0">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+    <EnvInjectBuildWrapper plugin="envinject@2.1.3">
+      <info>
+        <propertiesContent>PYTHON=c:\python27\python.exe</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.31">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+  </buildWrappers>
+  <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
+    <runSequentially>false</runSequentially>
+  </executionStrategy>
+</matrix-project>

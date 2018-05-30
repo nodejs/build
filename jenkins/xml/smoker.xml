@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<matrix-project plugin="matrix-project@1.12">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.0">
+      <projectUrl>https://github.com/nodejs/node/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>user</name>
+          <description></description>
+          <defaultValue>nodejs</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>project</name>
+          <description></description>
+          <defaultValue>node</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>commit</name>
+          <description>A proper commit sha, first 10 characters: git rev-parse HEAD | cut -b -10</description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <matrixOptions>
+        <throttleMatrixBuilds>true</throttleMatrixBuilds>
+        <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
+      </matrixOptions>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.7.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/$user/$project.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>$commit</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GithubWeb">
+      <url>https://github.com/nodejs/node</url>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanCheckout/>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>false</shallow>
+        <noTags>false</noTags>
+        <reference>/home/iojs/git/io.js.reference</reference>
+        <timeout>20</timeout>
+        <depth>0</depth>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
+    </extensions>
+  </scm>
+  <assignedNode>jenkins-workspace</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <axes>
+    <hudson.matrix.LabelAxis>
+      <name>nodes</name>
+      <values>
+        <string>debian8-64</string>
+        <string>debian9-64</string>
+      </values>
+    </hudson.matrix.LabelAxis>
+  </axes>
+  <builders>
+    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.0">
+        <expression>Windows_NT</expression>
+        <label>${ENV, var=&quot;OS&quot;}</label>
+      </runCondition>
+      <conditionalbuilders>
+        <EnvInjectBuilder plugin="envinject@2.1.5">
+          <info>
+            <propertiesContent>GYP_MSVS_VERSION=2013
+PYTHON=c:\python27\python.exe
+NODE_COMMON_PORT=12301
+DESTCPU=$DESTCPU
+ARCH=$ARCH
+DISTTYPE=$disttype
+DISTTYPEDIR=
+DATESTRING=$datestring
+COMMIT=$commit
+CUSTOMTAG=rc.$rc
+SSHCONFIG=\config
+RELEASE_URLBASE=$release_urlbase</propertiesContent>
+          </info>
+        </EnvInjectBuilder>
+        <hudson.tasks.BatchFile>
+          <command>vcbuild.bat release nosign %ARCH% small-icu&#xd;
+</command>
+        </hudson.tasks.BatchFile>
+      </conditionalbuilders>
+    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.0">
+        <expression>linux-gnu</expression>
+        <label>${ENV, var=&quot;OSTYPE&quot;}</label>
+      </runCondition>
+      <conditionalbuilders>
+        <hudson.tasks.Shell>
+          <command>./configure --prefix=$(pwd)/smoker --with-intl=small-icu --download=all
+make -j $(getconf _NPROCESSORS_ONLN)
+make install</command>
+        </hudson.tasks.Shell>
+      </conditionalbuilders>
+    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+    <hudson.tasks.Shell>
+      <command>export PATH=$(pwd)/smoker/bin:$PATH
+cd smoker
+node -v
+npm -v
+npm install --prefix=$(pwd) --global --loglevel=error citgm</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>export PATH=$(pwd)/smoker/bin:$PATH
+export npm_config_nodedir=$(pwd)
+export npm_loglevel=error
+retval=0
+
+cd smoker
+
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error lodash@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error underscore@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error request@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error commander@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error express@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error chalk@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error q@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error colors@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error coffee-script@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error through2@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error bluebird@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error moment@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error yeoman-generator@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error glob@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error gulp-util@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error jade@latest || retval=1
+# citgm --nodedir=$npm_config_nodedir --lookup --verbose error redis@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error socket.io@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error fs-extra@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error body-parser@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error uglify-js@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error handlebars@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error rimraf@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error yosay@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error mime@latest || retval=1
+# citgm --nodedir=$npm_config_nodedir --lookup --verbose error mongodb@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error graceful-fs@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error bignum@latest || retval=1
+citgm --nodedir=$npm_config_nodedir --lookup --verbose error hapi@latest || retval=1
+
+exit $retval</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+  </buildWrappers>
+  <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
+    <runSequentially>false</runSequentially>
+  </executionStrategy>
+</matrix-project>

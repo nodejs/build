@@ -1,0 +1,428 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<matrix-project plugin="matrix-project@1.11">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.28.0">
+      <projectUrl>https://github.com/nodejs/node/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>repository</name>
+          <description>Can be changed to point at a fork or private repo if deploy key matches, e.g. git@github.com:nodejs/node.git</description>
+          <defaultValue>https://github.com/nodejs/node.git</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>commit</name>
+          <description>A proper commit sha, first 10 characters: git rev-parse HEAD | cut -b -10</description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>datestring</name>
+          <description>Complete reverse date string, YYYYMMDD, UTC: date -u +&apos;%Y%m%d&apos;</description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>disttype</name>
+          <description>Is this a nightly or a next-nightly or an RC (choose custom) or a release</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>release</string>
+              <string>nightly</string>
+              <string>next-nightly</string>
+              <string>custom</string>
+              <string>test</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>release_urlbase</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>https://nodejs.org/download/release/</string>
+              <string>https://nodejs.org/download/nightly/</string>
+              <string>https://nodejs.org/download/next-nightly/</string>
+              <string>https://nodejs.org/download/rc/</string>
+              <string>https://nodejs.org/download/test/</string>
+              <string>https://iojs.org/download/release/</string>
+              <string>https://iojs.org/download/nightly/</string>
+              <string>https://iojs.org/download/next-nightly/</string>
+              <string>https://iojs.org/download/rc/</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>rc</name>
+          <description>If an RC build, set this to an appropriate number</description>
+          <defaultValue>0</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <matrixOptions>
+        <throttleMatrixBuilds>true</throttleMatrixBuilds>
+        <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
+      </matrixOptions>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.5.1">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>$repository</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>$commit</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GithubWeb">
+      <url>https://github.com/nodejs/node</url>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanCheckout/>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>false</shallow>
+        <noTags>false</noTags>
+        <reference>/home/iojs/git/io.js.reference</reference>
+        <timeout>20</timeout>
+        <depth>0</depth>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
+    </extensions>
+  </scm>
+  <assignedNode>jenkins-workspace</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <authToken>Ah4YF+2f5RlMNW7ja/W4crwejB4afORve0t1bI5CPx4rr4Kb5XkuIdFHGmDtda3qQJTpCg==</authToken>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <axes>
+    <hudson.matrix.LabelAxis>
+      <name>nodes</name>
+      <values>
+        <string>pi1-raspbian-wheezy</string>
+      </values>
+    </hudson.matrix.LabelAxis>
+  </axes>
+  <builders>
+    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.0">
+        <expression>Windows_NT</expression>
+        <label>${ENV, var=&quot;OS&quot;}</label>
+      </runCondition>
+      <conditionalbuilders>
+        <EnvInjectBuilder plugin="envinject@2.1.3">
+          <info>
+            <propertiesContent>GYP_MSVS_VERSION=2013
+PYTHON=c:\python27\python.exe
+NODE_COMMON_PORT=12301
+DESTCPU=$DESTCPU
+ARCH=$ARCH
+DISTTYPE=$disttype
+DISTTYPEDIR=
+DATESTRING=$datestring
+COMMIT=$commit
+CUSTOMTAG=rc.$rc
+SSHCONFIG=\config
+RELEASE_URLBASE=$release_urlbase</propertiesContent>
+          </info>
+        </EnvInjectBuilder>
+        <hudson.tasks.BatchFile>
+          <command>if &quot;%DISTTYPE%&quot;==&quot;test&quot; (&#xd;
+  set DISTTYPE=custom&#xd;
+  set CUSTOMTAG=test%DATESTRING%%COMMIT%&#xd;
+)&#xd;
+copy c:\node-icu\*.zip deps || true&#xd;
+vcbuild.bat build-release %ARCH% upload&#xd;
+</command>
+        </hudson.tasks.BatchFile>
+      </conditionalbuilders>
+    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.0">
+        <expression>linux-gnu|osx-tar</expression>
+        <label>${ENV, var=&quot;OSTYPE&quot;}</label>
+      </runCondition>
+      <conditionalbuilders>
+        <hudson.tasks.Shell>
+          <command>#!/bin/bash
+
+NODE_VERSION=$(python tools/getnodeversion.py)
+
+if [[ $NODE_LABELS =~ ppc &amp;&amp; $disttype =~ release|custom ]]; then
+  echo &quot;Not building $disttype on PPC slave&quot;
+  exit 0
+fi
+
+if [[ \
+    ( $NODE_LABELS =~ pre-1-release  &amp;&amp; $NODE_VERSION =~ ^[0] ) \
+ || ( $NODE_LABELS =~ post-1-release &amp;&amp; $NODE_VERSION =~ ^[^0] ) \
+]]; then
+
+if [ &quot;X${disttype}&quot; == &quot;Xtest&quot; ]; then
+  disttype=custom
+  CUSTOMTAG=&quot;test${datestring}${commit}&quot;
+else
+  CUSTOMTAG=&quot;rc.$rc&quot;
+fi
+
+if [[ &quot;X$PRE_1_PATH&quot; != &quot;X&quot; &amp;&amp; $NODE_VERSION =~ ^[0] ]]; then
+  export PATH=$PRE_1_PATH
+fi
+
+CONFIG_FLAGS=&quot;--download-path=${HOME}/node-icu/&quot;
+if [[ $NODE_VERSION =~ ^0\.10 ]]; then
+  CONFIG_FLAGS=&quot;&quot;
+fi
+
+echo ostype=$OSTYPE
+echo arch=$ARCH
+echo destcpu=$DESTCPU
+echo PATH=$PATH
+echo CONFIG_FLAGS=$CONFIG_FLAGS
+
+mkdir -p ${HOME}/node-icu/
+make -j$JOBS binary-upload \
+  DESTCPU=&quot;$DESTCPU&quot; \
+  ARCH=&quot;$ARCH&quot; \
+  DISTTYPE=&quot;$disttype&quot; \
+  DATESTRING=&quot;$datestring&quot; \
+  COMMIT=&quot;$commit&quot; \
+  CUSTOMTAG=&quot;$CUSTOMTAG&quot; \
+  RELEASE_URLBASE=&quot;$release_urlbase&quot; \
+  CONFIG_FLAGS=&quot;$CONFIG_FLAGS&quot;
+  
+fi</command>
+        </hudson.tasks.Shell>
+      </conditionalbuilders>
+    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.0">
+        <expression>solaris</expression>
+        <label>${ENV, var=&quot;OSTYPE&quot;}</label>
+      </runCondition>
+      <conditionalbuilders>
+        <hudson.tasks.Shell>
+          <command>#!/bin/bash
+
+NODE_VERSION=$(python tools/getnodeversion.py)
+
+if [[ \
+    ( $NODE_LABELS =~ pre-1-release  &amp;&amp; $NODE_VERSION =~ ^[0] ) \
+ || ( $NODE_LABELS =~ post-1-release &amp;&amp; $NODE_VERSION =~ ^[^0] ) \
+]]; then
+
+if [ &quot;X${disttype}&quot; == &quot;Xtest&quot; ]; then
+  disttype=custom
+  CUSTOMTAG=&quot;test${datestring}${commit}&quot;
+else
+  CUSTOMTAG=&quot;rc.$rc&quot;
+fi
+
+CONFIG_FLAGS=&quot;--download-path=${HOME}/node-icu/&quot;
+if [[ $NODE_VERSION =~ ^0\.10 ]]; then
+  CONFIG_FLAGS=&quot;&quot;
+fi
+
+mkdir -p ${HOME}/node-icu/
+make -j$JOBS binary-upload \
+  DESTCPU=&quot;x86&quot; \
+  ARCH=&quot;x86&quot; \
+  DISTTYPE=&quot;$disttype&quot; \
+  DATESTRING=&quot;$datestring&quot; \
+  COMMIT=&quot;$commit&quot; \
+  CUSTOMTAG=&quot;$CUSTOMTAG&quot; \
+  RELEASE_URLBASE=&quot;$release_urlbase&quot; \
+  CONFIG_FLAGS=&quot;$CONFIG_FLAGS&quot;
+make -j$JOBS binary-upload \
+  DESTCPU=&quot;x64&quot; \
+  ARCH=&quot;x64&quot; \
+  DISTTYPE=&quot;$disttype&quot; \
+  DATESTRING=&quot;$datestring&quot; \
+  COMMIT=&quot;$commit&quot; \
+  CUSTOMTAG=&quot;$CUSTOMTAG&quot; \
+  RELEASE_URLBASE=&quot;$release_urlbase&quot; \
+  CONFIG_FLAGS=&quot;$CONFIG_FLAGS&quot;
+  
+fi</command>
+        </hudson.tasks.Shell>
+      </conditionalbuilders>
+    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.0">
+        <expression>osx-pkg</expression>
+        <label>${ENV, var=&quot;OSTYPE&quot;}</label>
+      </runCondition>
+      <conditionalbuilders>
+        <EnvInjectBuilder plugin="envinject@2.1.3">
+          <info>
+            <propertiesContent>CODESIGN_CERT=Developer ID Application: Node.js Foundation
+PRODUCTSIGN_CERT=Developer ID Installer: Node.js Foundation
+PACKAGEMAKER=~/PackageMaker.app/Contents/MacOS/PackageMaker</propertiesContent>
+          </info>
+        </EnvInjectBuilder>
+        <hudson.tasks.Shell>
+          <command>NODE_VERSION=$(python tools/getnodeversion.py)
+
+if [ &quot;X${disttype}&quot; == &quot;Xtest&quot; ]; then
+  disttype=custom
+  CUSTOMTAG=&quot;test${datestring}${commit}&quot;
+else
+  CUSTOMTAG=&quot;rc.$rc&quot;
+fi
+
+CONFIG_FLAGS=&quot;--download-path=${HOME}/node-icu/&quot;
+if [[ $NODE_VERSION =~ ^0\.10 ]]; then
+  CONFIG_FLAGS=&quot;&quot;
+fi
+
+mkdir -p ${HOME}/node-icu/
+make -j$JOBS pkg-upload \
+  DESTCPU=&quot;$DESTCPU&quot; \
+  ARCH=&quot;$ARCH&quot; \
+  DISTTYPE=&quot;$disttype&quot; \
+  DATESTRING=&quot;$datestring&quot; \
+  COMMIT=&quot;$commit&quot; \
+  CUSTOMTAG=&quot;$CUSTOMTAG&quot; \
+  RELEASE_URLBASE=&quot;$release_urlbase&quot; \
+  CONFIG_FLAGS=&quot;$CONFIG_FLAGS&quot;
+</command>
+        </hudson.tasks.Shell>
+      </conditionalbuilders>
+    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.0">
+        <expression>1</expression>
+        <label>${ENV, var=&quot;MAKESOURCE&quot;}</label>
+      </runCondition>
+      <conditionalbuilders>
+        <hudson.tasks.Shell>
+          <command>NODE_VERSION=$(python tools/getnodeversion.py)
+
+if [ &quot;X${disttype}&quot; == &quot;Xtest&quot; ]; then
+  disttype=custom
+  CUSTOMTAG=&quot;test${datestring}${commit}&quot;
+else
+  CUSTOMTAG=&quot;rc.$rc&quot;
+fi
+
+CONFIG_FLAGS=&quot;--download-path=${HOME}/node-icu/&quot;
+if [[ $NODE_VERSION =~ ^0\.10 ]]; then
+  CONFIG_FLAGS=&quot;&quot;
+fi
+
+mkdir -p ${HOME}/node-icu/
+make -j$JOBS tar-upload \
+  DESTCPU=&quot;$DESTCPU&quot; \
+  ARCH=&quot;$ARCH&quot; \
+  DISTTYPE=&quot;$disttype&quot; \
+  DATESTRING=&quot;$datestring&quot; \
+  COMMIT=&quot;$commit&quot; \
+  CUSTOMTAG=&quot;$CUSTOMTAG&quot; \
+  RELEASE_URLBASE=&quot;$release_urlbase&quot; \
+  CONFIG_FLAGS=&quot;$CONFIG_FLAGS&quot;
+</command>
+        </hudson.tasks.Shell>
+        <hudson.tasks.Shell>
+          <command>NODE_VERSION=$(python tools/getnodeversion.py)
+
+if [ &quot;X${disttype}&quot; == &quot;Xtest&quot; ]; then
+  disttype=custom
+  CUSTOMTAG=&quot;test${datestring}${commit}&quot;
+else
+  CUSTOMTAG=&quot;rc.$rc&quot;
+fi
+
+CONFIG_FLAGS=&quot;--download-path=${HOME}/node-icu/&quot;
+if [[ $NODE_VERSION =~ ^0\.10 ]]; then
+  CONFIG_FLAGS=&quot;&quot;
+fi
+
+mkdir -p ${HOME}/node-icu/
+make -j$JOBS doc-upload \
+  DESTCPU=&quot;$DESTCPU&quot; \
+  ARCH=&quot;$ARCH&quot; \
+  DISTTYPE=&quot;$disttype&quot; \
+  DATESTRING=&quot;$datestring&quot; \
+  COMMIT=&quot;$commit&quot; \
+  CUSTOMTAG=&quot;$CUSTOMTAG&quot; \
+  RELEASE_URLBASE=&quot;$release_urlbase&quot; \
+  CONFIG_FLAGS=&quot;$CONFIG_FLAGS&quot;
+</command>
+        </hudson.tasks.Shell>
+        <hudson.tasks.Shell>
+          <command>NODE_VERSION=$(python tools/getnodeversion.py)
+
+if [ &quot;X${disttype}&quot; == &quot;Xtest&quot; ]; then
+  disttype=custom
+  CUSTOMTAG=&quot;test${datestring}${commit}&quot;
+else
+  CUSTOMTAG=&quot;rc.$rc&quot;
+fi
+
+CONFIG_FLAGS=&quot;--download-path=${HOME}/node-icu/&quot;
+if [[ $NODE_VERSION =~ ^0\.10 ]]; then
+  CONFIG_FLAGS=&quot;&quot;
+fi
+
+mkdir -p ${HOME}/node-icu/
+make -j$JOBS tar-headers-upload \
+  DESTCPU=&quot;$DESTCPU&quot; \
+  ARCH=&quot;$ARCH&quot; \
+  DISTTYPE=&quot;$disttype&quot; \
+  DATESTRING=&quot;$datestring&quot; \
+  COMMIT=&quot;$commit&quot; \
+  CUSTOMTAG=&quot;$CUSTOMTAG&quot; \
+  RELEASE_URLBASE=&quot;$release_urlbase&quot; \
+  PREFIX=&quot;/&quot; \
+  CONFIG_FLAGS=&quot;$CONFIG_FLAGS&quot;
+</command>
+        </hudson.tasks.Shell>
+      </conditionalbuilders>
+    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+  </builders>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>*-v*.*</artifacts>
+      <allowEmptyArchive>true</allowEmptyArchive>
+      <onlyIfSuccessful>true</onlyIfSuccessful>
+      <fingerprint>true</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.0">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+  </buildWrappers>
+  <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
+    <runSequentially>false</runSequentially>
+  </executionStrategy>
+</matrix-project>
