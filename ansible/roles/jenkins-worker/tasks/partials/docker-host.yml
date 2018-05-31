@@ -17,7 +17,13 @@
   set_fact:
     ccache_latest: "{{ ccache_latest_result.stdout }}"
 
+- name: docker | check if docker exists
+  shell: which docker
+  register: docker_exists
+  ignore_errors: yes
+
 - name: docker | install docker from docker.com
+  when: "docker_exists.stdout == ''"
   raw: curl -fsSL get.docker.com | sudo bash -
 
 - name: docker | copy docker-exec script
