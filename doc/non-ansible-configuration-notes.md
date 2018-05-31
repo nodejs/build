@@ -52,7 +52,6 @@ Invoke-WebRequest $ansibleURL -OutFile ConfigureRemotingForAnsible.ps1
 rm ConfigureRemotingForAnsible.ps1
 ```
 
-
 ## macOS
 
 TODO: Update and copy notes from <https://github.com/nodejs/build/tree/master/setup/osx>
@@ -68,6 +67,91 @@ The jenkins-workspace hosts are setup as standard Node.js nodes but are only giv
 * Download the Coverity Build Tool for Linux x64 at <https://scan.coverity.com/download> (requires a Coverity login)
 * Extract to `/var`, e.g. so the resulting directory looks like `/var/cov-analysis-linux64-2017.07/` or similar
 * Ensure that the [node-coverity-daily](https://ci.nodejs.org/job/node-daily-coverity/configure) job matches the path used in its explicit `PATH` setting
+
+## ARMv7 Wheezy
+
+The current configuration for the ARMv7 Wheezy nodes (hosted at Scaleway) @ https://github.com/nodejs/build/tree/master/setup/armv7-wheezy pulls in the Raspbian repository for access to GCC 4.8 since it's not available natively on Wheezy. Unfortunately this is an ARMv6 build of GCC and produces ARMv6 binaries rather than optimized ARMv7 binaries.
+
+ARMv7 GCC packages have been created for `armhf` using the Jessie GCC 4.9 source and are hosted @ https://ci.nodejs.org/downloads/armhf/ for use on our test and build ARMv7 Wheezy nodes. This is not yet in the Ansible scripts but could be migrated there by an intrepid reader (and Raspbian references removed). The following is a script that can update an ARMv7 Wheezy machine that has been set up using the existing `armv7-wheezy` Ansible script:
+
+```
+#!/bin/sh
+
+set -e
+set -x
+
+apt-get update && apt-get dist-upgrade -y && apt-get autoremove -y
+apt-get purge gcc-4.7-base -y
+apt-get install libcloog-isl3 -y
+
+cd /usr/src/
+
+curl -sLO https://ci.nodejs.org/downloads/armhf/libstdc++6_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/libstdc++6-4.9-dbg_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/libstdc++-4.9-dev_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/gcc-4.9-base_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/libgcc-4.9-dev_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/libgcc1-dbg_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/libgcc1_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/libgomp1_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/libatomic1_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/libasan1_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/libubsan0_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/g++-4.9_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/cpp-4.9_4.9.2-10_armhf.deb
+curl -sLO https://ci.nodejs.org/downloads/armhf/gcc-4.9_4.9.2-10_armhf.deb
+
+dpkg -i libstdc++6_4.9.2-10_armhf.deb \
+    libstdc++6-4.9-dbg_4.9.2-10_armhf.deb \
+    libstdc++-4.9-dev_4.9.2-10_armhf.deb \
+    gcc-4.9-base_4.9.2-10_armhf.deb \
+    libgcc-4.9-dev_4.9.2-10_armhf.deb \
+    libgcc1-dbg_4.9.2-10_armhf.deb \
+    libgcc1_4.9.2-10_armhf.deb \
+    libgomp1_4.9.2-10_armhf.deb \
+    libatomic1_4.9.2-10_armhf.deb \
+    libasan1_4.9.2-10_armhf.deb \
+    libubsan0_4.9.2-10_armhf.deb \
+    g++-4.9_4.9.2-10_armhf.deb \
+    cpp-4.9_4.9.2-10_armhf.deb \
+    gcc-4.9_4.9.2-10_armhf.deb
+
+rm libstdc++6_4.9.2-10_armhf.deb \
+    libstdc++6-4.9-dbg_4.9.2-10_armhf.deb \
+    libstdc++-4.9-dev_4.9.2-10_armhf.deb \
+    gcc-4.9-base_4.9.2-10_armhf.deb \
+    libgcc-4.9-dev_4.9.2-10_armhf.deb \
+    libgcc1-dbg_4.9.2-10_armhf.deb \
+    libgcc1_4.9.2-10_armhf.deb \
+    libgomp1_4.9.2-10_armhf.deb \
+    libatomic1_4.9.2-10_armhf.deb \
+    libasan1_4.9.2-10_armhf.deb \
+    libubsan0_4.9.2-10_armhf.deb \
+    g++-4.9_4.9.2-10_armhf.deb \
+    cpp-4.9_4.9.2-10_armhf.deb \
+    gcc-4.9_4.9.2-10_armhf.deb
+
+update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 1
+update-alternatives --set gcc /usr/bin/gcc-4.9
+update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-4.9  1
+update-alternatives --set cc /usr/bin/gcc-4.9
+update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9  1
+update-alternatives --set g++ /usr/bin/g++-4.9
+update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-4.9  1
+update-alternatives --set c++ /usr/bin/g++-4.9
+```
+
+The GCC packages themselves were created with the following steps on a fresh ARMv7 Wheezy server:
+
+```
+echo 'deb-src http://http.debian.net/debian/ jessie main non-free contrib' >> /etc/apt/sources.list
+apt-get update
+apt-get install -y fakeroot build-essential devscripts libc6-dbg m4 libtool autoconf2.64 autogen gawk zlib1g-dev systemtap-sdt-dev flex gdb locales sharutils procps libantlr-java libffi-dev fastjar libmagic-dev zip libasound2-dev libxtst-dev libxt-dev libart-2.0-dev libcairo2-dev dejagnu chrpath quilt doxygen ghostscript texlive-latex-base xsltproc libxml2-utils docbook-xsl-ns binutils-multiarch gperf bison texinfo libecj-java libgtk2.0-dev libcloog-isl-dev libmpc-dev libmpfr-dev libgmp-dev realpath graphviz libcloog-isl-dev dpkg-dev binutils
+cd /usr/src/ && apt-get source gcc-4.9/jessie
+curl -O https://raw.githubusercontent.com/nodejs/build/master/doc/deb-control-armv7.patch
+cd /usr/src/gcc-4.9-4.9.2/debian && patch -p0 < /usr/src/deb-control-armv7.patch
+debuild -uc -us
+```
 
 ## Raspberry Pi
 
