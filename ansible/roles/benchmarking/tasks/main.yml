@@ -1,0 +1,23 @@
+---
+
+- name: gather facts
+  setup:
+
+- name: Install h2load dependencies
+  package:
+    name: "{{ package }}"
+    state: present
+  loop_control:
+    loop_var: package
+  with_items: "{{ packages }}"
+
+- name: Download h2load git repo
+  git:
+    repo: 'https://github.com/nghttp2/nghttp2.git'
+    dest: "/home/{{ server_user }}/nghttp2"
+    force: yes
+
+- name: Setup and compile h2load
+  shell: "autoreconf -i && automake && autoconf && ./configure --enable-app && make -j4"
+  args:
+    chdir: "/home/{{ server_user }}/nghttp2"

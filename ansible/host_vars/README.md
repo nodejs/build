@@ -16,6 +16,8 @@ You will always have to set the following variables to configure a host:
 Variables that _might_ be available for you to change depending on
 what init system your host will be running:
 
+- `is_benchmark`: set to `true`/`false`. If true, will run the
+  `benchmarking` role on the machine
 - `server_jobs`: the number of parallel jobs to run on a host
 - `server_ram`: how much memory the slave should assign to java-base
                 (defaults to "128m")
