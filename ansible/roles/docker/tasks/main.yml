@@ -148,10 +148,14 @@
   with_items:
     - "{{ containers }}"
 
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+
 - name: "docker : start Jenkins"
   service:
     name: "jenkins-{{ item.name }}"
-    state: restarted
+    state: started
     enabled: yes
   with_items:
     - "{{ containers }}"
