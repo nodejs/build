@@ -3,7 +3,7 @@
 - name: gather facts
   setup:
 
-- name: Install h2load dependencies
+- name: Install packages
   package:
     name: "{{ package }}"
     state: present
@@ -21,3 +21,49 @@
   shell: "autoreconf -i && automake && autoconf && ./configure --enable-app && make -j4"
   args:
     chdir: "/home/{{ server_user }}/nghttp2"
+
+- name: Download wrk git repo
+  git:
+    repo: https://github.com/wg/wrk.git
+    dest: "/home/{{ server_user }}/wrk"
+    force: yes
+
+- name: Setup and compile wrk
+  shell: "make"
+  args:
+    chdir: "/home/{{ server_user }}/wrk"
+
+- name: Install Rscript repo | ubuntu1404
+  when: os == "ubuntu1404"
+  shell: echo "deb https://ftp.heanet.ie/mirrors/cran.r-project.org/bin/linux/ubuntu trusty/" > /etc/apt/sources.list.d/r.list
+
+- name: Install Rscript repo | ubuntu1604
+  when: os == "ubuntu1604"
+  shell: echo "deb https://ftp.heanet.ie/mirrors/cran.r-project.org/bin/linux/ubuntu xenial/" > /etc/apt/sources.list.d/r.list
+
+- name: Add R key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: E084DAB9
+
+- name: Update keys
+  shell: "apt-key update"
+
+- name: Update packages
+  include_role:
+    name: package-upgrade
+
+- name: Install Rscript packages
+  package:
+    name: "{{ package }}"
+    state: present
+  loop_control:
+    loop_var: package
+  with_items:
+    - r-base
+
+- name: Install ggplot2
+  shell: echo 'install.packages("ggplot2", repo="http://cran.us.r-project.org")' | R --no-save
+
+- name: Install plyr
+  shell: echo 'install.packages("plyr", repo="http://cran.us.r-project.org")' | R --no-save

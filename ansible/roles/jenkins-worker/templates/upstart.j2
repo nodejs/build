@@ -17,7 +17,7 @@ env JOBS="{{ jobs_env }}"
 env OSTYPE=linux-gnu
 
 # default path in ubuntu 1404 plus ccache
-env PATH="/home/{{ server_user }}/nghttp2/src:/usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+env PATH="/home/{{ server_user }}/nghttp2/src:/home/{{ server_user }}/wrk:/usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 setgid iojs
 setuid iojs

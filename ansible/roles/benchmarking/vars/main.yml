@@ -12,3 +12,4 @@ packages:
   - python-numpy
   - python-requests
   - zlib1g-dev
+  - build-essential
