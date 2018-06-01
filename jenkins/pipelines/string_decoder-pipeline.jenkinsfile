@@ -1,0 +1,26 @@
+#!/usr/bin/env groovy
+
+println "\n### BUILD PARAMETERS ###"
+def pr = [] // Mutable parameter set to pass to jobs. I know this is crazy.
+String printParams = '' // String of params to print
+for (param in params) {
+    printParams += param.toString() + '\n'
+    if (param.key != 'NODE_VERSIONs') {
+        pr.push(string(name: param.key, value: param.value))
+    }
+}
+println printParams
+
+stage('Test readable-stream') {
+    def versions = params['NODE_VERSIONs'].split()
+    def buildJobs = [:]
+    for (int i = 0; i < versions.length; i++) {
+        int index = i // locally scoped copy.
+        def p = pr.collect() // local copy of params
+        p.push(string(name: 'NODE_VERSION', value: versions[index]))
+        buildJobs["${versions[index]}"] = { build(job: 'string_decoder-continuous-integration', parameters: p) }
+    }
+
+    println buildJobs
+    parallel(buildJobs)
+}
