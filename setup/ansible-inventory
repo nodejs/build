@@ -1,7 +1,3 @@
-[iojs-build-centos6]
-test-softlayer-centos6-x64-1
-test-softlayer-centos6-x64-2
-
 [iojs-build-centos5]
 iojs-build-centos5-64-1
 test-digitalocean-centos5-x86-1
