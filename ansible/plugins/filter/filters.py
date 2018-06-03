@@ -23,7 +23,6 @@
 
 import re
 
-from distutils.version import StrictVersion
 from ansible.errors import AnsibleFilterError
 
 
@@ -45,7 +44,7 @@ def match_key(value, dictionary, raise_error=True, feedback_name='os'):
 
 
 def latest_version(versions):
-    versions.sort(key=StrictVersion)
+    versions.sort(key=lambda s: map(int, s.split('.')))
     return versions[-1]
 
 
