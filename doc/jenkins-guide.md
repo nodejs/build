@@ -55,7 +55,7 @@ via the Jenkins worker configure UI, so more failures don't pile up.
 Once you are done fixing the worker, ensure that you return the worker
 to the "online" status.
 
-The most common issues facing workers are explain below, with potential
+The most common issues facing workers are explained below, with potential
 solutions on how to remedy the problem. Most commands below are meant to
 be run on the worker itself, after SSH-ing in and switching to the
 `iojs` user.
@@ -75,7 +75,7 @@ workers, or the `swap -s -h` command on SmartOS workers.
 First, get statistics on how full (or not) the machine is by running the
 `df -h` command.
 
-If the `Use%` columns appears very high for the worker's largest disk,
+If the `Use%` column appears very high for the worker's largest disk,
 then it is probably appropriate to clean out part of the worker's
 workspace (where Jenkins jobs are performed). To clean out part of the
 workspace, run `rm -rf ~/build/node-test-commit*`.
@@ -140,7 +140,7 @@ know the `systemd` service name, say `jenkins-test-digitalocean-ubuntu1804_conta
 example:
 `systemctl restart jenkins-test-digitalocean-ubuntu1804_container-x64-1.service `.
 
-To "SSH into" a Docker container, first you need to find the container
+To SSH into a Docker container, first you need to find the container
 ID by running `docker ps`. Once you have the ID, you can run `docker
 exec -it CONTAINER_ID /bin/bash`, replacing `CONTAINER_ID` with the
 appropriate ID.
@@ -154,7 +154,7 @@ The first thing to remember is that, ultimately, all workers can be
 replaced with newly provisioned ones, so don't worry too much about
 messing up a worker.
 
-The safest bet when dealing with a erroring worker is to re-run its
+The safest bet when dealing with an erroring worker is to re-run its
 associated Ansible playbook. This will try and restore the worker back
 to its desired state, including refreshing and restarting the Jenkins
 agent configuration.
