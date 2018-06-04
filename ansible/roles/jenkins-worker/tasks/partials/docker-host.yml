@@ -8,14 +8,14 @@
   shell: "grep ^{{ server_user }} /etc/passwd | awk -F: '{print $4}'"
   register: server_user_uid
 
-- name: docker | fetch latest ccache release version
-  local_action: shell curl -sL https://www.samba.org/ftp/ccache/ | grep -Eo ccache-[0-9]+.[0-9]+\(.[0-9]+\)*.tar.gz
+- name: docker | fetch samba ccache HTML page
+  local_action: shell curl -sL https://www.samba.org/ftp/ccache/
   warn: False
-  register: ccache_latest_result
+  register: ccache_html_content
 
-- name: docker | register ccache version
+- name: docker | extract ccache latest version
   set_fact:
-    ccache_latest: "{{ (ccache_latest_result.stdout | regex_replace('ccache-') | regex_replace('.tar.gz')).split('\n') | latest_version }}"
+    ccache_latest: "{{ ccache_html_content.stdout | regex_findall('ccache-[0-9]+.[0-9]+(?:.[0-9]+)*.tar.gz') | map('regex_replace', 'ccache-') | map('regex_replace', '.tar.gz') | list | latest_version }}"
 
 - name: docker | install docker from docker.com
   raw: curl -fsSL get.docker.com | sudo bash -
