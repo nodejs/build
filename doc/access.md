@@ -5,6 +5,21 @@ Documents which groups have access to which Infra assets. Note that links to
 organisation, so those links may not work for you. The [secrets repo][] is also
 secret...
 
+## Joining the Build Working Group
+
+Anyone interested in helping out with the Build WG can reach out to existing
+members to let us know, for example via a GitHub Issue on this repo or through
+[IRC][].
+
+Membership of the Build WG involves granting infrastructure access, so full
+membership of the WG can be a gradual process. However we welcome anyone willing
+to contribute, and we're always working to make contributions easier.
+
+Once you're an established contributor, an existing Build WG member will invite
+you to join the WG. A PR adding your name can be raised by either you or them
+(e.g. [#524][]) and once that gains consensus and is landed you will be
+onboarded (see [the onboarding doc][] for more details).
+
 ## Machine Access
 
 For a list of machines, see the [inventory.yml][]. Secrets are stored in the
@@ -112,3 +127,7 @@ including GitHub and Jenkins secrets. The list of members is
 [GoGetSSL for SSL]: https://www.gogetssl.com/
 [Cloudflare]: https://www.cloudflare.com/
 [Mailgun email]: https://www.mailgun.com/
+[#524]: https://github.com/nodejs/build/pull/524
+[IRC]: /README.md#nodejs-build-working-group
+[the Readme]: /README.md
+[the onboarding doc]: /ONBOARDING.md
