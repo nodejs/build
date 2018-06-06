@@ -122,6 +122,18 @@ svcadm restart svc:/application/jenkins:default
 ~iojs/start.sh
 ```
 
+##### Restart the machine
+
+Sometimes something weird happens, and it's easier to just reboot the
+worker.
+On Unix just do one of:
+
+```bash
+shutdown -r now
+# or:
+reboot
+```
+
 ##### Fixing machines with Docker
 
 The above steps generally do not apply to workers that are either
@@ -163,3 +175,8 @@ If none of the above steps work, please post in the
 [#node-build IRC channel](irc://irc.freenode.net/node-build), or the
 [`nodejs/build` issue tracker](https://github.com/nodejs/build/issues), to allow
 for escalation and other WG members to troubleshoot.
+
+For problems with machines outside of the Jenkins test cluster, ask one
+of the members of the [infra](https://github.com/nodejs/build#infra-admins) or
+[release](https://github.com/nodejs/build#release-admins) administrators to
+take a look.
