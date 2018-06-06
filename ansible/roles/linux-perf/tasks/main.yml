@@ -1,0 +1,64 @@
+---
+
+#
+# installs Linux perf @ /usr/local/bin/perf
+#
+
+- stat: path=/usr/local/bin/perf
+  register: linux_perf
+  tags: linux_perf
+
+- name: Clean path
+  file:
+    state: absent
+    path: /data/tmp/
+  when: linux_perf.stat.exists == False
+  tags: linux_perf
+
+- name: Download Linux source code
+  git:
+    repo: https://github.com/torvalds/linux.git
+    depth: 1
+    dest: /data/tmp/linux
+  when: linux_perf.stat.exists == False
+  tags: linux_perf
+
+- name: Install build-essential
+  package:
+    name: build-essential
+    state: present
+  when: linux_perf.stat.exists == False
+  tags: linux_perf
+
+- name: Install flex
+  package:
+    name: flex
+    state: present
+  when: linux_perf.stat.exists == False
+  tags: linux_perf
+
+- name: Install bison
+  package:
+    name: bison
+    state: present
+  when: linux_perf.stat.exists == False
+  tags: linux_perf
+
+- name: build Linux perf
+  shell: make -j{{ ansible_processor_cores }}
+  args:
+    chdir: /data/tmp/linux/tools/perf
+  when: linux_perf.stat.exists == False
+  tags: linux_perf
+
+- name: install Linux perf
+  shell: cp /data/tmp/linux/tools/perf/perf /usr/local/bin/perf
+  when: linux_perf.stat.exists == False
+  tags: linux_perf
+
+- name: Clean path
+  file:
+    state: absent
+    path: /data/tmp/
+  when: linux_perf.stat.exists == False
+  tags: linux_perf
