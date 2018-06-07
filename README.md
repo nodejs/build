@@ -251,7 +251,7 @@ are required. After that the configuration will be removed.
 [22]:   https://www.intel.com/
 [23]:   https://www.macstadium.com/
 [24]:   https://www.packet.net/
-[Joining the Build WG]: doc/process/joining_the_build_wg.md
+[Joining the Build WG]: doc/access.md#joining-the-build-working-group
 [access.md]: ./doc/access.md
 [node]: https://nodejs.org/
 [ns]:   https://nodesource.com/
