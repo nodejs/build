@@ -24,20 +24,13 @@
         depth: 1
         dest: /data/tmp/linux
 
-    - name: Install build-essential
+    - name: Install packages
       package:
-        name: build-essential
+        name: "{{ package }}"
         state: present
-
-    - name: Install flex
-      package:
-        name: flex
-        state: present
-
-    - name: Install bison
-      package:
-        name: bison
-        state: present
+      loop_control:
+        loop_var: package
+      with_items: "{{ packages }}"
 
     - name: build Linux perf
       shell: make -j{{ ansible_processor_cores | default(1) }}
