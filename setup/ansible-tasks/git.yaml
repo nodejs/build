@@ -1,14 +1,14 @@
 ---
 # Downloads and installs git
 
-- name: Git | fetch git releases HTML page
-  local_action: shell curl -sL https://www.kernel.org/pub/software/scm/git/
-  register: git_html_content
+- name: Git | Latest git release version
+  local_action: shell curl -sL https://www.kernel.org/pub/software/scm/git/ | awk '{ if (match($0, />git-(([0-9]+)\.([0-9]+)\.([0-9]+))\.tar\.gz</, a)) { if (a[2]+0 > maxmaj || (a[2]+0 == maxmaj && a[3]+0 > maxmin) || (a[2]+0 == maxmaj && a[3]+0 == maxmin && a[4]+0 > maxpat)) { maxmaj = a[2]+0; maxmin = a[3]+0; maxpat = a[4]+0; } } } END { printf "%s.%s.%s\n", maxmaj, maxmin, maxpat }'
+  register: git_latest_result
   tags: git
 
-- name: Git | Extract latest version
+- name: Git | Extract version string
   set_fact:
-    git_latest: "{{ git_html_content.stdout | regex_findall('git-[0-9]+.[0-9]+(?:.[0-9]+)*.tar.gz') | map('regex_replace', 'git-') | map('regex_replace', '.tar.gz') | list | latest_version }}"
+    git_latest: "{{ git_latest_result.stdout }}"
   tags: git
 
 - name: Git | Check git --version

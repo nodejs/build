@@ -1,14 +1,14 @@
 ---
 # Downloads and installs ccache
 
-- name: CCache | fetch samba ccache HTML page
-  local_action: shell curl -sL https://www.samba.org/ftp/ccache/
-  register: ccache_html_content
+- name: CCache | Latest ccache release version
+  local_action: shell curl -sL https://www.samba.org/ftp/ccache/ | awk '{ if (match($0, />ccache-(([0-9]+)\.([0-9]+)\.?([0-9]+)?)\.tar\.gz</, a)) { if (a[2]+0 > maxmaj || (a[2]+0 == maxmaj && a[3]+0 > maxmin) || (a[2]+0 == maxmaj && a[3]+0 == maxmin && a[4]+0 > maxpat)) { maxmaj = a[2]+0; maxmin = a[3]+0; maxpat = a[4]+0; } } } END { printf "%s.%s.%s\n", maxmaj, maxmin, maxpat }'
+  register: ccache_latest_result
   tags: ccache
 
-- name: CCache | Extract ccache latest version
+- name: CCache | Extract version string
   set_fact:
-    ccache_latest: "{{ ccache_html_content.stdout | regex_findall('ccache-[0-9]+.[0-9]+(?:.[0-9]+)*.tar.gz') | map('regex_replace', 'ccache-') | map('regex_replace', '.tar.gz') | list | latest_version }}"
+    ccache_latest: "{{ ccache_latest_result.stdout }}"
   tags: ccache
 
 - name: CCache | Check ccache --version
