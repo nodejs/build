@@ -114,10 +114,10 @@ be run on the worker itself, after SSH-ing in and switching to the
 
 ##### Out of memory
 
-First, get statistics on running processes for the machine: `ps aux | grep iojs | grep -v java | grep -v grep`.
+First, get statistics on running processes for the machine: `ps aux | grep node`.
 
 If there are a lot of "hanging" / "abandoned" processes, it's best to
-remove them by running a command like: `ps aux | grep iojs | grep -v java | grep -v grep | awk '{print $2}' | xargs kill`.
+remove them by running a command like: `ps -ef | grep node | grep -v -egrep -ejava -edocker | awk '{print $2}' | xargs kill`.
 
 Overall memory utilization can be found using the `free` command on most
 workers, or the `swap -s -h` command on SmartOS workers.
