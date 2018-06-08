@@ -5,7 +5,7 @@
 #
 
 - stat:
-    path=/usr/local/bin/perf
+    path: /usr/local/bin/perf
   register: linux_perf
   tags: linux_perf
 
@@ -16,13 +16,13 @@
     - name: Clean path
       file:
         state: absent
-        path: /data/tmp/
+        path: "{{ tmp_folder }}"
 
     - name: Download Linux source code
       git:
         repo: https://github.com/torvalds/linux.git
         depth: 1
-        dest: /data/tmp/linux
+        dest: "{{ tmp_folder }}/linux"
 
     - name: Install packages
       package:
@@ -35,12 +35,12 @@
     - name: build Linux perf
       shell: make -j{{ ansible_processor_cores | default(1) }}
       args:
-        chdir: /data/tmp/linux/tools/perf
+        chdir: "{{ tmp_folder }}/linux/tools/perf"
 
     - name: install Linux perf
-      shell: cp /data/tmp/linux/tools/perf/perf /usr/local/bin/perf
+      shell: "cp {{ tmp_folder }}/linux/tools/perf/perf /usr/local/bin/perf"
 
     - name: Clean path
       file:
         state: absent
-        path: /data/tmp/
+        path: "{{ tmp_folder }}"
