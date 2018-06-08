@@ -55,3 +55,12 @@
 
   roles:
     - cross-compiler
+
+#
+# Install Linux perf on Ubuntu 16.04 servers
+#
+
+- hosts:
+    - test-*-ubuntu1604-x*
+  roles:
+    - linux-perf
