@@ -1,0 +1,6 @@
+---
+packages:
+  - build-essential
+  - flex
+  - bison
+tmp_folder: /data/tmp
