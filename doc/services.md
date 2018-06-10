@@ -7,7 +7,7 @@ and how to configure and operate them.
 
 Ansible is the tool used to managed all machines that the Build WG is responsible for.
 
-Secrets for Ansible scripts live within the `build` directory of the [`nodejs-private/secrets`](https://github.com/nodejs-private/secrets/tree/master/build) repository. Access to credentials is granted upon joining the build team
+Secrets for Ansible scripts live within the `build` directory of the [`nodejs-private/secrets`](https://github.com/nodejs-private/secrets/tree/master/build) repository. Access to credentials is granted upon joining the build team.
 
 ### `ci.nodejs.org`
 
@@ -40,3 +40,8 @@ The `github-bot` is the server that runs different [automation scripts](https://
 ### `nodejs.org`
 
 `nodejs.org` is the main website for the Node.js Foundation. Its Ansible configuration lives in [`setup/www`](https://github.com/nodejs/build/tree/master/setup/www)
+
+### `email`
+
+The [`nodejs/email`](https://github.com/nodejs/email) repo contains all
+email aliases for the Node.js Foundation, which are routed via Mailgun.
