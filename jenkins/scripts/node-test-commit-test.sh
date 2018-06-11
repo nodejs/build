@@ -141,7 +141,20 @@ fi
 echo $exec_cmd
 V=1
 
-$SHELL -xec "$exec_cmd"
+if [[ "$NODE_LABELS" =~ docker-armv7 ]]; then
+  echo "Checking node label: $nodes"
+  case $nodes in
+    debian7-docker-armv7) debian=wheezy;;
+    debian8-docker-armv7) debian=jessie;;
+    debian9-docker-armv7) debian=stretch;;
+    *) echo Error: Unsupported label $nodes; exit 1
+  esac
+
+  echo "$exec_cmd" > node-ci-exec
+  sudo docker-node-exec.sh -v $debian
+else
+  $SHELL -xec "$exec_cmd"
+fi
 
 if test $nodes = "ubuntu1604_sharedlibs_openssl110_x64"; then
   OPENSSL_VERSION="$(out/Release/node -pe process.versions | grep openssl)"
