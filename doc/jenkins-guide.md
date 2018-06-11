@@ -44,6 +44,44 @@ some WG members available in the
 [#node-build IRC channel](irc://irc.freenode.net/node-build), who can try and
 lend a hand.
 
+### Restricting access for security releases
+
+When security releases are due to go out, the Build WG plays an
+important role in facilitating their testing.
+
+##### Before the release
+
+About 24 hours before a release is published, the [public CI](ci.nodejs.org)
+must be "locked down" to prevent anyone from interfering in the testing of the
+release.
+
+Create a tracking issue in the [`nodejs/build` issue tracker](https://github.com/nodejs/build/issues) announcing the lockdown.
+
+Make a post in the `nodejs/collaborators` [discussion page](https://github.com/orgs/nodejs/teams/collaborators)
+to let users of the public CI know that their access will be curtailed.
+Be sure to insert a link to the `nodejs/build` tracking issue.
+
+To change the Jenkins security configuration, you must be a member of
+the `nodejs/jenkins-admins` team, and travel to the ["Configure Global
+Security"](https://ci.nodejs.org/configureSecurity/) page.
+
+Below is a screenshot of what the "Project-based Matrix Authorization Strategy"
+table should look like before the release testing:
+
+![](../static-assets/jenkins-authorization-normal.png)
+
+Below is a screenshot of what the table should look like while release
+testing is underway:
+
+![](../static-assets/jenkins-authorization-sec.png)
+
+##### After the release
+
+After the release has gone out, restore the table to its original
+condition. Add a comment to your post in `nodejs/collaborators` and the
+tracking issue in `nodejs/build` to announce that access has been
+restored.
+
 ### Solving problems
 
 Issues with the Jenkins clusters are usually reported to either the
