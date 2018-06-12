@@ -1,0 +1,28 @@
+---
+
+driver:
+  name: docker
+  use_sudo: false
+  cap_add:
+    - SYS_ADMIN
+
+platforms:
+  - name: ubuntu-14.04
+#  - name: ubuntu-16.04
+
+provisioner:
+  hosts: test-kitchen
+  name: ansible_playbook
+  playbook: default_kitchen.yml
+  roles_path: ../
+  filter_plugins_path: ../../plugins/filter
+  extra_vars: 
+    os: ubuntu1404
+  require_chef_for_busser: true
+  require_ruby_for_busser: false
+  ansible_verbosity: 1
+  ansible_verbose: true
+  sudo: true
+
+suites:
+  - name: default

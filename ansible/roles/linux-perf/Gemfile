@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+gem 'test-kitchen', '~> 1.0'
+
+group :integration do
+  gem 'kitchen-ansible', '~> 0.48'
+  gem 'kitchen-docker', '~> 2.6'
+end
