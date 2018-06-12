@@ -81,7 +81,7 @@
     - name: pi | test if nfs-root and sd card available
       shell: |
         test \
-          -n "$(sudo fdisk -l /dev/mmcblk0 | grep '^/dev/mmcblk0p1.*W95 FAT32$')" -a \
+          -n "$(sudo fdisk -l /dev/mmcblk0 | grep '^/dev/mmcblk0p1.*W95 FAT32')" -a \
           -n "$(grep ' / ' /proc/mounts | grep -E '^[0-9\.]+:/')"
       register: nfs_root_check_result
       ignore_errors: true
