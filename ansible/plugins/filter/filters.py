@@ -21,8 +21,9 @@
 # IN THE SOFTWARE.
 #
 
-from ansible.errors import AnsibleFilterError
 import re
+
+from ansible.errors import AnsibleFilterError
 
 
 def match_key(value, dictionary, raise_error=True, feedback_name='os'):
@@ -42,6 +43,11 @@ def match_key(value, dictionary, raise_error=True, feedback_name='os'):
     return False
 
 
+def latest_version(versions):
+    versions.sort(key=lambda s: map(int, s.split('.')))
+    return versions[-1]
+
+
 def starts_with(value, query):
     return value.startswith(query)
 
@@ -59,5 +65,6 @@ class FilterModule(object):
         return {
             'match_key': match_key,
             'startswith': starts_with,
-            'stripversion': stripversion
+            'stripversion': stripversion,
+            'latest_version': latest_version
         }
