@@ -1,0 +1,115 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent { label 'jenkins-workspace' }
+    parameters {
+        booleanParam(name: 'CERTIFY_SAFE', defaultValue: false, description: 'I have reviewed *the latest version of* these changes and I am sure that they don’t contain any code that could compromise the security of the CI infrastructure.')
+        string(name: 'GITHUB_ORG', defaultValue: 'nodejs', description: 'The user/org of the GitHub repo')
+        string(name: 'REPO_NAME', defaultValue: 'node', description: 'The name of the repo')
+        string(name: 'PR_ID', defaultValue: '', description: 'PR ID')
+        string(name: 'REBASE_ONTO', defaultValue: '', description: 'Optionally, rebase onto the given ref before testing. Leave blank to skip rebasing.')
+        string(name: 'CONFIG_FLAGS', defaultValue: '', description: 'Add arguments to ./configure.')
+    }
+    stages {
+        stage("Setup repository") {
+            steps {
+                checkout(poll: false, scm: [
+                    $class: 'GitSCM',
+                    branches: [[
+                        name: 'refs/heads/_jenkins_local_branch'
+                    ]],
+                    userRemoteConfigs: [[
+                        url: "https://github.com/${params.GITHUB_ORG}/${params.REPO_NAME}.git",
+                        refspec: "+refs/heads/*:refs/remotes/origin/* +${getBranchName(params)}:refs/remotes/origin/_jenkins_local_branch"
+                    ]]
+                ])
+            }
+        }
+
+        stage('Preflight') {
+            steps {
+                checkCertify(params)
+                setupGit(env, params)
+                setupSubParams(env, params)
+            }
+        }
+
+        stage('Run tests') {
+            parallel {
+                stage('Run linuxone') {
+                    steps {
+                        build(job: "node-test-commit-linuxone",
+                            parameters: setupSubParams(env, params),
+                            propagate: true)
+                    }
+                }
+
+                stage('Run linter') {
+                    steps {
+                        build(job: "node-linter",
+                            parameters: setupSubParams(env, params),
+                            propagate: true)
+                    }
+                }
+            }
+        }
+    }
+}
+
+def getBranchName(params) {
+    if (params.PR_ID) {
+        return "refs/pull/${params.PR_ID}/head"
+    } else {
+        return "refs/heads/master"
+    }
+}
+
+def checkCertify(params) {
+    if (!params.CERTIFY_SAFE) {
+        echo "Please certify that you have reviewed the changes to be tested, by ticking the CERTIFY_SAFE checkbox on the job launch page."
+        currentBuild.result = 'FAILURE'
+        sh "exit 1"
+    }
+}
+
+def setupGit(env, params) {
+    sh '''
+    git config --replace-all user.name Dummy
+    git config --replace-all user.email dummy@dummy.com
+    git config user.name
+    git config user.email
+    echo $GIT_COMMITTER_NAME
+    echo $GIT_AUTHOR_NAME
+
+    git rebase --abort || true
+    git checkout -f refs/remotes/origin/_jenkins_local_branch
+
+    git status
+    git rev-parse HEAD
+    '''
+
+    env.POST_REBASE_SHA1_CHECK = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+
+    def node_version_from_branch = sh(script: "python tools/getnodeversion.py", returnStdout: true).trim()
+    echo "Detected version from branch: ${node_version_from_branch}"
+
+    env.NODE_MAJOR_VERSION = sh(script: "grep '^#define[[:space:]]*NODE_MAJOR_VERSION[[:space:]]' src/node_version.h | sed 's/^#define[[:space:]]*NODE_MAJOR_VERSION[[:space:]]*//'", returnStdout: true).trim()
+    echo "Detected node major version: ${env.NODE_MAJOR_VERSION}"
+}
+
+def setupSubParams(env, params) {
+    def pr = [:] // Mutable copy of params.
+    params.each{ key, value -> pr.put(key, value) }
+    pr['NODES_SUBSET'] = "auto"
+    pr['IGNORE_FLAKY_TESTS'] = "true"
+    pr["POST_STATUS_TO_PR"] = "true"
+    pr["GIT_REMOTE_REF"] = getBranchName(params)
+    pr['NODE_MAJOR_VERSION'] = env.NODE_MAJOR_VERSION
+    pr['POST_REBASE_SHA1_CHECK'] = env.POST_REBASE_SHA1_CHECK
+
+    p = []
+    for (param in pr) {
+        p.push(string(name: param.key, value: "${param.value}"))
+    }
+    return p
+}
