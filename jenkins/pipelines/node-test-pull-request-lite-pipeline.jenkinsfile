@@ -19,7 +19,8 @@ pipeline {
                         name: 'refs/heads/_jenkins_local_branch'
                     ]],
                     userRemoteConfigs: [[
-                        url: "https://github.com/${params.GITHUB_ORG}/${params.REPO_NAME}.git",
+                        credentialsId: "96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c",
+                        url: "git@github.com:${params.GITHUB_ORG}/${params.REPO_NAME}.git",
                         refspec: "+refs/heads/*:refs/remotes/origin/* +${getBranchName(params)}:refs/remotes/origin/_jenkins_local_branch"
                     ]]
                 ])
@@ -104,6 +105,7 @@ def setupSubParams(env, params) {
     pr['IGNORE_FLAKY_TESTS'] = "true"
     pr["POST_STATUS_TO_PR"] = "true"
     pr["GIT_REMOTE_REF"] = getBranchName(params)
+    pr["GIT_ORIGIN_SCHEME"] = "git@github.com:"
     pr['NODE_MAJOR_VERSION'] = env.NODE_MAJOR_VERSION
     pr['POST_REBASE_SHA1_CHECK'] = env.POST_REBASE_SHA1_CHECK
 

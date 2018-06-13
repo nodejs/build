@@ -22,6 +22,7 @@ pipeline {
                         name: 'refs/heads/_jenkins_local_branch'
                     ]],
                     userRemoteConfigs: [[
+                        credentialsId: "96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c",
                         url: "${params.GIT_ORIGIN_SCHEME}${params.GITHUB_ORG}/${params.REPO_NAME}",
                         refspec: "+refs/heads/*:refs/remotes/origin/* +${params.GIT_REMOTE_REF}:refs/remotes/origin/_jenkins_local_branch"
                     ]]
