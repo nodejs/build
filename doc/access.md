@@ -89,7 +89,7 @@ configure machines).
 
 - [@nodejs/release][] have access to run builds.
 
-- [@nodejs/jenkins-admins][] have admin access.
+- [@nodejs/jenkins-release-admins][] have admin access.
 
 ### [GitHub Bot][]
 
@@ -101,6 +101,7 @@ including GitHub and Jenkins secrets. The list of members is
 [@nodejs/build]: https://github.com/orgs/nodejs/teams/build/members
 [@nodejs/collaborators]: https://github.com/orgs/nodejs/teams/collaborators/members
 [@nodejs/jenkins-admins]: https://github.com/orgs/nodejs/teams/jenkins-admins/members
+[@nodejs/jenkins-release-admins]: https://github.com/orgs/nodejs/teams/jenkins-release-admins/members
 [@nodejs/post-mortem-admins]: https://github.com/orgs/nodejs/teams/post-mortem-admins/members
 [@nodejs/post-mortem]: https://github.com/orgs/nodejs/teams/post-mortem/members
 [@nodejs/release]: https://github.com/orgs/nodejs/teams/release/members
