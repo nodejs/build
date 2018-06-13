@@ -1,0 +1,94 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent { label 'linter' }
+    parameters{
+        string(name: 'GITHUB_ORG', defaultValue: 'nodejs', description: 'The user/org of the GitHub repo')
+        string(name: 'REPO_NAME', defaultValue: 'node', description: 'The name of the repo')
+        string(name: 'GIT_REMOTE_REF', defaultValue: 'refs/heads/master', description: 'The remote portion of the Git refspec to fetch and test')
+        string(name: 'REBASE_ONTO', defaultValue: '', description: 'Optionally, rebase onto the given ref before testing. Leave blank to skip rebasing.')
+        string(name: 'POST_REBASE_SHA1_CHECK', defaultValue: '', description: 'After rebasing, check that the resulting commit sha1 matches the given one. If left blank, no check is performed.')
+        choice(name: 'GIT_ORIGIN_SCHEME', choices: "https://github.com/\ngit@github.com:", description: '')
+        string(name: 'POST_STATUS_TO_PR', defaultValue: '', description: 'Posts build status updates to a nodejs/node PR.')
+        string(name: 'CONFIG_FLAGS', defaultValue: '', description: 'Add arguments to ./configure.')
+    }
+
+    stages {
+        stage("Setup repository") {
+            steps {
+                checkout(poll: false, scm: [
+                    $class: 'GitSCM',
+                    branches: [[
+                        name: 'refs/heads/_jenkins_local_branch'
+                    ]],
+                    userRemoteConfigs: [[
+                        url: "${params.GIT_ORIGIN_SCHEME}${params.GITHUB_ORG}/${params.REPO_NAME}",
+                        refspec: "+refs/heads/*:refs/remotes/origin/* +${params.GIT_REMOTE_REF}:refs/remotes/origin/_jenkins_local_branch"
+                    ]]
+                ])
+            }
+        }
+
+        stage('Preflight') {
+            steps {
+                sh "curl https://raw.githubusercontent.com/nodejs/build/master/jenkins/scripts/node-test-commit-pre.sh -s | bash -xe"
+                sendBuildStatus("pending", env)
+            }
+        }
+
+        stage('Run tests') {
+            steps {
+                checkMake()
+                checkSed()
+                sh """
+                  # this job does not build node, so we symlink the system's node
+                  which node #&& ln -s ${sh(script: "which node", returnStdout: true).trim()}
+                  node --version
+
+                  ${env.MAKE} lint-md-build || true
+                  # If lint-ci fails, print all the interesting lines to the console.
+                  ${env.MAKE} lint-ci || { cat test-eslint.tap | grep -v '^ok\\|^TAP version 13\\|^1\\.\\.' | ${env.SED} '/^/\\s*\$/d' && exit 1; }
+                """
+            }
+        }
+    }
+
+    post {
+        success {
+            sendBuildStatus("success", env)
+        }
+
+        failure {
+            sendBuildStatus("failure", env)
+        }
+    }
+}
+
+def checkMake() {
+    def status = sh(returnStatus: true, script: "which gmake")
+    if (status != 0) {
+        env.MAKE = 'make'
+    } else {
+        env.MAKE = 'gmake'
+    }
+}
+
+def checkSed() {
+    def status = sh(returnStatus: true, script: "which gsed")
+    if (status != 0) {
+        env.SED = 'sed'
+    } else {
+        env.SED = 'gsed'
+    }
+}
+
+def sendBuildStatus(status, env) {
+    build job: 'post-build-status-update', parameters: [
+              string(name: 'REPO', value: 'node'),
+              string(name: 'IDENTIFIER', value: 'linter'),
+              string(name: 'URL', value: env.BUILD_URL),
+              string(name: 'COMMIT', value: sh(script: 'git rev-parse HEAD', returnStdout: true).trim()),
+              string(name: 'REF', value: env.GIT_REMOTE_REF),
+              string(name: 'STATUS', value: status)
+          ]
+}
