@@ -40,7 +40,8 @@
 
   - name: Update Casks
     become_user: administrator
-    command: /usr/local/bin/brew cu
+    homebrew_cask:
+      upgrade_all: yes
 
   - name: Disable Crash Reporter 1
     become_user: root
