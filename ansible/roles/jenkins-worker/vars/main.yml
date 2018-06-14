@@ -85,6 +85,9 @@ needs_monit: [
 
 # some os'es needs different paths to java. add them here.
 java_path: {
+  'macos10.10': 'java',
+  'macos10.11': 'java',
+  'macos10.12': 'java',
   'smartos14': '/opt/local/java/openjdk8/bin/java',
   'smartos15': '/opt/local/java/openjdk8/bin/java',
   'smartos16': '/opt/local/java/openjdk8/bin/java',
