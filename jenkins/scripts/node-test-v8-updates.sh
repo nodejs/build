@@ -11,7 +11,4 @@ git clone https://github.com/nodejs/build.git
 
 . ./build/jenkins/scripts/node-test-commit-pre.sh
 
-./configure;
-make -j $(getconf NPROCESSORS_ONLN);
-
-python tools/test.py -p tap --logfile test.tap --mode=release v8-updates
+make run-ci CI_JS_SUITES="v8-updates" CI_NATIVE_SUITES="" CI_DOC=""
