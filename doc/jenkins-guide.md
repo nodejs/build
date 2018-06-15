@@ -202,10 +202,10 @@ not restart them without good reason, it will make things worse.
 The above steps generally do not apply to workers that are either
 "Half Docker" or "Full Docker".
 
-Quick guide using [`test-softlayer-ubuntu1804_container-x64-1`][c1] as an example.
+Quick guide using [`test-softlayer-ubuntu1804_container-x64-1`][1] as an example.
 
 1. Figure out the which machine hosts the container. It should be stated in
-the [worker's view][c1] on Jenkins
+the [worker's view][1] on Jenkins
 2. Verify the existence of the container:
     * To view a list of all active Docker containers, you can run
     ```bash
@@ -264,3 +264,4 @@ take a look.
 
 [secrets repo]: https://github.com/nodejs-private/secrets
 [ci]: https://ci.nodejs.org/computer/test-softlayer-ubuntu1804_container-x64-1/
+[1]: https://ci.nodejs.org/computer/test-softlayer-ubuntu1804_container-x64-1/
