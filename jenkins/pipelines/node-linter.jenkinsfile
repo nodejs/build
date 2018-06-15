@@ -21,7 +21,7 @@ pipeline {
                     ]],
                     userRemoteConfigs: [[
                         credentialsId: "96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c",
-                        url: "git@github.com:{params.GITHUB_ORG}/${params.REPO_NAME}",
+                        url: "git@github.com:${params.GITHUB_ORG}/${params.REPO_NAME}",
                         refspec: "+refs/heads/*:refs/remotes/origin/* +${params.GIT_REMOTE_REF}:refs/remotes/origin/_jenkins_local_branch"
                     ]]
                 ])
@@ -33,7 +33,6 @@ pipeline {
                 sh "curl -L -s https://raw.githubusercontent.com/nodejs/build/master/jenkins/scripts/node-test-commit-pre.sh -s | bash -xe"
                 sendBuildStatus("pending", env)
                 checkMake()
-                checkSed()
                 // Make sure we have a node binary in the path 
                 sh 'node --version'
             }
