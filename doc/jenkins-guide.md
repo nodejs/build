@@ -218,40 +218,42 @@ not restart them without good reason, it will make things worse.
 The above steps generally do not apply to workers that are either
 "Half Docker" or "Full Docker".
 
-Quick guide using [`test-softlayer-ubuntu1804_container-x64-1`][1] as an example.
+Below is a quick guide using [`test-softlayer-ubuntu1804_container-x64-1`][1] as an example Jenkins worker.
 
 1. Figure out the which machine hosts the container. It should be stated in
 the [worker's view][1] on Jenkins
 2. Verify the existence of the container:
-    * To view a list of all active Docker containers, you can run
-    ```bash
-    docker ps
-    ```
+    * To view a list of all active Docker containers, you can run: `docker ps`
     * To view a list of all active services, you can run:  
-    ```bash
-    systemctl list-units | grep jenkins`
-    ```
+      ```bash
+      systemctl list-units | grep jenkins
+      ```
     * Each container should have a matching `systemd` service that starts and stops the
     container. It's name should be `jenkins-${workername}`, so in this example
-    ```
-    jenkins-test-softlayer-ubuntu1804_container-x64-1
-    ```
-3. To view the logs for a service run:  
-`journalctl -u jenkins-test-softlayer-ubuntu1804_container-x64-1`
+      ```
+      jenkins-test-softlayer-ubuntu1804_container-x64-1
+      ```
+3. To view the logs for a service run:
+   ```
+   journalctl -u jenkins-test-softlayer-ubuntu1804_container-x64-1
+   ```
 4. To restart a Docker container, restart the associated `systemd` service:
-`systemctl restart jenkins-test-softlayer-ubuntu1804_container-x64-1`
-5. `CONTAINER ID` is needed to console into a Docker container:
-    1. run `docker ps -f "name=test-softlayer-ubuntu1804_container-x64-1"`
-    Will give you:
-    ```
-    CONTAINER ID        IMAGE                                               COMMAND                  CREATED             STATUS              PORTS               NAMES
-    9f3272e43017        node-ci:test-softlayer-ubuntu1804_container-x64-1   "/bin/sh -c 'cd /hom…"   19 minutes ago      Up 19 minutes                           node-ci-test-softlayer-ubuntu1804_container-x64-1
-    ```
-    2. run:
-    ```
-    docker exec -it ${CONTAINER_ID} /bin/bash`
-    ```
-    replacing `CONTAINER_ID` with the appropriate ID, from the previous step
+   ```
+   systemctl restart jenkins-test-softlayer-ubuntu1804_container-x64-1
+   ```
+5. `CONTAINER ID` is needed to console into a Docker container, first run:
+   ```
+   docker ps -f "name=test-softlayer-ubuntu1804_container-x64-1"
+   ```
+   That will give you:
+   ```
+   CONTAINER ID        IMAGE                                               COMMAND                  CREATED             STATUS              PORTS               NAMES
+   9f3272e43017        node-ci:test-softlayer-ubuntu1804_container-x64-1   "/bin/sh -c 'cd /hom…"   19 minutes ago      Up 19 minutes                           node-ci-test-softlayer-ubuntu1804_container-x64-1
+   ```
+   then using run the following, replacing `CONTAINER_ID` with the appropriate ID
+   ```
+   docker exec -it ${CONTAINER_ID} /bin/bash`
+   ```
 
 
 ### IDK what to do
