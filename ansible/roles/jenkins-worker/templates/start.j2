@@ -2,20 +2,11 @@
 export HOME={{ home }}/{{ server_user }}
 export NODE_TEST_DIR="$HOME/tmp"
 export JOBS="{{ jobs_env }}"
-export OSTYPE=zos
 
-export _BPXK_AUTOCVT=ON
-export _CEE_RUNOPTS="FILETAG(AUTOCVT,AUTOTAG) POSIX(ON)"
-export _TAG_REDIR_ERR=txt
-export _TAG_REDIR_IN=txt
-export _TAG_REDIR_OUT=txt
+export OSTYPE=osx
+export ARCH=x64
+export DESTCPU=x64
 
-export CC=/bin/xlc
-export LINK=/bin/xlc
-export CFLAGS="-q64"
-export LDFLAGS="-q64"
-
-{{ java_path[os] }} -Dfile.encoding=ISO8859_1 -Xmx{{ server_ram|default('128m') }} \
+{{ java_path[os] }} -Xmx{{ server_ram|default('128m') }} \
     -jar {{ home }}/{{ server_user }}/slave.jar -secret {{ secret }} \
-    -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp >{{ home }}/{{ server_user }}/jenkins.log 2>&1  &
-EOF
+    -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp
