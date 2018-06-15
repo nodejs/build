@@ -2,6 +2,22 @@
 
 A guide on maintaining Node.js' Test and Release Jenkins clusters
 
+## TOC
+
+* [Ansible](#ansible)
+  * [Running playbooks](#running-playbooks)
+* [Security releases](#security-releases)
+  * [Before the release](#before-the-release)
+  * [After the release](#after-the-release)
+* [Solving problems](#solving-problems)
+  * [Out of memory](#out-of-memory)
+  * [Out of space](#out-of-space)
+  * [General issues with Jenkins agent: "normal machines" edition](#general-issues-with-jenkins-agent-normal-machines-edition)
+  * [Restart the machine](#restart-the-machine)
+  * [Containerized machines](#containerized-machines)
+  * [IDK what to do](#idk-what-to-do)
+
+
 ## Ansible
 
 All machines in the clusters are managed using Ansible, with the
@@ -35,7 +51,7 @@ some WG members available in the
 [#node-build IRC channel](irc://irc.freenode.net/node-build), who can try and
 lend a hand.
 
-## Restricting access for security releases
+## Security releases
 
 When security releases are due to go out, the Build WG plays an
 important role in facilitating their testing.
