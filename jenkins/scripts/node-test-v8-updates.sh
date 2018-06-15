@@ -6,9 +6,19 @@
 # are inteded to be run in Ubuntu 16.04 machines.
 ###
 
-rm -rf build
-git clone https://github.com/nodejs/build.git
+FLAKY_TESTS_MODE=run
+if test $IGNORE_FLAKY_TESTS = "true"; then
+  FLAKY_TESTS_MODE=dontcare
+fi
 
-. ./build/jenkins/scripts/node-test-commit-pre.sh
+echo FLAKY_TESTS_MODE=$FLAKY_TESTS_MODE
 
-make run-ci CI_JS_SUITES="v8-updates" CI_NATIVE_SUITES="" CI_DOC=""
+export JOBS=$(getconf _NPROCESSORS_ONLN)
+
+MAKE_ARGS="--output-sync=target -j $JOBS CI_JS_SUITES='v8-updates' CI_NATIVE_SUITES='' CI_DOC=''"
+
+NODE_TEST_DIR=${HOME}/node-tmp \
+PYTHON=python \
+FLAKY_TESTS=$FLAKY_TESTS_MODE \
+V=1 \
+make run-ci $MAKE_ARGS
