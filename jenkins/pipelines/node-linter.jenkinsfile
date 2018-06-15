@@ -22,7 +22,7 @@ pipeline {
                     userRemoteConfigs: [[
                         credentialsId: "96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c",
                         url: "git@github.com:{params.GITHUB_ORG}/${params.REPO_NAME}",
-                        refspec: "+${params.GIT_REMOTE_REF}:refs/remotes/origin/_jenkins_local_branch"
+                        refspec: "+refs/heads/*:refs/remotes/origin/* +${params.GIT_REMOTE_REF}:refs/remotes/origin/_jenkins_local_branch"
                     ]]
                 ])
             }
