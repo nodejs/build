@@ -18,7 +18,8 @@ pipeline {
                         name: 'refs/heads/_jenkins_local_branch'
                     ]],
                     userRemoteConfigs: [[
-                        url: "https://github.com/${params.GITHUB_ORG}/${params.REPO_NAME}",
+                        credentialsId: "96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c",
+                        url: "git@github.com:${params.GITHUB_ORG}/${params.REPO_NAME}",
                         refspec: "+${params.GIT_REMOTE_REF}:refs/remotes/origin/_jenkins_local_branch"
                     ]]
                 ])
@@ -36,13 +37,13 @@ pipeline {
         
         stage('Build linting tools') {
             steps {
+                // this target might not exist 
                 sh(returnStatus: true, script: "${env.MAKE} lint-md-build")
             }
         }
          
         stage('Run tests') {
             steps {
-                // If lint-ci fails, print all the interesting lines to the console.
                 sh "NODE=node ${env.MAKE} lint-ci"
             }
         }
@@ -50,7 +51,8 @@ pipeline {
     
     post {
         always {
-            tap2JUnit()
+            // Until we fix the TAP generator
+            // tap2JUnit()
         }
 
         success {
@@ -58,6 +60,7 @@ pipeline {
         }
 
         failure {
+            // If lint-ci fails, print all the interesting lines to the console.
             sh("cat test-eslint.tap | grep -v '^ok\\|^TAP version 13\\|^1\\.\\.|^' | awk 'NF'")
             sendBuildStatus("failure", env)
         }
