@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 pipeline {
     agent { label 'linter' }
     parameters{
@@ -8,7 +10,7 @@ pipeline {
         string(name: 'POST_REBASE_SHA1_CHECK', defaultValue: '', description: 'After rebasing, check that the resulting commit sha1 matches the given one. If left blank, no check is performed.')
         string(name: 'CONFIG_FLAGS', defaultValue: '', description: 'Add arguments to ./configure.')
     }
-    
+
     stages {
         stage("Setup repository") {
             steps {
@@ -19,49 +21,47 @@ pipeline {
                     ]],
                     userRemoteConfigs: [[
                         credentialsId: "96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c",
-                        url: "git@github.com:${params.GITHUB_ORG}/${params.REPO_NAME}",
+                        url: "git@github.com:{params.GITHUB_ORG}/${params.REPO_NAME}",
                         refspec: "+${params.GIT_REMOTE_REF}:refs/remotes/origin/_jenkins_local_branch"
                     ]]
                 ])
             }
         }
-        
+
         stage('Pre-flight') {
             steps {
                 sh "curl -L -s https://raw.githubusercontent.com/nodejs/build/master/jenkins/scripts/node-test-commit-pre.sh -s | bash -xe"
                 sendBuildStatus("pending", env)
                 checkMake()
+                checkSed()
+                // Make sure we have a node binary in the path 
                 sh 'node --version'
             }
         }
-        
+
         stage('Build linting tools') {
             steps {
-                // this target might not exist 
-                sh(returnStatus: true, script: "${env.MAKE} lint-md-build")
+                // Calling with `returnStatus` suppresses automatic failures
+                sh(script: "${env.MAKE} lint-md-build", returnStatus: true)
             }
         }
          
         stage('Run tests') {
             steps {
+                // this job does not build node, so we use the system's node 
                 sh "NODE=node ${env.MAKE} lint-ci"
             }
         }
     }
-    
-    post {
-        always {
-            // Until we fix the TAP generator
-            // tap2JUnit()
-        }
 
+    post {
         success {
             sendBuildStatus("success", env)
         }
 
         failure {
-            // If lint-ci fails, print all the interesting lines to the console.
-            sh("cat test-eslint.tap | grep -v '^ok\\|^TAP version 13\\|^1\\.\\.|^' | awk 'NF'")
+            // If lint-ci fails, print just  the __interesting__ lines to the console.
+            sh("cat test-eslint.tap | grep -v '^ok\\|^TAP version 13\\|^1\\.\\. | awk 'NF'")
             sendBuildStatus("failure", env)
         }
     }
@@ -84,11 +84,11 @@ def checkMake() {
     }
 }
 
+
 def sendBuildStatus(status, env) {
-    return
     build job: 'post-build-status-update', parameters: [
               string(name: 'REPO', value: 'node'),
-              string(name: 'IDENTIFIER', value: 'node-test-linter'),
+              string(name: 'IDENTIFIER', value: 'linter'),
               string(name: 'URL', value: env.BUILD_URL),
               string(name: 'COMMIT', value: sh(script: 'git rev-parse HEAD', returnStdout: true).trim()),
               string(name: 'REF', value: env.GIT_REMOTE_REF),
