@@ -25,7 +25,7 @@ setuid iojs
 script
 
   if [ $(uname -i) = "ppc64le" ]; then
-    export PATH=/home/iojs/jdk8u144-b01/bin:$PATH;
+    export PATH=/home/iojs/jdk8u172-b11/bin:$PATH;
   fi
 
   exec java -Xmx{{ server_ram|default('128m') }} \
