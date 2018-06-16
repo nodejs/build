@@ -1,8 +1,0 @@
-#!/bin/sh
-
-autossh -f -M 0 \
-  -o "ServerAliveInterval 30" \
-  -o "ServerAliveCountMax 3" \
-  tunnel@ci.nodejs.org \
-  -L {{ ci_port }}:ci-release.nodejs.org:{{ ci_port }} \
-  -N

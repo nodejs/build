@@ -25,46 +25,6 @@ test-requireio-rvagg-ubuntu1404-arm-odroid_xu3-1
 test-requireio_davglass-ubuntu1404-arm_odroid_xu-1
 test-requireio_davglass-ubuntu1404-arm_odroid_xu-2
 
-[iojs-raspbian]
-release-requireio_rvagg-debian7-arm_pi1p-1
-release-requireio_andineck-debian7-arm_pi1p-1
-release-devrus_mhdawson-debian7-arm_pi1p-1
-test-requireio_andineck-debian7-arm_pi1p-1
-test-requireio_bengl-debian7-arm_pi1p-1
-test-requireio_bengl-debian7-arm_pi1p-2
-test-requireio_continuationlabs-debian7-arm_pi1p-1
-test-requireio_ceejbot-debian7-arm_pi1p-1
-test-requireio_kahwee-debian8-arm_pi3-1
-test-requireio_mininodes-debian7-arm_pi1p-1
-test-requireio_indieisaconcept-debian7-arm_pi1p-1
-test-requireio_mhdawson-debian7-arm_pi1p-1
-test-requireio_securogroup-debian7-arm_pi1p-1
-test-requireio_securogroup-debian7-arm_pi1p-2
-test-requireio_chrislea-debian7-arm_pi1p-1
-test-requireio_davglass-debian7-arm_pi1p-1
-test-requireio_rvagg-debian7-arm_pi2-1
-test-requireio_joeyvandijk-debian7-arm_pi2-1
-test-requireio_joeyvandijk-debian7-arm_pi2-2
-test-requireio_svincent-debian7-arm_pi2-1
-test-requireio_mcollina-debian7-arm_pi2-1
-test-requireio_ceejbot-debian7-arm_pi2-1
-test-requireio_mininodes-debian7-arm_pi2-1
-test-requireio_sambthompson-debian7-arm_pi2-1
-test-requireio_louiscntr-debian7-arm_pi2-1
-test-requireio_svincent-debian7-arm_pi2-2
-test-requireio_svincent-debian7-arm_pi2-3
-test-requireio_jasnell-debian7-arm_pi2-1
-test-requireio_williamkapke-debian8-arm_pi3-1
-test-requireio_williamkapke-debian8-arm_pi3-2
-test-requireio_williamkapke-debian8-arm_pi3-3
-test-requireio_davglass-debian8-arm_pi3-1
-test-requireio_pivotalagency-debian8-arm_pi3-1
-test-requireio_pivotalagency-debian8-arm_pi3-2
-test-requireio_securogroup-debian8-arm_pi3-1
-test-requireio_securogroup-debian8-arm_pi3-2
-test-requireio_notthetup_sayanee-debian8-arm_pi3-1
-test-requireio_piccoloaiutante-debian8-arm_pi3-1
-
 [iojs-www]
 iojs-www
 
@@ -81,15 +41,10 @@ node-www
 iojs-jenkins
 
 [iojs-centos:children]
-iojs-build-centos6
 iojs-build-centos5
 
 [iojs-aix61]
 test-ibm-aix61-ppc64-1:18822
-
-[iojs-build-rhel72-linuxonecc]
-test-linuxonecc-rhel72-s390x-1
-test-linuxonecc-rhel72-s390x-2
 
 [node-windows]
 node-win10-x64-1.cloudapp.net
