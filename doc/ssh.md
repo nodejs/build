@@ -13,6 +13,9 @@ for build working group members.
    are available to you depends on the roles you have. In order to create new
    vm's and hook them up to CI you have to be part of the `infra` group.
    See [access](./access.md) for details about the groups.
+   To protect the unencrypted private keys, you can use
+   `ssh -p -f ~/.ssh/name_of_private_key` to add a personal passphrase to
+   the local copy of the key.
 3. Add this section to your `~/.ssh/config` file (if this file does not exist,
    create one). The configuration for the hosts will be written between the
    comments:
@@ -38,7 +41,8 @@ for build working group members.
 
 If everything is set up correctly, you should be able to log into
 the machine without passwords. By default you will log into the machine
-as `root`, but it is recommended to switch to the `iojs` user (run `su iojs`)
+as `root` (except macOS machines and some raspberry Pis),
+but it is recommended to switch to the `iojs` user (run `su iojs`)
 before performing any actions.
 
 [secrets repo]: https://github.com/nodejs-private/secrets
