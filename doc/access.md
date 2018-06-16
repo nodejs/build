@@ -1,9 +1,13 @@
 # Access to Node.js Infrastructure
 
-Documents which groups have access to which Infra assets. Note that links to
-`@nodejs/` teams are not visible to people who aren't in the Nodejs
-organisation, so those links may not work for you. The [secrets repo][] is also
-secret...
+This document describes which groups have access to which Infra assets.
+
+Note that links to `@nodejs/` teams are not visible to people who
+aren't in the Nodejs organization, and the [secrets repo][] is only
+visible to people who have read access to the nodejs-private organization.
+
+For technical howtos on getting SSH access to the machines, see the
+[SSH guide](./ssh.md).
 
 ## Joining the Build Working Group
 
