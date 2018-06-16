@@ -23,8 +23,7 @@ If you wanted to run the playbook for one of the linter machines,
 `ansible/host_vars/test-rackspace-freebsd10-x64-1` that contains the machine's
 Jenkins secret, and other configuration details.
 
-It is generally best to get the configuration from the
-[`nodejs-private/secrets`](https://github.com/nodejs-private/secrets), which
+It is generally best to get the configuration from the [secrets repo][], which
 contains encrypted versions of the files. If there is no file in that
 repository, you can always get the secret from the machine's Jenkins configuration
 page.
@@ -96,7 +95,7 @@ to the "online" status.
 The most common issues facing workers are explained below, with potential
 solutions on how to remedy the problem. Most commands below are meant to
 be run on the worker itself, after SSH-ing in and switching to the
-`iojs` user.
+`iojs` user. See the [SSH guide](./ssh.md) on how to log into the machines.
 
 ##### Out of memory
 
@@ -218,3 +217,5 @@ For problems with machines outside of the Jenkins test cluster, ask one
 of the members of the [infra](https://github.com/nodejs/build#infra-admins) or
 [release](https://github.com/nodejs/build#release-admins) administrators to
 take a look.
+
+[secrets repo]: https://github.com/nodejs-private/secrets

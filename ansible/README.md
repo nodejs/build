@@ -10,12 +10,7 @@
    `export PYTHONPATH=$(pip2 show pyyaml | grep Location | awk '{print $2}') `
    before you use `ansible-playbook`.
 2. Read this document.
-3. Clone the node secrets repository (if you don't have access ask anyone
-   in the [build group](https://github.com/nodejs/build#people).
-4. Copy the private keys (check the secrets repo for instructions) to your
-   `~/.ssh` folder. Make sure they have the same name. What keys are available
-   to you depends on what role you have. In order to create new vm's and hook
-   them up to CI you have to be part of the `infra` group.
+3. For SSH access, see the [SSH guide](../doc/ssh.md).
 
 
 ## Getting things done
