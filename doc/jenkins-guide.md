@@ -229,7 +229,7 @@ the [worker's view][1] on Jenkins
       systemctl list-units | grep jenkins
       ```
     * Each container should have a matching `systemd` service that starts and stops the
-    container. It's name should be `jenkins-${workername}`, so in this example
+    container. Its name should be `jenkins-${workername}`, so in this example
       ```
       jenkins-test-softlayer-ubuntu1804_container-x64-1
       ```
