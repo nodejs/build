@@ -47,8 +47,14 @@ pipeline {
          
         stage('Run tests') {
             steps {
-                // this job does not build node, so we use the system's node 
-                sh "NODE=node ${env.MAKE} lint-ci"
+                script {
+                    // this job does not build node, so we use the system's node 
+                    def ret = sh(script: "NODE=node ${env.MAKE} lint-ci", returnStatus: true)
+                    if (ret != 0) {
+                        echo(extractErrors())
+                        error('lint failed - open above section for details')
+                    }
+                }
             }
         }
     }
@@ -59,11 +65,18 @@ pipeline {
         }
 
         failure {
-            // If lint-ci fails, print just  the __interesting__ lines to the console.
-            sh("cat test-eslint.tap | grep -v '^ok\\|^TAP version 13\\|^1\\.\\. | awk 'NF'")
             sendBuildStatus("failure", env)
         }
     }
+}
+
+def extractErrors() {
+    def tap = readFile('test-eslint.tap')
+    tap = tap.replaceAll('(?m)^ok.*', '')
+    tap = tap.replaceAll('(?m)^TAP version 13.*', '')
+    tap = tap.replaceAll('(?m)^1\\.\\..*', '')
+    tap = tap.replaceAll('(?m)^\\s+$', '')
+    return tap
 }
 
 def tap2JUnit() {
