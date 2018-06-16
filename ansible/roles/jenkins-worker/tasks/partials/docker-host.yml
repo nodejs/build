@@ -61,6 +61,14 @@
     dest: "/lib/systemd/system/docker-jenkins-{{ item.name }}.service"
   with_items: "{{ docker_containers }}"
 
+- name: docker | stop containers
+  service:
+    name: "docker-jenkins-{{ item.name }}"
+    state: stopped
+  failed_when: "stop_containers is failed and 'not loaded' not in stop_containers.msg"
+  register: stop_containers
+  with_items: "{{ docker_containers }}"
+
 - name: docker | start containers
   service:
     name: "docker-jenkins-{{ item.name }}"
