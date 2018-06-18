@@ -1,5 +1,0 @@
----
-server_id: "pi2-7"
-server_suffix: "mininodes"
-server_secret: "SECRET_HERE"
-server_arch: "armv7l"
