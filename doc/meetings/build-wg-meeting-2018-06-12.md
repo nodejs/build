@@ -8,7 +8,7 @@
 ## Present
   * Luca Lanziani (@lucalanziani)
   * George Adams (@gdams)
-  * MIchael Dawson (@mhdawson)
+  * Michael Dawson (@mhdawson)
   * Daniel Bevenius (@danbev)
   * Adam Miller (@amiller-gh)
   * Jon Moss (@maclover7)
@@ -43,27 +43,23 @@
   * Build WG self-nomination: amiller-gh [#1305](https://github.com/nodejs/build/issues/1305)
   * request to join the build group [#1303](https://github.com/nodejs/build/issues/1303)
   * Request to join the team [#1299](https://github.com/nodejs/build/issues/1299)
-    * Daniel main motivation is to be able to help trouble shoot issues 
+    * Daniel - main motivation is to be able to help trouble shoot issues 
     * amiller - CI stability, and getting the fail rate down, but happy to help out everywhere else
     * Luca - interest on helping out on the ci side, but also happy to help out in other areas
-    * Matheus - Interested in helping improve the CI infra reliability and usability.
-
+    * Mattheus - Interested in helping improve the CI infra reliability and usability.
   * Refack:
-   * Key things that need to be done for CI help
-   * wipe workspace from the Jenkins GUI
-   * kill processes through script console
-   * restart jenkins agent (needs ssh)
-   * disk space cleanup
-   
-   * Could setup a number of ansible tasks which can do the cleanup, then could use ansible
+    * Key things that need to be done for CI help
+    * wipe workspace from the Jenkins GUI
+    * kill processes through script console
+    * restart jenkins agent (needs ssh)
+    * disk space cleanup
+    * Could setup a number of ansible tasks which can do the cleanup, then could use ansible
      tower to provide GUI to all collab to run when necessary
-
     * Improve tests 
     * Can also improve the overall user experience in using the CI
-    
   * Next steps
     * Jon - working on guide - https://github.com/nodejs/build/blob/master/doc/jenkins-guide.md
-      * volunteers to review the jenkins-guide.md, ask John for clarity where necessary
+      * volunteers to review the jenkins-guide.md, ask Jon for clarity where necessary
       * ask volunteers to join node-build on freenode, start responding to issues  
       * ask volunteers to start reading through the documentation.
     * Schedule onboarding for new members.
@@ -90,7 +86,6 @@ Ran out of time, tabled to next time:
 * Release infrastructure post mortem [#1212](https://github.com/nodejs/build/issues/1212)
 * Dropping 32-bit builds [#885](https://github.com/nodejs/build/issues/885)
 
-
 ## Q&A, Other
 
 ## Upcoming Meetings
@@ -98,5 +93,3 @@ Ran out of time, tabled to next time:
 * **Node.js Foundation Calendar**: https://nodejs.org/calendar
 
 Click `+GoogleCalendar` at the bottom right to add to your own Google calendar.
-
-
