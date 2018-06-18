@@ -27,9 +27,9 @@ for build working group members.
     ```
 4. Follow the instructions in the [ansible guide](../ansible/README.md) to
    install ansible on your local machine.
-5. Run `ansible-playbook playbooks/write-ssh-config.yml` from the root
-   directory of this repo, then the host information will be written into
-   your `~/.ssh/config`.
+5. Run `ansible-playbook playbooks/write-ssh-config.yml` from the `ansible/`
+   directory in the root of this repo, then the host information will be
+   written into your `~/.ssh/config`.
 6. Try logging into one of the machines that you have access to. In the
    `~/.ssh/config` file, the first word in the `Host` indicates the group
    that the machine is in, and the `IdentityFile` for each host can be
@@ -42,7 +42,7 @@ for build working group members.
 If everything is set up correctly, you should be able to log into
 the machine without passwords. By default you will log into the machine
 as `root` (except macOS machines and some raspberry Pis),
-but it is recommended to switch to the `iojs` user (run `su iojs`)
-before performing any actions.
+but it is recommended to switch to the `iojs` user (run `su iojs` or
+`sudo su iojs` for non-root logins) before performing any actions.
 
 [secrets repo]: https://github.com/nodejs-private/secrets
