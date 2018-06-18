@@ -6,12 +6,13 @@ onboarding session.
 ### Before the onboarding session
 
 * Email the new member and obtain their public GPG key
-* Ask them to start looking over `services.md` and `jenkins-guide.md`,
-  and to try and have any questions ready
 * Add them to the `test` group in `nodejs-private/secrets`
 * Add them to the `nodejs/build` and `nodejs-private/build` GitHub teams
-* Install Ruby and the `dotgpg` gem onto your development machine
-* Install Python 2.7 and Ansible
+* Ask them to start looking over `services.md` and `jenkins-guide.md`,
+  and to try and have any questions ready
+* Ask the onboardee to install:
+  * Ruby and the `dotgpg` gem
+  * Python 2.7 and Ansible
 
 ### General information
 
@@ -37,20 +38,22 @@ onboarding session.
 [`nodejs-private/secrets` repository][]
 * The access groups are explained in [`doc/access.md`](doc/access.md)
 * Say you want to decrypt the file `a.txt`, you'd run `dotgpg cat a.txt`
-* Clone down the repo, and practice decrypting a couple files, until you
-  get the hang of it
+* Have the onboardee clone `nodejs-private/secrets`, and practice decrypting a
+couple files, until you get the hang of it
 
 ### Ansible
 
 * Ansible scripts are used to setup and maintain all machines
 * See [`doc/services.md`](doc/services.md) for which playbooks
   correspond to different machines
-* Copy `nodejs_build_test` into `~/.ssh/nodejs_build_test`
-* Add the `begin` and `end` blocks into your `~/.ssh/config`
-* Run `ansible-playbook playbooks/write-ssh-config.yml`
-* See [`ansible/README.md`](ansible/README.md) for Ansible setup
+* Have the onboardee:
+  * Copy `nodejs_build_test` into `~/.ssh/nodejs_build_test`
+  * Add the `begin` and `end` blocks into their `~/.ssh/config`
+  * Run `ansible-playbook playbooks/write-ssh-config.yml`
+* Go over [`ansible/README.md`](ansible/README.md) for Ansible setup
   instructions
-* Practice running the `jenkins/worker/create.yml` playbook
+* Have the onboardee practice running the `jenkins/worker/create.yml` playbook
+on one of the machines in the test CI cluster
 
 ### Communication
 
