@@ -34,6 +34,7 @@ missing please open an issue. If you are interested in joining check out
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 - [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+- [@mmarchini](https://github.com/mmarchini) - Matheus Marchini
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 - [@piccoloaiutante](https://github.com/piccoloaiutante) - Michele Capra
