@@ -138,6 +138,9 @@ service jenkins status
 # SmartOS
 svcs -l svc:/application/jenkins:default
 
+# macOS
+sudo launchctl list | grep jenkins
+
 # Other OSes
 ~iojs/start.sh
 ```
@@ -154,6 +157,10 @@ service jenkins restart
 
 # SmartOS
 svcadm restart svc:/application/jenkins:default
+
+# macOS
+launchctl stop org.nodejs.osx.jenkins
+launchctl start org.nodejs.osx.jenkins
 
 # Other OSes
 ~iojs/start.sh
