@@ -1,0 +1,15 @@
+---
+base_packages:
+  - aptitude
+  - python-apt
+
+packages:
+  - nodejs
+  - git
+
+required_directories:
+  - bin
+  - config
+  - environment
+  - logs
+  - repos
