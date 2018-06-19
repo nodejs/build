@@ -38,7 +38,7 @@ onboarding session.
 [`nodejs-private/secrets` repository][]
 * The access groups are explained in [`doc/access.md`](doc/access.md)
 * Say you want to decrypt the file `a.txt`, you'd run `dotgpg cat a.txt`
-* Follow the instructions in [ssh.md](doc/ssh.md) to setup the secrets
+* Follow the instructions in [`doc/ssh.md`](doc/ssh.md) to setup the secrets
   repo and SSH accesslocally
 
 ### Ansible
