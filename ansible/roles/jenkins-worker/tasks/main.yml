@@ -230,6 +230,10 @@
   when: not os|startswith("zos") and not os|startswith("macos")
   service: name=jenkins state=restarted enabled=yes
 
+- name: Unload org.nodejs.osx.jenkins.plist from launchctl
+  when: os|startswith("macos")
+  command: launchctl unload /Library/LaunchDaemons/org.nodejs.osx.jenkins.plist
+
 - name: Load org.nodejs.osx.jenkins.plist into launchctl
   when: os|startswith("macos")
   command: launchctl load /Library/LaunchDaemons/org.nodejs.osx.jenkins.plist
