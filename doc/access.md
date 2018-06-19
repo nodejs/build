@@ -101,6 +101,27 @@ Those with `github-bot` access have access to the GitHub Bot's configuration,
 including GitHub and Jenkins secrets. The list of members is
 [here][GitHub Bot Admins].
 
+## NPM Management
+
+We have a number of modules under the Node.js Foundation including:
+
+* [citgm](https://github.com/nodejs/citgm)
+* [llnode](https://github.com/nodejs/llnode)
+* [node-gyp](https://github.com/nodejs/node-gyp)
+* [node-inspect](https://github.com/nodejs/node-inspect)
+* [node-report](https://github.com/nodejs/node-report)
+
+Modules are managed as follows:
+
+* The [`nodejs-foundation`][] npm user, which is managed by the Build
+  WG, is an administrator on all Foundation npm packages. It is the
+means to add or remove other module collaborators, and shouldn't be used
+to publish releases.
+* Package mantainers are added as npm "collaborators" to the package,
+  and publish releases.
+
+The credentials required for the `nodejs-foundation` user are maintained in
+encrypted form in the [secrets repo][].
 
 [@nodejs/build]: https://github.com/orgs/nodejs/teams/build/members
 [@nodejs/collaborators]: https://github.com/orgs/nodejs/teams/collaborators/members
@@ -136,3 +157,4 @@ including GitHub and Jenkins secrets. The list of members is
 [IRC]: /README.md#nodejs-build-working-group
 [the Readme]: /README.md
 [the onboarding doc]: /ONBOARDING.md
+[`nodejs-foundation`]: https://www.npmjs.com/~nodejs-foundation
