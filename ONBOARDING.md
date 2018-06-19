@@ -38,18 +38,14 @@ onboarding session.
 [`nodejs-private/secrets` repository][]
 * The access groups are explained in [`doc/access.md`](doc/access.md)
 * Say you want to decrypt the file `a.txt`, you'd run `dotgpg cat a.txt`
-* Have the onboardee clone `nodejs-private/secrets`, and practice decrypting a
-couple files, until you get the hang of it
+* Follow the instructions in [ssh.md](doc/ssh.md) to setup the secrets
+  repo and SSH accesslocally
 
 ### Ansible
 
 * Ansible scripts are used to setup and maintain all machines
 * See [`doc/services.md`](doc/services.md) for which playbooks
   correspond to different machines
-* Have the onboardee:
-  * Copy `nodejs_build_test` into `~/.ssh/nodejs_build_test`
-  * Add the `begin` and `end` blocks into their `~/.ssh/config`
-  * Run `ansible-playbook playbooks/write-ssh-config.yml`
 * Go over [`ansible/README.md`](ansible/README.md) for Ansible setup
   instructions
 * Have the onboardee practice running the `jenkins/worker/create.yml` playbook
