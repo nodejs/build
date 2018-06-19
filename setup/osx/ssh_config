@@ -1,8 +1,0 @@
-Host iojs-www node-www
-  HostName direct.nodejs.org
-  User staging
-  IdentityFile ~/.ssh/id_rsa
-
-Host ci.nodejs.org
-  User tunnel
-  IdentityFile ~/.ssh/id_rsa_ci
