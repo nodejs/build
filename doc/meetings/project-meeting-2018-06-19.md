@@ -1,7 +1,7 @@
-# Build WG: Discuss new projects #1330
+# Node.js Foundation Build WorkGroup Project Meeting 2018-06-19
 
+GitHub Issue: https://github.com/nodejs/build/issues/1317
 Issue link: https://github.com/nodejs/build/issues/1330
-Time: 19 June 2018
 
 ### Present
 
