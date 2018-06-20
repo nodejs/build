@@ -23,7 +23,7 @@ onboarding session.
 
 ### CI/Jenkins
 
-* Rublic CI (ci.nodejs.org)
+* Public CI (ci.nodejs.org)
   * `nodejs/jenkins-admins` are administrators
   * Tests Node.js itself, and several other Foundation projects
 * Release CI (ci-release.nodejs.org)
@@ -53,7 +53,7 @@ on one of the machines in the test CI cluster
 
 ### Communication
 
-* GitHub Isssues is used to manage tasks within the Build WG
+* GitHub Isssues are used to manage tasks within the Build WG
 * Try and use PRs to land changes, keep open for at least a day, and get
   at least one approval from another WG member.
 * Try and land PRs with the same commit metadata you'd use in
