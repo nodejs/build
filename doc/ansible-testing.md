@@ -1,10 +1,11 @@
 # Testing Ansible playbooks locally
 
-While working with these ansible playbooks, there's great value in testing them locally first, before running
-them on one or more remote servers. The following section tries to describe how you would do just that
-on a Vagrant virtual machine running debian for the [github-bot](github-bot/ansible-playbook.yaml).
+While working with Ansible playbooks, there's great value in testing them
+locally first, before running them on one or more remote servers. The following
+section tries to describe how you would do just that on a Vagrant virtual machine
+running Debian for the [github-bot][].
 
-Good luck, have fun!
+Good luck, and have fun!
 
 ## Prerequisites
 
@@ -12,7 +13,8 @@ Good luck, have fun!
 
 ## Create a Vagrantfile
 
-Create a directory with a file named `Vagrantfile` inside it, somewhere outside the build repo directory, as we don't want this in the repo.
+Create a directory with a file named `Vagrantfile` inside it, somewhere outside
+the build repo directory, as we don't want this in the repo.
 
 The `Vagrantfile` configures the virtual machine about to be created, with the following:
 
@@ -39,11 +41,10 @@ end
 
 ## Start virtual machine
 
-```bash
-$ vagrant up
-```
+You can run `vagrant up` to start the virtual machine.
 
-Notice which port the virtual machine's SSH port gets forward to, in the example below port `2200`.
+Notice which port the virtual machine's SSH port gets forward to, in the example
+below, the port is `2200`.
 
 ```
 ==> default: Forwarding ports...
@@ -62,17 +63,17 @@ $ ssh -p 2200 root@127.0.0.1
 
 *Remember to provide your correct port in the `-p` argument.*
 
-## Edit ~/.ssh/config
+## Edit `~/.ssh/config`
 
-You will have to create an SSH alias for the hosts you're running the ansible playbook against.
-In this [github-bot](github-bot/ansible-playbook.yaml) example, that means `github-bot` because
-the first line in the playbook says `hosts: github-bot`, which normally means our ansible
-inventory group defined in our [inventory file](ansible-inventory).
+You will have to create an SSH alias for the hosts you're running the Ansible playbook against.
 
-Add the following to your ~/.ssh/config:
+In this [github-bot] example, that means `infra-rackspace-debian8-x64-1` because
+the playbook declares this hostname as the host it runs on.
+
+Add the following to your `~/.ssh/config` file:
 
 ```
-Host github-bot
+Host infra-rackspace-debian8-x64-1
   HostName 127.0.0.1
   Port 2200
   User root
@@ -81,16 +82,25 @@ Host github-bot
 With that in place, it's even easier to connect to your virtual machine:
 
 ```bash
-$ ssh github-bot
+$ ssh infra-rackspace-debian8-x64-1
 ```
 
 ## Run the playbook
 
-While in the github-bot directory, run the playbook overriding the inventory altogether:
+Before running the playbook, ensure that you have created a host
+variables file for the machine with the necessary secrets for the
+playbook. In this case, the file would be `ansible/host_vars/infra-rackspace-debian8-x64-1`.
+Try and avoid using production secrets while testing the playbook -- you can add
+fake secrets to the file instead.
+
+While in the `ansible` directory, run the playbook using the following
+command:
 
 ```bash
-$ cd setup/github-bot
-$ ansible-playbook -i "github-bot," ansible-playbook.yaml
+$ cd ansible
+$ ansible-playbook playbooks/create-github-bot.yml
 ```
 
-The `-i` argument is crucial, as ansible ends up using your newly added SSH alias to run the playbook against.
+Don't forget to run `vagrant down` once you are down with the virtual machine.
+
+[github-bot]: ../ansible/playbooks/create-github-bot.yml
