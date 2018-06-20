@@ -1,7 +1,6 @@
 # Node.js Foundation Build WorkGroup Project Meeting 2018-06-19
 
-GitHub Issue: https://github.com/nodejs/build/issues/1317
-Issue link: https://github.com/nodejs/build/issues/1330
+GitHub Issue: https://github.com/nodejs/build/issues/1330
 
 ### Present
 
