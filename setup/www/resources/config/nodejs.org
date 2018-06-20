@@ -306,6 +306,11 @@ server {
         default_type text/plain;
     }
 
+    location /github-webhook.log {
+        alias /home/nodejs/github-webhook.log;
+        default_type text/plain;
+    }
+
     location /metrics {
         alias /home/dist/metrics/;
         autoindex on;
