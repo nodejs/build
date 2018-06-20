@@ -27,7 +27,6 @@ missing please open an issue. If you are interested in joining check out
 <!-- ncu-team-sync.team(nodejs/build) -->
 
 - [@gdams](https://github.com/gdams) - George Adams
-- [@geek](https://github.com/geek) - Wyatt Preul
 - [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
@@ -37,7 +36,6 @@ missing please open an issue. If you are interested in joining check out
 - [@mmarchini](https://github.com/mmarchini) - Matheus Marchini
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
-- [@piccoloaiutante](https://github.com/piccoloaiutante) - Michele Capra
 - [@refack](https://github.com/refack) - Refael Ackermann
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
