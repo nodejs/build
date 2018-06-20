@@ -31,6 +31,7 @@ missing please open an issue. If you are interested in joining check out
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
+- [@lucalanziani](https://github.com/lucalanziani) - Luca Lanziani
 - [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@mmarchini](https://github.com/mmarchini) - Matheus Marchini
