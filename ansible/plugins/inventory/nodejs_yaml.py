@@ -105,11 +105,7 @@ def main():
                         hostname = '{}-{}{}{}'.format(host_type, provider_name,
                                                       delimiter, host)
 
-                        # no point in adding windows servers for now
-                        if 'win' in hostname:
-                            continue
-                        else:
-                            export[host_type]['hosts'].append(hostname)
+                        export[host_type]['hosts'].append(hostname)
 
                         c = {}
 
@@ -135,8 +131,8 @@ def main():
                         if 'alias' in metadata:
                             c.update({'alias': metadata['alias']})
 
-                        if 'win' in hostname:
-                            c.update({'is_win': True})
+                        if 'vs' in metadata:
+                            c.update({'vs': metadata['vs']})
 
                         # add specific options from config
                         for option in ifilter(lambda s: s.startswith('hosts:'),

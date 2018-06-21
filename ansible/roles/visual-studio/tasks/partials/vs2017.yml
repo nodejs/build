@@ -1,0 +1,26 @@
+---
+
+#
+# Install Visual Studio 2017
+#
+
+
+- name: install Visual Studio Community 2017
+  win_chocolatey: name=visualstudio2017community
+
+- name: install Visual Studio Community 2017 Native Desktop Workload
+  win_chocolatey: name=visualstudio2017-workload-nativedesktop
+
+- name: install WiX Toolset
+  import_tasks: 'wixtoolset.yml'
+
+# Note: https://chocolatey.org/docs/helpers-install-chocolatey-vsix-package exists, but
+# can't be used with VS2017 yet: https://github.com/chocolatey/choco/issues/1201
+
+- name: download WiX Toolset Visual Studio Extension
+  win_get_url:
+    url: 'https://github.com/wixtoolset/VisualStudioExtension/releases/download/v0.9.21.62588/Votive2017.vsix'
+    dest: 'C:\TEMP\Votive2017.vsix'
+
+- name: install WiX Toolset Visual Studio Extension
+  win_shell: '& "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VSIXInstaller.exe" /quiet C:\TEMP\Votive2017.vsix'

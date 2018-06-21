@@ -30,7 +30,6 @@
   shell: coreadm -i /home/iojs/cores/core.%f.%p -e process -d global
 
 - name: disable sftp
-  when: not os|startswith("win")
   notify: restart sshd
   lineinfile: state=absent dest="{{ ssh_config }}" regexp=^Subsystem(\s+)sftp
 

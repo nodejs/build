@@ -1,0 +1,32 @@
+---
+
+#
+# Updates Windows
+#
+
+- block:
+  - name: reboot machine to ensure no updates are pending
+    win_reboot:
+  - name: wait for Jenkins to start if already installed
+    win_shell: 'Start-Sleep -Seconds 10'
+  - name: stop Jenkins after reboot
+    win_shell: 'Get-WmiObject Win32_Process -Filter "(Name = ''cmd.exe'') AND (CommandLine LIKE ''%jenkins.bat%'')" | % {$_.Terminate()}'
+
+- name: download and install Windows updates
+  win_updates:
+  register: update_result
+
+- when: update_result.reboot_required
+  block:
+  - name: reboot machine if necessary
+    win_reboot:
+      reboot_timeout: 3600
+  - name: wait for Jenkins to start if already installed
+    win_shell: 'Start-Sleep -Seconds 10'
+  - name: stop Jenkins after reboot
+    win_shell: 'Get-WmiObject Win32_Process -Filter "(Name = ''cmd.exe'') AND (CommandLine LIKE ''%jenkins.bat%'')" | % {$_.Terminate()}'
+
+- name: upgrade installed packages
+  win_chocolatey:
+    name: all
+    state: latest

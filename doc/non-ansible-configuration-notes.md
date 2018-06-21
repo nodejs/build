@@ -4,8 +4,6 @@ There are a number of infrastructure setup tasks that are not currently automate
 
 ## Windows (Azure/Rackspace)
 
-Currently the Windows configuration is [stand-alone][] and not part of the [newer Ansible configuration][], however it is up to date.
-
 In order to get Windows machines to a state where Ansible can be run against them, some manual steps need to be taken so that Ansible can connect.
 
 Machines should have:
@@ -18,13 +16,12 @@ To use Ansible for Windows, PowerShell access should be enabled as described in 
 
 Install the `pywinrm` pip module.
 
-Create a file `host_vars/node-win10-1.cloudapp.net` (`host_vars` in the same directory as `ansible-inventory`)
+Create a file `host_vars/node-win10-1.cloudapp.net` (`host_vars` in the same directory as `inventory.yml`)
 for each host and change the variables as necessary:
 
 ```yaml
 ---
-server_id: node-msft-win10-1
-server_secret: SECRET
+secret: SECRET
 ansible_user: USERNAME
 ansible_password: PASSWORD
 ansible_port: 5986

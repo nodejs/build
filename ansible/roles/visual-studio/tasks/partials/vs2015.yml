@@ -1,0 +1,19 @@
+---
+
+#
+# Install Visual Studio 2015
+#
+
+- name: download Visual Studio Community 2015
+  win_get_url:
+    url: 'https://go.microsoft.com/fwlink/?LinkId=532606'
+    dest: 'C:\TEMP\vs2015_community.exe'
+    force: no
+
+- name: install Visual Studio Community 2015
+  win_command: 'C:\TEMP\vs2015_community.exe /Silent /NoRestart
+                /InstallSelectableItems NativeLanguageSupport_Group
+                /Log C:\TEMP\vs2015_install_log.txt'
+
+- name: install WiX Toolset
+  import_tasks: 'wixtoolset.yml'

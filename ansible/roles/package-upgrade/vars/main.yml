@@ -10,6 +10,7 @@
     'dnf': 'fedora',
     'pkg': 'freebsd',
     'pkgin': 'smartos',
+    'chocolatey': 'win',
     'brew': 'macos'
     }
 

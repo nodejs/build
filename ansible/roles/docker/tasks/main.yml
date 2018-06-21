@@ -12,7 +12,6 @@
     name: "{{ inventory_hostname|replace('_', '-') }}"
 
 - name: disable sftp
-  when: not os|startswith("win")
   notify: restart sshd
   lineinfile:
     state: absent
