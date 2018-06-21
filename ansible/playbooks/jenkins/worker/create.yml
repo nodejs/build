@@ -11,6 +11,7 @@
   - infra-softlayer-ubuntu1404-x64-2
   - "!test-joyent-freebsd10-x64-2"
   - "!test-rackspace-freebsd10-x64-1"
+  - "!*-win*"
 
   roles:
     - bootstrap

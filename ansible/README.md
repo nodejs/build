@@ -5,8 +5,9 @@
 
 ## Getting started
 
-1. Install Ansible 2.2.0 or newer: `pip install ansible`. If you use brew, then
-   `brew install python2 ansible`, and then run
+1. Follow the [instructions to install the latest version of Ansible][ansible-install].
+   * In most cases, using pip: `pip install ansible`.
+   * If you use brew, then `brew install python2 ansible`, and then run
    `export PYTHONPATH=$(pip2 show pyyaml | grep Location | awk '{print $2}') `
    before you use `ansible-playbook`.
 2. Read this document.
@@ -16,16 +17,31 @@
 ## Getting things done
 
 Most of your work will probably include editing `inventory.yml`, followed by
-running one (or multiple) of below playbooks. If you're adding a new host,
-limiting ansible to just running on that host is probably quicker:
+running one (or multiple) of below playbooks.
+
+See the [manual setup instructions](../doc/non-ansible-configuration-notes.md)
+for how to prepare both the control and target machines to run the commands
+below. To ensure that the secrets are in place and test the connection to a
+host use:
+
+```console
+$ ansible test-digitalocean-debian8-x64-1 -m ping -vvvv
+## Or, for Windows hosts:
+$ ansible test-rackspace-win2008r2-x64-1 -m win_ping -vvvv
+```
+
+If you're adding a new host, limiting Ansible to just running on that host is
+probably quicker. In fact, you most likely want to use `--limit` for everything
+when you just need to edit a few set of hosts:
 
 ```console
 $ ansible-playbook playbooks/jenkins/worker/create.yml \
-    --limit "test-digitalocean-debian8-x64-1"
+    --limit "test-digitalocean-debian8-x64-1" -vv
 ```
 
-..in fact, you most likely want to use `--limit` for everything when you just
-need to edit a few set of hosts.
+If you only want to run a specific set of steps, you can use `--step`. This is
+useful when developing playbooks and when you want to be sure that only a few
+steps are executed, to avoid disrupting the machines.
 
 These playbooks are available to you:
 
@@ -194,5 +210,6 @@ Unsorted stuff of things we need to do/think about
 - [ ] github-bot: automate list of whitelisted Jenkins worker IPs with
       python
 
+[ansible-install]: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
 [callback]: plugins/inventory/nodejs_yaml.py
 [github-bot]: https://github.com/nodejs/github-bot

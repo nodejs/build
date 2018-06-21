@@ -1,3 +1,5 @@
 raspberry_pi: {
   apt_proxy: 'http://192.168.2.100:3142',
 }
+
+autologon_regpath: 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'

@@ -1,0 +1,28 @@
+---
+
+#
+# Windows bootstrap
+#
+
+- name: create TEMP directory
+  win_file: path='C:\TEMP' state=directory
+
+- block:
+  - name: set automatic logon user name
+    win_regedit:
+      path: "{{ autologon_regpath }}"
+      name: DefaultUsername
+      data: "{{ ansible_ssh_user }}"
+      type: string
+  - name: set automatic logon password
+    win_regedit:
+      path: "{{ autologon_regpath }}"
+      name: DefaultPassword
+      data: "{{ ansible_ssh_pass }}"
+      type: string
+  - name: enable automatic logon
+    win_regedit:
+      path: "{{ autologon_regpath }}"
+      name: AutoAdminLogon
+      data: 1
+      type: string

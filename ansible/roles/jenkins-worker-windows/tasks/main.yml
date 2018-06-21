@@ -1,0 +1,22 @@
+---
+
+#
+# Install the Jenkins worker
+#
+
+- name: install Java 8
+  win_chocolatey: name=jdk8
+
+- name: download Jenkins icon
+  win_get_url:
+    url: 'http://mirrors.jenkins-ci.org/art/jenkins-logo/favicon.ico'
+    dest: 'C:\jenkins.ico'
+    force: no
+
+- name: create jenkins.bat
+  win_template:
+    src: '../templates/jenkins.bat'
+    dest: 'C:\jenkins.bat'
+
+- name: create Jenkins shortcuts
+  script: '../files/Jenkins-Shortcuts.ps1'

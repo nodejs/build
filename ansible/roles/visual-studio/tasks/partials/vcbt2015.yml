@@ -1,0 +1,28 @@
+---
+
+#
+# Install Visual C++ Build Tools 2015
+#
+
+- name: download .NET Framework
+  win_get_url:
+    url: 'http://go.microsoft.com/fwlink/?LinkId=671743'
+    dest: 'C:\TEMP\netfw.exe'
+    force: no
+
+- name: install .NET Framework
+  win_command: 'C:\TEMP\netfw.exe /q /norestart
+                /log C:\TEMP\netfw_install_log.txt'
+
+- name: download Visual C++ Build Tools 2015
+  win_get_url:
+    url: 'https://go.microsoft.com/fwlink/?LinkId=691126'
+    dest: 'C:\TEMP\vcbt2015.exe'
+    force: no
+
+- name: install Visual C++ Build Tools 2015
+  win_command: 'C:\TEMP\vcbt2015.exe /Silent /NoRestart /Full
+                /Log C:\TEMP\vsbt2015_install_log.txt'
+
+- name: install WiX Toolset
+  import_tasks: 'wixtoolset.yml'
