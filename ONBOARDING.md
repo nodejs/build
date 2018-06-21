@@ -53,7 +53,7 @@ on one of the machines in the test CI cluster
 
 ### Communication
 
-* GitHub Isssues are used to manage tasks within the Build WG
+* GitHub Issues are used to manage tasks within the Build WG
 * Try and use PRs to land changes, keep open for at least a day, and get
   at least one approval from another WG member.
 * Try and land PRs with the same commit metadata you'd use in
