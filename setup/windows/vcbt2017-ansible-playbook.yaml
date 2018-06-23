@@ -1,0 +1,41 @@
+---
+- hosts: node-windows
+
+  tasks:
+
+    - name: Download and Install Windows Updates
+      win_updates:
+        register: update_result
+
+    - name: Reboot machine if necessary
+      win_reboot:
+        when: update_result.reboot_required
+
+    - name: Create C:\TEMP directory
+      win_file: path='C:\TEMP' state=directory
+
+    - name: VCBT2017 | Download .NET Framework 4.6.1 Setup
+      win_get_url:
+        url: 'http://go.microsoft.com/fwlink/?LinkId=671743'
+        dest: 'C:\TEMP\netfw.exe'
+      tags: [download, visualstudio]
+
+    - name: VCBT2017 | Install .NET Framework 4.6.1
+      raw: 'C:\TEMP\netfw.exe /q /norestart /log C:\TEMP\netfw_install_log.txt'
+      tags: [install, visualstudio]
+
+    - name: VCBT2017 | Download Visual C++ Build Tools 2017 Setup
+      win_get_url:
+        url: 'https://aka.ms/vs/15/release/vs_community.exe'
+        dest: 'C:\TEMP\vs_community.exe'
+      tags: [download, visualstudio]
+
+    - name: VCBT2017 | Install Visual C++ Build Tools 2017
+      raw: 'set TEMP=C:\TEMP;C:\TEMP\vs_BuildTools.exe --installPath c:\temp\bt2017 --add Microsoft.VisualStudio.Workload.VCTools;includeRecommended -q --wait'
+      tags: [install, visualstudio]
+
+    - name: Reboot machine after Visual C++ Build Tools installation
+      win_reboot:
+
+    - include: ./common-ansible-playbook.yaml
+      tags: common
