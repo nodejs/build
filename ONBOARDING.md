@@ -30,7 +30,9 @@ onboarding session.
   * `nodejs/jenkins-release-admins` are administrators
   * What creates and publishes all releases of Node.js
 * General trend is try and use Jenkins pipelines as much as possible,
-  store all bash scripts within `jenkins/scripts`
+  store all bash scripts within `jenkins/scripts`. Make sure that any
+  refactoring done to the jobs does not play with the job UI, such as
+  making it more difficult to view job results.
 
 ### Secrets
 
@@ -39,7 +41,7 @@ onboarding session.
 * The access groups are explained in [`doc/access.md`](doc/access.md)
 * Say you want to decrypt the file `a.txt`, you'd run `dotgpg cat a.txt`
 * Follow the instructions in [`doc/ssh.md`](doc/ssh.md) to setup the secrets
-  repo and SSH accesslocally
+  repo and SSH access locally
 
 ### Ansible
 
@@ -49,18 +51,21 @@ onboarding session.
 * Go over [`ansible/README.md`](ansible/README.md) for Ansible setup
   instructions
 * Have the onboardee practice running the `jenkins/worker/create.yml` playbook
-on one of the machines in the test CI cluster
+  on one of the machines in the test CI cluster
+* Windows access
 
 ### Communication
 
 * GitHub Issues are used to manage tasks within the Build WG
-* Try and use PRs to land changes, keep open for at least a day, and get
-  at least one approval from another WG member.
+* Try and use PRs to land changes: Keep open for at least 48 hours during the
+  week (72 hours on the weekend), and get at least one approval from another WG
+  member.
 * Try and land PRs with the same commit metadata you'd use in
   `nodejs/node`
 * IRC (specifically `#node-build` is important for communicating with
   other Node.js project members, and how we receive many initial signals
-of downtime
+  of downtime
+    * IRC logs are maintained at http://logs.libuv.org/node-build
 * Build WG meetings are every 2-3 weeks, and you should try and attend
   as many as possible. The meetings are listed in the [Node.js
 Foundation calendar][].
