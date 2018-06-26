@@ -26,7 +26,7 @@ host use:
 
 ```console
 $ ansible test-digitalocean-debian8-x64-1 -m ping -vvvv
-Or, for Windows hosts:
+## Or, for Windows hosts:
 $ ansible test-rackspace-win2008r2-x64-1 -m win_ping -vvvv
 ```
 
