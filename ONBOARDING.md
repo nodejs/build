@@ -57,11 +57,10 @@ onboarding session.
 ### Communication
 
 * GitHub Issues are used to manage tasks within the Build WG
-* Try and use PRs to land changes: Keep open for at least 48 hours during the
-  week (72 hours on the weekend), and get at least one approval from another WG
-  member.
-* Try and land PRs with the same commit metadata you'd use in
-  `nodejs/node`
+* Use GitHub Pull Requests to suggest, and then land, changes
+  * Keep open for at least 48 hours during the week (72 hours on the weekend)
+  * Get at least one approval from another WG member
+  * Land PRs with the same commit metadata you'd use in `nodejs/node`
 * IRC (specifically `#node-build` is important for communicating with
   other Node.js project members, and how we receive many initial signals
   of downtime
