@@ -25,6 +25,8 @@ hosts:
         debian8-x64-1: {ip: 184.172.29.199, alias: registry-mirror}
         ubuntu1404-x64-1: {ip: 169.44.16.104, alias: ci-release}
         ubuntu1404-x64-2: {ip: 50.23.85.254}
+        ubuntu1804-x64-1: {ip: 169.60.150.86, alias: keybox}
+        ubuntu1804-x64-2: {ip: 169.62.77.235, alias: ansible}
 
 
   - release:
