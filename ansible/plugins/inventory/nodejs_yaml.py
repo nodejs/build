@@ -72,7 +72,9 @@ def main():
     export = {'_meta': {'hostvars': {}}}
 
     # get inventory
-    with open("inventory.yml", 'r') as stream:
+    basepath = path.dirname(__file__)
+    inventory_path = path.abspath(path.join(basepath, "..", "..", "inventory.yml"))
+    with open(inventory_path, 'r') as stream:
         try:
             hosts = yaml.load(stream)
 
