@@ -12,3 +12,6 @@ setup/*/host_vars/release-*
 ansible/host_vars/*
 !ansible/host_vars/README.md
 !ansible/host_vars/*-template
+
+# python virtualenv
+virtualenv/

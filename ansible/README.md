@@ -5,14 +5,27 @@
 
 ## Getting started
 
-1. Follow the [instructions to install the latest version of Ansible][ansible-install].
-   * In most cases, using pip: `pip install ansible`.
-   * If you use brew, then `brew install python2 ansible`, and then run
-   `export PYTHONPATH=$(pip2 show pyyaml | grep Location | awk '{print $2}') `
-   before you use `ansible-playbook`.
-2. Read this document.
-3. For SSH access, see the [SSH guide](../doc/ssh.md).
+1. Read this document.
+2. For SSH access, see the [SSH guide](../doc/ssh.md).
 
+### Install ansible system wide
+
+Follow the [instructions to install the latest version of Ansible][ansible-install].
+* In most cases, using pip: `pip install ansible`.
+* If you use brew, then `brew install python2 ansible`, and then run
+`export PYTHONPATH=$(pip2 show pyyaml | grep Location | awk '{print $2}') `
+before you use `ansible-playbook`.
+
+### Install ansible in virtualenv
+
+From the `ansible` directory:
+
+1. Run `make && make UPDATE_ENV`
+2. Run `source ./virtualenv/bin/activate` to activate the virtualenv
+3. You can now use `ansible-playbook`
+4. When done you can quit the virtualenv with `deactivate`
+
+**NOTE**: Virtualenv is now set to use _ansible 2.4.0_
 
 ## Getting things done
 
