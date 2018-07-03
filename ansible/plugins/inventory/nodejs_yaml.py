@@ -35,6 +35,7 @@ import json
 import yaml
 import os
 import sys
+from os import path
 
 
 valid = {

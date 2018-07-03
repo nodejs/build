@@ -9,6 +9,7 @@
   - release
   # Benchmarking machine
   - infra-softlayer-ubuntu1404-x64-2
+  - "!infra-softlayer-ubuntu1804-x64-2"
   - "!*-win*"
 
   roles:
