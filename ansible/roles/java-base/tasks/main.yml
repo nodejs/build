@@ -55,7 +55,14 @@
   ignore_errors: yes
 
 - name: install java
-  when: java.rc > 0 and not os|startswith("zos") and arch != "ppc64" and not inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')
+  when:
+    - java.rc > 0 and not os|startswith("zos") and arch != "ppc64" and not inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')
+    - java.rc > 0 and not os|startswith("macos")
+  package: name="{{ java_package_name }}" state=present
+
+- name: install java (macOS)
+  become_user: administrator
+  when: java.rc > 0 and os|startswith("macos")
   package: name="{{ java_package_name }}" state=present
 
 - name: install webupd8 oracle java 8 extras

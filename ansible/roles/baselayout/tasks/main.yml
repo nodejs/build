@@ -20,6 +20,14 @@
         and not os|startswith("macos")
   hostname: name="{{ safe_hostname }}"
 
+- name: Set hostname to inventory_hostname macOS
+  command: "{{ item }}"
+  with_items:
+    - "sudo scutil --set HostName {{ inventory_hostname }}.nodejs.org"
+    - "sudo scutil --set ComputerName {{ inventory_hostname }}.nodejs.org"
+    - "dscacheutil -flushcache"
+  when: os|startswith("macos")
+
 - name: disable joyent smartconnect
   when: os|startswith("smartos")
   notify: restart sshd
