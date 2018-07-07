@@ -112,7 +112,7 @@
     dest: /etc/sudoers
     state: present
     regexp: "^{{ server_user }}"
-    line: "'{{ server_user }} ALL=(ALL) NOPASSWD: /bin/systemctl restart github-bot'"
+    line: "{{ server_user }} ALL=(ALL) NOPASSWD: /bin/systemctl restart github-bot"
 
 - name: Runtime dependencies | Clone node repo
   become: yes
