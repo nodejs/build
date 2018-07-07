@@ -9,8 +9,6 @@
   - release
   # Benchmarking machine
   - infra-softlayer-ubuntu1404-x64-2
-  - "!test-joyent-freebsd10-x64-2"
-  - "!test-rackspace-freebsd10-x64-1"
   - "!*-win*"
 
   roles:
@@ -31,7 +29,6 @@
       when: "'rhel72-s390x' in inventory_hostname"
 
   environment: '{{remote_env}}'
-
 
 #
 # Set up Jenkins Workspace servers
@@ -65,3 +62,33 @@
     - test-*-ubuntu1604-x*
   roles:
     - linux-perf
+
+#
+# Set up linter servers
+#
+
+- hosts:
+   - test-joyent-freebsd10-x64-2
+   - test-rackspace-freebsd10-x64-1
+
+  tasks:
+    - name: install lint-related packages
+      package:
+        name: "{{ package }}"
+        state: present
+      loop_control:
+        loop_var: package
+      with_items: [ "node", "npm" ]
+
+    - name: install core-validate-commit
+      npm:
+        name: "core-validate-commit"
+        global: yes
+        state: present
+        production: yes
+
+    - name: periodically update core-validate-commit
+      cron:
+        special_time: daily
+      # ksh does different stdout/err routing
+        job: "npm update -g core-validate-commit > & /dev/null"

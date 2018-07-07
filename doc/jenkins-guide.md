@@ -34,7 +34,7 @@ this example, you would want to run the following command on your local
 machine, from within the `ansible` directory:
 
 ```bash
-ansible-playbook playbooks/jenkins/linter.yml --limit test-rackspace-freebsd10-x64-1
+ansible-playbook playbooks/jenkins/worker/create.yml --limit test-rackspace-freebsd10-x64-1
 ```
 
 If all goes according to plan, then Ansible should be able to run the
