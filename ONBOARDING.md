@@ -29,10 +29,6 @@ onboarding session.
 * Release CI (ci-release.nodejs.org)
   * `nodejs/jenkins-release-admins` are administrators
   * What creates and publishes all releases of Node.js
-* General trend is try and use Jenkins pipelines as much as possible,
-  store all bash scripts within `jenkins/scripts`. Make sure that any
-  refactoring done to the jobs does not play with the job UI, such as
-  making it more difficult to view job results.
 
 ### Secrets
 
