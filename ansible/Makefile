@@ -7,7 +7,7 @@ ENV: Makefile
 
 CHECK_ENV:
 ifndef VIRTUAL_ENV
-	$(error PLEASE ENTER THE VIRTUALENV BEFORE FUN THE COMMAND)
+	$(error PLEASE ENTER THE VIRTUALENV BEFORE RUNNING THE COMMAND)
 endif
 
 UPDATE_ENV: requirements.txt
@@ -17,4 +17,3 @@ UPDATE_ENV: requirements.txt
 
 FLAKE8: CHECK_ENV
 	flake8
-

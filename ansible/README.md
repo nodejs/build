@@ -8,15 +8,15 @@
 1. Read this document.
 2. For SSH access, see the [SSH guide](../doc/ssh.md).
 
-### Install ansible system wide
+### Install ansible systemwide
 
 Follow the [instructions to install the latest version of Ansible][ansible-install].
-* In most cases, using pip: `pip install ansible`.
+* In most cases, use pip: `pip install ansible`.
 * If you use brew, then `brew install python2 ansible`, and then run
 `export PYTHONPATH=$(pip2 show pyyaml | grep Location | awk '{print $2}') `
 before you use `ansible-playbook`.
 
-### Install ansible in virtualenv
+### Install ansible via virtualenv
 
 From the `ansible` directory:
 
