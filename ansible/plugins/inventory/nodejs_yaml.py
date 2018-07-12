@@ -295,9 +295,8 @@ def has_metadata(info):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--list', action='store_true')
-    parser.add_argument('--host', action='store')
-    args = parser.parse_args()
-
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('--list', action='store_true')
+    # parser.add_argument('--host', action='store')
+    # args = parser.parse_args()
     main()
