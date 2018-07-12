@@ -6,25 +6,6 @@ test-softlayer-centos5-x64-2
 release-digitalocean-centos5-x64-1
 release-softlayer-centos5-x86-1
 
-[iojs-build-ubuntu1404]
-iojs-ibm-ppcle-ubuntu1404-64-1
-iojs-ibm-ppcle-ubuntu1404-64-2
-iojs-softlayer-benchmark
-test-softlayer-ubuntu14-x64-1
-test-softlayer-ubuntu14-x86-1
-test-digitalocean-ubuntu14-x86-1
-test-digitalocean-ubuntu14-x64-1
-release-osuosl-ubuntu14-ppc64_le-1
-test-osuosl-ubuntu14-ppc64_be-1
-test-osuosl-ubuntu14-ppc64_be-2
-release-osuosl-ubuntu14-ppc64_be-1
-iojs-ns-xgene-1
-iojs-ns-xgene-2
-iojs-ns-xgene-3
-test-requireio-rvagg-ubuntu1404-arm-odroid_xu3-1
-test-requireio_davglass-ubuntu1404-arm_odroid_xu-1
-test-requireio_davglass-ubuntu1404-arm_odroid_xu-2
-
 [iojs-www]
 iojs-www
 
@@ -35,7 +16,6 @@ infra-digitalocean-ubuntu1604-x64-1
 iojs-jenkins
 
 [iojs-ubuntu:children]
-iojs-build-ubuntu1404
 iojs-www
 node-www
 iojs-jenkins
