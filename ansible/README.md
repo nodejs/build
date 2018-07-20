@@ -55,8 +55,6 @@ These playbooks are available to you:
 
   - **jenkins/docker-host.yml**: Sets up a host to run Docker workers.
 
-  - **jenkins/linter.yml**: Sets up the code linters (flavour of a worker).
-
   - **create-github-bot.yml**: Configures the server that hosts the
     [github-bot][].
 

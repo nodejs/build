@@ -20,7 +20,6 @@ cluster:
 | Type  | Jenkins Agent | Jenkins Workspace | Playbook | Notes |
 |---|---|---|---|---|
 | "Normal"  | On machine | On machine | [`jenkins/worker/create.yml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/worker/create.yml) | Run-of-the-mill, most common type of worker |
-| "Linter"  | On machine | On machine | [`jenkins/linter.yml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/linter.yml) | Dedicated machines for `node-test-linter` |
 | "Half Docker"  | On machine | Docker container | [`jenkins/worker/create.yml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/worker/create.yml) |  Raspbery Pi, Scaleway ARM v7 |
 | "Full Docker"  |  Docker container | Docker container  | [`jenkins/docker-host.yaml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/docker-host.yaml) | Special case Linux machines |
 
