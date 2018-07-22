@@ -62,8 +62,8 @@ def buildExclusions = [
   [ /sharedlibs_shared/,              anyType,     lt(9)   ],
 
   // OSX ---------------------------------------------------
-  [ /^osx1010/,                       anyType,     lt(11)  ],
-  [ /^osx1011/,                       anyType,     gte(11) ],
+  [ /^osx1010/,                       anyType,     gte(11)  ],
+  [ /^osx1011/,                       anyType,     lt(11) ],
 
   // -------------------------------------------------------
 ]
