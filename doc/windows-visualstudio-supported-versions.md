@@ -1,5 +1,9 @@
 # Windows and Visual Studio versions supported for Node.js
 
+**Notes:**
+- The exact Windows builds and Visual Studio releases are not tracked. Assume the latest or a recent version at the time of each commit.
+- Only 64 bit machines are available in the CI system. Thus, all 32 bit binaries are cross-compiled and tested on WoW64.
+
 ## For running Node.js
 
 Supported versions for running the Node.js installer and executable as released.
@@ -83,4 +87,3 @@ These versions are used to build the official releases.
 7. Support for **building addons** with Visual Studio 2013 was removed in v9.0.0.
    - Issue: https://github.com/nodejs/node/issues/13372
    - Pull Request: https://github.com/nodejs/node/pull/14764
-
