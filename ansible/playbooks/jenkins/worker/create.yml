@@ -92,3 +92,31 @@
         special_time: daily
       # ksh does different stdout/err routing
         job: "npm update -g core-validate-commit > & /dev/null"
+
+# Ensure node is not installed anywhere but the linter servers
+- hosts:
+  - test
+  - release
+  - "!test-joyent-freebsd10-x64-2"
+  - "!test-rackspace-freebsd10-x64-1"
+  tasks:
+    - name: remove node and npm packages
+      when: not os|startswith("win") and not os|startswith("zos") and os != "centos5"
+      package:
+        name: "{{ package }}"
+        state: absent
+      loop_control:
+        loop_var: package
+      with_items: [ "node", "nodejs", "npm" ]
+    - name: fail if node is in the path - please uninstall it
+      when: not os|startswith("win")
+      shell: "node -v"
+      register: node_check_cmd
+      failed_when: node_check_cmd.rc == 0
+      changed_when: False
+    - name: fail if node is in the path - please uninstall it
+      when: os|startswith("win")
+      win_shell: "node -v"
+      register: node_check_cmd_win
+      failed_when: node_check_cmd_win.rc == 0
+      changed_when: False
