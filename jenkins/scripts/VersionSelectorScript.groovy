@@ -61,8 +61,11 @@ def buildExclusions = [
   [ /sharedlibs_withoutssl/,          anyType,     lt(10)  ],
   [ /sharedlibs_shared/,              anyType,     lt(9)   ],
 
-  // -------------------------------------------------------
+  // OSX ---------------------------------------------------
+  [ /^osx1010/,                       anyType,     gte(11) ],
+  [ /^osx1011/,                       releaseType, lt(11)  ],
 
+  // -------------------------------------------------------
 ]
 
 def canBuild = { nodeVersion, builderLabel, buildType ->
