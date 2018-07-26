@@ -1,7 +1,18 @@
 server {
     listen *:80;
-    listen [::]:80;
     server_name dist.libuv.org;
+
+    return 301 https://dist.libuv.org$request_uri;
+}
+
+server {
+    listen [::]:443 ssl http2;
+    listen *:443 ssl http2;
+    server_name dist.libuv.org;
+
+    ssl_certificate ssl/libuv_chained.crt;
+    ssl_certificate_key ssl/libuv.key;
+    ssl_trusted_certificate ssl/libuv_chained.crt;
 
     keepalive_timeout 60;
     server_tokens off;
@@ -9,6 +20,7 @@ server {
     resolver 8.8.4.4 8.8.8.8 valid=300s;
     resolver_timeout 10s;
 
+    add_header Strict-Transport-Security max-age=63072000;
     add_header X-Frame-Options DENY;
     add_header X-Content-Type-Options nosniff;
 
