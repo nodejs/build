@@ -1,50 +1,69 @@
 # Node.js build WG onboarding
 
-This document outlines what things future members of the build WG should be
-acquainted with. It might be expanded into additional documentation down
-the road.
+This document is an outline of the things we tell new Build WG members at their
+onboarding session.
+
+### Before the onboarding session
+
+* Email the new member and obtain their public GPG key
+* Add them to the `test` group in `nodejs-private/secrets`
+* Add them to the `nodejs/build` and `nodejs-private/build` GitHub teams
+* Ask them to start looking over `services.md` and `jenkins-guide.md`,
+  and to try and have any questions ready
+* Ask the onboardee to install:
+  * Ruby and the `dotgpg` gem
+  * Python 2.7 and Ansible
 
 ### General information
 
-  - Responsibilities
-  - Members/"who does what"/interest areas
-  - Technologies and software in use
-
+* Responsibilities: The Build WG manages everything in
+  [`doc/services.md`](doc/services.md)
+* Members/"who does what"/interest areas
+* Technologies and software in use
 
 ### CI/Jenkins
 
-  - `nodejs/build` ci access
-  - CI and CI-Release
-  - Setting up a node
-  - `iptables`/infra group
-  - Jobs
-
+* Public CI (ci.nodejs.org)
+  * `nodejs/jenkins-admins` are administrators
+  * Tests Node.js itself, and several other Foundation projects
+* Release CI (ci-release.nodejs.org)
+  * `nodejs/jenkins-release-admins` are administrators
+  * What creates and publishes all releases of Node.js
 
 ### Secrets
 
-  - Different access groups
-  - Using dotGPG
-
+* All production secrets are stored in the `build` directory of the
+[`nodejs-private/secrets` repository][]
+* The access groups are explained in [`doc/access.md`](doc/access.md)
+* Say you want to decrypt the file `a.txt`, you'd run `dotgpg cat a.txt`
+* Follow the instructions in [`doc/ssh.md`](doc/ssh.md) to setup the secrets
+  repo and SSH access locally
 
 ### Ansible
 
-  - Build repo layout
-  - Adding a node
-  - Running the playbook
-  - Common tasks
-
-
-### Build admin
-
-  - Common tasks
-    - Restarting a node/jenkins
-    - Fixing issues (trailing node processes, etc)
-  - Windows access
-
+* Ansible scripts are used to setup and maintain all machines
+* See [`doc/services.md`](doc/services.md) for which playbooks
+  correspond to different machines
+* Go over [`ansible/README.md`](ansible/README.md) for Ansible setup
+  instructions
+* Have the onboardee practice running the `jenkins/worker/create.yml` playbook
+  on one of the machines in the test CI cluster
+* Windows access
 
 ### Communication
 
-  - GitHub: PR/Issue workflow: committing/merging
-  - IRC
-  - `ci-alert@` and general email
-  - Build group meetings
+* GitHub Issues are used to manage tasks within the Build WG
+* Use GitHub Pull Requests to suggest, and then land, changes
+  * Keep open for at least 48 hours during the week (72 hours on the weekend)
+  * Get at least one approval from another WG member
+  * Land PRs with the same commit metadata you'd use in `nodejs/node`
+* IRC (specifically `#node-build` is important for communicating with
+  other Node.js project members, and how we receive many initial signals
+  of downtime
+    * IRC logs are maintained at http://logs.libuv.org/node-build
+* Build WG meetings are every 2-3 weeks, and you should try and attend
+  as many as possible. The meetings are listed in the [Node.js
+Foundation calendar][].
+
+[`nodejs-private/secrets` repository]: https://github.com/nodejs-private/secrets
+[Node.js Foundation calendar]: https://nodejs.org/calendar
