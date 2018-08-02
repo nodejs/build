@@ -8,8 +8,8 @@ if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
   esac
 fi
 
-  # get node version
-if [ "$NODE_MAJOR_VERSIONX" = "X" ]; then
+# get node version
+if [ -z ${NODE_MAJOR_VERSION+x} ]; then
   NODE_VERSION="$(python tools/getnodeversion.py)"
   NODE_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
 fi
