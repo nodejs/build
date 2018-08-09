@@ -156,5 +156,5 @@ encrypted form in the [secrets repo][].
 [#524]: https://github.com/nodejs/build/pull/524
 [IRC]: /README.md#nodejs-build-working-group
 [the Readme]: /README.md
-[the onboarding doc]: /ONBOARDING.md
+[the onboarding doc]: ./onboarding.md
 [`nodejs-foundation`]: https://www.npmjs.com/~nodejs-foundation
