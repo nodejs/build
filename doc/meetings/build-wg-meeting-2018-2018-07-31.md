@@ -26,7 +26,7 @@
 ### nodejs/build
 
 * policy: no use of PR code in live jobs [#1378](https://github.com/nodejs/build/issues/1378)
-  * Discussed in last meeting.  Want to balance reliability of infa versus getting things done.
+  * Discussed in last meeting.  Want to balance reliability of infra versus getting things done.
   * Want to formalize how we make changes to public CI.
   * Conclusion is that we should start discussion
   * Rod, we should just agree that we should adopt policy
