@@ -2,7 +2,7 @@
 
 ## Links
 
-* **Recording**:  https://www.youtube.com/watch?v=rzyqeVzHCCg
+* **Recording**: https://www.youtube.com/watch?v=rzyqeVzHCCg
 * **GitHub Issue**: https://github.com/nodejs/build/issues/1387
 
 ## Present
