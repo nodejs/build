@@ -1,0 +1,208 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.2">
+      <projectUrl>https://github.com/nodejs/node/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.28">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>GITHUB_ORG</name>
+          <description>The user/org of the GitHub repo</description>
+          <defaultValue>nodejs</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REPO_NAME</name>
+          <description>The name of the repo</description>
+          <defaultValue>node</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GIT_REMOTE_REF</name>
+          <description>The remote portion of the Git refspec to fetch and test</description>
+          <defaultValue>refs/heads/master</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REBASE_ONTO</name>
+          <description>Optionally, rebase onto the given ref before testing. Leave blank to skip rebasing.</description>
+          <defaultValue></defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>POST_REBASE_SHA1_CHECK</name>
+          <description></description>
+          <defaultValue>After rebasing, check that the resulting commit sha1 matches the given one. If left blank, no check is performed.</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>IGNORE_FLAKY_TESTS</name>
+          <description>Mark the build as unstable instead of failure if only flaky tests fail</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>CONFIG_FLAGS</name>
+          <description>Add arguments to ./configure</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>CI_JS_SUITES</name>
+          <description>Suites to run tools/test.py for, separated by spaces (e.g. internet)</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TEST_ARGS</name>
+          <description>Additional arguments to pass to `python tools/test.py` (e.g. --worker)</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <org.jvnet.jenkins.plugins.nodelabelparameter.LabelParameterDefinition plugin="nodelabelparameter@1.7.2">
+          <name>PLATFORM_LABEL</name>
+          <description></description>
+          <defaultValue>ubuntu1604-64</defaultValue>
+          <allNodesMatchingLabel>false</allNodesMatchingLabel>
+          <triggerIfResult>allCases</triggerIfResult>
+          <nodeEligibility class="org.jvnet.jenkins.plugins.nodelabelparameter.node.AllNodeEligibility"/>
+        </org.jvnet.jenkins.plugins.nodelabelparameter.LabelParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-beta2">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name>origin</name>
+        <refspec>+$GIT_REMOTE_REF:refs/remotes/origin/_jenkins_local_branch</refspec>
+        <url>git@github.com:$GITHUB_ORG/$REPO_NAME.git</url>
+        <credentialsId>96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>refs/heads/_jenkins_local_branch</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GithubWeb">
+      <url></url>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanCheckout/>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>false</shallow>
+        <noTags>true</noTags>
+        <reference>/data/iojs/git/io.js.reference</reference>
+        <timeout>20</timeout>
+        <depth>0</depth>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
+      <org.nodejs.jenkinsplugins.nodeversion.NodeVersionExtension plugin="node-version-jenkins-plugin@1.0-SNAPSHOT">
+        <exportNodejsVersion>true</exportNodejsVersion>
+      </org.nodejs.jenkinsplugins.nodeversion.NodeVersionExtension>
+    </extensions>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <customWorkspace>node-test-commit-custom-suites</customWorkspace>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>curl https://raw.githubusercontent.com/nodejs/build/master/jenkins/scripts/node-test-commit-pre.sh | bash -ex -s before</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>#/bin/bash
+
+echo $NODE_NAME
+
+rm -rf build
+git clone https://github.com/nodejs/build.git
+. ./build/jenkins/scripts/select-compiler.sh
+
+SKIP_MESSAGE=&quot;ok&quot;
+REVELANT_VERSION=1
+if [ &quot;$NODEJS_MAJOR_VERSION&quot; -lt &quot;6&quot; ]; then
+  REVELANT_VERSION=
+  # 390 is only supported on v6 and later for now
+  SKIP_MESSAGE=&quot;ok # skipped s390 not supported for versions less than 6, skipping&quot;
+fi
+
+RELEVANT_SUITE=1
+if [ &quot;$CI_JS_SUITES&quot; = &quot;v8-updates&quot; ] &amp;&amp; [ &quot;$NODEJS_MAJOR_VERSION&quot; -lt &quot;11&quot; ]; then
+  RELEVANT_SUITE=
+fi
+
+if [ &quot;$TEST_ARGS&quot; = &quot;--worker&quot; ] &amp;&amp; [ &quot;$NODEJS_MAJOR_VERSION&quot; -lt &quot;10&quot; ]; then
+  RELEVANT_SUITE=
+fi
+
+JOBS=$(getconf _NPROCESSORS_ONLN)
+
+if [ $REVELANT_VERSION ] &amp;&amp; [ $RELEVANT_SUITE ]; then
+  NODE_TEST_DIR=${HOME}/node-tmp
+  NODE_COMMON_PORT=15000
+  PYTHON=python
+  FLAKY_TESTS=$FLAKY_TESTS_MODE
+  make build-ci -j $JOBS
+  python tools/test.py -j $JOBS -p tap --logfile test.tap --mode=release --flaky-tests=dontcare $TEST_ARGS $CI_JS_SUITES
+else
+  # fake out so we don&apos;t get failures
+  mkdir out
+  echo &quot;1..1&quot; &gt;test.tap
+  echo &quot;ok 1 # skip $SKIP_MESSAGE&quot; &gt;&gt; test.tap
+  echo &quot;  ---&quot; &gt;&gt; test.tap
+  echo &quot;  duration_ms: 4.925&quot; &gt;&gt; test.tap
+  echo &quot;  ...&quot; &gt;&gt; test.tap
+fi</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>curl https://raw.githubusercontent.com/nodejs/build/master/jenkins/scripts/node-test-commit-diagnostics.sh | bash -ex -s after</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>mkdir out/junit || true
+tap2junit -i test.tap -o out/junit/test.xml || true</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.junit.JUnitResultArchiver plugin="junit@1.24">
+      <testResults>out/junit/*.xml</testResults>
+      <keepLongStdio>true</keepLongStdio>
+      <healthScaleFactor>1.0</healthScaleFactor>
+      <allowEmptyResults>true</allowEmptyResults>
+    </hudson.tasks.junit.JUnitResultArchiver>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
+      <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
+        <timeoutSecondsString>900</timeoutSecondsString>
+      </strategy>
+      <operationList>
+        <hudson.plugins.build__timeout.operations.FailOperation/>
+      </operationList>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.10"/>
+  </buildWrappers>
+</project>
