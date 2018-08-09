@@ -1,0 +1,52 @@
+---
+
+#
+# Fix common problems with Jenkins workers
+#
+
+- hosts:
+  - test
+  - release
+  # Benchmarking machine
+  - infra-softlayer-ubuntu1404-x64-2
+
+  tasks:
+    # Clean disk space
+    - name: Get disk space
+      command: "df -h"
+      register: disk_usage
+    - set_fact:
+        disk_usage: "{{ disk_usage.stdout_lines }}"
+    - debug:
+        var: "{{ disk_usage }}"
+
+    - name: Get directories to delete
+      find:
+        paths: /home/iojs/build/workspace
+        patterns: "node-test-binary-arm,node-test-commit-*,libuv-test-commit-*"
+        recurse: no
+        file_type: directory
+      register: directories
+
+    - name: Clean disk space
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      with_items: "{{ directories.files }}"
+
+    - name: Get disk space
+      command: "df -h"
+      register: disk_usage
+    - set_fact:
+        disk_usage: "{{ disk_usage.stdout_lines }}"
+    - debug:
+        var: "{{ disk_usage }}"
+
+    # Clean stale processes
+    - name: Clean stale processes
+      shell: "ps aux | grep iojs | grep -v java | grep -v grep | awk '{print $2}' | xargs -rl kill"
+
+    # Refresh jenkins-worker
+    - name: Refresh jenkins-worker
+      include_role:
+        name: jenkins-worker
