@@ -40,8 +40,8 @@
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>POST_REBASE_SHA1_CHECK</name>
-          <description></description>
-          <defaultValue>After rebasing, check that the resulting commit sha1 matches the given one. If left blank, no check is performed.</defaultValue>
+          <description>After rebasing, checks that the resulting commit sha1 matches the given one. If left blank, no check is performed.</description>
+          <defaultValue></defaultValue>
           <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
@@ -92,7 +92,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
-        <refspec>+$GIT_REMOTE_REF:refs/remotes/origin/_jenkins_local_branch</refspec>
+        <refspec>+refs/heads/*:refs/remotes/origin/* +$GIT_REMOTE_REF:refs/remotes/origin/_jenkins_local_branch</refspec>
         <url>git@github.com:$GITHUB_ORG/$REPO_NAME.git</url>
         <credentialsId>96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
