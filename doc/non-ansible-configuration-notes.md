@@ -64,7 +64,6 @@ Invoke-WebRequest $ansibleURL -OutFile ConfigureRemotingForAnsible.ps1
 rm ConfigureRemotingForAnsible.ps1
 ```
 
-
 ## macOS
 
 TODO: Update and copy notes from <https://github.com/nodejs/build/tree/master/setup/osx>
@@ -80,6 +79,10 @@ The jenkins-workspace hosts are setup as standard Node.js nodes but are only giv
 * Download the Coverity Build Tool for Linux x64 at <https://scan.coverity.com/download> (requires a Coverity login)
 * Extract to `/var`, e.g. so the resulting directory looks like `/var/cov-analysis-linux64-2017.07/` or similar
 * Ensure that the [node-coverity-daily](https://ci.nodejs.org/job/node-daily-coverity/configure) job matches the path used in its explicit `PATH` setting
+
+## SmartOS
+
+Joyent SmartOS machines use `libsmartsshd.so` for PAM SSH authentication in order to look up SSH keys allowed to access machines. Part of our Ansible setup removes this so we can only rely on traditional SSH authentication. Therefore, it is critcal to put `nodejs_test_*` public keys into `$USER/.ssh/authorized_keys` as appropriate or access will be lost and not recoverable after reboot or sshd restart (part of Ansible setup).
 
 ## Raspberry Pi
 
