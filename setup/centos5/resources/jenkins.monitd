@@ -1,4 +1,0 @@
-check process jenkins
-  with pidfile /var/run/jenkins/jenkins.pid
-  start program = "/etc/init.d/jenkins start"
-  stop program  = "/etc/init.d/jenkins stop"

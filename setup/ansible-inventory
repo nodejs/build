@@ -1,11 +1,3 @@
-[iojs-build-centos5]
-iojs-build-centos5-64-1
-test-digitalocean-centos5-x86-1
-test-softlayer-centos5-x64-1
-test-softlayer-centos5-x64-2
-release-digitalocean-centos5-x64-1
-release-softlayer-centos5-x86-1
-
 [iojs-www]
 iojs-www
 
@@ -19,9 +11,6 @@ iojs-jenkins
 iojs-www
 node-www
 iojs-jenkins
-
-[iojs-centos:children]
-iojs-build-centos5
 
 [iojs-aix61]
 test-ibm-aix61-ppc64-1:18822
