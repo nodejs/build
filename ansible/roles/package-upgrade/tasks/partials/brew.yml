@@ -10,7 +10,7 @@
     ignore_errors: yes
 
   - name: Install xcode-tools
-    script: files/partials/install-xcode.sh
+    script: files/install-xcode.sh
     when: xcode.rc > 1
 
   - name: Check if Homebrew is already installed
@@ -20,7 +20,7 @@
 
   - name: Install Homebrew
     become_user: administrator
-    script: files/partials/install-homebrew.sh
+    script: files/install-homebrew.sh
     when: not brew.stat.exists
 
   - name: Upgrade installed packages
