@@ -92,9 +92,6 @@ hosts:
         ubuntu1604_docker-x64-1: {ip: 128.199.198.56}
         ubuntu1604_docker-x64-2: {ip: 138.68.241.115}
 
-    - ibm:
-        aix61-ppc64-1: {ip: 50.200.166.131, port: 18822}
-
     - joyent:
         freebsd10-x64-1: {ip: 72.2.115.15}
         freebsd10-x64-2: {ip: 72.2.114.23}
