@@ -65,6 +65,7 @@ hosts:
 
     - macstadium:
         macos10.11-x64-1: {ip: 207.254.58.162, port: 10013, user: administrator}
+        macos10.10-x64-1: {ip: 207.254.58.162, port: 10014, user: administrator}
 
     - marist:
         zos13-s390x-1: {ip: 148.100.36.135, user: Unix1}
