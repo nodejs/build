@@ -58,13 +58,24 @@ def sendBuildStatus(repo, identifier, status, url, commit, ref) {
         'message': message
         ])
 
-    httpRequest(
-        url: "http://github-bot.nodejs.org:3333/${repo}/jenkins/${path}",
-        httpMode: "POST",
-        timeout: 30,
-        contentType: 'APPLICATION_JSON_UTF8',
-        requestBody: buildPayload
-    )
+    println(buildPayload)
+    
+    def response
+    try {
+        response = httpRequest(
+            url: "http://github-bot.nodejs.org:3333/${repo}/jenkins/${path}",
+            httpMode: "POST",
+            timeout: 30,
+            contentType: 'APPLICATION_JSON_UTF8',
+            requestBody: buildPayload
+        )
+    } catch (Exception e) {
+        println(e.toString())
+        if (response) {
+            println("Status: "+response.status)
+            println("Content: "+response.content)
+        }
+    }
 }
 
 def validateParams(params) {
