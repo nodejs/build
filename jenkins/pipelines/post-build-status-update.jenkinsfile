@@ -22,7 +22,9 @@ pipeline {
         stage('Send status report') {
             steps {
                 validateParams(params)
-                sendBuildStatus(params.REPO, params.IDENTIFIER, params.STATUS, params.URL, params.COMMIT, params.REF)
+                timeout(activity: true, time: 30, unit: 'SECONDS') {
+                    sendBuildStatus(params.REPO, params.IDENTIFIER, params.STATUS, params.URL, params.COMMIT, params.REF)
+                }
             }
         }
     }
@@ -56,11 +58,24 @@ def sendBuildStatus(repo, identifier, status, url, commit, ref) {
         'message': message
         ])
 
-    def script = "curl --ipv4 -s -o /dev/null --connect-timeout 5 -X POST " +
-        "-H 'Content-Type: application/json' -d '${buildPayload}' " +
-        "http://github-bot.nodejs.org:3333/${repo}/jenkins/${path}"
-
-    sh(returnStdout: true, script: script)
+    println(buildPayload)
+    
+    def response
+    try {
+        response = httpRequest(
+            url: "http://github-bot.nodejs.org:3333/${repo}/jenkins/${path}",
+            httpMode: "POST",
+            timeout: 30,
+            contentType: 'APPLICATION_JSON_UTF8',
+            requestBody: buildPayload
+        )
+    } catch (Exception e) {
+        println(e.toString())
+        if (response) {
+            println("Status: "+response.status)
+            println("Content: "+response.content)
+        }
+    }
 }
 
 def validateParams(params) {
