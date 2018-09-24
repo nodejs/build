@@ -1,0 +1,396 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<matrix-project plugin="matrix-project@1.13">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.security.AuthorizationMatrixProperty>
+      <inheritanceStrategy class="org.jenkinsci.plugins.matrixauth.inheritance.InheritParentStrategy"/>
+      <permission>hudson.model.Item.Build:nodejs*n-api</permission>
+      <permission>hudson.model.Item.Build:nodejs*n-api-admins</permission>
+      <permission>hudson.model.Item.Cancel:nodejs*n-api</permission>
+      <permission>hudson.model.Item.Cancel:nodejs*n-api-admins</permission>
+      <permission>hudson.model.Item.Configure:nodejs*n-api-admins</permission>
+      <permission>hudson.model.Item.Delete:nodejs*n-api-admins</permission>
+      <permission>hudson.model.Item.Discover:nodejs*n-api</permission>
+      <permission>hudson.model.Item.Discover:nodejs*n-api-admins</permission>
+      <permission>hudson.model.Item.Move:nodejs*n-api-admins</permission>
+      <permission>hudson.model.Item.Read:nodejs*n-api</permission>
+      <permission>hudson.model.Item.Read:nodejs*n-api-admins</permission>
+      <permission>hudson.model.Item.Workspace:nodejs*n-api-admins</permission>
+      <permission>hudson.model.Run.Delete:nodejs*n-api-admins</permission>
+      <permission>hudson.model.Run.Replay:nodejs*n-api</permission>
+      <permission>hudson.model.Run.Replay:nodejs*n-api-admins</permission>
+      <permission>hudson.model.Run.Update:nodejs*n-api</permission>
+      <permission>hudson.model.Run.Update:nodejs*n-api-admins</permission>
+    </hudson.security.AuthorizationMatrixProperty>
+    <org.jenkinsci.plugins.compressbuildlog.BuildLogCompressor plugin="compress-buildlog@1.2"/>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.2">
+      <projectUrl>https://github.com/nodejs/node/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.28">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>GITHUB_ORG</name>
+          <description>The user/org of the GitHub repo</description>
+          <defaultValue>nodejs</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REPO_NAME</name>
+          <description>The name of the repo</description>
+          <defaultValue>node</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GIT_REMOTE_REF</name>
+          <description>The remote portion of the Git refspec to fetch and test</description>
+          <defaultValue>refs/heads/master</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REBASE_ONTO</name>
+          <description>Optionally, rebase onto the given ref before testing. Leave blank to skip rebasing.</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>POST_REBASE_SHA1_CHECK</name>
+          <description>After rebasing, check that the resulting commit sha1 matches the given one. If left blank, no check is performed.</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>NODES_SUBSET</name>
+          <description>The subset of nodes to run tests on</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>test</string>
+              <string>io.js</string>
+              <string>0.12</string>
+              <string>0.10</string>
+              <string>pure_docs_change</string>
+              <string>all_nodes</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>IGNORE_FLAKY_TESTS</name>
+          <description>Mark the build as unstable instead of failure if only flaky tests fail</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>GIT_ORIGIN_SCHEME</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>https://github.com/</string>
+              <string>git@github.com:</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>POST_STATUS_TO_PR</name>
+          <description>Posts build status updates to a nodejs/node PR.</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <matrixOptions>
+        <throttleMatrixBuilds>true</throttleMatrixBuilds>
+        <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
+      </matrixOptions>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-beta3">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name>origin</name>
+        <refspec>+refs/heads/*:refs/remotes/origin/* +$GIT_REMOTE_REF:refs/remotes/origin/_jenkins_local_branch</refspec>
+        <url>$GIT_ORIGIN_SCHEME$GITHUB_ORG/$REPO_NAME.git</url>
+        <credentialsId>96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>refs/heads/_jenkins_local_branch</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GithubWeb">
+      <url>https://github.com/nodejs/node</url>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanCheckout/>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>false</shallow>
+        <noTags>false</noTags>
+        <reference>/home/iojs/git/io.js.reference</reference>
+        <timeout>20</timeout>
+        <depth>0</depth>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
+      <hudson.plugins.git.extensions.impl.ChangelogToBranch>
+        <options>
+          <compareRemote>origin</compareRemote>
+          <compareTarget>_jenkins_local_branch~1</compareTarget>
+        </options>
+      </hudson.plugins.git.extensions.impl.ChangelogToBranch>
+    </extensions>
+  </scm>
+  <assignedNode>jenkins-workspace</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <axes>
+    <hudson.matrix.LabelAxis>
+      <name>nodes</name>
+      <values>
+        <string>alpine-last-latest-x64</string>
+        <string>alpine-latest-x64</string>
+        <string>centos5-32</string>
+        <string>centos5-64</string>
+        <string>centos6-64</string>
+        <string>centos7-64</string>
+        <string>debian8-64</string>
+        <string>debian8-x86</string>
+        <string>fedora-last-latest-x64</string>
+        <string>fedora-latest-x64</string>
+        <string>ppcbe-ubuntu1404</string>
+        <string>ppcle-ubuntu1404</string>
+        <string>rhel72-s390x</string>
+        <string>ubuntu1204-64</string>
+        <string>ubuntu1204-clang341-64</string>
+        <string>ubuntu1404-32</string>
+        <string>ubuntu1404-64</string>
+        <string>ubuntu1604-32</string>
+        <string>ubuntu1604-64</string>
+        <string>ubuntu1710-x64</string>
+      </values>
+    </hudson.matrix.LabelAxis>
+  </axes>
+  <combinationFilter>NODES_SUBSET==&quot;all_nodes&quot; || NODES_SUBSET==&quot;io.js&quot; || (NODES_SUBSET==&quot;0.12&quot; &amp;&amp; [&quot;centos5-32&quot;,&quot;centos5-64&quot;,&quot;centos6-64&quot;,&quot;centos7-64&quot;,&quot;debian8-64&quot;,&quot;debian8-x86&quot;, &quot;ubuntu1204-64&quot;,&quot;ubuntu1404-32&quot;,&quot;ubuntu1404-64&quot;,&quot;ubuntu1504-64&quot;].contains(nodes)) || (NODES_SUBSET==&quot;0.10&quot; &amp;&amp; [&quot;centos5-32&quot;,&quot;centos5-64&quot;,&quot;centos6-64&quot;,&quot;centos7-64&quot;,&quot;debian8-64&quot;,&quot;ubuntu1204-64&quot;,&quot;ubuntu1404-32&quot;,&quot;ubuntu1404-64&quot;,&quot;ubuntu1504-64&quot;].contains(nodes)) ||  (NODES_SUBSET==&quot;test&quot; &amp;&amp; [&quot;ubuntu1404-64&quot;].contains(nodes))</combinationFilter>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>git --version
+
+# Name and email in git config need to be the same across all jobs
+# so that git rebase --committer-date-is-author-date will produce 
+# the same commit SHA1
+git config --replace-all user.name Dummy
+git config --replace-all user.email dummy@dummy.com
+git config user.name
+git config user.email
+echo $GIT_COMMITTER_NAME
+echo $GIT_AUTHOR_NAME
+
+git rebase --abort || true
+git checkout -f refs/remotes/origin/_jenkins_local_branch
+git config user.name
+git config user.email
+echo $GIT_COMMITTER_NAME
+echo $GIT_AUTHOR_NAME
+
+git status
+git rev-parse HEAD
+git rev-parse $REBASE_ONTO
+
+if [ -n &quot;${REBASE_ONTO}&quot; ]; then
+  git rebase --committer-date-is-author-date $REBASE_ONTO
+fi
+
+if [ -n &quot;${POST_REBASE_SHA1_CHECK}&quot; ]; then
+  check_sha1=${POST_REBASE_SHA1_CHECK}
+  head_sha1=$(git rev-parse HEAD)
+  if [ &quot;$head_sha1&quot; != &quot;$check_sha1&quot; ]; then
+    exit 1
+  fi 
+fi
+</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command># Diagnostics
+set +x
+DIAGFILE=${HOME}/jenkins_diagnostics.txt
+echo &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+TS=&quot;`date`&quot;
+echo $TS
+echo $TS &gt;&gt; ${DIAGFILE}
+echo &quot;Before building&quot; &gt;&gt; ${DIAGFILE}
+echo $BUILD_TAG &gt;&gt; ${DIAGFILE}
+echo $BUILD_URL &gt;&gt; ${DIAGFILE}
+echo $NODE_NAME &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;netstat -anp&quot; &gt;&gt; ${DIAGFILE}
+netstat -anp &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;netstat -gn&quot; &gt;&gt; ${DIAGFILE}
+netstat -gn &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;ps auxww&quot; &gt;&gt; ${DIAGFILE}
+ps auxww &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+mv ${DIAGFILE} ${DIAGFILE}-OLD || true
+tail -c 20000000 ${DIAGFILE}-OLD &gt; ${DIAGFILE} || true
+rm ${DIAGFILE}-OLD || true
+set -x
+pgrep node || true
+</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>set +x
+if test $POST_STATUS_TO_PR = &quot;true&quot;; then
+  curl -s -o /dev/null \
+    --connect-timeout 5 \
+    -X POST \
+    -H &quot;Content-Type: application/json&quot; \
+    -d &quot;{ \
+      \&quot;identifier\&quot;: \&quot;test/linux\&quot;, \
+      \&quot;status\&quot;: \&quot;pending\&quot;, \
+      \&quot;url\&quot;: \&quot;${BUILD_URL}\&quot;, \
+      \&quot;commit\&quot;: \&quot;$(git rev-parse HEAD)\&quot;, \
+      \&quot;ref\&quot;: \&quot;${GIT_REMOTE_REF}\&quot;, \
+      \&quot;message\&quot;: \&quot;running tests\&quot; \
+    }&quot; \
+    http://github-bot.nodejs.org:3333/node/jenkins/start &amp;
+fi</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash
+
+if test $IGNORE_FLAKY_TESTS = &quot;true&quot;
+then
+  FLAKY_TESTS_MODE=dontcare
+else
+  FLAKY_TESTS_MODE=run
+fi
+
+echo FLAKY_TESTS_MODE=$FLAKY_TESTS_MODE
+
+#echo ----------------------------------------------
+#env
+#echo ----------------------------------------------
+
+if [[ &quot;$nodes&quot; =~ clang ]]; then
+  # ubuntu12 clang variant
+  export CC=clang
+  export CXX=clang++
+fi
+
+# clang is only supported in Node versions 7 and lower
+MAJOR_VERSION=`cat src/node_version.h |grep &quot;#define NODE_MAJOR_VERSION&quot; | awk &apos;{ print $3}&apos;`
+RUN_TESTS=&quot;RUN&quot;
+echo $SMARTOS_VERSION
+if [[ &quot;$nodes&quot; =~ clang &amp;&amp; ${MAJOR_VERSION} -gt &quot;7&quot; ]]; then
+  RUN_TESTS=&quot;DONT_RUN&quot;
+fi
+
+if [ &quot;$RUN_TESTS&quot; = &quot;RUN&quot; ]; then
+  # build node
+  ./configure
+  make -j $(getconf _NPROCESSORS_ONLN)
+
+  rm node-nanomsg/ -rf
+  # get the nanomsg source
+  git clone https://github.com/sampsongao/node-nanomsg.git
+  cd node-nanomsg
+  git checkout napi-port-3.2.4
+  git pull
+  # remove 2 tests that fail even when not using N-API
+  rm test/ipc.js test/tcp.js test/standalone/term.js
+  
+  # update dependencies
+  git submodule update --init
+  # install npm dependencies
+  ${WORKSPACE}/out/Release/node ${WORKSPACE}/deps/npm/bin/npm-cli.js install
+
+  # build nanomsg
+  ${WORKSPACE}/out/Release/node ${WORKSPACE}/deps/npm/node_modules/node-gyp/bin/node-gyp.js rebuild --nodedir=${WORKSPACE}
+
+  export NODE_OPTIONS=--napi-modules
+  # run tests here
+  for test in $(find test/*.js test/standalone/*.js); do
+    ${WORKSPACE}/out/Release/node $test &gt; $test&quot;.tap&quot;
+  done
+  # symbols.js is not a regular test, tap file is empty
+  rm test/symbols.js.tap
+  # move tap files to WORKSPACE
+  mv test/*.tap ${WORKSPACE}/
+  mv test/standalone/*.tap ${WORKSPACE}/
+else
+  SKIP_MESSAGE=&quot;clang builds are not supported for version 8 and above, skipping&quot;
+  echo $SKIP_MESSAGE
+  # fake out so we don&apos;t get failures
+  echo &quot;1..1&quot; &gt;${WORKSPACE}/test.tap
+  echo &quot;ok 1 $SKIP_MESSAGE&quot; &gt;&gt;${WORKSPACE}/test.tap
+fi</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command># Diagnostics
+set +x
+DIAGFILE=${HOME}/jenkins_diagnostics.txt
+echo &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+TS=&quot;`date`&quot;
+echo $TS
+echo $TS &gt;&gt; ${DIAGFILE}
+echo &quot;After building&quot; &gt;&gt; ${DIAGFILE}
+echo $BUILD_TAG &gt;&gt; ${DIAGFILE}
+echo $BUILD_URL &gt;&gt; ${DIAGFILE}
+echo $NODE_NAME &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;netstat -anp&quot; &gt;&gt; ${DIAGFILE}
+netstat -anp &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;netstat -gn&quot; &gt;&gt; ${DIAGFILE}
+netstat -gn &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;ps auxww&quot; &gt;&gt; ${DIAGFILE}
+ps auxww &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+mv ${DIAGFILE} ${DIAGFILE}-OLD || true
+tail -c 20000000 ${DIAGFILE}-OLD &gt; ${DIAGFILE} || true
+rm ${DIAGFILE}-OLD || true
+set -x
+pgrep node || true
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.textfinder.TextFinderPublisher plugin="text-finder@1.10">
+      <fileSet>*.tap</fileSet>
+      <regexp>^not ok</regexp>
+      <succeedIfFound>false</succeedIfFound>
+      <unstableIfFound>true</unstableIfFound>
+      <alsoCheckConsoleOutput>false</alsoCheckConsoleOutput>
+    </hudson.plugins.textfinder.TextFinderPublisher>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+  </buildWrappers>
+  <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
+    <runSequentially>false</runSequentially>
+  </executionStrategy>
+</matrix-project>
+    
