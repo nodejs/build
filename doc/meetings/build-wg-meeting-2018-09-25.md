@@ -37,7 +37,7 @@ No announcements
   * No observed crisis so far (nobody has complained that they have been blocked)
   * No progress - skip for now
 * State of Ansible [#1277](https://github.com/nodejs/build/issues/1277)
-  * no updates
+  * all planned migration work done
 * Use of Docker in Build CI [#1226](https://github.com/nodejs/build/issues/1226)
   * Rod gave a good overview 
 
