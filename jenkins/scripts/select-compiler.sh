@@ -6,15 +6,20 @@ if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
     *s390x* ) SELECT_ARCH=S390X ;;
     *aix* ) SELECT_ARCH=AIXPPC ;;
   esac
+  
+  # Get node version
+  if [ -n "${NODEJS_MAJOR_VERSION}" ]; then
+    NODE_MAJOR_VERSION=$NODEJS_MAJOR_VERSION 
+  else
+    NODE_VERSION="$(python tools/getnodeversion.py)"
+    NODE_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
+  fi
 fi
 
 if [ "$SELECT_ARCH" = "PPC64LE" ]; then
   # Set default
   export COMPILER_LEVEL="4.8"
 
-  # Get node version
-  NODE_VERSION="$(python tools/getnodeversion.py)"
-  NODE_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
   echo "Setting compiler for Node version $NODE_MAJOR_VERSION on ppc64le"
 
   if [ "$NODE_MAJOR_VERSION" -gt "9" ]; then
@@ -35,9 +40,6 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
   # Default is 4.8 but it does not have the prefixes
   export COMPILER_LEVEL=""
 
-  # get node version
-  NODE_VERSION="$(python tools/getnodeversion.py)"
-  NODE_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
   echo "Setting compiler for Node version $NODE_MAJOR_VERSION on s390x"
 
   if [ "$NODE_MAJOR_VERSION" -gt "9" ]; then
@@ -54,9 +56,6 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
   echo "Compiler set to $COMPILER_LEVEL"
 
 elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
-  # get node version
-  NODE_VERSION="$(python tools/getnodeversion.py)"
-  NODE_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
   echo "Setting compiler for Node version $NODE_MAJOR_VERSION on AIX"
 
   if [ "$NODE_MAJOR_VERSION" -gt "9" ]; then
