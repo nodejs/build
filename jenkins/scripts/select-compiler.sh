@@ -9,18 +9,18 @@ if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
 fi
 
 # get node version
-if [ -z ${NODE_MAJOR_VERSION+x} ]; then
+if [ -z ${NODEJS_MAJOR_VERSION+x} ]; then
   NODE_VERSION="$(python tools/getnodeversion.py)"
-  NODE_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
+  NODEJS_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
 fi
 
 if [ "$SELECT_ARCH" = "PPC64LE" ]; then
   # Set default
   export COMPILER_LEVEL="4.8"
 
-  echo "Setting compiler for Node version $NODE_MAJOR_VERSION on ppc64le"
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on ppc64le"
 
-  if [ "$NODE_MAJOR_VERSION" -gt "9" ]; then
+  if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
     export PATH=/usr/lib/binutils-2.26/bin/:$PATH
     export COMPILER_LEVEL="4.9"
   fi
@@ -38,9 +38,9 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
   # Default is 4.8 but it does not have the prefixes
   export COMPILER_LEVEL=""
 
-  echo "Setting compiler for Node version $NODE_MAJOR_VERSION on s390x"
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on s390x"
 
-  if [ "$NODE_MAJOR_VERSION" -gt "9" ]; then
+  if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
     export PATH="/data/gcc-4.9/bin:$PATH"
     export LD_LIBRARY_PATH="/data/gcc-4.9/lib64:$LD_LIBRARY_PATH"
     export COMPILER_LEVEL="-4.9"
@@ -55,9 +55,9 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
 
 elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
   # get node version
-  echo "Setting compiler for Node version $NODE_MAJOR_VERSION on AIX"
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX"
 
-  if [ "$NODE_MAJOR_VERSION" -gt "9" ]; then
+  if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
     export LIBPATH=/home/iojs/gmake/opt/freeware/lib:/home/iojs/gcc-6.3.0-1/opt/freeware/lib/gcc/powerpc-ibm-aix6.1.0.0/6.3.0/pthread/ppc64:/home/iojs/gcc-6.3.0-1/opt/freeware/lib
     export PATH="/home/iojs/gcc-6.3.0-1/opt/freeware/bin:$PATH"
     export CC="ccache `which gcc`" CXX="ccache `which g++`" CXX_host="ccache `which g++`"
