@@ -80,3 +80,10 @@
     owner: "binary_tmp"
     group: "binary_tmp"
     mode: 0755
+
+- name: Increase the maximum number of connections trying to authenticate
+  notify: restart sshd
+  lineinfile:
+    line: "MaxStartups 100:30:150"
+    dest: "{{ ssh_config }}"
+    regexp: "MaxStartups"
