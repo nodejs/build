@@ -87,3 +87,22 @@
     line: "MaxStartups 100:30:150"
     dest: "{{ ssh_config }}"
     regexp: "MaxStartups"
+
+- name: Create clean-up script
+  copy:
+    src: "{{ role_path }}/files/clean_binary_tmp.sh"
+    dest: "~binary_tmp/clean_binary_tmp.sh"
+    owner: "binary_tmp"
+    group: "binary_tmp"
+    mode: 0755
+
+- name: Schedule clean-up script to run daily
+  lineinfile:
+    line: "0 5	* * *	binary_tmp	~binary_tmp/clean_binary_tmp.sh"
+    dest: "/etc/crontab"
+    regexp: "clean_binary_tmp"
+
+- name: Disable automatic garbage collection
+  command: "git config gc.auto 0"
+  args:
+    chdir: "~binary_tmp/binary_tmp.git/"
