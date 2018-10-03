@@ -1,0 +1,13 @@
+---
+
+#
+# variables for jenkins-workspace
+#
+
+ssh_config: /etc/ssh/sshd_config
+
+sshd_service_map: {
+  'ubuntu1604': 'ssh',
+}
+
+sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripversion])|default('sshd') }}"
