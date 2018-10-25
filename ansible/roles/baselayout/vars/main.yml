@@ -70,6 +70,10 @@ packages: {
     'gcc-c++,sudo',
   ],
 
+  rhel72_s390x: [
+    'at-spi2-core-devel',
+  ],
+
   smartos: [
     'gccmakedep',
     'git',
@@ -103,5 +107,9 @@ packages: {
 
   ubuntu1404: [
     'ntp,g++-4.8,gcc-4.8,g++-4.9,gcc-4.9,binutils-2.26',
+  ],
+
+  ubuntu1404_ppc64le: [
+    'libatspi2.0-dev'
   ]
 }
