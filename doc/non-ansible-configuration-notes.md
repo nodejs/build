@@ -11,10 +11,10 @@ sudo apt-get install software-properties-common
 sudo add-apt-repository ppa:certbot/certbot
 sudo apt-get update
 sudo apt-get install python-certbot-nginx
-mkdir -p /home/libuv/www/.well-known/acme-challenge/
-certbot --manual certonly -d dist.libuv.org -m build@iojs.org
-# take the CODE and the FILE and insert into the following command:
-echo "CODE" > /home/libuv/www/.well-known/acme-challenge/FILE
+certbot --nginx run -d dist.libuv.org -m build@iojs.org --agree-tos --no-redirect
+certbot --nginx run -d iojs.org -m build@iojs.org --agree-tos --no-redirect
+certbot --nginx run -d www.iojs.org -m build@iojs.org --agree-tos --no-redirect
+certbot --nginx run -d roadmap.iojs.org -m build@iojs.org --agree-tos --no-redirect
 ```
 
 ## Windows (Azure/Rackspace)
