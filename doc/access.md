@@ -75,7 +75,7 @@ are as follows.
 Note that the machines that our Jenkins instances run on are `infra` machines,
 and thus any task that requires access to the machine requires `infra` access.
 
-### [ci.nodejs.org](ci.nodejs.org)
+### [ci.nodejs.org](https://ci.nodejs.org)
 
 - [@nodejs/collaborators][] have access to run Node core tests.
 
@@ -89,7 +89,7 @@ configure machines).
 
 - [@nodejs/jenkins-admins][] have admin access.
 
-### [ci-release.nodejs.org](ci-release.nodejs.org)
+### [ci-release.nodejs.org](https://ci-release.nodejs.org)
 
 - [@nodejs/release][] have access to run builds.
 
