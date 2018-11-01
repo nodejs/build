@@ -2,97 +2,17 @@ server {
     listen *:80;
     server_name iojs.org www.iojs.org;
 
-    return 301 https://iojs.org$request_uri;
+    return 301 https://nodejs.org;
 }
 
 server {
     listen [::]:443 ssl http2;
     listen *:443 ssl http2;
-    server_name www.iojs.org;
+    server_name iojs.org www.iojs.org;
 
     ssl_certificate ssl/iojs_chained.crt;
     ssl_certificate_key ssl/iojs.key;
     ssl_trusted_certificate ssl/iojs_chained.crt;
 
-    return 301 https://iojs.org$request_uri;
-}
-
-server {
-    listen [::]:443 ssl http2;
-    listen *:443 ssl http2;
-    server_name iojs.org;
-
-    ssl_certificate ssl/iojs_chained.crt;
-    ssl_certificate_key ssl/iojs.key;
-    ssl_trusted_certificate ssl/iojs_chained.crt;
-
-    keepalive_timeout 60;
-    server_tokens off;
-
-    resolver 8.8.4.4 8.8.8.8 valid=300s;
-    resolver_timeout 10s;
-
-    add_header Strict-Transport-Security max-age=63072000;
-    add_header X-Frame-Options DENY;
-    add_header X-Content-Type-Options nosniff;
-
-    access_log /var/log/nginx/iojs/iojs.org-access.log nodejs;
-    error_log /var/log/nginx/iojs/iojs.org-error.log;
-
-    gzip on;
-    gzip_static on;
-    gzip_disable "MSIE [1-6]\.";
-    gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
-
-    root /home/www/iojs;
-    default_type text/plain;
-    index index.html;
-
-    location / {
-        rewrite ^/$ /en/ redirect;
-
-        location ~ \.json$ {
-            add_header access-control-allow-origin *;
-        }
-    }
-
-    location /download {
-        alias /home/dist/iojs;
-        autoindex on;
-        default_type text/plain;
-
-        location ~ \.json$ {
-            add_header access-control-allow-origin *;
-        }
-    }
-
-    location /dist {
-        alias /home/dist/iojs/release/;
-        autoindex on;
-        default_type text/plain;
-
-        location ~ \.json$ {
-            add_header access-control-allow-origin *;
-        }
-    }
-
-    location /docs {
-        alias /home/dist/iojs/docs/;
-        autoindex on;
-        default_type text/html;
-
-        location ~ \.json$ {
-            add_header access-control-allow-origin *;
-        }
-    }
-
-    location /api {
-        alias /home/dist/iojs/docs/latest/api;
-        autoindex on;
-        default_type text/plain;
-
-        location ~ \.json$ {
-            add_header access-control-allow-origin *;
-        }
-    }
+    return 301 https://nodejs.org;
 }
