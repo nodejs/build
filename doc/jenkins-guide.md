@@ -50,7 +50,7 @@ important role in facilitating their testing.
 
 ##### Before the release
 
-About 24 hours before a release is published, the [public CI](ci.nodejs.org)
+About 24 hours before a release is published, the [public CI](https://ci.nodejs.org)
 must be "locked down" to prevent anyone from interfering in the testing of the
 release.
 
