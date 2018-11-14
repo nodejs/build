@@ -92,3 +92,16 @@ server {
         }
     }
 }
+
+server {
+    listen *:80;
+    listen *:443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name roadmap.iojs.org;
+
+    ssl_certificate ssl/iojs_chained.crt;
+    ssl_certificate_key ssl/iojs.key;
+    ssl_trusted_certificate ssl/iojs_chained.crt;
+
+    return 301 https://nodejs.org;
+}
