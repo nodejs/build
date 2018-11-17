@@ -63,14 +63,9 @@ missing please open an issue. If you are interested in joining check out
 
 <!-- ncu-team-sync.team(nodejs/github-bot) -->
 
-- [@Fishrock123](https://github.com/Fishrock123) - Jeremiah Senkpiel
-- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
-- [@maclover7](https://github.com/maclover7) - Jon Moss
-- [@mscdex](https://github.com/mscdex) - mscdex
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
-- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
-- [@williamkapke](https://github.com/williamkapke) - William Kapke
+- [@refack](https://github.com/refack) - Refael Ackermann
 
 <!-- ncu-team-sync end -->
 
