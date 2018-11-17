@@ -1,0 +1,4 @@
+Host benchmark
+  HostName 50.97.245.4
+  User benchmark
+  IdentityFile ~/.ssh/benchmark_id_rsa

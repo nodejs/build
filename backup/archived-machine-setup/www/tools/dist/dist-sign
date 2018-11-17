@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -e
+
+site=$1
+
+if [ "X$site" != "Xiojs" ] && [ "X$site" != "Xnodejs" ]; then
+  echo "Usage: dist-sign < iojs | nodejs > <version>"
+  exit 1
+fi
+
+if [ "X$2" == "X" ]; then
+  echo "Usage: dist-sign < iojs | nodejs > <version>"
+  exit 1
+fi
+
+/home/staging/tools/promote/resha_release.sh $1 $2

@@ -1,0 +1,55 @@
+server {
+    listen *:80;
+    listen [::]:80;
+    server_name dist.libuv.org;
+
+    resolver 8.8.4.4 8.8.8.8 valid=300s;
+    resolver_timeout 10s;
+
+    access_log /var/log/nginx/libuv/libuv.org-access.log nodejs;
+    error_log /var/log/nginx/libuv/libuv.org-error.log;
+
+    location ~ ^/(?!(\.well-known)) {
+        rewrite ^ https://dist.libuv.org$request_uri permanent;
+    }
+
+    root /home/libuv/www;
+    default_type text/plain;
+    index index.html;
+    autoindex on;
+
+}
+
+server {
+    listen *:443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name dist.libuv.org;
+
+    ssl_certificate /etc/letsencrypt/live/dist.libuv.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/dist.libuv.org/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    keepalive_timeout 60;
+    server_tokens off;
+
+    resolver 8.8.4.4 8.8.8.8 valid=300s;
+    resolver_timeout 10s;
+
+    add_header Strict-Transport-Security max-age=63072000;
+    add_header X-Frame-Options DENY;
+    add_header X-Content-Type-Options nosniff;
+
+    access_log /var/log/nginx/libuv/libuv.org-access.log nodejs;
+    error_log /var/log/nginx/libuv/libuv.org-error.log;
+
+    gzip on;
+    gzip_static on;
+    gzip_disable "MSIE [1-6]\.";
+    gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
+
+    root /home/libuv/www;
+    default_type text/plain;
+    index index.html;
+    autoindex on;
+}

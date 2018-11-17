@@ -1,0 +1,39 @@
+- name: dist-indexer | Install dist-indexer
+  command: "npm install nodejs-dist-indexer -g"
+  tags: dist-indexer
+
+- name: latest-linker | Install latest-linker
+  command: "npm install nodejs-latest-linker -g"
+  tags: latest-linker
+
+- name: nightly-builder | Install nightly-builder
+  command: "npm install nodejs-nightly-builder -g"
+  tags: nightly-builder
+
+- name: nightly-builder | Copy config
+  template:
+    src: ./resources/config/nightly-builder.json.j2
+    dest: /etc/nightly-builder.json
+    mode: 0644
+  tags: nightly-builder
+
+- name: nightly-builder-chakracore | Copy config
+  template:
+    src: ./resources/config/nightly-builder-chakracore.json.j2
+    dest: /etc/nightly-builder-chakracore.json
+    mode: 0644
+  tags: nightly-builder
+
+  #TODO: the branches are hardwired here, they should be in vars somewhere
+- name: tools | Add periodic tasks to crontab
+  lineinfile:
+    dest: /etc/crontab
+    line: "{{ item }}"
+  with_items:
+  # 07:00UTC is 00:00PST and 03:00EST
+    - '0 6     * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/master --config /etc/nightly-builder.json'
+    - '0 8     * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/v9.x-staging --config /etc/nightly-builder.json'
+    - '0 10    * * *   dist    /usr/bin/nodejs-nightly-builder --type v8-canary --ref heads/canary --config /etc/nightly-builder-v8-canary.json'
+    - '0 4     * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/v9.x --config /etc/nightly-builder-chakracore.json'
+    - '0 5     * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/master --config /etc/nightly-builder-chakracore.json'
+  tags: tools

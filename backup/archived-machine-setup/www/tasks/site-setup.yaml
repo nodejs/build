@@ -1,0 +1,119 @@
+- name: Site Setup | Copy build-site scripts
+  copy:
+    src: ./resources/scripts/{{ item }}
+    dest: /home/nodejs/{{ item }}
+    mode: 0700
+    owner: nodejs
+    group: nodejs
+  with_items:
+    - build-site.sh
+    - build-benchmarking-site.sh
+    - check-build-site.sh
+  tags: setup
+
+- name: Site Setup | Make /home/www
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: nodejs
+  with_items:
+    - /home/www
+    - /home/www/iojs
+    - /home/www/nodejs
+    - /home/www/github
+    - /home/www/benchmarking
+    - /home/www/coverage
+  tags: setup
+
+- name: Site Setup | Make /home/nodejs/.ssh
+  file:
+    path: /home/nodejs/.ssh
+    state: directory
+    mode: 0700
+    owner: nodejs
+  tags: setup
+
+- name: Site Setup | Copy benchmark_id_rsa key
+  copy:
+    src: ./resources/secrets/benchmark_id_rsa.key
+    dest: /home/nodejs/.ssh/benchmark_id_rsa
+    mode: 0600
+    owner: nodejs
+    group: nodejs
+  tags: setup
+
+- name: Site Setup | Copy nodejs SSH config
+  template:
+    src: ./resources/config/nodejs_ssh_config.j2
+    dest: /home/nodejs/.ssh/config
+    mode: 0600
+    owner: nodejs
+    group: nodejs
+  tags: setup
+
+- name: Site Setup | Copy cdn-purge.sh script
+  template:
+    src: ./resources/scripts/cdn-purge.sh.j2
+    dest: /home/nodejs/cdn-purge.sh
+    mode: 0700
+    owner: root
+    group: root
+  tags: setup
+
+- name: Site Setup | Copy queue-cdn-purge.sh script
+  copy:
+    src: ./resources/scripts/queue-cdn-purge.sh
+    dest: /home/nodejs/queue-cdn-purge.sh
+    mode: 0755
+    owner: root
+    group: root
+  tags: setup
+
+- name: Site Setup | Copy sync-benchmarking.sh script
+  copy:
+    src: ./resources/scripts/sync-benchmarking.sh
+    dest: /home/nodejs/sync-benchmarking.sh
+    mode: 0755
+    owner: root
+    group: root
+  tags: setup
+
+- name: Site Setup | Make /home/nodejs/.npm
+  file:
+    path: /home/nodejs/.npm
+    state: directory
+    mode: 0755
+    owner: nodejs
+  tags: setup
+
+- name: Site Setup | Make /var/run/nodejs
+  file:
+    path: /var/run/nodejs
+    state: directory
+    mode: 0755
+    owner: nodejs
+  tags: setup
+
+- name: Site Setup | Initial nodejs, iojs and benchmarking clone and update
+  become: yes
+  become_user: "nodejs"
+  command: "{{ item }}"
+  with_items:
+    - "/home/nodejs/build-site.sh nodejs"
+    - "/home/nodejs/build-site.sh iojs"
+    - "/home/nodejs/build-benchmarking-site.sh"
+  tags: setup
+
+- name: Site Setup | Add periodic tasks to crontab
+  lineinfile:
+    dest: /etc/crontab
+    line: "{{ item }}"
+  with_items:
+    - '*/5 *   * * *   dist    /home/staging/tools/promote/promote_nightly.sh nodejs'
+    - '*/5 *   * * *   dist    /home/staging/tools/promote/promote_nightly.sh iojs'
+    - '*  *    * * *   nodejs  /home/nodejs/check-build-site.sh nodejs'
+    - '*  *    * * *   nodejs  /home/nodejs/check-build-site.sh iojs'
+    - '*  *    * * *   root    /home/nodejs/cdn-purge.sh'
+    - '* */4   * * *   nodejs  /home/nodejs/sync-benchmarking.sh'
+  tags: setup

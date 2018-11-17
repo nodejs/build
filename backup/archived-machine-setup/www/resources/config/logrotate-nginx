@@ -1,0 +1,37 @@
+/var/log/nginx/access.log
+/var/log/nginx/error.log
+/var/log/nginx/nodejs/nodejs.org-access.log
+/var/log/nginx/nodejs/nodejs.org-error.log
+/var/log/nginx/iojs/iojs.org-access.log
+/var/log/nginx/iojs/iojs.org-error.log
+/var/log/nginx/libuv/libuv.org-access.log
+/var/log/nginx/libuv/libuv.org-error.log
+/var/log/nginx/benchmarking/benchmarking.nodejs.org-access.log
+/var/log/nginx/benchmarking/benchmarking.nodejs.org-error.log
+/var/log/nginx/coverage/coverage.nodejs.org-access.log
+/var/log/nginx/coverage/coverage.nodejs.org-error.log
+{
+        daily
+        missingok
+        compresscmd /usr/bin/xz
+        uncompresscmd /usr/bin/unxz
+        compressext .xz
+        compress
+        delaycompress
+        notifempty
+        create 0640 www-data adm
+        dateext
+        dateformat .%Y%m%d.%s
+        dateyesterday
+        maxsize 500M
+        sharedscripts
+        rotate 36500
+        prerotate
+                if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+                        run-parts /etc/logrotate.d/httpd-prerotate; \
+                fi \
+        endscript
+        postrotate
+                [ -s /run/nginx.pid ] && kill -USR1 `cat /run/nginx.pid`
+        endscript
+}

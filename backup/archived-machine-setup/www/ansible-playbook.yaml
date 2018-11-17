@@ -1,0 +1,34 @@
+---
+- hosts: node-www
+  remote_user: root
+
+  tasks:
+    - include_vars: ansible-vars.yaml
+      tags: vars
+
+    - include: tasks/base.yaml
+      tags: base
+
+    - include: tasks/user.yaml
+      tags: user
+
+    - include: tasks/docker.yaml
+      tags: docker
+
+    - include: tasks/site-setup.yaml
+      tags: setup
+
+    - include: tasks/webhook.yaml
+      tags: webhook
+
+    - include: tasks/nginx.yaml
+      tags: nginx
+
+    - include: tasks/promote.yaml
+      tags: promote
+
+    - include: tasks/tools.yaml
+      tags: tools
+
+    - include: tasks/metrics.yaml
+      tags: metrics

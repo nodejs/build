@@ -1,0 +1,30 @@
+- name: promote | Make /home/staging/tools/promote
+  file:
+    path: /home/staging/tools/promote
+    state: directory
+    mode: 0755
+    owner: staging
+    group: staging
+  tags: promote
+
+- name: promote | Copy source files
+  copy:
+    src: tools/promote/
+    dest: /home/staging/tools/promote/
+    owner: root
+    group: dist
+    mode: 0750
+  tags: promote
+
+- name: promote | Copy dist promote files
+  copy:
+    src: tools/dist/{{ item }}
+    dest: /usr/local/bin/{{ item }}
+    owner: dist
+    group: dist
+    mode: 0750
+  with_items:
+    - dist-promotable
+    - dist-promote
+    - dist-sign
+  tags: promote
