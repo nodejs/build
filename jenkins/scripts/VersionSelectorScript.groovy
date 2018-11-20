@@ -12,7 +12,7 @@ def buildExclusions = [
   // Machine Label,                   Build Type,  Node Version
 
   // Linux -------------------------------------------------
-  [ /^centos5/,                       anyType,     gte(8)  ],
+  [ /^centos5/,                       anyType,     gte(9)  ],
   [ /^centos6/,                       releaseType, lt(8)   ],
   [ /centos[67]-(arm)?(64|32)-gcc48/, anyType,     gte(10) ],
   [ /centos[67]-(arm)?(64|32)-gcc6/,  anyType,     lt(10)  ],
