@@ -1,4 +1,5 @@
 server {
+    listen [::]:80;
     listen *:80;
     server_name iojs.org www.iojs.org;
 
@@ -9,22 +10,19 @@ server {
     listen [::]:443 ssl http2;
     listen *:443 ssl http2;
     server_name www.iojs.org;
-
-    ssl_certificate ssl/iojs_chained.crt;
-    ssl_certificate_key ssl/iojs.key;
-    ssl_trusted_certificate ssl/iojs_chained.crt;
+    ssl_certificate /etc/letsencrypt/live/www.iojs.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/www.iojs.org/privkey.pem; # managed by Certbot
 
     return 301 https://iojs.org$request_uri;
+
 }
 
 server {
     listen [::]:443 ssl http2;
     listen *:443 ssl http2;
     server_name iojs.org;
-
-    ssl_certificate ssl/iojs_chained.crt;
-    ssl_certificate_key ssl/iojs.key;
-    ssl_trusted_certificate ssl/iojs_chained.crt;
+    ssl_certificate /etc/letsencrypt/live/iojs.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/iojs.org/privkey.pem; # managed by Certbot
 
     keepalive_timeout 60;
     server_tokens off;
@@ -49,11 +47,7 @@ server {
     index index.html;
 
     location / {
-        rewrite ^/$ /en/ redirect;
-
-        location ~ \.json$ {
-            add_header access-control-allow-origin *;
-        }
+        return 301 https://nodejs.org;
     }
 
     location /download {
@@ -95,4 +89,17 @@ server {
             add_header access-control-allow-origin *;
         }
     }
+}
+
+server {
+    listen *:80;
+    listen [::]:80;
+    listen *:443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name roadmap.iojs.org;
+
+    ssl_certificate /etc/letsencrypt/live/roadmap.iojs.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/roadmap.iojs.org/privkey.pem; # managed by Certbot
+
+    return 301 https://nodejs.org;
 }
