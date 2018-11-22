@@ -1,7 +1,7 @@
 # This script is run by the job:
 # https://ci.nodejs.org/view/All/job/node-update-ecmascript-modules
-# It mirrors the master branch from node/node with nodejs/ecmascript-modules and
-# then attempts to rebase the modules-lkgr branch on top of it.
+# It mirrors the master branch from nodejs/node with nodejs/ecmascript-modules
+# and then attempts to rebase the modules-lkgr branch on top of it.
 
 cd node
 git config --replace-all user.name "Node.js Jenkins CI"
