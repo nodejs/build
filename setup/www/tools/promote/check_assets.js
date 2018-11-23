@@ -6,6 +6,11 @@ const childProcess = require('child_process')
 const assert = require('assert')
 
 const versionRe = /^v\d+\.\d+\.\d+$/
+const additionalDistAssets = [
+  'SHASUMS256.txt',
+  'SHASUMS256.txt.asc',
+  'SHASUMS256.txt.sig'
+]
 
 const stagingDir = process.argv[2]
 const distDir = process.argv[3]
@@ -21,27 +26,32 @@ if (stagingDir === 'test') {
 async function checkArgs () {
   let bad = false
   let dirStat
-  try {
-    dirStat = await fs.stat(stagingDir)
-  } catch (e) {}
 
-  if (!dirStat || !dirStat.isDirectory()) {
-    bad = true
-    console.error('Staging directory not found')
-  }
+  if (stagingDir && distDir) {
+    try {
+      dirStat = await fs.stat(stagingDir)
+    } catch (e) {}
 
-  if (!versionRe.test(path.basename(stagingDir))) {
-    bad = true
-    console.error(`Bad staging directory name: ${stagingDir}`)
-  }
+    if (!dirStat || !dirStat.isDirectory()) {
+      bad = true
+      console.error('Staging directory not found')
+    }
 
-  if (!distDir || !versionRe.test(path.basename(distDir))) {
+    if (!versionRe.test(path.basename(stagingDir))) {
+      bad = true
+      console.error(`Bad staging directory name: ${stagingDir}`)
+    }
+
+    if (!distDir || !versionRe.test(path.basename(distDir))) {
+      bad = true
+      console.error(`Bad dist directory name: ${distDir}`)
+    }
+  } else {
     bad = true
-    console.error(`Bad dist directory name: ${distDir}`)
   }
 
   if (bad) {
-    console.error('Usage: check_assets.js <path to staging directory>')
+    console.error('Usage: check_assets.js <path to staging directory> <path to dist directory>')
     process.exit(1)
   }
 }
@@ -120,13 +130,17 @@ async function execute () {
   console.log('... Checking assets')
 
   let caution = false
+  let update = false
+
   const version = path.basename(stagingDir)
   const line = versionToLine(version)
   const lineI = parseInt(line.replace(/[v.x]/g, ''), 10)
   let expectedLineI
 
+  // load asset lists
   const stagingAssets = await lsDepth2(stagingDir, true)
-  const distAssets = await lsDepth2(distDir, false)
+  let distAssets = await lsDepth2(distDir, false)
+  distAssets = distAssets.filter((a) => !additionalDistAssets.includes(a))
   let expectedAssets
 
   // load expected asset list, use a prior version if one isn't available for this line
@@ -149,11 +163,17 @@ async function execute () {
     console.log(`    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/${line}`)
   }
 
+  // generate comparison lists
+  const stagingDistIntersection = intersection(stagingAssets, distAssets)
+  const stagingDistUnion = union(stagingAssets, distAssets)
+  let notInActual = expectedAssets.filter((a) => !stagingDistUnion.includes(a))
+  let stagingNotInExpected = stagingAssets.filter((a) => !expectedAssets.includes(a))
+  let distNotInExpected = distAssets.filter((a) => !expectedAssets.includes(a))
+
   console.log(`... Expecting a total of ${expectedAssets.length} assets for ${line}`)
   console.log(`... ${stagingAssets.length} assets waiting in staging`)
 
   // what might be overwritten by promotion?
-  const stagingDistIntersection = intersection(stagingAssets, distAssets)
   if (stagingDistIntersection.length) {
     caution = true
     console.log(` \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  ${stagingDistIntersection.length} assets already promoted will be overwritten, is this OK?`)
@@ -164,36 +184,35 @@ async function execute () {
     console.log(`... ${distAssets.length} assets already promoted`)
   }
 
-  const stagingDistUnion = union(stagingAssets, distAssets)
-  let notInActual = []
-  let stagingNotInExpected = []
-
-  for (let asset of expectedAssets) {
-    if (!stagingDistUnion.includes(asset)) {
-      notInActual.push(asset)
-    }
-  }
-
-  for (let asset of stagingAssets) {
-    if (!expectedAssets.includes(asset)) {
-      stagingNotInExpected.push(asset)
-    }
-  }
-
-  if (!notInActual.length && !stagingNotInExpected.length) { // perfect staging state, we have everything we need
+  if (!notInActual.length) { // perfect staging state, we have everything we need
     console.log(` \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for ${line}`)
-  } else if (notInActual.length) { // missing some assets and they're not in staging, are you impatient?
+  } else { // missing some assets and they're not in staging, are you impatient?
     caution = true
     console.log(` \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  The following assets are expected for ${line} but are currently missing from staging:`)
     notInActual.forEach((a) => console.log(`    • ${a}`))
-  } else if (stagingNotInExpected.length) { // bogus unexpected files found, not good
+  }
+
+  // bogus unexpected files found in staging, not good
+  if (stagingNotInExpected.length) {
     caution = true
-    console.log(` \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  The following assets were found but are not expected for ${line}:`)
+    update = true
+    console.log(` \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  The following assets were found in staging but are not expected for ${line}:`)
     stagingNotInExpected.forEach((a) => console.log(`    • ${a}`))
+  }
+
+  // bogus unexpected files found in dist, not good
+  if (distNotInExpected.length) {
+    caution = true
+    update = true
+    console.log(` \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  The following assets were already promoted but are not expected for ${line}:`)
+    distNotInExpected.forEach((a) => console.log(`    • ${a}`))
+  }
+
+  // do we need to provide final notices?
+  if (update) {
     console.log(`    Does the expected assets list for ${line} need to be updated?`)
     console.log(`    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/${line}`)
   }
-
   if (caution) {
     console.log('    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m')
   }
@@ -259,44 +278,42 @@ function test () {
     })
   }
 
-  // TEST 1: Everything is in staging, nothing in dist, good to go
-  async function test1 () {
-    const version = 'v8.13.0'
+  async function runTest (number, version, expectedStdout, setup) {
     const testDir = await fs.mkdtemp(`${__filename}_`)
     const fixtureStagingDir = path.join(testDir, `staging/${version}`)
     const fixtureDistDir = path.join(testDir, `dist/${version}`)
-    await makeFixture(version, true, fixtureStagingDir)
+    await setup(fixtureStagingDir, fixtureDistDir)
+
     const stdout = await executeMe(fixtureStagingDir, fixtureDistDir)
-    console.log('\nTest 1 Assertions ???')
+    console.log(`\nTest ${number} Assertions ???`)
     console.log(`STDOUT------------------------------------------\n\n${stdout}\n------------------------------------------------`)
-    assert.equal(stdout, '... Checking assets\n' +
+    assert.equal(stdout, expectedStdout)
+    console.log(`Test ${number} Assertions ✓✓✓`)
+
+    await rimraf(testDir)
+  }
+  // TEST 1: Everything is in staging, nothing in dist, good to go
+  async function test1 () {
+    const version = 'v8.13.0'
+    const expectedStdout =
+      '... Checking assets\n' +
       '... Expecting a total of 44 assets for v8.x\n' +
       '... 44 assets waiting in staging\n' +
       '... 0 assets already promoted\n' +
-      ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v8.x\n')
-    console.log('Test 1 Assertions ✓✓✓')
-    await rimraf(testDir)
+      ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v8.x\n'
+
+    async function setup (fixtureStagingDir, fixtureDistDir) {
+      await makeFixture(version, true, fixtureStagingDir)
+    }
+
+    return runTest(1, version, expectedStdout, setup)
   }
 
   // TEST 2: Not quite everything is in staging, missing two assets, nothing in dist
   async function test2 () {
     const version = 'v10.1.0'
-    const testDir = await fs.mkdtemp(`${__filename}_`)
-    const fixtureStagingDir = path.join(testDir, `staging/${version}`)
-    const fixtureDistDir = path.join(testDir, `dist/${version}`)
-    await makeFixture(version, true, fixtureStagingDir)
-    await Promise.all([
-      fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0-linux-armv6l.tar.gz')),
-      fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0-linux-armv6l.tar.gz.done')),
-      fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0-linux-armv6l.tar.xz')),
-      fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0-linux-armv6l.tar.xz.done')),
-      fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0.pkg')),
-      fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0.pkg.done'))
-    ])
-    const stdout = await executeMe(fixtureStagingDir, fixtureDistDir)
-    console.log('\nTest 2 Assertions ???')
-    console.log(`STDOUT------------------------------------------\n\n${stdout}\n------------------------------------------------`)
-    assert.equal(stdout, '... Checking assets\n' +
+    const expectedStdout =
+      '... Checking assets\n' +
       '... Expecting a total of 40 assets for v10.x\n' +
       '... 37 assets waiting in staging\n' +
       '... 0 assets already promoted\n' +
@@ -305,34 +322,27 @@ function test () {
       '    • node-v10.1.0-linux-armv6l.tar.xz\n' +
       '    • node-v10.1.0.pkg\n' +
       '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
-    )
-    console.log('Test 2 Assertions ✓✓✓')
-    await rimraf(testDir)
+
+    async function setup (fixtureStagingDir, fixtureDistDir) {
+      await makeFixture(version, true, fixtureStagingDir)
+      await Promise.all([
+        fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0-linux-armv6l.tar.gz')),
+        fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0-linux-armv6l.tar.gz.done')),
+        fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0-linux-armv6l.tar.xz')),
+        fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0-linux-armv6l.tar.xz.done')),
+        fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0.pkg')),
+        fs.unlink(path.join(fixtureStagingDir, 'node-v10.1.0.pkg.done'))
+      ])
+    }
+
+    return runTest(2, version, expectedStdout, setup)
   }
 
   // TEST 3: Everything in staging, 3 files in dist
   async function test3 () {
     const version = 'v6.0.1'
-    const testDir = await fs.mkdtemp(`${__filename}_`)
-    const fixtureStagingDir = path.join(testDir, `staging/${version}`)
-    const fixtureDistDir = path.join(testDir, `dist/${version}`)
-    await makeFixture(version, true, fixtureStagingDir)
-    const distAssets = await makeFixture(version, false, fixtureDistDir)
-    await Promise.all(
-      distAssets.filter((a) => {
-        return a !== 'node-v6.0.1-headers.tar.gz' &&
-          a !== 'node-v6.0.1.tar.gz' &&
-          a !== 'node-v6.0.1-x86.msi' &&
-          // deleting all directories, so we don't need to delete the children
-          !/^win-x64\/.+/.test(a) &&
-          !/^win-x86\/.+/.test(a) &&
-          !/^docs\/.+/.test(a)
-      }).map((e) => rimraf(path.join(fixtureDistDir, e)))
-    )
-    const stdout = await executeMe(fixtureStagingDir, fixtureDistDir)
-    console.log('\nTest 3 Assertions ???')
-    console.log(`STDOUT------------------------------------------\n\n${stdout}\n------------------------------------------------`)
-    assert.equal(stdout, '... Checking assets\n' +
+    const expectedStdout =
+      '... Checking assets\n' +
       '... Expecting a total of 46 assets for v6.x\n' +
       '... 46 assets waiting in staging\n' +
       ' \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  3 assets already promoted will be overwritten, is this OK?\n' +
@@ -340,45 +350,51 @@ function test () {
       '    • node-v6.0.1-x86.msi\n' +
       '    • node-v6.0.1.tar.gz\n' +
       ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v6.x\n' +
-      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n')
-    console.log('Test 3 Assertions ✓✓✓')
-    await rimraf(testDir)
+      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
+
+    async function setup (fixtureStagingDir, fixtureDistDir) {
+      await makeFixture(version, true, fixtureStagingDir)
+      const distAssets = await makeFixture(version, false, fixtureDistDir)
+      await Promise.all(
+        distAssets.filter((a) => {
+          return a !== 'node-v6.0.1-headers.tar.gz' &&
+            a !== 'node-v6.0.1.tar.gz' &&
+            a !== 'node-v6.0.1-x86.msi' &&
+            // deleting all directories, so we don't need to delete the children
+            !/^win-x64\/.+/.test(a) &&
+            !/^win-x86\/.+/.test(a) &&
+            !/^docs\/.+/.test(a)
+        }).map((e) => rimraf(path.join(fixtureDistDir, e)))
+      )
+    }
+
+    return runTest(3, version, expectedStdout, setup)
   }
 
   // TEST 4: Everything in staging and everything in dist
   async function test4 () {
     const version = 'v11.11.11'
-    const testDir = await fs.mkdtemp(`${__filename}_`)
-    const fixtureStagingDir = path.join(testDir, `staging/${version}`)
-    const fixtureDistDir = path.join(testDir, `dist/${version}`)
-    await makeFixture(version, true, fixtureStagingDir)
-    await makeFixture(version, false, fixtureDistDir)
-    const stdout = await executeMe(fixtureStagingDir, fixtureDistDir)
-    console.log('\nTest 4 Assertions ???')
-    console.log(`STDOUT------------------------------------------\n\n${stdout}\n------------------------------------------------`)
-    assert.equal(stdout, '... Checking assets\n' +
+    const expectedStdout =
+      '... Checking assets\n' +
       '... Expecting a total of 40 assets for v11.x\n' +
       '... 40 assets waiting in staging\n' +
       ' \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  40 assets already promoted will be overwritten, is this OK?\n' +
       ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v11.x\n' +
-      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n')
-    console.log('Test 4 Assertions ✓✓✓')
-    await rimraf(testDir)
+      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
+
+    async function setup (fixtureStagingDir, fixtureDistDir) {
+      await makeFixture(version, true, fixtureStagingDir)
+      await makeFixture(version, false, fixtureDistDir)
+    }
+
+    return runTest(4, version, expectedStdout, setup)
   }
 
   // TEST 5: No expected files list is available for this version, it has to guess
   async function test5 () {
     const version = 'v9.9.9'
-    const testDir = await fs.mkdtemp(`${__filename}_`)
-    const fixtureStagingDir = path.join(testDir, `staging/${version}`)
-    const fixtureDistDir = path.join(testDir, `dist/${version}`)
-    // use the 10.x list, which is missing the x86 files, it'll check the 9.x
-    const expectedAssets = await loadExpectedAssets(version, 'v10.x')
-    await makeFixture(version, true, fixtureStagingDir, expectedAssets)
-    const stdout = await executeMe(fixtureStagingDir, fixtureDistDir)
-    console.log('\nTest 5 Assertions ???')
-    console.log(`STDOUT------------------------------------------\n\n${stdout}\n------------------------------------------------`)
-    assert.equal(stdout, '... Checking assets\n' +
+    const expectedStdout =
+      '... Checking assets\n' +
       ' \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  No expected asset list is available for v9.x, using the list for v8.x instead\n' +
       '    Should a new list be created for v9.x?\n' +
       '    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/v9.x\n' +
@@ -390,74 +406,195 @@ function test () {
       '    • node-v9.9.9-linux-x86.tar.xz\n' +
       '    • node-v9.9.9-sunos-x86.tar.gz\n' +
       '    • node-v9.9.9-sunos-x86.tar.xz\n' +
-      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n')
-    console.log('Test 5 Assertions ✓✓✓')
-    await rimraf(testDir)
+      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
+
+    async function setup (fixtureStagingDir, fixtureDistDir) {
+      // use the 10.x list, which is missing the x86 files, it'll check the 9.x
+      const expectedAssets = await loadExpectedAssets(version, 'v10.x')
+      await makeFixture(version, true, fixtureStagingDir, expectedAssets)
+    }
+
+    return runTest(5, version, expectedStdout, setup)
   }
 
   // TEST 6: Everything is in dist except for the armv6l files, but they are in staging
   async function test6 () {
     const version = 'v10.0.0'
-    const testDir = await fs.mkdtemp(`${__filename}_`)
-    const fixtureStagingDir = path.join(testDir, `staging/${version}`)
-    const fixtureDistDir = path.join(testDir, `dist/${version}`)
-    await fs.mkdir(fixtureStagingDir, { recursive: true })
-    await makeFixture(version, true, fixtureStagingDir, [
-      'node-v10.0.0-linux-armv6l.tar.gz',
-      'node-v10.0.0-linux-armv6l.tar.xz'
-    ])
-    await makeFixture(version, false, fixtureDistDir)
-    await Promise.all([
-      fs.unlink(path.join(fixtureDistDir, 'node-v10.0.0-linux-armv6l.tar.gz')),
-      fs.unlink(path.join(fixtureDistDir, 'node-v10.0.0-linux-armv6l.tar.xz'))
-    ])
-    const stdout = await executeMe(fixtureStagingDir, fixtureDistDir)
-    console.log('\nTest 6 Assertions ???')
-    console.log(`STDOUT------------------------------------------\n\n${stdout}\n------------------------------------------------`)
-    assert.equal(stdout, '... Checking assets\n' +
+    const expectedStdout =
+      '... Checking assets\n' +
       '... Expecting a total of 40 assets for v10.x\n' +
       '... 2 assets waiting in staging\n' +
       '... 38 assets already promoted\n' +
-      ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v10.x\n')
-    console.log('Test 6 Assertions ✓✓✓')
-    await rimraf(testDir)
+      ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v10.x\n'
+
+    async function setup (fixtureStagingDir, fixtureDistDir) {
+      await fs.mkdir(fixtureStagingDir, { recursive: true })
+      await makeFixture(version, true, fixtureStagingDir, [
+        'node-v10.0.0-linux-armv6l.tar.gz',
+        'node-v10.0.0-linux-armv6l.tar.xz'
+      ])
+      await makeFixture(version, false, fixtureDistDir)
+      await Promise.all([
+        fs.unlink(path.join(fixtureDistDir, 'node-v10.0.0-linux-armv6l.tar.gz')),
+        fs.unlink(path.join(fixtureDistDir, 'node-v10.0.0-linux-armv6l.tar.xz'))
+      ])
+    }
+
+    return runTest(6, version, expectedStdout, setup)
   }
 
   // TEST 7: Some unexpected files in staging
   async function test7 () {
     const version = 'v10.0.0'
-    const testDir = await fs.mkdtemp(`${__filename}_`)
-    const fixtureStagingDir = path.join(testDir, `staging/${version}`)
-    const fixtureDistDir = path.join(testDir, `dist/${version}`)
-    await fs.mkdir(fixtureStagingDir, { recursive: true })
-    await makeFixture(version, true, fixtureStagingDir, [
-      'ooolaalaa.tar.gz',
-      'whatdis.tar.xz'
-    ])
-    await makeFixture(version, false, fixtureDistDir)
-    const stdout = await executeMe(fixtureStagingDir, fixtureDistDir)
-    console.log('\nTest 7 Assertions ???')
-    console.log(`STDOUT------------------------------------------\n\n${stdout}\n------------------------------------------------`)
-    assert.equal(stdout, '... Checking assets\n' +
+    const expectedStdout =
+      '... Checking assets\n' +
       '... Expecting a total of 40 assets for v10.x\n' +
       '... 2 assets waiting in staging\n' +
       '... 40 assets already promoted\n' +
-      ' \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  The following assets were found but are not expected for v10.x:\n' +
+      ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v10.x\n' +
+      ' \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  The following assets were found in staging but are not expected for v10.x:\n' +
       '    • ooolaalaa.tar.gz\n' +
       '    • whatdis.tar.xz\n' +
       '    Does the expected assets list for v10.x need to be updated?\n' +
       '    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/v10.x\n' +
-      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n')
-    console.log('Test 7 Assertions ✓✓✓')
-    await rimraf(testDir)
+      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
+
+    async function setup (fixtureStagingDir, fixtureDistDir) {
+      await fs.mkdir(fixtureStagingDir, { recursive: true })
+      await makeFixture(version, true, fixtureStagingDir, [
+        'ooolaalaa.tar.gz',
+        'whatdis.tar.xz'
+      ])
+      await makeFixture(version, false, fixtureDistDir)
+    }
+
+    return runTest(7, version, expectedStdout, setup)
+  }
+
+  // TEST 8: Unexpected files in subdirectories, only check 2 levels deep
+  async function test8 () {
+    const version = 'v11.11.1'
+    const expectedStdout =
+      '... Checking assets\n' +
+      '... Expecting a total of 40 assets for v11.x\n' +
+      '... 42 assets waiting in staging\n' +
+      '... 0 assets already promoted\n' +
+      ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v11.x\n' +
+      ' \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  The following assets were found in staging but are not expected for v11.x:\n' +
+      '    • docs/bar\n' +
+      '    • docs/foo\n' +
+      '    Does the expected assets list for v11.x need to be updated?\n' +
+      '    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/v11.x\n' +
+      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
+
+    async function setup (fixtureStagingDir, fixtureDistDir) {
+      await fs.mkdir(fixtureStagingDir, { recursive: true })
+      await makeFixture(version, true, fixtureStagingDir)
+      await Promise.all([
+        fs.writeFile(path.join(fixtureStagingDir, 'docs/foo'), 'foo'),
+        fs.writeFile(path.join(fixtureStagingDir, 'docs/bar'), 'foo'),
+        fs.writeFile(path.join(fixtureStagingDir, 'docs/api/baz'), 'bar')
+      ])
+    }
+
+    return runTest(8, version, expectedStdout, setup)
+  }
+
+  // TEST 9: Some unexpected files in dist
+  async function test9 () {
+    const version = 'v6.7.8'
+    const expectedStdout =
+      '... Checking assets\n' +
+      '... Expecting a total of 46 assets for v6.x\n' +
+      '... 46 assets waiting in staging\n' +
+      '... 2 assets already promoted\n' +
+      ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v6.x\n' +
+      ' \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  The following assets were already promoted but are not expected for v6.x:\n' +
+      '    • ooolaalaa.tar.gz\n' +
+      '    • whatdis.tar.xz\n' +
+      '    Does the expected assets list for v6.x need to be updated?\n' +
+      '    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/v6.x\n' +
+      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
+
+    async function setup (fixtureStagingDir, fixtureDistDir) {
+      await fs.mkdir(fixtureDistDir, { recursive: true })
+      await makeFixture(version, false, fixtureDistDir, [
+        'ooolaalaa.tar.gz',
+        'whatdis.tar.xz'
+      ])
+      await makeFixture(version, true, fixtureStagingDir)
+    }
+
+    return runTest(9, version, expectedStdout, setup)
+  }
+
+  // TEST 10: SHASUMS in dist already, shouldn't bother us
+  async function test10 () {
+    const version = 'v8.0.0'
+    const expectedStdout =
+      '... Checking assets\n' +
+      '... Expecting a total of 44 assets for v8.x\n' +
+      '... 44 assets waiting in staging\n' +
+      ' \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  4 assets already promoted will be overwritten, is this OK?\n' +
+      '    • docs/\n' +
+      '    • docs/api/\n' +
+      '    • node-v8.0.0-linux-armv6l.tar.gz\n' +
+      '    • node-v8.0.0-linux-armv6l.tar.xz\n' +
+      ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v8.x\n' +
+      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
+
+    async function setup (fixtureStagingDir, fixtureDistDir) {
+      await fs.mkdir(fixtureDistDir, { recursive: true })
+      await Promise.all([
+        makeFixture(version, true, fixtureStagingDir),
+        makeFixture(version, false, fixtureDistDir, [
+          'SHASUMS256.txt',
+          'SHASUMS256.txt.asc',
+          'SHASUMS256.txt.sig',
+          'docs/',
+          'docs/api/',
+          'docs/api/bar',
+          'node-v8.0.0-linux-armv6l.tar.gz',
+          'node-v8.0.0-linux-armv6l.tar.xz'
+        ])
+      ])
+    }
+
+    return runTest(10, version, expectedStdout, setup)
   }
 
   // run in parallel and just print failures to stderr
-  test1().catch(console.error)
-  test2().catch(console.error)
-  test3().catch(console.error)
-  test4().catch(console.error)
-  test5().catch(console.error)
-  test6().catch(console.error)
-  test7().catch(console.error)
+  let failures = 0
+  let passes = 0
+  const tests = [
+    test1,
+    test2,
+    test3,
+    test4,
+    test5,
+    test6,
+    test7,
+    test8,
+    test9,
+    test10
+  ]
+
+  tests.forEach((test) => {
+    test()
+      .then(() => passes++)
+      .catch((err) => {
+        failures++
+        console.error(err)
+      })
+  })
+
+  process.on('exit', () => {
+    if (failures) {
+      console.error(`\n\u001b[31mThere were ${failures} test failures\u001b[39m`)
+    } else if (passes === tests.length) {
+      console.error('\n\u001b[32mAll tests have passed!\u001b[39m')
+    } else {
+      console.error(`\n\u001b[31mNot all tests seem to have run, something's wrong\u001b[39m`)
+    }
+  })
 }
