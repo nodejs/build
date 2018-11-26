@@ -60,6 +60,25 @@ Make a post in the `nodejs/collaborators` [discussion page](https://github.com/o
 to let users of the public CI know that their access will be curtailed.
 Be sure to insert a link to the `nodejs/build` tracking issue.
 
+Add a Jenkins "system message" in https://ci.nodejs.org/configure. Something like:
+```html
+<h1 style="color:red">system is under embargo for a security release</h1>
+<h2>For solidarity, even if you have access, plesae don't start unrelated jobs</h2>
+```
+And some fancy "extra-css" to the Theme at https://ci.nodejs.org/configure#section122:
+```css
+#header {
+  background-color: red;
+}
+a#jenkins-home-link:after {
+    content: "Under security embargo!";
+    font-size: larger;
+    color: yellow;
+    margin-left: 200px;
+}
+```
+
+
 To change the Jenkins security configuration, you must be a member of
 the `nodejs/jenkins-admins` team, and travel to the ["Configure Global
 Security"](https://ci.nodejs.org/configureSecurity/) page.
