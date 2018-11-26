@@ -100,6 +100,10 @@ condition. Add a comment to your post in `nodejs/collaborators` and the
 tracking issue in `nodejs/build` to announce that access has been
 restored.
 
+For easy reverting of config changes, you can use the history audit log:
+1. system (includes security matrix) - https://ci.nodejs.org/jobConfigHistory/history?name=config
+2. CSS - https://ci.nodejs.org/jobConfigHistory/history?name=org.codefirst.SimpleThemeDecorator
+
 ### Solving problems
 
 Issues with the Jenkins clusters are usually reported to either the
