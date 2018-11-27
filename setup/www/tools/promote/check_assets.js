@@ -26,23 +26,28 @@ if (stagingDir === 'test') {
 async function checkArgs () {
   let bad = false
   let dirStat
-  try {
-    dirStat = await fs.stat(stagingDir)
-  } catch (e) {}
 
-  if (!dirStat || !dirStat.isDirectory()) {
-    bad = true
-    console.error('Staging directory not found')
-  }
+  if (stagingDir && distDir) {
+    try {
+      dirStat = await fs.stat(stagingDir)
+    } catch (e) {}
 
-  if (!versionRe.test(path.basename(stagingDir))) {
-    bad = true
-    console.error(`Bad staging directory name: ${stagingDir}`)
-  }
+    if (!dirStat || !dirStat.isDirectory()) {
+      bad = true
+      console.error('Staging directory not found')
+    }
 
-  if (!distDir || !versionRe.test(path.basename(distDir))) {
+    if (!versionRe.test(path.basename(stagingDir))) {
+      bad = true
+      console.error(`Bad staging directory name: ${stagingDir}`)
+    }
+
+    if (!distDir || !versionRe.test(path.basename(distDir))) {
+      bad = true
+      console.error(`Bad dist directory name: ${distDir}`)
+    }
+  } else {
     bad = true
-    console.error(`Bad dist directory name: ${distDir}`)
   }
 
   if (bad) {
@@ -589,7 +594,7 @@ function test () {
     } else if (passes === tests.length) {
       console.error('\n\u001b[32mAll tests have passed!\u001b[39m')
     } else {
-      console.error(`\n\u001b[31mNot all tests seem to have run, something\'s wrong\u001b[39m`)
+      console.error(`\n\u001b[31mNot all tests seem to have run, something's wrong\u001b[39m`)
     }
   })
 }
