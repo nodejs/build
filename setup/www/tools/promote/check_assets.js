@@ -51,7 +51,7 @@ async function checkArgs () {
   }
 
   if (bad) {
-    console.error('Usage: check_assets.js <path to staging directory>')
+    console.error('Usage: check_assets.js <path to staging directory> <path to dist directory>')
     process.exit(1)
   }
 }
