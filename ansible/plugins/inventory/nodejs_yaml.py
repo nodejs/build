@@ -86,7 +86,7 @@ def main():
     config.read('ansible.cfg')
 
     for host_types in hosts['hosts']:
-        for host_type, providers in host_types.iteritems():
+        for host_type, providers in host_types.items():
             export[host_type] = {}
             export[host_type]['hosts'] = []
 
@@ -96,8 +96,8 @@ def main():
             }
 
             for provider in providers:
-                for provider_name, hosts in provider.iteritems():
-                    for host, metadata in hosts.iteritems():
+                for provider_name, hosts in provider.items():
+                    for host, metadata in hosts.items():
 
                         # some hosts have metadata appended to provider
                         # which requires underscore
@@ -111,7 +111,7 @@ def main():
 
                         try:
                             parsed_host = parse_host(hostname)
-                            for k, v in parsed_host.iteritems():
+                            for k, v in parsed_host.items():
                                 c.update({k: v[0] if type(v) is dict else v})
                         except Exception, e:
                             raise Exception('Failed to parse host: %s' % e)
