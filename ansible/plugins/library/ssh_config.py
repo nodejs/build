@@ -58,7 +58,7 @@ Host {{ host }} {{ metadata.alias }}
 
 
 def multi_replace(content, to_replace):
-    for key, val in to_replace.iteritems():
+    for key, val in to_replace.items():
         content = content.replace(key, val)
     return content
 
