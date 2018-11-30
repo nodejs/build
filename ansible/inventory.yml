@@ -93,6 +93,7 @@ hosts:
         ubuntu1604-x86-2: {ip: 104.131.191.135}
         ubuntu1604_docker-x64-1: {ip: 128.199.198.56}
         ubuntu1604_docker-x64-2: {ip: 138.68.241.115}
+        ubuntu1804-x64-1: {ip: 178.128.181.213}
 
     - joyent:
         freebsd10-x64-1: {ip: 72.2.115.15}
@@ -108,9 +109,8 @@ hosts:
         smartos17-x64-1: {ip: 165.225.170.181}
         smartos17-x64-2: {ip: 72.2.115.11}
         ubuntu1604_docker-x64-1: {ip: 165.225.138.30, user: ubuntu}
-        ubuntu1710-x64-1: {ip: 37.153.110.33, user: ubuntu}
-        ubuntu1710-x64-2: {ip: 8.19.32.121, user: ubuntu}
         ubuntu1604_arm_cross-x64-1: {ip: 165.225.136.6, user: ubuntu}
+        ubuntu1804-x64-1: {ip: 37.153.109.142, user: ubuntu}
 
     - marist:
         zos13-s390x-1: {ip: 148.100.36.133, user: Unix1}
