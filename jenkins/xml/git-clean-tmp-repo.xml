@@ -1,0 +1,85 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.security.AuthorizationMatrixProperty>
+      <inheritanceStrategy class="org.jenkinsci.plugins.matrixauth.inheritance.NonInheritingStrategy"/>
+      <permission>hudson.model.Item.Build:nodejs*build</permission>
+      <permission>hudson.model.Item.Cancel:nodejs*build</permission>
+      <permission>hudson.model.Item.Configure:nodejs*build</permission>
+      <permission>hudson.model.Item.Discover:nodejs*build</permission>
+      <permission>hudson.model.Item.Read:nodejs*build</permission>
+      <permission>hudson.model.Item.Workspace:nodejs*build</permission>
+      <permission>hudson.model.Run.Replay:nodejs*build</permission>
+      <permission>hudson.model.Run.Update:nodejs*build</permission>
+    </hudson.security.AuthorizationMatrixProperty>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.2">
+      <projectUrl>https://github.com/nodejs/node/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>jenkins-workspace</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash -ex
+
+git init
+
+grep -q ^$TEMP_REPO_SERVER ~/.ssh/known_hosts || (ssh-keyscan -t rsa $TEMP_REPO_SERVER &gt;&gt; ~/.ssh/known_hosts)
+
+BRANCHES=$(git ls-remote -h $TEMP_REPO | sed &apos;s|^.*refs/heads/||&apos;)
+
+# First get top-level branches that correspond to a Jenkins run
+JENKINS_BRANCHES=$(echo $BRANCHES | sed &apos;s/ /\n/g&apos; | grep ^jenkins- | grep -v -- -bin)
+for i in $JENKINS_BRANCHES; do
+  if [[ $i =~ ^jenkins-[a-z-]*-[0-9]*$ ]] ; then
+    JOB=$(echo $i | sed &apos;s/^jenkins-//;s/-[0-9]*$//&apos;)
+    RUN=$(echo $i | sed &apos;s/^[a-z-]*-//&apos;)
+    # Delete only if the job was already prunned in Jenkins
+    if (curl -L &quot;https://ci.nodejs.org/job/${JOB}/${RUN}/api/json&quot; | head -n4 | grep -q -- &apos;^&lt;title&gt;Error 404 Not Found&lt;/title&gt;$&apos;) ; then
+      # Get all branches related to the run, including binaries
+      DEL_BRANCHES=$(echo $BRANCHES | sed &apos;s/ /\n/g&apos; | grep ^$i)
+      for j in $DEL_BRANCHES; do
+        git push $TEMP_REPO :$j
+      done
+    fi
+  fi
+done
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+    <com.cloudbees.jenkins.plugins.sshagent.SSHAgentBuildWrapper plugin="ssh-agent@1.16">
+      <credentialIds>
+        <string>dea9092d-214b-471a-be5d-5343dd7755c1</string>
+      </credentialIds>
+      <ignoreMissing>false</ignoreMissing>
+    </com.cloudbees.jenkins.plugins.sshagent.SSHAgentBuildWrapper>
+  </buildWrappers>
+</project>
