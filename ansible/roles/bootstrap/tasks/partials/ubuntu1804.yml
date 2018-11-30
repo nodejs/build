@@ -1,7 +1,7 @@
 ---
 
 #
-#  ubuntu 17.10
+#  ubuntu 18.04
 #
 
 - name: check for python
