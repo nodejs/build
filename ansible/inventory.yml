@@ -107,7 +107,7 @@ hosts:
         smartos16-x64-2: {ip: 72.2.113.74}
         smartos17-x64-1: {ip: 165.225.170.181}
         smartos17-x64-2: {ip: 72.2.115.11}
-        ubuntu1604_docker-x64-1: {ip: 165.225.138.30, user: ubuntu}
+        ubuntu1604_docker-x64-1: {ip: 37.153.110.162, user: ubuntu}
         ubuntu1710-x64-1: {ip: 37.153.110.33, user: ubuntu}
         ubuntu1710-x64-2: {ip: 8.19.32.121, user: ubuntu}
         ubuntu1604_arm_cross-x64-1: {ip: 165.225.136.6, user: ubuntu}
