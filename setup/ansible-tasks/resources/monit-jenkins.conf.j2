@@ -1,4 +1,0 @@
-check process jenkins
-  matching slave.jar
-  start program = "/bin/su {{ server_user }} -c 'sleep 10 && cd /home/{{ server_user }} && /home/{{ server_user }}/start.sh'"
-  stop program = "/bin/su {{ server_user }} -c 'pkill -f slave.jar'"
