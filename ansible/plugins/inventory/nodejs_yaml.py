@@ -69,7 +69,6 @@ valid = {
 def main():
 
     hosts = {}
-    export = {'_meta': {'hostvars': {}}}
 
     # get inventory
     with open("inventory.yml", 'r') as stream:
@@ -84,6 +83,16 @@ def main():
     # get special cases
     config = configparser.ConfigParser()
     config.read('ansible.cfg')
+
+    export = parse_yaml(hosts, config)
+
+    print(json.dumps(export, indent=2))
+
+
+def parse_yaml(hosts, config):
+    """Parses host information from the output of yaml.load"""
+
+    export = {'_meta': {'hostvars': {}}}
 
     for host_types in hosts['hosts']:
         for host_type, providers in host_types.items():
@@ -146,7 +155,7 @@ def main():
                         export['_meta']['hostvars'][hostname] = {}
                         export['_meta']['hostvars'][hostname].update(c)
 
-    print(json.dumps(export, indent=2))
+    return export
 
 
 def parse_host(host):
