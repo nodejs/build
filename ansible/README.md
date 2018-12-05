@@ -43,6 +43,22 @@ If you only want to run a specific set of steps, you can use `--step`. This is
 useful when developing playbooks and when you want to be sure that only a few
 steps are executed, to avoid disrupting the machines.
 
+### Secrets
+
+If you have access to secrets, clone the `secrets` repository [next to the
+`build` repository](./plugins/inventory/nodejs_yaml.py#L146-L156), or
+`export NODE_BUILD_SECRETS=/path/to/secrets/build/`.
+
+To see if the inventory is loaded correctly, run the script directly and
+confirm that all the expected information is there and there are no warnings
+printed to stderr:
+
+```console
+$ python plugins/inventory/nodejs_yaml.py
+```
+
+### Playbooks
+
 These playbooks are available to you:
 
   - **jenkins/host/create.yml**: Sets up jenkins ci hosts.
@@ -114,14 +130,28 @@ For more information refer to other hosts in `inventory.yml` or the
 
 ### Metadata
 
-Each host needs a bit of metadata:
+You will always have to set the following variables to configure a host:
 
-  - (required) `ip`: used both by ansible and placed in your ssh config.
-  - `user`: only provide if ssh requires a non-root login. Passing this
-             will additionally make ansible try to become root for all
-             commands executed.
-  - `alias`: creates shorthand names for ssh convenience.
-  - `labels`: Each host can also labels. More on that below.
+- `secret`: the Jenkins slave secrets (use a dummy value for testing the
+  scripts on machines that will not be connected to Jenkins)
+- `ip`: the IP or DNS address of the machine
+
+#### Optional variables
+
+Variables that _might_ be available for you to change depending on
+the machine system and role:
+
+- `port`: SSH or WinRM port to connect to, necessary if not the default
+- `user`: only provide if SSH requires a non-root login. Passing this will
+  additionally make Ansible try to become root for all commands executed
+- `alias`: creates shorthand names for SSH convenience
+- `is_benchmark`: set to `true`/`false`. If true, will run the
+  `benchmarking` role on the machine
+- `server_jobs`: the number of parallel jobs to run on a host
+- `server_ram`: how much memory the slave should assign to java-base
+  (defaults to "128m")
+- `vs`: Visual Studio version to install on Windows hosts
+- `rdp_port`: port to use for Windows remote desktop connections
 
 ### Adding extra options to a host
 
@@ -130,7 +160,7 @@ freeform and are passed to ansible. One example is adding a proxycommand
 configuration to hosts at NodeSource since they sit behind a jumphost.
 
 Add a config section by creating a group with the name of the hosts you want
-to match (matches on full hostname). Since this is passed to `host_vars` it
+to match (matches on full hostname). Since this is passed as metadata it
 can be any kind of ansible variable/config:
 
 ```ini
@@ -145,7 +175,7 @@ ansible_python_interpreter: /usr/local/bin/python
 ### Docker host configuration options
 
 When configuring a Docker host using the `jenkins/docker-host.yml` playbook,
-your host_vars file for the new host(s) will need to have a special set of
+your inventory file for the new host(s) will need to have a special set of
 options to configure the containers run on the host. It should look something
 like this:
 

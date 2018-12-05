@@ -22,6 +22,7 @@
 # IN THE SOFTWARE.
 #
 
+from __future__ import print_function
 import argparse
 try:
     import configparser
@@ -35,6 +36,7 @@ import json
 import yaml
 import os
 import sys
+import subprocess
 
 
 valid = {
@@ -51,6 +53,8 @@ valid = {
                'rackspace', 'requireio', 'scaleway', 'softlayer', 'voxer',
                'packetnet', 'nearform')
 }
+DECRYPT_TOOL = "gpg"
+INVENTORY_FILENAME = "inventory.yml"
 
 # customisation options per host:
 #
@@ -68,11 +72,100 @@ valid = {
 
 def main():
 
+    # load config file for special cases
+    config = configparser.ConfigParser()
+    config.read('ansible.cfg')
+
+    # load public inventory
+    export = parse_yaml(load_yaml_file(INVENTORY_FILENAME), config)
+
+    # try to load a secret inventory for each access level
+    if check_decrypt_tool():
+        secrets_path = get_secrets_path()
+        if secrets_path is not None:
+            for accesstype in valid['type']:
+                file_path = os.path.join(secrets_path, accesstype, INVENTORY_FILENAME)
+                yaml_secrets = load_yaml_secrets(file_path)
+                if yaml_secrets is not None:
+                    secrets = parse_yaml(yaml_secrets, config)
+                    merge(export, secrets)
+
+    # export in JSON for Ansible
+    print(json.dumps(export, indent=2))
+
+
+# https://stackoverflow.com/a/7205107
+def merge(a, b, path=None):
+    "merges b into a"
+    if path is None: path = []
+    for key in b:
+        if key in a:
+            if isinstance(a[key], dict) and isinstance(b[key], dict):
+                merge(a[key], b[key], path + [str(key)])
+            elif isinstance(a[key], list) and isinstance(b[key], list):
+                a[key] = sorted(set(a[key]).union(b[key]))
+            elif a[key] == b[key]:
+                pass # same leaf value
+            else:
+                raise Exception('Conflict at %s' % '.'.join(path + [str(key)]))
+        else:
+            a[key] = b[key]
+    return a
+
+
+def check_decrypt_tool():
+    """Checks if the decrypt tool (gpg) is available and can be used"""
+
+    try:
+        p = subprocess.Popen([DECRYPT_TOOL, "--version"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        (output, _) = p.communicate()
+
+        if p.returncode == 0:
+            return True
+
+        print(output, file=sys.stderr)
+    except OSError as e:
+        print(e, file=sys.stderr)
+
+    print("WARNING: cannot find or use %s executable" % DECRYPT_TOOL, file=sys.stderr)
+    return False
+
+
+def get_secrets_path():
+    """Finds the location of the build secrets"""
+
+    path = os.environ.get('NODE_BUILD_SECRETS')
+    if path is not None:
+        path = os.path.realpath(path)
+        if os.path.isdir(path):
+            return path
+        else:
+            print("WARNING: NODE_BUILD_SECRETS defined but not a directory", file=sys.stderr)
+            return None
+
+    path = os.path.realpath('../../secrets/build/')
+    if os.path.isdir(path):
+        return path
+
+    path = os.path.realpath('../../nodejs-private/secrets/build/')
+    if os.path.isdir(path):
+        return path
+
+    path = os.path.realpath('../../../nodejs-private/secrets/build/')
+    if os.path.isdir(path):
+        return path
+
+    print("WARNING: could not find secrets, please define NODE_BUILD_SECRETS", file=sys.stderr)
+    return None
+
+
+def load_yaml_file(file_name):
+    """Loads YAML data from a file"""
+
     hosts = {}
-    export = {'_meta': {'hostvars': {}}}
 
     # get inventory
-    with open("inventory.yml", 'r') as stream:
+    with open(file_name, 'r') as stream:
         try:
             hosts = yaml.load(stream)
 
@@ -81,9 +174,25 @@ def main():
         finally:
             stream.close()
 
-    # get special cases
-    config = configparser.ConfigParser()
-    config.read('ansible.cfg')
+    return hosts
+
+
+def load_yaml_secrets(file_name):
+    """Loads YAML data from an encrypted file"""
+
+    p = subprocess.Popen([DECRYPT_TOOL, "-q", "--decrypt", file_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (stdout, _) = p.communicate()
+    if p.returncode != 0:
+        print("WARNING: cannot load %s" % file_name, file=sys.stderr)
+        return None
+
+    return yaml.load(stdout)
+
+
+def parse_yaml(hosts, config):
+    """Parses host information from the output of yaml.load"""
+
+    export = {'_meta': {'hostvars': {}}}
 
     for host_types in hosts['hosts']:
         for host_type, providers in host_types.items():
@@ -107,32 +216,29 @@ def main():
 
                         export[host_type]['hosts'].append(hostname)
 
-                        c = {}
+                        hostvars = {}
 
                         try:
                             parsed_host = parse_host(hostname)
                             for k, v in parsed_host.items():
-                                c.update({k: v[0] if type(v) is dict else v})
+                                hostvars.update({k: v[0] if type(v) is dict else v})
                         except Exception as e:
                             raise Exception('Failed to parse host: %s' % e)
 
-                        c.update({'ansible_host': metadata['ip']})
+                        if 'ip' in metadata:
+                            hostvars.update({'ansible_host': metadata['ip']})
+                            del metadata['ip']
 
                         if 'port' in metadata:
-                            c.update({'ansible_port': str(metadata['port'])})
+                            hostvars.update({'ansible_port': str(metadata['port'])})
+                            del metadata['port']
 
                         if 'user' in metadata:
-                            c.update({'ansible_user': metadata['user']})
-                            c.update({'ansible_become': True})
+                            hostvars.update({'ansible_user': metadata['user']})
+                            hostvars.update({'ansible_become': True})
+                            del metadata['user']
 
-                        if 'labels' in metadata:
-                            c.update({'labels': metadata['labels']})
-
-                        if 'alias' in metadata:
-                            c.update({'alias': metadata['alias']})
-
-                        if 'vs' in metadata:
-                            c.update({'vs': metadata['vs']})
+                        hostvars.update(metadata)
 
                         # add specific options from config
                         for option in ifilter(lambda s: s.startswith('hosts:'),
@@ -141,12 +247,14 @@ def main():
                             if option[6:] in hostname:
                                 for o in config.items(option):
                                     # configparser returns tuples of key, value
-                                    c.update({o[0]: o[1]})
+                                    hostvars.update({o[0]: o[1]})
 
                         export['_meta']['hostvars'][hostname] = {}
-                        export['_meta']['hostvars'][hostname].update(c)
+                        export['_meta']['hostvars'][hostname].update(hostvars)
 
-    print(json.dumps(export, indent=2))
+            export[host_type]['hosts'].sort()
+
+    return export
 
 
 def parse_host(host):
