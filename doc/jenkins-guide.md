@@ -11,27 +11,19 @@ The playbooks provision a machine, and handle tasks such as installing
 compilers, Java versions, and managing the local Jenkins agent.
 
 To see which playbooks correspond to which worker, check the [services
-document](doc/services.md).
+document](./services.md).
 
 ##### Running playbooks
 
-Before running playbooks, ensure that you have the host variables
-properly setup for the machine.
+Before running playbooks, ensure that you have the [secrets repo][] properly
+cloned and found by Ansible, [as described in the README](../ansible/README.md).
+If the machine secret is not available, you can always get it from the
+machine's Jenkins configuration page.
 
-If you wanted to run the playbook for one of the linter machines,
-`test-rackspace-freebsd10-x64-1`, there should be a file named
-`ansible/host_vars/test-rackspace-freebsd10-x64-1` that contains the machine's
-Jenkins secret, and other configuration details.
-
-It is generally best to get the configuration from the [secrets repo][], which
-contains encrypted versions of the files. If there is no file in that
-repository, you can always get the secret from the machine's Jenkins configuration
-page.
-
-Once you have the host variables set, you can now run the playbook for
-the machine. Since `test-rackspace-freebsd10-x64-1` is being used for
-this example, you would want to run the following command on your local
-machine, from within the `ansible` directory:
+You can now run the playbook for the machine. Since
+`test-rackspace-freebsd10-x64-1` is being used for this example, you would want
+to run the following command on your local machine, from within the `ansible`
+directory:
 
 ```bash
 ansible-playbook playbooks/jenkins/worker/create.yml --limit test-rackspace-freebsd10-x64-1
