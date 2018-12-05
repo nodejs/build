@@ -68,10 +68,22 @@ valid = {
 
 def main():
 
+    # load config file for special cases
+    config = configparser.ConfigParser()
+    config.read('ansible.cfg')
+
+    export = parse_yaml(load_yaml_file("inventory.yml"), config)
+
+    print(json.dumps(export, indent=2))
+
+
+def load_yaml_file(file_name):
+    """Loads YAML data from a file"""
+
     hosts = {}
 
     # get inventory
-    with open("inventory.yml", 'r') as stream:
+    with open(file_name, 'r') as stream:
         try:
             hosts = yaml.load(stream)
 
@@ -80,13 +92,7 @@ def main():
         finally:
             stream.close()
 
-    # get special cases
-    config = configparser.ConfigParser()
-    config.read('ansible.cfg')
-
-    export = parse_yaml(hosts, config)
-
-    print(json.dumps(export, indent=2))
+    return hosts
 
 
 def parse_yaml(hosts, config):
