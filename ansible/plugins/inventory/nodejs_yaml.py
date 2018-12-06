@@ -216,32 +216,29 @@ def parse_yaml(hosts, config):
 
                         export[host_type]['hosts'].append(hostname)
 
-                        c = {}
+                        hostvars = {}
 
                         try:
                             parsed_host = parse_host(hostname)
                             for k, v in parsed_host.items():
-                                c.update({k: v[0] if type(v) is dict else v})
+                                hostvars.update({k: v[0] if type(v) is dict else v})
                         except Exception as e:
                             raise Exception('Failed to parse host: %s' % e)
 
-                        c.update({'ansible_host': metadata['ip']})
+                        if 'ip' in metadata:
+                            hostvars.update({'ansible_host': metadata['ip']})
+                            del metadata['ip']
 
                         if 'port' in metadata:
-                            c.update({'ansible_port': str(metadata['port'])})
+                            hostvars.update({'ansible_port': str(metadata['port'])})
+                            del metadata['port']
 
                         if 'user' in metadata:
-                            c.update({'ansible_user': metadata['user']})
-                            c.update({'ansible_become': True})
+                            hostvars.update({'ansible_user': metadata['user']})
+                            hostvars.update({'ansible_become': True})
+                            del metadata['user']
 
-                        if 'labels' in metadata:
-                            c.update({'labels': metadata['labels']})
-
-                        if 'alias' in metadata:
-                            c.update({'alias': metadata['alias']})
-
-                        if 'vs' in metadata:
-                            c.update({'vs': metadata['vs']})
+                        hostvars.update(metadata)
 
                         # add specific options from config
                         for option in ifilter(lambda s: s.startswith('hosts:'),
@@ -250,10 +247,12 @@ def parse_yaml(hosts, config):
                             if option[6:] in hostname:
                                 for o in config.items(option):
                                     # configparser returns tuples of key, value
-                                    c.update({o[0]: o[1]})
+                                    hostvars.update({o[0]: o[1]})
 
                         export['_meta']['hostvars'][hostname] = {}
-                        export['_meta']['hostvars'][hostname].update(c)
+                        export['_meta']['hostvars'][hostname].update(hostvars)
+
+            export[host_type]['hosts'].sort()
 
     return export
 
