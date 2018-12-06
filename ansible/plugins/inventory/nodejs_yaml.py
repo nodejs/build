@@ -22,6 +22,7 @@
 # IN THE SOFTWARE.
 #
 
+from __future__ import print_function
 import argparse
 try:
     import configparser
@@ -35,6 +36,7 @@ import json
 import yaml
 import os
 import sys
+import subprocess
 
 
 valid = {
@@ -51,6 +53,8 @@ valid = {
                'rackspace', 'requireio', 'scaleway', 'softlayer', 'voxer',
                'packetnet', 'nearform')
 }
+DECRYPT_TOOL = "gpg"
+INVENTORY_FILENAME = "inventory.yml"
 
 # customisation options per host:
 #
@@ -72,9 +76,85 @@ def main():
     config = configparser.ConfigParser()
     config.read('ansible.cfg')
 
-    export = parse_yaml(load_yaml_file("inventory.yml"), config)
+    # load public inventory
+    export = parse_yaml(load_yaml_file(INVENTORY_FILENAME), config)
 
+    # try to load a secret inventory for each access level
+    if check_decrypt_tool():
+        secrets_path = get_secrets_path()
+        if secrets_path is not None:
+            for accesstype in valid['type']:
+                file_path = os.path.join(secrets_path, accesstype, INVENTORY_FILENAME)
+                yaml_secrets = load_yaml_secrets(file_path)
+                if yaml_secrets is not None:
+                    secrets = parse_yaml(yaml_secrets, config)
+                    merge(export, secrets)
+
+    # export in JSON for Ansible
     print(json.dumps(export, indent=2))
+
+
+# https://stackoverflow.com/a/7205107
+def merge(a, b, path=None):
+    "merges b into a"
+    if path is None: path = []
+    for key in b:
+        if key in a:
+            if isinstance(a[key], dict) and isinstance(b[key], dict):
+                merge(a[key], b[key], path + [str(key)])
+            elif a[key] == b[key]:
+                pass # same leaf value
+            else:
+                raise Exception('Conflict at %s' % '.'.join(path + [str(key)]))
+        else:
+            a[key] = b[key]
+    return a
+
+
+def check_decrypt_tool():
+    """Checks if the decrypt tool (gpg) is available and can be used"""
+
+    try:
+        p = subprocess.Popen([DECRYPT_TOOL, "--version"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        (output, _) = p.communicate()
+
+        if p.returncode == 0:
+            return True
+
+        print(output, file=sys.stderr)
+    except OSError as e:
+        print(e, file=sys.stderr)
+
+    print("WARNING: cannot find or use %s executable" % DECRYPT_TOOL, file=sys.stderr)
+    return False
+
+
+def get_secrets_path():
+    """Finds the location of the build secrets"""
+
+    path = os.environ.get('NODE_BUILD_SECRETS')
+    if path is not None:
+        path = os.path.realpath(path)
+        if os.path.isdir(path):
+            return path
+        else:
+            print("WARNING: NODE_BUILD_SECRETS defined but not a directory", file=sys.stderr)
+            return None
+
+    path = os.path.realpath('../../secrets/build/')
+    if os.path.isdir(path):
+        return path
+
+    path = os.path.realpath('../../nodejs-private/secrets/build/')
+    if os.path.isdir(path):
+        return path
+
+    path = os.path.realpath('../../../nodejs-private/secrets/build/')
+    if os.path.isdir(path):
+        return path
+
+    print("WARNING: could not find secrets, please define NODE_BUILD_SECRETS", file=sys.stderr)
+    return None
 
 
 def load_yaml_file(file_name):
@@ -93,6 +173,18 @@ def load_yaml_file(file_name):
             stream.close()
 
     return hosts
+
+
+def load_yaml_secrets(file_name):
+    """Loads YAML data from an encrypted file"""
+
+    p = subprocess.Popen([DECRYPT_TOOL, "-q", "--decrypt", file_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (stdout, _) = p.communicate()
+    if p.returncode != 0:
+        print("WARNING: cannot load %s" % file_name, file=sys.stderr)
+        return None
+
+    return yaml.load(stdout)
 
 
 def parse_yaml(hosts, config):
