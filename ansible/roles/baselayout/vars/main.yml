@@ -46,6 +46,10 @@ packages: {
     'ccache,gcc-c++,devtoolset-6,sudo',
   ],
 
+  aix: [
+    'gcc-c++,sudo',
+  ],
+
   debian7: [
     'gcc-4.8,g++-4.8,sudo',
   ],

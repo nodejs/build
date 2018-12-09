@@ -17,7 +17,7 @@
 
 - name: set hostname
   when: not os|startswith("smartos") and not os|startswith("zos")
-        and not os|startswith("macos")
+        and not os|startswith("macos") and not os|startswith("aix")
   hostname: name="{{ safe_hostname }}"
 
 - name: Set hostname to inventory_hostname macOS
@@ -27,6 +27,10 @@
     - "sudo scutil --set ComputerName {{ inventory_hostname }}.nodejs.org"
     - "dscacheutil -flushcache"
   when: os|startswith("macos")
+
+- name: Set hostname to inventory_hostname AIX
+  command: " hostname {{ inventory_hostname }}.nodejs.org"
+  when: os|startswith("aix")
 
 - name: disable joyent smartconnect
   when: os|startswith("smartos")

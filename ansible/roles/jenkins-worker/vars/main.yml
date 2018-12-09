@@ -5,6 +5,7 @@
 #
 
 init: {
+  aix: 'aix71',
   centos5:  'centos5',
   centos6:  'centos6',
   debian:  ['debian7', 'ubuntu1204'],
@@ -18,6 +19,11 @@ init: {
   }
 
 jenkins_init: {
+  aix: {
+    dest: '/etc/rc.d/rc2.d/Sjenkins',
+    src: 'aix.rc2.j2',
+    mode: '0555'
+    },
   centos5: {
     dest: '/etc/init.d/jenkins',
     src: 'centos5.initd.j2',
@@ -85,6 +91,7 @@ needs_monit: [
 
 # some os'es needs different paths to java. add them here.
 java_path: {
+  'aix71': '/home/iojs/jdk8u192-b12-jre/bin/java',
   'macos10.10': 'java',
   'macos10.11': 'java',
   'macos10.12': 'java',
@@ -97,6 +104,7 @@ java_path: {
 
 # same for bash. will default to /bin/bash if you don't set it
 bash_path: {
+  aix: '/usr/bin/ksh',
   freebsd: '/usr/local/bin/bash',
   zos: 'bash'
   }

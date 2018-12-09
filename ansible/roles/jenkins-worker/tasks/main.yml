@@ -232,7 +232,7 @@
   command: "chown -R {{ server_user }} {{ home }}/{{ server_user }}/gyp"
 
 - name: enable jenkins at startup - general
-  when: not os|startswith("zos") and not os|startswith("macos")
+  when: not os|startswith("zos") and not os|startswith("macos") and not os|startswith("aix")
   service: name=jenkins state=restarted enabled=yes
 
 - name: Unload org.nodejs.osx.jenkins.plist from launchctl

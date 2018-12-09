@@ -1,0 +1,12 @@
+#!/bin/sh
+export HOME={{ home }}/{{ server_user }}
+export NODE_TEST_DIR="$HOME/tmp"
+export JOBS="{{ jobs_env }}"
+
+export OSTYPE=aix
+export ARCH=ppc64le
+export DESTCPU=ppc64le
+
+{{ java_path[os] }} -Xmx{{ server_ram|default('128m') }} \
+    -jar {{ home }}/{{ server_user }}/slave.jar -secret {{ secret }} \
+    -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp
