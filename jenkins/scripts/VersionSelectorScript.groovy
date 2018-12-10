@@ -35,10 +35,10 @@ def buildExclusions = [
   [ /^cross-compiler-armv[67]-gcc-4.9/, anyType,   lt(10)  ],
 
   // Windows -----------------------------------------------
-  [ /^vs2013-/,                       anyType,     gte(6)  ],
-  [ /^vs2015-/,                       anyType,     lt(6)   ],
-  [ /^vs2015-/,                       anyType,     gte(10) ],
-  [ /^vs2017-/,                       anyType,     lt(10)  ],
+  [ /vs2013/,                         anyType,     gte(6)  ],
+  [ /vs2015/,                         anyType,     lt(6)   ],
+  [ /vs2015/,                         anyType,     gte(10) ],
+  [ /vs2017/,                         anyType,     lt(10)  ],
 
   // SmartOS -----------------------------------------------
   [ /^smartos14/,                     anyType,     gte(8)  ],
