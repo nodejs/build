@@ -31,19 +31,6 @@ To use Ansible for Windows, PowerShell access should be enabled as described in 
 
 Install the `pywinrm` pip module.
 
-Create a file `host_vars/node-win10-1.cloudapp.net` (`host_vars` in the same directory as `inventory.yml`)
-for each host and change the variables as necessary:
-
-```yaml
----
-secret: SECRET
-ansible_user: USERNAME
-ansible_password: PASSWORD
-ansible_port: 5986
-ansible_connection: winrm
-ansible_winrm_server_cert_validation: ignore
-```
-
 ### Target machines
 
 Ensure PowerShell v3 or higher is installed (`$PSVersionTable.PSVersion`), refer to [`ansible.intro_windows`][] if not.

@@ -87,11 +87,11 @@ $ ssh infra-rackspace-debian8-x64-1
 
 ## Run the playbook
 
-Before running the playbook, ensure that you have created a host
-variables file for the machine with the necessary secrets for the
-playbook. In this case, the file would be `ansible/host_vars/infra-rackspace-debian8-x64-1`.
+Before running the playbook, ensure that the necessary secrets are defined.
 Try and avoid using production secrets while testing the playbook -- you can add
-fake secrets to the file instead.
+fake secrets to the inventory instead and
+`export NODE_BUILD_SECRETS=/invalid/path/` to make sure the real secrets are
+not accessible.
 
 While in the `ansible` directory, run the playbook using the following
 command:
