@@ -29,9 +29,9 @@ try:
 except ImportError:
     import ConfigParser as configparser
 try:
-    from itertools import ifilter
+    from future_builtins import filter # Python 2
 except ImportError:
-    from itertools import filter as ifilter
+    pass # Python 3
 import json
 import yaml
 import os
@@ -73,7 +73,7 @@ INVENTORY_FILENAME = "inventory.yml"
 def main():
 
     # load config file for special cases
-    config = configparser.ConfigParser()
+    config = configparser.RawConfigParser()
     config.read('ansible.cfg')
 
     # load public inventory
@@ -91,7 +91,7 @@ def main():
                     merge(export, secrets)
 
     # export in JSON for Ansible
-    print(json.dumps(export, indent=2))
+    print(json.dumps(export, sort_keys=True, indent=2))
 
 
 # https://stackoverflow.com/a/7205107
@@ -241,8 +241,8 @@ def parse_yaml(hosts, config):
                         hostvars.update(metadata)
 
                         # add specific options from config
-                        for option in ifilter(lambda s: s.startswith('hosts:'),
-                                              config.sections()):
+                        for option in filter(lambda s: s.startswith('hosts:'),
+                                             config.sections()):
                             # remove `hosts:`
                             if option[6:] in hostname:
                                 for o in config.items(option):
