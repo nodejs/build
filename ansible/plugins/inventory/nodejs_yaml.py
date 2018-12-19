@@ -113,7 +113,7 @@ def main():
                             parsed_host = parse_host(hostname)
                             for k, v in parsed_host.items():
                                 c.update({k: v[0] if type(v) is dict else v})
-                        except Exception, e:
+                        except Exception as e:
                             raise Exception('Failed to parse host: %s' % e)
 
                         c.update({'ansible_host': metadata['ip']})
