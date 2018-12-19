@@ -123,8 +123,8 @@ and speed in our CI system.
   provides SmartOS and other test/build resources for the Node.js CI system.
 
 - **[IBM][10]**:
-  - Via their cloud company, [SoftLayer][11], provides hardware for
-    testing and benchmarking for the Node.js project's CI system.
+  - [IBM Cloud][11] provides hardware for testing and benchmarking for the
+    Node.js project's CI system.
   - Via the [Oregon State University Open Source Lab][12], provides
     PPC-based test and build infrastructure.
   - Via the [IBM LinuxOne(TM) Community Cloud][13], provides linuxOne
@@ -237,7 +237,7 @@ are required. After that the configuration will be removed.
 [8]:    https://azure.microsoft.com
 [9]:    https://www.joyent.com/
 [10]:   https://www.ibm.com/
-[11]:   https://www.softlayer.com/
+[11]:   https://www.ibm.com/cloud
 [12]:   https://osuosl.org/services/powerdev
 [13]:   https://developer.ibm.com/linuxone/
 [14]:   https://voxer.com/
