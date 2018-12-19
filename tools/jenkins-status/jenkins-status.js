@@ -28,12 +28,10 @@ function onData (err, computers) {
     if (!c.offline && !c.temporarilyOffline)
       return
 
-    let disk = c.monitorData['hudson.node_monitors.DiskSpaceMonitor'] &&
-               c.monitorData['hudson.node_monitors.DiskSpaceMonitor'].size &&
-               rnd(c.monitorData['hudson.node_monitors.DiskSpaceMonitor'].size / 1014 / 1024 / 1024)
-      , temp = c.monitorData['hudson.node_monitors.TemporarySpaceMonitor'] &&
-               c.monitorData['hudson.node_monitors.TemporarySpaceMonitor'].size &&
-               rnd(c.monitorData['hudson.node_monitors.TemporarySpaceMonitor'].size / 1024 / 1024 / 1024)
+    let dsm = c.monitorData['hudson.node_monitors.DiskSpaceMonitor']
+      , disk = dsm && dsm.size && rnd(dsm.size / 1014 / 1024 / 1024)
+      , tsm = c.monitorData['hudson.node_monitors.TemporarySpaceMonitor']
+      , temp = tsm && tsm.size && rnd(tsm.size / 1024 / 1024 / 1024)
 
     log('title', c.displayName)
     //log('plain', `\t               Idle: ${c.idle}`)
