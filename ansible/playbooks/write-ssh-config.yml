@@ -11,3 +11,6 @@
 
     - name: write hosts to ssh config
       ssh_config: path="~/.ssh/config" hostinfo="{{ hostvars }}"
+
+    - name: write Remmina config files
+      remmina_config: hostinfo="{{ hostvars }}"
