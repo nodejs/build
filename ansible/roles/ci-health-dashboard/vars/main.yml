@@ -1,0 +1,9 @@
+---
+ci_health_dashboard_image: "ci-health-dashboard:latest"
+ci_health_dashboard_container: "ci-health-dashboard"
+ci_health_dashboard_port: 80
+
+packages:
+  - docker-ce
+  - git
+

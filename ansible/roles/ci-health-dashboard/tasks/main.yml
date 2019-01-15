@@ -1,0 +1,35 @@
+---
+
+- name: Bootstrap | Install packages
+  package:
+    name: "{{ package }}"
+    state: present
+  loop_control:
+    loop_var: package
+  with_items: "{{ packages }}"
+
+- name: Init | Generate and copy init script
+  template:
+    src: "{{ role_path }}/templates/ci-health-dashboard.service.j2"
+    dest: /lib/systemd/system/ci-health-dashboard.service
+
+- name: Init | Generate and copy systemd EnvironmentFile
+  template:
+    src: "{{ role_path }}/templates/environment-file.j2"
+    dest: "/home/{{ server_user }}/environment/ci-health-dashboard"
+
+- name: Init | Clone ci-health-dashboard repo
+  become: yes
+  become_user: "{{ server_user }}"
+  git:
+    repo: https://github.com/nodejs/ci-health-dashboard.git
+    dest: "/home/{{ server_user }}/ci-health-dashboard"
+
+- name: Init | Build image
+  command: docker build -t {{ ci_health_dashboard_image }} /home/{{ server_user }}/ci-health-dashboard/
+
+- name: Init | Start ci-health-dashboard
+  service:
+    name: ci-health-dashboard
+    state: started
+    enabled: yes

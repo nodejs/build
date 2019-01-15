@@ -1,0 +1,14 @@
+[Unit]
+Description=ci-health-dashboard
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/docker run -d --rm --name {{ ci_health_dashboard_container }} --port {{ ci_health_dashboard_port }}:3000 {{ ci_health_dashboard_image }}
+ExecStop=/usr/bin/docker stop {{ ci_health_dashboard_container }}
+EnvironmentFile=/home/{{ server_user }}/environment/ci-health-dashboard
+WorkingDirectory=/home/{{ server_user }}/ci-health-dashboard
+Restart=always
+RestartSec=10
+User=root

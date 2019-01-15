@@ -13,6 +13,7 @@
     - bootstrap
     - package-upgrade
     - github-bot
+    - ci-health-dashboard
   pre_tasks:
     - name: check if secrets are properly set
       fail:
