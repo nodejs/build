@@ -32,16 +32,36 @@ Download and scp to the machine:
 http://www.bullfreeware.com/affichage.php?id=2378
 
 ```bash
-gcc-c++-4.8.5-1.aix6.1.ppc.rpm-with-deps.zip
+mkdir gcc
+cd gcc
+LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/gcc-c++-4.8.5-1.aix6.1.ppc.rpm-with-deps.zip
 unzip gcc-c++-4.8.5-1.aix6.1.ppc.rpm-with-deps.zip
 sh install-gcc-rpm.sh
+
+# Cleanup
+cd ../
+rm -rf gcc
+```
+
+#### git-tools
+
+```bash
+mkdir git-tools
+cd git-tools
+LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/git-1.8.3.1-3.aix6.1.ppc.rpm-with-deps.zip
+unzip git-1.8.3.1-3.aix6.1.ppc.rpm-with-deps.zip
+sh install-git-tools-rpm.sh
+
+# Cleanup
+cd ../
+rm -rf git-tools
 ```
 
 #### git
 
 ```bash
-LIBPATH=/usr/lib curl --insecure -O https://public.dhe.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/git/git-2.8.1-1.aix6.1.ppc.rpm
-rpm -ivh git-2.8.1-1.aix6.1.ppc.rpm
+LIBPATH=/usr/lib curl --insecure -O https://ci.nodejs.org/downloads/aix/git-2.8.1-1.aix6.1.ppc.rpm
+rpm -ivh git-2.8.1-1.aix6.1.ppc.rpm --force
 ```
 
 #### openssl, openssh
@@ -50,15 +70,21 @@ Download and scp to the machine:
 https://www-01.ibm.com/marketing/iwm/iwm/web/reg/pick.do?source=aixbp&lang=en_US
 
 ```bash
-# Copy into directory fixup
-cd fixup
+LIBPATH=/usr/lib curl --insecure -O https://ci.nodejs.org/downloads/aix/OpenSSH_6.0.0.6202.tar.Z
+LIBPATH=/usr/lib curl --insecure -O https://ci.nodejs.org/downloads/aix/openssl-1.0.2.800.tar.Z
 tar -xvf OpenSSH_6.0.0.6202.tar.Z
 tar -xvf openssl-1.0.2.800.tar.Z
+
 # Copy contents of OpenSSH_6.0.0.6202  openssl-1.0.2.800 to fixup dir.
+mkdir fixup
+cp -r OpenSSH_6.0.0.6202/* fixup/
+cp -r openssl-1.0.2.800/* fixup/
+cd fixup
+
 inutoc .
 
-emgr -r -L IV80743m9a  (if necessary)
-emgr -r -L IV83169m9a  (if necessary)
+emgr -r -L IV80743m9a  # (if necessary)
+emgr -r -L IV83169m9a  # (if necessary)
 
 installp -Y -qaXgd . openssl openssh
 ```
@@ -70,10 +96,9 @@ LIBPATH=/usr/lib curl --insecure -O https://public.dhe.ibm.com/aix/freeSoftware/
 rpm -e gettext
 rpm -hUv gettext-0.19.7-1.aix6.1.ppc.rpm
 
-Java7r1_64.jre.7.1.0.200.tar.gz
-gunzip Java7r1_64.jre.7.1.0.200.tar.gz
-tar -xvf Java7r1_64.jre.7.1.0.200.tar
-installp -agXYd . Java71_64.jre 2>&1 | tee installp.log
+LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/j864redist.tar.gz
+gunzip -d j864redist.tar.gz
+tar -xf j864redist.tar
 
 LIBPATH=/usr/lib curl --insecure -O http://www.oss4aix.org/download/everything/RPMS/make-3.82-1.aix5.3.ppc.rpm
 rpm -i make-3.82-1.aix5.3.ppc.rpm
@@ -86,9 +111,18 @@ http://www.bullfreeware.com/affichage.php?id=1458#
 http://www.bullfreeware.com/affichage.php?id=2048
 
 ```bash
+mkdir libtool
+cd libtool
+LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/3149libtool-2.2.7b-1.aix6.1.ppc.rpm-with-deps.zip
 unzip 3149libtool-2.2.7b-1.aix6.1.ppc.rpm-with-deps
-m4-1.4.17-1.aix6.1.ppc.rpm
+
+LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/m4-1.4.17-1.aix6.1.ppc.rpm
+
 sh install-libtool-rpm.sh
+
+# Cleanup
+cd ../
+rm -rf libtool
 ```
 
 #### pip
@@ -96,6 +130,13 @@ sh install-libtool-rpm.sh
 ```bash
 LIBPATH=/usr/lib curl https://bootstrap.pypa.io/get-pip.py | python
 ln -s /opt/freeware/bin/pip /usr/bin/pip
+```
+
+#### tap2junit
+
+```bash
+pip install tap2junit
+ln -s /opt/freeware/bin/tap2junit /usr/bin/tap2junit
 ```
 
 ## Install ccache
@@ -184,12 +225,15 @@ xmquery dgram   udp6    wait    root    /usr/bin/xmtopas xmtopas -p3
 
 ## Install the 6.3.x compiler
 
-* log into the machine
-* su - iojs
-* copy these two files into /home/iojs
-  * https://ci.nodejs.org/downloads/aix/V2-gcc-6.3.0-1.tar.gz
-  * https://ci.nodejs.org/downloads/aix/gmake-dep.tar.gz
-* gunzip the 2 files
-* untar the 2 files
+```bash
+su - iojs
+cd /home/iojs
 
+LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/V2-gcc-6.3.0-1.tar.gz
+gunzip -d V2-gcc-6.3.0-1.tar.gz
+tar -xf V2-gcc-6.3.0-1.tar
 
+LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/gmake-dep.tar.gz
+gunzip -d gmake-dep.tar.gz
+tar -xf gmake-dep.tar
+```
