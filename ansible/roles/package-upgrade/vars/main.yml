@@ -5,7 +5,7 @@
 #
 
   pm: {
-    'yum': ['centos', 'rhel72'],
+    'yum': ['centos', 'rhel72', 'aix'],
     'apt': ['debian', 'ubuntu'],
     'dnf': 'fedora',
     'pkg': 'freebsd',

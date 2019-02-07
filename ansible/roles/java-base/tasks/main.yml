@@ -65,6 +65,27 @@
   when: java.rc > 0 and os|startswith("macos")
   package: name="{{ java_package_name }}" state=present
 
+- name: check if java is installed AIX
+  stat:
+    path: /home/iojs/jdk8u192-b12-jre/bin
+  register: java_exists
+  when: os|startswith("aix")
+
+- name: download java AIX
+  get_url:
+    url: https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u192-b12/OpenJDK8U-jre_ppc64_aix_hotspot_8u192b12.tar.gz
+    dest: /tmp/
+  tags: java
+  when: java_exists.stat.exists == False and os|startswith("aix")
+
+- name: unarchive java AIX
+  unarchive:
+    src: /tmp/OpenJDK8U-jre_ppc64_aix_hotspot_8u192b12.tar.gz
+    remote_src: yes
+    dest: /home/iojs
+  tags: java
+  when: java_exists.stat.exists == False and os|startswith("aix")
+
 - name: install webupd8 oracle java 8 extras
   when: java.rc > 0 and os in ("ubuntu1204", "ubuntu1404") and arch != "ppc64"
   package: name="{{item}}" state=present
