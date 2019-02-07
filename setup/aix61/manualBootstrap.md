@@ -135,7 +135,7 @@ ln -s /opt/freeware/bin/pip /usr/bin/pip
 #### tap2junit
 
 ```bash
-pip install tap2junit
+python -m pip install --upgrade pip pipenv git+https://github.com/refack/tap2junit.git
 ln -s /opt/freeware/bin/tap2junit /usr/bin/tap2junit
 ```
 
