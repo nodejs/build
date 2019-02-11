@@ -23,7 +23,7 @@
 #
 
 from ansible.module_utils.basic import *
-from jinja2 import Environment, Template, filters
+from jinja2 import Environment
 import os
 import re
 
