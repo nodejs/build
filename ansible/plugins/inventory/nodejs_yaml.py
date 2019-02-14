@@ -283,7 +283,6 @@ def has_metadata(info):
        metadata by underscore. Not used anywhere at the moment for anything
        other than descriptiveness"""
 
-    param = dict()
     metadata = info.split('_', 1)
 
     try:
