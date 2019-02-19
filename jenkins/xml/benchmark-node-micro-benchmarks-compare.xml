@@ -1,0 +1,206 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>We want to compare two branches, tags or commits.</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.security.AuthorizationMatrixProperty>
+      <inheritanceStrategy class="org.jenkinsci.plugins.matrixauth.inheritance.InheritParentStrategy"/>
+      <permission>hudson.model.Item.Build:nodejs*benchmarking</permission>
+      <permission>hudson.model.Item.Build:nodejs*benchmarking-admins</permission>
+      <permission>hudson.model.Item.Cancel:nodejs*benchmarking</permission>
+      <permission>hudson.model.Item.Cancel:nodejs*benchmarking-admins</permission>
+      <permission>hudson.model.Item.Configure:nodejs*benchmarking-admins</permission>
+      <permission>hudson.model.Item.Delete:nodejs*benchmarking-admins</permission>
+      <permission>hudson.model.Item.Discover:nodejs*benchmarking</permission>
+      <permission>hudson.model.Item.Discover:nodejs*benchmarking-admins</permission>
+      <permission>hudson.model.Item.Move:nodejs*benchmarking-admins</permission>
+      <permission>hudson.model.Item.Read:nodejs*benchmarking</permission>
+      <permission>hudson.model.Item.Read:nodejs*benchmarking-admins</permission>
+      <permission>hudson.model.Item.Workspace:nodejs*benchmarking</permission>
+      <permission>hudson.model.Item.Workspace:nodejs*benchmarking-admins</permission>
+      <permission>hudson.model.Run.Delete:nodejs*benchmarking-admins</permission>
+      <permission>hudson.model.Run.Replay:nodejs*benchmarking</permission>
+      <permission>hudson.model.Run.Replay:nodejs*benchmarking-admins</permission>
+      <permission>hudson.model.Run.Update:nodejs*benchmarking</permission>
+      <permission>hudson.model.Run.Update:nodejs*benchmarking-admins</permission>
+    </hudson.security.AuthorizationMatrixProperty>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <com.synopsys.arc.jenkinsci.plugins.jobrestrictions.jobs.JobRestrictionProperty plugin="job-restrictions@0.8"/>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>FILTER</name>
+          <description>A string to restrict the number of benchmarks to run in a category.</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <jp.ikedam.jenkins.plugins.extensible__choice__parameter.ExtensibleChoiceParameterDefinition plugin="extensible-choice-parameter@1.6.0">
+          <name>CATEGORY</name>
+          <description>The category of tests to run, for example buffers, cluster etc. Typically folders in node/benchmark </description>
+          <editable>true</editable>
+          <editableType>NoFilter</editableType>
+          <choiceListProvider class="jp.ikedam.jenkins.plugins.extensible_choice_parameter.TextareaChoiceListProvider">
+            <whenToAdd>CompletedUnstable</whenToAdd>
+            <choiceList>
+              <string>arrays</string>
+              <string>assert</string>
+              <string>buffers</string>
+              <string>child_process</string>
+              <string>cluster</string>
+              <string>crypto</string>
+              <string>dgram</string>
+              <string>dns</string>
+              <string>domain</string>
+              <string>es</string>
+              <string>events</string>
+              <string>fixtures</string>
+              <string>fs</string>
+              <string>http</string>
+              <string>http2</string>
+              <string>misc</string>
+              <string>module</string>
+              <string>net</string>
+              <string>os</string>
+              <string>path</string>
+              <string>process</string>
+              <string>querystring</string>
+              <string>streams</string>
+              <string>string_decoder</string>
+              <string>timers</string>
+              <string>tls</string>
+              <string>url</string>
+              <string>util</string>
+              <string>v8</string>
+              <string>vm</string>
+              <string>zlib</string>
+            </choiceList>
+          </choiceListProvider>
+        </jp.ikedam.jenkins.plugins.extensible__choice__parameter.ExtensibleChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>RUNS</name>
+          <description>How many times to repeat each benchmark. Default to 30.</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GITHUB_BASE_ORG</name>
+          <description>The user/org of the GitHub repo (base for comparison)</description>
+          <defaultValue>nodejs</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REPO_NAME_BASE</name>
+          <description>The name of the repo (base for comparison)</description>
+          <defaultValue>node</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>BASE</name>
+          <description>the branch/tag/commit the test should be based off. e.g. master&quot;</description>
+          <defaultValue>master</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GITHUB_ORG_TARGET</name>
+          <description>The user/org of the GitHub repo (target for comparison)</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REPO_NAME_TARGET</name>
+          <description>The name of the repo (target for comparison)</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TARGET</name>
+          <description>the branch/tag/commit to compare against base</description>
+          <defaultValue></defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>test-nearform_intel-ubuntu1604-x64-1</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>/w/bnch-comp/</customWorkspace>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!bash -xe
+#start from a known state
+rm -rf node || true
+rm -rf bench || true
+export startDir=`pwd`
+# we need the repo that has the benchmark tests
+#git clone https://github.com/nodejs/node.git
+
+# get the additional files neeed for some benchmarks
+git clone https://github.com/nodejs/benchmarking.git bench
+
+# for now we simply build the latest from master
+# if there were nightlies already built we&apos;d probably
+# use those
+#pushd node
+#export ARCH=x64
+#export DESTCPU=x64
+#./configure
+#make -j8 node
+#export NODE_ROOT=`pwd`
+#export PATH=$NODE_ROOT/bin:$NODE_ROOT/out/Release/:$PATH
+#echo $PATH
+#popd
+
+#alias make=&quot;/usr/bin/make --output-sync=line V=1&quot;
+. bench/experimental/benchmarks/community-benchmark/run.sh
+
+
+
+
+
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>/jenk/bench/*.log</artifacts>
+      <allowEmptyArchive>true</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>true</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
+    <hudson.tasks.Mailer plugin="mailer@1.23">
+      <recipients>gareth@gsellis.com refack@gmail.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.10"/>
+  </buildWrappers>
+</project>

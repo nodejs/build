@@ -1,0 +1,322 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<matrix-project plugin="matrix-project@1.13">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.security.AuthorizationMatrixProperty>
+      <inheritanceStrategy class="org.jenkinsci.plugins.matrixauth.inheritance.InheritParentStrategy"/>
+      <permission>hudson.model.Item.Build:nodejs*build</permission>
+      <permission>hudson.model.Item.Cancel:nodejs*build</permission>
+      <permission>hudson.model.Item.Configure:nodejs*build</permission>
+      <permission>hudson.model.Item.Delete:nodejs*build</permission>
+      <permission>hudson.model.Item.Discover:nodejs*build</permission>
+      <permission>hudson.model.Item.Read:nodejs*build</permission>
+      <permission>hudson.model.Item.Workspace:nodejs*build</permission>
+      <permission>hudson.model.Run.Delete:nodejs*build</permission>
+      <permission>hudson.model.Run.Replay:nodejs*build</permission>
+      <permission>hudson.model.Run.Update:nodejs*build</permission>
+    </hudson.security.AuthorizationMatrixProperty>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
+      <projectUrl>https://github.com/nodejs/node/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <com.synopsys.arc.jenkinsci.plugins.jobrestrictions.jobs.JobRestrictionProperty plugin="job-restrictions@0.8"/>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <matrixOptions>
+        <throttleMatrixBuilds>true</throttleMatrixBuilds>
+        <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
+      </matrixOptions>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>GITHUB_ORG</name>
+          <description>The user/org of the GitHub repo</description>
+          <defaultValue>nodejs</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REPO_NAME</name>
+          <description>The name of the repo</description>
+          <defaultValue>node</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GIT_REMOTE_REF</name>
+          <description>The remote portion of the Git refspec to fetch and test</description>
+          <defaultValue>refs/heads/master</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REBASE_ONTO</name>
+          <description>Optionally, rebase onto the given ref before testing. Leave blank to skip rebasing.</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>POST_REBASE_SHA1_CHECK</name>
+          <description>After rebasing, check that the resulting commit sha1 matches the given one. If left blank, no check is performed.</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>IGNORE_FLAKY_TESTS</name>
+          <description>Mark the build as unstable instead of failure if only flaky tests fail</description>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>PUBLISH</name>
+          <description>Should the job publish to https://coverage.nodejs.org/</description>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-beta4">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name>origin</name>
+        <refspec>+refs/heads/*:refs/remotes/origin/* +$GIT_REMOTE_REF:refs/remotes/origin/_jenkins_local_branch</refspec>
+        <url>git@github.com:$GITHUB_ORG/$REPO_NAME.git</url>
+        <credentialsId>96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>refs/heads/_jenkins_local_branch</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GithubWeb">
+      <url>https://github.com/nodejs/node</url>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanCheckout/>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>false</shallow>
+        <noTags>true</noTags>
+        <reference>/home/iojs/git/io.js.reference</reference>
+        <timeout>20</timeout>
+        <depth>0</depth>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
+      <hudson.plugins.git.extensions.impl.ChangelogToBranch>
+        <options>
+          <compareRemote>origin</compareRemote>
+          <compareTarget>_jenkins_local_branch~1</compareTarget>
+        </options>
+      </hudson.plugins.git.extensions.impl.ChangelogToBranch>
+    </extensions>
+  </scm>
+  <assignedNode>jenkins-workspace</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <axes>
+    <hudson.matrix.LabelAxis>
+      <name>nodes</name>
+      <values>
+        <string>benchmark</string>
+      </values>
+    </hudson.matrix.LabelAxis>
+  </axes>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>git --version
+
+# Name and email in git config need to be the same across all jobs
+# so that git rebase --committer-date-is-author-date will produce 
+# the same commit SHA1
+git config --replace-all user.name Dummy
+git config --replace-all user.email dummy@dummy.com
+git config user.name
+git config user.email
+echo $GIT_COMMITTER_NAME
+echo $GIT_AUTHOR_NAME
+
+
+git rebase --abort || true
+git checkout -f refs/remotes/origin/_jenkins_local_branch
+git config user.name
+git config user.email
+echo $GIT_COMMITTER_NAME
+echo $GIT_AUTHOR_NAME
+
+git status
+git rev-parse HEAD
+git rev-parse $REBASE_ONTO
+
+if [ -n &quot;${REBASE_ONTO}&quot; ]; then
+  git rebase --committer-date-is-author-date $REBASE_ONTO
+fi
+
+if [ -n &quot;${POST_REBASE_SHA1_CHECK}&quot; ]; then
+  check_sha1=${POST_REBASE_SHA1_CHECK}
+  head_sha1=$(git rev-parse HEAD)
+  if [ &quot;$head_sha1&quot; != &quot;$check_sha1&quot; ]; then
+    exit 1
+  fi 
+fi
+</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command># Diagnostics
+set +x
+DIAGFILE=${HOME}/jenkins_diagnostics.txt
+echo &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+TS=&quot;`date`&quot;
+echo $TS
+echo $TS &gt;&gt; ${DIAGFILE}
+echo &quot;Before building&quot; &gt;&gt; ${DIAGFILE}
+echo $BUILD_TAG &gt;&gt; ${DIAGFILE}
+echo $BUILD_URL &gt;&gt; ${DIAGFILE}
+echo $NODE_NAME &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;netstat -anp&quot; &gt;&gt; ${DIAGFILE}
+netstat -anp &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;netstat -gn&quot; &gt;&gt; ${DIAGFILE}
+netstat -gn &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;ps auxww&quot; &gt;&gt; ${DIAGFILE}
+ps auxww &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+mv ${DIAGFILE} ${DIAGFILE}-OLD || true
+tail -c 20000000 ${DIAGFILE}-OLD &gt; ${DIAGFILE} || true
+rm ${DIAGFILE}-OLD || true
+set -x
+pgrep node || true
+</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash
+
+if [[ &quot;$nodes&quot; =~ clang ]]; then
+  # ubuntu12 clang variant
+  export CC=clang
+  export CXX=clang++
+fi
+
+# work around ISSUE #24996
+git apply /home/iojs/cov-patch-24966
+
+./configure --coverage
+make coverage-clean
+
+# adding &apos;test-internet&apos; as per https://github.com/nodejs/build/issues/1470
+NODE_TEST_DIR=${HOME}/node-tmp PYTHON=python COVTESTS=&quot;test-ci test-internet&quot; make coverage -j $(getconf _NPROCESSORS_ONLN)</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash -xe
+
+# copy the coverage results to the directory where we keep them
+# generate the summaries and transfer to the benchmarking data 
+# machine from which the website will pull them
+
+export PATH=&quot;$(pwd):$PATH&quot;
+
+# copy over results
+COMMIT_ID=$(git rev-parse --short=16 HEAD)
+mkdir -p &quot;$HOME/coverage-out&quot;
+OUTDIR=&quot;$HOME/coverage-out/out&quot;
+mkdir -p &quot;$OUTDIR&quot;
+rm -rf &quot;$OUTDIR/coverage-$COMMIT_ID&quot; || true
+cp -r coverage &quot;$OUTDIR/coverage-$COMMIT_ID&quot;
+
+# add entry into the index and generate the html version
+JSCOVERAGE=$(grep -B1 Lines coverage/index.html | \
+  head -n1 | grep -o &apos;[0-9\.]*&apos;)
+CXXCOVERAGE=$(grep -A3 Lines coverage/cxxcoverage.html | \
+  grep style | grep -o &apos;[0-9]\{1,3\}\.[0-9]\{1,2\}&apos;)
+NOW=$(date -u +&quot;%Y-%m-%dT%H:%M:%SZ&quot;)
+
+echo &quot;$JSCOVERAGE,$CXXCOVERAGE,$NOW,$COMMIT_ID&quot; &gt;&gt; &quot;$OUTDIR/index.csv&quot;
+
+cd $OUTDIR/..
+$WORKSPACE/build/jenkins/scripts/coverage/generate-index-html.py
+
+# transfer results to machine where coverage data is staged.
+if [ &quot;$PUBLISH&quot; = &quot;true&quot; ]; then
+  rsync -r out coveragedata:coverage-out
+fi</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command># Diagnostics
+set +x
+DIAGFILE=${HOME}/jenkins_diagnostics.txt
+echo &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+TS=&quot;`date`&quot;
+echo $TS
+echo $TS &gt;&gt; ${DIAGFILE}
+echo &quot;After building&quot; &gt;&gt; ${DIAGFILE}
+echo $BUILD_TAG &gt;&gt; ${DIAGFILE}
+echo $BUILD_URL &gt;&gt; ${DIAGFILE}
+echo $NODE_NAME &gt;&gt; ${DIAGFILE}
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;netstat -anp&quot; &gt;&gt; ${DIAGFILE}
+netstat -anp &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;netstat -gn&quot; &gt;&gt; ${DIAGFILE}
+netstat -gn &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+echo &gt;&gt; ${DIAGFILE}
+echo &quot;ps auxww&quot; &gt;&gt; ${DIAGFILE}
+ps auxww &gt;&gt; ${DIAGFILE} 2&gt;&amp;1 || true
+mv ${DIAGFILE} ${DIAGFILE}-OLD || true
+tail -c 20000000 ${DIAGFILE}-OLD &gt; ${DIAGFILE} || true
+rm ${DIAGFILE}-OLD || true
+set -x
+pgrep node || true
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.23">
+      <recipients>michael_dawson@ca.ibm.com refack@gmail.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
+      <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
+        <timeoutSecondsString>1800</timeoutSecondsString>
+      </strategy>
+      <operationList>
+        <hudson.plugins.build__timeout.operations.FailOperation/>
+      </operationList>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.10"/>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.1">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+  </buildWrappers>
+  <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
+    <runSequentially>false</runSequentially>
+  </executionStrategy>
+</matrix-project>
