@@ -4,7 +4,6 @@
 
 * **Recording**: https://www.youtube.com/watch?v=ARwP_S6WhPU 
 * **GitHub Issue**: https://github.com/nodejs/build/issues/1667
-* **Minutes Google Doc**: $MINUTES_DOC$
 
 ## Present
 
