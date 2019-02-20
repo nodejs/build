@@ -41,7 +41,7 @@
   * Rod, any path to coming up with a reduced test suite that might lighten the load
     setup. For debug build Rafael has exclude list that reduces coverage by only 1%
     for 15% less execution time.  For debug we only run once a day.
-  * MIght be option to run full test suite twice a day and reduce what we run in the PR
+  * Might be option to run full test suite twice a day and reduce what we run in the PR
     regression test.
   * Rod would be good to identify tests that never fail versus those we see fail on different
     platforms.
