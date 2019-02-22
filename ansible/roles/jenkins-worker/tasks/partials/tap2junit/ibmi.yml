@@ -1,8 +1,9 @@
 ---
 
 #
-# install tap2junit from pip
+# install tap2junit ibmi
 #
 
 - name: install tap2junit
   pip: name=tap2junit state=present
+  executable: pip2

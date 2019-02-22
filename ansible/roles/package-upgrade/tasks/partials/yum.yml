@@ -6,3 +6,5 @@
 
   - name: upgrade installed packages
     yum: name=* state=latest
+# XXX might have needed `use_backend=yum` at end of last line, but prob
+# not, was a workaround for a fixed path problem

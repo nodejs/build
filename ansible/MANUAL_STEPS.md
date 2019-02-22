@@ -479,3 +479,15 @@ After these steps are performed and the Pi's are running, Ansible can be run to 
 [Setting up a Windows Host]: https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html
 [newer Ansible configuration]: https://github.com/nodejs/build/tree/master/ansible
 [stand-alone]: https://github.com/nodejs/build/tree/master/setup/windows
+
+## IBMi
+
+Ansible 2.7.6 is required.
+
+There isn't a system start service on IBMi -- the machine should not be
+rebooted, and after ansible is run, jenkins needs to be started with
+jenkins-start.sh, as the iojs user.
+
+XXX how do people become the iojs user? Probably pre-ansible the
+`nodejs_build_test` user's keys need installing as the nodejs and iojs user on
+the target box.

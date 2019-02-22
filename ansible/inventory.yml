@@ -38,6 +38,9 @@ hosts:
         aix71-ppc64_be-1: {ip: 129.33.196.199, user: b9s010a}
         rhel7-s390x-1: {ip: 148.100.86.101, user: linux1}
 
+    - iinthecloud:
+        ibmi72-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
+
     - joyent:
         smartos15-x64-2: {ip: 165.225.148.139}
         smartos17-x64-2: {ip: 165.225.149.208}
@@ -180,6 +183,10 @@ hosts:
         macos10.15-x64-2: {ip: 199.7.167.99, port: 8823, user: administrator}
         macos10.14-x64-1: {ip: 199.7.167.99, port: 8822, user: administrator}
         macos10.14-x64-2: {ip: 199.7.167.100, port: 8824, user: administrator}
+
+    - iinthecloud:
+        ibmi72-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
+        ibmi72-ppc64_be-2: {ip: 65.183.160.59, user: nodejs}
 
     - rackspace:
         centos7-x64-1: {ip: 119.9.27.82}

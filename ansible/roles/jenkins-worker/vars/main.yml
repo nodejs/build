@@ -9,6 +9,7 @@ init: {
   centos6: 'centos6',
   debian: 'debian7',
   freebsd: 'freebsd',
+  ibmi: 'ibmi72',
   macos: 'macos',
   rhel7: 'rhel7',
   systemd: ['centos7', 'debian8', 'debian9', 'debian10', 'fedora', 'ubuntu1604', 'ubuntu1804'],
@@ -69,6 +70,10 @@ jenkins_init: {
     dest: '{{ home }}/{{ server_user }}/start.sh',
     src: 'zos_start.j2'
     },
+  ibmi: {
+    dest: '{{ home }}/{{ server_user }}/jenkins-start.sh',
+    src: 'ibmi_start.j2'
+    },
   }
 
 # if you fail here, it means it cant map your os or os family to a init system
@@ -86,6 +91,7 @@ needs_monit: [
 java_path: {
   'aix71': '/home/iojs/jdk8u192-b12-jre/bin/java',
   'aix72': '/home/iojs/jdk8u192-b12-jre/bin/java',
+  'ibmi72': '/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/bin/java',
   'macos10.10': 'java',
   'macos10.11': 'java',
   'macos10.12': 'java',

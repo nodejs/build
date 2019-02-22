@@ -25,18 +25,23 @@
   when: jobs_env is undefined
 
 - name: create group
-  when: not os|startswith("zos")
+  when: not os|startswith("zos") and not os|startswith("ibmi")
   group: name="{{ server_user }}"
 
 - name: create user
-  when: "not os|startswith('zos')"
+  when: "not os|startswith('zos') and not os|startswith('ibmi')"
   user:
     name: "{{ server_user }}"
     group: "{{ server_user }}"
     shell: "{{ bash_path[os|stripversion]|default('/bin/bash') }}"
 
+- name: create user for ibmi
+  when: os|startswith("ibmi")
+  command: "/QOpenSys/usr/bin/system 'CRTUSRPRF USRPRF({{ server_user }}) PASSWORD(*none)'"
+  ignore_errors: true
+
 - name: add ::1 to /etc/hosts for ipv6 compat
-  when: not os|startswith("zos")
+  when: not os|startswith("zos") and not os|startswith("ibmi")
   lineinfile:
     dest: /etc/hosts
     state: present
@@ -46,10 +51,19 @@
   file: path="{{ home }}/{{ server_user }}/tmp" state=directory
 
 - name: set NODE_TEST_DIR permission and owner
+  when: not os|startswith("ibmi")
   file:
     path: "{{ home }}/{{ server_user }}/tmp"
     owner: "{{ server_user }}"
     group: "{{ server_user }}"
+    mode: 0755
+
+# group has very different meaning on IBMi, only set to the build user
+- name: set NODE_TEST_DIR permission and owner IBMi
+  when: os|startswith("ibmi")
+  file:
+    path: "{{ home }}/{{ server_user }}/tmp"
+    owner: "{{ server_user }}"
     mode: 0755
 
 - name: run raspberry pi jenkins-worker setup
@@ -132,6 +146,59 @@
 - name: Firewall | make the new firewall rules take effect
   command: systemctl restart iptables
   when: "'rhel7-s390x' in inventory_hostname"
+
+- name: Check if SU is installed on IBMi
+  when: os|startswith("ibmi")
+  stat:
+    path: /QOpenSys/pkgs/bin/su
+  register: su_exists
+
+- name: git clone su on ibmi
+  git:
+    repo: https://github.com/ThePrez/IBMiOSS-utils.git
+    dest: /tmp/IBMiOSS-utils
+  when: su_exists.stat.exists == False and os|startswith("ibmi")
+
+- name: copy su into /QOpenSys/pkgs/bin IBMi
+  copy:
+    src: /tmp/IBMiOSS-utils/su
+    dest: /QOpenSys/pkgs/bin/su
+    remote_src: true
+  when: su_exists.stat.exists == False and os|startswith("ibmi")
+
+- name: copy su-setup into /QOpenSys/pkgs/bin IBMi
+  copy:
+    src: /tmp/IBMiOSS-utils/su-setup
+    dest: /QOpenSys/pkgs/bin/su-setup
+    remote_src: true
+  when: su_exists.stat.exists == False and os|startswith("ibmi")
+
+- name: Check if SU is installed on IBMi
+  when: os|startswith("ibmi")
+  stat:
+    path: /QOpenSys/pkgs/bin/su
+  register: su_exists
+
+# FIXME rewrite jenkins start to use ssh or SBMJOB, so su is not needed.
+- name: git clone su on ibmi
+  git:
+    repo: https://github.com/ThePrez/IBMiOSS-utils.git
+    dest: /tmp/IBMiOSS-utils
+  when: su_exists.stat.exists == False and os|startswith("ibmi")
+
+- name: copy su into /QOpenSys/pkgs/bin IBMi
+  copy:
+    src: /tmp/IBMiOSS-utils/su
+    dest: /QOpenSys/pkgs/bin/su
+    remote_src: true
+  when: su_exists.stat.exists == False and os|startswith("ibmi")
+
+- name: copy su-setup into /QOpenSys/pkgs/bin IBMi
+  copy:
+    src: /tmp/IBMiOSS-utils/su-setup
+    dest: /QOpenSys/pkgs/bin/su-setup
+    remote_src: true
+  when: su_exists.stat.exists == False and os|startswith("ibmi")
 
 - name: download slave.jar
   when: not os|startswith("zos")
@@ -313,7 +380,11 @@
     name: java-base
 
 - name: enable jenkins at startup - general
-  when: not os|startswith("zos") and not os|startswith("macos") and not os|startswith("aix")
+  when:
+    - not os|startswith("aix")
+    - not os|startswith("ibmi")
+    - not os|startswith("macos")
+    - not os|startswith("zos")
   service: name=jenkins state=restarted enabled=yes
 
 - name: Unload org.nodejs.osx.jenkins.plist from launchctl

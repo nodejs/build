@@ -115,6 +115,12 @@
   register: java_exists
   when: os|startswith("aix")
 
+- name: check if java is installed IBMi
+  stat:
+    path: /QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/bin/java
+  register: java_exists
+  when: os|startswith("ibmi")
+
 - name: download java AIX
   get_url:
     url: https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u192-b12/OpenJDK8U-jre_ppc64_aix_hotspot_8u192b12.tar.gz

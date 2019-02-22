@@ -57,6 +57,25 @@ packages: {
     'bash,cmake,gcc-c++,gcc6-c++,tar,unzip,git,make,sudo',
   ],
 
+  # @jgorzins - this works, but @rvagg says doing it as a concatenated string
+  # as above is _significantly_ faster to execute
+  ibmi: [
+    'autoconf',
+    'automake',
+    'ca-certificates-mozilla',
+    'ccache',
+    'coreutils-gnu',
+    'gcc',
+    'gcc-cplusplus',
+    'gcc-cpp',
+    'git',
+    'libstdcplusplus-devel',
+    'openssl-devel >= 1.1.1',
+    'python2-pip',
+    'sed-gnu',
+    'zlib-devel',
+  ],
+
   debian7: [
     'gcc-4.8,g++-4.8,sudo',
   ],
