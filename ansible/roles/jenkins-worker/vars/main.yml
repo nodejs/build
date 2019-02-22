@@ -6,6 +6,7 @@
 
 init: {
   aix: 'aix71',
+  ibmi: 'ibmi72',
   centos5:  'centos5',
   centos6:  'centos6',
   debian:  ['debian7', 'ubuntu1204'],
@@ -75,6 +76,10 @@ jenkins_init: {
     dest: '{{ home }}/{{ server_user }}/start.sh',
     src: 'zos_start.j2'
     },
+  ibmi: {
+    dest: '{{ home }}/{{ server_user }}/start.sh',
+    src: 'ibmi_start.j2'
+    },
   }
 
 # if you fail here, it means it cant map your os or os family to a init system
@@ -92,6 +97,7 @@ needs_monit: [
 # some os'es needs different paths to java. add them here.
 java_path: {
   'aix71': '/home/iojs/jdk8u192-b12-jre/bin/java',
+  'ibmi72': '/QOpenSys/QIBM/ProdDava/JavaVM/jdk80/64bit/bin/java',
   'macos10.10': 'java',
   'macos10.11': 'java',
   'macos10.12': 'java',

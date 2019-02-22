@@ -16,3 +16,7 @@ to
 ```bash
 sudo systemsetup -setremotelogin on
 ```
+
+## IBMi
+1. Install yum
+https://bitbucket.org/ibmi/opensource/src/master/docs/yum/#markdown-header-installation

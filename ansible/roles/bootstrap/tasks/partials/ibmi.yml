@@ -1,0 +1,12 @@
+---
+
+#
+# IBMi initial tools
+#
+
+- name: Add repository
+  yum_repository:
+    name: qsecofr
+    description: QSECOFR IBM i RPM Repo
+    baseurl: http://repo.qseco.fr
+    reposdir: /QOpenSys/etc/yum/repos.d

@@ -148,6 +148,10 @@ hosts:
         ubuntu1404-ppc64_le-2: {ip: 140.211.168.94}
         ubuntu1404-ppc64_le-3: {ip: 140.211.168.221, user: root}
 
+    - iinthecloud:
+        ibmi72-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
+        ibmi72-ppc64_be-2: {ip: 65.183.160.59, user: nodejs}
+
     - rackspace:
         centos7-x64-1: {ip: 119.9.27.82}
         debian8-x64-1: {ip: 23.253.109.216}

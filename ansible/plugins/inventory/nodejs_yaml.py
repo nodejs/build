@@ -51,7 +51,7 @@ valid = {
   'provider': ('azure', 'digitalocean', 'joyent', 'ibm', 'linuxonecc',
                'macstadium', 'marist', 'mininodes', 'msft', 'osuosl',
                'rackspace', 'requireio', 'scaleway', 'softlayer', 'voxer',
-               'packetnet', 'nearform')
+               'packetnet', 'nearform', 'iinthecloud')
 }
 DECRYPT_TOOL = "gpg"
 INVENTORY_FILENAME = "inventory.yml"

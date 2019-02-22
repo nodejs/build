@@ -50,6 +50,10 @@ packages: {
     'gcc-c++,sudo',
   ],
 
+  ibmi: [
+    'gcc-aix', 'gcc-cplusplus-aix', 'gcc-cpp', 'sed-gnu', 'coreutils-gnu', 'zlib-devel', 'openssl-devel >= 1.1.1', 'python2-pip', 'git', 'ca-certificates',
+  ],
+
   debian7: [
     'gcc-4.8,g++-4.8,sudo',
   ],
