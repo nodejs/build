@@ -59,14 +59,14 @@ Add a Jenkins "system message" in https://ci.nodejs.org/configure. Something lik
 ```
 And some fancy "extra-css" to the Theme at https://ci.nodejs.org/configure#section122:
 ```css
-#header {
+#header, .task-icon-link[href="/"] {
   background-color: red;
 }
 a#jenkins-home-link:after {
-    content: "Under security embargo!";
-    font-size: larger;
-    color: yellow;
-    margin-left: 200px;
+  content: "Under security embargo!";
+  font-size: larger;
+  color: yellow;
+  margin-left: 250px;
 }
 ```
 
