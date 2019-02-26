@@ -55,7 +55,7 @@ Be sure to insert a link to the `nodejs/build` tracking issue.
 Add a Jenkins "system message" in https://ci.nodejs.org/configure. Something like:
 ```html
 <h1 style="color:red">system is under embargo for a security release</h1>
-<h2>For solidarity, even if you have access, plesae don't start unrelated jobs</h2>
+<h2>For solidarity, even if you have access, please don't start unrelated jobs</h2>
 ```
 And some fancy "extra-css" to the Theme at https://ci.nodejs.org/configure#section122:
 ```css
