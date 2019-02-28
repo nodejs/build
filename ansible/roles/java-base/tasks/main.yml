@@ -76,7 +76,7 @@
     url: https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u192-b12/OpenJDK8U-jre_ppc64_aix_hotspot_8u192b12.tar.gz
     dest: /tmp/
   tags: java
-  when: java_exists.stat.exists == False and os|startswith("aix")
+  when: os|startswith("aix") and java_exists.stat.exists == False
 
 - name: unarchive java AIX
   unarchive:
@@ -84,7 +84,7 @@
     remote_src: yes
     dest: /home/iojs
   tags: java
-  when: java_exists.stat.exists == False and os|startswith("aix")
+  when: os|startswith("aix") and java_exists.stat.exists == False
 
 - name: install webupd8 oracle java 8 extras
   when: java.rc > 0 and os in ("ubuntu1204", "ubuntu1404") and arch != "ppc64"
