@@ -133,3 +133,27 @@
         mode: 0755
       when: pi_type in ("pi1p", "pi2")
       tags: general
+
+      # We need to do this here because the apt upgrade may upgrade what's in /boot and
+      # we'll end up out of sync and some services won't start properly on reboot
+
+    - name: pi | enable rpcbind service
+      service: name=rpcbind state=started enabled=yes
+      tags: init
+
+      # re-test this because we don't care about sd card at this stage
+    - name: pi | test if nfs-root
+      shell: |
+        test -n "$(grep ' / ' /proc/mounts | grep -E '^[0-9\.]+:/')"
+      register: nfs_root_check_result
+      ignore_errors: true
+
+    - name: pi | mount /boot/ via nfs
+      mount:
+        name: "/boot"
+        src: "{{ raspberry_pi.nfs_boot_server }}:{{ raspberry_pi.nfs_boot_share_root }}/{{ inventory_hostname }}"
+        fstype: nfs4
+        opts: nfsvers=3,rw,noexec,async,noauto
+        state: mounted
+      when: nfs_root_check_result.rc == 0
+      tags: nfs
