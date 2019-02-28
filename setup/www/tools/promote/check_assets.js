@@ -107,7 +107,7 @@ async function loadExpectedAssets (version, line) {
   try {
     const templateFile = path.join(__dirname, 'expected_assets', line)
     let files = await fs.readFile(templateFile, 'utf8')
-    return files.replace(/{VERSION}/g, version).split(/\n/g)
+    return files.replace(/{VERSION}/g, version).split(/\n/g).filter(Boolean)
   } catch (e) { }
   return null
 }
