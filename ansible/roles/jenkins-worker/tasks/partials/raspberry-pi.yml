@@ -2,26 +2,6 @@
 
 # For Raspberry Pis of any type, assumed to be running Debian 9
 
-- name: pi | enable rpcbind service
-  service: name=rpcbind state=started enabled=yes
-  tags: init
-
-- name: pi | test if nfs-root
-  shell: |
-    test -n "$(grep ' / ' /proc/mounts | grep -E '^[0-9\.]+:/')"
-  register: nfs_root_check_result
-  ignore_errors: true
-
-- name: pi | mount /boot/ via nfs
-  mount:
-    name: "/boot"
-    src: "{{ raspberry_pi.nfs_boot_server }}:{{ raspberry_pi.nfs_boot_share_root }}/{{ inventory_hostname }}"
-    fstype: nfs4
-    opts: nfsvers=3,rw,noexec,async,noauto
-    state: mounted
-  when: nfs_root_check_result.rc == 0
-  tags: nfs
-
 - name: pi | make .ccache
   file:
     path: "/home/{{ server_user }}/.ccache"

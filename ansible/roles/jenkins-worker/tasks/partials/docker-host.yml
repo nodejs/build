@@ -10,7 +10,6 @@
 
 - name: docker | fetch samba ccache HTML page
   local_action: shell curl -sL https://www.samba.org/ftp/ccache/
-  warn: False
   register: ccache_html_content
 
 - name: docker | extract ccache latest version
