@@ -59,6 +59,7 @@ def buildExclusions = [
   // Shared libs docker containers -------------------------
   [ /sharedlibs_openssl111/,          anyType,     lt(9)   ],
   [ /sharedlibs_openssl110/,          anyType,     lt(9)   ],
+  [ /sharedlibs_openssl110/,          anyType,     gte(12) ],
   [ /sharedlibs_openssl102/,          anyType,     gte(10) ],
   [ /sharedlibs_fips20/,              anyType,     gte(10) ],
   [ /sharedlibs_withoutintl/,         anyType,     lt(9)   ],
