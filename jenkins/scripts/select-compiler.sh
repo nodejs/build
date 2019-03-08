@@ -20,7 +20,11 @@ if [ "$SELECT_ARCH" = "PPC64LE" ]; then
 
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on ppc64le"
 
-  if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
+  if [ "$NODEJS_MAJOR_VERSION" -gt "11" ]; then
+    # See: https://github.com/nodejs/build/pull/1723#discussion_r265740122
+    export PATH=/usr/lib/binutils-2.26/bin/:$PATH
+    export COMPILER_LEVEL="6"
+  elif [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
     export PATH=/usr/lib/binutils-2.26/bin/:$PATH
     export COMPILER_LEVEL="4.9"
   fi

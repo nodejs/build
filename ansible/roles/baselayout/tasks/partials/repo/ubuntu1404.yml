@@ -1,7 +1,7 @@
 ---
 
 #
-# add PPA for gcc 4.9
+# add PPA for gcc updates
 #
 
 - name: "repo : add Ubuntu Toolchain PPA"

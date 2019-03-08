@@ -273,3 +273,6 @@
   when: os in needs_monit
   include: monit.yml
   static: false
+
+- include_role:
+    name: java-base
