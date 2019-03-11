@@ -14,6 +14,7 @@ def buildExclusions = [
   // Linux -------------------------------------------------
   [ /^centos5/,                       anyType,     gte(8)  ],
   [ /^centos6/,                       releaseType, lt(8)   ],
+  [ /^centos6/,                       anyType,     gte(12) ],
   [ /centos[67]-(arm)?(64|32)-gcc48/, anyType,     gte(10) ],
   [ /centos[67]-(arm)?(64|32)-gcc6/,  anyType,     lt(10)  ],
   [ /centos6-32-gcc6/,                releaseType, gte(10) ], // 32-bit linux for <10 only
