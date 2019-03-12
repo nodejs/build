@@ -36,7 +36,7 @@ hosts:
 
     - joyent:
         smartos14-x64-1: {ip: 72.2.113.193}
-        smartos15-x64-1: {ip: 165.225.170.142}
+        smartos15-x64-1: {ip: 72.2.113.195}
         smartos17-x64-1: {ip: 72.2.114.225}
         ubuntu1604_arm_cross-x64-1: {ip: 72.2.114.100, user: ubuntu}
 
@@ -106,7 +106,7 @@ hosts:
         smartos15-x64-2: {ip: 165.225.139.77}
         smartos16-x64-1: {ip: 72.2.115.252}
         smartos16-x64-2: {ip: 72.2.113.74}
-        smartos17-x64-1: {ip: 165.225.170.181}
+        smartos17-x64-1: {ip: 72.2.113.127}
         smartos17-x64-2: {ip: 72.2.115.11}
         ubuntu1604_docker-x64-1: {ip: 165.225.138.30, user: ubuntu}
         ubuntu1604_arm_cross-x64-1: {ip: 165.225.136.6, user: ubuntu}
