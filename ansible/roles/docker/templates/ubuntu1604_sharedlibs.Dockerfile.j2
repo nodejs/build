@@ -51,15 +51,15 @@ RUN mkdir -p /tmp/openssl_1.1.0j && \
     make install && \
     rm -rf /tmp/openssl_1.1.0j
 
-ENV OPENSSL111DIR /opt/openssl-1.1.1a
+ENV OPENSSL111DIR /opt/openssl-1.1.1b
 
-RUN mkdir -p /tmp/openssl_1.1.1a && \
-    cd /tmp/openssl_1.1.1a && \
-    curl -sL https://www.openssl.org/source/openssl-1.1.1a.tar.gz | tar zxv --strip=1 && \
+RUN mkdir -p /tmp/openssl_1.1.1b && \
+    cd /tmp/openssl_1.1.1b && \
+    curl -sL https://www.openssl.org/source/openssl-1.1.1b.tar.gz | tar zxv --strip=1 && \
     ./config --prefix=$OPENSSL111DIR && \
     make -j 6 && \
     make install && \
-    rm -rf /tmp/openssl_1.1.1a
+    rm -rf /tmp/openssl_1.1.1b
 
 ENV FIPS20DIR /opt/openssl-fips_2.0.16
 
