@@ -41,9 +41,9 @@ packages: {
 
   centos7_arm64: ['git'], # git2u not available for aarch64 (yet)
   centos7_x64: ['git2u','centos-release-scl',], # centos-release-scl is required to enable SCLo
-                                               # but we do it manually in partials/repo/centos7.yml for arm64
+                                                # but we do it manually in partials/repo/centos7.yml for arm64
   centos7: [
-    'ccache,gcc-c++,devtoolset-6,sudo',
+    'ccache,gcc-c++,devtoolset-6,sudo,devtoolset-8',
   ],
 
   aix: [
@@ -102,7 +102,7 @@ packages: {
   ],
 
   ubuntu: [
-    'ccache,g++,gcc,git,libfontconfig1,sudo',
+    'ccache,g++,gcc,git,libfontconfig1,sudo,gcc-8,g++-8',
   ],
 
   ubuntu1404: [
