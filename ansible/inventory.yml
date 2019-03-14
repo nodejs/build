@@ -108,7 +108,7 @@ hosts:
         smartos16-x64-2: {ip: 72.2.113.74}
         smartos17-x64-1: {ip: 72.2.113.127}
         smartos17-x64-2: {ip: 72.2.115.11}
-        ubuntu1604_docker-x64-1: {ip: 165.225.138.30, user: ubuntu}
+        ubuntu1604_docker-x64-1: {ip: 37.153.110.162, user: ubuntu}
         ubuntu1604_arm_cross-x64-1: {ip: 165.225.136.6, user: ubuntu}
         ubuntu1804-x64-1: {ip: 37.153.109.142, user: ubuntu}
 
@@ -219,7 +219,7 @@ hosts:
         debian9-x64-1: {ip: 169.60.150.91}
         ubuntu1404-x64-1: {ip: 50.97.245.5}
         ubuntu1404-x86-1: {ip: 50.97.245.9}
-        ubuntu1604_docker-x64-1: {ip: 130.198.66.50}
+        ubuntu1604_docker-x64-1: {ip: 169.62.77.230}
         ubuntu1604-x64-1: {ip: 169.60.150.88, alias: jenkins-workspace-3}
 
     - packetnet:
