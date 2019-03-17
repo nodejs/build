@@ -27,7 +27,16 @@ function log (t, s) {
 }
 
 function onData (err, computers) {
-  if (err) { throw err }
+  if (err) {
+    err.statusCode && console.error(`HTPPS request to Jenkins returned ${err.statusCode}`)
+    if (err.data) {
+      console.error('Try adding your Jenkins username to .ncurc with:\nncu-config --global set jenkins_username USERNAME')
+      console.error('\n some lines from the error page:\n')
+      const lines = err.data.toString().split(/[\r\n]/).map((l) => l.trim()).filter(l => l.length)
+      console.error(lines.slice(0, 10).join('\n'))
+    }
+    throw err
+  }
 
   computers.computer.forEach(function (c) {
     if (!c.offline && !c.temporarilyOffline) { return }
@@ -49,5 +58,10 @@ function onData (err, computers) {
   })
 }
 
-const apiUrl = `https://${config.username}:${config.jenkins_token}@ci.nodejs.org/computer/api/json?token=TOKEN`
+if (!config.jenkins_token) {
+  console.error('To use this tool please setup node-core-utils and set\nncu-config --global set jenkins_token TOKEN\nncu-config --global set jenkins_username USERNAME')
+  process.exit(1)
+}
+const username = config.jenkins_username || config.username
+const apiUrl = `https://${username}:${config.jenkins_token}@ci.nodejs.org/computer/api/json?token=TOKEN`
 jsonist.get(apiUrl, onData)
