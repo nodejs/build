@@ -1,8 +1,18 @@
 'use strict'
 
+const fs = require('fs')
+const os = require('os')
+const path = require('path')
+
 const jsonist = require('jsonist')
     , chalk   = require('chalk')
 
+// Read `.ncurc` file (from node-core-utils) for Jenkins token. This is brittle
+// but the script is currently not working for anyone. Probably a good idea to
+// add some error handling and a way to load the API key from an environment
+// variable or something else.
+
+const config = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.ncurc')))
 
 function rnd (d) {
   return Math.round(d * 100) / 100
@@ -42,5 +52,5 @@ function onData (err, computers) {
   })
 }
 
-
-jsonist.get('https://ci.nodejs.org/computer/api/json?pretty=true', onData)
+const apiUrl = `https://${config.username}:${config.jenkins_token}@ci.nodejs.org/computer/api/json?token=TOKEN`
+jsonist.get(apiUrl, onData)

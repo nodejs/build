@@ -9,7 +9,7 @@
   "author": "Rod <rod@vagg.org> (http://r.va.gg/)",
   "license": "MIT",
   "dependencies": {
-    "chalk": "~1.0.0",
-    "jsonist": "~1.0.2"
+    "chalk": "^2.4.2",
+    "jsonist": "^2.1.0"
   }
 }
