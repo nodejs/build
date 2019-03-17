@@ -5,7 +5,8 @@ const os = require('os')
 const path = require('path')
 
 const jsonist = require('jsonist')
-    , chalk   = require('chalk')
+
+const chalk = require('chalk')
 
 // Read `.ncurc` file (from node-core-utils) for Jenkins token. This is brittle
 // but the script is currently not working for anyone. Probably a good idea to
@@ -18,30 +19,26 @@ function rnd (d) {
   return Math.round(d * 100) / 100
 }
 
-
 function log (t, s) {
-  if (t == 'bad')
-    s = chalk.bold(chalk.red(s))
-  if (t == 'title')
-    s = chalk.bold(chalk.yellow(s))
-  if (t == 'good')
-    s = chalk.bold(s)
+  if (t === 'bad') { s = chalk.bold(chalk.red(s)) }
+  if (t === 'title') { s = chalk.bold(chalk.yellow(s)) }
+  if (t === 'good') { s = chalk.bold(s) }
   console.log(s)
 }
 
-
 function onData (err, computers) {
-  if (err)
-    throw err
+  if (err) { throw err }
 
   computers.computer.forEach(function (c) {
-    if (!c.offline && !c.temporarilyOffline)
-      return
+    if (!c.offline && !c.temporarilyOffline) { return }
 
     let dsm = c.monitorData['hudson.node_monitors.DiskSpaceMonitor']
-      , disk = dsm && dsm.size && rnd(dsm.size / 1014 / 1024 / 1024)
-      , tsm = c.monitorData['hudson.node_monitors.TemporarySpaceMonitor']
-      , temp = tsm && tsm.size && rnd(tsm.size / 1024 / 1024 / 1024)
+
+    let disk = dsm && dsm.size && rnd(dsm.size / 1014 / 1024 / 1024)
+
+    let tsm = c.monitorData['hudson.node_monitors.TemporarySpaceMonitor']
+
+    let temp = tsm && tsm.size && rnd(tsm.size / 1024 / 1024 / 1024)
 
     log('title', c.displayName)
     log('plain', `\t               Idle: ${c.idle}`)
