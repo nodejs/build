@@ -10,7 +10,7 @@
 
 - name: "ccache : extract ccache latest version"
   set_fact:
-    ccache_latest: "{{ ccache_html_content.stdout | regex_findall('ccache-[0-9]+.[0-9]+(?:.[0-9]+)*.tar.gz') | map('regex_replace', 'ccache-') | map('regex_replace', '.tar.gz') | list | latest_version }}"
+    ccache_latest: "{{ ccache_html_content.stdout | regex_findall('ccache-[0-9]+.[0-9]+(?:.[0-9]+)*.tar.gz') | map('regex_replace', 'ccache-') | list | map('regex_replace', '.tar.gz') | list | latest_version }}"
 
 - name: "ccache : download and extract"
   unarchive:
