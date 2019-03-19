@@ -10,14 +10,14 @@
 
 - stat: path=/data/gmp-6.1/include/gmp.h
   register: build_gmp
-  tags: gcc49
+  tags: gcc
 
 - name: Clean path
   file:
     state: absent
     path: /data/tmp/
   when: build_gmp.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 
 - name: Create working directory
@@ -26,14 +26,14 @@
     state: directory
     mode: 0755
   when: build_gmp.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: download gmp 6.1.0
   get_url:
     url: http://ftp.gnu.org/gnu/gmp/gmp-6.1.0.tar.xz
     dest: /data/tmp/
   when: build_gmp.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: unarchive gmp 6.1.0
   unarchive:
@@ -41,7 +41,7 @@
     remote_src: yes
     dest: /data/tmp/
   when: build_gmp.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: Create build directory
   file:
@@ -49,35 +49,35 @@
     state: directory
     mode: 0755
   when: build_gmp.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: configure gmp 6.1.0
   shell: /data/tmp/gmp-6.1.0/configure --prefix=/data/gmp-6.1
   args:
     chdir: /data/tmp/build
   when: build_gmp.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: build gmp 6.1.0
   shell: make -j{{ ansible_processor_cores }} install
   args:
     chdir: /data/tmp/build
   when: build_gmp.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 
 ## mpfr-3.1
 
 - stat: path=/data/mpfr-3.1/include/mpfr.h
   register: build_mpfr
-  tags: gcc49
+  tags: gcc
 
 - name: Clean path
   file:
     state: absent
     path: /data/tmp/
   when: build_mpfr.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: Create working directory
   file:
@@ -85,14 +85,14 @@
     state: directory
     mode: 0755
   when: build_mpfr.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: download mprf 3.1.4
   get_url:
     url: http://ftp.gnu.org/gnu/mpfr/mpfr-3.1.4.tar.gz
     dest: /data/tmp/
   when: build_mpfr.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: unarchive mprf 3.1.4
   unarchive:
@@ -100,7 +100,7 @@
     remote_src: yes
     dest: /data/tmp/
   when: build_mpfr.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: Create build directory
   file:
@@ -108,34 +108,34 @@
     state: directory
     mode: 0755
   when: build_mpfr.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: build mprf 3.1.4
   shell: /data/tmp/mpfr-3.1.4/configure --with-gmp=/data/gmp-6.1 --prefix=/data/mpfr-3.1
   args:
     chdir: /data/tmp/build
   when: build_mpfr.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: build mprf 3.1.4
   shell: make -j{{ ansible_processor_cores }} install
   args:
     chdir: /data/tmp/build
   when: build_mpfr.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 ## mpc-1.0
 
 - stat: path=/data/mpc-1.0/include/mpc.h
   register: build_mpc
-  tags: gcc49
+  tags: gcc
 
 - name: Clean path
   file:
     state: absent
     path: /data/tmp/
   when: build_mpc.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 
 - name: Create working directory
@@ -144,14 +144,14 @@
     state: directory
     mode: 0755
   when: build_mpc.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: download mpc 1.0.3
   get_url:
     url: http://ftp.gnu.org/gnu/mpc/mpc-1.0.3.tar.gz
     dest: /data/tmp/
   when: build_mpc.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: unarchive mpc 1.0.3
   unarchive:
@@ -159,7 +159,7 @@
     remote_src: yes
     dest: /data/tmp/
   when: build_mpc.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: Create build directory
   file:
@@ -167,35 +167,35 @@
     state: directory
     mode: 0755
   when: build_mpc.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: configure mpc 1.0.3
   shell: /data/tmp/mpc-1.0.3/configure --with-mpfr=/data/mpfr-3.1 --with-gmp=/data/gmp-6.1 --prefix=/data/mpc-1.0
   args:
     chdir: /data/tmp/build
   when: build_mpc.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: build mpc 1.0.3
   shell: make -j{{ ansible_processor_cores }} install
   args:
     chdir: /data/tmp/build
   when: build_mpc.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 
 ## binutils-2.28
 
 - stat: path=/data/binutils-2.28/bin/ranlib
   register: build_binutils
-  tags: gcc49
+  tags: gcc
 
 - name: Clean path
   file:
     state: absent
     path: /data/tmp/
   when: build_binutils.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: Create working directory
   file:
@@ -203,14 +203,14 @@
     state: directory
     mode: 0755
   when: build_binutils.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: download binutils 2.28.1
   get_url:
     url: https://ftp.gnu.org/gnu/binutils/binutils-2.28.1.tar.gz
     dest: /data/tmp/
   when: build_binutils.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: unarchive binutils 2.28.1
   unarchive:
@@ -218,7 +218,7 @@
     remote_src: yes
     dest: /data/tmp/
   when: build_binutils.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: Create build directory
   file:
@@ -226,28 +226,28 @@
     state: directory
     mode: 0755
   when: build_binutils.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: configure binutils 2.28.1
   shell: /data/tmp/binutils-2.28.1/configure --with-mpfr=/data/mpfr-3.1 --with-gmp=/data/gmp-6.1 --prefix=/data/binutils-2.28
   args:
     chdir: /data/tmp/build
   when: build_binutils.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: build binutils 2.28.1
   shell: make -j{{ ansible_processor_cores }}
   args:
     chdir: /data/tmp/build
   when: build_binutils.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 - name: install binutils 2.28.1
   shell: make install
   args:
     chdir: /data/tmp/build
   when: build_binutils.stat.exists == False
-  tags: gcc49
+  tags: gcc
 
 
 ## gcc-4.9
