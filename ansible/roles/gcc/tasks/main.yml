@@ -2,6 +2,7 @@
 
 #
 # installs gcc 4.9 @ /data/gcc-4.9 on rhel7.x
+# and      gcc 6.3 @ /data/gcc-6.3
 #
 
 
@@ -322,3 +323,79 @@
     path: /data/tmp/
   when: build_gcc_49.stat.exists == False
   tags: gcc49
+
+
+## gcc-6.3
+
+- stat: path=/data/gcc-6.3/bin/gcc-6.3
+  register: build_gcc_63
+  tags: gcc63
+
+- name: Clean path
+  file:
+    state: absent
+    path: /data/tmp/
+  when: build_gcc_63.stat.exists == False
+  tags: gcc63
+
+- name: Create working directory
+  file:
+    path: /data/tmp
+    state: directory
+    mode: 0755
+  when: build_gcc_63.stat.exists == False
+  tags: gcc63
+
+- name: download gcc 6.3.0
+  get_url:
+    url: http://ftp.gnu.org/gnu/gcc/gcc-6.3.0/gcc-6.3.0.tar.gz
+    dest: /data/tmp/
+  when: build_gcc_63.stat.exists == False
+  tags: gcc63
+
+- name: unarchive gcc 6.3.0
+  unarchive:
+    src: /data/tmp/gcc-6.3.0.tar.gz
+    remote_src: yes
+    dest: /data/tmp/
+  when: build_gcc_63.stat.exists == False
+  tags: gcc63
+
+- name: Create build directory
+  file:
+    path: /data/tmp/build
+    state: directory
+    mode: 0755
+  when: build_gcc_63.stat.exists == False
+  tags: gcc63
+
+# gcc6.3 needs a g++ with '-no-pie', and system default of 4.8 does not
+- name: configure gcc6.3
+  shell: CC=/data/gcc-4.9/bin/gcc-4.9 CXX=/data/gcc-4.9/bin/g++-4.9 /data/tmp/gcc-6.3.0/configure --with-mpfr=/data/mpfr-3.1 --with-gmp=/data/gmp-6.1 --with-mpc=/data/mpc-1.0 --prefix=/data/gcc-6.3 --program-suffix=-6.3 --disable-multilib
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_63.stat.exists == False
+  tags: gcc63
+
+- name: build gcc63
+  shell: make -j{{ ansible_processor_cores }}
+  async: 7000
+  poll: 10
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_63.stat.exists == False
+  tags: gcc63
+
+- name: install gcc63
+  shell: make install
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_63.stat.exists == False
+  tags: gcc63
+
+- name: Clean path
+  file:
+    state: absent
+    path: /data/tmp/
+  when: build_gcc_63.stat.exists == False
+  tags: gcc63
