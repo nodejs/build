@@ -33,6 +33,8 @@ Install the `pywinrm` pip module: `pip install pywinrm`
 
 ### Target machines
 
+Section looks specific to Windows target machines.
+
 Ensure PowerShell v3 or higher is installed (`$PSVersionTable.PSVersion`), refer to [`ansible.intro_windows`][] if not.
 
 Before running the preparation script, the network location must be set to Private (not necessary for Azure).

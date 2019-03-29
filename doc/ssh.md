@@ -43,6 +43,11 @@ deprecated and
  can be disabled by setting deprecation_warnings=False in ansible.cfg.
   [ERROR]: WARNING: could not find secrets, please define NODE_BUILD_SECRETS
 ```
+
+If going through top-level README.md, you get to this step before getting to the
+Secrets section. Also, its not an ERROR, all the playbook command were run,
+and `~/.ssh/config` was updated.
+
 6. Try logging into one of the machines that you have access to. In the
    `~/.ssh/config` file, the first word in the `Host` indicates the group
    that the machine is in, and the `IdentityFile` for each host can be

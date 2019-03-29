@@ -34,6 +34,16 @@
     dev: "{{ additional_drive }}"
   when: "'rhel72-s390x' in inventory_hostname"
 
+# How? This step needs additional information.
+# [root@nodejs-rhel7-6 ~]# mkdir /data
+# [root@nodejs-rhel7-6 ~]# mount -a
+# mount: wrong fs type, bad option, bad superblock on /dev/dasdb1,
+#        missing codepage or helper program, or other error
+# 
+#        In some cases useful info is found in syslog - try
+#        dmesg | tail or so.
+# [root@nodejs-rhel7-6 ~]# tail /etc/fstab
+# /dev/dasdb1 /data ext4 defaults 0 0
 - name: User | ensure larger disk is mounted
   mount:
     name: /data
