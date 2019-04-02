@@ -1,4 +1,4 @@
-secret:
+secret: JENKINS_SECRET
 remote_env:
   FFI_LIB: /NODEJS2/python-2017-04-12-py27/python27/lib/ffi
   PYTHON_ENV: python27

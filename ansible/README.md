@@ -43,6 +43,18 @@ If you only want to run a specific set of steps, you can use `--step`. This is
 useful when developing playbooks and when you want to be sure that only a few
 steps are executed, to avoid disrupting the machines.
 
+You can't run any playbooks on a host until you've manually created a
+`build:ansible/host_vars/HOST` file for that host (same name as the argument
+to limit, above). Use `host_vars/test-marist-zos13-s390x-templat` as an
+example. The `secret:` doesn't have to be the real Jenkins secret until the
+worker actually has to connect to the master.
+
+You may also need to copy the SSH ID files you are using while setting up a new
+host to the correct file name, for example:
+```console
+$ cp ~/.ssh/rhel72-s390x-3.pem /home/sam/.ssh/nodejs_build_test
+```
+
 ### Secrets
 
 If you have access to secrets, clone the `secrets` repository [next to the
