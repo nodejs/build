@@ -1,6 +1,8 @@
 #!/bin/bash
 
 if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
+  NODE_NAME=${NODE_NAME:-$HOSTNAME}
+  echo "Selecting compiler based on $NODE_NAME"
   case $NODE_NAME in
     *ppc64_le* ) SELECT_ARCH=PPC64LE ;;
     *s390x* ) SELECT_ARCH=S390X ;;
