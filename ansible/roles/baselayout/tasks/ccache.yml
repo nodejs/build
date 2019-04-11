@@ -5,7 +5,10 @@
 #
 
 - name: "ccache : fetch samba ccache HTML page"
-  local_action: shell curl -sL https://www.samba.org/ftp/ccache/
+  # This depends on ansible being able to run curl locally, YMMV, if it doesn't
+  # work, try changing the local_action to a remote one:
+  #  raw: curl -sL https://www.samba.org/ftp/ccache/
+  local_action: command shell -sL https://www.samba.org/ftp/ccache/
   register: ccache_html_content
 
 - name: "ccache : extract ccache latest version"

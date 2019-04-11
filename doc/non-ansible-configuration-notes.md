@@ -29,7 +29,7 @@ To use Ansible for Windows, PowerShell access should be enabled as described in 
 
 ### Control machine (where Ansible is run)
 
-Install the `pywinrm` pip module.
+Install the `pywinrm` pip module: `pip install pywinrm`
 
 ### Target machines
 

@@ -71,7 +71,7 @@ packages: {
   ],
 
   rhel72: [
-    'gcc-c++,sudo',
+    'gcc-c++,sudo,git,zip,unzip',
   ],
 
   smartos: [
