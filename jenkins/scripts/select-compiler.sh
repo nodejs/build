@@ -1,6 +1,8 @@
 #!/bin/bash
 
 if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
+  NODE_NAME=${NODE_NAME:-$HOSTNAME}
+  echo "Selecting compiler based on $NODE_NAME"
   case $NODE_NAME in
     *ppc64_le* ) SELECT_ARCH=PPC64LE ;;
     *s390x* ) SELECT_ARCH=S390X ;;
@@ -44,22 +46,26 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
 
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on s390x"
 
-  if [ "$NODEJS_MAJOR_VERSION" -gt "11" ]; then
-    export PATH="/data/gcc-6.3/bin:/data/binutils-2.28/bin:$PATH"
-    export LD_LIBRARY_PATH="/data/gcc-6.3/lib64:$LD_LIBRARY_PATH"
-    export COMPILER_LEVEL="-6.3"
-  elif [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
-    export PATH="/data/gcc-4.9/bin:/data/binutils-2.28/bin:$PATH"
+  if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
+    export PATH="/data/gcc-4.9/bin:$PATH"
     export LD_LIBRARY_PATH="/data/gcc-4.9/lib64:$LD_LIBRARY_PATH"
     export COMPILER_LEVEL="-4.9"
   fi
 
-  # Select the appropriate compiler
-  export CC="ccache gcc${COMPILER_LEVEL}"
-  export CXX="ccache g++${COMPILER_LEVEL}"
-  export LINK="g++${COMPILER_LEVEL}"
-
-  echo "Compiler set to $COMPILER_LEVEL"
+  if [ "$NODEJS_MAJOR_VERSION" -gt "11" ]; then
+    # Setup devtoolset-6, sets LD_LIBRARY_PATH, PATH, etc.
+    . /opt/rh/devtoolset-6/enable
+    export CC="ccache s390x-redhat-linux-gcc"
+    export CXX="ccache s390x-redhat-linux-g++"
+    export LINK="s390x-redhat-linux-g++"
+    echo "Compiler set to devtoolset-6"
+  else
+    # Select the appropriate compiler
+    export CC="ccache gcc${COMPILER_LEVEL}"
+    export CXX="ccache g++${COMPILER_LEVEL}"
+    export LINK="g++${COMPILER_LEVEL}"
+    echo "Compiler set to $COMPILER_LEVEL"
+  fi
 
 elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
   # get node version
