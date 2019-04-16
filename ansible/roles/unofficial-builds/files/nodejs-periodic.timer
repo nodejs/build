@@ -1,0 +1,13 @@
+[Unit]
+Description=Schedule periodic checker & runner
+RefuseManualStart=no
+RefuseManualStop=no
+
+[Timer]
+Persistent=true
+OnBootSec=120
+OnUnitActiveSec=300
+Unit=nodejs-periodic.service
+
+[Install]
+WantedBy=multi-user.target

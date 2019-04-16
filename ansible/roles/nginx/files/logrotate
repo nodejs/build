@@ -13,6 +13,7 @@
         dateyesterday
         maxsize 500M
         sharedscripts
+        rotate 36500
         prerotate
                 if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
                         run-parts /etc/logrotate.d/httpd-prerotate; \

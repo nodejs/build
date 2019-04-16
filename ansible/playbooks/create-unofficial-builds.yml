@@ -1,0 +1,27 @@
+---
+
+#
+# sets up the host that runs unofficial-builds.nodejs.org
+#
+# To properly run this, create a file
+# ansible/host_vars/infra-digitalocean-ubuntu1804-x64-2 with the line:
+#   github_deploy_webhook_secret: xyzabc
+# where 'xyzabc' is the github deployment hook secret from the unofficial-builds
+# repository
+
+- hosts: infra-digitalocean-ubuntu1804-x64-2
+  roles:
+    - bootstrap
+    - package-upgrade
+    - baselayout
+    - { role: docker, server_user: 'nodejs' }
+    - { role: nginx, sites: [ 'unofficial-builds.nodejs.org' ] }
+    - unofficial-builds
+  pre_tasks:
+    - name: check if secrets are properly set
+      fail:
+      failed_when: not {{ secret }}
+      loop_control:
+        loop_var: secret
+      with_items:
+        - github_deploy_webhook_secret

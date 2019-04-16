@@ -1,0 +1,7 @@
+---
+base_packages:
+  - aptitude
+  - python-apt
+
+packages:
+  - nodejs,git,nginx,logrotate,certbot,python-certbot-nginx
