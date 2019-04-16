@@ -18,6 +18,7 @@ sshd_service_map: {
   'ubuntu1404': 'ssh',
   'ubuntu1204': 'ssh',
   'smartos17': 'ssh',
+  'smartos18': 'ssh',
 }
 
 sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripversion])|default('sshd') }}"
@@ -99,6 +100,11 @@ packages: {
 
   smartos17: [
     'gcc7'
+  ],
+
+  smartos18: [
+    'gcc7',
+    'ccache'
   ],
 
   ubuntu: [
