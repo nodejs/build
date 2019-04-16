@@ -210,7 +210,7 @@ def parse_yaml(hosts, config):
 
                         # some hosts have metadata appended to provider
                         # which requires underscore
-                        delimiter = "_" if host.count('-') is 3 else "-"
+                        delimiter = "_" if host.count('-') == 3 else "-"
                         hostname = '{}-{}{}{}'.format(host_type, provider_name,
                                                       delimiter, host)
 
@@ -265,7 +265,7 @@ def parse_host(host):
 
     expected = ['type', 'provider', 'os', 'arch', 'uid']
 
-    if len(info) is not 5:
+    if len(info) != 5:
         raise Exception('Host format is invalid: %s,' % host)
 
     for key, item in enumerate(expected):
