@@ -1,0 +1,10 @@
+[Unit]
+Description=Periodic unofficial-builds checker & runner
+
+[Service]
+Type=oneshot
+ExecStart=/home/nodejs/unofficial-builds/bin/periodic.sh
+User=nodejs
+
+[Install]
+WantedBy=multi-user.target

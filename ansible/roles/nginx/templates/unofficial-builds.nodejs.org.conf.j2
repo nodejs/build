@@ -1,0 +1,49 @@
+# This is not the final form of this file, certbot inserts https into this
+# and an http redirect
+
+log_format nodejs    '$remote_addr - $remote_user [$time_local] '
+                     '"$request" $status $body_bytes_sent '
+                     '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
+
+server {
+    listen *:80;
+
+    server_name unofficial-builds.nodejs.org;
+
+    keepalive_timeout 60;
+    server_tokens off;
+
+    resolver 8.8.4.4 8.8.8.8 valid=300s;
+    resolver_timeout 10s;
+
+    add_header Strict-Transport-Security max-age=63072000;
+    add_header X-Frame-Options DENY;
+    add_header X-Content-Type-Options nosniff;
+
+    access_log /var/log/nginx/unofficial-builds.nodejs.org-access.log nodejs;
+    error_log /var/log/nginx/unofficial-builds.nodejs.org-error.log;
+
+    gzip on;
+    gzip_static on;
+    gzip_disable "MSIE [1-6]\.";
+    gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
+
+    location /download {
+        alias /home/nodejs/download;
+        autoindex on;
+        default_type text/plain;
+        add_header X-Robots-Tag noindex;
+    }
+
+    location /logs {
+        alias /home/nodejs/logs;
+        autoindex on;
+        default_type text/plain;
+        add_header X-Robots-Tag noindex;
+    }
+
+    root /home/nodejs/unofficial-builds/www;
+    default_type text/plain;
+    index index.html;
+    autoindex on;
+}

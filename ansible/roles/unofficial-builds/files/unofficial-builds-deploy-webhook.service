@@ -1,0 +1,12 @@
+[Unit]
+Description=unofficial-builds-deploy-webhook
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/github-webhook --config /etc/unofficial-builds-deploy-webhook.json
+WorkingDirectory=/home/nodejs
+Restart=always
+RestartSec=10
+User=nodejs

@@ -32,7 +32,7 @@
 
 - name: remove default site
   file:
-    path: "etc/nginx/sites-{{ pathname }}/"
+    path: "/etc/nginx/sites-{{ pathname }}/default"
     state: absent
   loop_control:
     loop_var: pathname
@@ -57,4 +57,4 @@
     - 'application/gzip gz;'
 
 - name: enable at boot
-  service: name=nginx state=started enabled=yes
+  service: name=nginx state=restarted enabled=yes

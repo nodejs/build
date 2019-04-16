@@ -1,0 +1,127 @@
+---
+
+- name: Bootstrap | Install baseline packages
+  package:
+    name: "{{ package }}"
+    state: present
+  loop_control:
+    loop_var: package
+  with_items: "{{ base_packages }}"
+
+- name: Bootstrap | Add nodesource signing key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
+
+- name: Bootstrap | Add nodesource repo
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_10.x jessie main
+    state: present
+
+- name: letsencrypt | Add certbot ppa
+  apt_repository:
+    repo: 'ppa:certbot/certbot'
+    state: present
+
+- name: Bootstrap | APT Update and upgrade
+  apt:
+    update_cache: yes
+    upgrade: full
+
+- name: Bootstrap | Install packages
+  package:
+    name: "{{ package }}"
+    state: present
+  loop_control:
+    loop_var: package
+  with_items: "{{ packages }}"
+
+- name: Bootstrap | Enable time syncing
+  service:
+    name: systemd-timesyncd
+    state: started
+    enabled: yes
+
+- name: Boostrap | Add nodejs user
+  user:
+    name: "nodejs"
+    shell: /bin/bash
+
+- name: Docker | add nodejs user to docker group
+  user:
+    name: "nodejs"
+    groups: "docker"
+    append: yes
+
+- name: Init | Create required directories
+  file:
+    path: "/home/nodejs/{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "nodejs"
+  with_items:
+    - bin
+    - var
+    - logs
+    - staging
+    - download
+    - .ccache
+
+- name: letsencrypt | Setup certificate
+  shell: certbot --nginx -d 'unofficial-builds.nodejs.org' --email build@iojs.org --agree-tos -n --no-verify-ssl --post-hook "sudo systemctl start nginx" --redirect
+
+- name: Init | Clone unofficial-builds repo
+  become: yes
+  become_user: "nodejs"
+  git:
+    repo: https://github.com/nodejs/unofficial-builds
+    dest: "/home/nodejs/unofficial-builds"
+
+- name: Deploy Webhook | Install github-webhook
+  npm:
+    name: github-webhook
+    global: yes
+
+- name: Deploy Webhook | Copy config
+  template:
+    src: "{{ role_path }}/templates/unofficial-builds-deploy-webhook.json.j2"
+    dest: "/etc/unofficial-builds-deploy-webhook.json"
+
+- name: Deploy Webhook | Copy deploy script
+  copy:
+    src: "{{ role_path }}/files/deploy-unofficial-builds.sh"
+    dest: "/home/nodejs/bin/deploy-unofficial-builds.sh"
+    mode: 0755
+    owner: "nodejs"
+    group: "nodejs"
+
+- name: Deploy Webhook | Copy init script
+  copy:
+    src: "{{ role_path }}/files/unofficial-builds-deploy-webhook.service"
+    dest: /lib/systemd/system/unofficial-builds-deploy-webhook.service
+
+- name: Deploy Webhook | Start service
+  service:
+    name: unofficial-builds-deploy-webhook
+    state: started
+    enabled: yes
+
+- name: Periodic | Copy periodic service unit
+  copy:
+    src: "{{ role_path }}/files/nodejs-periodic.service"
+    dest: /lib/systemd/system/nodejs-periodic.service
+    owner: "nodejs"
+    group: "nodejs"
+
+- name: Periodic | Copy periodic timer unit
+  copy:
+    src: "{{ role_path }}/files/nodejs-periodic.timer"
+    dest: /lib/systemd/system/nodejs-periodic.timer
+    owner: "nodejs"
+    group: "nodejs"
+
+- name: Periodic | Register periodic runner
+  systemd:
+    name: nodejs-periodic.timer
+    state: started
+    enabled: yes
