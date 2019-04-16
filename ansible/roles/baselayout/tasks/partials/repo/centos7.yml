@@ -11,6 +11,12 @@
     name: "https://centos{{ ansible_distribution_major_version }}.iuscommunity.org/ius-release.rpm"
     state: present
 
+- name: centos7 | install scl for devtoolset-6
+  when: "arch != 'arm64' and arch != 'ppc64'"
+  yum:
+    name: centos-release-scl
+    state: present
+
 - name: centos7 | aarch64 | install sclo repo
   when: "arch == 'arm64'"
   copy:
