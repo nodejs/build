@@ -36,7 +36,7 @@ common_packages: [
 packages: {
   centos6_x64: ['centos-release-scl'], # only available on x86_64, 32-bit is from https://copr.fedorainfracloud.org/coprs/mlampe
   centos6: [
-    'ccache,git2u,gcc-c++,devtoolset-6,sudo', # even need gcc on centos6 so ccache has symlinks
+    'ccache,git2u,gcc-c++,devtoolset-6,devtoolset-2,devtoolset-2-binutils,sudo', # even need gcc on centos6 so ccache has symlinks
   ],
 
   centos7_arm64: ['git'], # git2u not available for aarch64 (yet)
