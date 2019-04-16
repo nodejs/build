@@ -32,6 +32,7 @@ hosts:
     - digitalocean:
         centos5-x64-1: {ip: 162.243.217.142}
         centos6-x86-1: {ip: 162.243.248.28}
+        centos7-x64-1: {ip: 138.68.12.105}
 
     - joyent:
         smartos14-x64-1: {ip: 72.2.113.193}
