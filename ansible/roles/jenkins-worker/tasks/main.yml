@@ -252,6 +252,11 @@
   when: os|startswith("zos")
   command: "chown -R {{ server_user }} {{ home }}/{{ server_user }}/gyp"
 
+# This has to be done before the `service` (and similar) commands because
+# java is needed to start the service
+- include_role:
+    name: java-base
+
 - name: enable jenkins at startup - general
   when: not os|startswith("zos") and not os|startswith("macos") and not os|startswith("aix")
   service: name=jenkins state=restarted enabled=yes
@@ -294,6 +299,3 @@
   when: os in needs_monit
   include: monit.yml
   static: false
-
-- include_role:
-    name: java-base

@@ -5,5 +5,4 @@
 #
 
 dependencies:
-- { 'role': 'java-base' }
 - { 'role': 'gcc', when: os|startswith("rhel7") }
