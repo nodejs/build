@@ -5,7 +5,7 @@ const path = require('path')
 const childProcess = require('child_process')
 const assert = require('assert')
 
-const versionRe = /^v\d+\.\d+\.\d+$/
+const versionRe = /^v\d+\.\d+\.\d+/
 const additionalDistAssets = [
   'SHASUMS256.txt',
   'SHASUMS256.txt.asc',
@@ -97,7 +97,7 @@ async function lsDepth2 (dir, isStaging) {
 }
 
 function versionToLine (version) {
-  return version.replace(/^(v\d+)\.[\d.]+$/g, '$1.x')
+  return version.replace(/^(v\d+)\.[\d.]+.*/g, '$1.x')
 }
 
 async function loadExpectedAssets (version, line) {
