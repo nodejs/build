@@ -152,7 +152,7 @@ async function execute () {
   // No expected asset list available for this line, wut?
   if (!expectedAssets) {
     console.log(` \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  No expected asset list is available for ${line}, does one need to be created?`)
-    console.log(`    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/${line}`)
+    console.log(`    https://github.com/nodejs/build/tree/master/ansible/www-standalone/tools/promote/expected_assets/${line}`)
     process.exit(0)
   }
 
@@ -160,7 +160,7 @@ async function execute () {
   if (expectedLineI !== lineI) {
     console.log(` \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  No expected asset list is available for ${line}, using the list for v${expectedLineI}.x instead`)
     console.log(`    Should a new list be created for ${line}?`)
-    console.log(`    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/${line}`)
+    console.log(`    https://github.com/nodejs/build/tree/master/ansible/www-standalone/tools/promote/expected_assets/${line}`)
   }
 
   // generate comparison lists
@@ -211,7 +211,7 @@ async function execute () {
   // do we need to provide final notices?
   if (update) {
     console.log(`    Does the expected assets list for ${line} need to be updated?`)
-    console.log(`    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/${line}`)
+    console.log(`    https://github.com/nodejs/build/tree/master/ansible/www-standalone/tools/promote/expected_assets/${line}`)
   }
   if (caution) {
     console.log('    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m')
@@ -397,7 +397,7 @@ function test () {
       '... Checking assets\n' +
       ' \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  No expected asset list is available for v9.x, using the list for v8.x instead\n' +
       '    Should a new list be created for v9.x?\n' +
-      '    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/v9.x\n' +
+      '    https://github.com/nodejs/build/tree/master/ansible/www-standalone/tools/promote/expected_assets/v9.x\n' +
       '... Expecting a total of 44 assets for v9.x\n' +
       '... 40 assets waiting in staging\n' +
       '... 0 assets already promoted\n' +
@@ -456,7 +456,7 @@ function test () {
       '    • ooolaalaa.tar.gz\n' +
       '    • whatdis.tar.xz\n' +
       '    Does the expected assets list for v10.x need to be updated?\n' +
-      '    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/v10.x\n' +
+      '    https://github.com/nodejs/build/tree/master/ansible/www-standalone/tools/promote/expected_assets/v10.x\n' +
       '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
 
     async function setup (fixtureStagingDir, fixtureDistDir) {
@@ -484,7 +484,7 @@ function test () {
       '    • docs/bar\n' +
       '    • docs/foo\n' +
       '    Does the expected assets list for v11.x need to be updated?\n' +
-      '    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/v11.x\n' +
+      '    https://github.com/nodejs/build/tree/master/ansible/www-standalone/tools/promote/expected_assets/v11.x\n' +
       '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
 
     async function setup (fixtureStagingDir, fixtureDistDir) {
@@ -513,7 +513,7 @@ function test () {
       '    • ooolaalaa.tar.gz\n' +
       '    • whatdis.tar.xz\n' +
       '    Does the expected assets list for v6.x need to be updated?\n' +
-      '    https://github.com/nodejs/build/tree/master/setup/www/tools/promote/expected_assets/v6.x\n' +
+      '    https://github.com/nodejs/build/tree/master/ansible/www-standalone/tools/promote/expected_assets/v6.x\n' +
       '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
 
     async function setup (fixtureStagingDir, fixtureDistDir) {
