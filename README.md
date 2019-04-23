@@ -40,6 +40,7 @@ missing please open an issue. If you are interested in joining check out
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 - [@refack](https://github.com/refack) - Refael Ackermann
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@sam-github](https://github.com/sam-github) - Sam Roberts
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@Trott](https://github.com/Trott) - Rich Trott
 
