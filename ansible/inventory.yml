@@ -50,6 +50,7 @@ hosts:
         aix61-ppc64_be-1: {ip: 140.211.9.99}
         ubuntu1404-ppc64_be-1: {ip: 140.211.168.76}
         ubuntu1404-ppc64_le-1: {ip: 140.211.168.66}
+        centos7-ppc64_le-1: {ip: 140.211.168.61, user: centos}
 
     - scaleway:
         ubuntu1604-armv7l-1: {ip: 212.47.245.242}
@@ -150,6 +151,8 @@ hosts:
         ubuntu1404-ppc64_le-1: {ip: 140.211.168.106}
         ubuntu1404-ppc64_le-2: {ip: 140.211.168.94}
         ubuntu1404-ppc64_le-4: {ip: 140.211.168.140}
+        centos7-ppc64_le-1: {ip: 140.211.168.193, user: centos}
+        centos7-ppc64_le-2: {ip: 140.211.168.244, user: centos}
 
     - rackspace:
         centos7-x64-1: {ip: 119.9.27.82}
