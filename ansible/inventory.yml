@@ -143,6 +143,10 @@ hosts:
         macos10.12-x64-1: {ip: 207.254.58.162, port: 10001, user: administrator}
         macos10.12-x64-2: {ip: 207.254.58.162, port: 10002, user: administrator}
 
+    - msft:
+        win10-arm64-1: { vs: '2017' }
+        win10-arm64-2: { vs: '2017' }
+
     - osuosl:
         aix61-ppc64_be-1: {ip: 140.211.9.101}
         aix61-ppc64_be-2: {ip: 140.211.9.100}

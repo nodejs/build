@@ -9,7 +9,9 @@
   win_chocolatey: name=visualstudio2017community
 
 - name: install Visual Studio Community 2017 Native Desktop Workload
-  win_chocolatey: name=visualstudio2017-workload-nativedesktop
+  win_chocolatey:
+      name: visualstudio2017-workload-nativedesktop
+      params: '--add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64'
 
 - name: install WiX Toolset
   import_tasks: 'wixtoolset.yml'
