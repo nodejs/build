@@ -237,3 +237,22 @@ LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/gmake
 gunzip -d gmake-dep.tar.gz
 tar -xf gmake-dep.tar
 ```
+
+## Install python3
+
+```bash
+mkdir /tmp/i-files
+cd /tmp/i-files
+LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/aixtools.python3.3.7.3.0.I
+installp -d /tmp/i-files -L
+installp -d /tmp/i-files -a aixtools.python3
+```
+
+The archive was originally from http://www.aixtools.net/index.php/python3
+
+Installation is into `/opt/bin`.
+
+If uninstallation is needed for some reason, the command is:
+```
+installp -u aixtools.python3
+```
