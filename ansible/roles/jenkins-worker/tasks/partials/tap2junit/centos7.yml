@@ -1,7 +1,7 @@
 ---
 
 #
-# centos7: python2.7 is default
+# centos7: python2.7 is default, python36 (the package name) is available
 #
 
 - name: install required packages
@@ -9,7 +9,7 @@
   loop_control:
     loop_var: package
   with_items:
-    - python-setuptools
+    - python-setuptools, python36
 
 - name: install tap2junit
   raw: easy_install tap2junit
