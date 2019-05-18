@@ -18,10 +18,10 @@
 | test-macstadium-macos10.09-x64-1 | ??? |  |  | Network is unreachable
 | test-digitalocean-ubuntu1404-x64-1 | Py2 & Py3 | 2.7.6 | 3.4.3 | 
 | test-digitalocean-ubuntu1404-x86-1 | Py2 & Py3 | 2.7.6 | 3.4.3 | 
-| test-digitalocean-ubuntu1604-x86-1 | Python 3 | 2.7.12 | 3.5.2 | 
-| test-digitalocean-ubuntu1604-x86-2 | Python 3 | 2.7.12 | 3.5.2 | 
-| test-digitalocean-ubuntu1604_docker-x64-1 | Python 3 | 2.7.12 | 3.5.2 | 
-| test-digitalocean-ubuntu1604_docker-x64-2 | Python 3 | 2.7.12 | 3.5.2 | 
+| test-digitalocean-ubuntu1604-x86-1 | | 2.7.12 | 3.5.2 | 
+| test-digitalocean-ubuntu1604-x86-2 | | 2.7.12 | 3.5.2 | 
+| test-digitalocean-ubuntu1604_docker-x64-1 | | 2.7.12 | 3.5.2 | 
+| test-digitalocean-ubuntu1604_docker-x64-2 | | 2.7.12 | 3.5.2 | 
 | test-digitalocean-ubuntu1804-x64-1 | Python 2 | 2.7.15rc1 | 3.6.7 | 
 | test-joyent-freebsd10-x64-1 | | 2.7.15 | 3.6.7 | 
 | test-joyent-freebsd10-x64-2 | | 2.7.15 | 3.6.7 | 
@@ -62,6 +62,8 @@
 | test-osuosl-aix61-ppc64_be-1 | Python 3 | 2.7.11 | None | @sam-github has ideas on these...
 | test-osuosl-aix61-ppc64_be-2 | | 2.7.11 | 3.7.3 | https://github.com/nodejs/build/issues/1775#issuecomment-492803274
 | test-osuosl-aix61-ppc64_be-3 | Python 3 | 2.7.11 | None | ...three
+| test-osuosl-centos7-ppc64_le-1 | Python 2 | 2.7.5 | 3.6.8 | https://github.com/nodejs/build/issues/1674
+| test-osuosl-centos7-ppc64_le-2 | Python 2 | 2.7.5 | 3.6.8 | https://github.com/nodejs/build/issues/1674
 | test-osuosl-ubuntu1404-ppc64_be-1 | Py2 & Py3 | 2.7.6 | 3.4.3 | 
 | test-osuosl-ubuntu1404-ppc64_be-2 | Py2 & Py3 | 2.7.6 | 3.4.3 | 
 | test-osuosl-ubuntu1404-ppc64_le-1 | Py2 & Py3 | 2.7.6 | 3.4.3 | 
