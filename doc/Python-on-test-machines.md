@@ -97,4 +97,34 @@
 | test-softlayer-ubuntu1404-x64-1 | Py2 & Py3 | 2.7.6 | 3.4.3 | 
 | test-softlayer-ubuntu1404-x86-1 | Py2 & Py3 | 2.7.6 | 3.4.3 | 
 | test-softlayer-ubuntu1604-x64-1 | | 2.7.12 | 3.5.2 | 
-| test-softlayer-ubuntu1604-docker-x64-1 | | 2.7.12 | 3.5.2 | 
+| test-softlayer-ubuntu1604-docker-x64-1 | | 2.7.12 | 3.5.2 |
+
+### find_pythons_on_test_hosts.py
+```python
+#!/usr/bin/env python3
+
+"""
+This Python script will generate a shell script that will run
+find_pythons.sh on each host in the table above.
+"""
+
+with open("Python-on-test-machines.md") as in_file:
+    hosts = [
+        line.split("|")[1].strip()  # host is first table element
+        for line in in_file.readlines()
+        if line.startswith("|")  # only lines containing table rows
+    ]
+fmt = "find_pythons.sh {} || true"  # swallow any errors
+print("\n".join(fmt.format(host) for host in hosts[2:]))  # [2:] drops the headers
+print("")
+```
+
+### find_pythons.sh
+```sh
+#!/bin/sh
+
+echo "$0: $1"
+ssh $1 which python ; python --version || true
+ssh $1 which python2 ; python2 --version || true
+ssh $1 which python3 ; python3 --version || true
+```
