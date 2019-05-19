@@ -1,7 +1,10 @@
+# Document the Python versions available on Node.js test machines
+
+See __find_pythons.sh__ and __find_pythons_on_test_hosts.py__ below to help in validating this data.
+
 * Acceptable Python 2 is version __>= 2.7.9__
 * Acceptable Python 3 is version __>= 3.5.0__
 * Release candidate versions (like __2.7.15rc_1__) should be replaced with production versions
-
 
 | Machine | Upgrade Needed? | Legacy Python | Python | Description |
 | ------- | --------------- | ------------- | ------ | ----------- |
@@ -99,6 +102,16 @@
 | test-softlayer-ubuntu1604-x64-1 | | 2.7.12 | 3.5.2 | 
 | test-softlayer-ubuntu1604-docker-x64-1 | | 2.7.12 | 3.5.2 |
 
+
+### find_pythons.sh
+```sh
+#!/bin/sh
+
+echo "$0: $1"
+ssh $1 which python ; python --version || true
+ssh $1 which python2 ; python2 --version || true
+ssh $1 which python3 ; python3 --version || true
+```
 ### find_pythons_on_test_hosts.py
 ```python
 #!/usr/bin/env python3
@@ -117,14 +130,4 @@ with open("Python-on-test-machines.md") as in_file:
 fmt = "find_pythons.sh {} || true"  # swallow any errors
 print("\n".join(fmt.format(host) for host in hosts[2:]))  # [2:] drops the headers
 print("")
-```
-
-### find_pythons.sh
-```sh
-#!/bin/sh
-
-echo "$0: $1"
-ssh $1 which python ; python --version || true
-ssh $1 which python2 ; python2 --version || true
-ssh $1 which python3 ; python3 --version || true
 ```
