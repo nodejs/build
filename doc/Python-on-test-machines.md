@@ -1,4 +1,4 @@
-# Document the Python versions available on Node.js test machines
+# Python versions available on Node.js test machines
 
 See __find_pythons.sh__ and __find_pythons_on_test_hosts.py__ below to help in validating this data.
 
