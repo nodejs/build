@@ -111,6 +111,7 @@ echo "$0: $1"
 ssh $1 which python ; python --version || true
 ssh $1 which python2 ; python2 --version || true
 ssh $1 which python3 ; python3 --version || true
+ssh $1 which pyenv ; pyenv --version || true
 ```
 ### find_pythons_on_test_hosts.py
 ```python
