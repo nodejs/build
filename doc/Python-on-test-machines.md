@@ -1,6 +1,6 @@
 # Python versions available on Node.js test machines
 
-See __find_pythons.sh__ and __find_pythons_on_test_hosts.py__ below to help in validating this data.
+See [__find_pythons.sh__](#find_pythonssh) and [__find_pythons_on_test_hosts.py__](#find_pythons_on_test_hostspy) below to help in validating this data.
 
 * Acceptable Python 2 is version __>= 2.7.9__
 * Acceptable Python 3 is version __>= 3.5.0__
