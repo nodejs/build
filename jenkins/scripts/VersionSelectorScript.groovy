@@ -19,7 +19,6 @@ def buildExclusions = [
   [ /centos[67]-(arm)?(64|32)-gcc6/,  anyType,     lt(10)  ],
   [ /centos6-32-gcc6/,                releaseType, gte(10) ], // 32-bit linux for <10 only
   [ /^centos7-64/,                    releaseType, lt(12)  ],
-  [ /^centos7-ppcle/,                 anyType,     lt(12)  ],
   [ /debian8-x86/,                    anyType,     gte(10) ], // 32-bit linux for <10 only
   [ /^ubuntu1804/,                    anyType,     lt(10)  ], // probably temporary
   [ /^ubuntu1204/,                    anyType,     gte(10) ],
@@ -56,6 +55,8 @@ def buildExclusions = [
 
   // PPC BE ------------------------------------------------
   [ /^ppcbe-ubuntu/,                  anyType,     gte(8)  ],
+  [ /^ppcle-ubuntu/,                  anyType,     gte(13) ],
+  [ /^centos7-ppcle/,                 anyType,     lt(12)  ],
 
   // s390x -------------------------------------------------
   [ /s390x/,                          anyType,     lt(6)   ],
