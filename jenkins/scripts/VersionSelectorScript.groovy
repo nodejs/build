@@ -53,7 +53,7 @@ def buildExclusions = [
   [ /^smartos17/,                     anyType,     gte(12) ],
   [ /^smartos18/,                     anyType,     lt(12)  ],
 
-  // PPC BE ------------------------------------------------
+  // PPC ---------------------------------------------------
   [ /^ppcbe-ubuntu/,                  anyType,     gte(8)  ],
   [ /^ppcle-ubuntu/,                  anyType,     gte(13) ],
   [ /^centos7-ppcle/,                 anyType,     lt(12)  ],
