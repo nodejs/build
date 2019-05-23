@@ -39,3 +39,37 @@
     url: "https://www.centos.org/keys/RPM-GPG-KEY-CentOS-SIG-SCLo"
     dest: "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
     mode: 0644
+
+- stat: path=/usr/local/bin/python3.7
+  register: build_python37
+
+- name: centos7 | ppc64 | download python 3.7
+  get_url:
+    url: https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz
+    dest: /tmp/
+  when: "arch == 'ppc64' and build_python37.stat.exists == False"
+
+- name: centos7 | ppc64 | unarchive python 3.7
+  unarchive:
+    src: /tmp/Python-3.7.3.tgz
+    remote_src: yes
+    dest: /tmp/
+  when: "arch == 'ppc64' and build_python37.stat.exists == False"
+
+- name: centos7 | ppc64 | configure python 3.7
+  shell: /tmp/Python-3.7.3/configure
+  args:
+    chdir: /tmp/Python-3.7.3
+  when: "arch == 'ppc64' and build_python37.stat.exists == False"
+
+- name: centos7 | ppc64 | install python 3.7
+  shell: make -j6 install
+  args:
+    chdir: /tmp/Python-3.7.3
+  when: "arch == 'ppc64' and build_python37.stat.exists == False"
+
+- name: centos7 | ppc64 | clean python 3.7
+  file:
+    state: absent
+    path: /tmp/Python-3.7
+  when: "arch == 'ppc64' and build_python37.stat.exists == False"
