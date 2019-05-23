@@ -123,6 +123,13 @@
         - "{{ role_path }}/tasks/partials/tap2junit/pip.yml"
       skip: true
 
+- name: Firewall | add rule to allow accepting multicast
+  lineinfile:
+    dest: /etc/sysconfig/iptables
+    insertafter: ":OUTPUT ACCEPT.*]"
+    line: "-A INPUT -m pkttype --pkt-type multicast -j ACCEPT"
+  when: "'rhel72-s390x' in inventory_hostname"
+
 - name: Firewall | add basic rule to allow communication locally
   lineinfile:
     dest: /etc/sysconfig/iptables
