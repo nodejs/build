@@ -132,10 +132,6 @@ hosts:
         ubuntu1604-arm64_odroid_c2-3: {ip: 70.167.220.149, user: odroid}
 
     - macstadium:
-        macos10.08-x64-1: {ip: 207.254.58.162, port: 10009, user: administrator}
-        macos10.08-x64-2: {ip: 207.254.58.162, port: 10010, user: administrator}
-        macos10.09-x64-1: {ip: 207.254.58.162, port: 10007, user: administrator}
-        macos10.09-x64-2: {ip: 207.254.58.162, port: 10008, user: administrator}
         macos10.10-x64-1: {ip: 207.254.58.162, port: 10005, user: administrator}
         macos10.10-x64-2: {ip: 207.254.58.162, port: 10006, user: administrator}
         macos10.11-x64-1: {ip: 207.254.58.162, port: 10003, user: administrator}
