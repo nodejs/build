@@ -83,8 +83,9 @@ hosts:
         centos5-x86-1: {ip: 192.241.250.186}
         debian8-x64-1: {ip: 159.203.103.52}
         debian9-x64-1: {ip: 138.197.97.208}
-        fedora26-x64-1: {ip: 178.62.236.249}
         fedora27-x64-1: {ip: 159.203.117.50}
+        fedora30-x64-1: {ip: 178.62.236.249}
+        fedora30-x64-2: {ip: 159.203.98.84}
         freebsd10-x64-1: {ip: 159.203.59.134, user: freebsd}
         freebsd11-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd11-x64-2: {ip: 107.170.28.213, user: freebsd}
@@ -163,7 +164,6 @@ hosts:
         centos7-x64-1: {ip: 119.9.27.82}
         debian8-x64-1: {ip: 23.253.109.216}
         debian8-x64-2: {ip: 104.239.140.184}
-        fedora26-x64-1: {ip: 119.9.52.113}
         fedora27-x64-1: {ip: 119.9.51.79}
         freebsd10-x64-1: {ip: 119.9.52.218}
         ubuntu1204-x64-1: {ip: 119.9.51.210}
