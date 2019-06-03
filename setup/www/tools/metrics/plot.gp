@@ -7,7 +7,7 @@ archcolumns  = system("awk -F, 'NR == 1 { print NF; exit }' " . inputdir . "/arc
 oscolumns  = system("awk -F, 'NR == 1 { print NF; exit }' " . inputdir . "/os.csv")
 
 set macros
-LABELSETTINGS = "at graph 0.01,0.96 font 'Ubuntu Mono,14' textcolor rgb \"#9999a5\""
+LABELSETTINGS = "at graph 0.5,0.96 center font 'Ubuntu Mono,14' textcolor rgb \"#9999a5\""
 
 set linetype 1  lc rgb "#444444" lw 1
 set linetype 2  lc rgb "#E41A1C" lw 1
@@ -64,6 +64,8 @@ set xtics textcolor rgb "#9999a5"
 set ytics textcolor rgb "#9999a5"
 
 set term pngcairo size 2000,800 font "Ubuntu Mono,11" background rgb "#fefeff"
+
+set key left Left maxcols 1 maxrows 14
 
 set output outputdir . "/country.png"
 set label 1 "Top Countries (" . sourcename . ")" @LABELSETTINGS
