@@ -69,7 +69,7 @@ set key left Left maxcols 1 maxrows 14
 
 set output outputdir . "/country.png"
 set label 1 "Top Countries (" . sourcename . ")" @LABELSETTINGS
-plot for [i=2:11] inputdir . "/country.csv" every ::1 \
+plot for [i=2:13] inputdir . "/country.csv" every ::1 \
   using 1:i title sprintf(system("head -1 " . inputdir . "/country.csv | awk -F, '{ print $".i." }'")." / day (total: %'dk)", word(countrysums, i-1) / 1000) lw 2
 
 set output outputdir . "/version.png"
