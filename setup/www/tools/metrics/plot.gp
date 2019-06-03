@@ -9,15 +9,19 @@ oscolumns  = system("awk -F, 'NR == 1 { print NF; exit }' " . inputdir . "/os.cs
 set macros
 LABELSETTINGS = "at graph 0.01,0.96 font 'Ubuntu Mono,14' textcolor rgb \"#9999a5\""
 
-set linetype 1  lc rgb "#E41A1C" lw 1
-set linetype 2  lc rgb "#377EB8" lw 1
-set linetype 3  lc rgb "#4DAF4A" lw 1
-set linetype 4  lc rgb "#984EA3" lw 1
-set linetype 5  lc rgb "#FF7F00" lw 1
-set linetype 6  lc rgb "#D0D033" lw 1
-set linetype 7  lc rgb "#A65628" lw 1
-set linetype 8  lc rgb "#F781BF" lw 1
-set linetype cycle 8
+set linetype 1  lc rgb "#444444" lw 1
+set linetype 2  lc rgb "#E41A1C" lw 1
+set linetype 3  lc rgb "#377EB8" lw 1
+set linetype 4  lc rgb "#4DAF4A" lw 1
+set linetype 5  lc rgb "#984EA3" lw 1
+set linetype 6  lc rgb "#FF7F00" lw 1
+set linetype 7  lc rgb "#D0D033" lw 1
+set linetype 8  lc rgb "#A65628" lw 1
+set linetype 9  lc rgb "#F781BF" lw 1
+set linetype 10  lc rgb "#93F41D" lw 1
+set linetype 11  lc rgb "#79FFDB" lw 1
+set linetype 12  lc rgb "#F213EA" lw 1
+set linetype cycle 1
 
 set datafile sep ","
 
