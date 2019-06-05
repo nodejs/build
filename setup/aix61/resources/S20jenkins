@@ -8,7 +8,7 @@
 
 case "$1" in
 start )
-        su - {{user}} -c 'ulimit -c 0; \
+        TERM=ansi su - {{user}} -c 'ulimit -c 0; \
               export jenkins_log_file="/home/{{user}}/jenkins_console.log"
               export PATH=/opt/freeware/bin/ccache:/usr/java71_64/jre/bin:$PATH; \
               export HOME=/home/{{user}}; \
