@@ -21,7 +21,7 @@
           <envvar name='NODE_TEST_DIR' value='/home/{{ server_user }}/tmp' />
           <envvar name='OSTYPE' value='solaris' />
           <envvar name='HOME' value='/home/{{ server_user }}' />
-          <envvar name='JOBS' value='{{ jobs_env|default("4") }}' />
+          <envvar name='JOBS' value='{{ jobs_env|default("2") }}' />
           <envvar name='PATH' value='/usr/local/bin:/usr/local/sbin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin' />
         </method_environment>
       </method_context>
