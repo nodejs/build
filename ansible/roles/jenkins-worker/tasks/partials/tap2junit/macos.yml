@@ -1,10 +1,11 @@
 ---
 
 #
-# macos: python2.7
+# install tap2junit from pip
 #
 
-- name: install pip
+- name: install tap2junit
   pip:
     name: tap2junit
+    state: present
     executable: /usr/local/bin/pip2

@@ -71,6 +71,21 @@ packages: {
     'ccache,git,gmake,sudo,python3,py36-pip'
   ],
 
+  'macos10.10': [
+    'python@2',
+    'python'
+  ],
+
+  'macos10.11': [
+    'python@2',
+    'python'
+  ],
+
+  'macos10.12': [
+    'python@2',
+    'python'
+  ],
+
   rhel72: [
     'gcc-c++,sudo,git,zip,unzip',
   ],
