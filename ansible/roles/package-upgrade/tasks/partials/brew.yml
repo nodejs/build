@@ -50,3 +50,7 @@
   - name: Disable Crash Reporter 2
     become_user: root
     command: launchctl unload -w /System/Library/LaunchDaemons/com.apple.ReportCrash.Root.plist
+
+  - name: Spotlight content indexing
+    become_user: root
+    command: launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist
