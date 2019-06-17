@@ -157,6 +157,18 @@
     timeout: 60
     force: yes
 
+- name: Resolver | ipnodes needs to be present on zos, similar to hosts file
+  when: os|startswith("zos")
+  copy:
+    content: "127.0.0.1 localhost\n::1 localhost\n"
+    dest: /etc/ipnodes
+
+- name: Resolver | set DNS resolving priorities for zos 
+  when: os|startswith("zos")
+  copy:
+    content: "LOOKUP LOCAL DNS"
+    dest: '{{ home }}/{{ server_user }}/resolve'
+
 # temporary until we get the right cert bundles
 - name: download slave.jar -zos
   when: os|startswith("zos")
