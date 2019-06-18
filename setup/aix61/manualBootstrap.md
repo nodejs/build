@@ -197,6 +197,61 @@ pages earlier and not wait for the sync demon:
 ioo -o j2_maxRandomWrite=32
 ```
 
+## Setup ramdisks
+
+Clear old state, if its not a fresh install:
+```
+mv /home/iojs/build/tools /home/iojs/build.tools
+
+umount /home/iojs/build
+umount /ramdisk0
+
+rmramdisk rramdisk0
+rmramdisk rramdisk1
+
+# ls -l /dev/ramdisk*
+ls: 0653-341 The file /dev/ramdisk* does not exist.
+```
+
+Create and mount new ramdisks:
+```
+# mkramdisk 10000000
+/dev/rramdisk0
+# mkfs -V jfs2 -o log=INLINE /dev/ramdisk0
+mkfs: destroy /dev/ramdisk0 (yes)? y
+logform: Format inline log for  <y>?
+File system created successfully.
+4979164 kilobytes total disk space.
+Device /dev/ramdisk0:
+  Standard empty filesystem
+  Size:           9958328 512-byte (DEVBLKSIZE) blocks
+# mount -V jfs2 -o log=/dev/ramdisk0 /dev/ramdisk0 /ramdisk0
+# chown iojs:staff /ramdisk0/
+# mkramdisk 23000000
+/dev/rramdisk1
+# mkfs -V jfs2 -o log=INLINE /dev/ramdisk1
+mkfs: destroy /dev/ramdisk1 (yes)?
+logform: Format inline log for  <y>?
+File system created successfully.
+11454388 kilobytes total disk space.
+Device /dev/ramdisk1:
+  Standard empty filesystem
+  Size:           22908776 512-byte (DEVBLKSIZE) blocks
+# mount -V jfs2 -o log=/dev/ramdisk1 /dev/ramdisk1 /home/iojs/build
+# chown iojs:staff /home/iojs/build
+# ls -l /dev/*ramdisk*
+brw-------    1 root     system       36,  0 Jun 18 12:13 /dev/ramdisk0
+brw-------    1 root     system       36,  1 Jun 18 12:14 /dev/ramdisk1
+crw-------    1 root     system       36,  0 Jun 18 12:13 /dev/rramdisk0
+crw-------    1 root     system       36,  1 Jun 18 12:14 /dev/rramdisk1
+# df | grep ram
+/dev/ramdisk0   10000000   9956864    1%        4     1% /ramdisk0
+/dev/ramdisk1   23000000  22905728    1%        4     1% /home/iojs/build
+# mount | grep ram
+         /dev/ramdisk0    /ramdisk0        jfs2   Jun 18 12:13 rw,log=/dev/ramdisk0
+         /dev/ramdisk1    /home/iojs/build jfs2   Jun 18 12:14 rw,log=/dev/ramdisk1
+```
+
 ## Run ansible script to complete base configuration
 
 See [the README](./README.md) for instructions
