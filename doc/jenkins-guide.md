@@ -185,6 +185,7 @@ launchctl start org.nodejs.osx.jenkins
 
 Sometimes something weird happens, and it's easier to just reboot the
 worker.
+
 On Unix just do one of:
 
 ```bash
@@ -192,6 +193,9 @@ shutdown -r now
 # or:
 reboot
 ```
+
+On the advice of the system adminstrators managing the AIX machines, please do
+not restart them without good reason, it will make things worse.
 
 ##### Fixing machines with Docker
 
