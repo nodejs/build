@@ -116,10 +116,10 @@ and speed in our CI system.
 
 ![Tier 2 Infrastructure Providers](./static-assets/tier-2-providers.png)
 
-- **[Microsoft][7]**: provides Windows-related test infrastructure
+- **[Microsoft][7]**: Provides Windows-related test infrastructure
   on [Azure][8] for the Node.js CI system.
 
-- **[Joyent][9]**:, a private cloud infrastructure company, provides SmartOS
+- **[Joyent][9]**: A private cloud infrastructure company, provides SmartOS
   and other test/build resources for the Node.js CI system, resources for
   backup of our critical infrastructure, redundancy for nodejs.org and or
   [unencrypted.nodejs.org](http://unencrypted.nodejs.org) mirror.
@@ -132,19 +132,19 @@ and speed in our CI system.
   - Via the [IBM LinuxOne(TM) Community Cloud][13], provides linuxOne
     based test and build infrastructure.
 
-- **[Scaleway][15]**: a "BareMetal" SSD cloud server provider,
-  contributes key ARMv7 hardware for test and release builds for the Node.js CI
-  system.
+- **[Scaleway][15]**: Scalable cloud platform designed for developers &
+  growing companies, contributes key ARMv7 hardware for test and release
+  builds for the Node.js CI system.
 
-- **[Cloudflare][16]**: a CDN and internet traffic management
+- **[Cloudflare][16]**: CDN and internet traffic management
   provider, are responsible for providing fast and always-available
   access to [nodejs.org][node].
 
-- **[ARM][17]**: semiconductor intellectual property supplier, have donated
+- **[ARM][17]**: Semiconductor intellectual property supplier, have donated
   ARMv8 / ARM64 hardware used by the Node.js CI system for build and testing
   Node.js.
 
-- **[Intel][22]**: "the world leader in silicon innovation," contributes
+- **[Intel][22]**: "The world leader in silicon innovation," contributes
   hardware used for benchmarking in the Node.js project's CI system to advance
   and accelerate Node.js performance.
 
