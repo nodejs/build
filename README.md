@@ -1,5 +1,6 @@
-![NodeSource ARM Cluster](./static-assets/ns-arm-cluster.jpg)
-<p align="center">(our arm cluster - picture is CC BY-SA 3.0 AU, Rod Vagg)</p>
+![ARM Cluster](./static-assets/ns-arm-cluster.jpg)
+<p align="center"><i><small>Some of the Node.js Build ARM resources: 3
+generations of Raspberry Pi and other ARMv7 & ARM64 hardware</small></i></p>
 
 # Node.js Build Working Group
 
@@ -103,9 +104,7 @@ test coverage that it does today.
 - **[Rackspace][3]**: a popular managed cloud company, provides significant
   resources used to power much of the Node.js project's CI system, including
   key Windows compilation servers, along with additional services such as
-  object storage for backups via [Cloud Files][4] and [Mailgun][5] for some
-  [nodejs.org email][6] services.
-
+  [Mailgun][5] for some [nodejs.org and iojs.org email][6] services.
 
 
 ### Tier-2 Providers
@@ -120,8 +119,10 @@ and speed in our CI system.
 - **[Microsoft][7]**: provides Windows-related test infrastructure
   on [Azure][8] for the Node.js CI system.
 
-- **[Joyent][9]**:, a public/private cloud infrastructure company,
-  provides SmartOS and other test/build resources for the Node.js CI system.
+- **[Joyent][9]**:, a private cloud infrastructure company, provides SmartOS
+  and other test/build resources for the Node.js CI system, resources for
+  backup of our critical infrastructure, redundancy for nodejs.org and or
+  [unencrypted.nodejs.org](http://unencrypted.nodejs.org) mirror.
 
 - **[IBM][10]**:
   - [IBM Cloud][11] provides hardware for testing and benchmarking for the
@@ -131,23 +132,17 @@ and speed in our CI system.
   - Via the [IBM LinuxOne(TM) Community Cloud][13], provides linuxOne
     based test and build infrastructure.
 
-- **[Voxer][14]**: a voice, text, photo and video messaging service and
-  well-known Node.js early-adopter donated and host OS X hardware for building
-  and testing via the Node.js project's CI system.
-
 - **[Scaleway][15]**: a "BareMetal" SSD cloud server provider,
-  contributes key ARMv7 hardware for test and build for the Node.js CI system.
+  contributes key ARMv7 hardware for test and release builds for the Node.js CI
+  system.
 
-- **[NodeSource][ns]**: a Node.js enterprise products and services
-  company, donates hardware and hosting for most of the Node.js project's ARM
-  test and build infrastructure.
-
-- **[CloudFlare][16]**: a CDN and internet traffic management
+- **[Cloudflare][16]**: a CDN and internet traffic management
   provider, are responsible for providing fast and always-available
   access to [nodejs.org][node].
 
 - **[ARM][17]**: semiconductor intellectual property supplier, have donated
-  ARMv8 hardware used by the Node.js CI system for build and testing Node.js.
+  ARMv8 / ARM64 hardware used by the Node.js CI system for build and testing
+  Node.js.
 
 - **[Intel][22]**: "the world leader in silicon innovation," contributes
   hardware used for benchmarking in the Node.js project's CI system to advance
@@ -157,8 +152,8 @@ and speed in our CI system.
   hardware used for testing in the Node.js project's CI system.
 
 - **[Packet][24]**: Bare metal cloud for developers. Through their
-  [Works on Arm](https://www.worksonarm.com/),
-  Packet provides ARM64 build infrastructure.
+  [Works on Arm](https://www.worksonarm.com/), Packet provides ARM64 build
+  infrastructure and additional resources for powering our CI system.
 
 ### Community Donations
 
@@ -231,7 +226,6 @@ are required. After that the configuration will be removed.
 [1]:    irc://irc.freenode.net/node-build
 [2]:    https://digitalocean.com/
 [3]:    https://www.rackspace.com/
-[4]:    https://www.rackspace.com/cloud/files
 [5]:    https://www.mailgun.com/
 [6]:    https://github.com/nodejs/email
 [7]:    https://www.microsoft.com/
@@ -241,7 +235,6 @@ are required. After that the configuration will be removed.
 [11]:   https://www.ibm.com/cloud
 [12]:   https://osuosl.org/services/powerdev
 [13]:   https://developer.ibm.com/linuxone/
-[14]:   https://voxer.com/
 [15]:   https://www.scaleway.com/
 [16]:   https://www.cloudflare.com/
 [17]:   https://www.arm.com/
