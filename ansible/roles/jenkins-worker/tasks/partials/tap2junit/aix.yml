@@ -11,7 +11,7 @@
 
 - name: download get-pip.py
   get_url:
-    url: http://bootstrap.pypa.io/get-pip.py
+    url: https://bootstrap.pypa.io/get-pip.py
     dest: /home/iojs/get-pip.py
   when: pip_exists.stat.exists == False
 
