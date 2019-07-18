@@ -270,6 +270,8 @@ runShared () {
 
 setupEnvironment
 
+echo "Matching label: $nodes"
+
 if [[ "$nodes" =~ _openssl102_ ]]; then
   runOpenSSL102
 elif [[ "$nodes" =~ _openssl110_ ]]; then
