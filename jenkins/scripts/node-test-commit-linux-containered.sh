@@ -270,22 +270,22 @@ runShared () {
 
 setupEnvironment
 
-if [[ "$label" =~ _openssl102_ ]]; then
+if [[ "$nodes" =~ _openssl102_ ]]; then
   runOpenSSL102
-elif [[ "$label" =~ _openssl110_ ]]; then
+elif [[ "$nodes" =~ _openssl110_ ]]; then
   runOpenSSL110
-elif [[ "$label" =~ _openssl111_ ]]; then
+elif [[ "$nodes" =~ _openssl111_ ]]; then
   runOpenSSL111
-elif [[ "$label" =~ _fips20_ ]]; then
+elif [[ "$nodes" =~ _fips20_ ]]; then
   runFips20
-elif [[ "$label" =~ _debug_ ]]; then
+elif [[ "$nodes" =~ _debug_ ]]; then
   runDebug
-elif [[ "$label" =~ _zlib_ ]]; then
+elif [[ "$nodes" =~ _zlib_ ]]; then
   runZlib
-elif [[ "$label" =~ _withoutintl_ ]]; then
+elif [[ "$nodes" =~ _withoutintl_ ]]; then
   runWithoutIntl
-elif [[ "$label" =~ _withoutssl_ ]]; then
+elif [[ "$nodes" =~ _withoutssl_ ]]; then
   runWithoutSsl
-elif [[ "$label" =~ _shared_ ]]; then
+elif [[ "$nodes" =~ _shared_ ]]; then
   runShared
 fi
