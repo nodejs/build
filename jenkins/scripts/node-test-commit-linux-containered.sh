@@ -1,30 +1,5 @@
 #!/bin/bash -ex
 
-# run node-test-commit-pre.sh
-# run node-test-commit-diagnostics.sh
-
-setupEnvironment
-
-if [[ "$label" =~ _openssl102_ ]]; then
-  runOpenSSL102
-elif [[ "$label" =~ _openssl110_ ]]; then
-  runOpenSSL110
-elif [[ "$label" =~ _openssl111_ ]]; then
-  runOpenSSL111
-elif [[ "$label" =~ _fips20_ ]]; then
-  runFips20
-elif [[ "$label" =~ _debug_ ]]; then
-  runDebug
-elif [[ "$label" =~ _zlib_ ]]; then
-  runZlib
-elif [[ "$label" =~ _withoutintl_ ]]; then
-  runWithoutIntl
-elif [[ "$label" =~ _withoutssl_ ]]; then
-  runWithoutSsl
-elif [[ "$label" =~ _shared_ ]]; then
-  runShared
-fi
-
 function setupEnvironment {
   FLAKY_TESTS_MODE=run
   if test $IGNORE_FLAKY_TESTS = "true"; then
@@ -291,4 +266,26 @@ function runShared {
   runCiWithConfig "--shared"
 }
 
-# run node-test-commit-diagnostics.sh
+### MAIN ###
+
+setupEnvironment
+
+if [[ "$label" =~ _openssl102_ ]]; then
+  runOpenSSL102
+elif [[ "$label" =~ _openssl110_ ]]; then
+  runOpenSSL110
+elif [[ "$label" =~ _openssl111_ ]]; then
+  runOpenSSL111
+elif [[ "$label" =~ _fips20_ ]]; then
+  runFips20
+elif [[ "$label" =~ _debug_ ]]; then
+  runDebug
+elif [[ "$label" =~ _zlib_ ]]; then
+  runZlib
+elif [[ "$label" =~ _withoutintl_ ]]; then
+  runWithoutIntl
+elif [[ "$label" =~ _withoutssl_ ]]; then
+  runWithoutSsl
+elif [[ "$label" =~ _shared_ ]]; then
+  runShared
+fi
