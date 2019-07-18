@@ -144,9 +144,20 @@ runDebug () {
     # sed -i 's/\[\$system==linux\]/[$system==linux]\ntest-inspector-async-stack-traces-promise-then : PASS, FLAKY/g' test/sequential/sequential.status
     # Needed for Node < 10, see https://github.com/nodejs/node/issues/17018
     sed -i 's/\[\$system==linux\]/[$system==linux]\ntest-inspector-contexts : PASS, FLAKY/g' test/sequential/sequential.status
+
+    # Makefile doesn't handle debug properly for test-ci in Node <10 so we
+    # special-case it and run build-ci and a manual tools/test.py invocation
+
+    buildCiWithConfig "--debug"
+
+    # Run tests, emulate test-ci in Makefile but with --mode=debug
+    python tools/test.py -j $JOBS -p tap --logfile test.tap \
+      --mode=debug --flaky-tests=${FLAKY_TESTS_MODE} \
+      default addons js-native-api node-api doctool
+  else
+    runCiWithConfig "--debug"
   fi
 
-  buildCiWithConfig "--debug"
 
   # Sanity check that we actually have a debug executable
   if ! [ -x out/Debug/node ]; then
@@ -172,16 +183,6 @@ runDebug () {
     echo "  duration_ms: 0"
     echo "  ..."
     exit 0
-  fi
-
-  if [ "$NODEJS_MAJOR_VERSION" -lt "10" ]; then
-    # Run tests, emulate test-ci in Makefile but with --mode=debug
-    python tools/test.py -j $JOBS -p tap --logfile test.tap \
-      --mode=debug --flaky-tests=${FLAKY_TESTS_MODE} \
-      default addons js-native-api node-api doctool
-  else
-    # Runs the proper mode in Node >= 10
-    testCiWithArgs ""
   fi
 
   # Clean up any leftover processes, error if found.
