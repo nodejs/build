@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 
-function setupEnvironment {
+setupEnvironment () {
   FLAKY_TESTS_MODE=run
   if test $IGNORE_FLAKY_TESTS = "true"; then
     FLAKY_TESTS_MODE=dontcare
@@ -24,7 +24,7 @@ function setupEnvironment {
   g++ -v
 }
 
-function runCiWithConfig {
+runCiWithConfig () {
   local flags="$1"
   PYTHON=python \
     NODE_TEST_DIR=${HOME}/node-tmp \
@@ -33,7 +33,7 @@ function runCiWithConfig {
     make run-ci -j $JOBS
 }
 
-function buildCiWithConfig {
+buildCiWithConfig () {
   local flags="$1"
   PYTHON=python \
     NODE_TEST_DIR=${HOME}/node-tmp \
@@ -42,7 +42,7 @@ function buildCiWithConfig {
     make build-ci -j $JOBS
 }
 
-function testCiWithArgs {
+testCiWithArgs () {
   local args="$1"
   PYTHON=python \
     NODE_TEST_DIR=${HOME}/node-tmp \
@@ -52,7 +52,7 @@ function testCiWithArgs {
 }
 
 ###--- ubuntu1604_sharedlibs_openssl102_x64 ---###
-function runOpenSSL102 {
+runOpenSSL102 () {
   export LD_LIBRARY_PATH=${OPENSSL102DIR}/lib/
   export DYLD_LIBRARY_PATH=${OPENSSL102DIR}/lib/
   export PATH=${OPENSSL102DIR}/bin/:$PATH
@@ -72,7 +72,7 @@ function runOpenSSL102 {
 }
 
 ###--- ubuntu1604_sharedlibs_openssl110_x64 ---###
-function runOpenSSL110 {
+runOpenSSL110 () {
   export LD_LIBRARY_PATH=${OPENSSL110DIR}/lib/
   export DYLD_LIBRARY_PATH=${OPENSSL110DIR}/lib/
   export PATH=${OPENSSL110DIR}/bin/:$PATH
@@ -92,7 +92,7 @@ function runOpenSSL110 {
 }
 
 ###--- ubuntu1604_sharedlibs_openssl111_x64 ---###
-function runOpenSSL111 {
+runOpenSSL111 () {
   export LD_LIBRARY_PATH=${OPENSSL111DIR}/lib/
   export DYLD_LIBRARY_PATH=${OPENSSL111DIR}/lib/
   export PATH=${OPENSSL111DIR}/bin/:$PATH
@@ -112,7 +112,7 @@ function runOpenSSL111 {
 }
 
 ###--- ubuntu1604_sharedlibs_fips20_x64 ---###
-function runFips20 {
+runFips20 () {
   runCiWithConfig "--openssl-fips=$FIPS20DIR"
 
   # Sanity check that we actually built in FIPS capable mode. We expect to see
@@ -135,7 +135,7 @@ function runFips20 {
 }
 
 ###--- ubuntu1604_sharedlibs_debug_x64 ---###
-function runDebug {
+runDebug () {
   if [ "$NODEJS_MAJOR_VERSION" -lt "10" ]; then
     # Needed for Node < 10, see https://github.com/nodejs/node/issues/17016
     sed -i 's/\[\$system==linux\]/[$system==linux]\ntest-error-reporting : PASS, FLAKY/g' test/parallel/parallel.status
@@ -190,7 +190,7 @@ function runDebug {
 }
 
 ###--- ubuntu1604_sharedlibs_zlib_x64 ---###
-function runZlib {
+runZlib () {
   export LD_LIBRARY_PATH=${ZLIB12DIR}/lib/
   export DYLD_LIBRARY_PATH=${ZLIB12DIR}/lib/
 
@@ -209,7 +209,7 @@ function runZlib {
 }
 
 ###--- ubuntu1604_sharedlibs_withoutintl_x64 ---###
-function runWithoutIntl {
+runWithoutIntl () {
   runCiWithConfig "--without-intl"
 
   # Sanity check that `Intl` is `undefined`
@@ -236,7 +236,7 @@ function runWithoutIntl {
 }
 
 ###--- ubuntu1604_sharedlibs_withoutssl_x64 ---###
-function runWithoutSsl {
+runWithoutSsl () {
   runCiWithConfig "--without-ssl"
 
   # Sanity check that there is no OpenSSL compiled into the binaruy
@@ -262,7 +262,7 @@ function runWithoutSsl {
 }
 
 ###--- ubuntu1604_sharedlibs_shared_x64 ---###
-function runShared {
+runShared () {
   runCiWithConfig "--shared"
 }
 
