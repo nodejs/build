@@ -49,28 +49,46 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - smartos18-64 (Node >= 12)
   - **node-test-commit-windows-fanned**
     - **node-compile-windows**
-      * Version selection: `(!(ENGINE!="ChakraCore") || !label.endsWith("-arm")) && (!(NODE_MAJOR_VERSION.toInteger()>=6) || !label.startsWith("win-vs2013")) && (!(NODE_MAJOR_VERSION.toInteger()>=10) || !(label.startsWith("win-vs2015") || label.startsWith("win-vcbt2015"))) && (!(NODE_MAJOR_VERSION.toInteger()<8) || !label.startsWith("win-vs2017")) && (!(NODE_MAJOR_VERSION.toInteger()<10) || label!="win-vs2017-x86")`
+      * Combination Filter (structured as a conjuction of implications):
+        - When `ENGINE!="ChakraCore"` exclude `*-arm`
+        - When Node >= 6 exclude `win-vs2013*`
+        - When Node >= 10 exclude `win-vs2015*` and `win-vcbt2015*`
+        - When Node < 8 exclude `win-vs2017*`
+        - When Node < 10 exclude `win-vs2017-x86`
       - win-vcbt2015 (Node < 10)
       - win-vs2015 (Node >= 6 < 10)
-      - win-vs2015-arm (Node >= 6 < 10)
-      - win-vs2015-x86 (Node >= 6)
+      - win-vs2015-arm (Node-ChakraCore)
+      - win-vs2015-x86 (Node >= 6 < 10)
       - win-vs2017 (Node >= 8)
-      - win-vs2017-arm (Node >= 8)
+      - win-vs2017-arm (Node-ChakraCore)
       - win-vs2017-x86 (Node >= 10)
-    - **node-test-binary-windows & node-test-binary-windows-2**
-      * Version selection: `(RUNNER=="win10" && COMPILED_BY=="vs2017") || (RUNNER=="win2008r2-vs2017" && COMPILED_BY=="vs2017") || (RUNNER=="win2012r2" && COMPILED_BY=="vs2017-x86") || (RUNNER=="win2016" && COMPILED_BY=="vs2017")`
-      - win10
-        - vs2017
-        - vs2017-x86
-      - win2008r2-vs2017
-        - vs2017
-        - vs2017-x86
-      - win2012r2
-        - vs2017
-        - vs2017-x86
-      - win2016
-        - vs2017
-        - vs2017-x86
+    - **node-test-binary-windows** (Node <= 10)
+      * Combination Filter (structured as a conjuction of implications):
+        - When Node < 10:
+          - On `win10` run:
+            - `COMPILED_BY=="vcbt2015"` always
+          - On `win2008r2-vs2013` run:
+            - `COMPILED_BY=="vs2013"` when Node < 6
+            - `COMPILED_BY=="vs2015"` when Node >= 6 < 9
+          - On `win2008r2-vs2017` run:
+            - `COMPILED_BY=="vs2015"` when Node >= 9
+          - On `win2012r2` run:
+            - `COMPILED_BY=="vs2015"` always
+            - `COMPILED_BY=="vs2015-x86"` always
+          - On `win2016` run:
+            - `COMPILED_BY=="vs2015"` when Node < 8
+            - `COMPILED_BY=="vs2017"` when Node >= 8
+        - When Node == 10:
+          - On `win10` run `COMPILED_BY=="vs2017"`
+          - On `win2008r2-vs2017` run `COMPILED_BY=="vs2017"`
+          - On `win2012r2` run `COMPILED_BY=="vs2017-x86"`
+          - On `win2016` run `COMPILED_BY=="vs2017"`
+    - **node-test-binary-windows-2** (Node >= 11)
+      * Combination Filter:
+        - On `win10` run `COMPILED_BY=="vs2017"`
+        - On `win2008r2-vs2017` run `COMPILED_BY=="vs2017"`
+        - On `win2012r2` run `COMPILED_BY=="vs2017-x86"`
+        - On `win2016` run `COMPILED_BY=="vs2017"`
   - **node-test-commit-linux-containered**
     - ubuntu1604_sharedlibs_debug_x64 
       1. `CONFIG_FLAGS="$CONFIG_FLAGS --debug" make build-ci -j $JOBS`
