@@ -49,7 +49,7 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - smartos18-64 (Node >= 12)
   - **node-test-commit-windows-fanned**
     - **node-compile-windows**
-      * Combination Filter (structured as a conjuction of implications):
+      * Combination Filter (structured as a conjunction of implications):
         - When `ENGINE!="ChakraCore"` exclude `*-arm`
         - When Node >= 6 exclude `win-vs2013*`
         - When Node >= 10 exclude `win-vs2015*` and `win-vcbt2015*`
@@ -63,7 +63,7 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
       - win-vs2017-arm (Node-ChakraCore)
       - win-vs2017-x86 (Node >= 10)
     - **node-test-binary-windows** (Node <= 10)
-      * Combination Filter (structured as a conjuction of implications):
+      * Combination Filter (structured as a conjunction of implications):
         - When Node < 10:
           - On `win10` run:
             - `COMPILED_BY=="vcbt2015"` always
