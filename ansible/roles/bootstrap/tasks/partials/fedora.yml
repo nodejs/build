@@ -31,3 +31,12 @@
   selinux: state=disabled
   # this should be done. not sure how to make it properly/gracefully
   # notify: reboot host
+
+- name: check for firewalld
+  raw: stat /usr/sbin/firewalld
+  register: has_firewalld
+  failed_when: has_firewalld.rc > 1
+
+- name: remove firewalld
+  when: has_firewalld.rc == 0
+  raw: dnf remove -y firewalld

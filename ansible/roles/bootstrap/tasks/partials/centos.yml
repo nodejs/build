@@ -1,0 +1,8 @@
+- name: check for firewalld
+  raw: stat /usr/sbin/firewalld
+  register: has_firewalld
+  failed_when: has_firewalld.rc > 1
+
+- name: remove firewalld
+  when: has_firewalld.rc == 0
+  raw: yum remove -y firewalld
