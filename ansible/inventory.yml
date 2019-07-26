@@ -212,7 +212,7 @@ hosts:
         osx1010-x64-1: {ip: 192.168.2.210, user: iojs}
 
     - scaleway:
-        ubuntu1604-armv7l-1: {ip: 51.15.200.62}
+        ubuntu1604-armv7l-1: {ip: 212.47.233.202}
         ubuntu1604-armv7l-2: {ip: 51.15.218.201}
         ubuntu1604-armv7l-3: {ip: 163.172.186.154}
 
