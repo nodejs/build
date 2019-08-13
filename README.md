@@ -27,6 +27,7 @@ missing please open an issue. If you are interested in joining check out
 
 <!-- ncu-team-sync.team(nodejs/build) -->
 
+- [@bnoordhuis](https://github.com/bnoordhuis) - Ben Noordhuis
 - [@gdams](https://github.com/gdams) - George Adams
 - [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
 - [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil
