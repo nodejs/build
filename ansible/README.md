@@ -55,6 +55,17 @@ host to the correct file name, for example:
 $ cp ~/.ssh/rhel72-s390x-3.pem /home/sam/.ssh/nodejs_build_test
 ```
 
+### Running commands directly
+
+You can run Ansible modules directly from the command line, including the
+[`shell`](https://docs.ansible.com/ansible/latest/modules/shell_module.html)
+module. Since Windows uses a dedicated module, a common pattern is:
+
+```console
+$ ansible 'test-*:!*-win*' -m shell -a 'python -V'
+$ ansible 'test-*-win*' -m win_shell -a 'python -V'
+```
+
 ### Secrets
 
 If you have access to secrets, clone the `secrets` repository [next to the
