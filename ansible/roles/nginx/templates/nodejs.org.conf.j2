@@ -339,8 +339,8 @@ server {
     rewrite ^/feed/vulnerability/?$                               https://$server_name/en/feed/vulnerability.xml permanent;
 
     # Asset rewrites
-    rewrite ^/(?!static/)?favicon\.ico$                           https://$server_name/static/favicon.ico permanent;
-    rewrite ^/apple-touch-icon.*\.png$                            https://$server_name/static/apple-touch-icon.png permanent;
+    rewrite ^/(?!static/)?favicon\.ico$                           https://$server_name/static/images/favicons/favicon.ico permanent;
+    rewrite ^/apple-touch-icon.*\.png$                            https://$server_name/static/images/favicons/apple-touch-icon.png permanent;
     rewrite ^/trademark-policy.pdf$                               https://$server_name/static/documents/trademark-policy.pdf permanent;
 
     rewrite ^/logos/                                              https://$server_name/static/images/logos/ permanent;
