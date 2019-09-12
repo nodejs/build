@@ -25,31 +25,19 @@ Machines should have:
   - Remote Desktop (RDP) enabled, the port should be listed with the access credentials if it is not the default (3389).
   - PowerShell access enabled, the port should be listed with the access credentials if it is not the default (5986).
 
-To use Ansible for Windows, PowerShell access should be enabled as described in [`ansible.intro_windows`][].
-
 ### Control machine (where Ansible is run)
 
 Install the `pywinrm` pip module: `pip install pywinrm`
 
 ### Target machines
 
-Ensure PowerShell v3 or higher is installed (`$PSVersionTable.PSVersion`), refer to [`ansible.intro_windows`][] if not.
-
-Before running the preparation script, the network location must be set to Private (not necessary for Azure).
-This can be done in Windows 10 by going to `Settings`, `Network`, `Ethernet`, click the connection name
-(usually `Ethernet`, next to the icon) and change `Find devices and content` to on.
-
-The preparation script can be manually downloaded from [`ansible.intro_windows`][] and run, or automatically by running
-this in PowerShell (run as Administrator):
+The preparation script needs to be run in PowerShell (run as Administrator):
 
 ```powershell
-Set-ExecutionPolicy -Force -Scope CurrentUser Unrestricted
-$ansibleURL = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
-Invoke-WebRequest $ansibleURL -OutFile ConfigureRemotingForAnsible.ps1
-.\ConfigureRemotingForAnsible.ps1
-# Optional
-rm ConfigureRemotingForAnsible.ps1
+iwr -useb https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 | iex
 ```
+
+Test the connection to the target machine with `ansible HOST -m win_ping -vvvv`. If there is any issue, please refer to the official Ansible documentation in [Setting up a Windows Host][].
 
 ## macOS
 
@@ -305,6 +293,6 @@ yum install -y devtoolset-6-s390x-rpms/*
 
 
 
-[`ansible.intro_windows`]: http://docs.ansible.com/ansible/intro_windows.html
+[Setting up a Windows Host]: https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html
 [newer Ansible configuration]: https://github.com/nodejs/build/tree/master/ansible
 [stand-alone]: https://github.com/nodejs/build/tree/master/setup/windows
