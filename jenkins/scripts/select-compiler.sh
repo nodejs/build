@@ -24,7 +24,7 @@ if [ "$SELECT_ARCH" = "PPC64LE" ]; then
 
   case $NODE_NAME in
     *centos7* )
-      if [ "$NODEJS_MAJOR_VERSION" -gt "11" ]; then
+      if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
         # Setup devtoolset-6, sets LD_LIBRARY_PATH, PATH, etc.
         . /opt/rh/devtoolset-6/enable
         echo "Compiler set to devtoolset-6"
