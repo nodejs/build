@@ -135,7 +135,7 @@ ln -s /opt/freeware/bin/pip /usr/bin/pip
 #### tap2junit
 
 ```bash
-python -m pip install --upgrade pip pipenv git+https://github.com/jbergstroem/tap2junit.git
+python -m pip install --upgrade pip pipenv git+https://github.com/nodejs/tap2junit.git
 ln -s /opt/freeware/bin/tap2junit /usr/bin/tap2junit
 ```
 
@@ -302,6 +302,10 @@ LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/aixto
 installp -d /tmp/i-files -L
 installp -d /tmp/i-files -a aixtools.python3
 ```
+
+Repeat the __pip__ and __tap2junit__ steps above but substitute __python3__ in the commands in place of
+__python__.  This is required because Python 2 and Python 3 have separate site-packages so that modules
+installed on one are not automatically available on the other.
 
 The archive was originally from http://www.aixtools.net/index.php/python3
 
