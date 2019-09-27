@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-import sys
 import csv
-import geoip2.database
 import os
+import sys
+
+import geoip2.database
 
 reader = geoip2.database.Reader(os.path.dirname(os.path.realpath(__file__)) + '/GeoLite2-City.mmdb')
 
@@ -28,11 +29,10 @@ for row in logFileReader:
         country = georec.country.iso_code
       if georec.subdivisions.most_specific.iso_code:
         region = georec.subdivisions.most_specific.iso_code
-  except:
+  except Exception:
     pass
 
   row.insert(1, country.encode('utf-8'))
   row.insert(2, region.encode('utf-8'))
 
   logFileWriter.writerow(row)
-

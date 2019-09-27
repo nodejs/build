@@ -22,10 +22,12 @@
 # IN THE SOFTWARE.
 #
 
-from ansible.module_utils.basic import *
-from jinja2 import Environment
 import os
 import re
+
+from ansible.module_utils.basic import AnsibleModule
+from jinja2 import Environment
+
 
 pre_match = '# begin: node.js template'
 post_match = '# end: node.js template'
@@ -99,8 +101,7 @@ def main():
                          path)
 
     if not is_templatable(path, contents):
-        module.fail_json(msg='Your ssh config lacks template stubs. ' +
-                             'Check README.md for instructions.')
+        module.fail_json(msg='Your ssh config lacks template stubs. Check README.md for instructions.')
 
     rendered = '{}{}{}'.format(
         pre_match,

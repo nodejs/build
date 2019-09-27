@@ -6,9 +6,9 @@ import datetime
 with open('out/index.csv') as index:
   index_csv = filter(lambda line: line, index.read().split('\n'))
 
+# noqa
 with open('out/index.html', 'w') as out:
-  out.write(
-'''
+  out.write('''
 <!DOCTYPE html>
 <html>
   <head>
@@ -28,6 +28,7 @@ with open('out/index.html', 'w') as out:
     <link rel="stylesheet" href="https://nodejs.org/layouts/css/styles.css" media="all">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600">
     <style>
+        #logo { margin-bottom: 1rem; }
         main { margin-bottom: 2rem; }
         .table-header,
         .table-row {
@@ -64,6 +65,11 @@ with open('out/index.html', 'w') as out:
     </style>
   </head>
   <body>
+  <header>
+    <div class="container" id="logo">
+      <img src="https://nodejs.org/static/images/logos/nodejs-new-white-pantone.png" alt="node.js">
+    </div>
+  </header>
   <div id="main">
     <div class="container">
       <h1>Node.js Nightly Code Coverage</h1>
@@ -90,6 +96,7 @@ with open('out/index.html', 'w') as out:
               <div><div class="cell-header">JS Coverage</div><div class="cell-value"><a href="coverage-{1}/index.html">{2:05.2f}&nbsp;%</a></div></div>
               <div><div class="cell-header">C++ Coverage</div><div class="cell-value"><a href="coverage-{1}/cxxcoverage.html">{3:05.2f}&nbsp;%</a></div></div>
             </div>'''.format(date, sha, float(jscov), float(cxxcov)))
+
   out.write('''
           </div>
         </div>

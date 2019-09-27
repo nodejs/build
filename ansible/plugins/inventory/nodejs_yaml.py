@@ -23,35 +23,32 @@
 #
 
 from __future__ import print_function
+
 import argparse
+import json
+import os
+import subprocess
+import sys
+
+import yaml
 try:
     import configparser
 except ImportError:
     import ConfigParser as configparser
-try:
-    from future_builtins import filter # Python 2
-except ImportError:
-    pass # Python 3
-import json
-import yaml
-import os
-import sys
-import subprocess
-
 
 valid = {
-  # taken from nodejs/node.git: ./configure
-  'arch': ('armv6l', 'armv7l', 'arm64', 'ia32', 'mips', 'mipsel', 'ppc',
-           'ppc64', 'x32', 'x64', 'x86', 's390', 's390x'),
+    # taken from nodejs/node.git: ./configure
+    'arch': ('arm', 'arm64', 'ia32', 'mips', 'mipsel', 'mips64el', 'ppc',
+             'ppc64', 'x32', 'x64', 'x86', 'x86_64', 's390x'),
 
-  # valid roles - add as necessary
-  'type': ('infra', 'release', 'test'),
+    # valid roles - add as necessary
+    'type': ('infra', 'release', 'test'),
 
-  # providers - validated for consistency
-  'provider': ('azure', 'digitalocean', 'joyent', 'ibm', 'linuxonecc',
-               'macstadium', 'marist', 'mininodes', 'msft', 'osuosl',
-               'rackspace', 'requireio', 'scaleway', 'softlayer', 'voxer',
-               'packetnet', 'nearform')
+    # providers - validated for consistency
+    'provider': ('azure', 'digitalocean', 'joyent', 'ibm', 'linuxonecc',
+                 'macstadium', 'marist', 'mininodes', 'msft', 'osuosl',
+                 'rackspace', 'requireio', 'scaleway', 'softlayer', 'voxer',
+                 'packetnet', 'nearform')
 }
 DECRYPT_TOOL = "gpg"
 INVENTORY_FILENAME = "inventory.yml"
@@ -97,7 +94,7 @@ def main():
 # https://stackoverflow.com/a/7205107
 def merge(a, b, path=None):
     "merges b into a"
-    if path is None: path = []
+    path = path or []
     for key in b:
         if key in a:
             if isinstance(a[key], dict) and isinstance(b[key], dict):
@@ -105,7 +102,7 @@ def merge(a, b, path=None):
             elif isinstance(a[key], list) and isinstance(b[key], list):
                 a[key] = sorted(set(a[key]).union(b[key]))
             elif a[key] == b[key]:
-                pass # same leaf value
+                pass  # same leaf value
             else:
                 raise Exception('Conflict at %s' % '.'.join(path + [str(key)]))
         else:
@@ -167,7 +164,7 @@ def load_yaml_file(file_name):
     # get inventory
     with open(file_name, 'r') as stream:
         try:
-            hosts = yaml.load(stream)
+            hosts = yaml.safe_load(stream)
 
         except yaml.YAMLError as exc:
             print(exc)
@@ -186,11 +183,11 @@ def load_yaml_secrets(file_name):
         print("WARNING: cannot load %s" % file_name, file=sys.stderr)
         return None
 
-    return yaml.load(stdout)
+    return yaml.safe_load(stdout)
 
 
 def parse_yaml(hosts, config):
-    """Parses host information from the output of yaml.load"""
+    """Parses host information from the output of yaml.safe_load"""
 
     export = {'_meta': {'hostvars': {}}}
 
@@ -279,9 +276,11 @@ def parse_host(host):
 
 
 def has_metadata(info):
-    """Checks for metadata in variables. These are separated from the "key"
-       metadata by underscore. Not used anywhere at the moment for anything
-       other than descriptiveness"""
+    """
+    Checks for metadata in variables. These are separated from the "key"
+    metadata by underscore. Not used anywhere at the moment for anything
+    other than descriptiveness
+    """
 
     metadata = info.split('_', 1)
 
