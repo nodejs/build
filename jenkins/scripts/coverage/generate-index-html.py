@@ -6,7 +6,6 @@ import datetime
 with open('out/index.csv') as index:
   index_csv = filter(lambda line: line, index.read().split('\n'))
 
-# noqa
 with open('out/index.html', 'w') as out:
   out.write('''
 <!DOCTYPE html>
