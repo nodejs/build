@@ -355,8 +355,9 @@ server {
 
     # Asset rewrites
     rewrite ^/layouts/css/styles\.css$                            https://$server_name/static/css/styles.css permanent;
-    rewrite ^/(?!static/)?favicon\.ico$                           https://$server_name/static/images/favicons/favicon.ico permanent;
-    rewrite ^/apple-touch-icon.*\.png$                            https://$server_name/static/images/favicons/apple-touch-icon.png permanent;
+    rewrite ^/(static/)?favicon\.ico$                             https://$server_name/static/images/favicons/favicon.ico permanent;
+    rewrite ^/(static/)?favicon\.png$                             https://$server_name/static/images/favicons/favicon-32x32.png permanent;
+    rewrite ^/(static/)?apple-touch-icon.*\.png$                  https://$server_name/static/images/favicons/apple-touch-icon.png permanent;
     rewrite ^/trademark-policy.pdf$                               https://$server_name/static/documents/trademark-policy.pdf permanent;
 
     rewrite ^/logos/                                              https://$server_name/static/images/logos/ permanent;
