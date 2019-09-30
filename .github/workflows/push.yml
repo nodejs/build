@@ -1,5 +1,5 @@
-name: on push
-on: [push]
+name: on push or pull_request
+on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
