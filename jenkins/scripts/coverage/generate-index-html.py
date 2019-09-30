@@ -24,7 +24,7 @@ with open('out/index.html', 'w') as out:
     <link rel="apple-touch-icon" href="https://nodejs.org/static/apple-touch-icon.png">
     <link rel="icon" sizes="32x32" type="image/png" href="https://nodejs.org/static/favicon.png">
 
-    <link rel="stylesheet" href="https://nodejs.org/layouts/css/styles.css" media="all">
+    <link rel="stylesheet" href="https://nodejs.org/static/css/styles.css" media="all">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600">
     <style>
         #logo { margin-bottom: 1rem; }
