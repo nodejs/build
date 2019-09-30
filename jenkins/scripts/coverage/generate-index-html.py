@@ -9,23 +9,23 @@ with open('out/index.csv') as index:
 with open('out/index.html', 'w') as out:
   out.write('''
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <title>Node.js Code Coverage</title>
 
-    <link rel="dns-prefetch" href="http://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="http://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     <meta name="author" content="Node.js Foundation">
     <meta name="robots" content="index, follow">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="https://nodejs.org/static/apple-touch-icon.png">
-    <link rel="icon" sizes="32x32" type="image/png" href="https://nodejs.org/static/favicon.png">
+    <link rel="apple-touch-icon" href="https://nodejs.org/static/images/favicons/apple-touch-icon.png">
+    <link rel="icon" sizes="32x32" type="image/png" href="https://nodejs.org/static/images/favicons/favicon-32x32.png">
 
-    <link rel="stylesheet" href="https://nodejs.org/static/css/styles.css" media="all">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600&display=fallback">
+    <link rel="stylesheet" href="https://nodejs.org/static/css/styles.css">
     <style>
         #logo { margin-bottom: 1rem; }
         main { margin-bottom: 2rem; }
@@ -66,7 +66,7 @@ with open('out/index.html', 'w') as out:
   <body>
   <header>
     <div class="container" id="logo">
-      <img src="https://nodejs.org/static/images/logos/nodejs-new-white-pantone.png" alt="node.js">
+      <img src="https://nodejs.org/static/images/logo.svg" alt="node.js" width="122" height="75">
     </div>
   </header>
   <div id="main">
@@ -99,18 +99,19 @@ with open('out/index.html', 'w') as out:
   out.write('''
           </div>
         </div>
+      </main>
+    </div>
+  </div>
+  <footer class="no-margin-top">
+    <div class="container">
+      <div class="linuxfoundation-footer">
+        <a class="linuxfoundation-logo" href="http://collabprojects.linuxfoundation.org/">Linux Foundation Collaborative Projects</a>
+        <p>&copy; 2016 Node.js Foundation. All Rights Reserved. Portions of this site originally &copy; 2016 Joyent.</p>
+        <p>Node.js is a trademark of Joyent, Inc. and is used with its permission. Please review the <a href="https://nodejs.org/static/documents/trademark-policy.pdf">Trademark Guidelines of the Node.js Foundation</a>.</p>
+        <p>Linux Foundation is a registered trademark of The Linux Foundation.</p>
+        <p>Linux is a registered <a href="http://www.linuxfoundation.org/programs/legal/trademark" title="Linux Mark Institute">trademark</a> of Linus Torvalds.</p>
       </div>
     </div>
-    <footer class="no-margin-top">
-      <div class="linuxfoundation-footer">
-        <div class="container">
-          <a class="linuxfoundation-logo" href="http://collabprojects.linuxfoundation.org">Linux Foundation Collaborative Projects</a>
-          <p>&copy; 2016 Node.js Foundation. All Rights Reserved. Portions of this site originally &copy; 2016 Joyent. </p>
-          <p>Node.js is a trademark of Joyent, Inc. and is used with its permission. Please review the <a href="https://nodejs.org/static/documents/trademark-policy.pdf">Trademark Guidelines of the Node.js Foundation</a>.</p>
-          <p>Linux Foundation is a registered trademark of The Linux Foundation.</p>
-          <p>Linux is a registered <a href="http://www.linuxfoundation.org/programs/legal/trademark" title="Linux Mark Institute">trademark</a> of Linus Torvalds.</p>
-        </div>
-      </div>
-    </footer>
+  </footer>
   </body>
 </html>''')
