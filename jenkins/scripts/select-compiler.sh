@@ -43,8 +43,8 @@ if [ "$SELECT_ARCH" = "PPC64LE" ]; then
   fi
 
   # Select the appropriate compiler
-  export CC="ccache gcc-${COMPILER_LEVEL}"
-  export CXX="ccache g++-${COMPILER_LEVEL}"
+  export CC="gcc-${COMPILER_LEVEL}"
+  export CXX="g++-${COMPILER_LEVEL}"
   export LINK="g++-${COMPILER_LEVEL}"
 
   echo "Compiler set to $COMPILER_LEVEL"
