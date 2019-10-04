@@ -1,8 +1,8 @@
 ---
 
-- name: "debian8 | add debian-backports" # has systemd-coredump if needed
+- name: "debian8 | add jessie-backports" # has systemd-coredump if needed
   apt_repository:
-    repo: 'deb http://ftp.debian.org/debian jessie-backports main'
+    repo: 'deb http://archive.debian.org/debian jessie-backports main'
     state: present
     update_cache: yes
   register: has_updated_package_repo
