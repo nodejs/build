@@ -29,7 +29,6 @@ def buildExclusions = [
   [ /^ubuntu1604-32/,                 anyType,     gte(10) ], // 32-bit linux for <10 only
 
   // ARM  --------------------------------------------------
-  [ /^debian7-docker-armv7$/,         anyType,     gte(10) ],
   [ /^debian8-docker-armv7$/,         releaseType, lt(10)  ],
   [ /^debian8-docker-armv7$/,         anyType,     gte(12) ],
   [ /^debian9-docker-armv7$/,         anyType,     lt(10)  ],

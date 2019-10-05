@@ -119,7 +119,6 @@ raspberry_pi: {
       { name: 'jessie', template: 'rpi_jessie.Dockerfile.j2' }
     ],
     armv7l: [
-      { name: 'wheezy', template: 'rpi_wheezy.Dockerfile.j2' },
       { name: 'jessie', template: 'rpi_jessie.Dockerfile.j2' },
       { name: 'stretch', template: 'rpi_stretch.Dockerfile.j2' }
     ],
@@ -132,7 +131,6 @@ raspberry_pi: {
 
 scaleway_armv7: {
   containers: [
-      { name: 'wheezy', template: 'armv7_wheezy.Dockerfile.j2' },
       { name: 'jessie', template: 'armv7_jessie.Dockerfile.j2' },
       { name: 'stretch', template: 'armv7_stretch.Dockerfile.j2' }
   ]
