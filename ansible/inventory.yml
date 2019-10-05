@@ -94,8 +94,8 @@ hosts:
         ubuntu1404-x86-1: {ip: 159.203.115.220}
         ubuntu1604-x86-1: {ip: 159.203.77.233}
         ubuntu1604-x86-2: {ip: 104.131.191.135}
-        ubuntu1604_docker-x64-1: {ip: 128.199.198.56}
-        ubuntu1604_docker-x64-2: {ip: 138.68.241.115}
+        ubuntu1804_docker-x64-1: {ip: 134.209.55.216}
+        ubuntu1804_docker-x64-2: {ip: 159.89.183.200}
         ubuntu1804-x64-1: {ip: 178.128.181.213}
 
     - joyent:
@@ -113,7 +113,7 @@ hosts:
         smartos17-x64-2: {ip: 72.2.115.11}
         smartos18-x64-1: {ip: 72.2.115.192}
         smartos18-x64-2: {ip: 72.2.119.47}
-        ubuntu1604_docker-x64-1: {ip: 37.153.110.162, user: ubuntu}
+        ubuntu1804_docker-x64-1: {ip: 165.225.151.201, user: ubuntu}
         ubuntu1604_arm_cross-x64-1: {ip: 165.225.136.6, user: ubuntu}
         ubuntu1804-x64-1: {ip: 37.153.109.142, user: ubuntu}
 
@@ -212,9 +212,9 @@ hosts:
         osx1010-x64-1: {ip: 192.168.2.210, user: iojs}
 
     - scaleway:
-        ubuntu1604-armv7l-1: {ip: 212.47.233.202}
-        ubuntu1604-armv7l-2: {ip: 51.15.218.201}
-        ubuntu1604-armv7l-3: {ip: 163.172.186.154}
+        ubuntu1804-armv7l-1: {ip: 212.47.246.3}
+        ubuntu1804-armv7l-2: {ip: 212.47.233.202}
+        ubuntu1804-armv7l-3: {ip: 51.15.218.201}
 
     - softlayer:
         centos5-x64-1: {ip: 50.23.85.252}
@@ -226,7 +226,7 @@ hosts:
         debian9-x64-1: {ip: 169.60.150.91}
         ubuntu1404-x64-1: {ip: 50.97.245.5}
         ubuntu1404-x86-1: {ip: 50.97.245.9}
-        ubuntu1604_docker-x64-1: {ip: 169.62.77.230}
+        ubuntu1804_docker-x64-1: {ip: 52.117.26.9}
         ubuntu1604-x64-1: {ip: 169.60.150.88, alias: jenkins-workspace-3}
 
     - packetnet:

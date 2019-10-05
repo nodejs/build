@@ -8,12 +8,12 @@
   # This depends on ansible being able to run curl locally, YMMV, if it doesn't
   # work, try changing the local_action to a remote one:
   #  raw: curl -sL https://www.samba.org/ftp/ccache/
-  local_action: command shell curl -sL https://www.samba.org/ftp/ccache/
+  local_action: shell curl -sL https://www.samba.org/ftp/ccache/ | sed -n -e 's/.*"ccache-\([0-9.]*\).tar.gz".*/\1/p' | tail -1
   register: ccache_html_content
 
 - name: "ccache : extract ccache latest version"
   set_fact:
-    ccache_latest: "{{ ccache_html_content.stdout | regex_findall('ccache-[0-9]+.[0-9]+(?:.[0-9]+)*.tar.gz') | map('regex_replace', 'ccache-') | map('regex_replace', '.tar.gz') | list | latest_version }}"
+    ccache_latest: "{{ ccache_html_content.stdout }}"
 
 - name: "ccache : download and extract"
   unarchive:
