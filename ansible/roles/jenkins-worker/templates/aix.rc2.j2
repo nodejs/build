@@ -1,12 +1,35 @@
-#!/bin/sh
-export HOME={{ home }}/{{ server_user }}
-export NODE_TEST_DIR="$HOME/tmp"
-export JOBS="{{ jobs_env }}"
+#!/bin/ksh
 
-export OSTYPE=aix
-export ARCH=ppc64
-export DESTCPU=ppc64
+##################################################
+# name: S20jenkins
+# purpose: script that will start or stop jenkins
+##################################################
 
-{{ java_path[os] }} -Xmx{{ server_ram|default('128m') }} \
-    -jar {{ home }}/{{ server_user }}/slave.jar -secret {{ secret }} \
-    -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp
+
+# (@sam-github)  Purpose of java in PATH unknown, since an explicit path to
+# java is used to run jenkins.
+case "$1" in
+start )
+        su - {{server_user}} -c '\
+              ulimit -c 0; \
+	      ulimit -d unlimited; \
+	      ulimit -m unlimited; \
+	      export TERM=ansi; \
+              export jenkins_log_file="/home/{{server_user}}/jenkins_console.log"; \
+              export PATH=/home/{{server_user}}/jdk8u192-b12-jre/jre/bin:$PATH; \
+              export HOME=/home/{{server_user}}; \
+              export NODE_TEST_DIR=$HOME/tmp; \
+              export NODE_COMMON_PIPE="$HOME/test.pipe"; \
+              export OSTYPE=AIX72; \
+              export GIT_SSL_CAINFO="$HOME/ca-bundle.crt"; \
+              export SSL_CERT_FILE="$HOME/ca-bundle.crt"; \
+        /home/{{server_user}}/jdk8u192-b12-jre/bin/java -Xmx128m -Dorg.jenkinsci.plugins.gitclient.Git.timeOut=30 -jar "$HOME/slave.jar" \
+          -secret {{secret}} \
+          -jnlpUrl {{jenkins_url}}/computer/{{inventory_hostname}}/slave-agent.jnlp >$jenkins_log_file 2>&1 &'
+        ;;
+stop )
+        ;;
+* )
+        echo "Usage: $0 (start | stop)"
+        exit 1
+esac

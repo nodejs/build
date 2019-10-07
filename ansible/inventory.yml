@@ -144,6 +144,8 @@ hosts:
         win10-arm64-2: { vs: '2017' }
 
     - osuosl:
+# secret for -1 was compromised, do not use -1 name
+        aix72-ppc64_be-2: {ip: 140.211.9.30}
         aix61-ppc64_be-1: {ip: 140.211.9.101}
         aix61-ppc64_be-2: {ip: 140.211.9.100}
         aix61-ppc64_be-3: {ip: 140.211.9.77}
