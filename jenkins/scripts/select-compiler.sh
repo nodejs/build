@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Notes and warnings:
+# - ccache and CC: v8 builds (at least) depend on the ability to be able to do
+# `ln -s $CC some/place` (but only on some plaforms), so the
+# `export CC="ccache /a/gcc-version/cc"` idiom breaks those builds. The best
+# way to do ccache is to push `/path/to/gcc-version` on to the front of PATH,
+# then push a `/path/to/ccache/wrappers` in front of the compiler path.
+
 if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
   NODE_NAME=${NODE_NAME:-$HOSTNAME}
   echo "Selecting compiler based on $NODE_NAME"
@@ -28,7 +35,7 @@ if [ "$SELECT_ARCH" = "PPC64LE" ]; then
         # Setup devtoolset-6, sets LD_LIBRARY_PATH, PATH, etc.
         . /opt/rh/devtoolset-6/enable
         echo "Compiler set to devtoolset-6"
-	return
+        return
       fi
       ;;
    esac
@@ -73,16 +80,36 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
   fi
 
 elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
-  # get node version
-  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX"
+  case $NODE_NAME in
+    *aix72* )
+      echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX72"
+
+      if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
+        export LIBPATH=/opt/gcc-6.3/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/ppc64:/opt/gcc-6.3/lib
+        export PATH="/opt/ccache-3.7.4/libexec:/opt/gcc-6.3/bin:$PATH"
+        export CC="gcc" CXX="g++" CXX_host="g++"
+        echo "Compiler set to 6.3"
+        return
+      else
+        echo "Compiler left as system default:" `g++ -dumpversion`
+        return
+      fi
+      ;;
+  esac
+
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX61"
 
   if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
     export LIBPATH=/home/iojs/gmake/opt/freeware/lib:/home/iojs/gcc-6.3.0-1/opt/freeware/lib/gcc/powerpc-ibm-aix6.1.0.0/6.3.0/pthread/ppc64:/home/iojs/gcc-6.3.0-1/opt/freeware/lib
     export PATH="/home/iojs/gcc-6.3.0-1/opt/freeware/bin:$PATH"
     export CC="ccache `which gcc`" CXX="ccache `which g++`" CXX_host="ccache `which g++`"
+    # TODO(sam-github): configure ccache by pushing /opt/freeware/bin/ccache on
+    # front of PATH
     echo "Compiler set to 6.3"
   else
     export CC="ccache `which gcc`" CXX="ccache `which g++`" CXX_host="ccache `which g++`"
+    # TODO(sam-github): configure ccache by pushing /opt/freeware/bin/ccache on
+    # front of PATH
     echo "Compiler set to default at 4.8.5"
   fi
 fi
