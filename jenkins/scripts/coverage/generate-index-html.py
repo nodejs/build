@@ -25,50 +25,7 @@ with open('out/index.html', 'w') as out:
     <link rel="icon" sizes="32x32" type="image/png" href="https://nodejs.org/static/images/favicons/favicon-32x32.png">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600&display=fallback">
-    <link rel="stylesheet" href="https://nodejs.org/static/css/styles.css">
-    <style>
-        #logo { margin-bottom: 1rem; }
-        #badge {
-          margin-top: 1rem;
-          margin-bottom: 1rem;
-        }
-        #badge, a {
-          border: none;
-        }
-        main { margin-bottom: 2rem; }
-        .table-header,
-        .table-row {
-          box-sizing: border-box;
-          display: flex;
-          width: 100%;
-          padding: 2px 10px;
-        }
-        .table-header { font-weight: bold;}
-        .table-header > div,
-        .table-row > div {
-          flex-grow: 1;
-          width: 100px;
-        }
-        .table-row:nth-child(even) { background-color: #eee; }
-        .sha .cell-value { font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace; }
-        .cell-header { display: none; }
-        @media screen and (min-width: 690px) and (max-width: 850px) {
-          .table-header > div:nth-child(n+3),
-          .table-row > div:nth-child(n+3) {
-            flex-grow: 0.2;
-          }
-          .table-header > div:first-child,
-          .table-row > div:first-child {
-            flex-grow: 0.4;
-          }
-        }
-        @media screen and (max-width: 690px) {
-          .cell-header { display: block; font-weight: bold; }
-          .table-header { display: none; }
-          .table-row { display: block; }
-          .table-row > div { width: 100%; text-align: center; margin-bottom: 12px;}
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
   <header>
