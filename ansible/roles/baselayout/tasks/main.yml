@@ -95,9 +95,9 @@
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"
 
-- name: Check whether /etc/paths contains "/usr/localopt/ccache/libexec" (macos)
+- name: Check whether /etc/paths contains "/usr/local/opt/ccache/libexec" (macos)
   when: os|startswith("macos")
-  command: grep -Fxq "/usr/localopt/ccache/libexec" /etc/paths
+  command: grep -Fxq "/usr/local/opt/ccache/libexec" /etc/paths
   register: ccache_mac
   check_mode: no
   ignore_errors: yes
@@ -107,7 +107,7 @@
   when: os|startswith("macos") and ccache_mac.rc == 1
   lineinfile: dest=/etc/paths
     insertbefore=BOF
-    line='/usr/localopt/ccache/libexec'
+    line='/usr/local/opt/ccache/libexec'
 
 - name: ubuntu1404 | update package alternatives
   when: os == "ubuntu1404"
