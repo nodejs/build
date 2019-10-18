@@ -13,6 +13,8 @@
 # way to do ccache is to push `/path/to/gcc-version` on to the front of PATH,
 # then push a `/path/to/ccache/wrappers` in front of the compiler path.
 
+
+
 if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
   NODE_NAME=${NODE_NAME:-$HOSTNAME}
   echo "Selecting compiler based on $NODE_NAME"
@@ -22,14 +24,15 @@ if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
     *aix* ) SELECT_ARCH=AIXPPC ;;
     *x64* ) SELECT_ARCH=X64 ;;
     *arm64* ) SELECT_ARCH=ARM64 ;;
+    *macos* ) SELECT_ARCH=MACOS ;;
   esac
 fi
 
 # get node version
-if [ -z ${NODEJS_MAJOR_VERSION+x} ]; then
-  NODE_VERSION="$(python tools/getnodeversion.py)"
-  NODEJS_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
-fi
+ if [ -z ${NODEJS_MAJOR_VERSION+x} ]; then
+   NODE_VERSION="$(python tools/getnodeversion.py)"
+   NODEJS_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
+ fi
 
 if [ "$SELECT_ARCH" = "PPC64LE" ]; then
   # Set default
@@ -154,4 +157,22 @@ elif [ "$SELECT_ARCH" = "ARM64" ]; then
       ;;
   esac
 
+  elif [ "$SELECT_ARCH" = "MACOS" ]; then
+
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on macos"
+
+  if [ "$NODEJS_MAJOR_VERSION" -ge "13" ]; then
+    # set xcode version to latest
+    sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+    echo "set xcode to latest - At least version 10"
+  elif [ "$NODEJS_MAJOR_VERSION" -ge "12" ]; then
+    sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+    echo "set xcode to latest - at least version 8"
+  elif [ "$NODEJS_MAJOR_VERSION" -ge "10" ]; then
+    sudo xcode-select -s /Applications/Xcode8.3.3.app/Contents/Developer
+    echo "set xcode to at least version 8"
+  elif [ "$NODEJS_MAJOR_VERSION" -ge "8" ]; then
+    sudo xcode-select -s /Applications/Xcode8.3.3.app/Contents/Developer
+    echo "set xcode to at least version 8"
+  fi
 fi
