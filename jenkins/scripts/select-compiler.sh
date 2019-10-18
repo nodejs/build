@@ -13,8 +13,6 @@
 # way to do ccache is to push `/path/to/gcc-version` on to the front of PATH,
 # then push a `/path/to/ccache/wrappers` in front of the compiler path.
 
-
-
 if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
   NODE_NAME=${NODE_NAME:-$HOSTNAME}
   echo "Selecting compiler based on $NODE_NAME"
