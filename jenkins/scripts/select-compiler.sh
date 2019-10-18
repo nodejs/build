@@ -27,10 +27,10 @@ if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
 fi
 
 # get node version
- if [ -z ${NODEJS_MAJOR_VERSION+x} ]; then
-   NODE_VERSION="$(python tools/getnodeversion.py)"
-   NODEJS_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
- fi
+if [ -z ${NODEJS_MAJOR_VERSION+x} ]; then
+  NODE_VERSION="$(python tools/getnodeversion.py)"
+  NODEJS_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
+fi
 
 if [ "$SELECT_ARCH" = "PPC64LE" ]; then
   # Set default
