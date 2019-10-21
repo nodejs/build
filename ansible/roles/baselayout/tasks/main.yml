@@ -118,6 +118,15 @@
     - gcc
     - g++
 
+- name: ubuntu1604 | update package alternatives
+  when: os == "ubuntu1604"
+  alternatives: link=/usr/bin/{{ gcc }} name={{ gcc }} path=/usr/bin/{{ gcc }}-5
+  loop_control:
+    loop_var: gcc
+  with_items:
+    - gcc
+    - g++
+
 - name: smartos17 | update gcc symlinks
   when: os == "smartos17"
   file:

@@ -14,6 +14,8 @@ if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
     *ppc64*le* ) SELECT_ARCH=PPC64LE ;;
     *s390x* ) SELECT_ARCH=S390X ;;
     *aix* ) SELECT_ARCH=AIXPPC ;;
+    *x64* ) SELECT_ARCH=X64 ;;
+    *arm64* ) SELECT_ARCH=ARM64 ;;
   esac
 fi
 
@@ -112,4 +114,33 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
     # front of PATH
     echo "Compiler set to default at 4.8.5"
   fi
+
+elif [ "$SELECT_ARCH" = "X64" ]; then
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on x64"
+
+
+  if test $nodes = "centos6-64-gcc48"; then
+    . /opt/rh/devtoolset-2/enable
+    echo "Compiler set to devtoolset-2"
+  elif [[ "$nodes" =~ centos[67]-64-gcc6 ]]; then
+    . /opt/rh/devtoolset-6/enable
+    echo "Compiler set to devtoolset-6"
+  elif test $nodes = "ubuntu1604-64"; then
+    if [ "$NODEJS_MAJOR_VERSION" -gt "12" ]; then
+      export CC="gcc-6"
+      export CXX="g++-6"
+      export LINK="g++-6"
+      echo "Compiler set to GCC 6 for $NODEJS_MAJOR_VERSION"
+    fi
+  fi
+
+elif [ "$SELECT_ARCH" = "ARM64" ]; then
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on arm64"
+
+
+  if [[ "$nodes" =~ centos[67]-arm64-gcc6 ]]; then
+    . /opt/rh/devtoolset-6/enable
+    echo "Compiler set to devtoolset-6"
+  fi
+
 fi
