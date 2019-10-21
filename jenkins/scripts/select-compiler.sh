@@ -164,13 +164,13 @@ elif [ "$SELECT_ARCH" = "ARM64" ]; then
     sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
     echo "set xcode to latest - At least version 10"
   elif [ "$NODEJS_MAJOR_VERSION" -ge "12" ]; then
-    sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-    echo "set xcode to latest - at least version 8"
+    sudo xcode-select -s /Applications/Xcode8.3.3.app/Contents/Developer
+    echo "set xcode to version 8"
   elif [ "$NODEJS_MAJOR_VERSION" -ge "10" ]; then
     sudo xcode-select -s /Applications/Xcode8.3.3.app/Contents/Developer
-    echo "set xcode to at least version 8"
+    echo "set xcode to version 8"
   elif [ "$NODEJS_MAJOR_VERSION" -ge "8" ]; then
     sudo xcode-select -s /Applications/Xcode8.3.3.app/Contents/Developer
-    echo "set xcode to at least version 8"
+    echo "set xcode to version 8"
   fi
 fi
