@@ -148,18 +148,6 @@
   command: systemctl restart iptables
   when: "'rhel72-s390x' in inventory_hostname"
 
-- name: firewalld | allow ipv4 multicast traffic
-  command: firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -m pkttype --pkt-type multicast -j ACCEPT
-  when: "'fedora27-x64' in inventory_hostname"
-
-- name: firewalld | allow ipv6 multicast traffic
-  command: firewall-cmd --permanent --direct --add-rule ipv6 filter INPUT 0 -m pkttype --pkt-type multicast -j ACCEPT
-  when: "'fedora27-x64' in inventory_hostname"
-
-- name: firewalld | restart so rules take effect
-  command: systemctl restart firewalld
-  when: "'fedora27-x64' in inventory_hostname"
-
 - name: download slave.jar
   when: not os|startswith("zos")
   get_url:
