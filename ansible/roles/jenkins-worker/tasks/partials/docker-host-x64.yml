@@ -1,0 +1,30 @@
+---
+
+- name: docker-host-x64 | check if docker exists
+  shell: which docker
+  register: docker_exists
+  ignore_errors: yes
+
+- name: docker-host-x64 | install docker from docker.com
+  when: "docker_exists.stdout == ''"
+  raw: curl -fsSL get.docker.com | bash -
+
+- name: docker-host-x64 | copy docker-node-exec.sh
+  copy:
+    src: "{{ role_path }}/files/docker-node-exec.sh"
+    dest: "/usr/local/bin/docker-node-exec.sh"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: docker-host-x64 | give {{ server_user }} sudoers access to docker-exec script
+  lineinfile:
+    line: "{{ server_user }} ALL=(ALL) NOPASSWD: /usr/local/bin/docker-node-exec.sh"
+    dest: "/etc/sudoers"
+    regexp: docker-node-exec.sh$
+
+- name: docker-host-x64 | install shyaml
+  pip:
+    name: shyaml
+    state: present
+    executable: pip3
