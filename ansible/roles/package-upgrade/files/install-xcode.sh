@@ -1,4 +1,8 @@
 #!/bin/bash
+
+#Copyright (c) 2013 rtrouton
+#source: https://github.com/rtrouton/rtrouton_scripts/blob/master/rtrouton_scripts/install_xcode_command_line_tools/install_xcode_command_line_tools.sh
+
 osx_vers=$(sw_vers -productVersion | awk -F "." '{print $2}')
 cmd_line_tools_temp_file="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
 
