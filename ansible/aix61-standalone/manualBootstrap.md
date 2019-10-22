@@ -4,11 +4,12 @@ once and after some small number of runs (2-3) all of the required
 modules will be installed.
 
 
-## Increase the size of the /opt and / filesystems
+## Increase the size of the filesystems
 
 ```bash
 chfs -a size=+1300000 /opt
 chfs -a size=+250000 /
+chfs -a size=917504 /tmp
 ```
 
 AIX72: unneeded: -1 and -2 and aix7-2 have different sizes, and 7.2 is big
