@@ -106,7 +106,7 @@
   - "!test-rackspace-freebsd10-x64-1"
   tasks:
     - name: remove node and npm packages
-      when: not os|startswith("win") and not os|startswith("zos") and os != "centos5"
+      when: not os|startswith("win") and not os|startswith("zos")
       package:
         name: "{{ package }}"
         state: absent

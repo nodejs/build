@@ -31,7 +31,6 @@ hosts:
   - release:
 
     - digitalocean:
-        centos5-x64-1: {ip: 162.243.217.142}
         centos6-x86-1: {ip: 162.243.248.28}
         centos7-x64-1: {ip: 138.68.12.105}
 
@@ -57,7 +56,6 @@ hosts:
         ubuntu1604-armv7l-2: {ip: 212.47.234.107}
 
     - softlayer:
-        centos5-x86-1: {ip: 50.23.85.253}
         centos6-x64-1: {ip: 169.62.77.228}
 
     - linuxonecc:
@@ -79,7 +77,6 @@ hosts:
         msft-ubuntu1404-x64-1: {ip: node-msft-cross-compiler-1.cloudapp.net}
 
     - digitalocean:
-        centos5-x86-1: {ip: 192.241.250.186}
         debian8-x64-1: {ip: 159.203.103.52}
         debian9-x64-1: {ip: 138.197.97.208}
         fedora27-x64-1: {ip: 159.203.117.50}
@@ -211,8 +208,6 @@ hosts:
         ubuntu1804-armv7l-3: {ip: 51.15.218.201}
 
     - softlayer:
-        centos5-x64-1: {ip: 50.23.85.252}
-        centos5-x64-2: {ip: 173.193.25.109}
         centos6-x64-1: {ip: 169.61.75.51}
         centos6-x64-2: {ip: 169.61.75.58}
         centos7-x64-1: {ip: 50.23.85.250}

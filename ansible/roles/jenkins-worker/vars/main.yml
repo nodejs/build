@@ -6,7 +6,6 @@
 
 init: {
   aix: ['aix71', 'aix72'],
-  centos5: 'centos5',
   centos6: 'centos6',
   debian: 'debian7',
   freebsd: 'freebsd',
@@ -23,11 +22,6 @@ jenkins_init: {
     dest: '/etc/rc.d/rc2.d/S20jenkins',
     src: 'aix.rc2.j2',
     mode: '0555'
-    },
-  centos5: {
-    dest: '/etc/init.d/jenkins',
-    src: 'centos5.initd.j2',
-    mode: '0755'
     },
   centos6: {
     dest: '/etc/init.d/jenkins',
@@ -84,7 +78,6 @@ init_type: "{{ os|match_key(init, raise_error=False)|default(os|stripversion|mat
 jenkins: "{{ jenkins_init[init_type] }}"
 
 needs_monit: [
-  'centos5',
   'centos6',
   'debian7',
   ]
