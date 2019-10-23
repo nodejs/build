@@ -27,7 +27,6 @@ grep -- 'joyent' hosts/all > hosts/joyent
 grep -- 'release-' hosts/all > hosts/release
 grep -- 'rhel72-s390x' hosts/all > hosts/rhel72-s390x
 grep -- 'smartos' hosts/all > hosts/smartos
-grep -- 'smartos14-x64' hosts/all > hosts/smartos14-x64
 grep -- 'softlayer' hosts/all > hosts/softlayer
 grep -- 'test-' hosts/all > hosts/test
 grep -- 'ubuntu1404-ppc64_be' hosts/all > hosts/ubuntu1404-ppc64_be

@@ -41,8 +41,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - ppcbe-ubuntu1404 (Node < 8)
     - ppcle-ubuntu1404 (Node < 13)
   - **node-test-commit-smartos**
-    - smartos14-32 (Node < 8)
-    - smartos14-64 (Node < 8)
     - smartos15-64 (Node >= 8 < 10)
     - smartos16-64 (Node >= 8 < 12)
     - smartos17-64 (Node >= 10 < 12)

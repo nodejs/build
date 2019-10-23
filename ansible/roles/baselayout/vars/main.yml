@@ -6,7 +6,7 @@
 
 binary_dest: '/usr/local/bin/ccache'
 
-ccache_no_binpkg: ['smartos14', 'smartos15', 'smartos16', 'smartos17']
+ccache_no_binpkg: ['smartos15', 'smartos16', 'smartos17']
 ccache_version: 3.3.2
 
 git_no_binpkg: ['debian7']
@@ -93,11 +93,6 @@ packages: {
     'gmake',
     'xz',
     'sudo',
-  ],
-
-  smartos14: [
-    'gcc48',
-    'gcc48-libs'
   ],
 
   smartos15: [
