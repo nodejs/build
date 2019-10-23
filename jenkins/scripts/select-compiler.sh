@@ -1,4 +1,10 @@
-#!/bin/bash
+# Usage:
+#   .../node % . ./build/jenkins/scripts/select-compiler.sh
+#
+# This file is sourced from the CWD of node by CI build scripts to select the
+# compiler to be used based on the version of node in the CWD.
+#
+# It must be /bin/sh syntax (no bashims).
 
 # Notes and warnings:
 # - ccache and CC: v8 builds (at least) depend on the ability to be able to do
@@ -118,29 +124,34 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
 elif [ "$SELECT_ARCH" = "X64" ]; then
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on x64"
 
-
-  if test $nodes = "centos6-64-gcc48"; then
-    . /opt/rh/devtoolset-2/enable
-    echo "Compiler set to devtoolset-2"
-  elif [[ "$nodes" =~ centos[67]-64-gcc6 ]]; then
-    . /opt/rh/devtoolset-6/enable
-    echo "Compiler set to devtoolset-6"
-  elif [[ "$nodes" =~ ubuntu1604-.*64 ]]; then
-    if [ "$NODEJS_MAJOR_VERSION" -gt "12" ]; then
-      export CC="gcc-6"
-      export CXX="g++-6"
-      export LINK="g++-6"
-      echo "Compiler set to GCC 6 for $NODEJS_MAJOR_VERSION"
-    fi
-  fi
+  case $nodes in
+    centos6-64-gcc48 )
+      . /opt/rh/devtoolset-2/enable
+      echo "Compiler set to devtoolset-2"
+      ;;
+    centos[67]-64-gcc6 )
+      . /opt/rh/devtoolset-6/enable
+      echo "Compiler set to devtoolset-6"
+      ;;
+    ubuntu1604-*64 )
+      if [ "$NODEJS_MAJOR_VERSION" -gt "12" ]; then
+        export CC="gcc-6"
+        export CXX="g++-6"
+        export LINK="g++-6"
+        echo "Compiler set to GCC 6 for $NODEJS_MAJOR_VERSION"
+      fi
+      ;;
+  esac
 
 elif [ "$SELECT_ARCH" = "ARM64" ]; then
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on arm64"
 
 
-  if [[ "$nodes" =~ centos[67]-arm64-gcc6 ]]; then
-    . /opt/rh/devtoolset-6/enable
-    echo "Compiler set to devtoolset-6"
-  fi
+  case $nodes in
+    centos[67]-arm64-gcc6 )
+      . /opt/rh/devtoolset-6/enable
+      echo "Compiler set to devtoolset-6"
+      ;;
+  esac
 
 fi
