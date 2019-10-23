@@ -27,7 +27,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - debian9-64
     - fedora-last-latest-x64
     - fedora-latest-x64
-    - ubuntu1204-64 (Node < 10)
     - ubuntu1404-32 (Node < 10)
     - ubuntu1404-64 (Node < 12)
     - ubuntu1604-32 (Node < 10)

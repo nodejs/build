@@ -88,8 +88,6 @@ hosts:
         freebsd10-x64-1: {ip: 159.203.59.134, user: freebsd}
         freebsd11-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd11-x64-2: {ip: 107.170.28.213, user: freebsd}
-        ubuntu1204-x64-1: {ip: 104.236.234.182}
-        ubuntu1204-x64-2: {ip: 107.170.104.83}
         ubuntu1404-x64-1: {ip: 45.55.252.223}
         ubuntu1404-x86-1: {ip: 159.203.115.220}
         ubuntu1604-x86-1: {ip: 159.203.77.233}
@@ -159,7 +157,6 @@ hosts:
         debian8-x64-2: {ip: 104.239.140.184}
         fedora27-x64-1: {ip: 119.9.51.79}
         freebsd10-x64-1: {ip: 119.9.52.218}
-        ubuntu1204-x64-1: {ip: 119.9.51.210}
         ubuntu1604-x64-1: {ip: 119.9.51.176}
         ubuntu1604-x64-2: {ip: 104.130.124.194}
 

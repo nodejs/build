@@ -16,7 +16,6 @@ ssh_config: /etc/ssh/sshd_config
 
 sshd_service_map: {
   'ubuntu1404': 'ssh',
-  'ubuntu1204': 'ssh',
   'smartos17': 'ssh',
   'smartos18': 'ssh',
 }
