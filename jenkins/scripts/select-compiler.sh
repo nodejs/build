@@ -125,7 +125,7 @@ elif [ "$SELECT_ARCH" = "X64" ]; then
   elif [[ "$nodes" =~ centos[67]-64-gcc6 ]]; then
     . /opt/rh/devtoolset-6/enable
     echo "Compiler set to devtoolset-6"
-  elif test $nodes = "ubuntu1604-64"; then
+  elif [[ "$nodes" =~ ubuntu1604-.*64 ]]; then
     if [ "$NODEJS_MAJOR_VERSION" -gt "12" ]; then
       export CC="gcc-6"
       export CXX="g++-6"
