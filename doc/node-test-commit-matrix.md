@@ -16,8 +16,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
   - **node-test-commit-linux**
     - alpine-last-latest-x64
     - alpine-latest-x64
-    - centos5-32 (Node < 8)
-    - centos5-64 (Node < 8)
     - centos6-64-gcc48 (Node < 10)
     - centos6-64-gcc6 (Node >= 10)
     - centos7-64-gcc48 (Node < 10)

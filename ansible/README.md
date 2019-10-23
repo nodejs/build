@@ -242,13 +242,11 @@ Unsorted stuff of things we need to do/think about
 - [ ] add clang/clang++ symlinks for ccache
 - [ ] centos7 needs different ccache path
 - [ ] debian7 needs to update alternative gcc/g++
-- [ ] adding scl stuff on centos5/6 is broken
 - [ ] verify that /usr/local/bin works as ccache install path
 - [x] remove subversion since v8 tests uses git nowadays
 - [ ] assign 192/256mb ram to the jenkins instances that requires it:
       - aix
       - TBD
-- [ ] centos5 and 6 repositories for rhel\* stuff is broken
 - [ ] automate more items in initial Raspberry Pi setup (see bottom of
       setup/raspberry-pi/README.md, some of these can be automated)
 - [ ] epel-release for centos - required for centos7 on packet.net arm64
