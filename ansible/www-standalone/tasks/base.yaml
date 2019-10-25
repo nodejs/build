@@ -17,3 +17,28 @@
     state: latest
   with_items: packages
   tags: base
+
+- name: Base | Tune system variables
+  lineinfile:
+    dest: "/etc/sysctl.conf"
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
+  with_items:
+    - { regexp: "net.core.netdev_max_backlog", line: "net.core.netdev_max_backlog = 5000" }
+    - { regexp: "net.ipv4.ip_local_port_range", line: "net.ipv4.ip_local_port_range = 1024 65535" }
+    - { regexp: "net.core.wmem_max", line: "net.core.wmem_max = 12582912" }
+    - { regexp: "net.core.rmem_max", line: "net.core.rmem_max = 12582912" }
+    - { regexp: "net.ipv4.tcp_rmem", line: "net.ipv4.tcp_rmem = 10240 87380 12582912" }
+    - { regexp: "net.ipv4.tcp_wmem", line: "net.ipv4.tcp_wmem = 10240 87380 12582912" }
+  tags: base
+
+- name: Base | Tune user limits
+  lineinfile:
+    dest: "/etc/security/limits.conf"
+    line: "{{ item }}"
+  with_items:
+    - "*         hard    nofile      500000"
+    - "*         soft    nofile      500000"
+    - "root      hard    nofile      500000"
+    - "root      soft    nofile      500000"
+  tags: base
