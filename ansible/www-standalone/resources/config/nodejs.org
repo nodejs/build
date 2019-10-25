@@ -169,6 +169,21 @@ server {
 
 server {
     listen *:80;
+    server_name foundation.nodejs.org;
+
+    return 301 https://openjsf.org/;
+}
+
+server {
+    listen *:443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name foundation.nodejs.org;
+
+    return 301 https://openjsf.org/;
+}
+
+server {
+    listen *:80;
     server_name newsletter.nodejs.org;
 
     return 301 http://us14.campaign-archive2.com/home/?u=c7c2e114a827812354112c23b&id=f006b61f29;
