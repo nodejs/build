@@ -38,6 +38,10 @@ hosts:
         smartos15-x64-1: {ip: 72.2.113.195}
         smartos17-x64-1: {ip: 72.2.114.225}
         smartos18-x64-1: {ip: 72.2.119.185}
+        smartos15-x64-2: {ip: 165.225.148.139}
+        smartos17-x64-2: {ip: 165.225.149.208}
+        smartos18-x64-2: {ip: 165.225.148.12}
+
         ubuntu1604_arm_cross-x64-1: {ip: 72.2.114.100, user: ubuntu}
 
     - requireio:
@@ -104,6 +108,8 @@ hosts:
         smartos17-x64-2: {ip: 72.2.115.11}
         smartos18-x64-1: {ip: 72.2.115.192}
         smartos18-x64-2: {ip: 72.2.119.47}
+        smartos18-x64-3: {ip: 165.225.151.114}
+        smartos18-x64-4: {ip: 165.225.149.13}
         ubuntu1804_docker-x64-1: {ip: 165.225.151.201, user: ubuntu}
         ubuntu1604_arm_cross-x64-1: {ip: 165.225.136.6, user: ubuntu}
         ubuntu1804-x64-1: {ip: 165.225.149.88, user: ubuntu}
