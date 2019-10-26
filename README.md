@@ -41,6 +41,7 @@ missing please open an issue. If you are interested in joining check out
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 - [@refack](https://github.com/refack) - Refael Ackermann
+- [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
