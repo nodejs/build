@@ -156,67 +156,6 @@ Then, manually:
 * Update <https://github.com/nodejs/build/blob/master/ansible/inventory.yml> to reflect any host additions or changes (this is primarily for automatic .ssh/config setup purposes currently)
 * Run Ansible from <https://github.com/nodejs/build/tree/master/setup/raspberry-pi> with `ansible-playbook ansible-playbook.yaml -i ../ansible-inventory --limit <hostname>`
 
-## git on CentOS 5
-
-GitHub have removed TLS 1.0 & 1.1 support, leaving CentOS 5 support in the lurch. Git has to be manually built on CentOS 5, this also requires:
-
- * Manually fixing yum repos to point to a still-available CentOS 5 repo (many have been removed and the mirror system doesn't work for 5 anymore) so we can install a couple of dependencies
- * Removing old git & curl
- * Compiling and installing OpenSSL 1.0.2
- * Compiling and installing curl / libcurl
- * Compiling and installing git
-
-The steps to achieve this are as follows, note that there are some manual steps here:
-
-```sh
-vi /etc/yum.repos.d/CentOS-Base.repo
-# comment out exiting "mirrorlist" and "baseurl" lines in the top [base] block
-# add in: baseurl=http://mirrors.usc.edu/pub/linux/distributions/centos/5.11/os/$basearch/
-# comment out everything else below the [base] block, e.g. go to the blank line below it and in vim run: :.,$s/^/#
-
-yum remove -y git curl
-yum install -y zlib-devel gettext
-
-cd /tmp/
-
-wget https://www.openssl.org/source/openssl-1.0.2n.tar.gz
-tar zxvf openssl-1.0.2n.tar.gz && cd openssl-1.0.2n
-./config -fpic shared && make -j4 && make install
-echo /usr/local/ssl/lib >> /etc/ld.so.conf
-ldconfig
-
-cd ..
-
-# Manually download https://curl.haxx.se/download/curl-7.58.0.tar.gz and scp to /tmp/ on the server (haxx.se is strict tls 1.2)
-tar zxvf curl-7.58.0.tar.gz && cd curl-7.58.0
-./configure --with-ssl=/usr/local/ssl --disable-ldap && make -j4 && make install
-echo /usr/local/lib >> /etc/ld.so.conf
-ldconfig
-
-cd ..
-
-/usr/local/bin/curl -sLO https://www.kernel.org/pub/software/scm/git/git-2.16.2.tar.gz
-tar zxvf git-2.16.2.tar.gz && cd git-2.16.2
-LDFLAGS="-L/usr/local/ssl/lib/ -L/usr/local/lib" ./configure --with-openssl=/usr/local/ssl/ --with-curl=/usr/local
-LDFLAGS="-L/usr/local/ssl/lib/ -L/usr/local/lib" make -j4
-make install
-
-cd ..
-/usr/local/bin/curl -sLO https://cloudflare.cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.6p1.tar.gz
-tar zxvf openssh-7.6p1.tar.gz && cd openssh-7.6p1
-LDFLAGS="-L/usr/local/ssl/lib/" ./configure --with-ssl-dir=/usr/local/ssl/ --prefix=/usr/local/
-LDFLAGS="-L/usr/local/ssl/lib/" make -j4
-make install
-
-# test with: cd /tmp/ && git clone https://github.com/nodejs/node
-```
-
-Also ensure that /usr/local/bin is included in the `JENKINS_PATH` set in /etc/init.d/jenkins
-
-[`ansible.intro_windows`]: http://docs.ansible.com/ansible/intro_windows.html
-[newer Ansible configuration]: https://github.com/nodejs/build/tree/master/ansible
-[stand-alone]: https://github.com/nodejs/build/tree/master/setup/windows
-
 ## AIX 7.2
 
 To set up, basically:
@@ -308,3 +247,8 @@ Notes:
 	$ ln -s ../bin/ccache gcov
 	$ cd cd /opt/ccache-3.7.4
 	$ tar -cf /opt/ccache-3.7.4.aix7.2.ppc.tar.gz *
+
+
+[`ansible.intro_windows`]: http://docs.ansible.com/ansible/intro_windows.html
+[newer Ansible configuration]: https://github.com/nodejs/build/tree/master/ansible
+[stand-alone]: https://github.com/nodejs/build/tree/master/setup/windows
