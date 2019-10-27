@@ -70,15 +70,33 @@ packages: {
     'ccache,git,gmake,sudo,python3,py36-pip'
   ],
 
+  # Yosemite
   'macos10.10': [
     'python@2,python,ccache'
   ],
 
+  # El Capitan
   'macos10.11': [
     'python@2,python,ccache'
   ],
 
+  # Sierra
   'macos10.12': [
+    'python@2,python,ccache'
+  ],
+
+  # High Sierra
+  'macos10.13': [
+    'python@2,python,ccache'
+  ],
+
+  # Mojave
+  'macos10.14': [
+    'python@2,python,ccache'
+  ],
+
+  # Catalina
+  'macos10.15': [
     'python@2,python,ccache'
   ],
 
