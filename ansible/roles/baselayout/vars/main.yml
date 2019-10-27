@@ -114,7 +114,7 @@ packages: {
   ],
 
   ubuntu: [
-    'ccache,g++,gcc,g++-6,gcc-6,git,libfontconfig1,sudo',
+    'ccache,g++,gcc,g++-6,gcc-6,git,libfontconfig1,sudo,python3-pip',
   ],
 
   ubuntu1404: [
