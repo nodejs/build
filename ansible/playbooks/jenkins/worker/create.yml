@@ -68,42 +68,13 @@
   roles:
     - linux-perf
 
-#
-# Set up linter servers
-#
-
-- hosts:
-   - test-joyent-freebsd10-x64-2
-   - test-rackspace-freebsd10-x64-1
-
-  tasks:
-    - name: install lint-related packages
-      package:
-        name: "{{ package }}"
-        state: present
-      loop_control:
-        loop_var: package
-      with_items: [ "node", "npm" ]
-
-    - name: install core-validate-commit
-      npm:
-        name: "core-validate-commit"
-        global: yes
-        state: present
-        production: yes
-
-    - name: periodically update core-validate-commit
-      cron:
-        special_time: daily
-      # ksh does different stdout/err routing
-        job: "npm update -g core-validate-commit > & /dev/null"
-
 # Ensure node is not installed anywhere but the linter servers
 - hosts:
   - test
   - release
-  - "!test-joyent-freebsd10-x64-2"
-  - "!test-rackspace-freebsd10-x64-1"
+  - "!test-packetnet-ubuntu1604-x64-1"
+  - "!test-packetnet-ubuntu1604-x64-2"
+  - "!test-softlayer-ubuntu1604-x64-1"
   tasks:
     - name: remove node and npm packages
       when: not os|startswith("win") and not os|startswith("zos")

@@ -106,3 +106,31 @@
   command: "git config gc.auto 0"
   args:
     chdir: "~binary_tmp/binary_tmp.git/"
+
+- name: Add nodesource signing key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
+
+- name: Add nodesource repo
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_12.x xenial main
+    state: present
+
+- name: Install node
+  package:
+    name: nodejs
+    state: present
+
+- name: Upgrade pip2
+  pip:
+    name: pip
+    executable: pip2
+    state: latest
+
+- name: Upgrade pip3
+  pip:
+    name: pip
+    executable: pip3
+    state: latest
+
