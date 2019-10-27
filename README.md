@@ -20,8 +20,9 @@ delivery of binaries and source code to end-users.
 This repository contains information used to set up and maintain the various
 pieces of Node.js Foundation infrastructure managed by the Build Working Group.
 It is intended to be open and transparent, if you see any relevant information
-missing please open an issue. If you are interested in joining check out
-[this][Joining the Build WG].
+missing please open an issue. If you are interested in joining, please read
+[access.md][] to understand the process and reasoning we use for granting access
+to the resources we manage.
 
 ## Build WG Members
 
@@ -79,7 +80,8 @@ missing please open an issue. If you are interested in joining check out
 
 <!-- ncu-team-sync end -->
 
-For more information about accesses and team roles see [access.md][].
+If you are interested in joining the Build WG, or for more information about
+accesses and team roles see [access.md][].
 
 ## Infrastructure Providers
 
@@ -247,7 +249,6 @@ are required. After that the configuration will be removed.
 [22]:   https://www.intel.com/
 [23]:   https://www.macstadium.com/
 [24]:   https://www.packet.net/
-[Joining the Build WG]: doc/access.md#joining-the-build-working-group
 [access.md]: ./doc/access.md
 [node]: https://nodejs.org/
 [ns]:   https://nodesource.com/
