@@ -5,11 +5,11 @@
 #
 
 - name: install add-apt-repostory
-  when: os = "ubuntu1404" and arch != "ppc64"
+  when: os == "ubuntu1404" and arch != "ppc64"
   package: name=software-properties-common state=present
 
 - name: add webupd8 oracle java repository
-  when: os = "ubuntu1404" and arch != "ppc64"
+  when: os == "ubuntu1404" and arch != "ppc64"
   apt_repository: repo='ppa:webupd8team/java'
 
 - name: add webupd8team oracle java repository
@@ -24,7 +24,7 @@
   shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
 
 - name: accept webupd8 oracle java 8 license
-  when: os = "ubuntu1404" and arch != "ppc64" or os == "debian8"
+  when: os == "ubuntu1404" and arch != "ppc64" or os == "debian8"
   debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
 
 - name: update packages
@@ -102,7 +102,7 @@
   when: os|startswith("aix") and java_exists.stat.exists == False
 
 - name: install webupd8 oracle java 8 extras
-  when: java.rc > 0 and os = "ubuntu1404" and arch != "ppc64"
+  when: java.rc > 0 and os == "ubuntu1404" and arch != "ppc64"
   package: name="{{item}}" state=present
   with_items:
     - ca-certificates
