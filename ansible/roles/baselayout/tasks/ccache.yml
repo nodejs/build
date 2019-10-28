@@ -23,7 +23,14 @@
   register: new_archive
 
 - name: "ccache : prepare for compilation"
+  when: not os|startswith("smartos")
   shell: ./configure -q
+  args:
+    chdir: "/tmp/ccache-{{ ccache_latest }}"
+
+- name: "ccache : prepare for compilation - smartos"
+  when: os|startswith("smartos")
+  shell: bash ./configure CPPFLAGS=-std=c99
   args:
     chdir: "/tmp/ccache-{{ ccache_latest }}"
 
