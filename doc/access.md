@@ -35,7 +35,7 @@ README.
 
 When considering new members, the Build WG is primarily concerned with
 **competence** and **trust**. Membership grants access to a significant amount
-of, resources. While we partition our resources into trust levels, the basic
+of resources. While we partition our resources into trust levels, the basic
 level that all members have access to comprises the largest number of servers
 maintained by the Build WG. Members should have a basic level of competence in
 one or more technical areas covered by the Build WG such that the addition of
@@ -55,8 +55,8 @@ should be aware of the bounds of their expertise and act accordingly.
   needs to establish trust. Individuals with no prior relationship to the
   Node.js project or one of its member companies are likely to be asked to
   contribute as a non-member where possible for a period of time to establish
-  the basics of a trust relationship. The most two most straigtforward paths to
-  trust are:
+  the basics of a trust relationship. The most two most straightforward paths
+  to trust are:
   1. An established relationship with the Node.js project and its associated
      working groups and activities. The longer the better.
   2. A contractual relationship (such as employment) with a member company of
@@ -81,14 +81,14 @@ members list on the README (e.g. [#524][]). New members can open such a pull
 request themselves, but it would be advisable to check with an existing member
 before doing so. Alternatively, an existing member may "sponsor" a new member by
 opening a pull request. Existing, active members will vote on a pull request and
-where no objetions are present after a reasonable period of time, membership
+where no objections are present after a reasonable period of time, membership
 will be granted.
 
 Depending on the level of trust and competence assessed by existing Build WG
 members, new members may not be given immediate access to protected resources.
 This is at the discretion of the Build WG. We ask that you not take offence if
 we appear slow to grant access to resources you ask for as we take our
-responsibilities regarding security and the stability of our infrastrucutre very
+responsibilities regarding security and the stability of our infrastructure very
 seriously.
 
 Onboarding of new members is provided once they join, see the
