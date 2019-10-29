@@ -38,7 +38,7 @@ hosts:
         smartos15-x64-1: {ip: 72.2.113.195}
         smartos17-x64-1: {ip: 72.2.114.225}
         smartos18-x64-1: {ip: 72.2.119.185}
-        ubuntu1604_arm_cross-x64-1: {ip: 72.2.114.100, user: ubuntu}
+        ubuntu1604_arm_cross-x64-1: {ip: 165.225.151.28, user: ubuntu}
 
     - requireio:
         rvagg-debian9-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi}
@@ -74,7 +74,7 @@ hosts:
   - test:
 
     - azure:
-        msft-ubuntu1404-x64-1: {ip: node-msft-cross-compiler-1.cloudapp.net}
+        msft-ubuntu1604_arm_cross-x64-1: {ip: nodejs.eastus2.cloudapp.azure.com, user: ubuntu}
 
     - digitalocean:
         debian8-x64-1: {ip: 159.203.103.52}
@@ -104,8 +104,8 @@ hosts:
         smartos17-x64-2: {ip: 72.2.115.11}
         smartos18-x64-1: {ip: 72.2.115.192}
         smartos18-x64-2: {ip: 72.2.119.47}
+        ubuntu1604_arm_cross-x64-1: {ip: 165.225.149.35, user: ubuntu}
         ubuntu1804_docker-x64-1: {ip: 165.225.151.201, user: ubuntu}
-        ubuntu1604_arm_cross-x64-1: {ip: 165.225.136.6, user: ubuntu}
         ubuntu1804-x64-1: {ip: 165.225.149.88, user: ubuntu}
 
     - marist:

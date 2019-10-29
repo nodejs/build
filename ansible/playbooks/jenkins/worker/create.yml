@@ -18,6 +18,8 @@
     - { role: 'benchmarking',
         when: is_benchmark is defined and is_benchmark|bool == True }
     - jenkins-worker
+    - { role: 'cross-compiler',
+        when: "'arm_cross' in inventory_hostname" }
 
   pre_tasks:
 # Requires `secret: XXX` to be in the ansible/host_vars/HOST
@@ -46,18 +48,6 @@
 
   roles:
     - jenkins-workspace
-
-#
-# Set up ARM cross compiler servers
-#
-
-- hosts:
-    - test-azure_msft-ubuntu1404-x64-1
-    - test-joyent-ubuntu1604_arm_cross-x64-1
-    - release-joyent-ubuntu1604_arm_cross-x64-1
-
-  roles:
-    - cross-compiler
 
 #
 # Install Linux perf on Ubuntu 16.04 servers
