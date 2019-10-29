@@ -6,7 +6,28 @@
 osx_vers=$(sw_vers -productVersion | awk -F "." '{print $2}')
 cmd_line_tools_temp_file="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
 
-# Installing the latest Xcode command line tools on 10.9.x or higher
+# Installing xcode for 10.14+
+
+if [[ "$osx_vers" -ge 14 ]]; then
+wget -P /tmp/ foo.bar/Xcode10.xip #Placeholder URL
+xip --expand /tmp/Xcode10.xip
+mv /tmp/Xcode.app /Applications/Xcode10.app
+fi
+
+# Installing xcodes for 10.13
+
+if [[ "$osx_vers" -ge 13 ]]; then
+wget -P /tmp/ foo.bar/Xcode10.xip #Placeholder URL
+xip --expand /tmp/Xcode10.xip
+mv /tmp/Xcode.app /Applications/Xcode10.app
+# Install second xcode
+wget -P /tmp/ foo.bar/Xcode8.xip #Placeholder URL
+xip --expand /tmp/Xcode8.xip
+mv /tmp/Xcode.app /Applications/Xcode8.app
+fi
+
+
+# Installing the latest Xcode command line tools on 10.9.x - 10.12.x
 
 if [[ "$osx_vers" -ge 9 ]]; then
 touch "$cmd_line_tools_temp_file";

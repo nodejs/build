@@ -11,6 +11,9 @@ and change:
 to
 `%admin          ALL = (ALL) NOPASSWD:ALL`
 
+also add this line to allow the jenkins user to change xcode version
+`iojs ALL=(ALL) NOPASSWD: /usr/bin/xcode-select`
+
 2. Allow ssh access
 
 ```bash
