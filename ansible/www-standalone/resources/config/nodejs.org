@@ -199,8 +199,8 @@ server {
 }
 
 server {
-    listen *:443 default_server ssl http2;
-    listen [::]:443 default_server ipv6only=on ssl http2;
+    listen *:443 default_server ssl http2 backlog=4096;
+    listen [::]:443 default_server ipv6only=on ssl http2 backlog=4096;
 
     server_name nodejs.org;
 
@@ -256,6 +256,10 @@ server {
     }
 
     location /download {
+        sendfile on;
+        sendfile_max_chunk 1m;
+        tcp_nopush on;
+
         alias /home/dist/nodejs;
         autoindex on;
         default_type text/plain;
@@ -267,6 +271,10 @@ server {
     }
 
     location /dist {
+        sendfile on;
+        sendfile_max_chunk 1m;
+        tcp_nopush on;
+
         alias /home/dist/nodejs/release/;
         autoindex on;
         default_type text/plain;

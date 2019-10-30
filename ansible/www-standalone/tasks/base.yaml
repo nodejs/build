@@ -30,6 +30,7 @@
     - { regexp: "net.core.rmem_max", line: "net.core.rmem_max = 12582912" }
     - { regexp: "net.ipv4.tcp_rmem", line: "net.ipv4.tcp_rmem = 10240 87380 12582912" }
     - { regexp: "net.ipv4.tcp_wmem", line: "net.ipv4.tcp_wmem = 10240 87380 12582912" }
+    - { regexp: "net.core.somaxconn", line: "net.core.somaxconn = 4096" }
   tags: base
 
 - name: Base | Tune user limits
