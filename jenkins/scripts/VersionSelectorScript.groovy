@@ -1,8 +1,15 @@
+// https://wiki.jenkins.io/display/JENKINS/matrix+groovy+execution+strategy+plugin
+// https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
+
 // Helper closures to make our buildExclusions DSL terse and readable
-def gte = { v -> { nodeVersion -> nodeVersion >= v} }
 def gt = { v -> { nodeVersion -> nodeVersion > v} }
-def lt = { v -> { nodeVersion -> nodeVersion < v} }
+def lt = { v -> { nodeVersion -> nodeVersion < v } }
+def gte = { v -> { nodeVersion -> nodeVersion >= v } }
+def ltGte = { vLt, vGte -> { nodeVersion -> lt(vLt)(nodeVersion) || gte(vGte)(nodeVersion) } }
+def allVer = { nodeVersion -> true }
+def noVer = { nodeVersion -> false }
 def releaseType = { buildType -> buildType == 'release' }
+def testType = { buildType -> buildType == 'test' }
 def anyType = { buildType -> true }
 
 def buildExclusions = [
@@ -47,11 +54,32 @@ def buildExclusions = [
   [ /^cross-compiler-armv[67]-gcc-6/, anyType,     lt(12)  ],
 
   // Windows -----------------------------------------------
-  [ /vs2013/,                         anyType,     gte(6)  ],
-  [ /vs2015/,                         anyType,     lt(6)   ],
-  [ /vs2015/,                         anyType,     gte(10) ],
-  [ /vs2017/,                         anyType,     lt(10)  ],
-  [ /vs2019/,                         anyType,     lt(10)  ],
+  // https://github.com/nodejs/build/blob/master/doc/windows-visualstudio-supported-versions.md
+  // Release Builders - should only match one VS version per Node.js version
+  [ /vs2013/,                         releaseType, gte(6)        ],
+  [ /vs2015/,                         releaseType, ltGte(6, 10)  ],
+  [ /vs2017/,                         releaseType, ltGte(10, 14) ],
+  [ /vs2019/,                         releaseType, lt(14)        ],
+  // VS versions supported to compile Node.js - also matches labels used by test runners
+  [ /vs2013(-\w+)?$/,                 testType,    gte(6)        ],
+  [ /vs2015(-\w+)?$/,                 testType,    gte(10)       ],
+  [ /vcbt2015(-\w+)?$/,               testType,    gte(10)       ],
+  [ /vs2017(-\w+)?$/,                 testType,    lt(8)         ],
+  [ /vs2019(-\w+)?$/,                 testType,    lt(13)        ],
+  [ /vs2015-x86$/,                    testType,    gte(10)       ], // compile x86 only once
+  [ /vs2017-x86$/,                    testType,    ltGte(10, 14) ],
+  [ /vs2019-x86$/,                    testType,    lt(14)        ],
+  // VS versions supported to build add-ons
+  [ /vs2013-COMPILED_BY/,             testType,    gte(9)        ],
+  [ /vs2015-COMPILED_BY/,             testType,    noVer         ],
+  [ /vcbt2015-COMPILED_BY/,           testType,    noVer         ],
+  [ /vs2017-COMPILED_BY/,             testType,    lt(8)         ],
+  [ /vs2019-COMPILED_BY/,             testType,    lt(12)        ],
+  // Exclude some redundant configurations
+  // https://github.com/nodejs/build/blob/master/doc/node-test-commit-matrix.md
+  [ /win2008r2.*COMPILED_BY-vs2017/,  testType,    lt(10)        ], // vs2015 runs on win2008 for <10
+  [ /win10.*COMPILED_BY-vs2017/,      testType,    lt(10)        ], // vcbt2015 runs on win10 for <10
+  [ /win10.*COMPILED_BY-vs2017/,      testType,    gte(13)       ], // vs2019 runs on win10 for >=13
 
   // SmartOS -----------------------------------------------
   [ /^smartos15/,                     anyType,     lt(8)   ],
