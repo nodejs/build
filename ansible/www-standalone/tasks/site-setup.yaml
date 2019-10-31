@@ -117,3 +117,12 @@
     - '*  *    * * *   root    /home/nodejs/cdn-purge.sh'
     - '* */4   * * *   nodejs  /home/nodejs/sync-benchmarking.sh'
   tags: setup
+
+- name: Site Setup | Add dist-perms script in cron.daily
+  copy:
+    src: ./resources/scripts/dist-perms
+    dest: /etc/cron.daily/dist-perms
+    mode: 0755
+    owner: root
+    group: root
+  tags: setup
