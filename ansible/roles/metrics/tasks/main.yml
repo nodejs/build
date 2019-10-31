@@ -1,0 +1,109 @@
+---
+
+- name: Bootstrap | Add nodesource signing key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
+
+- name: Bootstrap | Add nodesource repo
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_12.x bionic main
+    state: present
+
+- name: GCP | Install GCP APT key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    keyring: /usr/share/keyrings/cloud.google.gpg
+
+- name: GCP | Install GCP APT repository
+  apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main"
+    state: present
+
+- name: Bootstrap | APT Update and upgrade
+  apt:
+    update_cache: yes
+    upgrade: full
+
+- name: Bootstrap | Install packages
+  package:
+    name: "{{ package }}"
+    state: present
+  loop_control:
+    loop_var: package
+  with_items: "{{ packages }}"
+
+- name: Bootstrap | Enable time syncing
+  service:
+    name: systemd-timesyncd
+    state: started
+    enabled: yes
+
+- name: Boostrap | Add nodejs user
+  user:
+    name: "nodejs"
+    shell: /bin/bash
+
+- name: Init | Create required directories
+  file:
+    path: "/home/nodejs/{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "nodejs"
+  with_items:
+    - logs/nodejs.org/
+    - logs/backup-www.nodejs.org/
+    - logs/cloudflare/
+    - bin/process-cloudflare/
+
+- name: Cloudflare | Copy process-cloudflare
+  copy:
+    src: "{{ role_path }}/files/process-cloudflare/{{ item }}"
+    dest: /home/nodejs/bin/process-cloudflare/
+    owner: "nodejs"
+    group: "nodejs"
+    mode: 0755
+  with_items:
+    - process-cloudflare.js
+    - package.json
+
+- name: Cloudflare | Install process-cloudflare dependencies
+  command: npm install
+  args:
+    chdir: /home/nodejs/bin/process-cloudflare/
+
+- name: Periodic | Copy periodic service unit
+  copy:
+    src: "{{ role_path }}/files/sync-{{ item }}-periodic.service"
+    dest: /lib/systemd/system/sync-{{ item }}-periodic.service
+    owner: "nodejs"
+    group: "nodejs"
+  with_items:
+    - www
+    - backup-www
+    - cloudflare
+
+- name: Periodic | Copy periodic timer unit
+  copy:
+    src: "{{ role_path }}/files/sync-{{ item }}-periodic.timer"
+    dest: /lib/systemd/system/sync-{{ item }}-periodic.timer
+    owner: "nodejs"
+    group: "nodejs"
+  with_items:
+    - www
+    - backup-www
+    - cloudflare
+
+- name: Periodic | Register periodic runner
+  systemd:
+    name: sync-{{ item }}-periodic.timer
+    state: started
+    enabled: yes
+  with_items:
+    - www
+    - backup-www
+    - cloudflare
+
+- name: End
+  debug:
+    msg: SEE roles/metrics/README.md FOR ADDITIONAL STEPS TO AUTHORIZED `gsutil` TO FETCH CLOUDFLARE LOGS

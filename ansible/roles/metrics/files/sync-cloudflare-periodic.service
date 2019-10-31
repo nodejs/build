@@ -1,0 +1,10 @@
+[Unit]
+Description=Periodic log sync from cloudflare
+
+[Service]
+Type=oneshot
+User=nodejs
+ExecStart=/usr/bin/gsutil rsync -d -r gs://cloudflare-logs-nodejs/ /home/nodejs/logs/cloudflare/
+
+[Install]
+WantedBy=multi-user.target
