@@ -1,0 +1,10 @@
+[Unit]
+Description=Periodic log sync from nodejs.org
+
+[Service]
+Type=oneshot
+User=nodejs
+ExecStart=/usr/bin/rsync -e "ssh" -aqz root@direct.nodejs.org:/var/log/nginx/ /home/nodejs/logs/nodejs.org/
+
+[Install]
+WantedBy=multi-user.target

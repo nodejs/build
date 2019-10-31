@@ -1,0 +1,14 @@
+[Unit]
+Description=Schedule periodic backup-www sync
+RefuseManualStart=no
+RefuseManualStop=no
+
+[Timer]
+Persistent=true
+OnBootSec=300
+RandomizedDelaySec=300
+OnUnitActiveSec=3600
+Unit=sync-backup-www-periodic.service
+
+[Install]
+WantedBy=multi-user.target
