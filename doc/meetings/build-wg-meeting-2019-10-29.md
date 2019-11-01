@@ -9,7 +9,7 @@
 * Rod Vagg
 * Michael Dawson (@mhdawson)
 * Sam Roberts
-* Ashely Cripps
+* Ashley Cripps
 * Richard Lau
 * Myles Borrins
 
