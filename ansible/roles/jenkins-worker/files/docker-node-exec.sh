@@ -45,12 +45,38 @@ set -x
 image="${image_base}:${image_tag}"
 # failure to pull is acceptable if Docker Hub is offline or erroring and we have the image
 docker pull "${image}" || true
-docker run \
+#docker run \
+#  --init \
+#  -e TINI_SUBREAPER=true \
+#  -e TINI_KILL_PROCESS_GROUP=true \
+#  -e TINI_VERBOSITY=3 \
+#  --rm \
+#  -v $(pwd):/home/iojs/workspace \
+#  -v /home/iojs/.ccache/${image_tag}:/home/iojs/.ccache \
+#  -u iojs \
+#  "${image}" \
+#  /bin/sh -xec "cd /home/iojs/workspace && . ./$exec_script"
+
+container=$(docker run \
   --init \
   --rm \
+  -d \
   -v $(pwd):/home/iojs/workspace \
   -v /home/iojs/.ccache/${image_tag}:/home/iojs/.ccache \
   -u iojs \
   "${image}" \
-  /bin/bash -xec "cd /home/iojs/workspace && . ./$exec_script"
+  tail -f /dev/null)
 
+sleep 2
+
+echo -e "Container is running ($image_tag)...\n"
+docker exec $container /bin/sh -c "cat /etc/os-release || true"
+echo -e "\n"
+
+set +e
+docker exec -i $container /bin/bash -xec "cd /home/iojs/workspace && . ./$exec_script"
+exit_code=$?
+
+docker stop $container
+
+exit $exit_code
