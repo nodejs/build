@@ -12,7 +12,7 @@
   * [ci.nodejs.org](#cinodejsorg)
     * [Jenkins admins](#jenkins-admins)
   * [ci-release.nodejs.org](#ci-releasenodejsorg)
-  * [[GitHub Bot][]](#github-bot)
+  * [GitHub Bot](#github-bot)
 * [NPM Management](#npm-management)
 
 This document describes which groups have access to which assets managed by the
@@ -275,7 +275,7 @@ encrypted form in the [secrets repo][].
 [@nodejs/jenkins-release-admins]: https://github.com/orgs/nodejs/teams/jenkins-release-admins/members
 [@nodejs/post-mortem-admins]: https://github.com/orgs/nodejs/teams/post-mortem-admins/members
 [@nodejs/post-mortem]: https://github.com/orgs/nodejs/teams/post-mortem/members
-[@nodejs/release]: https://github.com/orgs/nodejs/teams/release/members
+[@nodejs/releasers]: https://github.com/orgs/nodejs/teams/releasers/members
 [SSH guide]: ./ssh.md
 [libuv]: https://github.com/libuv/libuv/
 [Build WG members]: /README.md#build-wg-members
