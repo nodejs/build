@@ -25,7 +25,7 @@ No items on agenda adhoc coverage of
 * Definition of role to capture what we need in terms of additional WG build members. Working
   session to refine:  https://docs.google.com/document/d/1a2iLuj1Ga2FkdKHdGPAJUld1ibRkd-shl7lQJTD1KIw/edit
   * Next steps:
-     * Michael will circulat to build WG members for additional comments
+     * Michael will circulate to build WG members for additional comments
      * Once we have additional feedback (1-2 days hopefully) Myles/Michael will get feedback from 
        managers at Google to validate it has info that larger companies will need
      * Michael to take back to the board
