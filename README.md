@@ -30,18 +30,18 @@ to the resources we manage.
 
 - [@bnoordhuis](https://github.com/bnoordhuis) - Ben Noordhuis
 - [@gdams](https://github.com/gdams) - George Adams
-- [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
 - [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
-- [@lucalanziani](https://github.com/lucalanziani) - Luca Lanziani
+- [@LucaLanziani](https://github.com/LucaLanziani) - Luca Lanziani
 - [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@mmarchini](https://github.com/mmarchini) - Matheus Marchini
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
+- [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
-- [@refack](https://github.com/refack) - Refael Ackermann
+- [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
@@ -52,18 +52,58 @@ to the resources we manage.
 
 ### Infra Admins
 
-- [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
+<!-- ncu-team-sync.team(nodejs/build-infra) -->
+
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 
+<!-- ncu-team-sync end -->
+
+### Jenkins Admins
+
+Admin access to https://ci.nodejs.org/.
+
+<!-- ncu-team-sync.team(nodejs/jenkins-admins) -->
+
+- [@gdams](https://github.com/gdams) - George Adams
+- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+- [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@maclover7](https://github.com/maclover7) - Jon Moss
+- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+- [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
+- [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
+- [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
+- [@richardlau](https://github.com/richardlau) - Richard Lau
+- [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@sam-github](https://github.com/sam-github) - Sam Roberts
+- [@Trott](https://github.com/Trott) - Rich Trott
+
+<!-- ncu-team-sync end -->
+
 ### Release Admins
 
-- [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
+
+### Release Jenkins Admins
+
+Admin access to https://ci-release.nodejs.org/.
+
+<!-- ncu-team-sync.team(nodejs/jenkins-release-admins) -->
+
+- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+- [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+- [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
+- [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
+- [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
+- [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@sam-github](https://github.com/sam-github) - Sam Roberts
+
+<!-- ncu-team-sync end -->
 
 ### GitHub Bot Admins
 
@@ -75,6 +115,7 @@ to the resources we manage.
 - [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mscdex](https://github.com/mscdex) - mscdex
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
+- [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@williamkapke](https://github.com/williamkapke) - William Kapke
 
@@ -82,6 +123,10 @@ to the resources we manage.
 
 If you are interested in joining the Build WG, or for more information about
 accesses and team roles see [access.md][].
+
+### Emeriti
+
+- [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
 
 ## Infrastructure Providers
 
