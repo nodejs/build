@@ -56,7 +56,7 @@ No items on agenda adhoc coverage of
         * Michael/Sam -> smartos machines
         * Rod -> linting, infra machines and a couple other stragglers.
 
-     * At this point still work to but looks manageable.
+     * At this point still work to do but looks manageable.
 
 
 ## Q&A, Other
