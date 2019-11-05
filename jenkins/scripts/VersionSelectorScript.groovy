@@ -52,9 +52,6 @@ def buildExclusions = [
   [ /^smartos17/,                     anyType,     gte(12) ],
   [ /^smartos18/,                     anyType,     lt(12)  ],
 
-  // PPC BE ------------------------------------------------
-  [ /^ppcbe-ubuntu/,                  anyType,     gte(8)  ],
-
   // s390x -------------------------------------------------
   [ /s390x/,                          anyType,     lt(6)   ],
 
