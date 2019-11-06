@@ -28,7 +28,7 @@ for row in logFileReader:
         country = georec.country.iso_code
       if georec.subdivisions.most_specific.iso_code:
         region = georec.subdivisions.most_specific.iso_code
-  except:
+  except Exception:
     pass
 
   row.insert(1, country.encode('utf-8'))
