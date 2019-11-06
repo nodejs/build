@@ -138,21 +138,29 @@ def get_secrets_path():
             return path
         else:
             print("WARNING: NODE_BUILD_SECRETS defined but not a directory", file=sys.stderr)
+            print("It must be the path to a local checkout of https://github.com/nodejs-private/secrets", file=sys.stderr)
             return None
 
     path = os.path.realpath('../../secrets/build/')
     if os.path.isdir(path):
         return path
 
+    print("Checked ../../secrets/build/: it is not a directory", file=sys.stderr)
+
     path = os.path.realpath('../../nodejs-private/secrets/build/')
     if os.path.isdir(path):
         return path
+
+    print("Checked ../../nodejs-private/secrets/build/: it is not a directory", file=sys.stderr)
 
     path = os.path.realpath('../../../nodejs-private/secrets/build/')
     if os.path.isdir(path):
         return path
 
+    print("Checked ../../../nodejs-private/secrets/build/: it is not a directory", file=sys.stderr)
+
     print("WARNING: could not find secrets, please define NODE_BUILD_SECRETS", file=sys.stderr)
+    print("It must be the path to a local checkout of https://github.com/nodejs-private/secrets", file=sys.stderr)
     return None
 
 
