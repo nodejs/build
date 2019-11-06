@@ -100,20 +100,12 @@ hosts:
     - joyent:
         freebsd10-x64-1: {ip: 72.2.115.15}
         freebsd10-x64-2: {ip: 72.2.114.23}
-        smartos15-x64-1: {ip: 165.225.137.117}
-        smartos15-x64-2: {ip: 165.225.139.77}
         smartos15-x64-3: {ip: 165.225.148.128}
         smartos15-x64-4: {ip: 165.225.149.91}
-        smartos16-x64-1: {ip: 72.2.115.252}
-        smartos16-x64-2: {ip: 72.2.113.74}
         smartos16-x64-3: {ip: 165.225.151.106}
         smartos16-x64-4: {ip: 165.225.149.158}
-        smartos17-x64-1: {ip: 72.2.113.127}
-        smartos17-x64-2: {ip: 72.2.115.11}
         smartos17-x64-3: {ip: 165.225.148.15}
         smartos17-x64-4: {ip: 165.225.148.16}
-        smartos18-x64-1: {ip: 72.2.115.192}
-        smartos18-x64-2: {ip: 72.2.119.47}
         smartos18-x64-3: {ip: 165.225.151.114}
         smartos18-x64-4: {ip: 165.225.149.13}
         ubuntu1804_docker-x64-1: {ip: 165.225.151.201, user: ubuntu}
