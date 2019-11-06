@@ -1,3 +1,10 @@
 #!/bin/sh
 
-find /home/dist/nodejs/ -mindepth 2 \( -type f -o -type d \) -user dist -mtime +7 -exec chown root.root '{}' \;
+find /home/dist/nodejs/ \
+  -mindepth 2 \
+  \( -type f -o -type d \) \
+  -regextype posix-extended \
+  ! -regex '/home/dist/nodejs/[a-z0-9-]*/index.(tab|json)' \
+  -user dist \
+  -mtime +7 \
+  -exec chown root.root '{}' \;
