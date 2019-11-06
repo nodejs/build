@@ -1,3 +1,3 @@
 #!/bin/sh
 
-find /home/dist/nodejs/ \( -type f -o -type d \) -user dist -mtime +7 -exec chown root.root '{}' \;
+find /home/dist/nodejs/ -mindepth 2 \( -type f -o -type d \) -user dist -mtime +7 -exec chown root.root '{}' \;
