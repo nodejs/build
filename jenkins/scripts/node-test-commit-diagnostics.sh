@@ -39,4 +39,11 @@ mv ${DIAGFILE} ${DIAGFILE}-OLD || true
 tail -c 20000000 ${DIAGFILE}-OLD > ${DIAGFILE} || true
 rm ${DIAGFILE}-OLD || true
 set -x
-pgrep node || true
+perl -MFile::Basename -e '
+  my @r = ();
+  for (qx[ps ax]) {
+    my @F = split;
+    push @r, $F[0] if $F[4] && basename($F[4]) eq "node"
+  }
+  print "@r\n" if @r
+' || true
