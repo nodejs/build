@@ -46,4 +46,4 @@ perl -MFile::Basename -e '
     push @r, $F[0] if $F[4] && basename($F[4]) eq "node"
   }
   print "@r\n" if @r
-' || true
+'
