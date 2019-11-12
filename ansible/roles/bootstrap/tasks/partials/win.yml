@@ -26,3 +26,23 @@
       name: AutoAdminLogon
       data: 1
       type: string
+
+# Comply with Azure security recommendations
+# After changing anything in this list check if the following still work:
+# - Windows Update
+# - PowerShell remoting (for Ansible connections)
+# - RDP from Windows
+# - RDP from Remmina
+- block:
+  - name: disable SSL 2.0
+    win_regedit:
+      path: 'HKLM:\System\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 2.0\Server'
+      name: Enabled
+      data: 0
+      type: dword
+  - name: disable SSL 3.0
+    win_regedit:
+      path: 'HKLM:\System\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 3.0\Server'
+      name: Enabled
+      data: 0
+      type: dword
