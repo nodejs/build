@@ -12,7 +12,7 @@
 
 - name: install Visual Studio Community 2015
   win_command: 'C:\TEMP\vs2015_community.exe /Silent /NoRestart
-                /InstallSelectableItems NativeLanguageSupport_Group
+                /InstallSelectableItems NativeLanguageSupport_VC
                 /Log C:\TEMP\vs2015_install_log.txt'
 
 - name: install WiX Toolset
