@@ -86,6 +86,7 @@ Admin access to https://ci.nodejs.org/.
 
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 
 ### Release Jenkins Admins
