@@ -42,48 +42,12 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - smartos16-64 (Node >= 8 < 12)
     - smartos17-64 (Node >= 10 < 12)
     - smartos18-64 (Node >= 12)
-  - **node-test-commit-windows-fanned**
+  - **node-test-commit-windows-fanned**  
+    [See below for detailed information](#windows-test-matrix). Sub-jobs are:
     - **node-compile-windows**
-      * Combination Filter (structured as a conjunction of implications):
-        - When `ENGINE!="ChakraCore"` exclude `*-arm`
-        - When Node >= 6 exclude `win-vs2013*`
-        - When Node >= 10 exclude `win-vs2015*` and `win-vcbt2015*`
-        - When Node < 8 exclude `win-vs2017*`
-        - When Node < 10 exclude `win-vs2017-x86`
-      - win-vcbt2015 (Node < 10)
-      - win-vs2015 (Node >= 6 < 10)
-      - win-vs2015-arm (Node-ChakraCore)
-      - win-vs2015-x86 (Node >= 6 < 10)
-      - win-vs2017 (Node >= 8)
-      - win-vs2017-arm (Node-ChakraCore)
-      - win-vs2017-x86 (Node >= 10)
-    - **node-test-binary-windows** (Node <= 10)
-      * Combination Filter (structured as a conjunction of implications):
-        - When Node < 10:
-          - On `win10` run:
-            - `COMPILED_BY=="vcbt2015"` always
-          - On `win2008r2-vs2013` run:
-            - `COMPILED_BY=="vs2013"` when Node < 6
-            - `COMPILED_BY=="vs2015"` when Node >= 6 < 9
-          - On `win2008r2-vs2017` run:
-            - `COMPILED_BY=="vs2015"` when Node >= 9
-          - On `win2012r2` run:
-            - `COMPILED_BY=="vs2015"` always
-            - `COMPILED_BY=="vs2015-x86"` always
-          - On `win2016` run:
-            - `COMPILED_BY=="vs2015"` when Node < 8
-            - `COMPILED_BY=="vs2017"` when Node >= 8
-        - When Node == 10:
-          - On `win10` run `COMPILED_BY=="vs2017"`
-          - On `win2008r2-vs2017` run `COMPILED_BY=="vs2017"`
-          - On `win2012r2` run `COMPILED_BY=="vs2017-x86"`
-          - On `win2016` run `COMPILED_BY=="vs2017"`
-    - **node-test-binary-windows-2** (Node >= 11)
-      * Combination Filter:
-        - On `win10` run `COMPILED_BY=="vs2017"`
-        - On `win2008r2-vs2017` run `COMPILED_BY=="vs2017"`
-        - On `win2012r2` run `COMPILED_BY=="vs2017-x86"`
-        - On `win2016` run `COMPILED_BY=="vs2017"`
+    - **node-test-commit-windows-debug**
+    - **node-test-binary-windows-js-suites**
+    - **node-test-binary-windows-native-suites**
   - **node-test-commit-linux-containered**
     - ubuntu1604_sharedlibs_debug_x64 
       1. `CONFIG_FLAGS="$CONFIG_FLAGS --debug" make build-ci -j $JOBS`
@@ -137,3 +101,92 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     1. `make -j1 bench-addons-build`
     1. `make -j 4 build-ci`
     1. `python tools/test.py -j 4 -p tap --logfile test.tap --mode=release --flaky-tests=dontcare --worker`
+
+## Windows Test Matrix
+
+The **node-test-commit-windows-fanned** is divided in 3 stages:
+  - **git-rebase** loads a commit from GitHub into a repository dedicated to temporary data, optionally rebasing.
+  - **node-compile-windows** compiles Node.js, loading from and storing the result back in the temporaries repository. Meanwhile, **node-compile-windows-debug** compiles Node.js in debug mode and compiles a native add-on to ensure minimum functionality, discarding the resulting binaries.
+  - **node-test-binary-windows-js-suites** and **node-test-binary-windows-native-suites** fully test the binaries from the previous stage (only from the Release builds).
+
+Running the resulting binaries from every supported Visual Studio version in every supported Windows version would place an unreasonable demand on the infrastructure we have available, so **only a subset of combinations is run**.
+- Debug builds run only to ensure the debug build is not broken, the resulting binaries are not fully tested.
+- x86 builds only run in one Visual Studio version, preferably the one used to build the official releases.
+
+### Combinations being tested
+
+- Run JS tests on all supported Windows Versions.
+- Run add-ons tests on all supported Visual Studio versions (preferably spanning all supported Windows Versions).
+- If necessary, run more combinations for the Visual Studio version that is used to build the official releases.
+
+The following combinations are used:
+
+#### Node.js version 8
+
+| Binaries produced by: | Run in Windows version: | Test add-ons with: |
+|-----------------------|-------------------------|--------------------|
+| VCBT 2015             | 10                      | VCBT 2015          |
+| VS 2015               | 2008R2                  | VS 2017            |
+|                       | 2012R2                  | VS 2013, VS 2015   |
+| VS 2015 (x86)         | 2012R2                  | VS 2015            |
+| VS 2017               | 2016                    | VS 2017            |
+
+#### Node.js versions 9 to 12
+
+| Binaries produced by: | Run in Windows version: | Test add-ons with: |
+|-----------------------|-------------------------|--------------------|
+| VS 2017               | 10                      | VCBT 2015          |
+|                       | 2008R2 (until EOL)      | VS 2017            |
+|                       | 2016                    | VS 2017            |
+| VS 2017 (x86)         | 2012R2                  | VS 2015            |
+
+#### Node.js versions 13 and newer
+
+| Binaries produced by: | Run in Windows version: | Test add-ons with: |
+|-----------------------|-------------------------|--------------------|
+| VS 2017               | 2016                    | VS 2017            |
+|                       | 2008R2 (until EOL)      | VS 2017            |
+| VS 2019               | 10                      | VCBT 2015, VS 2019 |
+| VS 2019 (x86)         | 2012R2                  | VS 2015, VS 2019   |
+
+### Machines available to CI
+
+| # | Windows | Visual Studio | Use for   | Provider  | Notes |
+|---|---------|---------------|-----------|-----------|-------|
+| 4 | 10      | VCBT 2015     | All       | Azure     |       |
+| 4 | 10      | VS 2019       | Test Only | Azure     |       |
+| 6 | 2016    | VS 2017       | Test Only | Azure     |       |
+| 4 | 2008R2  | VS 2017       | Test Only | Rackspace | Remove at Windows 2008 EOL |
+| 2 | 2012R2  | VS 2013       | All       | Rackspace | Remove at Node.js 8 EOL |
+| 2 | 2012R2  | VS 2015       | All       | Rackspace |       |
+| 4 | 2012R2  | VS 2017       | All       | Rackspace |       |
+| 6 | 2012R2  | VS 2019       | All       | Rackspace |       |
+
+- Machines for "Test Only" don't build Node.js, but are still used to build add-ons so Visual Studio is necessary.
+- Machines in Rackspace have more capacity, so avoid building on Azure, at least the current Node.js version.
+- Optimize resources for the current Node.js master.
+- Ensure Node.js LTS versions have full coverage, even if with possible bottlenecks in certain versions.
+
+### Jenkins Labels
+
+Machines for "Test Only" should have the following labels:
+
+| Template | Examples | Notes |
+|---|---|---|
+| `winVER` | `win10` | Used for other CI jobs that don't require VS |
+| `winVER-vsVER` | `win10-vcbt2015`, `win2012r2-vs2019` | Used for other CI jobs |
+| 1 | `win10-COMPILED_BY-vcbt2015` | Used for running JS tests |
+| 2 | `win10-vs2015-COMPILED_BY-vs2017` | Used for running add-ons tests |
+
+All combinations of labels possible from the tables above (Combinations being tested) need to be assigned to the machines:
+1. `Run in Windows version`-COMPILED_BY-`Binaries produced by`
+2. `Run in Windows version`-`Test add-ons with`-COMPILED_BY-`Binaries produced by`
+
+- When building add-ons with a x86 Node.js version, the addons will automatically be compiled for x86 so a specific label (`winV-vsV-x86-COMPILED_BY-vsV`) is not needed.
+
+Machines for "All" ("Test Only" + Build) should also have the labels:
+
+| Template | Examples | Notes |
+|---|---|---|
+| `win-vsVER` | `win-vs2019` |  |
+| `win-vsVER-x86` | `win-vs2019-x86` | Not necessary for `vcbt2015` |
