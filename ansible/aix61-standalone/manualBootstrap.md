@@ -428,3 +428,13 @@ inutoc
 installp -aXgd ./ -e /tmp/install.log all
 ```
 4. Find compilers in `/opt/IBM/xl[cC]/16.1.0/bin/`
+
+
+## Edit SSH config
+
+Add the following two lines to `/etc/ssh/sshd_config`:
+
+```
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+```
