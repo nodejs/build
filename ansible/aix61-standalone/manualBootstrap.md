@@ -9,19 +9,115 @@ modules will be installed.
 ```bash
 chfs -a size=+1300000 /opt
 chfs -a size=+250000 /
-chfs -a size=917504 /tmp
+chfs -a size=+917504 /tmp
 ```
 
-AIX72: unneeded: -1 and -2 and aix7-2 have different sizes, and 7.2 is big
-enough already:
+For the systems without ramdisks `/home` needs to be set to the same size as `/home/iojs/build` would be on a ramdisk machine
 
-               6.1-1          6.1-2     7.2-2
-	/opt: 3670016 x 512, 2228224  31457280
-	/:    3538944 x 512, 3407872   4194304
+```bash
+chfs -a size=23000000 /home
+```
+
+## Edit SSH config
+
+Add the following two lines to `/etc/ssh/sshd_config`:
+
+```
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+```
+
+## Remove failedlogin file
+
+If /etc/security/failedlogin is growing without bounds on AIX6.1, remove
+it with a cron job, use `crontab -e`, and add one line:
+```sh
+0 12 * * * /usr/bin/rm -f /etc/security/failedlogin
+```
+
+# AIX 7.2 Install
+
+Most packages should be installed via ansible.
+
+If there are any missing they should be installed via yum
+
+What you do need to install manually is **gcc** and **ccache**
+
+## gcc 6.3.x on AIX 7.2
+
+```bash
+mkdir -p /opt/gcc-6.3 && cd /opt/gcc-6.3
+curl -L https://ci.nodejs.org/downloads/aix/gcc-6.3-aix7.2.ppc.tar.gz | /opt/freeware/bin/tar -xzf -
+```
+
+## ccache 3.7.4 on AIX 7.2
+
+```bash
+mkdir -p /opt/ccache-3.7.4 && cd /opt/ccache-3.7.4
+curl -L https://ci.nodejs.org/downloads/aix/ccache-3.7.4.aix7.2.ppc.tar.gz | /opt/freeware/bin/tar -xzf -
+```
+## Enable the AHA fs
+
+For AIX 7.2 and 6.1, needed for the file watcher unit tests.
+
+Add the following to /etc/filesystems:
+
+```
+/aha:
+        dev             = /aha
+        vfs             = ahafs
+        mount           = true
+        vol             = /aha
+```
+
+and then:
+
+```bash
+mkdir /aha
+mount /aha
+```
+
+## Install XL compilers
+
+1. Download 16.1.0 packages from: https://testcase.boulder.ibm.com (username:
+   xlcomp4, password: ask @mhdawson)
+2. scp them to target:/opt/ibm-xlc
+3. on target:
+```bash
+cd /opt/ibm-xlc
+uncompress 16.1.0.3-IBM-xlCcmp-AIX-FP003.tar.Z
+uncompress IBM_XL_C_CPP_V16.1.0.0_AIX.tar.Z
+installp -aXYgd ./usr/sys/inst.images -e /tmp/install.log all
+inutoc
+installp -aXgd ./ -e /tmp/install.log all
+```
+4. Find compilers in `/opt/IBM/xl[cC]/16.1.0/bin/`
+
+
+
+#### tap2junit
+
+Should be installed via ansible but if needed to be done manually use the following:
+
+AIX72:
+```
+  python  -m pip install --upgrade pip pipenv git+https://github.com/nodejs/tap2junit
+  python3 -m pip install --upgrade pip pipenv git+https://github.com/nodejs/tap2junit
+  ln -s /opt/freeware/bin/tap2junit /usr/bin/tap2junit
+```
+
+Note: probably only the py3 was needed
+
+```bash
+python -m pip install --upgrade pip pipenv git+https://github.com/nodejs/tap2junit.git
+ln -s /opt/freeware/bin/tap2junit /usr/bin/tap2junit
+```
+
+
+# AIX 6.1 Install
 
 ## Install required packages
 
-AIX72: unneeded, package were installed by yum
 
 #### curl, unzip
 
@@ -57,8 +153,6 @@ rm -rf gcc
 
 #### git-tools
 
-AIX72: unneeded, installed with yum
-
 ```bash
 mkdir git-tools
 cd git-tools
@@ -73,8 +167,6 @@ rm -rf git-tools
 
 #### git
 
-AIX72: unneeded, installed with yum
-
 ```bash
 LIBPATH=/usr/lib curl --insecure -O https://ci.nodejs.org/downloads/aix/git-2.8.1-1.aix6.1.ppc.rpm
 rpm -ivh git-2.8.1-1.aix6.1.ppc.rpm --force
@@ -82,7 +174,6 @@ rpm -ivh git-2.8.1-1.aix6.1.ppc.rpm --force
 
 #### openssl, openssh
 
-AIX72: unneeded, installed with yum
 
 Download and scp to the machine:
 https://www-01.ibm.com/marketing/iwm/iwm/web/reg/pick.do?source=aixbp&lang=en_US
@@ -109,7 +200,6 @@ installp -Y -qaXgd . openssl openssh
 
 #### gettext, java, make
 
-AIX72: unneeded, installed by ansible in /home/iojs/
 
 ```bash
 LIBPATH=/usr/lib curl --insecure -O https://public.dhe.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/gettext/gettext-0.19.7-1.aix6.1.ppc.rpm
@@ -126,7 +216,6 @@ rpm -i make-3.82-1.aix5.3.ppc.rpm
 
 #### libtool
 
-AIX72: unneeded, should not be installed
 
 Download and scp to the machine:
 http://www.bullfreeware.com/affichage.php?id=1458#
@@ -149,32 +238,15 @@ rm -rf libtool
 
 #### pip
 
-AIX72: unneeded, installed with yum
-
 ```bash
 LIBPATH=/usr/lib curl https://bootstrap.pypa.io/get-pip.py | python
 ln -s /opt/freeware/bin/pip /usr/bin/pip
 ```
 
-#### tap2junit
 
-AIX72:
-```
-  python  -m pip install --upgrade pip pipenv git+https://github.com/nodejs/tap2junit
-  python3 -m pip install --upgrade pip pipenv git+https://github.com/nodejs/tap2junit
-  ln -s /opt/freeware/bin/tap2junit /usr/bin/tap2junit
-```
-
-Note: probably only the py3 was needed
-
-```bash
-python -m pip install --upgrade pip pipenv git+https://github.com/nodejs/tap2junit.git
-ln -s /opt/freeware/bin/tap2junit /usr/bin/tap2junit
-```
 
 ## Install ccache
 
-AIX72: TODO describe how to install with curl
 
   The right way to do this is not with CC and CXX that have ccache in them,
   but by making sure that ccache is first in the path, and that following it
@@ -206,7 +278,6 @@ rm -rf tmp
 
 ## Add ::1 to /etc/hosts
 
-AIX72: done with ansible, or already done
 
 ```bash
 echo "::1 localhost" >>/etc/hosts
@@ -242,6 +313,66 @@ pages earlier and not wait for the sync demon:
 ```bash
 ioo -o j2_maxRandomWrite=32
 ```
+
+## gcc 6.3.x on AIX 6.1
+
+```bash
+su - iojs
+cd /home/iojs
+
+LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/V2-gcc-6.3.0-1.tar.gz
+gunzip -d V2-gcc-6.3.0-1.tar.gz
+tar -xf V2-gcc-6.3.0-1.tar
+
+LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/gmake-dep.tar.gz
+gunzip -d gmake-dep.tar.gz
+tar -xf gmake-dep.tar
+```
+
+
+## Install python3
+
+AIX72: uneeded, installed by yum
+
+```bash
+mkdir /tmp/i-files
+cd /tmp/i-files
+LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/aixtools.python3.3.7.3.0.I
+installp -d /tmp/i-files -L
+installp -d /tmp/i-files -a aixtools.python3
+```
+
+Repeat the __pip__ and __tap2junit__ steps above but substitute __python3__ in the commands in place of
+__python__.  This is required because Python 2 and Python 3 have separate site-packages so that modules
+installed on one are not automatically available on the other.
+
+The archive was originally from http://www.aixtools.net/index.php/python3
+
+Installation is into `/opt/bin`.
+
+If uninstallation is needed for some reason, the command is:
+```
+installp -u aixtools.python3
+```
+
+## Install XL compilers
+
+1. Download 16.1.0 packages from: https://testcase.boulder.ibm.com (username:
+   xlcomp4, password: ask @mhdawson)
+2. scp them to target:/opt/ibm-xlc
+3. on target:
+```bash
+cd /opt/ibm-xlc
+uncompress 16.1.0.3-IBM-xlCcmp-AIX-FP003.tar.Z
+uncompress IBM_XL_C_CPP_V16.1.0.0_AIX.tar.Z
+installp -aXYgd ./usr/sys/inst.images -e /tmp/install.log all
+inutoc
+installp -aXgd ./ -e /tmp/install.log all
+```
+4. Find compilers in `/opt/IBM/xl[cC]/16.1.0/bin/`
+
+
+# Final setup steps
 
 ## Setup ramdisks
 
@@ -356,93 +487,4 @@ time    dgram   udp     wait    root    internal
 caa_cfg stream  tcp6    nowait  root    /usr/sbin/clusterconf clusterconf >>/var/adm/ras/clusterconf.log 2>&1
 wsmserver       stream  tcp     nowait  root    /usr/websm/bin/wsmserver wsmserver -start
 xmquery dgram   udp6    wait    root    /usr/bin/xmtopas xmtopas -p3
-```
-
-
-## gcc 6.3.x on AIX 6.1
-
-```bash
-su - iojs
-cd /home/iojs
-
-LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/V2-gcc-6.3.0-1.tar.gz
-gunzip -d V2-gcc-6.3.0-1.tar.gz
-tar -xf V2-gcc-6.3.0-1.tar
-
-LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/gmake-dep.tar.gz
-gunzip -d gmake-dep.tar.gz
-tar -xf gmake-dep.tar
-```
-
-## gcc 6.3.x on AIX 7.2
-
-```bash
-mkdir -p /opt/gcc-6.3 && cd /opt/gcc-6.3
-curl -L https://ci.nodejs.org/downloads/aix/gcc-6.3-aix7.2.ppc.tar.gz | /opt/freeware/bin/tar -xzf -
-```
-
-## ccache 3.7.4 on AIX 7.2
-
-```bash
-mkdir -p /opt/ccache-3.7.4 && cd /opt/ccache-3.7.4
-curl -L https://ci.nodejs.org/downloads/aix/ccache-3.7.4.aix7.2.ppc.tar.gz | /opt/freeware/bin/tar -xzf -
-```
-
-## Install python3
-
-AIX72: uneeded, installed by yum
-
-```bash
-mkdir /tmp/i-files
-cd /tmp/i-files
-LIBPATH=/usr/lib curl -L --insecure -O https://ci.nodejs.org/downloads/aix/aixtools.python3.3.7.3.0.I
-installp -d /tmp/i-files -L
-installp -d /tmp/i-files -a aixtools.python3
-```
-
-Repeat the __pip__ and __tap2junit__ steps above but substitute __python3__ in the commands in place of
-__python__.  This is required because Python 2 and Python 3 have separate site-packages so that modules
-installed on one are not automatically available on the other.
-
-The archive was originally from http://www.aixtools.net/index.php/python3
-
-Installation is into `/opt/bin`.
-
-If uninstallation is needed for some reason, the command is:
-```
-installp -u aixtools.python3
-```
-
-## Install XL compilers
-
-1. Download 16.1.0 packages from: https://testcase.boulder.ibm.com (username:
-   xlcomp4, password: ask @mhdawson)
-2. scp them to target:/opt/ibm-xlc
-3. on target:
-```bash
-cd /opt/ibm-xlc
-uncompress 16.1.0.3-IBM-xlCcmp-AIX-FP003.tar.Z
-uncompress IBM_XL_C_CPP_V16.1.0.0_AIX.tar.Z
-installp -aXYgd ./usr/sys/inst.images -e /tmp/install.log all
-inutoc
-installp -aXgd ./ -e /tmp/install.log all
-```
-4. Find compilers in `/opt/IBM/xl[cC]/16.1.0/bin/`
-
-
-## Edit SSH config
-
-Add the following two lines to `/etc/ssh/sshd_config`:
-
-```
-PasswordAuthentication no
-ChallengeResponseAuthentication no
-```
-
-## Remove failedlogin file
-
-If /etc/security/failedlogin is growing without bounds on AIX6.1, remove
-it with a cron job, use `crontab -e`, and add one line:
-```sh
-0 12 * * * /usr/bin/rm -f /etc/security/failedlogin
 ```
