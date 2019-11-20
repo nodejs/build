@@ -438,3 +438,11 @@ Add the following two lines to `/etc/ssh/sshd_config`:
 PasswordAuthentication no
 ChallengeResponseAuthentication no
 ```
+
+## Remove failedlogin file
+
+If /etc/security/failedlogin is growing without bounds on AIX6.1, remove
+it with a cron job, use `crontab -e`, and add one line:
+```sh
+0 12 * * * /usr/bin/rm -f /etc/security/failedlogin
+```
