@@ -43,7 +43,8 @@
     * build time flag, so a potential concern to make compressed version only option
   * Google has not said they are removing option, but there is concern we’ll get 
     a lot less test coverage as only the compressed option will be used in Chrome were
-* PR to add build option to Node.js to enable compressed pointers: https://github.com/nodejs/node/pull/30463
+  * PR to add build option to Node.js to enable compressed pointers: https://github.com/nodejs/node/pull/30463
+  * Background doc on compressed pointers in V8 https://docs.google.com/document/d/10qh2-b4C5OtSg-xLwyZpEI5ZihVBPtn1xwKBbQC26yI
 
 
 * Metrics collection
