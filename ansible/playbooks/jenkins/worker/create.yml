@@ -31,6 +31,28 @@
 
   environment: '{{remote_env}}'
 
+- hosts:
+  - "*-win*"
+
+  roles:
+    - bootstrap
+    - package-upgrade
+    - baselayout-windows
+    - visual-studio
+    - jenkins-worker-windows
+
+  pre_tasks:
+    - name: check if secret is properly set
+      fail:
+      failed_when: not secret
+
+  post_tasks:
+    - name: reboot Windows machines
+      when: os|startswith("win")
+      win_reboot:
+
+  environment: '{{remote_env}}'
+
 #
 # Set up Jenkins Workspace servers
 #
@@ -52,7 +74,10 @@
   roles:
     - linux-perf
 
+#
 # Ensure node is not installed anywhere but the linter servers
+#
+
 - hosts:
   - test
   - release

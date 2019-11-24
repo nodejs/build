@@ -8,7 +8,7 @@
   - name: reboot machine to ensure no updates are pending
     win_reboot:
   - name: wait for Jenkins to start if already installed
-    win_shell: 'Start-Sleep -Seconds 10'
+    win_shell: 'Start-Sleep -Seconds 30'
   - name: stop Jenkins after reboot
     win_shell: 'Get-WmiObject Win32_Process -Filter "(Name = ''cmd.exe'') AND (CommandLine LIKE ''%jenkins.bat%'')" | % {$_.Terminate()}'
 
