@@ -23,3 +23,32 @@
 - name: install Visual Studio 2019
   when: "'vs2019' in inventory_hostname"
   include_tasks: "partials/vs2019.yml"
+
+# Install clcache and apply patches known to work
+- block:
+  - name: check if clcache is already cloned
+    win_stat: path='C:\clcache'
+    register: clcache_stat
+  - name: clone clcache repository
+    win_command: 'git clone https://github.com/frerich/clcache.git C:\clcache'
+    when: not clcache_stat.stat.exists
+  - name: update clcache repository
+    win_command: 'git fetch --all'
+    args: { chdir: 'C:\clcache' }
+    when: clcache_stat.stat.exists
+  - name: checkout revision
+    win_command: 'git checkout -f -B master 7a3e62a3d801e0bc94dd78001c03144ce5232940'
+    args: { chdir: 'C:\clcache' }
+  - name: merge PR 324
+    win_shell: 'curl.exe -L https://github.com/frerich/clcache/pull/324.patch | git am'
+    args: { chdir: 'C:\clcache' }
+  - name: merge PR 317
+    win_shell: 'curl.exe -L https://github.com/frerich/clcache/pull/317.patch | git am'
+    args: { chdir: 'C:\clcache' }
+  - name: install PyInstaller
+    # https://github.com/pyinstaller/pyinstaller/issues/4265
+    win_command: 'py -3 -m pip install https://github.com/pyinstaller/pyinstaller/archive/develop.tar.gz'
+    #win_command: 'py -3 -m pip install PyInstaller'
+  - name: build clcache
+    win_shell: '$env:PYTHONPATH = "C:\clcache"; py -3 -m PyInstaller -y pyinstaller/clcache_main.py'
+    args: { chdir: 'C:\clcache' }
