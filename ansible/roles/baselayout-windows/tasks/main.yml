@@ -7,6 +7,9 @@
 - name: install NetWide Assembler
   win_chocolatey: name=nasm
 
+- name: install Python 3
+  win_chocolatey: name=python
+
 - name: install Python 2
   win_chocolatey: name=python2
 
@@ -24,7 +27,7 @@
 
 # Necessary for junit output in Jenkins jobs
 - name: install tap2junit
-  win_command: 'pip2 install tap2junit'
+  win_command: 'pip3 install --upgrade tap2junit'
 
 # Necessary for the libuv test job
 - block:
