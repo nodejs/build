@@ -17,6 +17,10 @@
       params: '/GitAndUnixToolsOnPath'
   - name: enable long paths in Git
     win_command: 'git config --global core.longpaths true'
+  - name: set Git user name
+    win_command: 'git config --global user.name "{{inventory_hostname}}"'
+  - name: set Git user email
+    win_command: 'git config --global user.email "ci@iojs.org"'
 
 # Necessary for junit output in Jenkins jobs
 - name: install tap2junit
