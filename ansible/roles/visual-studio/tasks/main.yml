@@ -4,26 +4,22 @@
 # Install Visual Studio
 #
 
-- when: vs == '2013'
-  block:
-  # TODO: Ensure no other versions are installed
-  - name: install Visual Studio 2013
-    include_tasks: "partials/vs2013.yml"
+- name: install Visual Studio 2013
+  when: "'vs2013' in inventory_hostname"
+  include_tasks: "partials/vs2013.yml"
 
-- when: vs == '2015'
-  block:
-  # TODO: Ensure no other versions are installed
-  - name: install Visual Studio 2015
-    include_tasks: "partials/vs2015.yml"
+- name: install Visual Studio 2015
+  when: "'vs2015' in inventory_hostname"
+  include_tasks: "partials/vs2015.yml"
 
-- when: vs == 'vcbt2015'
-  block:
-  # TODO: Ensure no other versions are installed
-  - name: install Visual C++ Build Tools 2015
-    include_tasks: "partials/vcbt2015.yml"
+- name: install Visual C++ Build Tools 2015
+  when: "'vcbt2015' in inventory_hostname"
+  include_tasks: "partials/vcbt2015.yml"
 
-- when: vs == '2017'
-  block:
-  # TODO: Ensure no other versions are installed
-  - name: install Visual Studio 2017
-    include_tasks: "partials/vs2017.yml"
+- name: install Visual Studio 2017
+  when: "'vs2017' in inventory_hostname"
+  include_tasks: "partials/vs2017.yml"
+
+- name: install Visual Studio 2019
+  when: "'vs2019' in inventory_hostname"
+  include_tasks: "partials/vs2019.yml"
