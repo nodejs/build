@@ -1,0 +1,80 @@
+---
+
+#
+# Updates Windows username, password and connection ports
+#
+# Usage:
+#
+# Set the following variables with the new values in the secret inventory file:
+# - new_user     - to change the username
+# - new_password - to change the password
+# - new_port     - to change the WinRM connection port (default: 5986)
+# - new_rdp_port - to change the RDP connection port (default: 3389)
+#
+# Changing username, password or WinRM port makes Ansible unable to connect,
+# failing the command immediately. Thus, after EACH STEP in this script
+# runs/fails successfully, remove the old variable and 'new_' from the new one
+# in the inventory file and run again if there are more to change.
+#
+# Only the RDP port needs a reboot to apply (ansible HOST -m win_reboot).
+#
+# Changing credentials on release machines breaks access to the code signing
+# certificate, so it need to be re-installed after running this.
+#
+
+
+- hosts:
+  - "*-win*"
+
+  vars:
+    autologon_regpath: 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'
+
+  tasks:
+    - name: set automatic logon user name
+      when: '(new_user is defined) and (new_user|length > 0)'
+      win_regedit:
+        path: "{{ autologon_regpath }}"
+        name: DefaultUsername
+        data: "{{ new_user }}"
+        type: string
+    - name: rename user account - applies immediately making this fail on success
+      when: '(new_user is defined) and (new_user|length > 0)'
+      win_command: "wmic useraccount where name=\"{{ ansible_user }}\" rename {{ new_user }}"
+
+    - name: set automatic logon password
+      when: '(new_password is defined) and (new_password|length > 0)'
+      win_regedit:
+        path: "{{ autologon_regpath }}"
+        name: DefaultPassword
+        data: "{{ new_password }}"
+        type: string
+    - name: change user password - applies immediately making this fail on success
+      when: '(new_password is defined) and (new_password|length > 0)'
+      win_command: "net user {{ ansible_user }} {{ new_password }}"
+
+
+# CAUTION: Change ports only in Rackspace. Azure hosts are behind NAT.
+- hosts:
+  - "*-rackspace-win*"
+
+  vars:
+    netsh_common: 'netsh advfirewall firewall add rule profile=any dir=in protocol=TCP action=allow'
+
+  tasks:
+    - name: add firewall exception for WinRM port
+      when: '(new_port is defined) and (new_port > 0)'
+      win_command: "{{ netsh_common }} name=\"Allow WinRM HTTPS on port {{ new_port }}\" localport={{ new_port }}"
+    - name: change WinRM port - applies immediately making this fail with ConnectTimeout on success
+      when: '(new_port is defined) and (new_port > 0)'
+      win_shell: "winrm set winrm/config/listener?Address=*+Transport=HTTPS '@{Port=\"{{ new_port }}\"}'"
+
+    - name: add firewall exception for RDP port
+      when: '(new_rdp_port is defined) and (new_rdp_port > 0)'
+      win_command: "{{ netsh_common }} name=\"Allow RDP on port {{ new_rdp_port }}\" localport={{ new_rdp_port }}"
+    - name: change RDP port - applies only when host is rebooted
+      when: '(new_rdp_port is defined) and (new_rdp_port > 0)'
+      win_regedit:
+        path: 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp'
+        name: PortNumber
+        data: "{{ new_rdp_port }}"
+        type: dword
