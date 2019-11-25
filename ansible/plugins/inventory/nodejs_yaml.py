@@ -243,6 +243,10 @@ def parse_yaml(hosts, config):
                             hostvars.update({'ansible_become': True})
                             del metadata['user']
 
+                        if 'password' in metadata:
+                            hostvars.update({'ansible_password': str(metadata['password'])})
+                            del metadata['password']
+
                         hostvars.update(metadata)
 
                         # add specific options from config
