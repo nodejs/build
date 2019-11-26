@@ -16,7 +16,7 @@ hosts:
         ubuntu1804-x64-2: {ip: 45.55.45.227, alias: unofficial-builds}
 
     - joyent:
-        smartos15-x64-1: {ip: 72.2.118.125, alias: backup}
+        smartos15-x64-1: {ip: 165.225.151.21, alias: backup}
         ubuntu1604-x64-1: {ip: 165.225.149.55, alias: unencrypted}
 
     - rackspace:
