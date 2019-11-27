@@ -15,6 +15,7 @@ start )
               export NODE_TEST_DIR=$HOME/tmp; \
               export NODE_COMMON_PIPE="$HOME/test.pipe"; \
               export OSTYPE=AIX61; \
+              export JOBS=4; \
               export GIT_SSL_CAINFO="$HOME/ca-bundle.crt"; \
               export SSL_CERT_FILE="$HOME/ca-bundle.crt"; \
         java -Xmx128m -Dorg.jenkinsci.plugins.gitclient.Git.timeOut=30 -jar "$HOME/slave.jar" \
