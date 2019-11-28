@@ -1,5 +1,35 @@
 ---
 
+- name: scaleway armv7 | check for swapfile
+  stat:
+    path: /swapfile
+  register: swapfile_stat
+
+- name: scaleway armv7 | make swap file
+  shell: fallocate -l 4G /swapfile
+  when: swapfile_stat.stat.exists == False
+
+- name: scaleway armv7 | set swap file permissions
+  file:
+    path: /swapfile
+    mode: '0600'
+  when: swapfile_stat.stat.exists == False
+
+- name: scaleway armv7 | mkswap
+  shell: mkswap /swapfile
+  when: swapfile_stat.stat.exists == False
+
+- name: scaleway armv7 | set swap in fstab
+  lineinfile:
+    dest: /etc/fstab
+    state: present
+    regexp: '^/swapfile'
+    line: '/swapfile none swap sw 0 0'
+
+- name: scaleway armv7 | swapon
+  shell: swapon -a
+  when: swapfile_stat.stat.exists == False
+
 - name: scaleway armv7 | configure containers
   set_fact:
     docker_containers: "{{ scaleway_armv7.containers }}"

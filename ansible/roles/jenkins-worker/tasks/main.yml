@@ -17,9 +17,9 @@
 - name: set jobs_env from server_jobs or ansible_processor_vcpus
   set_fact:
     jobs_env: "{{ server_jobs|default(ansible_processor_vcpus) }}"
-  when: server_jobs is defined or ansible_processor_vcpus is defined
+  when: jobs_env is undefined and (server_jobs is defined or ansible_processor_vcpus is defined)
 
-- name: set jobs_env from server_jobs or ansible_processor_vcpus
+- name: set jobs_env to fall-back value of 2
   set_fact:
     jobs_env: "2"
   when: jobs_env is undefined
