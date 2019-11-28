@@ -105,7 +105,7 @@
     creates: "/usr/local/bin/cmake"
 
 - name: run docker-host-x64 jenkins-worker setup
-  when: "'ubuntu1804_docker-x64' in inventory_hostname"
+  when: "'_docker-x64' in inventory_hostname"
   include: "{{ role_path }}/tasks/partials/docker-host-x64.yml"
 
 # @TODO(mhdawson): get tap2junit working on zOS
