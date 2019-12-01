@@ -28,6 +28,13 @@ with open('out/index.html', 'w') as out:
     <link rel="stylesheet" href="https://nodejs.org/static/css/styles.css">
     <style>
         #logo { margin-bottom: 1rem; }
+        #badge {
+          margin-top: 1rem;
+          margin-bottom: 1rem;
+        }
+        #badge, a {
+          border: none;
+        }
         main { margin-bottom: 2rem; }
         .table-header,
         .table-row {
@@ -72,8 +79,13 @@ with open('out/index.html', 'w') as out:
   <div id="main">
     <div class="container">
       <h1>Node.js Nightly Code Coverage</h1>
+      Nightly combined JavaScript coverage, across Windows, Linux, and a variety of runtimes,
+      can be found on <a href="https://codecov.io/gh/nodejs/node">codecov.io</a>:
+      <a href="https://codecov.io/gh/nodejs/node">
+        <img id="badge" alt="Combined coverage" src="https://codecov.io/gh/nodejs/node/branch/master/graph/badge.svg" />
+      </a>
       <h3>
-        Node.js Core&nbsp;&nbsp;<a href="https://github.com/nodejs/node">&rarr;</a>
+        Nightly Linux Coverage&nbsp;&nbsp;<a href="https://github.com/nodejs/node">&rarr;</a>
       </h3>
       <main>
         <div class="page-content">
