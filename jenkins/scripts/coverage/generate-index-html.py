@@ -79,13 +79,13 @@ with open('out/index.html', 'w') as out:
   <div id="main">
     <div class="container">
       <h1>Node.js Nightly Code Coverage</h1>
-      Nightly combined JavaScript coverage, across Windows, Linux, and a variety of runtimes,
-      can be found on <a href="https://codecov.io/gh/nodejs/node">codecov.io</a>:
+      Nightly combined JavaScript coverage for Windows and Linux can be found
+      on <a href="https://codecov.io/gh/nodejs/node">codecov.io</a>:
       <a href="https://codecov.io/gh/nodejs/node">
         <img id="badge" alt="Combined coverage" src="https://codecov.io/gh/nodejs/node/branch/master/graph/badge.svg" />
       </a>
       <h3>
-        Nightly Linux Coverage&nbsp;&nbsp;<a href="https://github.com/nodejs/node">&rarr;</a>
+        Nightly Linux Branch Coverage&nbsp;&nbsp;<a href="https://github.com/nodejs/node">&rarr;</a>
       </h3>
       <main>
         <div class="page-content">
