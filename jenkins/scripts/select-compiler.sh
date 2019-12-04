@@ -110,7 +110,6 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
       echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX7.1"
 
       if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
-        #export LIBPATH=/opt/freeware/lib:/opt/gcc-6.3/lib/gcc/powerpc-ibm-aix7.1.0.0/6.3.0/pthread/ppc64:/opt/gcc-6.3/lib
         export PATH="/opt/ccache-3.7.4/libexec:/opt/freeware/gcc6/bin:$PATH"
         export CC="gcc" CXX="g++" CXX_host="g++"
         echo "Compiler set to 6.3"

@@ -71,6 +71,9 @@ hosts:
     - marist:
         zos13-s390x-1: {ip: 148.100.36.135, user: Unix1}
 
+    - pcc:
+        aix71-ppc64_be-1: {ip: 129.33.196.199, user: b9s010a}
+
   - test:
 
     - azure:
@@ -131,14 +134,9 @@ hosts:
         win10-arm64-1: { vs: '2017' }
         win10-arm64-2: { vs: '2017' }
 
-    - ibm:
-        aix72-ppc64_be-1: {ip: 129.33.196.193, user: b9s010a}
-        aix72-ppc64_be-2: {ip: 129.33.196.194, user: b9s010a}
-        aix72-ppc64_be-3: {ip: 129.33.196.195, user: b9s010a}
-        aix72-ppc64_be-4: {ip: 129.33.196.196, user: b9s010a}
+    - pcc:
         aix71-ppc64_be-1: {ip: 129.33.196.197, user: b9s010a}
         aix71-ppc64_be-2: {ip: 129.33.196.198, user: b9s010a}
-        aix71-ppc64_be-3: {ip: 129.33.196.199, user: b9s010a}
 
 
     - osuosl:

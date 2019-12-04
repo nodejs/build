@@ -35,6 +35,27 @@ it with a cron job, use `crontab -e`, and add one line:
 0 12 * * * /usr/bin/rm -f /etc/security/failedlogin
 ```
 
+## Fix "Missing" shared objects
+
+On the 7.1 machines we were facing this issues when yum installed packages were not able to find some of the shared objects they needed
+
+```sh
+bash-5.0$ gmake -v
+exec(): 0509-036 Cannot load program gmake because of the following errors:
+        0509-022 Cannot load module /opt/freeware/lib/libintl.a(libintl.so.8).
+        0509-150   Dependent module /usr/lib/libiconv.a(libiconv.so.2) could not be loaded.
+        0509-152   Member libiconv.so.2 is not found in archive
+        0509-022 Cannot load module make_64.
+        0509-150   Dependent module /opt/freeware/lib/libintl.a(libintl.so.8) could not be loaded.
+        0509-022 Cannot load module .
+```
+
+The fix is as following:
+
+```sh
+sudo rm /usr/lib/libiconv.a && sudo ln -s /opt/freeware/bin/libiconv.a /usr/lib
+```
+
 # AIX 7.2 Install
 
 Most packages should be installed via ansible.
