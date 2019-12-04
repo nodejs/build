@@ -77,6 +77,20 @@ hosts:
 
     - azure:
         msft-ubuntu1604_arm_cross-x64-1: {ip: nodejs.eastus2.cloudapp.azure.com, user: ubuntu}
+        msft-win10_vcbt2015-x64-1: {ip: nodejs.eastus2.cloudapp.azure.com}
+        msft-win10_vcbt2015-x64-2: {ip: nodejs.westus2.cloudapp.azure.com}
+        msft-win10_vcbt2015-x64-3: {ip: nodejs.eastus2.cloudapp.azure.com}
+        msft-win10_vcbt2015-x64-4: {ip: nodejs.westus2.cloudapp.azure.com}
+        msft-win10_vs2019-x64-1: {ip: nodejs.eastus2.cloudapp.azure.com}
+        msft-win10_vs2019-x64-2: {ip: nodejs.westus2.cloudapp.azure.com}
+        msft-win10_vs2019-x64-3: {ip: nodejs.eastus2.cloudapp.azure.com}
+        msft-win10_vs2019-x64-4: {ip: nodejs.westus2.cloudapp.azure.com}
+        msft-win2016_vs2017-x64-1: {ip: nodejs.eastus2.cloudapp.azure.com}
+        msft-win2016_vs2017-x64-2: {ip: nodejs.westus2.cloudapp.azure.com}
+        msft-win2016_vs2017-x64-3: {ip: nodejs.eastus2.cloudapp.azure.com}
+        msft-win2016_vs2017-x64-4: {ip: nodejs.westus2.cloudapp.azure.com}
+        msft-win2016_vs2017-x64-5: {ip: nodejs.eastus2.cloudapp.azure.com}
+        msft-win2016_vs2017-x64-6: {ip: nodejs.westus2.cloudapp.azure.com}
 
     - digitalocean:
         debian8-x64-1: {ip: 159.203.103.52}
@@ -134,8 +148,8 @@ hosts:
         macos10.12-x64-2: {ip: 207.254.58.162, port: 10002, user: administrator}
 
     - msft:
-        win10-arm64-1: { vs: '2017' }
-        win10-arm64-2: { vs: '2017' }
+        win10_vs2017-arm64-1: {}
+        win10_vs2017-arm64-2: {}
 
 
     - osuosl:
@@ -159,6 +173,24 @@ hosts:
         fedora27-x64-1: {ip: 119.9.51.79}
         ubuntu1604-x64-1: {ip: 119.9.51.176}
         ubuntu1604-x64-2: {ip: 104.130.124.194}
+        win2008r2_vs2017-x64-1: {ip: 162.242.223.198}
+        win2008r2_vs2017-x64-2: {ip: 104.130.135.210}
+        win2008r2_vs2017-x64-3: {ip: 119.9.131.43}
+        win2008r2_vs2017-x64-4: {ip: 104.130.116.9}
+        win2012r2_vs2013-x64-1: {ip: 104.239.174.165}
+        win2012r2_vs2013-x64-2: {ip: 104.130.132.171}
+        win2012r2_vs2015-x64-1: {ip: 104.239.174.8}
+        win2012r2_vs2015-x64-2: {ip: 104.130.141.137}
+        win2012r2_vs2017-x64-1: {ip: 162.242.237.72}
+        win2012r2_vs2017-x64-2: {ip: 104.239.142.99}
+        win2012r2_vs2017-x64-3: {ip: 119.9.131.54}
+        win2012r2_vs2017-x64-4: {ip: 166.78.99.25}
+        win2012r2_vs2019-x64-1: {ip: 162.242.237.124}
+        win2012r2_vs2019-x64-2: {ip: 104.130.158.58}
+        win2012r2_vs2019-x64-3: {ip: 119.9.131.63}
+        win2012r2_vs2019-x64-4: {ip: 104.130.219.103}
+        win2012r2_vs2019-x64-5: {ip: 104.130.6.92}
+        win2012r2_vs2019-x64-6: {ip: 104.130.141.231}
 
     - requireio:
         andineck-debian10-armv6l_pi1p-1:         {ip: 192.168.2.42, user: pi, alias: iojs-ns-pi1p-3 }
