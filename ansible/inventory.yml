@@ -44,8 +44,8 @@ hosts:
         ubuntu1604_arm_cross-x64-1: {ip: 165.225.151.28, user: ubuntu}
 
     - requireio:
-        rvagg-debian9-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi}
-        andineck-debian9-armv6l_pi1p-1: {ip: 192.168.2.41, user: pi}
+        rvagg-debian10-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi, alias: iojs-ns-pi1p-1 }
+        andineck-debian10-armv6l_pi1p-1: {ip: 192.168.2.41, user: pi, alias: iojs-ns-pi1p-2 }
         osx1010-x64-1: {ip: 192.168.2.211, user: iojs}
 
     - osuosl:
@@ -162,43 +162,43 @@ hosts:
         ubuntu1604-x64-2: {ip: 104.130.124.194}
 
     - requireio:
-        andineck-debian9-armv6l_pi1p-1:         {ip: 192.168.2.42, user: pi}
-        bengl-debian9-armv6l_pi1p-1:            {ip: 192.168.2.43, user: pi}
-        bengl-debian9-armv6l_pi1p-2:            {ip: 192.168.2.44, user: pi}
-        continuationlabs-debian9-armv6l_pi1p-1: {ip: 192.168.2.45, user: pi}
-        ceejbot-debian9-armv6l_pi1p-1:          {ip: 192.168.2.46, user: pi}
-        mininodes-debian9-armv6l_pi1p-1:        {ip: 192.168.2.47, user: pi}
-        indieisaconcept-debian9-armv6l_pi1p-1:  {ip: 192.168.2.48, user: pi}
-        mhdawson-debian9-armv6l_pi1p-1:         {ip: 192.168.2.49, user: pi}
-        securogroup-debian9-armv6l_pi1p-1:      {ip: 192.168.2.50, user: pi}
-        securogroup-debian9-armv6l_pi1p-2:      {ip: 192.168.2.51, user: pi}
-        chrislea-debian9-armv6l_pi1p-1:         {ip: 192.168.2.52, user: pi}
-        davglass-debian9-armv6l_pi1p-1:         {ip: 192.168.2.53, user: pi}
+        andineck-debian10-armv6l_pi1p-1:         {ip: 192.168.2.42, user: pi, alias: iojs-ns-pi1p-3 }
+        bengl-debian10-armv6l_pi1p-1:            {ip: 192.168.2.43, user: pi, alias: iojs-ns-pi1p-4 }
+        bengl-debian10-armv6l_pi1p-2:            {ip: 192.168.2.44, user: pi, alias: iojs-ns-pi1p-5}
+        continuationlabs-debian10-armv6l_pi1p-1: {ip: 192.168.2.45, user: pi, alias: iojs-ns-pi1p-6 }
+        ceejbot-debian10-armv6l_pi1p-1:          {ip: 192.168.2.46, user: pi, alias: iojs-ns-pi1p-7 }
+        mininodes-debian10-armv6l_pi1p-1:        {ip: 192.168.2.47, user: pi, alias: iojs-ns-pi1p-8 }
+        indieisaconcept-debian10-armv6l_pi1p-1:  {ip: 192.168.2.48, user: pi, alias: iojs-ns-pi1p-9 }
+        mhdawson-debian10-armv6l_pi1p-1:         {ip: 192.168.2.49, user: pi, alias: iojs-ns-pi1p-10 }
+        securogroup-debian10-armv6l_pi1p-1:      {ip: 192.168.2.50, user: pi, alias: iojs-ns-pi1p-11 }
+        securogroup-debian10-armv6l_pi1p-2:      {ip: 192.168.2.51, user: pi, alias: iojs-ns-pi1p-12 }
+        chrislea-debian10-armv6l_pi1p-1:         {ip: 192.168.2.52, user: pi, alias: iojs-ns-pi1p-13 }
+        davglass-debian10-armv6l_pi1p-1:         {ip: 192.168.2.53, user: pi, alias: iojs-ns-pi1p-14 }
 
-        rvagg-debian9-armv7l_pi2-1:        {ip: 192.168.2.60, user: pi}
-        joeyvandijk-debian9-armv7l_pi2-1:  {ip: 192.168.2.61, user: pi}
-        joeyvandijk-debian9-armv7l_pi2-2:  {ip: 192.168.2.62, user: pi}
-        svincent-debian9-armv7l_pi2-1:     {ip: 192.168.2.63, user: pi}
-        mcollina-debian9-armv7l_pi2-1:     {ip: 192.168.2.64, user: pi}
-        ceejbot-debian9-armv7l_pi2-1:      {ip: 192.168.2.65, user: pi}
-        mininodes-debian9-armv7l_pi2-1:    {ip: 192.168.2.66, user: pi}
-        sambthompson-debian9-armv7l_pi2-1: {ip: 192.168.2.67, user: pi}
-        louiscntr-debian9-armv7l_pi2-1:    {ip: 192.168.2.68, user: pi}
-        svincent-debian9-armv7l_pi2-2:     {ip: 192.168.2.69, user: pi}
-        svincent-debian9-armv7l_pi2-3:     {ip: 192.168.2.70, user: pi}
-        jasnell-debian9-armv7l_pi2-1:      {ip: 192.168.2.71, user: pi}
+        rvagg-debian10-armv7l_pi2-1:        {ip: 192.168.2.60, user: pi, alias: iojs-ns-pi2-1 }
+        joeyvandijk-debian10-armv7l_pi2-1:  {ip: 192.168.2.61, user: pi, alias: iojs-ns-pi2-2 }
+        joeyvandijk-debian10-armv7l_pi2-2:  {ip: 192.168.2.62, user: pi, alias: iojs-ns-pi2-3 }
+        svincent-debian10-armv7l_pi2-1:     {ip: 192.168.2.63, user: pi, alias: iojs-ns-pi2-4 }
+        mcollina-debian10-armv7l_pi2-1:     {ip: 192.168.2.64, user: pi, alias: iojs-ns-pi2-5 }
+        ceejbot-debian10-armv7l_pi2-1:      {ip: 192.168.2.65, user: pi, alias: iojs-ns-pi2-6 }
+        mininodes-debian10-armv7l_pi2-1:    {ip: 192.168.2.66, user: pi, alias: iojs-ns-pi2-7 }
+        sambthompson-debian10-armv7l_pi2-1: {ip: 192.168.2.67, user: pi, alias: iojs-ns-pi2-8 }
+        louiscntr-debian10-armv7l_pi2-1:    {ip: 192.168.2.68, user: pi, alias: iojs-ns-pi2-9 }
+        svincent-debian10-armv7l_pi2-2:     {ip: 192.168.2.69, user: pi, alias: iojs-ns-pi2-10 }
+        svincent-debian10-armv7l_pi2-3:     {ip: 192.168.2.70, user: pi, alias: iojs-ns-pi2-11 }
+        jasnell-debian10-armv7l_pi2-1:      {ip: 192.168.2.71, user: pi, alias: iojs-ns-pi2-12 }
 
-        williamkapke-debian9-arm64_pi3-1:      {ip: 192.168.2.80, user: pi}
-        williamkapke-debian9-arm64_pi3-2:      {ip: 192.168.2.81, user: pi}
-        williamkapke-debian9-arm64_pi3-3:      {ip: 192.168.2.82, user: pi}
-        davglass-debian9-arm64_pi3-1:          {ip: 192.168.2.83, user: pi}
-        pivotalagency-debian9-arm64_pi3-1:     {ip: 192.168.2.84, user: pi}
-        pivotalagency-debian9-arm64_pi3-2:     {ip: 192.168.2.85, user: pi}
-        securogroup-debian9-arm64_pi3-1:       {ip: 192.168.2.86, user: pi}
-        securogroup-debian9-arm64_pi3-2:       {ip: 192.168.2.87, user: pi}
-        notthetup_sayanee-debian9-arm64_pi3-1: {ip: 192.168.2.88, user: pi}
-        piccoloaiutante-debian9-arm64_pi3-1:   {ip: 192.168.2.89, user: pi}
-        kahwee-debian9-arm64_pi3-1:            {ip: 192.168.2.90, user: pi}
+        williamkapke-debian10-arm64_pi3-1:      {ip: 192.168.2.80, user: pi, alias: iojs-ns-pi3-1 }
+        williamkapke-debian10-arm64_pi3-2:      {ip: 192.168.2.81, user: pi, alias: iojs-ns-pi3-2 }
+        williamkapke-debian10-arm64_pi3-3:      {ip: 192.168.2.82, user: pi, alias: iojs-ns-pi3-3 }
+        davglass-debian10-arm64_pi3-1:          {ip: 192.168.2.83, user: pi, alias: iojs-ns-pi3-4 }
+        pivotalagency-debian10-arm64_pi3-1:     {ip: 192.168.2.84, user: pi, alias: iojs-ns-pi3-5 }
+        pivotalagency-debian10-arm64_pi3-2:     {ip: 192.168.2.85, user: pi, alias: iojs-ns-pi3-6 }
+        securogroup-debian10-arm64_pi3-1:       {ip: 192.168.2.86, user: pi, alias: iojs-ns-pi3-7 }
+        securogroup-debian10-arm64_pi3-2:       {ip: 192.168.2.87, user: pi, alias: iojs-ns-pi3-8 }
+        notthetup_sayanee-debian10-arm64_pi3-1: {ip: 192.168.2.88, user: pi, alias: iojs-ns-pi3-9 }
+        piccoloaiutante-debian10-arm64_pi3-1:   {ip: 192.168.2.89, user: pi, alias: iojs-ns-pi3-10 }
+        kahwee-debian10-arm64_pi3-1:            {ip: 192.168.2.90, user: pi, alias: iojs-ns-pi3-11 }
 
         rvagg-ubuntu1404-arm64_odroidxu3-1: {ip: 192.168.2.10, user: odroid}
         rvagg-ubuntu1404-arm64_odroidxu-1: {ip: 192.168.2.15}
