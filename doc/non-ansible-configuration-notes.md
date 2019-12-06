@@ -112,49 +112,60 @@ Joyent SmartOS machines use `libsmartsshd.so` for PAM SSH authentication in orde
 
 ## Raspberry Pi
 
-Currently the Raspberry Pi configuration is [stand-alone](https://github.com/nodejs/build/tree/master/setup/raspberry-pi) and not part of the [newer Ansible configuration](https://github.com/nodejs/build/tree/master/ansible), however it is up to date.
+Raspberry Pi configuration is integrated into the standard Ansible playbooks and will run properly when the right hosts are executed.
 
-In order to get Raspberry Pi's to a state where they Ansible can be run against them, some manual steps need to be taken, including the sourcing of older images.
+The current configuration relies upon an NFS boot and NFS root architecture, although it should still be possible to connect a non-NFS Raspberry Pi to the Node.js CI and the Ansible playbooks are intended to be friendly to non-NFS hosts. It's possible that current Ansible scripts don't properly account for non-NFS hosts since these are not regularly included so some adjustments may be necessary.
 
-### Raspbian
+This document covers much of the process we use: https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/net_tutorial.md
 
-Raspberry Pi B+ and Raspberry Pi 2 boxes used in the cluster run Raspbian Wheezy, based on Debian 7 (Wheezy). This distribution is no longer supported so an older version must be used. The last build based on Wheezy was raspbian-2015-05-07, which is available at <http://downloads.raspberrypi.org/raspbian/images/raspbian-2015-05-07/>.
+### NFS boot
 
-Raspberry Pi 3's use the most recent Raspbian Jessie, based on Debian 8 (Jessie) images.
+* The SD card in the Raspberry Pi should have an up to date bootcode.bin (found in the FAT partition of the Raspbian images and comes via regular updates) and ideally an updated firmware. It is possible to boot newer Pi's without SD card but the SD card is necessary for older models and our Ansible setup uses it for local swap space.
+* Upon boot, the bootcode will cause the Pi to reach out for an initial DHCP discovery. A DHCP server should be configured to respond appropriately for that device's address along with some NFS boot signals, such as this configuration for dnsmasq:
 
-Unfortunately, for recent versions of all Raspberry Pi hardware, including the more recently produced version 1 B+ and version 2, they will not boot with the stock raspbian-2015-05-07 image. To fix this image:
+```
+enable-tftp
+tftp-root=/var/tftpd
+pxe-service=0,"Raspberry Pi Boot"
+```
 
-1. Download the latest Jessie image (verified with raspbian-2016-05-31)
-2. Extract the first partition of the image (the small FAT32 partition)
-3. Copy the complete contents of this partition on to the first partition of an SD card that has the Wheezy image ***but*** keep the `cmdline.txt` from the Wheezy version
+* The tftp server on the same DHCP server should be able to respond to boot requests.
+* After looking in the root of the tftp server, the Pi will attempt to load files from a subdirectory named by its serial number. Obtain the serial number from /proc/cpuinfo from a running Pi, take the last 8 characters from the `Serial` field and use that to store individual boot files.
+* Copy the entirety of the boot partition of the Raspbian disk image into a subdirectory for each Pi. Symlinks are acceptable to map serial numbers to the names of the Pi's to keep them organised properly.
+* Edit cmdline.txt inside the tftp subdirectory for each file and replace the contents with:
 
-See below for specific instructions on how to do this.
+``
+modprobe.blacklist=bcm2835_v4l2 root=/dev/nfs nfsroot=NFS_ROOT_SERVER_IP:/NFS_ROOT_FOR_THIS_PI,vers=3 rw ip=dhcp rootwait elevator=deadline
+```
 
-#### Manual provisioning steps
+* Replacing `NFS_ROOT_SERVER_IP` and `NFS_ROOT_FOR_THIS_PI` as appropraite. It is assumed that NFSv3 is used for the root server. The `modprobe.blacklist` is for a sound driver that has been causing problems in most 2019 versions of the Raspbian kernels (Stretch and Buster), this may be fixed at a later day and be unnecessary. Booting would freeze late in the process without this driver removed.
+* The DHCP / tftp server should export each of the boot directories via NFS so they can be mounted by the Pi's as /boot/ which will allow the files to be updated during system updates.
 
-Set up SD card:
+### NFS root
 
-* Copy image, e.g. `dd if=/tmp/2015-05-05-raspbian-wheezy.img of=/dev/sdh bs=1M conv=fsync` for Pi1's and 2's
-* For Wheezy:
-  - mount partition 1 of the card (`/boot`)
-  - remove contents
-  - copy in the contents of the Jessie SD image partition 1
-  - replace `cmdline.txt` in the partition with the original from the Wheezy SD image (which simply contains `dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait`)
-  - unmount and sync/eject
+An NFS root server can be separate from NFS boot server, and could be different for each Pi.
 
-Set up running system, steps to execute in `raspi-config`:
+* The NFS root server should export a shared .ccache directory to be mounted by all Pi's, so it should be exported in such a way as to be permissive with IP addresses. The export should have roughly these options: `(async,rw,all_squash,anonuid=1001,anongid=1002,no_subtree_check)`.
+* The NFS root server should export a root directory for each Pi. The IP of the server along with the path to the directory should be put in cmdline.txt on the NFS boot server. The exports should have roughly these options: `(rw,sync,no_subtree_check,no_root_squash)`/
+* The ext4 partition of the Raspbian image file (second partition, not the boot FAT partition) should be extracted into this root directory.
+* `etc/fstab` in the root directory should be edited to make it NFS compatible. Remove the existing `/boot` and `/` entries and replace them with:
 
-* Expand Filesystem
-* Change User Password
-* Advanced - Enable SSH
+```
+/dev/mmcblk0p1 /mnt/mmcblk0p1 vfat defaults 0 0
+NFS_ROOT_SERVER_IP:PATH_TO_SHARED_CCACHE_DIRECTORY /home/iojs/.ccache nfs4 rw,exec,async,noauto 0 0
+NFS_BOOT_SERVER_IP:PATH_TO_TFTP_BOOT_EXPORT /boot nfs4 nfsvers=3,rw,noexec,async,noauto 0 0
+```
 
-Then, manually:
+* Ansible should also perform checks on `/etc/fstab` so these modifications may not be strictly necessary but it is helpful to have first-boot be into an appropriate state.
+* Mounting `/` is done during the NFS boot process so is omitted from `/etc/fstab`.
+* The SD card is mounted at `/mnt/mmcblk0p1` and is assumed to be in this location by the Ansible scripts for swap file creation.
+* `/boot` is this Pi's tftp boot directory from the NFS boot server.
+* When powered on, the Pi should perform all mount steps and present with the standard initial Raspbian boot & login. Note that SSH is not enabled by default and this needs to be done manually before you can remotely access it. To streamline setup, these additional steps can be performed on an initial Pi and then its root directory copied to all other root directories with only minor modifications to `/etc/fstab` required:
+  * Enable SSH with `raspi-config`
+  * Add the `nodejs_build_test` public SSH key to `~pi/.ssh/authorized_keys` (with appropriate permissions).
+  * Change the default password for user `pi` to remove insecurity. This could even be disabled entirely since the SSH key is in place.
 
-* Set up ~pi/.ssh/authorized_keys as appropriate for running Ansible (Insert the `nodejs_build_test` key or the `nodejs_build_release` key as appropriate). Set ~pi/.ssh to mode 755 and ~pi/.ssh/authorized_keys to mode 644.
-* Ensure that it can boot on the network and local SSH configuration matches the host (reprovisioned hosts will need a replacement of your `known_hosts` entry for it)
-* Update <https://github.com/nodejs/build/blob/master/setup/ansible-inventory> to include any new hosts under `[iojs-raspbian]`
-* Update <https://github.com/nodejs/build/blob/master/ansible/inventory.yml> to reflect any host additions or changes (this is primarily for automatic .ssh/config setup purposes currently)
-* Run Ansible from <https://github.com/nodejs/build/tree/master/setup/raspberry-pi> with `ansible-playbook ansible-playbook.yaml -i ../ansible-inventory --limit <hostname>`
+After these steps are performed and the Pi's are running, Ansible can be run to finish setup. A reboot is recommended after initial setup to ensure the environment is configured correctly (locale and other settings that are changed).
 
 ## AIX 7.2
 

@@ -71,7 +71,7 @@
 
 - name: install java
   when:
-    - java.rc > 0 and not os|startswith("zos") and arch != "ppc64" and not inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')
+    - java.rc > 0 and not os|startswith("zos") and arch != "ppc64"
     - java.rc > 0 and not os|startswith("macos")
   package: name="{{ java_package_name }}" state=present
 
@@ -107,11 +107,3 @@
   with_items:
     - ca-certificates
     - oracle-java8-set-default
-
-- name: pi | uninstall stock java
-  when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
-  package: name="openjdk-8-jre-headless" state=absent
-
-- name: pi | install java
-  when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
-  package: name="oracle-java8-jdk" state=present
