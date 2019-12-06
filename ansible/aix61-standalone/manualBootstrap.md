@@ -9,7 +9,7 @@ modules will be installed.
 ```bash
 chfs -a size=+1300000 /opt
 chfs -a size=+250000 /
-chfs -a size=+917504 /tmp
+chfs -a size=917504 /tmp
 ```
 
 For the systems without ramdisks `/home` needs to be set to the same size as `/home/iojs/build` would be on a ramdisk machine
@@ -62,9 +62,8 @@ Most packages should be installed via ansible.
 
 If there are any missing they should be installed via yum
 
-What you do need to install manually is **gcc** and **ccache**
+What you do need to install manually is **ccache**
 
-## gcc 6.3.x on AIX 7.2
 
 ```bash
 mkdir -p /opt/gcc-6.3 && cd /opt/gcc-6.3
@@ -79,7 +78,7 @@ curl -L https://ci.nodejs.org/downloads/aix/ccache-3.7.4.aix7.2.ppc.tar.gz | /op
 ```
 ## Enable the AHA fs
 
-For AIX 7.2 and 6.1, needed for the file watcher unit tests.
+For AIX 7 and 6.1, needed for the file watcher unit tests.
 
 Add the following to /etc/filesystems:
 
@@ -115,24 +114,6 @@ installp -aXgd ./ -e /tmp/install.log all
 4. Find compilers in `/opt/IBM/xl[cC]/16.1.0/bin/`
 
 
-
-#### tap2junit
-
-Should be installed via ansible but if needed to be done manually use the following:
-
-AIX72:
-```
-  python  -m pip install --upgrade pip pipenv git+https://github.com/nodejs/tap2junit
-  python3 -m pip install --upgrade pip pipenv git+https://github.com/nodejs/tap2junit
-  ln -s /opt/freeware/bin/tap2junit /usr/bin/tap2junit
-```
-
-Note: probably only the py3 was needed
-
-```bash
-python -m pip install --upgrade pip pipenv git+https://github.com/nodejs/tap2junit.git
-ln -s /opt/freeware/bin/tap2junit /usr/bin/tap2junit
-```
 
 
 # AIX 6.1 Install

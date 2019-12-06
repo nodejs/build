@@ -71,7 +71,7 @@ hosts:
     - marist:
         zos13-s390x-1: {ip: 148.100.36.135, user: Unix1}
 
-    - pcc:
+    - ibm:
         aix71-ppc64_be-1: {ip: 129.33.196.199, user: b9s010a}
 
   - test:
@@ -134,7 +134,7 @@ hosts:
         win10-arm64-1: { vs: '2017' }
         win10-arm64-2: { vs: '2017' }
 
-    - pcc:
+    - ibm:
         aix71-ppc64_be-1: {ip: 129.33.196.197, user: b9s010a}
         aix71-ppc64_be-2: {ip: 129.33.196.198, user: b9s010a}
 

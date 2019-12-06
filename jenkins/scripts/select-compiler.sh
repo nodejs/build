@@ -103,9 +103,7 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
         return
       fi
       ;;
-  esac
-
-  case $NODE_NAME in
+    
     *aix71* )
       echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX7.1"
 
@@ -121,6 +119,7 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
       ;;
   esac
 
+  
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX61"
 
   if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
