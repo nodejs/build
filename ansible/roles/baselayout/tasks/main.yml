@@ -146,7 +146,7 @@
   when: "os == 'centos6'"
   yum:
     disable_gpg_check: true
-    name: "devtoolset-2-gcc,devtoolset-2-gcc-c++"
+    name: "devtoolset-2-gcc,devtoolset-2-gcc-c++,devtoolset-2-binutils"
     state: present
 
 - name: remove fortune from login shells

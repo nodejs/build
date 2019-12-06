@@ -56,7 +56,7 @@ hosts:
         ubuntu1604-armv7l-2: {ip: 212.47.234.107}
 
     - softlayer:
-        centos6-x64-1: {ip: 169.62.77.228}
+        centos6-x64-1: {ip: 50.97.245.10}
 
     - linuxonecc:
         rhel72-s390x-1: {ip: 148.100.110.65}
