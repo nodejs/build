@@ -90,7 +90,7 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
 elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
   case $NODE_NAME in
     *aix72* )
-      echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX72"
+      echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX7.2"
 
       if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
         export LIBPATH=/opt/gcc-6.3/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/ppc64:/opt/gcc-6.3/lib
@@ -103,8 +103,23 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
         return
       fi
       ;;
+    
+    *aix71* )
+      echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX7.1"
+
+      if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
+        export PATH="/opt/ccache-3.7.4/libexec:/opt/freeware/gcc6/bin:$PATH"
+        export CC="gcc" CXX="g++" CXX_host="g++"
+        echo "Compiler set to 6.3"
+        return
+      else
+        echo "Compiler left as system default:" `g++ -dumpversion`
+        return
+      fi
+      ;;
   esac
 
+  
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX61"
 
   if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
