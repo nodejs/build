@@ -45,10 +45,10 @@ valid = {
     'type': ('infra', 'release', 'test'),
 
     # providers - validated for consistency
-    'provider': ('azure', 'digitalocean', 'joyent', 'linuxonecc',
+    'provider': ('azure', 'digitalocean', 'ibm', 'joyent', 'linuxonecc',
                  'macstadium', 'marist', 'mininodes', 'msft', 'osuosl',
                  'rackspace', 'requireio', 'scaleway', 'softlayer', 'voxer',
-                 'packetnet', 'ibm', 'nearform')
+                 'packetnet', 'nearform')
 }
 DECRYPT_TOOL = "gpg"
 INVENTORY_FILENAME = "inventory.yml"

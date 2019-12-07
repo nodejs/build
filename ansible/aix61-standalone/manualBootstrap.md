@@ -76,6 +76,7 @@ curl -L https://ci.nodejs.org/downloads/aix/gcc-6.3-aix7.2.ppc.tar.gz | /opt/fre
 mkdir -p /opt/ccache-3.7.4 && cd /opt/ccache-3.7.4
 curl -L https://ci.nodejs.org/downloads/aix/ccache-3.7.4.aix7.2.ppc.tar.gz | /opt/freeware/bin/tar -xzf -
 ```
+
 ## Enable the AHA fs
 
 For AIX 7 and 6.1, needed for the file watcher unit tests.
@@ -333,8 +334,6 @@ tar -xf gmake-dep.tar
 
 
 ## Install python3
-
-AIX72: uneeded, installed by yum
 
 ```bash
 mkdir /tmp/i-files
