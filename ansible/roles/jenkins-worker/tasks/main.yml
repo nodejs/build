@@ -54,16 +54,16 @@
 # current hosts that has set RPMs already (in /data/devtoolset-6-s390x-rpms/).
 # Example:
 #   devtools6_s390x_src: test-linuxonecc-rhel72-s390x-1
-#- name: copy devtools-6 to control host
-#  local_action: command rsync -ar {{ devtools6_s390x_src }}:/data/devtoolset-6-s390x-rpms/ /tmp/devtoolset-6-s390x-rpms/
-#  when: "'rhel72-s390x' in inventory_hostname"
+- name: copy devtools-6 to control host
+  local_action: command rsync -ar {{ devtools6_s390x_src }}:/data/devtoolset-6-s390x-rpms/ /tmp/devtoolset-6-s390x-rpms/
+  when: "'rhel72-s390x' in inventory_hostname"
 
-#- name: copy devtools-6 to remote host
-#  synchronize:
-#    src: /tmp/devtoolset-6-s390x-rpms/
-#    dest: /data/devtoolset-6-s390x-rpms/
-#    recursive: true
-#  when: "'rhel72-s390x' in inventory_hostname"
+- name: copy devtools-6 to remote host
+  synchronize:
+    src: /tmp/devtoolset-6-s390x-rpms/
+    dest: /data/devtoolset-6-s390x-rpms/
+    recursive: true
+  when: "'rhel72-s390x' in inventory_hostname"
 
 - name: install devtools-6 on remote host
   shell: yum install -y /data/devtoolset-6-s390x-rpms/*
