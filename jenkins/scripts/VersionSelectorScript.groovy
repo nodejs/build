@@ -42,6 +42,7 @@ def buildExclusions = [
   [ /vs2015/,                         anyType,     lt(6)   ],
   [ /vs2015/,                         anyType,     gte(10) ],
   [ /vs2017/,                         anyType,     lt(10)  ],
+  [ /vs2019/,                         anyType,     lt(10)  ],
 
   // SmartOS -----------------------------------------------
   [ /^smartos15/,                     anyType,     lt(8)   ],
