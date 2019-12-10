@@ -151,6 +151,8 @@ An NFS root server can be separate from NFS boot server, and could be different 
 * `etc/fstab` in the root directory should be edited to make it NFS compatible. Remove the existing `/boot` and `/` entries and replace them with:
 
 ```
+
+```
 /dev/mmcblk0p1 /mnt/mmcblk0p1 vfat defaults 0 0
 NFS_ROOT_SERVER_IP:PATH_TO_SHARED_CCACHE_DIRECTORY /home/iojs/.ccache nfs4 rw,exec,async,noauto 0 0
 NFS_BOOT_SERVER_IP:PATH_TO_TFTP_BOOT_EXPORT /boot nfs4 nfsvers=3,rw,noexec,async,noauto 0 0
@@ -277,6 +279,30 @@ Notes:
 	$ cd cd /opt/ccache-3.7.4
 	$ tar -cf /opt/ccache-3.7.4.aix7.2.ppc.tar.gz *
 	```
+
+
+## rhel7-s390x
+
+### devtoolset-6 install
+
+First copy the rpms from a machine that already has them
+
+```
+scp -r test-ibm-rhel7-s390x-1:/data/devtoolset-6-s390x-rpms/ ~/devtoolset-6-s390x-rpms
+```
+
+Then copy them over to the target machine
+
+```
+scp -r ~/devtoolset-6-s390x-rpms {target host}:/data/devtoolset-6-s390x-rpms/
+```
+
+Then install the rpms
+
+```
+yum install -y /data/devtoolset-6-s390x-rpms/*
+```
+
 
 
 [`ansible.intro_windows`]: http://docs.ansible.com/ansible/intro_windows.html

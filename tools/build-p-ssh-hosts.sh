@@ -25,7 +25,7 @@ grep -- 'digitalocean' hosts/all > hosts/digitalocean
 grep -- 'infra-' hosts/all > hosts/infra
 grep -- 'joyent' hosts/all > hosts/joyent
 grep -- 'release-' hosts/all > hosts/release
-grep -- 'rhel72-s390x' hosts/all > hosts/rhel72-s390x
+grep -- 'rhel7-s390x' hosts/all > hosts/rhel7-s390x
 grep -- 'smartos' hosts/all > hosts/smartos
 grep -- 'softlayer' hosts/all > hosts/softlayer
 grep -- 'test-' hosts/all > hosts/test

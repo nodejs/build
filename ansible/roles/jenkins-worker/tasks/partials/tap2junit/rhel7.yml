@@ -1,7 +1,7 @@
 ---
 
 #
-# rhel72: python2.7 is default
+# rhel7: python2.7 is default
 #
 
 - name: install required packages
