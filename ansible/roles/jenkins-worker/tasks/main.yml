@@ -29,47 +29,11 @@
   group: name="{{ server_user }}"
 
 - name: create user
-  when: "not os|startswith('zos') and not 'rhel72-s390x' in inventory_hostname"
+  when: "not os|startswith('zos')"
   user:
     name: "{{ server_user }}"
     group: "{{ server_user }}"
     shell: "{{ bash_path[os|stripversion]|default('/bin/bash') }}"
-
-- name: create user for rhel72-s390x
-  user:
-    name: "{{ server_user }}"
-    group: "{{ server_user }}"
-    home: "/data/{{server_user }}"
-    shell: "{{ bash_path[os|stripversion]|default('/bin/bash') }}"
-  when: "'rhel72-s390x' in inventory_hostname"
-
-- name: create symbolic link for home directory on rhel72-s390x
-  file:
-    src: "/data/{{ server_user }}"
-    dest: "/home/{{ server_user }}"
-    state: link
-  when: "'rhel72-s390x' in inventory_hostname"
-
-# devtools6_s390x_src should be defined in the host_vars file to be one of
-# current hosts that has set RPMs already (in /data/devtoolset-6-s390x-rpms/).
-# Example:
-#   devtools6_s390x_src: test-linuxonecc-rhel72-s390x-1
-- name: copy devtools-6 to control host
-  local_action: command rsync -ar {{ devtools6_s390x_src }}:/data/devtoolset-6-s390x-rpms/ /tmp/devtoolset-6-s390x-rpms/
-  when: "'rhel72-s390x' in inventory_hostname"
-
-- name: copy devtools-6 to remote host
-  synchronize:
-    src: /tmp/devtoolset-6-s390x-rpms/
-    dest: /data/devtoolset-6-s390x-rpms/
-    recursive: true
-  when: "'rhel72-s390x' in inventory_hostname"
-
-- name: install devtools-6 on remote host
-  shell: yum install -y /data/devtoolset-6-s390x-rpms/*
-  async: 3600
-  poll: 10
-  when: "'rhel72-s390x' in inventory_hostname"
 
 - name: add ::1 to /etc/hosts for ipv6 compat
   when: not os|startswith("zos")
