@@ -294,13 +294,13 @@ scp -r test-ibm-rhel7-s390x-1:/data/devtoolset-6-s390x-rpms/ ~/devtoolset-6-s390
 Then copy them over to the target machine
 
 ```
-scp -r ~/devtoolset-6-s390x-rpms {target host}:/data/devtoolset-6-s390x-rpms/
+scp -r ~/devtoolset-6-s390x-rpms {target host}:~/devtoolset-6-s390x-rpms/
 ```
 
 Then install the rpms
 
 ```
-yum install -y /data/devtoolset-6-s390x-rpms/*
+yum install -y devtoolset-6-s390x-rpms/*
 ```
 
 
