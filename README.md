@@ -28,6 +28,7 @@ to the resources we manage.
 
 <!-- ncu-team-sync.team(nodejs/build) -->
 
+- [@addaleax](https://github.com/addaleax) - Anna Henningsen
 - [@bnoordhuis](https://github.com/bnoordhuis) - Ben Noordhuis
 - [@gdams](https://github.com/gdams) - George Adams
 - [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil
