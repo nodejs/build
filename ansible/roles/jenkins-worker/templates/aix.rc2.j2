@@ -20,7 +20,7 @@ start )
               export HOME=/home/{{server_user}}; \
               export NODE_TEST_DIR=$HOME/tmp; \
               export NODE_COMMON_PIPE="$HOME/test.pipe"; \
-              export OSTYPE=AIX7; \
+              export OSTYPE=AIX72; \
         /home/{{server_user}}/jdk8u192-b12-jre/bin/java -Xmx128m -Dorg.jenkinsci.plugins.gitclient.Git.timeOut=30 -jar "$HOME/slave.jar" \
           -secret {{secret}} \
           -jnlpUrl {{jenkins_url}}/computer/{{inventory_hostname}}/slave-agent.jnlp >$jenkins_log_file 2>&1 &'
