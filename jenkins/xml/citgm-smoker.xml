@@ -210,7 +210,7 @@ e.x. citgm omg-i-pass # this too shall pass</description>
         <string>osx1010</string>
         <string>ppcbe-ubuntu1404</string>
         <string>ppcle-ubuntu1404</string>
-        <string>rhel7-s390x</string>
+        <string>rhel72-s390x</string>
         <string>ubuntu1204-64</string>
         <string>ubuntu1404-64</string>
         <string>ubuntu1604-64</string>
