@@ -112,7 +112,7 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - debian9-docker-armv7 (Node >= 10)
     - ubuntu1604-arm64 
   - **node-test-commit-linuxone**
-    - rhel72-s390x (Node >= 6)
+    - rhel7-s390x (Node >= 6)
   - **node-test-commit-aix**
     - aix61-ppc64 (Node >= 6)
   - **node-test-commit-arm-fanned**

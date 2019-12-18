@@ -86,7 +86,7 @@ packages: {
     'python@2,python,ccache'
   ],
 
-  rhel72: [
+  rhel7: [
     'gcc-c++,sudo,git,zip,unzip',
   ],
 

@@ -28,12 +28,6 @@
     - name: check if secret is properly set
       fail:
       failed_when: not secret
-# Requires `additional_drive: /dev/dasdb1` to be in the ansible/host_vars/HOST
-# file, where HOST is the full ansible host name.
-    - name: check if additional_drive is properly set
-      fail:
-      failed_when: not additional_drive
-      when: "'rhel72-s390x' in inventory_hostname"
 
   environment: '{{remote_env}}'
 

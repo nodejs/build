@@ -42,6 +42,7 @@
   shell: coreadm -i /home/iojs/cores/core.%f.%p -e process -d global
 
 - name: disable sftp
+  when: not "'rhel7-s390x' in inventory_hostname"
   notify: restart sshd
   lineinfile: state=absent dest="{{ ssh_config }}" regexp=^Subsystem(\s+)sftp
 
@@ -56,7 +57,7 @@
       skip: true
 
 - name: check for a recent enough ccache
-  when: os in ccache_no_binpkg or 'rhel72-s390x' in inventory_hostname
+  when: os in ccache_no_binpkg or 'rhel7-s390x' in inventory_hostname
   stat: path="{{ binary_dest }}"
   register: has_ccache
 
@@ -175,7 +176,7 @@
     line: '127.0.1.1        {{safe_hostname}}'
 
 - name: run ccache installer
-  when: os == "rhel72" and arch == "s390x" and not has_ccache.stat.exists
+  when: os == "rhel7" and arch == "s390x" and not has_ccache.stat.exists
   include: ccache.yml
   static: false
   vars:
