@@ -7,6 +7,11 @@
 - name: install NetWide Assembler
   win_chocolatey: name=nasm
 
+- name: install CMake
+  win_chocolatey:
+    name: cmake
+    install_args: 'ADD_CMAKE_TO_PATH=System'
+
 - name: install Python 3
   win_chocolatey: name=python
 
