@@ -418,7 +418,8 @@ Device /dev/ramdisk1:
   Standard empty filesystem
   Size:           22908776 512-byte (DEVBLKSIZE) blocks
 # mount -V jfs2 -o log=/dev/ramdisk1 /dev/ramdisk1 /home/iojs/build
-# chown iojs:staff /home/iojs/build
+# mkdir /home/iojs/build/.ccache
+# chown iojs:staff /home/iojs/build /home/iojs/build/.ccache
 # ls -l /dev/*ramdisk*
 brw-------    1 root     system       36,  0 Jun 18 12:13 /dev/ramdisk0
 brw-------    1 root     system       36,  1 Jun 18 12:14 /dev/ramdisk1
