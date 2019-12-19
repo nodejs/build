@@ -73,6 +73,31 @@
         - "{{ role_path }}/tasks/partials/tap2junit/pip.yml"
       skip: true
 
+- name: Firewall | add rule to allow accepting multicast
+  lineinfile:
+    dest: /etc/sysconfig/iptables
+    insertafter: ":OUTPUT ACCEPT.*]"
+    line: "-A INPUT -m pkttype --pkt-type multicast -j ACCEPT"
+  when: "'rhel7-s390x' in inventory_hostname"
+
+- name: Firewall | add basic rule to allow communication locally
+  lineinfile:
+    dest: /etc/sysconfig/iptables
+    insertafter: ":OUTPUT ACCEPT.*]"
+    line: "-A INPUT -s 127.0.0.1/32 -d 127.0.0.1/32 -j ACCEPT"
+  when: "'rhel7-s390x' in inventory_hostname"
+
+- name: Firewall | add additional rule to allow communication from 127.0.0.2
+  lineinfile:
+    dest: /etc/sysconfig/iptables
+    insertafter: ":OUTPUT ACCEPT.*]"
+    line: "-A INPUT -s 127.0.0.2/32 -d 127.0.0.1/32 -j ACCEPT"
+  when: "'rhel7-s390x' in inventory_hostname"
+
+- name: Firewall | make the new firewall rules take effect
+  command: systemctl restart iptables
+  when: "'rhel7-s390x' in inventory_hostname"
+
 - name: download slave.jar
   when: not os|startswith("zos")
   get_url:
