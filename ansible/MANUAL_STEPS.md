@@ -1,5 +1,18 @@
 # Manual steps required to run ansible on machines
 
+## RHEL7-S390X
+1. V8 build-tools
+
+Copy `/home/iojs/build-tools/{gn,ninja}` from any other RHEL7-S390X host that
+has them to the newly provisioned one. Confirm `gn --version` is at least
+`1620`.
+
+If building from scratch, gn is built from  https://gn.googlesource.com/gn,
+and ninja is built from https://github.com/ninja-build/ninja.
+
+Note: If https://bugs.chromium.org/p/chromium/issues/detail?id=1029662 is
+resolved this will no longer be necessary.
+
 ## macOS
 1. Update Sudoers file:
 
