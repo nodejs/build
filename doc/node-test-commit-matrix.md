@@ -121,17 +121,7 @@ Running the resulting binaries from every supported Visual Studio version in eve
 
 The following combinations are used:
 
-#### Node.js version 8
-
-| Binaries produced by: | Run in Windows version: | Test add-ons with: |
-|-----------------------|-------------------------|--------------------|
-| VCBT 2015             | 10                      | VCBT 2015          |
-| VS 2015               | 2008R2                  | VS 2017            |
-|                       | 2012R2                  | VS 2013, VS 2015   |
-| VS 2015 (x86)         | 2012R2                  | VS 2015            |
-| VS 2017               | 2016                    | VS 2017            |
-
-#### Node.js versions 9 to 12
+#### Node.js versions 10 & 12
 
 | Binaries produced by: | Run in Windows version: | Test add-ons with: |
 |-----------------------|-------------------------|--------------------|
