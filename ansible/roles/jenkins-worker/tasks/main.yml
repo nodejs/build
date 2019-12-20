@@ -73,6 +73,21 @@
         - "{{ role_path }}/tasks/partials/tap2junit/pip.yml"
       skip: true
 
+- name: Firewall | enable iptables
+  command: systemctl enable iptables
+  when: "'rhel7-s390x' in inventory_hostname"
+
+- name: Firewall | check for firewalld
+  raw: stat /usr/sbin/firewalld
+  register: has_firewalld
+  failed_when: has_firewalld.rc > 1
+  when: "'rhel7-s390x' in inventory_hostname"
+
+- name: Firewall | remove firewalld
+  when: has_firewalld.rc == 0
+  raw: yum remove -y firewalld
+  when: "'rhel7-s390x' in inventory_hostname"
+
 - name: Firewall | add rule to allow accepting multicast
   lineinfile:
     dest: /etc/sysconfig/iptables
