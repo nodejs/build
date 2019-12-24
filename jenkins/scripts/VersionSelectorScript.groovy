@@ -61,8 +61,9 @@ def buildExclusions = [
 
   // AIX ppc64 ---------------------------------------------
   [ /aix61/,                          anyType,     lt(6)   ],
-  [ /aix71/,                          anyType,     lt(14)  ],
-  [ /aix71/,                          releaseType, lt(15)  ],
+  [ /aix61/,                          anyType,     gt(13)  ],
+  [ /aix71/,                          anyType,     lt(13)  ],
+  [ /aix71/,                          releaseType, lt(14)  ],
 
   // Shared libs docker containers -------------------------
   [ /sharedlibs_openssl111/,          anyType,     lt(11)  ],
