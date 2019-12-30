@@ -1,5 +1,6 @@
 // Helper closures to make our buildExclusions DSL terse and readable
 def gte = { v -> { nodeVersion -> nodeVersion >= v} }
+def gt = { v -> { nodeVersion -> nodeVersion > v} }
 def lt = { v -> { nodeVersion -> nodeVersion < v} }
 def releaseType = { buildType -> buildType == 'release' }
 def anyType = { buildType -> true }
