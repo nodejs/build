@@ -1,4 +1,24 @@
-# Manual steps required to run ansible on machines
+# Manual steps required to setup machines
+
+## `release-*` machines
+
+Once setup, they must have `~iojs/.ssh` cloned from another machine, so they
+have the ssh setup and keys required to upload release artifacts to the
+nodejs.org web server. The result will be 2 files, an `id_rsa` containing
+a private key, and a config containing:
+```
+Host node-www
+  HostName direct.nodejs.org
+  User staging
+  IdentityFile ~/.ssh/id_rsa
+```
+
+Its necessary to accept the `known_hosts` keys interactively on first ssh or
+the release builds will fail. After setting up .ssh, do something like this:
+```
+ssh node-www date
+// ... accept the host keys
+```
 
 ## RHEL7-S390X
 1. V8 build-tools
