@@ -64,14 +64,14 @@ mkdir -p /opt/gcc-6.3 && cd /opt/gcc-6.3
 curl -L https://ci.nodejs.org/downloads/aix/gcc-6.3-aix7.2.ppc.tar.gz | /opt/freeware/bin/tar -xzf -
 ```
 
-## ccache 3.7.4 on AIX 7.2
+### ccache 3.7.4 on AIX 7.2
 
 ```bash
 mkdir -p /opt/ccache-3.7.4 && cd /opt/ccache-3.7.4
 curl -L https://ci.nodejs.org/downloads/aix/ccache-3.7.4.aix7.2.ppc.tar.gz | /opt/freeware/bin/tar -xzf -
 ```
 
-## Enable the AHA fs
+### Enable the AHA fs
 
 For AIX 7 and 6.1, needed for the file watcher unit tests.
 
@@ -92,7 +92,7 @@ mkdir /aha
 mount /aha
 ```
 
-## Install XL compilers
+### Install XL compilers
 
 1. Download 16.1.0 packages from: https://testcase.boulder.ibm.com (username:
    xlcomp4, password: ask @mhdawson)
@@ -109,5 +109,24 @@ installp -aXgd ./ -e /tmp/install.log all
 4. Find compilers in `/opt/IBM/xl[cC]/16.1.0/bin/`
 
 
+### Fix "Missing" shared objects
 
+On the 7.1 machines we were facing this issues when yum installed packages were
+not able to find some of the shared objects they needed
 
+```sh
+bash-5.0$ gmake -v
+exec(): 0509-036 Cannot load program gmake because of the following errors:
+        0509-022 Cannot load module /opt/freeware/lib/libintl.a(libintl.so.8).
+        0509-150   Dependent module /usr/lib/libiconv.a(libiconv.so.2) could not be loaded.
+        0509-152   Member libiconv.so.2 is not found in archive
+        0509-022 Cannot load module make_64.
+        0509-150   Dependent module /opt/freeware/lib/libintl.a(libintl.so.8) could not be loaded.
+        0509-022 Cannot load module .
+```
+
+The fix is as follows:
+
+```sh
+sudo rm /usr/lib/libiconv.a && sudo ln -s /opt/freeware/bin/libiconv.a /usr/lib
+```
