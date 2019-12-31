@@ -19,14 +19,22 @@ def buildExclusions = [
   [ /centos[67]-(arm)?(64|32)-gcc6/,  anyType,     lt(10)  ],
   [ /centos6-32-gcc6/,                releaseType, gte(10) ], // 32-bit linux for <10 only
   [ /^centos7-64/,                    releaseType, lt(12)  ],
-  [ /^centos7-ppcle/,                 anyType,     lt(10)  ],
-  [ /^ppcle-ubuntu/,                  releaseType, gte(10) ],
   [ /debian8-x86/,                    anyType,     gte(10) ], // 32-bit linux for <10 only
   [ /debian8/,                        anyType,     gte(13) ],
   [ /^ubuntu1804/,                    anyType,     lt(10)  ], // probably temporary
   [ /^ubuntu1404-32/,                 anyType,     gte(10) ], // 32-bit linux for <10 only
   [ /^ubuntu1404-64/,                 anyType,     gte(12) ],
   [ /^ubuntu1604-32/,                 anyType,     gte(10) ], // 32-bit linux for <10 only
+
+  // Linux PPC LE ------------------------------------------
+  [ /^centos7-ppcle/,                 anyType,     lt(10)  ],
+  [ /^ppcle-ubuntu/,                  releaseType, gte(10) ],
+
+  // Linux PPC BE ------------------------------------------
+  [ /^ppcbe-ubuntu/,                  anyType,     gte(8)  ],
+
+  // Linux S390X --------------------------------------------
+  [ /s390x/,                          anyType,     lt(6)   ],
 
   // ARM  --------------------------------------------------
   [ /^debian8-docker-armv7$/,         releaseType, lt(10)  ],
@@ -54,13 +62,7 @@ def buildExclusions = [
   [ /^smartos17/,                     anyType,     gte(12) ],
   [ /^smartos18/,                     anyType,     lt(12)  ],
 
-  // PPC BE ------------------------------------------------
-  [ /^ppcbe-ubuntu/,                  anyType,     gte(8)  ],
-
-  // RHEL s390x --------------------------------------------
-  [ /s390x/,                          anyType,     lt(6)   ],
-
-  // AIX ppc64 ---------------------------------------------
+  // AIX PPC64 ---------------------------------------------
   [ /aix61/,                          anyType,     lt(6)   ],
   [ /aix61/,                          anyType,     gt(13)  ],
   [ /aix71/,                          anyType,     lt(13)  ],
