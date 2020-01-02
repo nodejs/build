@@ -2,7 +2,6 @@
 // https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
 
 // Helper closures to make our buildExclusions DSL terse and readable
-def gt = { v -> { nodeVersion -> nodeVersion > v} }
 def lt = { v -> { nodeVersion -> nodeVersion < v } }
 def gte = { v -> { nodeVersion -> nodeVersion >= v } }
 def ltGte = { vLt, vGte -> { nodeVersion -> lt(vLt)(nodeVersion) || gte(vGte)(nodeVersion) } }
@@ -92,7 +91,7 @@ def buildExclusions = [
 
   // AIX PPC64 ---------------------------------------------
   [ /aix61/,                          anyType,     lt(6)   ],
-  [ /aix61/,                          anyType,     gt(13)  ],
+  [ /aix61/,                          anyType,     gte(14) ],
   [ /aix71/,                          anyType,     lt(13)  ],
   [ /aix71/,                          releaseType, lt(14)  ],
 
