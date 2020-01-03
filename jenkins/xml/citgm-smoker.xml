@@ -208,7 +208,6 @@ e.x. citgm omg-i-pass # this too shall pass</description>
         <string>fedora22</string>
         <string>fedora23</string>
         <string>osx1010</string>
-        <string>ppcbe-ubuntu1404</string>
         <string>ppcle-ubuntu1404</string>
         <string>rhel72-s390x</string>
         <string>ubuntu1204-64</string>
