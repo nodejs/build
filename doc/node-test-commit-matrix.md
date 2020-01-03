@@ -125,7 +125,6 @@ The following combinations are used:
 | Binaries produced by: | Run in Windows version: | Test add-ons with: |
 |-----------------------|-------------------------|--------------------|
 | VS 2017               | 10                      | VCBT 2015          |
-|                       | 2008R2 (until EOL)      | VS 2017            |
 |                       | 2016                    | VS 2017            |
 | VS 2017 (x86)         | 2012R2                  | VS 2015            |
 
@@ -134,7 +133,6 @@ The following combinations are used:
 | Binaries produced by: | Run in Windows version: | Test add-ons with: |
 |-----------------------|-------------------------|--------------------|
 | VS 2017               | 2016                    | VS 2017            |
-|                       | 2008R2 (until EOL)      | VS 2017            |
 | VS 2019               | 10                      | VCBT 2015, VS 2019 |
 | VS 2019 (x86)         | 2012R2                  | VS 2015, VS 2019   |
 
@@ -145,7 +143,6 @@ The following combinations are used:
 | 4 | 10      | VCBT 2015     | All       | Azure     |       |
 | 4 | 10      | VS 2019       | Test Only | Azure     |       |
 | 6 | 2016    | VS 2017       | Test Only | Azure     |       |
-| 4 | 2008R2  | VS 2017       | Test Only | Rackspace | Remove at Windows 2008 EOL |
 | 2 | 2012R2  | VS 2013       | All       | Rackspace | Remove at Node.js 8 EOL |
 | 2 | 2012R2  | VS 2015       | All       | Rackspace |       |
 | 4 | 2012R2  | VS 2017       | All       | Rackspace |       |

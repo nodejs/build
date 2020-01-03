@@ -73,7 +73,6 @@ def buildExclusions = [
   [ /vs2019-COMPILED_BY/,             testType,    lt(12)        ],
   // Exclude some redundant configurations
   // https://github.com/nodejs/build/blob/master/doc/node-test-commit-matrix.md
-  [ /win2008r2.*COMPILED_BY-vs2017/,  testType,    lt(10)        ], // vs2015 runs on win2008 for <10
   [ /win10.*COMPILED_BY-vs2017/,      testType,    lt(10)        ], // vcbt2015 runs on win10 for <10
   [ /win10.*COMPILED_BY-vs2017/,      testType,    gte(13)       ], // vs2019 runs on win10 for >=13
 
