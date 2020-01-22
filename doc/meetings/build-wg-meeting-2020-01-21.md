@@ -13,7 +13,7 @@
 * Rod Vagg (@rvagg)
 * Ash Cripps (@AshCripps)
 * Sam Roberts (@sam-github)
-* Rich Trott
+* Rich Trott (@Trott)
 
 ## Agenda
 
