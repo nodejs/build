@@ -58,7 +58,7 @@
 * Node 14, build infra requirements
   * Richard to create issue and tag for agenda.
 
-* Ashley, should we do membership? 
+* Ashley, should we audit membership? 
   * Agreed, Ashley will start the membership review process.
 
 ## Q&A, Other
