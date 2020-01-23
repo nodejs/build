@@ -86,6 +86,20 @@ packages: {
     'python@2,python,ccache'
   ],
 
+  'macos10.13': [
+    'python@2,python,ccache'
+  ],
+
+
+  'macos10.14': [
+    'python@2,python,ccache'
+  ],
+
+
+  'macos10.15': [
+    'python@2,python,ccache'
+  ],
+
   rhel7: [
     'gcc-c++,sudo,git,zip,unzip,iptables-services,GConf2-devel',
   ],
