@@ -61,6 +61,27 @@
     dest: "/usr/bin/java"
     state: link
 
+- name: download java on s390x
+  when: os == "rhel7" and arch == "s390x"
+  get_url:
+    url: https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u242-b08_openj9-0.18.1/OpenJDK8U-jdk_s390x_linux_openj9_8u242b08_openj9-0.18.1.tar.gz
+    dest: /tmp/
+
+- name: unarchive java s390x
+  when: os == "rhel7" and arch == "s390x"
+  unarchive:
+    src: /tmp/OpenJDK8U-jdk_s390x_linux_openj9_8u242b08_openj9-0.18.1.tar.gz
+    remote_src: yes
+    dest: /opt
+  tags: java
+
+- name: symlink java s390x
+  when: os == "rhel7" and arch == "s390x"
+  file:
+    src: "/opt/jdk8u242-b08/bin/java"
+    dest: "/usr/bin/java"
+    state: link
+
 # if this fails you want to check in vars/main.yml and add package name
 # as appropriate -- try to use generic os family if available.
 
