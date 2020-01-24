@@ -28,7 +28,7 @@ WG seats are not time-limited.  There is no fixed size of the WG.
 The Build WG is comprised of individuals who are interested in managing servers
 and the services that are managed on behalf of the Node.js project. Membership
 is determined by the group itself, with existing, active, members voting on
-proposals to add new members. You can see existing [Build WG members][] on the
+proposals to add new members. You can see existing [Build WG members](./README.md#build-wg-members) on the
 README.
 
 When considering new members, the Build WG is primarily concerned with
@@ -101,6 +101,10 @@ do not have the time to continue working on the project. Any emeritus
 member may rejoin the working group following consensus from the current
 working group.
 
+The Build Working Group is split into 3 tiers - Build-Test, Build-Release and
+Build-Infra. To see what access the 3 tiers give and what other access is available
+to member of the Working Groups see [access.md][]
+
 ### WG Meetings
 
 The WG meets fortnightly on a Zoom Webinar. A designated moderator
@@ -133,7 +137,7 @@ agenda item and sends it as a pull request after the meeting.
 
 ### Consensus Seeking Process
 
-The WG follows a [Consensus Seeking][] decision-making model.
+The WG follows a Consensus Seeking decision-making model.
 
 When an agenda item has appeared to reach a consensus the moderator
 will ask "Does anyone object?" as a final call for dissent from the
@@ -158,3 +162,6 @@ The [Node.js Code of Conduct][] applies to this WG.
 [Node.js Code of Conduct]: https://github.com/nodejs/TSC/blob/master/CODE_OF_CONDUCT.md
 [Node.js Moderation Policy]: https://github.com/nodejs/TSC/blob/master/Moderation-Policy.md
 [the onboarding doc]: /ONBOARDING.md
+[IRC]: /README.md#nodejs-build-working-group
+[#524]: https://github.com/nodejs/build/pull/524
+[access.md]: /doc/access.md
