@@ -3,67 +3,41 @@
 This document is an outline of the things we tell new Build WG members at their
 onboarding session.
 
-### Before the onboarding session
+## Onboarding checklists
 
-* Email the new member and obtain their public GPG key
-* Add them to the `test` group in `nodejs-private/secrets`
-* Add them to the `nodejs/build` and `nodejs-private/build` GitHub teams
-* Ask them to start looking over `services.md` and `jenkins-guide.md`,
-  and to try and have any questions ready
-* Ask the onboardee to install:
-  * Ruby and the `dotgpg` gem
-  * Python 2.7 and Ansible
+### Onboarding to build-test issue checklist
 
-### General information
-
-* Responsibilities: The Build WG manages everything in
-  [`doc/services.md`](doc/services.md)
-* Members/"who does what"/interest areas
-* Technologies and software in use
-
-### CI/Jenkins
-
-* Public CI (ci.nodejs.org)
-  * `nodejs/jenkins-admins` are administrators
-  * Tests Node.js itself, and several other Foundation projects
-* Release CI (ci-release.nodejs.org)
-  * `nodejs/jenkins-release-admins` are administrators
-  * What creates and publishes all releases of Node.js
-
-### Secrets
-
-* All production secrets are stored in the `build` directory of the
-[`nodejs-private/secrets` repository][]
-* The access groups are explained in [`doc/access.md`](doc/access.md)
-* Say you want to decrypt the file `a.txt`, you'd run `dotgpg cat a.txt`
-* Follow the instructions in [`doc/ssh.md`](doc/ssh.md) to setup the secrets
-  repo and SSH access locally
-
-### Ansible
-
-* Ansible scripts are used to setup and maintain all machines
-* See [`doc/services.md`](doc/services.md) for which playbooks
-  correspond to different machines
-* Go over [`ansible/README.md`](ansible/README.md) for Ansible setup
-  instructions
-* Have the onboardee practice running the `jenkins/worker/create.yml` playbook
+- [ ] Email the new member and obtain their public GPG key
+- [ ] Add them to the `test` group in `nodejs-private/secrets`
+- [ ] Add them to the `nodejs/build` and `nodejs-private/build` GitHub teams
+- [ ] Schedule a meeting with the member to:
+    - [ ] Walk them through the infrastructure and what other members do 
+    - [ ] Explain how to decrypt nodejs/secrets 
+    - [ ] Practice running the `jenkins/worker/create.yml` playbook
   on one of the machines in the test CI cluster
-* Windows access
+    - [ ] Answer any questions they may have
+- [ ] Before the meeting the Onboardee is to:
+  - [ ] Install Ruby and the `dotgpg` gem
+  - [ ] Install Python and Ansible
+  - [ ] Read `services.md`. `jenkins-guide.md`,
+    `GOVERNANCE.md` and to try and have any questions ready
+- [ ] PR changes to [README.md](./README.md#build-wg-members) to add the member to build-test
 
-### Communication
 
-* GitHub Issues are used to manage tasks within the Build WG
-* Use GitHub Pull Requests to suggest, and then land, changes
-  * Keep open for at least 48 hours during the week (72 hours on the weekend)
-  * Get at least one approval from another WG member
-  * Land PRs with the same commit metadata you'd use in `nodejs/node`
-* IRC (specifically `#node-build` is important for communicating with
-  other Node.js project members, and how we receive many initial signals
-  of downtime
-    * IRC logs are maintained at http://logs.libuv.org/node-build
-* Build WG meetings are every 2-3 weeks, and you should try and attend
-  as many as possible. The meetings are listed in the [Node.js
-Foundation calendar][].
+All members that are onboarded to the build-release and build-infra teams
+should already be a member of build-test so the checklist is shorter
+
+### Onboarding to build-release issue checklist
+
+- [ ] Email the new member and obtain their public GPG key
+- [ ] Add them to the `release` group in `nodejs-private/secrets`
+
+
+### Onboarding to build-infra issue checklist
+
+- [ ] Email the new member and obtain their public GPG key
+- [ ] Add them to the `infra` group in `nodejs-private/secrets`
+
 
 [`nodejs-private/secrets` repository]: https://github.com/nodejs-private/secrets
 [Node.js Foundation calendar]: https://nodejs.org/calendar
