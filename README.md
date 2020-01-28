@@ -298,7 +298,7 @@ are required. After that the configuration will be removed.
 [22]:   https://www.intel.com/
 [23]:   https://www.macstadium.com/
 [24]:   https://www.packet.net/
-[access.md]: ./doc/access.md
+[resources.md]: ./doc/resources.md
 [governance.md]: ./GOVERNANCE.md
 [node]: https://nodejs.org/
 [ns]:   https://nodesource.com/

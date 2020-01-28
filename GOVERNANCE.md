@@ -117,7 +117,7 @@ working group.
 
 The Build Working Group is split into 3 tiers - Build-Test, Build-Release and
 Build-Infra. To see what access the 3 tiers give and what other access is available
-to member of the Working Groups see [access.md][]
+to member of the Working Groups see [resources.md][]
 
 ### WG Meetings
 
@@ -264,4 +264,4 @@ The [Node.js Code of Conduct][] applies to this WG.
 [the onboarding doc]: /ONBOARDING.md
 [IRC]: /README.md#nodejs-build-working-group
 [#524]: https://github.com/nodejs/build/pull/524
-[access.md]: /doc/access.md
+[resources.md]: /doc/resources.md
