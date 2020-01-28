@@ -6,15 +6,12 @@ pipeline {
         string(name: 'GITHUB_ORG', defaultValue: 'nodejs', description: 'The user/org of the GitHub repo')
         string(name: 'REPO_NAME', defaultValue: 'node', description: 'The name of the repo')
         string(name: 'GIT_REMOTE_REF', defaultValue: 'refs/heads/master', description: 'The remote portion of the Git refspec to fetch and test')
-        string(name: 'REBASE_ONTO', defaultValue: '', description: 'Optionally, rebase onto the given ref before testing. Leave blank to skip rebasing.')
-        string(name: 'POST_REBASE_SHA1_CHECK', defaultValue: '', description: 'After rebasing, check that the resulting commit sha1 matches the given one. If left blank, no check is performed.')
-        string(name: 'CONFIG_FLAGS', defaultValue: '', description: 'Add arguments to ./configure.')
     }
 
     stages {
         stage("Setup repository") {
             steps {
-                checkout(poll: false, scm: [
+                checkout(changelog: false, poll: false, scm: [
                     $class: 'GitSCM',
                     branches: [[
                         name: 'refs/heads/_jenkins_local_branch'
@@ -22,7 +19,6 @@ pipeline {
                     userRemoteConfigs: [[
                         credentialsId: "96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c",
                         url: "git@github.com:${params.GITHUB_ORG}/${params.REPO_NAME}",
-                        refspec: "+refs/heads/*:refs/remotes/origin/* +${params.GIT_REMOTE_REF}:refs/remotes/origin/_jenkins_local_branch"
                     ]]
                 ])
             }
@@ -38,19 +34,30 @@ pipeline {
             }
         }
 
+
         stage('Build linting tools') {
             steps {
                 // Calling with `returnStatus` suppresses automatic failures
                 sh(script: "${env.MAKE} lint-md-build", returnStatus: true)
+                sh(script: "${env.MAKE} lint-py-build", returnStatus: true)
             }
         }
          
         stage('Run tests') {
             steps {
                 script {
+                    def node_version = sh(script: "python  tools/getnodeversion.py", returnStdout: true).trim()
+                    echo node_version
+                    def node_version_parts = node_version.tokenize('.')
+                    def node_major = node_version_parts[0] as int
+                    def lint_py3_ret = 0
+                    if (node_major > 11) {
+                    // this job does not build node, so we use the system's node 
+                      lint_py3_ret = sh(script: "NODE=node PYTHON=python3 ${env.MAKE} lint-py", returnStatus: true)
+                    }
                     // this job does not build node, so we use the system's node 
                     def ret = sh(script: "NODE=node ${env.MAKE} lint-ci", returnStatus: true)
-                    if (ret != 0) {
+                    if (ret != 0 || lint_py3_ret != 0) {
                         echo(extractErrors())
                         error('lint failed - open above section for details')
                     }
