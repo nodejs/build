@@ -17,7 +17,7 @@
   * [email](#email)
 * [NPM Management](#npm-management)
 
-This document describes resources and assets are managed by the
+This document describes resources and assets managed by the
 Build Working Group.
 
 _Note that links to `@nodejs/` teams in this document are not visible to people

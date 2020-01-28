@@ -155,7 +155,7 @@ The Build Working Group uses GitHub Issues to manage tasks. GitHub Pull Requests
 These Pull Requests must be:
   * Keep open for at least 48 hours during the week (72 hours on the weekend)
   * Get at least one approval from another WG member
-  * Land PRs with the same commit metadata you'd use in `nodejs/node`
+  * Use the squash merge button workflow on Github
 
 
 [IRC], specifically `#node-build` is important for communicating with
