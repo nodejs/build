@@ -1,7 +1,7 @@
 # Access to Node.js Infrastructure
 
-* [Build Working Group Membership](#build-working-group-membership)
 * [Resource Access](#resource-access)
+  * [Ansible configuration](#ansible-configuration)
   * [Test servers](#test-servers)
   * [Infra servers](#infra-servers)
     * [IaaS services](#iaas-services)
@@ -9,14 +9,16 @@
     * [Certificates](#certificates)
   * [Release servers](#release-servers)
     * [Certificates](#certificates-1)
+  * [Nodejs.org](#nodejs.org)
   * [ci.nodejs.org](#cinodejsorg)
     * [Jenkins admins](#jenkins-admins)
   * [ci-release.nodejs.org](#ci-releasenodejsorg)
   * [GitHub Bot](#github-bot)
+  * [email](#email)
 * [NPM Management](#npm-management)
 
-This document describes which groups have access to which assets managed by the
-Build Working Group and how membership of those groups is managed.
+This document describes resources and assets are managed by the
+Build Working Group.
 
 _Note that links to `@nodejs/` teams in this document are not visible to people
 who aren't in the Nodejs organization, and the [secrets repo][] is only visible
@@ -33,6 +35,12 @@ to. Secrets are encrypted and accessible only to a pre-defined set of personal
 GPG keys, so access to the repo does not itself give access to any of the
 secrets within. Individuals with different levels of access are able to use
 their GPG keys to decrypt a broader range of secrets.
+
+### Ansible configuration
+
+Ansible is the tool used to managed all machines that the Build WG is responsible for.
+
+Secrets for Ansible scripts live within the `build` directory of the [`nodejs-private/secrets`](https://github.com/nodejs-private/secrets/tree/master/build) repository. Access to credentials is granted upon joining the build team.
 
 ### Test servers
 
@@ -52,18 +60,6 @@ encountered with these servers. This is not a small amount of trust and
 individuals should be conscious of the impact of their activities and **always
 ask for assistance where there is uncertainty**.
 
-We expect that even if you are given access to Test servers, Build WG members
-should:
-
-1. Not operate too far beyond their competence level without assistance.
-   Humility is the key. Hubris gets you, and us, in trouble.
-2. Operate in a collaborative manner _as much as possible_. The more
-   communication the better and team behavior is what we expect.
-3. Be sensitive to the complex web of concerns that surround our infrastructure.
-   This will take some getting used to, but know that there are often very good
-   reasons that things may not be according to what you think is the optimal
-   situation. For example: we are dealing with donated resources and we often
-   have to perform careful balancing-acts to foster these relationships.
 
 ### Infra servers
 
@@ -125,7 +121,14 @@ In addition to servers, release has access to:
 - [Apple][] (for pkg signing)
 - [Digicert for Authenticode][] (for binary signing)
 
+### nodejs.org
+
+`nodejs.org` is the main website for the Node.js Foundation. Its Ansible configuration lives in [`setup/www`](https://github.com/nodejs/build/tree/master/setup/www)
+
 ### [ci.nodejs.org](https://ci.nodejs.org)
+
+`ci.nodejs.org` is the main Jenkins setup used to test projects within
+the Node.js Foundation, the largest being Node itself.
 
 This is a publicly accessible resource, only a GitHub account is required to
 gain read-access. [@nodejs/collaborators][] have access to run Node core tests.
@@ -141,6 +144,20 @@ jobs. For example, the [post-mortem jobs][] are managed by
 [@nodejs/post-mortem][], and configured by [@nodejs/post-mortem-admins][].
 For more info see the [Jenkins access doc][].
 
+There are several different types of machines that form the test CI
+cluster:
+
+| Type  | Jenkins Agent | Jenkins Workspace | Playbook | Notes |
+|---|---|---|---|---|
+| "Normal"  | On machine | On machine | [`jenkins/worker/create.yml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/worker/create.yml) | Run-of-the-mill, most common type of worker |
+| "Half Docker"  | On machine | Docker container | [`jenkins/worker/create.yml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/worker/create.yml) |  Raspbery Pi, Scaleway ARM v7 |
+| "Full Docker"  |  Docker container | Docker container  | [`jenkins/docker-host.yaml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/docker-host.yaml) | Special case Linux machines |
+
+[`nodejs-ci-health`](https://nodejs-ci-health.mmarchini.me/),
+[`node-build-monitor`](http://node-build-monitor.herokuapp.com/), and
+[`node-builder`](http://node-builder.herokuapp.com/) can all be used to
+monitor the health of `ci.nodejs.org`.
+
 #### Jenkins admins
 
 [@nodejs/jenkins-admins][] have administrator access to ci.nodejs.org. They are
@@ -152,7 +169,7 @@ enough competent people available to maintain the resource as required.
 
 ### [ci-release.nodejs.org](https://ci-release.nodejs.org)
 
-This is a private Jenkins instance. Only certain GitHub teams have access.
+This is a private Jenkins instance used to release Node.js. Only certain GitHub teams have access.
 
 [@nodejs/releasers][] have access to run builds on a job named `iojs+release`.
 This is our primary pipeline that creates all downloadable resource available
@@ -168,9 +185,16 @@ jenkins-release-admins membership who do not have infra or release membership.
 
 ### [GitHub Bot][]
 
+The `github-bot` is the server that runs different [automation scripts](https://github.com/nodejs/github-bot/tree/master/scripts) within the Node.js Foundation GitHub organization. For example, the bot automatically applies labels to new pull requests in `nodejs/node`, and can trigger Jenkins builds or report their statuses on pull requests. Its Ansible configuration lives in [`playbooks/create-github-bot.yml`](https://github.com/nodejs/build/tree/master/ansible/playbooks/create-github-bot.yml)
+
 Those with `github-bot` access have access to the GitHub Bot's configuration,
 including GitHub and Jenkins secrets. The list of members is
 [here][GitHub Bot Admins].
+
+### `email`
+
+The [`nodejs/email`](https://github.com/nodejs/email) repo contains all
+email aliases for the Node.js Foundation, which are routed via Mailgun.
 
 ## NPM Management
 

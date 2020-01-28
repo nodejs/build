@@ -89,6 +89,20 @@ we appear slow to grant access to resources you ask for as we take our
 responsibilities regarding security and the stability of our infrastructure very
 seriously.
 
+We expect that even if you are given access to Test servers, Build Working Group
+members should:
+
+1. Not operate too far beyond their competence level without assistance.
+   Humility is the key. Hubris gets you, and us, in trouble.
+2. Operate in a collaborative manner _as much as possible_. The more
+   communication the better and team behavior is what we expect.
+3. Be sensitive to the complex web of concerns that surround our infrastructure.
+   This will take some getting used to, but know that there are often very good
+   reasons that things may not be according to what you think is the optimal
+   situation. For example: we are dealing with donated resources and we often
+   have to perform careful balancing-acts to foster these relationships.
+
+
 Onboarding of new members is provided once they join, see the
 [the onboarding doc][] for more details.
 
