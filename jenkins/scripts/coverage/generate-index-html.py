@@ -3,6 +3,10 @@
 
 import datetime
 
+with open('jenkins/scripts/coverage/styles.css') as in_file:
+  with open('out/styles.css') as out_file:
+    out_file.write(in_file.read())
+
 with open('out/index.csv') as index:
   index_csv = filter(lambda line: line, index.read().split('\n'))
 
