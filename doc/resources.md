@@ -1,7 +1,7 @@
 # Access to Node.js Infrastructure
 
-* [Build Working Group Membership](#build-working-group-membership)
 * [Resource Access](#resource-access)
+  * [Ansible configuration](#ansible-configuration)
   * [Test servers](#test-servers)
   * [Infra servers](#infra-servers)
     * [IaaS services](#iaas-services)
@@ -9,14 +9,16 @@
     * [Certificates](#certificates)
   * [Release servers](#release-servers)
     * [Certificates](#certificates-1)
+  * [Nodejs.org](#nodejs.org)
   * [ci.nodejs.org](#cinodejsorg)
     * [Jenkins admins](#jenkins-admins)
   * [ci-release.nodejs.org](#ci-releasenodejsorg)
   * [GitHub Bot](#github-bot)
+  * [email](#email)
 * [NPM Management](#npm-management)
 
-This document describes which groups have access to which assets managed by the
-Build Working Group and how membership of those groups is managed.
+This document describes resources and assets managed by the
+Build Working Group.
 
 _Note that links to `@nodejs/` teams in this document are not visible to people
 who aren't in the Nodejs organization, and the [secrets repo][] is only visible
@@ -24,75 +26,6 @@ to people who have read access to the nodejs-private organization._
 
 For technical details on getting SSH access to the machines, see the
 [SSH guide][].
-
-## Build Working Group Membership
-
-The Build WG is comprised of individuals who are interested in managing servers
-and the services that are managed on behalf of the Node.js project. Membership
-is determined by the group itself, with existing, active, members voting on
-proposals to add new members. You can see existing [Build WG members][] on the
-README.
-
-When considering new members, the Build WG is primarily concerned with
-**competence** and **trust**. Membership grants access to a significant amount
-of resources. While we partition our resources into trust levels, the basic
-level that all members have access to comprises the largest number of servers
-maintained by the Build WG. Members should have a basic level of competence in
-one or more technical areas covered by the Build WG such that the addition of
-a new member spreads the maintenance burden rather than creating additional
-burden because of lack of competence, or un-trustworthy behavior. The Build WG
-is not an expert group and we offer a place to learn and develop skills. Members
-should be aware of the bounds of their expertise and act accordingly.
-
-* Competence: it is difficult to objectively gauge technical competence without
-  demonstration. You can demonstrate competence by contributing to resources in
-  this repository where you see need or attempting to assist Build WG members
-  where you are able. Competence may also be demonstrated through contributions
-  to other activities of the Node.js project, although competence in software
-  development does not necessarily correlate with the type of technical
-  competence the Build WG would prefer.
-* Trust: because we are granting access to protected resources, the Build WG
-  needs to establish trust. Individuals with no prior relationship to the
-  Node.js project or one of its member companies are likely to be asked to
-  contribute as a non-member where possible for a period of time to establish
-  the basics of a trust relationship. The most two most straightforward paths
-  to trust are:
-  1. An established relationship with the Node.js project and its associated
-     working groups and activities. The longer the better.
-  2. A contractual relationship (such as employment) with a member company of
-     the OpenJS Foundation. Contractual relationships carry legal weight and
-     provide greater likelihood of a stable trust relationship; at a minimum
-     they establish strong legal accountability.
-
-Please be aware of the fact that **the Build WG is usually invisible to the
-Node.js project when things go well, but highly visible when things don't go
-well**. Downtime of important resources can have a very wide impact, not just
-for Node.js open source contributors but for very large sections of the Node.js
-user ecosystem. Security breaches could have devastating consequences and these
-all reflect on the Build WG.
-
-If you are interested in helping out with the Build WG, please reach out to
-existing members to let us know. The best means for communication with the Build
-WG are either here via GitHub issues or through the `#node-build` channel on
-Freenode [IRC][].
-
-Membership is granted by way of a pull request adding a new individual to the
-members list on the README (e.g. [#524][]). New members can open such a pull
-request themselves, but it would be advisable to check with an existing member
-before doing so. Alternatively, an existing member may "sponsor" a new member by
-opening a pull request. Existing, active members will vote on a pull request and
-where no objections are present after a reasonable period of time, membership
-will be granted.
-
-Depending on the level of trust and competence assessed by existing Build WG
-members, new members may not be given immediate access to protected resources.
-This is at the discretion of the Build WG. We ask that you not take offence if
-we appear slow to grant access to resources you ask for as we take our
-responsibilities regarding security and the stability of our infrastructure very
-seriously.
-
-Onboarding of new members is provided once they join, see the
-[the onboarding doc][] for more details.
 
 ## Resource Access
 
@@ -102,6 +35,12 @@ to. Secrets are encrypted and accessible only to a pre-defined set of personal
 GPG keys, so access to the repo does not itself give access to any of the
 secrets within. Individuals with different levels of access are able to use
 their GPG keys to decrypt a broader range of secrets.
+
+### Ansible configuration
+
+Ansible is the tool used to managed all machines that the Build WG is responsible for.
+
+Secrets for Ansible scripts live within the `build` directory of the [`nodejs-private/secrets`](https://github.com/nodejs-private/secrets/tree/master/build) repository. Access to credentials is granted upon joining the build team.
 
 ### Test servers
 
@@ -121,18 +60,6 @@ encountered with these servers. This is not a small amount of trust and
 individuals should be conscious of the impact of their activities and **always
 ask for assistance where there is uncertainty**.
 
-We expect that even if you are given access to Test servers, Build WG members
-should:
-
-1. Not operate too far beyond their competence level without assistance.
-   Humility is the key. Hubris gets you, and us, in trouble.
-2. Operate in a collaborative manner _as much as possible_. The more
-   communication the better and team behavior is what we expect.
-3. Be sensitive to the complex web of concerns that surround our infrastructure.
-   This will take some getting used to, but know that there are often very good
-   reasons that things may not be according to what you think is the optimal
-   situation. For example: we are dealing with donated resources and we often
-   have to perform careful balancing-acts to foster these relationships.
 
 ### Infra servers
 
@@ -194,7 +121,14 @@ In addition to servers, release has access to:
 - [Apple][] (for pkg signing)
 - [Digicert for Authenticode][] (for binary signing)
 
+### nodejs.org
+
+`nodejs.org` is the main website for the Node.js Foundation. Its Ansible configuration lives in [`setup/www`](https://github.com/nodejs/build/tree/master/setup/www)
+
 ### [ci.nodejs.org](https://ci.nodejs.org)
+
+`ci.nodejs.org` is the main Jenkins setup used to test projects within
+the Node.js Foundation, the largest being Node itself.
 
 This is a publicly accessible resource, only a GitHub account is required to
 gain read-access. [@nodejs/collaborators][] have access to run Node core tests.
@@ -210,6 +144,20 @@ jobs. For example, the [post-mortem jobs][] are managed by
 [@nodejs/post-mortem][], and configured by [@nodejs/post-mortem-admins][].
 For more info see the [Jenkins access doc][].
 
+There are several different types of machines that form the test CI
+cluster:
+
+| Type  | Jenkins Agent | Jenkins Workspace | Playbook | Notes |
+|---|---|---|---|---|
+| "Normal"  | On machine | On machine | [`jenkins/worker/create.yml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/worker/create.yml) | Run-of-the-mill, most common type of worker |
+| "Half Docker"  | On machine | Docker container | [`jenkins/worker/create.yml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/worker/create.yml) |  Raspbery Pi, Scaleway ARM v7 |
+| "Full Docker"  |  Docker container | Docker container  | [`jenkins/docker-host.yaml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/docker-host.yaml) | Special case Linux machines |
+
+[`nodejs-ci-health`](https://nodejs-ci-health.mmarchini.me/),
+[`node-build-monitor`](http://node-build-monitor.herokuapp.com/), and
+[`node-builder`](http://node-builder.herokuapp.com/) can all be used to
+monitor the health of `ci.nodejs.org`.
+
 #### Jenkins admins
 
 [@nodejs/jenkins-admins][] have administrator access to ci.nodejs.org. They are
@@ -221,7 +169,7 @@ enough competent people available to maintain the resource as required.
 
 ### [ci-release.nodejs.org](https://ci-release.nodejs.org)
 
-This is a private Jenkins instance. Only certain GitHub teams have access.
+This is a private Jenkins instance used to release Node.js. Only certain GitHub teams have access.
 
 [@nodejs/releasers][] have access to run builds on a job named `iojs+release`.
 This is our primary pipeline that creates all downloadable resource available
@@ -237,9 +185,16 @@ jenkins-release-admins membership who do not have infra or release membership.
 
 ### [GitHub Bot][]
 
+The `github-bot` is the server that runs different [automation scripts](https://github.com/nodejs/github-bot/tree/master/scripts) within the Node.js Foundation GitHub organization. For example, the bot automatically applies labels to new pull requests in `nodejs/node`, and can trigger Jenkins builds or report their statuses on pull requests. Its Ansible configuration lives in [`playbooks/create-github-bot.yml`](https://github.com/nodejs/build/tree/master/ansible/playbooks/create-github-bot.yml)
+
 Those with `github-bot` access have access to the GitHub Bot's configuration,
 including GitHub and Jenkins secrets. The list of members is
 [here][GitHub Bot Admins].
+
+### `email`
+
+The [`nodejs/email`](https://github.com/nodejs/email) repo contains all
+email aliases for the Node.js Foundation, which are routed via Mailgun.
 
 ## NPM Management
 

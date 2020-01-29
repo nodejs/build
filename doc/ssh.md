@@ -12,7 +12,7 @@ for build working group members.
 2. Copy the SSH keys in the [secrets repo][] to your `~/.ssh` folder. What keys
    are available to you depends on the roles you have. In order to create new
    vm's and hook them up to CI you have to be part of the `infra` group.
-   See [access](./access.md) for details about the groups.
+   See [resources](./resources.md) for details about the groups.
    To protect the unencrypted private keys, you can use
    `ssh -p -f ~/.ssh/name_of_private_key` to add a personal passphrase to
    the local copy of the key.

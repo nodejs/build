@@ -21,7 +21,7 @@ This repository contains information used to set up and maintain the various
 pieces of Node.js Foundation infrastructure managed by the Build Working Group.
 It is intended to be open and transparent, if you see any relevant information
 missing please open an issue. If you are interested in joining, please read
-[access.md][] to understand the process and reasoning we use for granting access
+[GOVERNANCE.md][] to understand the process and reasoning we use for granting access
 to the resources we manage.
 
 ## Build WG Members
@@ -125,7 +125,7 @@ Admin access to https://ci-release.nodejs.org/.
 <!-- ncu-team-sync end -->
 
 If you are interested in joining the Build WG, or for more information about
-accesses and team roles see [access.md][].
+accesses and team roles see [GOVERNANCE.md][].
 
 ### Emeriti
 
@@ -298,7 +298,8 @@ are required. After that the configuration will be removed.
 [22]:   https://www.intel.com/
 [23]:   https://www.macstadium.com/
 [24]:   https://www.packet.net/
-[access.md]: ./doc/access.md
+[resources.md]: ./doc/resources.md
+[GOVERNANCE.md]: ./GOVERNANCE.md
 [node]: https://nodejs.org/
 [ns]:   https://nodesource.com/
 [pivotal]: https://www.pivotalagency.com.au/
