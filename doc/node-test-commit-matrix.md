@@ -35,7 +35,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - osx1011
   - **node-test-commit-plinux**
     - centos7-ppcle (Node >= 12)
-    - ppcbe-ubuntu1404 (Node < 8)
     - ppcle-ubuntu1404 (Node < 13)
   - **node-test-commit-smartos**
     - smartos15-64 (Node >= 8 < 10)
