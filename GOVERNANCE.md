@@ -239,7 +239,7 @@ repo.
 #### Jenkins Job Configuration Access
 
 There are a number of cases where we would like working group members
-to be able to run and or edit jobs within jenkins. Examples include
+to be able to run and or edit jobs within Jenkins. Examples include
 the CITGM jobs and the Benchmarking jobs.
 
 By default jobs can only be edited by members of the
@@ -255,7 +255,7 @@ This section outlines the processes by which we will allow
 people outside the build working group to edit jobs as well
 as allowing people who are not collaborators to run specific jobs.
 
-Unfortunately jenkins does not allow us to easily delegate the
+Unfortunately Jenkins does not allow us to easily delegate the
 creation of new jobs in an appropriate manner.
 As such, the creation of a new job will
 need to be requested through an issue in the build repo. Any
@@ -270,7 +270,7 @@ existing jobs, which will preserve the right permissions.
 All members of a working group will be able to run and cancel
 the jobs tied to their working group. This is accomplished
 by enabling project-based security for the jobs, and then
-giving the jenkins group, corresponding to the github
+giving the Jenkins group, corresponding to the Github
 team for the working group, Build/Cancel permissions.
 
 * Ability to modify jobs
@@ -278,7 +278,7 @@ team for the working group, Build/Cancel permissions.
 A subset of the members of a working group are able to modify
 and delete jobs.  This is accomplished
 by enabling project-based security for the jobs, and then
-giving the jenkins group, corresponding to the github
+giving the Jenkins group, corresponding to the Github
 team for the working group admins,
 the Build/Cancel/Discover/Read/Delete/Update permissions.
 
@@ -312,7 +312,7 @@ issue on the working group's repo.
 
 Once approved by the working group and existing working group admins,
 one of the existing working group admins can then add the new
-individual to the github admin team for the working group
+individual to the Github admin team for the working group
 (e.g. benchmarking-admins).
 
 ### Consensus Seeking Process
