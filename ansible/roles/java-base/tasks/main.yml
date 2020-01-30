@@ -67,7 +67,7 @@
     url: https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u242-b08_openj9-0.18.1/OpenJDK8U-jdk_s390x_linux_openj9_8u242b08_openj9-0.18.1.tar.gz
     dest: /tmp/
 - name: unarchive java s390x
-  when: os == "rhel7" arch == "s390x"
+  when: os == "rhel7" and arch == "s390x"
   unarchive:
     src: /tmp/OpenJDK8U-jdk_s390x_linux_openj9_8u242b08_openj9-0.18.1.tar.gz
     remote_src: yes
