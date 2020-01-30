@@ -82,7 +82,7 @@ with open('out/index.html', 'w') as out:
       Nightly combined JavaScript coverage for Windows and Linux can be found
       on <a href="https://codecov.io/gh/nodejs/node">codecov.io</a>:
       <a href="https://codecov.io/gh/nodejs/node">
-        <img id="badge" alt="Combined coverage" src="https://codecov.io/gh/nodejs/node/branch/master/graph/badge.svg" />
+        <img id="badge" src="https://codecov.io/gh/nodejs/node/branch/master/graph/badge.svg" alt="Combined coverage" width="112" height="20">
       </a>
       <h3>
         Nightly Linux Branch Coverage&nbsp;&nbsp;<a href="https://github.com/nodejs/node">&rarr;</a>
