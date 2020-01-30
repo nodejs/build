@@ -1,14 +1,14 @@
-name: on push or pull_request
+name: Lint
 on: [push, pull_request]
 jobs:
-  build:
+  Python:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 2
       matrix:
         python-version: [2.7, 3.7]
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
