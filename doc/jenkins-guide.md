@@ -31,7 +31,7 @@ document](./services.md).
 
 ### Running playbooks
 
-Before running playbooks, ensure that you have the [secrets repo][] properly
+Before running playbooks, ensure that you have the [secrets repo][secrets repo] properly
 cloned and found by Ansible, [as described in the README](../ansible/README.md).
 If the machine secret is not available, you can always get it from the
 machine's Jenkins configuration page.
@@ -112,13 +112,13 @@ For easy reverting of config changes, you can use the history audit log:
 1. system (includes security matrix) - https://ci.nodejs.org/jobConfigHistory/history?name=config
 2. CSS - https://ci.nodejs.org/jobConfigHistory/history?name=org.codefirst.SimpleThemeDecorator
 
-### Solving problems
+## Solving problems
 
 Issues with the Jenkins clusters are usually reported to either the
 [#node-build IRC channel](irc://irc.freenode.net/node-build), or to the
 [`nodejs/build` issue tracker](https://github.com/nodejs/build/issues).
 
-When trying to fix a worker, ensure that you "mark the node as offline,"
+When trying to fix a worker, ensure that you `mark the node as offline`,
 via the Jenkins worker configure UI, so more failures don't pile up.
 Once you are done fixing the worker, ensure that you return the worker
 to the "online" status.
