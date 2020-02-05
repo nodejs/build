@@ -2,7 +2,23 @@
 
 A guide on maintaining Node.js' Test and Release Jenkins clusters
 
-### Ansible
+## TOC
+
+* [Ansible](#ansible)
+  * [Running playbooks](#running-playbooks)
+* [Security releases](#security-releases)
+  * [Before the release](#before-the-release)
+  * [After the release](#after-the-release)
+* [Solving problems](#solving-problems)
+  * [Out of memory](#out-of-memory)
+  * [Out of space](#out-of-space)
+  * [General issues with Jenkins agent: "normal machines" edition](#general-issues-with-jenkins-agent-normal-machines-edition)
+  * [Restart the machine](#restart-the-machine)
+  * [Containerized machines](#containerized-machines)
+  * [IDK what to do](#idk-what-to-do)
+
+
+## Ansible
 
 All machines in the clusters are managed using Ansible, with the
 playbooks that live in `ansible/playbooks/jenkins`.
@@ -13,9 +29,9 @@ compilers, Java versions, and managing the local Jenkins agent.
 To see which playbooks correspond to which worker, check the [services
 document](./services.md).
 
-##### Running playbooks
+### Running playbooks
 
-Before running playbooks, ensure that you have the [secrets repo][] properly
+Before running playbooks, ensure that you have the [secrets repo][secrets repo] properly
 cloned and found by Ansible, [as described in the README](../ansible/README.md).
 If the machine secret is not available, you can always get it from the
 machine's Jenkins configuration page.
@@ -35,12 +51,12 @@ some WG members available in the
 [#node-build IRC channel](irc://irc.freenode.net/node-build), who can try and
 lend a hand.
 
-### Restricting access for security releases
+## Security releases
 
 When security releases are due to go out, the Build WG plays an
 important role in facilitating their testing.
 
-##### Before the release
+### Before the release
 
 About 24 hours before a release is published, the [public CI](https://ci.nodejs.org)
 must be "locked down" to prevent anyone from interfering in the testing of the
@@ -85,7 +101,7 @@ testing is underway:
 
 ![](../static-assets/jenkins-authorization-sec.png)
 
-##### After the release
+### After the release
 
 After the release has gone out, restore the table to its original
 condition. Add a comment to your post in `nodejs/collaborators` and the
@@ -96,13 +112,13 @@ For easy reverting of config changes, you can use the history audit log:
 1. system (includes security matrix) - https://ci.nodejs.org/jobConfigHistory/history?name=config
 2. CSS - https://ci.nodejs.org/jobConfigHistory/history?name=org.codefirst.SimpleThemeDecorator
 
-### Solving problems
+## Solving problems
 
 Issues with the Jenkins clusters are usually reported to either the
 [#node-build IRC channel](irc://irc.freenode.net/node-build), or to the
 [`nodejs/build` issue tracker](https://github.com/nodejs/build/issues).
 
-When trying to fix a worker, ensure that you "mark the node as offline,"
+When trying to fix a worker, ensure that you `mark the node as offline`,
 via the Jenkins worker configure UI, so more failures don't pile up.
 Once you are done fixing the worker, ensure that you return the worker
 to the "online" status.
@@ -112,7 +128,7 @@ solutions on how to remedy the problem. Most commands below are meant to
 be run on the worker itself, after SSH-ing in and switching to the
 `iojs` user. See the [SSH guide](./ssh.md) on how to log into the machines.
 
-##### Out of memory
+### Out of memory
 
 First, get statistics on running processes for the machine: `ps aux | grep node`.
 
@@ -122,7 +138,7 @@ remove them by running a command like: `ps -ef | grep node | grep -v -egrep -eja
 Overall memory utilization can be found using the `free` command on most
 workers, or the `swap -s -h` command on SmartOS workers.
 
-##### Out of space
+### Out of space
 
 First, get statistics on how full (or not) the machine is by running the
 `df -h` command.
@@ -132,7 +148,7 @@ then it is probably appropriate to clean out part of the worker's
 workspace (where Jenkins jobs are performed). To clean out part of the
 workspace, run `rm -rf ~/build/node-test-commit*`.
 
-##### General issues with Jenkins agent: "normal machines" edition
+### General issues with Jenkins agent: "normal machines" edition
 
 Git errors or exceptions raised by the Jenkins agent can usually be
 fixed by taking a look at the agent's logs, and then restarting it.
@@ -181,7 +197,7 @@ launchctl start org.nodejs.osx.jenkins
 ~iojs/start.sh
 ```
 
-##### Restart the machine
+### Restart the machine
 
 Sometimes something weird happens, and it's easier to just reboot the
 worker.
@@ -197,30 +213,50 @@ reboot
 On the advice of the system adminstrators managing the AIX machines, please do
 not restart them without good reason, it will make things worse.
 
-##### Fixing machines with Docker
+### Fixing machines with Docker
 
 The above steps generally do not apply to workers that are either
 "Half Docker" or "Full Docker".
 
-To view a list of all active Docker containers, you can run `docker ps`.
+Below is a quick guide using [`test-softlayer-ubuntu1804_container-x64-1`][1] as an example Jenkins worker.
 
-Each Docker container has a matching `systemd` service that starts and
-stops the container. There are several actions you can take once you
-know the `systemd` service name, say `jenkins-test-digitalocean-ubuntu1804_container-x64-1.service`, for instance:
+1. Figure out the which machine hosts the container. It should be stated in
+the [worker's view][1] on Jenkins
+2. Verify the existence of the container:
+    * To view a list of all active Docker containers, you can run: `docker ps`
+    * To view a list of all active services, you can run:  
+      ```bash
+      systemctl list-units | grep jenkins
+      ```
+    * Each container should have a matching `systemd` service that starts and stops the
+    container. Its name should be `jenkins-${workername}`, so in this example
+      ```
+      jenkins-test-softlayer-ubuntu1804_container-x64-1
+      ```
+3. To view the logs for a service run:
+   ```
+   journalctl -u jenkins-test-softlayer-ubuntu1804_container-x64-1
+   ```
+4. To restart a Docker container, restart the associated `systemd` service:
+   ```
+   systemctl restart jenkins-test-softlayer-ubuntu1804_container-x64-1
+   ```
+5. `CONTAINER ID` is needed to console into a Docker container, first run:
+   ```
+   docker ps -f "name=test-softlayer-ubuntu1804_container-x64-1"
+   ```
+   That will give you:
+   ```
+   CONTAINER ID        IMAGE                                               COMMAND                  CREATED             STATUS              PORTS               NAMES
+   9f3272e43017        node-ci:test-softlayer-ubuntu1804_container-x64-1   "/bin/sh -c 'cd /hom…"   19 minutes ago      Up 19 minutes                           node-ci-test-softlayer-ubuntu1804_container-x64-1
+   ```
+   then using run the following, replacing `CONTAINER_ID` with the appropriate ID
+   ```
+   docker exec -it ${CONTAINER_ID} /bin/bash`
+   ```
 
-- To view a list of all active services, you can run
-`systemctl list-units | grep jenkins`.
-- To view the logs for a service, you can run `journalctl -n 50 -u systemctl restart jenkins-test-digitalocean-ubuntu1804_container-x64-1.service | less`
-- To restart a Docker container, restart the associated `systemd` service, for
-example:
-`systemctl restart jenkins-test-digitalocean-ubuntu1804_container-x64-1.service `.
 
-To SSH into a Docker container, first you need to find the container
-ID by running `docker ps`. Once you have the ID, you can run `docker
-exec -it CONTAINER_ID /bin/bash`, replacing `CONTAINER_ID` with the
-appropriate ID.
-
-##### IDK what to do
+### IDK what to do
 
 In case the above steps did not work, or you are unsure of what to try,
 this section is for you.
@@ -245,3 +281,5 @@ of the members of the [infra](https://github.com/nodejs/build#infra-admins) or
 take a look.
 
 [secrets repo]: https://github.com/nodejs-private/secrets
+[ci]: https://ci.nodejs.org/computer/test-softlayer-ubuntu1804_container-x64-1/
+[1]: https://ci.nodejs.org/computer/test-softlayer-ubuntu1804_container-x64-1/
