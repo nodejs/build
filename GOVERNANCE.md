@@ -121,8 +121,8 @@ to member of the Working Groups see [resources.md][]
 
 ### WG Meetings
 
-The WG meets fortnightly on a Zoom Webinar, schedule is available on the [Node.js Foundation calendar]. A designated moderator
-approved by the WG runs the meeting. Each meeting should be
+The WG meets every three weeks on a Zoom Webinar, schedule is available on the [Node.js Foundation calendar].
+A designated moderator approved by the WG runs the meeting. Each meeting should be
 published to YouTube.
 
 Items are added to the WG agenda that are considered contentious or
