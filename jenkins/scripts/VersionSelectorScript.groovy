@@ -87,10 +87,8 @@ def buildExclusions = [
   [ /^smartos18/,                     anyType,     lt(12)  ],
 
   // AIX PPC64 ---------------------------------------------
-  [ /aix61/,                          anyType,     lt(6)   ],
-  [ /aix61/,                          anyType,     gte(12) ],
+  [ /aix61/,                          anyType,     gte(10) ],
   [ /aix71/,                          anyType,     lt(10)  ],
-  [ /aix71/,                          releaseType, lt(12)  ],
 
   // Shared libs docker containers -------------------------
   [ /sharedlibs_openssl111/,          anyType,     lt(11)  ],
