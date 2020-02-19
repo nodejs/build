@@ -255,6 +255,12 @@ the [worker's view][1] on Jenkins
    docker exec -it ${CONTAINER_ID} /bin/bash`
    ```
 
+### Windows
+
+On Windows, it might or might not help but should be harmless to run
+https://ci.nodejs.org/view/All/job/git-clean-windows/ and
+https://ci.nodejs.org/view/All/job/windows-update-reboot/ with force
+reboot.
 
 ### IDK what to do
 
