@@ -44,16 +44,29 @@ hosts:
         smartos18-x64-2: {ip: 165.225.148.12}
         ubuntu1604_arm_cross-x64-1: {ip: 165.225.151.28, user: ubuntu}
 
-    - requireio:
-        rvagg-debian10-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi, alias: iojs-ns-pi1p-1 }
-        andineck-debian10-armv6l_pi1p-1: {ip: 192.168.2.41, user: pi, alias: iojs-ns-pi1p-2 }
-        osx1010-x64-1: {ip: 192.168.2.211, user: iojs}
+    - macstadium:
+        macos10.11-x64-1: {ip: 207.254.58.162, port: 10013, user: administrator}
+        macos10.10-x64-1: {ip: 207.254.58.162, port: 10014, user: administrator}
+
+    - marist:
+        zos13-s390x-1: {ip: 148.100.36.135, user: Unix1}
+    
+    - nearform:
+        macos10.15-x64-1: {ip: 83.147.191.69, user: administrator}
 
     - osuosl:
         aix61-ppc64_be-1: {ip: 140.211.9.99}
         ubuntu1404-ppc64_be-1: {ip: 140.211.168.76}
         ubuntu1404-ppc64_le-1: {ip: 140.211.168.66}
         centos7-ppc64_le-1: {ip: 140.211.168.61, user: centos}
+
+    - packetnet:
+        centos7-arm64-1: {ip: 147.75.104.218}
+
+    - requireio:
+        rvagg-debian10-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi, alias: iojs-ns-pi1p-1 }
+        andineck-debian10-armv6l_pi1p-1: {ip: 192.168.2.41, user: pi, alias: iojs-ns-pi1p-2 }
+        osx1010-x64-1: {ip: 192.168.2.211, user: iojs}
 
     - scaleway:
         ubuntu1604-armv7l-1: {ip: 212.47.245.242}
@@ -63,15 +76,9 @@ hosts:
         centos6-x64-1: {ip: 169.62.77.228}
 
 
-    - packetnet:
-        centos7-arm64-1: {ip: 147.75.104.218}
 
-    - macstadium:
-        macos10.11-x64-1: {ip: 207.254.58.162, port: 10013, user: administrator}
-        macos10.10-x64-1: {ip: 207.254.58.162, port: 10014, user: administrator}
 
-    - marist:
-        zos13-s390x-1: {ip: 148.100.36.135, user: Unix1}
+
 
   - test:
 
