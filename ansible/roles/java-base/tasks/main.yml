@@ -95,6 +95,13 @@
     - java.rc > 0 and not os|startswith("macos")
   package: name="{{ java_package_name }}" state=present
 
+- name: install java tap (macOS)
+  become_user: administrator
+  when: java.rc > 0 and os|startswith("macos")
+  homebrew_tap:
+        name: AdoptOpenJDK/openjdk
+        state: present
+
 - name: install java (macOS)
   become_user: administrator
   when: java.rc > 0 and os|startswith("macos")
