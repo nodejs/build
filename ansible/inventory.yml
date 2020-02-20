@@ -158,6 +158,13 @@ hosts:
         win10_vs2017-arm64-1: {}
         win10_vs2017-arm64-2: {}
 
+    - nearform:
+        macos10.15-x64-1: {ip: 83.147.191.70, user: administrator}
+        macos10.15-x64-2: {ip: 83.147.191.71, user: administrator}
+        macos10.15-x64-3: {ip: 83.147.191.72, user: administrator}
+        intel-ubuntu1604-x64-1: {ip: 92.51.196.114}
+        intel-ubuntu1604-x64-2: {ip: 92.51.196.115}
+
 
     - osuosl:
 # secret for -1 was compromised, do not use -1 name
@@ -265,7 +272,3 @@ hosts:
 # remember to update Jenkins worker IP whitelist in github-bot
         ubuntu1604-x64-1: {ip: 147.75.70.41, alias: jenkins-workspace-1}
         ubuntu1604-x64-2: {ip: 147.75.73.189, alias: jenkins-workspace-2}
-
-    - nearform:
-        intel-ubuntu1604-x64-1: {ip: 92.51.196.114}
-        intel-ubuntu1604-x64-2: {ip: 92.51.196.115}
