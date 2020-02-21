@@ -29,7 +29,7 @@ to the resources we manage.
 <!-- ncu-team-sync.team(nodejs/build) -->
 
 - [@addaleax](https://github.com/addaleax) - Anna Henningsen
-- [@AshCripps](https://github.com/AshCripps) - Ashley Cripps
+- [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 - [@bnoordhuis](https://github.com/bnoordhuis) - Ben Noordhuis
 - [@gdams](https://github.com/gdams) - George Adams
 - [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil
@@ -69,9 +69,11 @@ Admin access to https://ci.nodejs.org/.
 
 <!-- ncu-team-sync.team(nodejs/jenkins-admins) -->
 
+- [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 - [@gdams](https://github.com/gdams) - George Adams
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
+- [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 - [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
