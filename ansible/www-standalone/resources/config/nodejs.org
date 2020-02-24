@@ -179,7 +179,13 @@ server {
     listen [::]:443 ssl http2;
     server_name foundation.nodejs.org;
 
-    return 301 https://openjsf.org/;
+    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Nasa_FNL.pdf$         https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-NASA.pdf permanent;
+    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Fusion_Final.pdf$     https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-Fusion.pdf permanent;
+    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Walmart_final-1.pdf$  https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-Walmart.pdf permanent;
+    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_HomeAway.pdf$         https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-HomeAway.pdf permanent;
+    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CapitalOne_FINAL_casestudy.pdf$ https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-CapitalOne.pdf permanent;
+
+    rewrite ^/(.*)$ https://openjsf.org/ permanent;
 }
 
 server {
