@@ -103,7 +103,9 @@ def buildExclusions = [
   // OSX ---------------------------------------------------
   [ /^osx1010/,                       anyType,     gte(11) ],
   [ /^osx1011/,                       releaseType, lt(11)  ],
-  
+  [ /^osx1011/,                       releaseType, gte(14)  ],
+  [ /^osx1015/,                       releaseType, lt(14)  ],
+
   // FreeBSD -----------------------------------------------
   [ /^freebsd10/,                     anyType,     gte(11) ],
 
