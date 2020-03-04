@@ -11,8 +11,8 @@
 * Michael Dawson (@mhdawson)
 * Ash Cripps (@AshCripps)
 * John Kleinschmidt (@jkleinsc)
-* Rod Vagg
-* Rich Trott
+* Rod Vagg (@rvagg)
+* Rich Trott (@Trott)
 
 ## Agenda
 
