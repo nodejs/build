@@ -23,8 +23,9 @@
 ### nodejs/build
 
 * workflow: add stale action [#2196](https://github.com/nodejs/build/pull/2196)
+  * Implementation of https://github.com/nodejs/build/issues/2190 using GitHub Actions.
   * No objections from those in the meeting, we should move forward with it.
-
+  
 * suggestion: we enable the "stale" bot on nodejs/build 
 [#2190](https://github.com/nodejs/build/issues/2190)
   * covered under the discussion on #2196.
