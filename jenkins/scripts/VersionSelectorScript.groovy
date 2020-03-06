@@ -90,6 +90,7 @@ def buildExclusions = [
   [ /aix71/,                          anyType,     lt(10)  ],
 
   // Shared libs docker containers -------------------------
+  [ /ubi81_sharedlibs/,               anyType,     lt(13)  ],
   [ /sharedlibs_openssl111/,          anyType,     lt(11)  ],
   [ /sharedlibs_openssl110/,          anyType,     lt(9)   ],
   [ /sharedlibs_openssl110/,          anyType,     gte(12) ],
