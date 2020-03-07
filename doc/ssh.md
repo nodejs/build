@@ -14,7 +14,7 @@ for build working group members.
    vm's and hook them up to CI you have to be part of the `infra` group.
    See [resources](./resources.md) for details about the groups.
    To protect the unencrypted private keys, you can use
-   `ssh -p -f ~/.ssh/name_of_private_key` to add a personal passphrase to
+   `ssh-keygen -p -f ~/.ssh/name_of_private_key` to add a personal passphrase to
    the local copy of the key.
 3. Add this section to your `~/.ssh/config` file (if this file does not exist,
    create one). The configuration for the hosts will be written between the
