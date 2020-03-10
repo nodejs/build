@@ -193,6 +193,10 @@ svcadm restart svc:/application/jenkins:default
 launchctl stop org.nodejs.osx.jenkins
 launchctl start org.nodejs.osx.jenkins
 
+# AIX
+/etc/rc.d/rc2.d/S20jenkins stop
+/etc/rc.d/rc2.d/S20jenkins start
+
 # Other OSes
 ~iojs/start.sh
 ```
