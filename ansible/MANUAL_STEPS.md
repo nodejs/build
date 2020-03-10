@@ -1,26 +1,29 @@
 # Manual steps required to setup machines
 
-* [Firewall Config](#adding-firewall-entries-for-jenkins-workers)
-* [Release machines](#release--machines)
-* [RHEL7-s390x](#RHEL7-s390x)
-  * [V8 Build Tools](#V8-build-tools)
-  * [Devtoolset-6](#devtoolset-6-install)
+* [Adding firewall entries for Jenkins workers](#adding-firewall-entries-for-jenkins-workers)
+* [`release-*` machines](#release--machines)
+  * [macOS release machines](#macos-release-machines)
+    * [Full Xcode](#full-xcode)
+    * [Signing certificates](#signing-certificates)
+* [RHEL7-S390X](#rhel7-s390x)
+  * [V8 build-tools](#v8-build-tools)
+  * [devtoolset-6 install](#devtoolset-6-install)
 * [macOS](#macos)
-* [AIX 72](#aix-72-install)
-  * [ccache on AIX 72](#ccache-374-on-aix-72)
-  * [AHA filesystem](#Enable-the-AHA-fs)
-  * [XL Compilers](#Install-XL-compilers)
-  * [Missing shared objects](#fix-missing-shared-objects)
-  * [Preparing GCC](#Preparing-gcc-distributables)
-  * [Preparing ccache](#Preparing-ccache-distributables)
-* [Windows](#windows-azurerackspace)
-  * [Control Machine](#control-machine-where-ansible-is-run)
-  * [Target machines](#Target-machines)
-* [Jenkins Workspace](#jenkins-workspace)
-* [Docker hosts](#Docker-hosts)
-* [SmartOS](#SmartOS)
-* [Raspberry Pi](#Raspberry-Pi)
-  * [NFS boot](#NFS-boot)
+* [AIX 7.2 Install](#aix-72-install)
+  * [ccache 3.7.4 on AIX 7.2](#ccache-374-on-aix-72)
+  * [Enable the AHA fs](#enable-the-aha-fs)
+  * [Install XL compilers](#install-xl-compilers)
+  * [Fix "Missing" shared objects](#fix-missing-shared-objects)
+  * [Preparing gcc distributables](#preparing-gcc-distributables)
+  * [Preparing ccache distributables](#preparing-ccache-distributables)
+* [Windows (Azure/Rackspace)](#windows-azurerackspace)
+  * [Control machine (where Ansible is run)](#control-machine-where-ansible-is-run)
+  * [Target machines](#target-machines)
+* [jenkins-workspace](#jenkins-workspace)
+* [Docker hosts](#docker-hosts)
+* [SmartOS](#smartos)
+* [Raspberry Pi](#raspberry-pi)
+  * [NFS boot](#nfs-boot)
 
 
 ## Adding firewall entries for Jenkins workers
@@ -57,10 +60,34 @@ Host node-www
 
 Its necessary to accept the `known_hosts` keys interactively on first ssh or
 the release builds will fail. After setting up .ssh, do something like this:
+
 ```
 ssh node-www date
 // ... accept the host keys
 ```
+
+### macOS release machines
+
+Previous notes: [#1393](https://github.com/nodejs/build/issues/1393)
+
+#### Full Xcode
+
+Xcode Command-line tools are not enough to perform a full notarization cycle, full Xcode must be installed manually.
+
+As root:
+
+* Download Xcode: https://developer.apple.com/download/more/ - find non-beta version, open Developer Tools in browser, Networking tab, start download (then cancel), in Networking tab "Copy as cURL" (available in Chrome & FF)
+* Download onto release machine using the copied curl command (may need `-o xcode.xip` appended to curl command) to `/tmp`
+* Extract: `xip --extract xcode.xip`
+* Move `Xcode.app` directory to `/Applications`
+* `xcode-select --switch /Applications/Xcode.app`
+* `xcode-select -r` - accept license
+
+#### Signing certificates
+
+* Extract from secrets/build/release: `dotgpg cat Apple\ Developer\ ID\ Node.js\ Foundation.p12.base64 | base64 -d > /tmp/Apple\ Developer\ ID\ Node.js\ Foundation.p12`
+* Transfer to release machine (scp to /tmp)
+* `sudo security import /tmp/Apple\ Developer\ ID\ Node.js\ Foundation.p12 -k /Library/Keychains/System.keychain -T /usr/bin/codesign -T /usr/bin/productsign -P 'XXXX'` (where XXXX is found in secrets/build/release/apple.md) (`security unlock-keychain -u /Library/Keychains/System.keychain` _may_ be required prior to running this command).
 
 ## RHEL7-S390X
 
