@@ -191,7 +191,7 @@ exec(): 0509-036 Cannot load program gmake because of the following errors:
 The fix is as follows:
 
 ```sh
-sudo rm /usr/lib/libiconv.a && sudo ln -s /opt/freeware/bin/libiconv.a /usr/lib
+sudo rm /usr/lib/libiconv.a && sudo ln -s /opt/freeware/lib/libiconv.a /usr/lib
 ```
 
 ### Preparing gcc distributables
