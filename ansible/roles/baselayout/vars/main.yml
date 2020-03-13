@@ -47,7 +47,7 @@ packages: {
   ],
 
   aix: [
-    'bash,gcc-c++,gcc6-c++,tar,unzip,git,make,sudo',
+    'bash,cmake,gcc-c++,gcc6-c++,tar,unzip,git,make,sudo',
   ],
 
   debian7: [
