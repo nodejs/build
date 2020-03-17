@@ -13,6 +13,7 @@ A guide on maintaining Node.js' Test and Release Jenkins clusters
   * [Out of memory](#out-of-memory)
   * [Out of space](#out-of-space)
   * [General issues with Jenkins agent: "normal machines" edition](#general-issues-with-jenkins-agent-normal-machines-edition)
+  * [Read-only filesystem](#read-only-filesystem)
   * [Restart the machine](#restart-the-machine)
   * [Fixing machines with Docker](#fixing-machines-with-docker)
   * [IDK what to do](#idk-what-to-do)
