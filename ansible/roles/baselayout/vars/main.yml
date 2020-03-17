@@ -97,7 +97,7 @@ packages: {
 
 
   'macos10.15': [
-    'python,ccache'
+    'cmake,python,ccache'
   ],
 
   rhel7: [
