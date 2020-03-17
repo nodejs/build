@@ -200,6 +200,21 @@ launchctl start org.nodejs.osx.jenkins
 ~iojs/start.sh
 ```
 
+### Read-only filesystem
+
+Sometimes a failure in the filesystem will cause it to enter a read-only state.
+If that happens, follow the steps below:
+
+```bash
+touch foo                      # to confirm system is read-only, don't proceed if this succeeds
+sudo df                        # to determine the device for `/`
+sudo e2fsck -y /dev/mmcblk0p2  # replace mmcblk0p2 with proper device for `/`
+touch foo                      # this should succeed now
+```
+
+If the second touch fails, follow instructions below to 
+[restart the machine](#restart-the-machine).
+
 ### Restart the machine
 
 Sometimes something weird happens, and it's easier to just reboot the
