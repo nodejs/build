@@ -272,3 +272,5 @@ hosts:
 # remember to update Jenkins worker IP whitelist in github-bot
         ubuntu1604-x64-1: {ip: 147.75.70.41, alias: jenkins-workspace-1}
         ubuntu1604-x64-2: {ip: 147.75.73.189, alias: jenkins-workspace-2}
+        ubuntu1804-x64-1: {ip: 147.75.66.203, alias: jenkins-workspace-4}
+        ubuntu1804-x64-2: {ip: 147.75.81.67, alias: jenkins-workspace-5}
