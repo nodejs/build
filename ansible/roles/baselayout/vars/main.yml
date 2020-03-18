@@ -75,29 +75,29 @@ packages: {
   ],
 
   'macos10.10': [
-    'python,ccache'
+    'cmake,python,ccache'
   ],
 
   'macos10.11': [
-    'python,ccache'
+    'cmake,python,ccache'
   ],
 
   'macos10.12': [
-    'python,ccache'
+    'cmake,python,ccache'
   ],
 
   'macos10.13': [
-    'python,ccache'
+    'cmake,python,ccache'
   ],
 
 
   'macos10.14': [
-    'python,ccache'
+    'cmake,python,ccache'
   ],
 
 
   'macos10.15': [
-    'python,ccache'
+    'cmake,python,ccache'
   ],
 
   rhel7: [
