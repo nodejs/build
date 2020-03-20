@@ -210,11 +210,14 @@ If that happens, follow the steps below:
 touch foo                      # to confirm system is read-only, don't proceed if this succeeds
 sudo df                        # to determine the device for `/`
 sudo e2fsck -y /dev/mmcblk0p2  # replace mmcblk0p2 with proper device for `/`
-touch foo                      # this should succeed now
 ```
 
-If the second touch fails, follow instructions below to 
+After running the steps above, follow instructions below to 
 [restart the machine](#restart-the-machine).
+
+Note: the occurrence of read-only root filesystem indicates there's probably a
+more concerning issue going on. Remember to open an issue on nodejs/build to 
+investigate further, as it might be required to reprovision the machine.
 
 ### Restart the machine
 
