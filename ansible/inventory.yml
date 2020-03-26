@@ -153,6 +153,9 @@ hosts:
         macos10.11-x64-2: {ip: 207.254.58.162, port: 10004, user: administrator}
         macos10.12-x64-1: {ip: 207.254.58.162, port: 10001, user: administrator}
         macos10.12-x64-2: {ip: 207.254.58.162, port: 10002, user: administrator}
+        macos10.15-x64-1: {ip: 199.7.167.99, port: 8823, user: administrator}
+        macos10.15-x64-2: {ip: 199.7.167.100, port: 8823, user: administrator}
+        macos10.15-x64-3: {ip: 199.7.167.99, port: 8824, user: administrator}
 
     - msft:
         win10_vs2017-arm64-1: {}
