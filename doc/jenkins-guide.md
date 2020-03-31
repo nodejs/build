@@ -147,7 +147,7 @@ First, get statistics on how full (or not) the machine is by running the
 If the `Use%` column appears very high for the worker's largest disk,
 then it is probably appropriate to clean out part of the worker's
 workspace (where Jenkins jobs are performed). To clean out part of the
-workspace, run `rm -rf ~/build/node-test-commit*`.
+workspace, run `rm -rf ~/build/workspace/node-test-commit*`.
 
 ### General issues with Jenkins agent: "normal machines" edition
 
