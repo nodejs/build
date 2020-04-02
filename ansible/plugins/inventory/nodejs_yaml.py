@@ -47,7 +47,7 @@ valid = {
     # providers - validated for consistency
     'provider': ('azure', 'digitalocean', 'ibm', 'joyent', 'linuxonecc',
                  'macstadium', 'marist', 'mininodes', 'msft', 'osuosl',
-                 'rackspace', 'requireio', 'scaleway', 'softlayer', 'voxer',
+                 'orka', 'rackspace', 'requireio', 'scaleway', 'softlayer', 'voxer',
                  'packetnet', 'nearform')
 }
 DECRYPT_TOOL = "gpg"
