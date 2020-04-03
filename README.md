@@ -52,6 +52,8 @@ to the resources we manage.
 
 <!-- ncu-team-sync end -->
 
+Above list is manually synced with the [gpg member list](https://github.com/nodejs-private/secrets/tree/master/build/test/.gpg).
+
 ### Infra Admins
 
 <!-- ncu-team-sync.team(nodejs/build-infra) -->
@@ -88,10 +90,15 @@ Admin access to https://ci.nodejs.org/.
 
 ### Release Admins
 
+Access to [release secrets][].
+
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@sam-github](https://github.com/sam-github) - Sam Roberts
+
+Above list is manually synced with the [gpg member list](https://github.com/nodejs-private/secrets/tree/master/build/release/.gpg).
 
 ### Release Jenkins Admins
 
@@ -305,4 +312,5 @@ are required. After that the configuration will be removed.
 [node]: https://nodejs.org/
 [ns]:   https://nodesource.com/
 [pivotal]: https://www.pivotalagency.com.au/
+[release secrets]: https://github.com/nodejs-private/secrets/tree/master/build/release/
 [securo]: http://securogroup.com/
