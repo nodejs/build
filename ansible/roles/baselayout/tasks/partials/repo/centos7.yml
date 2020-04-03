@@ -12,19 +12,11 @@
     state: present
 
 
-- name: centos7 | install scl for devtoolset-6
-  when: "arch != 'arm64' and arch != 'ppc64'"
+- name: centos7 | install scl for devtoolset-6, devtoolset-8
+  when: "arch != 'arm64'"
   yum:
     name: centos-release-scl
     state: present
-
-- name: centos7 | ppc64 | install sclo7 devtoolset-6
-  when: "arch == 'ppc64'"
-  yum_repository:
-    name: sclo7-devtoolset-6
-    description: cbs.centos.org sclo7-devtoolset-6-rh-release
-    baseurl: https://cbs.centos.org/repos/sclo7-devtoolset-6-rh-release/$basearch/os/
-    gpgcheck: no
 
 - name: centos7 | aarch64 | install sclo repo
   when: "arch == 'arm64'"
@@ -40,7 +32,8 @@
     dest: "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo"
     mode: 0644
 
-- stat: path=/usr/local/bin/python3.7
+- stat:
+    path: /usr/local/bin/python3.7
   register: build_python37
 
 - name: centos7 | ppc64 | download python 3.7
