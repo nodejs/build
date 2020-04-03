@@ -33,7 +33,7 @@ document](./services.md).
 ### Running playbooks
 
 Before running playbooks, ensure that you have the [secrets repo][secrets repo] properly
-cloned and found by Ansible, [as described in the README](../ansible/README.md).
+cloned and found by Ansible, as described in the [ansible guide](./ansible.md).
 If the machine secret is not available, you can always get it from the
 machine's Jenkins configuration page.
 

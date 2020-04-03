@@ -25,7 +25,7 @@ for build working group members.
 
      # end: node.js template
     ```
-4. Follow the instructions in the [ansible guide](../ansible/README.md) to
+4. Follow the instructions in the [ansible guide](./ansible.md) to
    install ansible on your local machine.
 5. Run `ansible-playbook playbooks/write-ssh-config.yml` from the `ansible/`
    directory in the root of this repo, then the host information will be
