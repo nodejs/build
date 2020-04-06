@@ -21,9 +21,11 @@ def buildExclusions = [
   // Linux -------------------------------------------------
   [ /^centos6/,                       releaseType, lt(8)   ],
   [ /^centos6/,                       anyType,     gte(12) ],
-  [ /centos[67]-(arm)?(64|32)-gcc48/, anyType,     gte(10) ],
-  [ /centos[67]-(arm)?(64|32)-gcc6/,  anyType,     lt(10)  ],
-  [ /centos6-32-gcc6/,                releaseType, gte(10) ], // 32-bit linux for <10 only
+  [ /^centos[67]-(arm)?(64|32)-gcc48/,anyType,     gte(10) ],
+  [ /^centos[67]-(arm)?(64|32)-gcc6/, anyType,     lt(10)  ],
+  [ /^centos[67]-(arm)?(64|32)-gcc6/, anyType,     gte(14) ], // 14.x: gcc6 builds stop
+  [ /^centos7-(arm)?(64)-gcc8/,       anyType,     lt(14)  ], // 14.x: gcc8 builds start
+  [ /^centos6-32-gcc6/,               releaseType, gte(10) ], // 32-bit linux for <10 only
   [ /^centos7-64/,                    releaseType, lt(12)  ],
   [ /debian8-x86/,                    anyType,     gte(10) ], // 32-bit linux for <10 only
   [ /debian8/,                        anyType,     gte(13) ],
@@ -48,6 +50,7 @@ def buildExclusions = [
   [ /^cross-compiler-armv[67]-gcc-4.9/, anyType,   lt(10)  ],
   [ /^cross-compiler-armv[67]-gcc-4.9/, anyType,   gte(12) ],
   [ /^cross-compiler-armv[67]-gcc-6/, anyType,     lt(12)  ],
+  [ /^ubuntu1604-arm64/,              anyType,     gte(14) ],
 
   // Windows -----------------------------------------------
   // https://github.com/nodejs/build/blob/master/doc/windows-visualstudio-supported-versions.md
