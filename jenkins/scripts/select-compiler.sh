@@ -154,6 +154,10 @@ elif [ "$SELECT_ARCH" = "X64" ]; then
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on x64"
 
   case $nodes in
+    centos7-64-gcc8 )
+      . /opt/rh/devtoolset-8/enable
+      echo "Compiler set to devtoolset-8"
+      ;;
     centos6-64-gcc48 )
       . /opt/rh/devtoolset-2/enable
       echo "Compiler set to devtoolset-2"
@@ -177,6 +181,10 @@ elif [ "$SELECT_ARCH" = "ARM64" ]; then
 
 
   case $nodes in
+    centos7-arm64-gcc8 )
+      . /opt/rh/devtoolset-8/enable
+      echo "Compiler set to devtoolset-8"
+      ;;
     centos[67]-arm64-gcc6 )
       . /opt/rh/devtoolset-6/enable
       echo "Compiler set to devtoolset-6"
