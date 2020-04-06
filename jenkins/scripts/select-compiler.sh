@@ -39,6 +39,17 @@ if [ "$SELECT_ARCH" = "PPC64LE" ]; then
 
   case $NODE_NAME in
     *centos7* )
+      if [ "$NODEJS_MAJOR_VERSION" -gt "13" ]; then
+        # Setup devtoolset-8, sets LD_LIBRARY_PATH, PATH, etc.
+        . /opt/rh/devtoolset-8/enable
+        export CC="ccache ppc64le-redhat-linux-gcc"
+        export CXX="ccache ppc64le-redhat-linux-g++"
+        export LINK="ppc64le-redhat-linux-g++"
+        echo "Compiler set to devtoolset-8"
+        return
+      fi
+      ;;
+    *centos7* )
       if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
         # Setup devtoolset-6, sets LD_LIBRARY_PATH, PATH, etc.
         . /opt/rh/devtoolset-6/enable
