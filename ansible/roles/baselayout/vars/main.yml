@@ -43,7 +43,7 @@ packages: {
   # partials/repo/centos7.yml for arm64
   centos7_arm64: ['git'], # git2u not available for aarch64 (yet)
   centos7_x64: ['devtoolset-6-libatomic-devel,git2u,centos-release-scl'],
-  centos7_ppc64: ['devtoolset-6-libatomic-devel,git'],
+  centos7_ppc64: ['devtoolset-6-libatomic-devel,git,python3'],
 
   centos7: [
     'bzip2-devel,openssl-devel,ccache,gcc-c++,devtoolset-6,sudo,zlib-devel,libffi-devel,devtoolset-8,devtoolset-8-libatomic-devel',
