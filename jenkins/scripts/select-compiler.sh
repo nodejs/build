@@ -86,7 +86,14 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
 
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on s390x"
 
-  if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
+  if [ "$NODEJS_MAJOR_VERSION" -gt "13" ]; then
+    # Setup devtoolset-8, sets LD_LIBRARY_PATH, PATH, etc.
+    . /opt/rh/devtoolset-8/enable
+    export CC="ccache s390x-redhat-linux-gcc"
+    export CXX="ccache s390x-redhat-linux-g++"
+    export LINK="s390x-redhat-linux-g++"
+    echo "Compiler set to devtoolset-8"
+  elif [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
     # Setup devtoolset-6, sets LD_LIBRARY_PATH, PATH, etc.
     . /opt/rh/devtoolset-6/enable
     export CC="ccache s390x-redhat-linux-gcc"

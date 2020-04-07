@@ -37,6 +37,7 @@ def buildExclusions = [
   // Linux PPC LE ------------------------------------------
   [ /^centos7-ppcle/,                 anyType,     lt(10)  ],
   [ /^ppcle-ubuntu/,                  releaseType, gte(10) ],
+  [ /^ppcle-ubuntu/,                  anyType,     gte(14) ],
 
   // Linux S390X --------------------------------------------
   [ /s390x/,                          anyType,     lt(6)   ],
