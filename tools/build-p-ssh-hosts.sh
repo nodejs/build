@@ -21,11 +21,13 @@ grep -- 'armv7l_pi2' hosts/all > hosts/armv7l_pi2
 grep -- 'centos6-x64' hosts/all > hosts/centos6-x64
 grep -- 'centos7-ppc64_le' hosts/all > hosts/centos7-ppc64_le
 grep -- 'centos7-ppc64_le' hosts/all > hosts/centos7-ppc64_le
+grep -- 'centos7' hosts/all > hosts/centos7
 grep -- 'digitalocean' hosts/all > hosts/digitalocean
 grep -- 'infra-' hosts/all > hosts/infra
 grep -- 'joyent' hosts/all > hosts/joyent
 grep -- 'release-' hosts/all > hosts/release
 grep -- 'rhel7-s390x' hosts/all > hosts/rhel7-s390x
+grep -- 'rhel7.*-s390x' hosts/all > hosts/rhel7x-s390x
 grep -- 'smartos' hosts/all > hosts/smartos
 grep -- 'softlayer' hosts/all > hosts/softlayer
 grep -- 'test-' hosts/all > hosts/test
