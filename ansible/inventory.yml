@@ -187,6 +187,7 @@ hosts:
         macos10.15-x64-1: {ip: 199.7.167.100, port: 8823, user: administrator}
         macos10.15-x64-2: {ip: 199.7.167.99, port: 8823, user: administrator}
         macos10.14-x64-1: {ip: 199.7.167.99, port: 8822, user: administrator}
+        macos10.14-x64-2: {ip: 199.7.167.100, port: 8824, user: administrator}
 
     - rackspace:
         centos7-x64-1: {ip: 119.9.27.82}
