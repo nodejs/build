@@ -38,7 +38,7 @@ rm -f /tmp/cdnpurge.$site
 #  -H "X-Auth-Email: ${api_email}" \
 #  -H "X-Auth-Key: ${api_key}"
 
-echo "$(date -u --iso-8601=s), ${zone_id}, ${reason}" >> /home/nodejs/cdn-purge.log
+echo "$(date -u --iso-8601=s), ${site}, ${reason}" >> /home/nodejs/cdn-purge.log
 
 # purge full cache
 curl -X DELETE \
