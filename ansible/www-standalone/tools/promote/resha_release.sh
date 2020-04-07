@@ -25,4 +25,4 @@ fi
 
 ${__dirname}/_resha.sh $site $dstdir $2
 
-/home/nodejs/queue-cdn-purge.sh $site
+/home/nodejs/queue-cdn-purge.sh $site resha_release

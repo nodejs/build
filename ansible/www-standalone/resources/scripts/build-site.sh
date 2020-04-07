@@ -44,6 +44,7 @@ docker run \
   -v /home/nodejs/.npm:/npm/ \
   node:latest \
   bash -c " \
+    apt-get update && apt-get install -y rsync && \
     addgroup nodejs --gid ${nodeuid} && \
     adduser nodejs --uid ${nodeuid} --gid ${nodegid} --gecos nodejs --disabled-password && \
     su nodejs -c ' \
@@ -57,4 +58,4 @@ docker run \
 
 rsync -avz --delete --exclude .git ${clonedir}/${rsync_from} /home/www/${site}/
 
-/home/nodejs/queue-cdn-purge.sh $site
+/home/nodejs/queue-cdn-purge.sh $site build-site

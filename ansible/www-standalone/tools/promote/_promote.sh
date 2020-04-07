@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 __dirname="$(CDPATH= cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ -z ${srcdir+x} ]; then
@@ -19,6 +21,7 @@ fi
 
 site=$1
 version=$2
+purge=no
 
 for subdir in $(cd $srcdir && ls); do
 
@@ -39,6 +42,7 @@ for subdir in $(cd $srcdir && ls); do
         cp -a "${srcdir}/${subdir}/${doneref}" "${dstdir}/${subdir}/${doneref}"
         rm -rf "${srcdir}/${subdir}/${doneref}"
         resha=yes
+        purge=yes
       fi
 
       rm -f "${srcdir}/${subdir}/${donefile}"
@@ -49,7 +53,10 @@ for subdir in $(cd $srcdir && ls); do
       ${__dirname}/_resha.sh $site $dstdir $subdir
     fi
 
-    /home/nodejs/queue-cdn-purge.sh $site
   fi
 
 done
+
+if [ "$purge" == "yes" ]; then
+  /home/nodejs/queue-cdn-purge.sh $site promote
+fi
