@@ -50,7 +50,7 @@ hosts:
 
     - marist:
         zos13-s390x-1: {ip: 148.100.36.135, user: Unix1}
-    
+
     - nearform:
         macos10.15-x64-1: {ip: 83.147.191.69, user: administrator}
 
@@ -59,6 +59,9 @@ hosts:
         ubuntu1404-ppc64_be-1: {ip: 140.211.168.76}
         ubuntu1404-ppc64_le-1: {ip: 140.211.168.66}
         centos7-ppc64_le-1: {ip: 140.211.168.61, user: centos}
+
+    - orka:
+        macos10.15-x64-1: {ip: 199.7.167.101, port: 8822, user: administrator}
 
     - packetnet:
         centos7-arm64-1: {ip: 147.75.104.218}
