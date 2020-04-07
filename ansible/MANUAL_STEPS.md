@@ -78,10 +78,10 @@ As root:
 
 * Download Xcode: https://developer.apple.com/download/more/ - find non-beta version, open Developer Tools in browser, Networking tab, start download (then cancel), in Networking tab "Copy as cURL" (available in Chrome & FF)
 * Download onto release machine using the copied curl command (may need `-o xcode.xip` appended to curl command) to `/tmp`
-* Extract: `xip --extract xcode.xip`
+* Extract: `xip --expand xcode.xip`
 * Move `Xcode.app` directory to `/Applications`
 * `xcode-select --switch /Applications/Xcode.app`
-* `xcode-select -r` - accept license
+* `xcodebuild -license` - accept license
 
 #### Signing certificates
 
