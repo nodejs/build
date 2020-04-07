@@ -110,11 +110,9 @@
     dest: /etc/crontab
     line: "{{ item }}"
   with_items:
-    - '*/5 *   * * *   dist    /home/staging/tools/promote/promote_nightly.sh nodejs'
-    - '*/5 *   * * *   dist    /home/staging/tools/promote/promote_nightly.sh iojs'
-    - '*  *    * * *   nodejs  /home/nodejs/check-build-site.sh nodejs'
-    - '*  *    * * *   nodejs  /home/nodejs/check-build-site.sh iojs'
-    - '*  *    * * *   root    /home/nodejs/cdn-purge.sh'
+    - '*/30 *    * * *   dist    /home/staging/tools/promote/promote_nightly.sh nodejs'
+    - '*/5  *    * * *   nodejs  /home/nodejs/check-build-site.sh nodejs'
+    - '*/5  *    * * *   root    /home/nodejs/cdn-purge.sh'
     - '* */4   * * *   nodejs  /home/nodejs/sync-benchmarking.sh'
   tags: setup
 
