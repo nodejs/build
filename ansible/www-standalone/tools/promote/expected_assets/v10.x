@@ -1,4 +1,5 @@
 docs/
+docs/apilinks.json
 docs/api/
 node-{VERSION}-aix-ppc64.tar.gz
 node-{VERSION}-darwin-x64.tar.gz
