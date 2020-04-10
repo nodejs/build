@@ -27,6 +27,8 @@ if ! [ -f /tmp/cdnpurge.$site ]; then
   exit 0
 fi
 
+reason="$(cat /tmp/cdnpurge.$site | tr '\n' ' ')"
+
 rm -f /tmp/cdnpurge.$site
 
 # list zones:
@@ -35,6 +37,8 @@ rm -f /tmp/cdnpurge.$site
 #  "https://api.cloudflare.com/client/v4/zones/" \
 #  -H "X-Auth-Email: ${api_email}" \
 #  -H "X-Auth-Key: ${api_key}"
+
+echo "$(date -u --iso-8601=s), ${site}, ${reason}" >> /home/nodejs/cdn-purge.log
 
 # purge full cache
 curl -X DELETE \
