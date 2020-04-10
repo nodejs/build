@@ -17,8 +17,6 @@ node-{VERSION}-linux-s390x.tar.xz
 node-{VERSION}-linux-x64.tar.gz
 node-{VERSION}-linux-x64.tar.xz
 node-{VERSION}.pkg
-node-{VERSION}-sunos-x64.tar.gz
-node-{VERSION}-sunos-x64.tar.xz
 node-{VERSION}.tar.gz
 node-{VERSION}.tar.xz
 node-{VERSION}-win-x64.7z
