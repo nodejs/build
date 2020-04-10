@@ -106,7 +106,7 @@ def buildExclusions = [
 
   // OSX ---------------------------------------------------
   [ /^osx1010/,                       testType,    gte(11) ],
-  [ /^osx1010/,                       releaseType, allVer  ],
+  [ /^osx1010(?!-release-sources)/,   releaseType, allVer  ],
   [ /^osx1011/,                       testType,    gte(14) ],
   [ /^osx1011/,                       releaseType, allVer  ],
   // osx1015 enabled for all, and builds all releases to support notarization
@@ -116,8 +116,6 @@ def buildExclusions = [
 
   // Source / headers / docs -------------------------------
   [ /^osx1010-release-sources$/,      releaseType, gte(11) ],
-  [ /^osx1011-release-sources$/,      releaseType, lt(11)  ],
-  [ /^osx1011-release-sources$/,      releaseType, gte(12) ],
   [ /^centos7-release-sources$/,      releaseType, lt(12)  ],
 
   // -------------------------------------------------------
