@@ -4,49 +4,49 @@
 # Updates all packages for macos-based distributions
 #
 
-  - name: Check for xcode-tools
-    raw: xcode-select --print-path &> /dev/null
-    register: xcode
-    ignore_errors: yes
+- name: Check for xcode-tools
+  raw: xcode-select --print-path &> /dev/null
+  register: xcode
+  ignore_errors: true
 
-  - name: Install xcode-tools
-    script: files/install-xcode.sh
-    when: xcode.rc > 1
+- name: Install xcode-tools
+  script: files/install-xcode.sh
+  when: xcode.rc > 1
 
-  - name: Check if Homebrew is already installed
-    stat:
-      path: /usr/local/bin/brew
-    register: brew
+- name: Check if Homebrew is already installed
+  stat:
+    path: /usr/local/bin/brew
+  register: brew
 
-  - name: Install Homebrew
-    become_user: administrator
-    script: files/install-homebrew.sh
-    when: not brew.stat.exists
+- name: Install Homebrew
+  become_user: administrator
+  script: files/install-homebrew.sh
+  when: not brew.stat.exists
 
-  - name: Upgrade installed packages
-    become_user: administrator
-    homebrew:
-      upgrade_all: yes
+- name: Upgrade installed packages
+  become_user: administrator
+  homebrew:
+    upgrade_all: true
 
-  - name: Install brew cu
-    become_user: administrator
-    homebrew_tap:
-      name: buo/cask-upgrade
+- name: Install brew cu
+  become_user: administrator
+  homebrew_tap:
+    name: buo/cask-upgrade
 
-  - name: Add AdoptOpenJDK Java Repo
-    become_user: administrator
-    homebrew_tap:
-      name: AdoptOpenJDK/openjdk
+- name: Add AdoptOpenJDK Java Repo
+  become_user: administrator
+  homebrew_tap:
+    name: AdoptOpenJDK/openjdk
 
-  - name: Update Casks
-    become_user: administrator
-    homebrew_cask:
-      upgrade_all: yes
+- name: Update Casks
+  become_user: administrator
+  homebrew_cask:
+    upgrade_all: true
 
-  - name: Disable Crash Reporter 1
-    become_user: root
-    command: launchctl unload -w /System/Library/LaunchAgents/com.apple.ReportCrash.plist
+- name: Disable Crash Reporter 1
+  become_user: root
+  command: launchctl unload -w /System/Library/LaunchAgents/com.apple.ReportCrash.plist
 
-  - name: Disable Crash Reporter 2
-    become_user: root
-    command: launchctl unload -w /System/Library/LaunchDaemons/com.apple.ReportCrash.Root.plist
+- name: Disable Crash Reporter 2
+  become_user: root
+  command: launchctl unload -w /System/Library/LaunchDaemons/com.apple.ReportCrash.Root.plist

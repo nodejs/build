@@ -4,16 +4,16 @@
 # bootstrap packages required for ansible to work
 #
 
-  - name: run os-specific bootstrap
-    include: "{{ bootstrap_include }}"
-    loop_control:
-      loop_var: bootstrap_include
-    with_first_found:
-      - files:
+- name: run os-specific bootstrap
+  include: "{{ bootstrap_include }}"
+  loop_control:
+    loop_var: bootstrap_include
+  with_first_found:
+    - files:
         - "{{ role_path }}/tasks/partials/{{ os }}.yml"
         - "{{ role_path }}/tasks/partials/{{ os|stripversion }}.yml"
-        skip: true
+      skip: true
 
-  - name: run raspberry pi bootstrap
-    when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
-    include: "{{ role_path }}/tasks/partials/raspberry-pi.yml"
+- name: run raspberry pi bootstrap
+  when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
+  include: "{{ role_path }}/tasks/partials/raspberry-pi.yml"

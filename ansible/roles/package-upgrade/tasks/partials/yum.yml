@@ -4,5 +4,5 @@
 # Updates all packages for centos-based distributions
 #
 
-  - name: upgrade installed packages
-    yum: name=* state=latest
+- name: upgrade installed packages
+  yum: name=* state=latest

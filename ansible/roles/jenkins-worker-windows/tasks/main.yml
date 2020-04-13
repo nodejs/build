@@ -11,7 +11,7 @@
   win_get_url:
     url: 'http://mirrors.jenkins-ci.org/art/jenkins-logo/favicon.ico'
     dest: 'C:\jenkins.ico'
-    force: no
+    force: false
 
 - name: create jenkins.bat
   win_template:

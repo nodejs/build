@@ -31,7 +31,7 @@
     url: "https://github.com/nodejs-ci.keys"
     dest: "/tmp/nodejs-ci.keys"
   delegate_to: 127.0.0.1
-  become: no
+  become: false
 
 - name: Add nodejs-ci to authorized_keys for binary_tmp
   authorized_key:
@@ -63,7 +63,7 @@
   git:
     repo: "https://github.com/nodejs/node"
     dest: "~binary_tmp/binary_tmp.git"
-    bare: yes
+    bare: true
 
 - name: Create git-shell-commands directory
   file:

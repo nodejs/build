@@ -2,3 +2,8 @@
 
 #
 # this role depends on java-base
+#
+
+dependencies:
+  - { 'role': 'java-base' }
+  - { 'role': 'gcc', when: os|startswith("rhel7") }

@@ -18,7 +18,7 @@
 - name: "ccache : download and extract"
   unarchive:
     dest: /tmp/
-    remote_src: yes
+    remote_src: true
     src: "https://www.samba.org/ftp/ccache/ccache-{{ ccache_latest }}.tar.gz"
   register: new_archive
 
@@ -41,7 +41,7 @@
   copy:
     dest: "/usr/local/bin"
     mode: 0755
-    remote_src: yes
+    remote_src: true
     src: "/tmp/ccache-{{ ccache_latest }}/ccache"
 
 - name: "ccache : create symlinks"

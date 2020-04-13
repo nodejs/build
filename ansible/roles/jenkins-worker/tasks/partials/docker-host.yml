@@ -9,7 +9,8 @@
   register: server_user_uid
 
 - name: docker | fetch samba ccache HTML page
-  local_action: shell curl -sL https://www.samba.org/ftp/ccache/ | sed -n -e 's/.*"ccache-\([0-9.]*\).tar.gz".*/\1/p' | tail -1
+  local_action: shell curl -sL https://www.samba.org/ftp/ccache/
+  warn: false
   register: ccache_html_content
 
 - name: docker | extract ccache latest version
@@ -19,7 +20,7 @@
 - name: docker | check if docker exists
   shell: which docker
   register: docker_exists
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: docker | install docker from docker.com
   when: "docker_exists.stdout == ''"
@@ -72,5 +73,5 @@
   service:
     name: "docker-jenkins-{{ item.name }}"
     state: started
-    enabled: yes
+    enabled: true
   with_items: "{{ docker_containers }}"

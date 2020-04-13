@@ -8,5 +8,5 @@
   apt_repository:
     repo: 'ppa:ubuntu-toolchain-r/test'
     state: present
-    update_cache: yes
+    update_cache: true
   register: has_updated_package_repo

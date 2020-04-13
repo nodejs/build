@@ -38,7 +38,7 @@
 - name: unarchive gmp 6.1.0
   unarchive:
     src: /data/tmp/gmp-6.1.0.tar.xz
-    remote_src: yes
+    remote_src: true
     dest: /data/tmp/
   when: build_gmp.stat.exists == False
   tags: gcc
@@ -97,7 +97,7 @@
 - name: unarchive mprf 3.1.4
   unarchive:
     src: /data/tmp/mpfr-3.1.4.tar.gz
-    remote_src: yes
+    remote_src: true
     dest: /data/tmp/
   when: build_mpfr.stat.exists == False
   tags: gcc
@@ -156,7 +156,7 @@
 - name: unarchive mpc 1.0.3
   unarchive:
     src: /data/tmp/mpc-1.0.3.tar.gz
-    remote_src: yes
+    remote_src: true
     dest: /data/tmp/
   when: build_mpc.stat.exists == False
   tags: gcc
@@ -215,7 +215,7 @@
 - name: unarchive binutils 2.28.1
   unarchive:
     src: /data/tmp/binutils-2.28.1.tar.gz
-    remote_src: yes
+    remote_src: true
     dest: /data/tmp/
   when: build_binutils.stat.exists == False
   tags: gcc
@@ -281,7 +281,7 @@
 - name: unarchive gcc 4.9.4
   unarchive:
     src: /data/tmp/gcc-4.9.4.tar.gz
-    remote_src: yes
+    remote_src: true
     dest: /data/tmp/
   when: build_gcc_49.stat.exists == False
   tags: gcc49

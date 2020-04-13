@@ -100,9 +100,9 @@
   when: os|startswith("macos")
   command: grep -Fxq "/usr/local/opt/ccache/libexec" /etc/paths
   register: ccache_mac
-  check_mode: no
-  ignore_errors: yes
-  changed_when: no
+  check_mode: false
+  ignore_errors: true
+  changed_when: false
 
 - name: add ccache to the path (macos)
   when: os|startswith("macos") and ccache_mac.rc == 1

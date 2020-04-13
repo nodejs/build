@@ -6,10 +6,10 @@
 
 binary_dest: '/usr/local/bin/ccache'
 
-ccache_no_binpkg: ['smartos15', 'smartos16', 'smartos17']
+ccache_no_binpkg: [ 'smartos14', 'smartos15', 'smartos16', 'smartos17' ]
 ccache_version: 3.3.2
 
-git_no_binpkg: ['debian7']
+git_no_binpkg: [ 'debian7' ]
 git_version: 2.10.2
 
 ssh_config: /etc/ssh/sshd_config
@@ -23,8 +23,8 @@ sshd_service_map: {
 sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripversion])|default('sshd') }}"
 
 ntp_service: {
-  systemd: ['debian8', 'debian9', 'debian10', 'ubuntu1604', 'ubuntu1804'],
-  ntp_package: ['ubuntu1404']
+  systemd: [ 'debian8', 'debian9', 'ubuntu1604', 'ubuntu1610', 'ubuntu1710' ],
+  ntp_package: [ 'ubuntu1404' ]
 }
 
 common_packages: [
@@ -34,16 +34,14 @@ common_packages: [
 # you can either add os family or os to this list (see smartos)
 # but the playbook chooses os over family - not both
 packages: {
-  centos6_x64: ['centos-release-scl'], # only available on x86_64, 32-bit is from https://copr.fedorainfracloud.org/coprs/mlampe
+  centos6_x64: [ 'centos-release-scl' ],  # only available on x86_64, 32-bit is from https://copr.fedorainfracloud.org/coprs/mlampe
   centos6: [
-    'ccache,git2u,gcc-c++,devtoolset-6,sudo', # even need gcc on centos6 so ccache has symlinks
+    'ccache,git2u,gcc-c++,devtoolset-6,sudo',  # even need gcc on centos6 so ccache has symlinks
   ],
 
-  # centos-release-scl is required to enable SCLo but we do it manually in
-  # partials/repo/centos7.yml for arm64
-  centos7_arm64: ['git'], # git2u not available for aarch64 (yet)
-  centos7_x64: ['devtoolset-6-libatomic-devel,git2u,centos-release-scl'],
-  centos7_ppc64: ['devtoolset-6-libatomic-devel,git,python3'],
+  centos7_arm64: [ 'git' ],  # git2u not available for aarch64 (yet)
+  centos7_x64: [ 'git2u', 'centos-release-scl', ],  # centos-release-scl is required to enable SCLo
+  # but we do it manually in partials/repo/centos7.yml for arm64
 
   centos7: [
     'bzip2-devel,openssl-devel,ccache,gcc-c++,devtoolset-6,sudo,zlib-devel,libffi-devel,devtoolset-8,devtoolset-8-libatomic-devel',

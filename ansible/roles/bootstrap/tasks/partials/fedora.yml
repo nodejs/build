@@ -24,7 +24,7 @@
   when: os in ("fedora27", "fedora30")
   raw: dnf info libselinux-python | grep Installed
   register: has_libselinux
-  failed_when:  has_libselinux.rc > 1
+  failed_when: has_libselinux.rc > 1
 
 - name: install libselinux-python bindings
   when: os in ("fedora27", "fedora30") and has_libselinux.rc == 1

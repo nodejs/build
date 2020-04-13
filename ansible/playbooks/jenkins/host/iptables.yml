@@ -8,44 +8,44 @@
 #
 
 - hosts:
-  - infra-digitalocean-ubuntu1404-x64-1 # ci.nodejs.org
-  - infra-softlayer-ubuntu1404-x64-1 # ci-release.nodejs.org
+  - infra-digitalocean-ubuntu1404-x64-1  # ci.nodejs.org
+  - infra-softlayer-ubuntu1404-x64-1  # ci-release.nodejs.org
 
   vars:
     hostgroups: {
       'infra-digitalocean-ubuntu1404-x64-1': 'test',
       'infra-softlayer-ubuntu1404-x64-1': 'release'
-      }
+    }
     jumphost: 'vagg-arm.nodejs.org'
 
 
   tasks:
-  - name: add hosts to firewall
-    when: not 'ansible_ssh_common_args' in hostvars[host] and
-          hostgroups[inventory_hostname] == hostvars[host].type
-    iptables:
-      table: filter
-      chain: jnlp
-      jump: ACCEPT
-      comment: "{{ host }}"
-      source: "{{ hostvars[host]['ansible_host'] }}/32"
-    loop_control:
-      loop_var: host
-    with_inventory_hostnames: "{{ hostgroups[inventory_hostname] }}"
+    - name: add hosts to firewall
+      when: not 'ansible_ssh_common_args' in hostvars[host] and
+            hostgroups[inventory_hostname] == hostvars[host].type
+      iptables:
+        table: filter
+        chain: jnlp
+        jump: ACCEPT
+        comment: "{{ host }}"
+        source: "{{ hostvars[host]['ansible_host'] }}/32"
+      loop_control:
+        loop_var: host
+      with_inventory_hostnames: "{{ hostgroups[inventory_hostname] }}"
 
-  # we _could_ use lookup('dig') here but it requires dnspython
-  - name: lookup ip address for proxy host
-    run_once: true
-    local_action: raw dig +short {{ jumphost }}
-    register: jumphost_ip
-    failed_when: not jumphost_ip.stdout_lines[0]
+    # we _could_ use lookup('dig') here but it requires dnspython
+    - name: lookup ip address for proxy host
+      run_once: true
+      local_action: raw dig +short {{ jumphost }}
+      register: jumphost_ip
+      failed_when: not jumphost_ip.stdout_lines[0]
 
-  # awful awful. should really look up this somehow but i can't figure out
-  # how to do it properly.
-  - name: add proxy host(s) to firewall
-    iptables:
-      table: filter
-      chain: jnlp
-      jump: ACCEPT
-      comment: "{{ jumphost }}"
-      source: "{{ jumphost_ip.stdout_lines[0] }}/32"
+    # awful awful. should really look up this somehow but i can't figure out
+    # how to do it properly.
+    - name: add proxy host(s) to firewall
+      iptables:
+        table: filter
+        chain: jnlp
+        jump: ACCEPT
+        comment: "{{ jumphost }}"
+        source: "{{ jumphost_ip.stdout_lines[0] }}/32"

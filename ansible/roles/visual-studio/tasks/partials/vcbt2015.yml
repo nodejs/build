@@ -8,7 +8,7 @@
   win_get_url:
     url: 'http://go.microsoft.com/fwlink/?LinkId=671743'
     dest: 'C:\TEMP\netfw.exe'
-    force: no
+    force: false
 
 - name: install .NET Framework
   win_command: 'C:\TEMP\netfw.exe /q /norestart
@@ -18,7 +18,7 @@
   win_get_url:
     url: 'https://go.microsoft.com/fwlink/?LinkId=691126'
     dest: 'C:\TEMP\vcbt2015.exe'
-    force: no
+    force: false
 
 - name: install Visual C++ Build Tools 2015
   win_command: 'C:\TEMP\vcbt2015.exe /Silent /NoRestart /Full

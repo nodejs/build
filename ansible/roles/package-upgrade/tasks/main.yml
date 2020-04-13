@@ -4,7 +4,7 @@
 # upgrade all installed packages for a host
 #
 
-  - name: include package manager tasks
-    when: not os|startswith("zos")
-    include: "partials/{{ template }}.yml"
-    failed_when: template is False
+- name: include package manager tasks
+  when: not os|startswith("zos")
+  include: "partials/{{ template }}.yml"
+  failed_when: template is False

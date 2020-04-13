@@ -1,3 +1,5 @@
+---
+
 - name: GitHub Webhook | Install github-webhook
   command: "npm install github-webhook -g"
   tags: webhook
@@ -19,5 +21,5 @@
   service:
     name: github-webhook
     state: restarted
-    enabled: yes
+    enabled: true
   tags: webhook

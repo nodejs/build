@@ -81,13 +81,37 @@
 #
 
 - hosts:
-  - test
-  - release
-  - "!test-packetnet-ubuntu1604-x64-1"
-  - "!test-packetnet-ubuntu1604-x64-2"
-  - "!test-softlayer-ubuntu1604-x64-1"
-  - "!test-packetnet-ubuntu1804-x64-1"
-  - "!test-packetnet-ubuntu1804-x64-2"
+    - test-joyent-freebsd10-x64-2
+    - test-rackspace-freebsd10-x64-1
+
+  tasks:
+    - name: install lint-related packages
+      package:
+        name: "{{ package }}"
+        state: present
+      loop_control:
+        loop_var: package
+      with_items: [ "node", "npm" ]
+
+    - name: install core-validate-commit
+      npm:
+        name: "core-validate-commit"
+        global: true
+        state: present
+        production: true
+
+    - name: periodically update core-validate-commit
+      cron:
+        special_time: daily
+        # ksh does different stdout/err routing
+        job: "npm update -g core-validate-commit > & /dev/null"
+
+# Ensure node is not installed anywhere but the linter servers
+- hosts:
+    - test
+    - release
+    - "!test-joyent-freebsd10-x64-2"
+    - "!test-rackspace-freebsd10-x64-1"
   tasks:
     - name: remove node and npm packages
       when: not os|startswith("win") and not os|startswith("zos")
@@ -102,10 +126,10 @@
       shell: "node -v"
       register: node_check_cmd
       failed_when: node_check_cmd.rc == 0
-      changed_when: False
+      changed_when: false
     - name: fail if node is in the path - please uninstall it
       when: os|startswith("win")
       win_shell: "node -v"
       register: node_check_cmd_win
       failed_when: node_check_cmd_win.rc == 0
-      changed_when: False
+      changed_when: false

@@ -9,5 +9,5 @@
   tasks:
     - name: collect ccache statistics
       script: ../partials/ccache_statistics.sh
-      become: yes
+      become: true
       become_user: "{{ server_user }}"

@@ -1,3 +1,5 @@
+---
+
 - name: Docker | Add the Docker.io repo
   command: "bash -c 'curl -sL http://get.docker.io/ | bash -'"
   tags: docker

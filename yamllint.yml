@@ -1,0 +1,6 @@
+---
+extends: default
+rules:
+  line-length: disable
+  braces: { min-spaces-inside: 1, max-spaces-inside: 1 }
+  brackets: { min-spaces-inside: 1, max-spaces-inside: 1 }

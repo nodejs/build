@@ -8,14 +8,6 @@
   when: "'scaleway-ubuntu1804-armv7l' not in inventory_hostname"
   apt: upgrade=dist update_cache=yes
 
-  # kernel upgrades on the scaleway hosts are dicey
-  # see https://github.com/scaleway/image-ubuntu/issues/132 for kernel woes
-- name: upgrade installed packages (safe)
-  when: "'scaleway-ubuntu1804-armv7l' in inventory_hostname"
-  apt: upgrade=safe update_cache=yes
-  environment:
-    FLASH_KERNEL_SKIP: true
-
-  # don't know how to use autoremove=yes for all packages
+# don't know how to use autoremove=yes for all packages
 - name: clean unwanted packages
   command: apt-get -y autoremove warn=False

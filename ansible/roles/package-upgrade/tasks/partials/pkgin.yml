@@ -4,5 +4,5 @@
 # Updates all packages for illumos-based (smartos) distributions
 #
 
-  - name: upgrade installed packages
-    pkgin: update_cache=yes upgrade=yes clean=yes
+- name: upgrade installed packages
+  pkgin: update_cache=yes upgrade=yes clean=yes

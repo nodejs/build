@@ -15,7 +15,7 @@
   git:
     repo: 'https://github.com/nghttp2/nghttp2.git'
     dest: "/home/{{ server_user }}/nghttp2"
-    force: yes
+    force: true
 
 - name: Setup and compile h2load
   shell: "autoreconf -i && automake && autoconf && ./configure --enable-app && make -j4"
@@ -26,7 +26,7 @@
   git:
     repo: https://github.com/wg/wrk.git
     dest: "/home/{{ server_user }}/wrk"
-    force: yes
+    force: true
 
 - name: Setup and compile wrk
   shell: "make"

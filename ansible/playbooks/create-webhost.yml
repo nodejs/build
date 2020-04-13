@@ -39,7 +39,7 @@
       apt_repository:
         repo: "{{ repo }}"
         state: present
-        update_cache: yes
+        update_cache: true
       loop_control:
         loop_var: repo
       with_items:
@@ -53,7 +53,7 @@
       user:
         name: "{{ user.name }}"
         shell: /bin/bash
-        append: yes
+        append: true
         groups: "{{ user.extra_group if 'extra_group' in user else '' }}"
       loop_control:
         loop_var: user
@@ -72,7 +72,7 @@
         group: "{{ folder[0] }}"
       loop_control:
         loop_var: folder
-    # old structure looks like this
+      # old structure looks like this
       when: not('{{ folder[0] }}' == 'dist' and '{{ folder[2] }}' == 'custom')
             and not('{{ folder[0] }}' == 'staging' and
                     '{{ folder[2] }}' in ['test', 'docs', 'rc'])

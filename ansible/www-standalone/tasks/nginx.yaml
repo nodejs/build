@@ -1,3 +1,5 @@
+---
+
 - name: nginx | Copy site configs
   copy:
     src: ./resources/config/{{ item }}
@@ -106,16 +108,16 @@
     owner: www-data
     group: adm
   with_items:
-      - 'nodejs'
-      - 'iojs'
-      - 'libuv'
-      - 'benchmarking'
-      - 'coverage'
+    - 'nodejs'
+    - 'iojs'
+    - 'libuv'
+    - 'benchmarking'
+    - 'coverage'
   tags: nginx
 
 - name: nginx | Restart service
   service:
     name: nginx
     state: restarted
-    enabled: yes
+    enabled: true
   tags: nginx

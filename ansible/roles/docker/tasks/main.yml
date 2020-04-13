@@ -161,14 +161,13 @@
 
 - name: reload systemd
   systemd:
-    daemon_reload: yes
-  when: containers is defined
+    daemon_reload: true
 
 - name: "docker : start Jenkins"
   service:
     name: "jenkins-{{ item.name }}"
     state: started
-    enabled: yes
+    enabled: true
   with_items:
     - "{{ containers }}"
   when: containers is defined

@@ -1,10 +1,10 @@
 ---
 
-- name: "debian8 | add jessie-backports" # has systemd-coredump if needed
+- name: "debian8 | add debian-backports"  # has systemd-coredump if needed
   apt_repository:
     repo: 'deb http://archive.debian.org/debian jessie-backports main'
     state: present
-    update_cache: yes
+    update_cache: true
   register: has_updated_package_repo
 
 - name: "debian8 | add git-core trusty ppa"
@@ -12,7 +12,7 @@
     repo: ppa:git-core/ppa
     codename: trusty
     state: present
-    update_cache: yes
+    update_cache: true
   register: has_updated_package_repo
 
 - name: "debian8 | add trusty-updates gpg keys"
@@ -33,5 +33,5 @@
   apt_repository:
     repo: 'deb http://us.archive.ubuntu.com/ubuntu trusty-updates main universe'
     state: present
-    update_cache: yes
+    update_cache: true
   register: has_updated_package_repo

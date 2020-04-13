@@ -4,8 +4,8 @@
 # Updates all packages for freebsd-based distributions
 #
 
-  - name: upgrade installed packages
-    raw: pkg upgrade -y -q
+- name: upgrade installed packages
+  raw: pkg upgrade -y -q
 
-  - name: package cleanup
-    raw: pkg clean -y -q
+- name: package cleanup
+  raw: pkg clean -y -q

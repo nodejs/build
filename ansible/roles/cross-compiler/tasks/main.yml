@@ -11,12 +11,12 @@
 - name: upgrade installed packages
   apt:
     upgrade: dist
-    update_cache: yes
+    update_cache: true
 
 - name: install required packages
   apt:
     name: "{{ packages }}"
-    update_cache: yes
+    update_cache: true
     state: latest
 
 - name: increase file descriptor limits

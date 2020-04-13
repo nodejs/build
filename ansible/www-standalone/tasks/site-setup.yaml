@@ -1,3 +1,5 @@
+---
+
 - name: Site Setup | Copy build-site scripts
   copy:
     src: ./resources/scripts/{{ item }}
@@ -96,7 +98,7 @@
   tags: setup
 
 - name: Site Setup | Initial nodejs, iojs and benchmarking clone and update
-  become: yes
+  become: true
   become_user: "nodejs"
   command: "{{ item }}"
   with_items:

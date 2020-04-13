@@ -9,5 +9,5 @@
   apt_repository:
     repo: 'deb http://ftp.debian.org/debian wheezy-backports main'
     state: present
-    update_cache: yes
+    update_cache: true
   register: has_updated_package_repo

@@ -5,71 +5,71 @@
 #
 
 init: {
-  aix: ['aix71', 'aix72'],
+  centos5: 'centos5',
   centos6: 'centos6',
-  debian: 'debian7',
+  debian: [ 'debian7', 'ubuntu1204' ],
   freebsd: 'freebsd',
   macos: 'macos',
-  rhel7: 'rhel7',
-  systemd: ['centos7', 'debian8', 'debian9', 'debian10', 'fedora', 'ubuntu1604', 'ubuntu1804'],
+  rhel72: 'rhel72',
+  systemd: [ 'centos7', 'debian8', 'debian9', 'fedora', 'ubuntu1604', 'ubuntu1610', 'ubuntu1710' ],
   svc: 'smartos',
-  upstart: ['ubuntu12', 'ubuntu1404'],
+  upstart: [ 'ubuntu12', 'ubuntu1404' ],
   zos_start: 'zos'
-  }
+}
 
 jenkins_init: {
-  aix: {
-    dest: '/etc/rc.d/rc2.d/S20jenkins',
-    src: 'aix.rc2.j2',
-    mode: '0555'
-    },
+  centos5: {
+    dest: '/etc/init.d/jenkins',
+    src: 'centos5.initd.j2',
+    mode: '0755'
+  },
   centos6: {
     dest: '/etc/init.d/jenkins',
     src: 'centos6.initd.j2',
     mode: '0755'
-    },
+  },
   debian: {
     dest: '/etc/init.d/jenkins',
     src: 'sysvinit.initd.j2',
     mode: '0755'
-    },
+  },
   freebsd: {
     dest: '/usr/local/etc/rc.d/jenkins',
     src: 'freebsd.initd.j2',
     mode: '0755'
-    },
+  },
   macos: {
     dest: '/Library/LaunchDaemons/org.nodejs.osx.jenkins.plist',
     src: 'org.nodejs.osx.jenkins.plist',
     mode: '0755'
-    },
+  },
   openrc: {
     dest: '/etc/init.d/jenkins',
     src: 'openrc.initd.j2',
     mode: '0755'
-    },
-  rhel7: {
+  },
+  rhel72: {
     dest: '/usr/lib/systemd/system/jenkins.service',
     src: 'systemd.service.j2',
     mode: '0644'
-    },
+  },
   svc: {
     dest: '/home/{{ server_user }}/jenkins_manifest.xml',
     src: 'jenkins_manifest.xml.j2'
-    },
+  },
   systemd: {
     dest: '/lib/systemd/system/jenkins.service',
     src: 'systemd.service.j2'
-    },
+  },
   upstart: {
     dest: '/etc/init/jenkins.conf',
     src: 'upstart.j2'
-    },
+  },
   zos_start: {
     dest: '{{ home }}/{{ server_user }}/start.sh',
     src: 'zos_start.j2'
-    },
-  }
+  },
+}
 
 # if you fail here, it means it cant map your os or os family to a init system
 # the best thing to do would be throwing, but the default case seems to be
@@ -80,7 +80,7 @@ jenkins: "{{ jenkins_init[init_type] }}"
 needs_monit: [
   'centos6',
   'debian7',
-  ]
+]
 
 # some os'es needs different paths to java. add them here.
 java_path: {
@@ -97,14 +97,14 @@ java_path: {
   'smartos17': '/opt/local/java/openjdk8/bin/java',
   'smartos18': '/opt/local/java/openjdk8/bin/java',
   'zos13': '/usr/lpp/java/J8.0_64/bin/java'
-  }
+}
 
 # same for bash. will default to /bin/bash if you don't set it
 bash_path: {
   aix: '/usr/bin/ksh',
   freebsd: '/usr/local/bin/bash',
   zos: 'bash'
-  }
+}
 
 raspberry_pi: {
   nfs_root_server: '192.168.1.10',
@@ -127,8 +127,9 @@ raspberry_pi: {
 
 scaleway_armv7: {
   containers: [
-      { name: 'jessie', template: 'armv7_jessie.Dockerfile.j2' },
-      { name: 'stretch', template: 'armv7_stretch.Dockerfile.j2' }
+    { name: 'wheezy', template: 'armv7_wheezy.Dockerfile.j2' },
+    { name: 'jessie', template: 'armv7_jessie.Dockerfile.j2' },
+    { name: 'stretch', template: 'armv7_stretch.Dockerfile.j2' }
   ]
 }
 

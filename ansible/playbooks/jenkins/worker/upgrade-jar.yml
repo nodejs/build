@@ -4,9 +4,9 @@
 # upgrade `slave.jar` at jenkins workers
 #
 
--  hosts: test
+- hosts: test
 
-   tasks:
+  tasks:
     - name: download slave.jar
       get_url:
         url: "{{ jenkins_worker_jar }}"

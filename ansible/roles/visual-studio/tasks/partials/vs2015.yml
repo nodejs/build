@@ -8,7 +8,7 @@
   win_get_url:
     url: 'https://go.microsoft.com/fwlink/?LinkId=532606'
     dest: 'C:\TEMP\vs2015_community.exe'
-    force: no
+    force: false
 
 - name: install Visual Studio Community 2015
   win_command: 'C:\TEMP\vs2015_community.exe /Silent /NoRestart
