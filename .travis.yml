@@ -1,6 +1,6 @@
 ---
 language: python
-python: "2.7"
+python: "3.7"
 
 sudo: required
 dist: trusty
@@ -11,9 +11,7 @@ addons:
       - python-pip
 
 install:
-  # Install yamllint
-  - pip install yamllint
+  - pip3 install yamllint
 
 script:
-  # Check YAML validity
   - yamllint -c yamllint.yml .
