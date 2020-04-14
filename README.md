@@ -95,6 +95,7 @@ Access to [release secrets][].
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+- [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
 
@@ -111,7 +112,7 @@ Admin access to https://ci-release.nodejs.org/.
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
-- [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
+- [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
 
