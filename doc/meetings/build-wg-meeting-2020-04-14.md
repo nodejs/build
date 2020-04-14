@@ -12,7 +12,7 @@
 * Ash Cripps (@AshCripps)
 * Michael Dawson (@mhdawson)
 * John Kleinschmidt (@jkleinsc)
-* Sam Roberts
+* Sam Roberts (@sam-github)
 
 ## Agenda
 
