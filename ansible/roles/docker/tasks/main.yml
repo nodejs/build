@@ -145,6 +145,15 @@
     - "{{ containers }}"
   when: containers is defined
 
+- name: "docker : copy cc-selector.sh"
+  copy:
+    src: "{{ role_path }}/files/cc-selector.sh"
+    dest: /root/docker-container-{{ item.name }}/cc-selector.sh
+    mode: 0755
+  with_items:
+    - "{{ containers }}"
+  when: containers is defined and item.os.find('_arm_cross') != -1
+
 - name: "docker : build image"
   command: docker build -t node-ci:{{ item.name }} /root/docker-container-{{ item.name }}/
   with_items:
