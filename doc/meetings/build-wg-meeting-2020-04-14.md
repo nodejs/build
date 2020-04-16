@@ -44,7 +44,7 @@
 * Platform requirements for Node.js 14 [#2168](https://github.com/nodejs/build/issues/2168)
   * Using OSX to build (needed for notarization)
   * Installed DevToolSet 8 so we can build on some platforms
-  * Remaining issue is updating unbuntu 16 to 18 ARM cross compiler machine.
+  * Remaining issue is updating the cross compiler machine for armv7 from Ubuntu 16.04 to 18.04.
   * Very close to being ready, Release is next Tuesday.
 
 ## Q&A, Other
