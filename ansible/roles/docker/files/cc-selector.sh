@@ -1,5 +1,5 @@
 # create CC, CXX, CC_host and CXX_host environment variables appropriate for the
-# worker label in use. Of the form: cross-compiler-ubuntu1[68]04-armv[67]-gcc-(4\.[89](\.4)?|6|8)
+# worker label in use. Of the form: cross-compiler-ubuntu1[68]04-armv[67]-gcc-(4\.9.4?|6|8)
 
 # Expected labels:
 # cross-compiler-ubuntu1604-armv6-gcc-4.9.4
@@ -8,10 +8,7 @@
 # cross-compiler-ubuntu1804-armv7-gcc-6
 # cross-compiler-ubuntu1804-armv7-gcc-8
 
-rpi_tools_base="/opt/raspberrypi/tools/"
 rpi_newer_tools_base="/opt/raspberrypi/rpi-newer-crosstools/"
-base_4_8="${rpi_tools_base}arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-"
-base_4_9="${rpi_tools_base}arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-"
 base_4_9_4="${rpi_newer_tools_base}x64-gcc-4.9.4-binutils-2.28/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-"
 base_6="${rpi_newer_tools_base}x64-gcc-6.5.0/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-"
 base_8="${rpi_newer_tools_base}x64-gcc-8.3.0/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-"
@@ -22,14 +19,14 @@ function run {
   local label="$1"
 
   export arm_type=$(echo $label | sed -E 's/^cross-compiler-ubuntu1[68]04-(armv[67])-gcc-.*$/\1/')
-  export gcc_version=$(echo $label | sed -E 's/^cross-compiler-ubuntu1[68]04-armv[67]-gcc-(4\.[89](\.4)?|6|8)/\1/')
+  export gcc_version=$(echo $label | sed -E 's/^cross-compiler-ubuntu1[68]04-armv[67]-gcc-(4\.9\.4|6|8)/\1/')
   export git_branch="cc-${arm_type}"
 
   if [[ ! "$arm_type" =~ ^armv[67]$ ]]; then
     echo "Could not determine ARM type from '$label'"
     exit 1
   fi
-  if [[ ! "$gcc_version" =~ ^(4\.[89](\.4)?|6|8)$ ]]; then
+  if [[ ! "$gcc_version" =~ ^(4\.9\.4|6|8)$ ]]; then
     echo "Could not determine ARM type from '$label'"
     exit 1
   fi
