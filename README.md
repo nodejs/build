@@ -47,6 +47,7 @@ to the resources we manage.
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
+- [@smpeters] (https://github.com/smpeters) - Steve Peters
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@Trott](https://github.com/Trott) - Rich Trott
 
