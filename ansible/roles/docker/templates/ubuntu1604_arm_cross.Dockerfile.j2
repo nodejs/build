@@ -20,8 +20,6 @@ RUN apt-get update \
     python-software-properties \
     libfontconfig1 \
     make \
-    gcc-4.8-multilib \
-    g++-4.8-multilib \
     gcc-4.9-multilib \
     g++-4.9-multilib \
     gcc-6-multilib \
@@ -30,8 +28,7 @@ RUN apt-get update \
 RUN pip install tap2junit \
   && pip3 install tap2junit
 
-RUN git clone https://github.com/raspberrypi/tools.git /opt/raspberrypi/tools \
-  && git clone https://github.com/rvagg/rpi-newer-crosstools.git /opt/raspberrypi/rpi-newer-crosstools
+RUN git clone https://github.com/rvagg/rpi-newer-crosstools.git /opt/raspberrypi/rpi-newer-crosstools
 
 COPY cc-selector.sh /opt/raspberrypi/cc-selector.sh
 
