@@ -198,6 +198,57 @@
   when: os|startswith("smartos")
   raw: "svccfg import {{ jenkins.dest }}"
 
+- name: install cmake - create directory - part 1
+  when: os|startswith("zos")
+  file:
+    owner: "{{ server_user }}"
+    path: "{{ home }}/{{ server_user }}/cmake"
+    state: directory
+
+- name: install cmake - download tarball - part 2
+  when: os|startswith("zos")
+  shell:
+    chdir: "{{ home }}/{{ server_user }}/cmake"
+    cmd: "su -s {{ server_user }} -c 'curl -sL -o cmake-v3.5.1-zos.tar.gz https://github.com/fjeremic/CMake/archive/v3.5.1-zos.tar.gz'"
+    creates: "{{ home }}/{{ server_user }}/cmake/cmake-v3.5.1-zos.tar.gz"
+
+- name: install cmake - extract tarball - part 3
+  when: os|startswith("zos")
+  shell:
+    chdir: "{{ home }}/{{ server_user }}/cmake"
+    cmd: "su -s {{ server_user }} -c 'gzip -dc < cmake-v3.5.1-zos.tar.gz | pax -r -o from=iso8859-1,to=ibm-1047'"
+    creates: "{{ home }}/{{ server_user }}/cmake/CMake-3.5.1-zos"
+
+- name: install cmake - create temp directory - part 4
+  when: os|startswith("zos")
+  file:
+    owner: "{{ server_user }}"
+    path: "{{ home }}/{{ server_user }}/temp"
+    state: directory
+
+- name: install cmake - create install directory - part 5
+  when: os|startswith("zos")
+  file:
+    owner: "{{ server_user }}"
+    path: "{{ home }}/{{ server_user }}/local"
+    state: directory
+
+- name: install cmake - build - part 6
+  when: os|startswith("zos")
+  environment:
+    _C89_CCMODE: 1
+    _CC_CCMODE: 1
+    _CXX_CCMODE: 1
+    _TAG_REDIR_ERR: txt
+    _TAG_REDIR_IN: txt
+    _TAG_REDIR_OUT: txt
+    PATH: "{{ home }}/{{ server_user }}:/bin:/NODEJS2/bin:/NODEJS/bin"
+    TMPDIR: "{{ home }}/{{ server_user }}/temp"
+  shell:
+    chdir: "{{ home }}/{{ server_user }}/cmake/CMake-3.5.1-zos"
+    cmd: "su -s {{ server_user }} -c './bootstrap --prefix={{ home }}/{{ server_user }}/local --verbose && make -j8 VERBOSE=1 && make install'"
+    creates: "{{ home }}/{{ server_user }}/local/bin/cmake"
+
 - name: render gyp into place - Create directory - part 1
   when: os|startswith("zos")
   file:
