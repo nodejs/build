@@ -59,22 +59,6 @@ if [ "$SELECT_ARCH" = "PPC64LE" ]; then
       ;;
    esac
 
-  if [ "$NODEJS_MAJOR_VERSION" -gt "11" ]; then
-    # See: https://github.com/nodejs/build/pull/1723#discussion_r265740122
-    export PATH=/usr/lib/binutils-2.26/bin/:$PATH
-    export COMPILER_LEVEL="6"
-  elif [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
-    export PATH=/usr/lib/binutils-2.26/bin/:$PATH
-    export COMPILER_LEVEL="4.9"
-  fi
-
-  # Select the appropriate compiler
-  export CC="gcc-${COMPILER_LEVEL}"
-  export CXX="g++-${COMPILER_LEVEL}"
-  export LINK="g++-${COMPILER_LEVEL}"
-
-  echo "Compiler set to $COMPILER_LEVEL"
-
 elif [ "$SELECT_ARCH" = "S390X" ]; then
 
   # Set default
@@ -136,23 +120,6 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
       fi
       ;;
   esac
-
-  
-  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX61"
-
-  if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
-    export LIBPATH=/home/iojs/gmake/opt/freeware/lib:/home/iojs/gcc-6.3.0-1/opt/freeware/lib/gcc/powerpc-ibm-aix6.1.0.0/6.3.0/pthread/ppc64:/home/iojs/gcc-6.3.0-1/opt/freeware/lib
-    export PATH="/home/iojs/gcc-6.3.0-1/opt/freeware/bin:$PATH"
-    export CC="ccache `which gcc`" CXX="ccache `which g++`" CXX_host="ccache `which g++`"
-    # TODO(sam-github): configure ccache by pushing /opt/freeware/bin/ccache on
-    # front of PATH
-    echo "Compiler set to 6.3"
-  else
-    export CC="ccache `which gcc`" CXX="ccache `which g++`" CXX_host="ccache `which g++`"
-    # TODO(sam-github): configure ccache by pushing /opt/freeware/bin/ccache on
-    # front of PATH
-    echo "Compiler set to default at 4.8.5"
-  fi
 
 elif [ "$SELECT_ARCH" = "X64" ]; then
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on x64"
