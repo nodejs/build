@@ -42,7 +42,7 @@ hosts:
         smartos15-x64-2: {ip: 165.225.148.139}
         smartos17-x64-2: {ip: 165.225.149.208}
         smartos18-x64-2: {ip: 165.225.148.12}
-        ubuntu1604_arm_cross-x64-1: {ip: 165.225.151.28, user: ubuntu}
+        ubuntu1804_docker-x64-1: {ip: 165.225.150.76, user: ubuntu}
 
     - macstadium:
         macos10.11-x64-1: {ip: 207.254.58.162, port: 10013, user: administrator}
@@ -83,7 +83,6 @@ hosts:
   - test:
 
     - azure:
-        msft-ubuntu1604_arm_cross-x64-1: {ip: nodejs.eastus2.cloudapp.azure.com, user: ubuntu}
         msft-win10_vcbt2015-x64-1: {ip: nodejs.eastus2.cloudapp.azure.com}
         msft-win10_vcbt2015-x64-2: {ip: nodejs.westus2.cloudapp.azure.com}
         msft-win10_vcbt2015-x64-3: {ip: nodejs.eastus2.cloudapp.azure.com}
@@ -132,7 +131,6 @@ hosts:
         smartos17-x64-4: {ip: 165.225.148.16}
         smartos18-x64-3: {ip: 165.225.151.114}
         smartos18-x64-4: {ip: 165.225.149.13}
-        ubuntu1604_arm_cross-x64-1: {ip: 165.225.149.35, user: ubuntu}
         ubuntu1804_docker-x64-1: {ip: 165.225.151.201, user: ubuntu}
         ubuntu1804-x64-1: {ip: 165.225.149.88, user: ubuntu}
 

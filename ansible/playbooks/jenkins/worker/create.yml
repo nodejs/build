@@ -18,8 +18,6 @@
     - { role: 'benchmarking',
         when: is_benchmark is defined and is_benchmark|bool == True }
     - jenkins-worker
-    - { role: 'cross-compiler',
-        when: "'arm_cross' in inventory_hostname" }
 
   pre_tasks:
 # Requires `secret: XXX` to be in the ansible/host_vars/HOST
