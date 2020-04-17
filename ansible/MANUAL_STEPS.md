@@ -2,6 +2,7 @@
 
 * [Adding firewall entries for Jenkins workers](#adding-firewall-entries-for-jenkins-workers)
 * [`release-*` machines](#release--machines)
+  * [`release-*container*` machines](#release-container-machines)
   * [macOS release machines](#macos-release-machines)
     * [Full Xcode](#full-xcode)
     * [Signing certificates](#signing-certificates)
@@ -15,7 +16,6 @@
   * [Install XL compilers](#install-xl-compilers)
   * [Fix "Missing" shared objects](#fix-missing-shared-objects)
   * [Preparing gcc distributables](#preparing-gcc-distributables)
-  * [Preparing ccache distributables](#preparing-ccache-distributables)
 * [Windows (Azure/Rackspace)](#windows-azurerackspace)
   * [Control machine (where Ansible is run)](#control-machine-where-ansible-is-run)
   * [Target machines](#target-machines)
@@ -50,13 +50,17 @@ To add an entry do the following:
 Once setup, they must have `~iojs/.ssh` cloned from another machine, so they
 have the ssh setup and keys required to upload release artifacts to the
 nodejs.org web server. The result will be 2 files, an `id_rsa` containing
-a private key, and a config containing:
+a private key, and a `config` containing:
+
 ```
 Host node-www
   HostName direct.nodejs.org
   User staging
   IdentityFile ~/.ssh/id_rsa
 ```
+
+Both the `config` file and `id_rsa` should be owned and only readable by the
+user: `chmod 700 .ssh && chmod 600 .ssh/*`.
 
 Its necessary to accept the `known_hosts` keys interactively on first ssh or
 the release builds will fail. After setting up .ssh, do something like this:
@@ -65,6 +69,21 @@ the release builds will fail. After setting up .ssh, do something like this:
 ssh node-www date
 // ... accept the host keys
 ```
+
+### `release-*container*` machines
+
+In the case of Docker container release hosts, the SSH configuration above works
+differently since the `~iojs` home directories are elsewhere on the host
+machine. The Docker containers are started with `/home/iojs` inside the
+container mounted from `/home/iojs/name-of-container/` on the host machine.
+Therefore, the above SSH configuration should take place in
+`/home/iojs/name-of-container/.ssh/`, with permissions set appropriately.
+
+`known_hosts` can be primed and SSH tested from within the running containers:
+
+1. Find the running container ID using `docker ps`
+2. Enter the container using `docker exec <containerid> -ti bash`
+3. Run `ssh node-www date` (as above)
 
 ### macOS release machines
 
