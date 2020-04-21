@@ -60,6 +60,9 @@ hosts:
         ubuntu1404-ppc64_le-1: {ip: 140.211.168.66}
         centos7-ppc64_le-1: {ip: 140.211.168.61, user: centos}
 
+    - orka:
+        macos10.15-x64-1: {ip: 199.7.167.101, port: 8822, user: administrator}
+
     - packetnet:
         centos7-arm64-1: {ip: 147.75.104.218}
 
@@ -177,6 +180,12 @@ hosts:
         ubuntu1404-ppc64_le-4: {ip: 140.211.168.140}
         centos7-ppc64_le-1: {ip: 140.211.168.193, user: centos}
         centos7-ppc64_le-2: {ip: 140.211.168.244, user: centos}
+
+    - orka:
+        macos10.15-x64-1: {ip: 199.7.167.100, port: 8823, user: administrator}
+        macos10.15-x64-2: {ip: 199.7.167.99, port: 8823, user: administrator}
+        macos10.14-x64-1: {ip: 199.7.167.99, port: 8822, user: administrator}
+        macos10.14-x64-2: {ip: 199.7.167.100, port: 8824, user: administrator}
 
     - rackspace:
         centos7-x64-1: {ip: 119.9.27.82}
