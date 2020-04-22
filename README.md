@@ -24,6 +24,19 @@ missing please open an issue. If you are interested in joining, please read
 [GOVERNANCE.md][] to understand the process and reasoning we use for granting access
 to the resources we manage.
 
+## Related groups
+
+The Build WG isn't responsible for all "build" related activity, there are
+several other groups working on specific aspects of build:
+
+- https://github.com/nodejs/release - Builds the official Node.js releases.
+  Works very closely with the Build WG. Supporting Release is one of the
+  most important goals of the Build WG.
+- https://github.com/nodejs/docker-node - Builds the official Docker images
+  for Node.js. A consumer of the builds produced by Release.
+- https://github.com/nodejs/unofficial-builds/ - Builds unofficial binaries for
+  Node.js. An experimental project, see its README for more information.
+
 ## Build WG Members
 
 <!-- ncu-team-sync.team(nodejs/build) -->
