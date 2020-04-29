@@ -124,6 +124,7 @@ hosts:
         rhel7-s390x-2: {ip: 148.100.86.117, user: linux1}
         rhel7-s390x-3: {ip: 148.100.86.28, user: linux1}
         rhel7-s390x-4: {ip: 148.100.86.94, user: linux1}
+        ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
 
     - joyent:
         smartos15-x64-3: {ip: 165.225.148.128}
@@ -268,7 +269,6 @@ hosts:
         ubuntu1404-x64-1: {ip: 50.97.245.5}
         ubuntu1404-x86-1: {ip: 50.97.245.9}
         ubuntu1804_docker-x64-1: {ip: 52.117.26.9}
-        ubuntu1604-x64-1: {ip: 169.60.150.88, alias: jenkins-workspace-3}
 
     - packetnet:
         centos7-arm64-1: {ip: 147.75.193.230}
@@ -277,7 +277,5 @@ hosts:
         ubuntu1604-arm64-2: {ip: 147.75.74.174}
 # when adding, removing or changing the IPs below,
 # remember to update Jenkins worker IP whitelist in github-bot
-        ubuntu1604-x64-1: {ip: 147.75.70.41, alias: jenkins-workspace-1}
-        ubuntu1604-x64-2: {ip: 147.75.73.189, alias: jenkins-workspace-2}
         ubuntu1804-x64-1: {ip: 147.75.66.203, alias: jenkins-workspace-4}
         ubuntu1804-x64-2: {ip: 147.75.81.67, alias: jenkins-workspace-5}
