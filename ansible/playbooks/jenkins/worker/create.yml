@@ -56,11 +56,9 @@
 #
 
 - hosts:
-    - test-packetnet-ubuntu1604-x64-1
-    - test-packetnet-ubuntu1604-x64-2
     - test-packetnet-ubuntu1804-x64-1
     - test-packetnet-ubuntu1804-x64-2
-    - test-softlayer-ubuntu1604-x64-1
+    - test-ibm-ubuntu1804-x64-1
 
   roles:
     - jenkins-workspace
@@ -81,11 +79,9 @@
 - hosts:
   - test
   - release
-  - "!test-packetnet-ubuntu1604-x64-1"
-  - "!test-packetnet-ubuntu1604-x64-2"
-  - "!test-softlayer-ubuntu1604-x64-1"
   - "!test-packetnet-ubuntu1804-x64-1"
   - "!test-packetnet-ubuntu1804-x64-2"
+  - "!test-ibm-ubuntu1804-x64-1"
   tasks:
     - name: remove node and npm packages
       when: not os|startswith("win") and not os|startswith("zos")
