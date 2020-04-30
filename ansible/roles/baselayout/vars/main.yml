@@ -104,7 +104,7 @@ packages: {
   ],
 
   rhel7: [
-    'gcc-c++,sudo,git,zip,unzip,iptables-services,GConf2-devel',
+    'gcc-c++,sudo,git,zip,unzip,iptables-services,GConf2-devel,openssl-devel',
   ],
 
   smartos: [
