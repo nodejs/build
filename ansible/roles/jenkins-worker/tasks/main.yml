@@ -60,6 +60,33 @@
   when: "'scaleway-ubuntu1804-armv7l' in inventory_hostname"
   include: "{{ role_path }}/tasks/partials/scaleway-armv7.yml"
 
+- name: rhel7 install cmake - create directory
+  when: os|startswith("rhel7")
+  file:
+    path: "/tmp/cmake"
+    state: directory
+
+- name: rhel7 install cmake - download tarball
+  when: os|startswith("rhel7")
+  shell:
+    chdir: "/tmp/cmake"
+    cmd: "curl -sL -o cmake-3.17.2.tar.gz https://github.com/Kitware/CMake/releases/download/v3.17.2/cmake-3.17.2.tar.gz"
+    creates:  "/tmp/cmake/cmake-3.17.2.tar.gz"
+
+- name: rhel7 install cmake - extract tarball
+  when: os|startswith("rhel7")
+  shell:
+    chdir: "/tmp/cmake"
+    cmd: "tar -xzf cmake-3.17.2.tar.gz"
+    creates:  "/tmp/cmake/cmake-3.17.2"
+
+- name: rhel7 install cmake - build
+  when: os|startswith("rhel7")
+  shell:
+    chdir: "/tmp/cmake/cmake-3.17.2"
+    cmd: "./bootstrap --verbose && make -j6 VERBOSE=1 && make install"
+    creates: "/usr/local/bin/cmake"
+
 # @TODO(mhdawson): get tap2junit working on zOS
 - name: prepare installing tap2junit
   when: type != "release" and not os|startswith("zos")
