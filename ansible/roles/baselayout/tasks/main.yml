@@ -79,6 +79,7 @@
     loop_var: package
   with_items:
     # ansible doesn't like empty lists
+    - "{{ packages[os+'_'+arch]|default('[]') }}"
     - "{{ packages[os]|default('[]') }}"
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"

@@ -31,8 +31,12 @@ common_packages: [
   'automake,bash,libtool',
 ]
 
-# you can either add os family or os to this list (see smartos)
-# but the playbook chooses os over family - not both
+# You can either add os family or os to this list (see smartos)
+# but the playbook chooses os over family - not both.
+#
+# To determine the value of `os` or of `arch` for a specific HOST, use ansible:
+# % ansible -m debug -a "var=arch"  HOST
+# % ansible -m debug -a "var=os"  HOST
 packages: {
   centos6_x64: ['centos-release-scl'], # only available on x86_64, 32-bit is from https://copr.fedorainfracloud.org/coprs/mlampe
   centos6: [
