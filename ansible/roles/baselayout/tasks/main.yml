@@ -66,8 +66,8 @@
   stat: path="{{ binary_dest }}"
   register: has_git
 
-- name: centos | remove existing git package
-  when: "(os == 'centos6' or os == 'centos7') and arch != 'arm64'"
+- name: centos6 | remove existing git package
+  when: "os == 'centos6' and arch != 'arm64'"
   yum:
     name: "git"
     state: absent
