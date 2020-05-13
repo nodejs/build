@@ -1,5 +1,6 @@
 #!/QOpenSys/pkgs/bin/bash
-SBMJOB_OPTS="JOB(JENKINS_CI) USER(IOJS)"
+CIJOBNAME="JENKINS_CI"
+SBMJOB_OPTS="JOB($CIJOBNAME) USER(IOJS)"
 
 export PATH=/QOpenSys/pkgs/lib/ccache:/QOpenSys/pkgs/bin:/QOpenSys/usr/bin:/usr/ccs/bin:/QOpenSys/usr/bin/X11:/usr/sbin:.:/usr/bin
 export PASE_PATH=$PATH
@@ -12,8 +13,14 @@ export QIBM_USE_DESCRIPTOR_STDIO=N
 
 unset LC_ALL
 
+if [[ $(/QOpenSys/usr/bin/system "WRKACTJOB  JOB($CIJOBNAME)" | grep -i $CIJOBNAME | wc -l) != "1" ]]
+then
+  echo "Job already running"
+  exit 1
+fi
+
 export START_CMD="{{ java_path[os] }} -Xmx{{ server_ram|default('128m') }} -jar {{ home }}/{{ server_user }}/slave.jar -secret {{ secret }} -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp >{{ home }}/{{ server_user }}/jenkins.log 2>&1 "
 
 echo $START_CMD
 
-exec /QOpenSys/usr/bin/system -kpiveO "SBMJOB CMD(CALL PGM(QP2SHELL2) PARM('/QOpenSys/usr/bin/sh' '-c' 'echo starting Jenkins slave && cd $JENKS_HOME && env && exec $START_CMD')) CPYENVVAR(*YES) PRTDEV(*USRPRF) ALWMLTTHD(*YES) $SBMJOB_OPTS"
+exec /QOpenSys/usr/bin/system -v -kpiveO "SBMJOB CMD(QSH CMD('echo starting Jenkins slave && cd $JENKS_HOME && env && exec $START_CMD')) CPYENVVAR(*YES) PRTDEV(*USRPRF) ALWMLTTHD(*YES) $SBMJOB_OPTS"
