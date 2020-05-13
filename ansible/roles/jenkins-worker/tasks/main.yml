@@ -38,7 +38,8 @@
 - name: create user for ibmi
   when: os|startswith("ibmi")
   command: "/QOpenSys/usr/bin/system 'CRTUSRPRF USRPRF({{ server_user }}) PASSWORD(*none)'"
-  ignore_errors: true
+  args:
+    creates: "/QSYS.LIB/IOJS.USRPRF"
 
 - name: add ::1 to /etc/hosts for ipv6 compat
   when: not os|startswith("zos") and not os|startswith("ibmi")
