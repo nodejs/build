@@ -5,5 +5,7 @@
 #
 
 - name: install tap2junit
-  pip: name=tap2junit state=present
-  executable: pip2
+  pip:
+    name: tap2junit
+    state: present
+    executable: /QOpenSys/pkgs/bin/pip2
