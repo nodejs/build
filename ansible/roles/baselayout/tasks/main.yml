@@ -95,17 +95,6 @@
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"
 
-- name: install packages IBMi
-  when: os|startswith("ibmi")
-  yum: name="{{ package }}" state=present use_backend=yum
-  loop_control:
-    loop_var: package
-  with_items:
-    # ansible doesn't like empty lists
-    - "{{ packages[os]|default('[]') }}"
-    - "{{ packages[os|stripversion]|default('[]') }}"
-    - "{{ common_packages|default('[]') }}"
-
 - name: install packages (macos)
   when: os|startswith("macos")
   become_user: administrator
