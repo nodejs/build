@@ -71,7 +71,7 @@ packages: {
     'git',
     'libstdcplusplus-devel',
     'openssl-devel',
-    'python3-pip',
+    'python2-pip',
     'sed-gnu',
     'zlib-devel',
   ],
