@@ -4,13 +4,12 @@ SBMJOB_OPTS="JOB($CIJOBNAME) USER(IOJS)"
 
 export PATH=/QOpenSys/pkgs/lib/ccache:/QOpenSys/pkgs/bin:/QOpenSys/usr/bin:/usr/ccs/bin:/QOpenSys/usr/bin/X11:/usr/sbin:.:/usr/bin
 export PASE_PATH=$PATH
-export JENKS_HOME={{ home }}/{{ server_user }}
+export HOME={{ home }}/{{ server_user }}
 export NODE_COMMON_PIPE="$HOME/test.pipe"
 export NODE_TEST_DIR="$HOME/tmp"
 export JOBS=4
 export OSTYPE=ibmi
 export QIBM_USE_DESCRIPTOR_STDIO=Y
-export HOME=/home/IOJS
 
 unset LC_ALL
 
@@ -24,4 +23,4 @@ export START_CMD="{{ java_path[os] }} -Xmx{{ server_ram|default('128m') }} -Dos4
 
 echo $START_CMD
 
-exec /QOpenSys/usr/bin/system -v -kpiveO "SBMJOB CMD(QSH CMD('echo starting Jenkins slave && cd $JENKS_HOME && env && exec $START_CMD')) CPYENVVAR(*YES) PRTDEV(*USRPRF) ALWMLTTHD(*YES) $SBMJOB_OPTS"
+exec /QOpenSys/usr/bin/system -v -kpiveO "SBMJOB CMD(QSH CMD('echo starting Jenkins slave && cd $HOME && env && exec $START_CMD')) CPYENVVAR(*YES) PRTDEV(*USRPRF) ALWMLTTHD(*YES) $SBMJOB_OPTS"
