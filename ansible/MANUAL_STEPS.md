@@ -480,14 +480,33 @@ After these steps are performed and the Pi's are running, Ansible can be run to 
 [newer Ansible configuration]: https://github.com/nodejs/build/tree/master/ansible
 [stand-alone]: https://github.com/nodejs/build/tree/master/setup/windows
 
-## IBMi
+## IBM i
 
 Ansible 2.7.6 is required.
 
 There isn't a system start service on IBMi -- the machine should not be
 rebooted, and after ansible is run, jenkins needs to be started with
-jenkins-start.sh, as the iojs user.
+jenkins-start.sh. This will submit the job under the iojs user
 
-XXX how do people become the iojs user? Probably pre-ansible the
-`nodejs_build_test` user's keys need installing as the nodejs and iojs user on
-the target box.
+The following manual steps must be done to set 
+
+### Install open source ecosystem
+See http://ibm.biz/ibmi-rpms (see "Installation" section)
+
+## Set global PATH to use Open Source Ecosystem
+Edit `/QOpenSys/etc/profile` to contain:
+```
+PATH=/QOpenSys/pkgs/bin:$PATH
+export PATH
+```
+This can be done by running the following commands from a shell:
+```
+echo 'PATH=/QOpenSys/pkgs/bin:$PATH' >> /QOpenSys/etc/profile
+echo 'export PATH' >> /QOpenSys/etc/profile
+```
+
+## Use bash as the default shell (maintainer convenience only)
+```
+yum install chsh
+chsh -s /QOpenSys/pkgs/bin/bash
+```
