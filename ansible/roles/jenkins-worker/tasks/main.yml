@@ -25,18 +25,24 @@
   when: jobs_env is undefined
 
 - name: create group
-  when: not os|startswith("zos")
+  when: not os|startswith("zos") and not os|startswith("ibmi")
   group: name="{{ server_user }}"
 
 - name: create user
-  when: "not os|startswith('zos')"
+  when: "not os|startswith('zos') and not os|startswith('ibmi')"
   user:
     name: "{{ server_user }}"
     group: "{{ server_user }}"
     shell: "{{ bash_path[os|stripversion]|default('/bin/bash') }}"
 
+- name: create user for ibmi
+  when: os|startswith("ibmi")
+  command: "/QOpenSys/usr/bin/system 'CRTUSRPRF USRPRF({{ server_user }}) PASSWORD(*none)'"
+  args:
+    creates: "/QSYS.LIB/IOJS.USRPRF"
+
 - name: add ::1 to /etc/hosts for ipv6 compat
-  when: not os|startswith("zos")
+  when: not os|startswith("zos") and not os|startswith("ibmi")
   lineinfile:
     dest: /etc/hosts
     state: present
@@ -46,10 +52,19 @@
   file: path="{{ home }}/{{ server_user }}/tmp" state=directory
 
 - name: set NODE_TEST_DIR permission and owner
+  when: not os|startswith("ibmi")
   file:
     path: "{{ home }}/{{ server_user }}/tmp"
     owner: "{{ server_user }}"
     group: "{{ server_user }}"
+    mode: 0755
+
+# group has very different meaning on IBMi, only set to the build user
+- name: set NODE_TEST_DIR permission and owner IBMi
+  when: os|startswith("ibmi")
+  file:
+    path: "{{ home }}/{{ server_user }}/tmp"
+    owner: "{{ server_user }}"
     mode: 0755
 
 - name: run raspberry pi jenkins-worker setup
@@ -313,7 +328,11 @@
     name: java-base
 
 - name: enable jenkins at startup - general
-  when: not os|startswith("zos") and not os|startswith("macos") and not os|startswith("aix")
+  when:
+    - not os|startswith("aix")
+    - not os|startswith("ibmi")
+    - not os|startswith("macos")
+    - not os|startswith("zos")
   service: name=jenkins state=restarted enabled=yes
 
 - name: Unload org.nodejs.osx.jenkins.plist from launchctl

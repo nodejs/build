@@ -22,6 +22,7 @@ if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
     *aix* ) SELECT_ARCH=AIXPPC ;;
     *x64* ) SELECT_ARCH=X64 ;;
     *arm64* ) SELECT_ARCH=ARM64 ;;
+    *ibmi72* ) SELECT_ARCH=IBMI72 ;;
   esac
 fi
 
@@ -88,6 +89,11 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
     export LINK="g++${COMPILER_LEVEL}"
     echo "Compiler set to $COMPILER_LEVEL"
   fi
+
+elif [ "$SELECT_ARCH" = "IBMI72" ]; then
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on IBMI72"
+  export PATH="/QOpenSys/pkgs/lib/ccache:$PATH"
+  echo "Compiler left as system default (6.3)"
 
 elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
   case $NODE_NAME in

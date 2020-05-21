@@ -5,4 +5,6 @@
 #
 
   - name: upgrade installed packages
-    yum: name=* state=latest
+    yum: name=* state=latest use_backend=yum
+# If difficulty recognizing yum is encountered, see https://github.com/ansible/ansible/pull/69484, it is possible
+# to apply that patch manually to a local install of ansible (if necessary).

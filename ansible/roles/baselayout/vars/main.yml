@@ -57,6 +57,10 @@ packages: {
     'bash,cmake,gcc-c++,gcc6-c++,tar,unzip,git,make,sudo',
   ],
 
+  ibmi: [
+    'autoconf,automake,ca-certificates-mozilla,ccache,cmake,coreutils-gnu,gcc,gcc-cplusplus,gcc-cpp,git,libstdcplusplus-devel,m4-gnu,openssl-devel,python2-pip,sed-gnu,zlib-devel',
+  ],
+
   debian7: [
     'gcc-4.8,g++-4.8,sudo',
   ],
