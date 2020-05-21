@@ -488,7 +488,6 @@ There isn't a system start service on IBMi -- the machine should not be
 rebooted, and after ansible is run, jenkins needs to be started with
 jenkins-start.sh. This will submit the job under the iojs user
 
-The following manual steps must be done to set 
 
 ### Install open source ecosystem
 See http://ibm.biz/ibmi-rpms (see "Installation" section)
