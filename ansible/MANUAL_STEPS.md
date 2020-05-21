@@ -517,9 +517,3 @@ After that is completed, copy to the `.bashrc` file for the nodejs user
 yum install chsh
 chsh -s /QOpenSys/pkgs/bin/bash
 ```
-
-### Install Ansible version 2.7.6
-
-Ansible 2.7.6 is required, until the resolution of [this issue](https://github.com/ansible/ansible/issues/64031).
-
-`pip3 install ansible==2.7.6`
