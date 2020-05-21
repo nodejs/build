@@ -24,7 +24,7 @@
 * [SmartOS](#smartos)
 * [Raspberry Pi](#raspberry-pi)
   * [NFS boot](#nfs-boot)
-
+* [IBM i](#ibm-i)
 
 ## Adding firewall entries for Jenkins workers
 
@@ -482,17 +482,23 @@ After these steps are performed and the Pi's are running, Ansible can be run to 
 
 ## IBM i
 
-Ansible 2.7.6 is required.
-
 There isn't a system start service on IBMi -- the machine should not be
 rebooted, and after ansible is run, jenkins needs to be started with
-jenkins-start.sh. This will submit the job under the iojs user
+`jenkins-start.sh`. This will submit the job under the iojs user. If the 
+job is already running, the `jenkins-start.sh` script will not start
+another job.
 
 
 ### Install open source ecosystem
 See http://ibm.biz/ibmi-rpms (see "Installation" section)
 
-## Set global PATH to use Open Source Ecosystem
+### Create Nodejs user's home directory
+```
+mkdir -p /home/NODEJS
+chown -R nodejs /home/NODEJS
+```
+
+### Set global PATH and .bashrc to use Open Source Ecosystem
 Edit `/QOpenSys/etc/profile` to contain:
 ```
 PATH=/QOpenSys/pkgs/bin:$PATH
@@ -503,9 +509,17 @@ This can be done by running the following commands from a shell:
 echo 'PATH=/QOpenSys/pkgs/bin:$PATH' >> /QOpenSys/etc/profile
 echo 'export PATH' >> /QOpenSys/etc/profile
 ```
+After that is completed, copy to the `.bashrc` file for the nodejs user
+`cp /QOpenSys/etc/profile /home/NODEJS/.bashrc`
 
-## Use bash as the default shell (maintainer convenience only)
+### Use bash as the default shell (maintainer convenience only)
 ```
 yum install chsh
 chsh -s /QOpenSys/pkgs/bin/bash
 ```
+
+### Install Ansible version 2.7.6
+
+Ansible 2.7.6 is required, until the resolution of [this issue](https://github.com/ansible/ansible/issues/64031).
+
+`pip3 install ansible==2.7.6`
