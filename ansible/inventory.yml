@@ -183,6 +183,7 @@ hosts:
         macos10.15-x64-2: {ip: 199.7.167.99, port: 8823, user: administrator}
         macos10.14-x64-1: {ip: 199.7.167.99, port: 8822, user: administrator}
         macos10.14-x64-2: {ip: 199.7.167.100, port: 8824, user: administrator}
+        macos10.14-x64-3: {ip: 199.7.167.101, port: 8824, user: administrator}
 
     - iinthecloud:
         ibmi72-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
