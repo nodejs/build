@@ -97,6 +97,10 @@ table should look like before the release testing:
 
 ![](../static-assets/jenkins-authorization-normal.png)
 
+***Note: the Jenkins UI changes occaisonally, as does the permissions. Make a
+screenshot of the "before" state if it does not exactly match the documented
+screenshot (and update the documented screenshot).***
+
 Below is a screenshot of what the table should look like while release
 testing is underway:
 
@@ -109,7 +113,14 @@ condition. Add a comment to your post in `nodejs/collaborators` and the
 tracking issue in `nodejs/build` to announce that access has been
 restored.
 
-For easy reverting of config changes, you can use the history audit log:
+The process of restoring permissions involves adding back the groups that are no
+longer displayed (because they had no permissions), and setting the permissions
+to those shown above ("before the release testing").
+
+The history audit log may be helpful, but there is no way to revert to an
+earlier configuration.
+
+Relevant logs:
 1. system (includes security matrix) - https://ci.nodejs.org/jobConfigHistory/history?name=config
 2. CSS - https://ci.nodejs.org/jobConfigHistory/history?name=org.codefirst.SimpleThemeDecorator
 
