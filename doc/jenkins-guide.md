@@ -97,6 +97,10 @@ table should look like before the release testing:
 
 ![](../static-assets/jenkins-authorization-normal.png)
 
+***Note: the Jenkins UI changes occaisonally, as does the permissions. Make a
+screenshot of the "before" state if it does not exactly match the documented
+screenshot (and update the documented screenshot).***
+
 Below is a screenshot of what the table should look like while release
 testing is underway:
 
