@@ -20,5 +20,5 @@ This document serves as a checklist of what we must go through when offboarding 
     - [ ] nodejs/jenkins-release-admins
     - [ ] nodejs-private/build
 - [ ] PR changes to [README.md](./README.md#build-wg-members) to move the member to emeritus status
-- [ ] Run `ncu team sync` to vaildate the user has been removed from the build teams
+- [ ] Run `ncu-team sync README.md` to validate the user has been removed from the build teams
 - [ ] Remove them from the [`nodejs/email`](https://github.com/nodejs/email) alias

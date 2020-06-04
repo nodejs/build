@@ -46,7 +46,6 @@ to the resources we manage.
 - [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@sam-github](https://github.com/sam-github) - Sam Roberts
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@Trott](https://github.com/Trott) - Rich Trott
 
@@ -83,7 +82,6 @@ Admin access to https://ci.nodejs.org/.
 - [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@sam-github](https://github.com/sam-github) - Sam Roberts
 - [@Trott](https://github.com/Trott) - Rich Trott
 
 <!-- ncu-team-sync end -->
@@ -97,7 +95,6 @@ Access to [release secrets][].
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@sam-github](https://github.com/sam-github) - Sam Roberts
 
 Above list is manually synced with the [gpg member list](https://github.com/nodejs-private/secrets/tree/master/build/release/.gpg).
 
@@ -115,7 +112,6 @@ Admin access to https://ci-release.nodejs.org/.
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@sam-github](https://github.com/sam-github) - Sam Roberts
 
 <!-- ncu-team-sync end -->
 
@@ -129,7 +125,6 @@ Admin access to https://ci-release.nodejs.org/.
 - [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mscdex](https://github.com/mscdex) - mscdex
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
-- [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@williamkapke](https://github.com/williamkapke) - William Kapke
 
@@ -141,6 +136,8 @@ accesses and team roles see [GOVERNANCE.md][].
 ### Emeriti
 
 - [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
+- [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
+- [@sam-github](https://github.com/sam-github) - Sam Roberts
 
 ## Infrastructure Providers
 
