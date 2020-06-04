@@ -31,7 +31,6 @@ to the resources we manage.
 - [@addaleax](https://github.com/addaleax) - Anna Henningsen
 - [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 - [@bnoordhuis](https://github.com/bnoordhuis) - Ben Noordhuis
-- [@gdams](https://github.com/gdams) - George Adams
 - [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
@@ -43,7 +42,6 @@ to the resources we manage.
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
-- [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
@@ -71,7 +69,6 @@ Admin access to https://ci.nodejs.org/.
 <!-- ncu-team-sync.team(nodejs/jenkins-admins) -->
 
 - [@AshCripps](https://github.com/AshCripps) - Ash Cripps
-- [@gdams](https://github.com/gdams) - George Adams
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
@@ -79,7 +76,6 @@ Admin access to https://ci.nodejs.org/.
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
-- [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@Trott](https://github.com/Trott) - Rich Trott
@@ -119,11 +115,9 @@ Admin access to https://ci-release.nodejs.org/.
 
 <!-- ncu-team-sync.team(nodejs/github-bot) -->
 
-- [@Fishrock123](https://github.com/Fishrock123) - Jeremiah Senkpiel
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 - [@maclover7](https://github.com/maclover7) - Jon Moss
-- [@mscdex](https://github.com/mscdex) - mscdex
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@williamkapke](https://github.com/williamkapke) - William Kapke
