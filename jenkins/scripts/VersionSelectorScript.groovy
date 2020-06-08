@@ -62,7 +62,7 @@ def buildExclusions = [
   [ /vs2013(-\w+)?$/,                 testType,    gte(6)        ],
   [ /vs2015(-\w+)?$/,                 testType,    gte(10)       ],
   [ /vcbt2015(-\w+)?$/,               testType,    gte(10)       ],
-  [ /vs2017(-\w+)?$/,                 testType,    lt(8)         ],
+  [ /vs2017(-\w+)?$/,                 testType,    ltGte(8, 15)  ],
   [ /vs2019(-\w+)?$/,                 testType,    lt(13)        ],
   [ /vs2015-x86$/,                    testType,    gte(10)       ], // compile x86 only once
   [ /vs2017-x86$/,                    testType,    ltGte(10, 14) ],
