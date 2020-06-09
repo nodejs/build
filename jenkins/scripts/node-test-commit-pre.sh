@@ -39,5 +39,10 @@ if [ -n "${POST_REBASE_SHA1_CHECK}" ]; then
   fi
 fi
 
-# TODO(gib): Run locally once we're cloning the whole git repo.
-curl https://raw.githubusercontent.com/nodejs/build/master/jenkins/scripts/node-test-commit-diagnostics.sh | bash -ex -s before
+# Run the local copy, if we have one, or fetch the latest from GitHub.
+LOCAL_SCRIPT="${WORKSPACE}/build/jenkins/scripts/node-test-commit-diagnostics.sh"
+if [ -e "${LOCAL_SCRIPT}" ]; then
+  bash -ex "${LOCAL_SCRIPT}" before
+else
+  curl https://raw.githubusercontent.com/nodejs/build/master/jenkins/scripts/node-test-commit-diagnostics.sh | bash -ex -s before
+fi
