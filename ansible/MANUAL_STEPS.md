@@ -25,6 +25,7 @@
 * [Raspberry Pi](#raspberry-pi)
   * [NFS boot](#nfs-boot)
 * [IBM i](#ibm-i)
+* [z/OS](#zos)
 
 ## Adding firewall entries for Jenkins workers
 
@@ -517,3 +518,24 @@ After that is completed, copy to the `.bashrc` file for the nodejs user
 yum install chsh
 chsh -s /QOpenSys/pkgs/bin/bash
 ```
+
+## z/OS
+
+The system Java installed is too old to be able to verify the SSL certificate
+for our Jenkins servers and a more recent version has to be installed manually.
+The script used to start the Jenkins agent expects to find the Java SDK in
+[`/u/unix1/java/J8.0_64/`](roles/jenkins-worker/vars/main.yml).
+
+To install the Java SDK, obtain the latest Java 8 service refresh for z/OS from:
+https://developer.ibm.com/javasdk/support/zos/
+
+Transfer the pax.Z file to the z/OS system (via sftp, do not use scp as that
+will perform an unwanted character conversion). Log into the z/OS system and
+extract the SDK via the `pax` command:
+e.g. if the pax.Z file is located in `/u/unix1/SDK8_64bit_SR6_FP10.PAX.Z`
+```
+mkdir -p /u/unix1/java
+cd /u/unix1/java
+pax -rf /u/unix1/SDK8_64bit_SR6_FP10.PAX.Z -ppx
+```
+
