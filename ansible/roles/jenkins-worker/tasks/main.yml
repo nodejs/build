@@ -52,7 +52,9 @@
   file: path="{{ home }}/{{ server_user }}/tmp" state=directory
 
 - name: set NODE_TEST_DIR permission and owner
-  when: not os|startswith("ibmi")
+  when:
+    - not os|startswith("ibmi")
+    - not os|startswith("zos")
   file:
     path: "{{ home }}/{{ server_user }}/tmp"
     owner: "{{ server_user }}"
@@ -161,13 +163,27 @@
   when: os|startswith("zos")
   copy:
     content: "127.0.0.1 localhost\n::1 localhost\n"
-    dest: /etc/ipnodes
+    dest: '{{ home }}/{{ server_user }}/ipnodes.utf8'
+  register: ipnodes
+
+- name: Resolver | convert ipnodes to ebcdic
+  when: os|startswith("zos")
+  shell:
+    cmd: "iconv -f utf8 -t ibm-1047 {{ ipnodes.dest }} > /etc/ipnodes"
+    creates: "/etc/ipnodes"
 
 - name: Resolver | set DNS resolving priorities for zos
   when: os|startswith("zos")
   copy:
     content: "LOOKUP LOCAL DNS"
-    dest: '{{ home }}/{{ server_user }}/resolve'
+    dest: '{{ home }}/{{ server_user }}/resolve.utf8'
+  register: resolve
+
+- name: Resolver | convert resolve to ebcdic
+  when: os|startswith("zos")
+  shell:
+    cmd: "iconv -f utf8 -t ibm-1047 {{ resolve.dest }} > {{ (resolve.dest | splitext)[0] }}"
+    creates: "{{ (resolve.dest | splitext)[0] }}"
 
 # temporary until we get the right cert bundles
 - name: download slave.jar -zos
@@ -186,6 +202,12 @@
     src: "{{ role_path }}/templates/git-wrapper.j2"
     dest: "{{ home }}/{{ server_user }}/git-wrapper"
     mode: "{{ jenkins.mode|default('0655') }}"
+  register: gitwrapper
+
+- name: tag git-wrapper as ascii
+  when: os|startswith("zos") and gitwrapper.changed
+  shell:
+    cmd: "chtag -t -c iso8859-1 {{ gitwrapper.dest }}"
 
 - stat: path={{ home }}/{{ server_user }}/runAsciiBash
   register: runAsciiBashExists
@@ -196,6 +218,12 @@
     src: "{{ role_path }}/templates/runAsciiBash.c.j2"
     dest: "{{ home }}/{{ server_user }}/runAsciiBash.c"
     mode: "{{ jenkins.mode|default('0644') }}"
+  register: asciibashc
+
+- name: tag runAsciiBash source as ascii
+  when: os|startswith("zos") and asciibashc.changed
+  shell:
+    cmd: "chtag -t -c iso8859-1 {{ asciibashc.dest }}"
 
 - name: render runAsciiBash into place - part 2
   when: os|startswith("zos")
@@ -203,9 +231,18 @@
     src: "{{ role_path }}/templates/gen_runAsciiBash.j2"
     dest: "{{ home }}/{{ server_user }}/gen_runAsciiBash.sh"
     mode: "{{ jenkins.mode|default('0655') }}"
+  register: genasciibash
+
+- name: tag runAsciiBash build script as ascii
+  when: os|startswith("zos") and genasciibash.changed
+  shell:
+    cmd: "chtag -t -c iso8859-1 {{ genasciibash.dest }}"
 
 - name: render runAsciiBash into place - part 3
-  when: os|startswith("zos") and runAsciiBashExists.stat.exists == False
+  when:
+    - os|startswith("zos")
+    - asciibashc.changed or genasciibash.changed or
+      runAsciiBashExists.stat.exists == False
   shell: "sh {{ home }}/{{ server_user }}/gen_runAsciiBash.sh"
 
 - name: render init script into place
@@ -213,6 +250,13 @@
     src: "{{ jenkins.src }}"
     dest: "{{ jenkins.dest }}"
     mode: "{{ jenkins.mode|default('0644') }}"
+  register: initscript
+
+- name: convert init script to ebcdic on z/OS
+  when: os|startswith("zos")
+  shell:
+    cmd: "iconv -f utf8 -t ibm-1047 {{ initscript.dest }} > {{ (initscript.dest | splitext)[0] }}"
+    creates: "{{ (initscript.dest | splitext)[0] }}"
 
 - name: centos6 | render sysconfig into place
   when: "os == 'centos6'"
@@ -357,6 +401,12 @@
     src: "{{ role_path }}/templates/zos_rc_patch.j2"
     dest: "{{ home }}/{{ server_user }}/rc_patch"
     mode: "{{ jenkins.mode|default('0644') }}"
+  register: rcpatch
+
+- name: tag rc_patch as ascii
+  when: os|startswith("zos") and rcpatch.changed
+  shell:
+    cmd: "chtag -t -c iso8859-1 {{ rcpatch.dest }}"
 
 - name: enable jenkins at startup - zos - part 2
   when: os|startswith("zos")
@@ -364,6 +414,12 @@
     src: "{{ role_path }}/templates/zos_rc_patch_apply.j2"
     dest: "{{ home }}/{{ server_user }}/rc_patch_apply.sh"
     mode: "{{ jenkins.mode|default('0655') }}"
+  register: rcpatchapply
+
+- name: tag rc_patch_apply.sh as ascii
+  when: os|startswith("zos") and rcpatchapply.changed
+  shell:
+    cmd: "chtag -t -c iso8859-1 {{ rcpatchapply.dest }}"
 
 - name: enable jenkins at startup - zos - part 3
   when: os|startswith("zos")

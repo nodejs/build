@@ -9,8 +9,6 @@ if [[ $1 == "rev-parse" ]]; then
   /NODEJS2/bin/git "$@" | cat
 elif [[ $1 == "whatchanged" ]]; then
   /NODEJS2/bin/git "$@" | iconv -f iso8859-1 -t ibm-1047 | iconv -t iso8859-1 -f ibm-1047
-elif [[ $1 == "rev-list" ]]; then
-  /NODEJS2/bin/git "$@" | iconv -f iso8859-1 -t ibm-1047 | iconv -t iso8859-1 -f ibm-1047
 else
   /NODEJS2/bin/git $@
 fi

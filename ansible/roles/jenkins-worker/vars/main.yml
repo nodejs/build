@@ -67,7 +67,7 @@ jenkins_init: {
     src: 'upstart.j2'
     },
   zos_start: {
-    dest: '{{ home }}/{{ server_user }}/start.sh',
+    dest: '{{ home }}/{{ server_user }}/start.sh.utf8',
     src: 'zos_start.j2'
     },
   ibmi: {
