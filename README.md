@@ -86,6 +86,7 @@ Admin access to https://ci.nodejs.org/.
 
 Access to [release secrets][].
 
+- [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
