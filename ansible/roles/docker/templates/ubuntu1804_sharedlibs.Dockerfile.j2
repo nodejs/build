@@ -34,45 +34,25 @@ RUN addgroup --gid {{ server_user_gid.stdout_lines[0] }} {{ server_user }}
 
 RUN adduser --gid {{ server_user_gid.stdout_lines[0] }} --uid {{ server_user_uid.stdout_lines[0] }} --disabled-password --gecos {{ server_user }} {{ server_user }}
 
-ENV OPENSSL102DIR /opt/openssl-1.0.2r
+ENV OPENSSL110DIR /opt/openssl-1.1.0l
 
-RUN mkdir -p /tmp/openssl_1.0.2r && \
-    cd /tmp/openssl_1.0.2r && \
-    curl -sL https://www.openssl.org/source/openssl-1.0.2r.tar.gz | tar zxv --strip=1 && \
-    ./Configure shared linux-x86_64 --prefix=$OPENSSL102DIR -fPIC && \
-    make -j 6 && \
-    make install && \
-    rm -rf /tmp/openssl_1.0.r
-
-ENV OPENSSL110DIR /opt/openssl-1.1.0j
-
-RUN mkdir -p /tmp/openssl_1.1.0j && \
-    cd /tmp/openssl_1.1.0j && \
-    curl -sL https://www.openssl.org/source/openssl-1.1.0j.tar.gz | tar zxv --strip=1 && \
+RUN mkdir -p /tmp/openssl_1.1.0l && \
+    cd /tmp/openssl_1.1.0l && \
+    curl -sL https://www.openssl.org/source/openssl-1.1.0l.tar.gz | tar zxv --strip=1 && \
     ./config --prefix=$OPENSSL110DIR && \
     make -j 6 && \
     make install && \
-    rm -rf /tmp/openssl_1.1.0j
+    rm -rf /tmp/openssl_1.1.0l
 
-ENV OPENSSL111DIR /opt/openssl-1.1.1b
+ENV OPENSSL111DIR /opt/openssl-1.1.1g
 
-RUN mkdir -p /tmp/openssl_1.1.1b && \
-    cd /tmp/openssl_1.1.1b && \
-    curl -sL https://www.openssl.org/source/openssl-1.1.1b.tar.gz | tar zxv --strip=1 && \
+RUN mkdir -p /tmp/openssl_1.1.1g && \
+    cd /tmp/openssl_1.1.1g && \
+    curl -sL https://www.openssl.org/source/openssl-1.1.1g.tar.gz | tar zxv --strip=1 && \
     ./config --prefix=$OPENSSL111DIR && \
     make -j 6 && \
     make install && \
-    rm -rf /tmp/openssl_1.1.1b
-
-ENV FIPS20DIR /opt/openssl-fips_2.0.16
-
-RUN FIPSDIR=$FIPS20DIR mkdir -p /tmp/openssl-fips_2.0.16 && \
-    cd /tmp/openssl-fips_2.0.16 && \
-    curl -sL https://openssl.org/source/openssl-fips-2.0.16.tar.gz | tar zxv --strip=1 && \
-    ./config --prefix=$FIPS20DIR && \
-    make && \
-    make install && \
-    rm -rf /tmp/openssl-fips_2.0.16
+    rm -rf /tmp/openssl_1.1.1g
 
 ENV ZLIB12DIR /opt/zlib_1.2.11
 
