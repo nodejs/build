@@ -4,8 +4,12 @@
 # ubuntu series: python 2.7
 #
 
+# TODO(@rvagg): a hack, how do we handle py3?
+
 - name: install pip
   package: name=python-pip state=present
+  when: os != "ubuntu2004"
 
 - name: install tap2junit
   pip: name=tap2junit state=present
+  when: os != "ubuntu2004"
