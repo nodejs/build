@@ -116,8 +116,8 @@ hosts:
         ubuntu1604-x86-2: {ip: 104.131.191.135}
         ubuntu1804_docker-x64-1: {ip: 134.209.55.216}
         ubuntu1804_docker-x64-2: {ip: 159.89.183.200}
-        ubuntu1910_docker-x64-1: {ip: 167.71.99.4}
-        ubuntu1910_docker-x64-2: {ip: 159.203.120.157}
+        ubuntu2004_docker-x64-1: {ip: 167.71.99.4}
+        ubuntu2004_docker-x64-2: {ip: 159.203.120.157}
         ubuntu1804-x64-1: {ip: 178.128.181.213}
 
     - ibm:

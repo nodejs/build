@@ -23,7 +23,7 @@ sshd_service_map: {
 sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripversion])|default('sshd') }}"
 
 ntp_service: {
-  systemd: ['debian8', 'debian9', 'debian10', 'ubuntu1604', 'ubuntu1804', 'ubuntu1904'],
+  systemd: ['debian8', 'debian9', 'debian10', 'ubuntu1604', 'ubuntu1804', 'ubuntu2004'],
   ntp_package: ['ubuntu1404']
 }
 
