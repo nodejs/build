@@ -3,6 +3,9 @@
 const { pipeline, Transform } = require('stream')
 const split2 = require('split2')
 const strftime = require('strftime').timezone(0)
+const {Storage} = require('@google-cloud/storage');
+
+const storage = new Storage({keyFilename: "metrics-processor-service-key.json"});
 
 const jsonStream = new Transform({
   readableObjectMode: true,
@@ -140,16 +143,30 @@ const logTransformStream = new Transform({
   }
 })
 
-pipeline(
-  process.stdin,
-  split2(),
-  jsonStream,
-  logTransformStream,
-  process.stdout,
-  (err) => {
-    if (err) {
-      console.error('ERROR', err)
-      process.exit(1)
-    }
-  }
-)
+
+exports.processLogs = (data, context, callback) => {
+  console.log('Node version is: ' + process.version);
+  const file = data;
+  bucketName = file.bucket;
+  fileName = file.name;
+  console.log("DATA " + data);
+  console.log("BUCKET " + bucketName);
+  console.log("FILENAME " + fileName);
+  processedFile = fileName.split(".")[0];
+  processedFile = processedFile.split("_")[0].concat("_", processedFile.split("_")[1]); 
+  console.log("PROCESSEDFILENAME " + processedFile);
+
+  storage.bucket(bucketName).file(file.name).createReadStream()
+  .on('error', function(err) { console.error(err) })
+  .pipe(split2())
+  .pipe(jsonStream)
+  .pipe(logTransformStream)
+  .pipe(storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({resumable: false})
+        .on("error", err => {
+          console.log("ERROR: >> ", err)
+        })
+        .on("finish", () => {
+        console.log("FINISHED")
+        callback()
+      }));
+}
