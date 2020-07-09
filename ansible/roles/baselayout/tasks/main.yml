@@ -122,6 +122,19 @@
     insertbefore=BOF
     line='/usr/local/opt/ccache/libexec'
 
+- name: centos7_ppc64 | update package alternatives
+  when: os == "centos7" and arch == "ppc64"
+  alternatives:
+    link: /usr/local/bin/{{ cmake }}
+    name: "{{ cmake }}"
+    path: /usr/bin/{{ cmake }}3
+  loop_control:
+    loop_var: cmake
+  with_items:
+    - cmake
+    - cpack
+    - ctest
+
 - name: ubuntu1404 | update package alternatives
   when: os == "ubuntu1404"
   alternatives: link=/usr/bin/{{ gcc }} name={{ gcc }} path=/usr/bin/{{ gcc }}-4.9
