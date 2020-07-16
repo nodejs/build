@@ -45,6 +45,7 @@ To add an entry do the following:
   the end of the file.
 * restore the config from the temporary file: `iptables-restore foo`
 * remove the temporary file: `rm foo`
+* run `iptables-save > /etc/iptables/rules.v4` to ensure the changes persist across reboots
 
 ## `release-*` machines
 
