@@ -108,6 +108,7 @@ def buildExclusions = [
   [ /^osx1010(?!-release-sources)/,   releaseType, allVer  ],
   [ /^osx1011/,                       testType,    gte(14) ],
   [ /^osx1011/,                       releaseType, allVer  ],
+  [ /^osx11/,                         testType,    lt(15)  ],
   // osx1015 enabled for all, and builds all releases to support notarization
 
   // FreeBSD -----------------------------------------------
