@@ -65,9 +65,10 @@ def buildExclusions = [
   [ /vcbt2015(-\w+)?$/,               testType,    gte(10)       ],
   [ /vs2017(-\w+)?$/,                 testType,    ltGte(8, 15)  ],
   [ /vs2019(-\w+)?$/,                 testType,    lt(13)        ],
-  [ /vs2015-x86$/,                    testType,    gte(10)       ], // compile x86 only once
+  [ /vs2015-x86$/,                    testType,    gte(10)       ], // compile arm64/x86 only once
   [ /vs2017-x86$/,                    testType,    ltGte(10, 14) ],
   [ /vs2019-x86$/,                    testType,    lt(14)        ],
+  [ /vs2019-arm64$/,                  testType,    lt(14)        ],
   // VS versions supported to build add-ons
   [ /vs2013-COMPILED_BY/,             testType,    gte(9)        ],
   [ /vs2015-COMPILED_BY/,             testType,    noVer         ],
@@ -161,6 +162,13 @@ combinations.each{
   if (nodeMajorVersion >= 4) {
     if (!canBuild(nodeMajorVersion, builderLabel, _buildType)) {
       println "Skipping $builderLabel for Node.js $nodeMajorVersion"
+      return
+    }
+  }
+  // Run tests on Windows ARM64 only if explicitly requested
+  if (builderLabel =~ /^win.*COMPILED_BY.*-arm64$/) {
+    if (!parameters['RUN_ARM64_TESTS'].toString().equalsIgnoreCase("true")){
+      println "Skipping $builderLabel because RUN_ARM64_TESTS is not selected"
       return
     }
   }
