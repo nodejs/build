@@ -89,8 +89,6 @@ needs_monit: [
 
 # some os'es needs different paths to java. add them here.
 java_path: {
-  'aix71': '/home/iojs/jdk8u192-b12-jre/bin/java',
-  'aix72': '/home/iojs/jdk8u192-b12-jre/bin/java',
   'ibmi72': '/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/bin/java',
   'macos10.10': 'java',
   'macos10.11': 'java',
