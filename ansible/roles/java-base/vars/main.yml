@@ -23,7 +23,7 @@ java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default('
 
 # Add os_arch combinations here that should install and use AdoptOpenJDK
 # binaries. Override any variables in the dictionary. 
-# e.g. on AIX as ansible_architecture is 'chrp' on some of our hosts so we
+# e.g. on AIX ansible_architecture is 'chrp' on some of our hosts so we
 # override arch to be on the safe side.
 adoptopenjdk: {
   aix71_ppc64: { arch: ppc64 },
