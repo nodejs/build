@@ -21,11 +21,13 @@ packages: {
 
 java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default('missing') }}"
 
-# Add os_arch combinations here that should install and use AdoptOpenJDK binaries.
-# Override any variables in the dictionary, e.g. centos7_ppc64: { version: 11 }.
+# Add os_arch combinations here that should install and use AdoptOpenJDK
+# binaries. Override any variables in the dictionary. 
+# e.g. on AIX as ansible_architecture is 'chrp' on some of our hosts so we
+# override arch to be on the safe side.
 adoptopenjdk: {
-  aix71_ppc64: {},
-  aix72_ppc64: {},
+  aix71_ppc64: { arch: ppc64 },
+  aix72_ppc64: { arch: ppc64 },
   centos7_ppc64: {},
   rhel7_s390x: {}
 }
