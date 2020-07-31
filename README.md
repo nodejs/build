@@ -38,7 +38,7 @@ to the resources we manage.
 - [@LucaLanziani](https://github.com/LucaLanziani) - Luca Lanziani
 - [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
-- [@mmarchini](https://github.com/mmarchini) - Matheus Marchini
+- [@mmarchini](https://github.com/mmarchini) - Mary Marchini
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
