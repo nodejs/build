@@ -5,9 +5,6 @@
 # purpose: script that will start or stop jenkins
 ##################################################
 
-
-# (@sam-github)  Purpose of java in PATH unknown, since an explicit path to
-# java is used to run jenkins.
 case "$1" in
 start )
         su - {{server_user}} -c '\
@@ -16,12 +13,11 @@ start )
 	      ulimit -m unlimited; \
 	      export TERM=ansi; \
               export jenkins_log_file="/home/{{server_user}}/jenkins_console.log"; \
-              export PATH=/home/{{server_user}}/jdk8u192-b12-jre/jre/bin:$PATH; \
               export HOME=/home/{{server_user}}; \
               export NODE_TEST_DIR=$HOME/tmp; \
               export NODE_COMMON_PIPE="$HOME/test.pipe"; \
               export OSTYPE=AIX72; \
-        /home/{{server_user}}/jdk8u192-b12-jre/bin/java -Xmx128m -Dorg.jenkinsci.plugins.gitclient.Git.timeOut=30 -jar "$HOME/slave.jar" \
+        /usr/bin/java -Xmx128m -Dorg.jenkinsci.plugins.gitclient.Git.timeOut=30 -jar "$HOME/slave.jar" \
           -secret {{secret}} \
           -jnlpUrl {{jenkins_url}}/computer/{{inventory_hostname}}/slave-agent.jnlp >$jenkins_log_file 2>&1 &'
         ;;
