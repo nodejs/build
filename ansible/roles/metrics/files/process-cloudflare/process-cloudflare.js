@@ -14,7 +14,7 @@ const jsonStream = new Transform({
       this.push(JSON.parse(chunk.toString()))
       callback()
     } catch (e) {
-      callback(e)
+      callback()
     }
   }
 })
@@ -156,17 +156,20 @@ exports.processLogs = (data, context, callback) => {
   processedFile = processedFile.split("_")[0].concat("_", processedFile.split("_")[1]); 
   console.log("PROCESSEDFILENAME " + processedFile);
 
-  storage.bucket(bucketName).file(file.name).createReadStream()
-  .on('error', function(err) { console.error(err) })
-  .pipe(split2())
-  .pipe(jsonStream)
-  .pipe(logTransformStream)
-  .pipe(storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({resumable: false})
-        .on("error", err => {
-          console.log("ERROR: >> ", err)
-        })
-        .on("finish", () => {
-        console.log("FINISHED")
+  pipeline(
+    storage.bucket(bucketName).file(file.name).createReadStream(),
+    split2(),
+    jsonStream,
+    logTransformStream,
+    storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({resumable: false}),
+    (err) => {
+      if (err) {
+        console.log("PIPELINE HAS FAILED", err)
+        callback(err)
+      } else {
+        console.log("PIPELINE SUCCESS")
         callback()
-      }));
+      }
+    }
+  )
 }
