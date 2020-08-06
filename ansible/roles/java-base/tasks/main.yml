@@ -42,9 +42,14 @@
 
 - name: install java
   when:
-    - java.rc > 0 and not os|startswith("zos") and arch != "ppc64"
-    - java.rc > 0 and not os|startswith("macos")
-  package: name="{{ java_package_name }}" state=present
+    - java.rc > 0
+    - not os|startswith("zos")
+    - (arch != "ppc64" or os|startswith("ibmi"))
+    - not os|startswith("macos")
+  package:
+    name: "{{ java_package_name }}"
+    state: present
+    use: "{{ os|startswith(\"ibmi\")|ternary(\"yum\", omit) }}"
 
 - name: install java tap (macOS)
   become_user: administrator
@@ -59,12 +64,6 @@
   homebrew_cask:
         name: "{{ java_package_name }}"
         state: present
-
-- name: check if java is installed IBMi
-  stat:
-    path: /QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/bin/java
-  register: java_exists
-  when: os|startswith("ibmi")
 
 - name: install webupd8 oracle java 8 extras
   when: java.rc > 0 and os == "ubuntu1404" and arch != "ppc64"

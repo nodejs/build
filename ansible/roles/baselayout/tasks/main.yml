@@ -73,24 +73,16 @@
     state: absent
 
 - name: install packages
-  when: not os|startswith("zos") and not os|startswith("macos") and not os|startswith("ibmi")
-  package: name="{{ package }}" state=present
+  when: not os|startswith("zos") and not os|startswith("macos")
+  package: 
+    name: "{{ package }}"
+    state: present
+    use: "{{ os|startswith(\"ibmi\")|ternary(\"yum\", omit) }}"
   loop_control:
     loop_var: package
   with_items:
     # ansible doesn't like empty lists
     - "{{ packages[os+'_'+arch]|default('[]') }}"
-    - "{{ packages[os]|default('[]') }}"
-    - "{{ packages[os|stripversion]|default('[]') }}"
-    - "{{ common_packages|default('[]') }}"
-
-- name: install packages IBMi
-  when: os|startswith("ibmi")
-  yum: name="{{ package }}" state=present use_backend=yum
-  loop_control:
-    loop_var: package
-  with_items:
-    # ansible doesn't like empty lists
     - "{{ packages[os]|default('[]') }}"
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"
