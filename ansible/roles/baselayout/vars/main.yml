@@ -111,6 +111,14 @@ packages: {
     'cmake,python,ccache'
   ],
 
+  'macos10.16': [
+    'cmake,python,ccache'
+  ],
+
+  'macos11.0': [
+    'cmake,python,ccache'
+  ],
+
   rhel7: [
     'gcc-c++,sudo,git,zip,unzip,iptables-services,GConf2-devel,openssl-devel',
   ],

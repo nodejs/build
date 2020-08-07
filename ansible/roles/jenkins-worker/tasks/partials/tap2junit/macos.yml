@@ -8,4 +8,4 @@
   pip:
     name: tap2junit
     state: present
-    executable: /usr/local/bin/pip3
+    executable: /usr/bin/pip3
