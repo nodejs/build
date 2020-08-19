@@ -273,6 +273,7 @@ Build and test orchestration is performed by [Jenkins][21].
 - A listing of connected servers for testing, building and benchmarking
   can be found at: <https://ci.nodejs.org/computer/>
 - A summary of the general health of the last 100 jobs can be found at: <https://ci-health.nodejs.org/#/job-summary>
+- Monitoring with Grafana: <https://grafana.nodejs.org/>
 
 The Build WG will keep build configuration required for a release line for 6
 months after the release goes End-of-Life, in case further build or test runs
