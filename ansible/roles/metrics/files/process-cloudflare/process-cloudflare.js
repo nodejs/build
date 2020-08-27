@@ -161,7 +161,7 @@ async function processLogs (bucket, filename) {
 
   return new Promise((resolve, reject) => {
     pipeline(
-      storage.bucket(bucket).file(filename).createReadStream({ emitClose: true })
+      storage.bucket(bucket).file(filename).createReadStream()
       .on("close", () => {
         console.log("Stream closed");
       })
@@ -171,8 +171,8 @@ async function processLogs (bucket, filename) {
       split2(),
       jsonStream,
       logTransformStream,
-      storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({ resumable: false })
-      //process.stdout
+      //storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({ resumable: false }),
+      process.stdout
       .on("end", () => {
         console.log("FINISHED");
       }),
@@ -219,13 +219,11 @@ app.post('/', async (req, res) => {
 
   const bucket = req.body.message.attributes.bucketId;
   const filename = req.body.message.attributes.objectId;
-
   console.log("EVENT TYPE: ", eventType);
 
   await processLogs(bucket, filename);
 
   res.status(200).send();
-
 });
 
 const port = process.env.PORT || 8080;
