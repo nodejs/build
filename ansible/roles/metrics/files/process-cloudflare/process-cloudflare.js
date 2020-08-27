@@ -4,6 +4,11 @@ const { pipeline, Transform } = require('stream')
 const split2 = require('split2')
 const strftime = require('strftime').timezone(0)
 const {Storage} = require('@google-cloud/storage');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+app.use(bodyParser.json());
 
 const storage = new Storage({keyFilename: "metrics-processor-service-key.json"});
 
@@ -144,32 +149,77 @@ const logTransformStream = new Transform({
 })
 
 
-exports.processLogs = (data, context, callback) => {
+async function processLogs (bucket, filename) {
   console.log('Node version is: ' + process.version);
-  const file = data;
-  bucketName = file.bucket;
-  fileName = file.name;
-  console.log("DATA " + data);
-  console.log("BUCKET " + bucketName);
-  console.log("FILENAME " + fileName);
-  processedFile = fileName.split(".")[0];
+  console.log("BUCKET " + bucket);
+  console.log("FILENAME " + filename);
+  let processedFile = filename.split(".")[0];
   processedFile = processedFile.split("_")[0].concat("_", processedFile.split("_")[1]);
   console.log("PROCESSEDFILENAME " + processedFile);
 
-  pipeline(
-    storage.bucket(bucketName).file(file.name).createReadStream(),
-    split2(),
-    jsonStream,
-    logTransformStream,
-    storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({resumable: false}),
-    (err) => {
-      if (err) {
-        console.log("PIPELINE HAS FAILED", err)
-        callback(err)
-      } else {
-        console.log("PIPELINE SUCCESS")
-        callback()
-      }
-    }
-  )
-}
+
+  return new Promise((resolve, reject) => {
+      pipeline(
+        storage.bucket(bucket).file(filename).createReadStream()
+        .on("close", () => {
+          console.log("Stream closed");
+        }),
+        split2(),
+        jsonStream,
+        logTransformStream,
+        storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({ resumable: false }),
+        (err) => {
+          if (err) {
+            console.log("PIPELINE HAS FAILED", err)
+            reject();
+          } else {
+            console.log("PIPELINE SUCCESS")
+            resolve();
+          }
+        }
+      )
+    })
+  }
+
+
+app.post('/', async (req, res) => {
+
+  if (!req.body) {
+    const msg = "No Pub/Sub Message received";
+    console.error(msg);
+    res.status(400).send("Bad Request: " + msg);
+    return;
+  }
+  if (!req.body.message) {
+    const msg = 'invalid Pub/Sub message format';
+    console.error(`error: ${msg}`);
+    res.status(400).send(`Bad Request: ${msg}`);
+    return;
+  }
+
+  const eventType = req.body.message.attributes.eventType;
+
+  if (eventType != "OBJECT_FINALIZE"){
+    const msg = `Event type is ${eventType} not OBJECT_FINALIZE`;
+    console.error(`error ${msg}`);
+    res.status(400).send(`Bad Request: ${msg}`);
+    return;
+  }
+
+  const bucket = req.body.message.attributes.bucketId;
+  const filename = req.body.message.attributes.objectId;
+
+  console.log("EVENT TYPE: ", eventType);
+
+  await processLogs(bucket, filename);
+
+  res.status(204).send();
+
+});
+
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log("Listening on port: ", port);
+});
+
+module.exports = app;
