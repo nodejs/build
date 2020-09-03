@@ -110,6 +110,23 @@ As root:
 * Transfer to release machine (scp to /tmp)
 * `sudo security import /tmp/Apple\ Developer\ ID\ Node.js\ Foundation.p12 -k /Library/Keychains/System.keychain -T /usr/bin/codesign -T /usr/bin/productsign -P 'XXXX'` (where XXXX is found in secrets/build/release/apple.md) (`security unlock-keychain -u /Library/Keychains/System.keychain` _may_ be required prior to running this command).
 
+#### Validating certificates are in date
+
+1. security -i unlock-keychain    (Enter the password for the machine located in secrets)
+2. security find-certificate -c "Developer ID Application" -p > /tmp/app.cert     (outputs the PEM format of the cert so we can properly inspect it)
+3. security find-certificate -c "Developer ID Installer" -p > /tmp/installer.cert
+4. openssl x509 -inform PEM -text -in /tmp/app.cert | less
+5. openssl x509 -inform PEM -text -in /tmp/installer.cert | less
+
+The last two steps will show the details of the certificates allowing to see expiry dates.
+
+Example: 
+
+```
+Not Before: Jan 22 03:40:05 2020 GMT
+Not After : Jan 22 03:40:05 2025 GMT
+```
+
 ## RHEL7-S390X
 
 ### V8 build-tools
@@ -539,4 +556,3 @@ mkdir -p /u/unix1/java
 cd /u/unix1/java
 pax -rf /u/unix1/SDK8_64bit_SR6_FP10.PAX.Z -ppx
 ```
-
