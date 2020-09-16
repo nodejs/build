@@ -102,7 +102,8 @@ java_path: {
   'smartos16': '/opt/local/java/openjdk8/bin/java',
   'smartos17': '/opt/local/java/openjdk8/bin/java',
   'smartos18': '/opt/local/java/openjdk8/bin/java',
-  'zos13': '/u/unix1/java/J8.0_64/bin/java'
+  'zos13': '/u/unix1/java/J8.0_64/bin/java',
+  'zos24': '/usr/lpp/java/J8.0_64/bin/java'
   }
 
 # same for bash. will default to /bin/bash if you don't set it

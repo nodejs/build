@@ -146,6 +146,9 @@ hosts:
         zos13-s390x-1:
             ip: 148.100.36.133
             user: Unix1
+            ansible_python_interpreter: /NODEJS2/python-2017-04-12-py27/python27/bin/python
+            cmake_path_env: "{{ home }}/{{ server_user }}:/bin:/NODEJS2/bin:/NODEJS/bin"
+            git_cmd: /NODEJS2/bin/git
             remote_env:
                 LIBPATH: /lib:/usr/lib:.:/NODEJS2/lib/perl5/5.24.0/os390/CORE.pod:/NODEJS2/python-2017-04-12-py27/python27/lib/
                 PATH: /NODEJS2/python-2017-04-12-py27/python27/bin:/bin:/NODEJS2/bin:/NODEJS/bin
@@ -153,9 +156,23 @@ hosts:
         zos13-s390x-2:
             ip: 148.100.36.134
             user: Unix1
+            ansible_python_interpreter: /NODEJS2/python-2017-04-12-py27/python27/bin/python
+            cmake_path_env: "{{ home }}/{{ server_user }}:/bin:/NODEJS2/bin:/NODEJS/bin"
+            git_cmd: /NODEJS2/bin/git
             remote_env:
                 LIBPATH: /lib:/usr/lib:.:/NODEJS2/lib/perl5/5.24.0/os390/CORE.pod:/NODEJS2/python-2017-04-12-py27/python27/lib/
                 PATH: /NODEJS2/python-2017-04-12-py27/python27/bin:/bin:/NODEJS2/bin:/NODEJS/bin
+            server_jobs: 4
+        zos24-s390x-1:
+            ip: 148.100.36.155
+            user: unix1
+            ansible_python_interpreter: /rsusr/rocket/python-2017-04-12-py27/python27/bin/python
+            become_method: su
+            cmake_path_env: "{{ home }}/{{ server_user }}:/rsusr/rocket/bin:/bin"
+            git_cmd: /rsusr/rocket/bin/git
+            remote_env:
+                LIBPATH: /lib:/usr/lib:.:/rsusr/rocket/lib/perl5/5.24.0/os390/CORE.pod:/rsusr/rocket/python-2017-04-12-py27/python27/lib/
+                PATH: /rsusr/rocket/python-2017-04-12-py27/python27/bin:/bin:/rsusr/rocket/bin
             server_jobs: 4
 
     - mininodes:
