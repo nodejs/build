@@ -158,28 +158,39 @@ async function processLogs (bucket, filename) {
   console.log("PROCESSEDFILENAME " + processedFile);
 
 
+
   return new Promise((resolve, reject) => {
-      pipeline(
-        storage.bucket(bucket).file(filename).createReadStream()
-        .on("close", () => {
-          console.log("Stream closed");
-        }),
-        split2(),
-        jsonStream,
-        logTransformStream,
-        storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({ resumable: false }),
-        (err) => {
-          if (err) {
-            console.log("PIPELINE HAS FAILED", err)
-            reject();
-          } else {
-            console.log("PIPELINE SUCCESS")
-            resolve();
-          }
+    pipeline(
+      storage.bucket(bucket).file(filename).createReadStream()
+      .on("close", () => {
+        console.log("Stream closed");
+      })
+      .on("end", () => {
+        console.log("READ STREAM ENDED");
+      }),
+      split2(),
+      jsonStream,
+      logTransformStream,
+      //storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({ resumable: false }),
+      process.stdout
+      .on("end", () => {
+        console.log("FINISHED");
+      }),
+      (err) => {
+        if (err) {
+          console.log("PIPELINE HAS FAILED", err)
+          reject();
+        } else {
+          console.log("PIPELINE SUCCESS")
+          resolve();
         }
-      )
+      }
+    )
+    .on("error", (err) =>{
+      console.log("ERROR IN PIPELINE, ", err);
     })
-  }
+  })
+}
 
 
 app.post('/', async (req, res) => {
@@ -213,7 +224,7 @@ app.post('/', async (req, res) => {
 
   await processLogs(bucket, filename);
 
-  res.status(204).send();
+  res.status(200).send();
   
 });
 
