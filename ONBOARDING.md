@@ -24,4 +24,4 @@ onboarding session.
 
 
 At first all members are added to nodejs/build-test. Members may be granted further permissions and access as needed
-by the working group, see [GOVERNANCE][./GOVERNANCE.md].
+by the working group, see [GOVERNANCE](./GOVERNANCE.md).
