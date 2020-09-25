@@ -151,13 +151,13 @@
   when: "'rhel7-s390x' in inventory_hostname"
 
 - name: download slave.jar
-  when: not os|startswith("zos")
   get_url:
     url: "{{ jenkins_worker_jar }}"
     dest: '{{ home }}/{{ server_user }}/slave.jar'
     mode: 0644
     timeout: 60
     force: yes
+    validate_certs: '{{ os|startswith("zos")|ternary("no", omit) }}'
 
 - name: Resolver | ipnodes needs to be present on zos, similar to hosts file
   when: os|startswith("zos")
@@ -184,17 +184,6 @@
   shell:
     cmd: "iconv -f utf8 -t ibm-1047 {{ resolve.dest }} > {{ (resolve.dest | splitext)[0] }}"
     creates: "{{ (resolve.dest | splitext)[0] }}"
-
-# temporary until we get the right cert bundles
-- name: download slave.jar -zos
-  when: os|startswith("zos")
-  get_url:
-    url: "{{ jenkins_worker_jar }}"
-    dest: '{{ home }}/{{ server_user }}/slave.jar'
-    mode: 0644
-    timeout: 60
-    validate_certs: no
-    force: yes
 
 - name: render git wrapper into place
   when: os|startswith("zos")
@@ -281,6 +270,7 @@
   when: os|startswith("zos")
   file:
     owner: "{{ server_user }}"
+    mode: "0775"
     path: "{{ home }}/{{ server_user }}/cmake"
     state: directory
 
@@ -317,11 +307,12 @@
   environment:
     _C89_CCMODE: 1
     _CC_CCMODE: 1
+    _CEE_RUNOPTS: FILETAG(AUTOCVT,AUTOTAG) POSIX(ON)
     _CXX_CCMODE: 1
     _TAG_REDIR_ERR: txt
     _TAG_REDIR_IN: txt
     _TAG_REDIR_OUT: txt
-    PATH: "{{ home }}/{{ server_user }}:/bin:/NODEJS2/bin:/NODEJS/bin"
+    PATH: "{{ cmake_path_env }}"
     TMPDIR: "{{ home }}/{{ server_user }}/temp"
   shell:
     chdir: "{{ home }}/{{ server_user }}/cmake/CMake-3.5.1-zos"
@@ -329,7 +320,7 @@
     creates: "{{ home }}/{{ server_user }}/local/bin/cmake"
 
 - name: render gyp into place - Create directory - part 1
-  when: os|startswith("zos")
+  when: os|startswith("zos13")
   file:
     path: "{{ home }}/{{ server_user }}/gyp"
     state: directory
@@ -338,7 +329,7 @@
 # only provides an https endpoint.  We store on ci
 # instead
 - name: render gyp into place - get the zip - part 2
-  when: os|startswith("zos")
+  when: os|startswith("zos13")
   uri:
     url: "http://ci.nodejs.org/downloads/zos/gyp.tar.gz"
     dest: "{{ home }}/{{ server_user }}/gyp/gyp.tar.gz"
@@ -347,7 +338,7 @@
 # note that unarchive does not work (does not like version
 # of tar) so just execute commands directly
 - name: render gyp into place - decompress - part 3
-  when: os|startswith("zos")
+  when: os|startswith("zos13")
   command: "gunzip gyp.tar.gz"
   args:
     chdir: "{{ home }}/{{ server_user }}/gyp"
@@ -356,14 +347,14 @@
 # the user option does not seem to work so
 # do that change in separate step below
 - name: render gyp into place - extract - part 4
-  when: os|startswith("zos")
+  when: os|startswith("zos13")
   command: "pax -rf gyp.tar -o from=iso8859-1,to=ibm-1047"
   args:
     chdir: "{{ home }}/{{ server_user }}/gyp"
     creates:  "{{ home }}/{{ server_user }}/gyp/LICENSE"
 
 - name: render gyp into place - fix up ownership - part 5
-  when: os|startswith("zos")
+  when: os|startswith("zos13")
   command: "chown -R {{ server_user }} {{ home }}/{{ server_user }}/gyp"
 
 # This has to be done before the `service` (and similar) commands because

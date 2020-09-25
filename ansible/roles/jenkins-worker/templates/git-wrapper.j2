@@ -6,9 +6,9 @@ export _TAG_REDIR_IN=txt
 export _TAG_REDIR_OUT=txt
 
 if [[ $1 == "rev-parse" ]]; then
-  /NODEJS2/bin/git "$@" | cat
+  {{ git_cmd }} "$@" | cat
 elif [[ $1 == "whatchanged" ]]; then
-  /NODEJS2/bin/git "$@" | iconv -f iso8859-1 -t ibm-1047 | iconv -t iso8859-1 -f ibm-1047
+  {{ git_cmd }} "$@" | iconv -f iso8859-1 -t ibm-1047 | iconv -t iso8859-1 -f ibm-1047
 else
-  /NODEJS2/bin/git $@
+  {{ git_cmd }} $@
 fi
