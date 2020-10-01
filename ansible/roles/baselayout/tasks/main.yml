@@ -23,13 +23,13 @@
 - name: Set hostname to inventory_hostname macOS
   command: "{{ item }}"
   with_items:
-    - "sudo scutil --set HostName {{ inventory_hostname }}.nodejs.org"
-    - "sudo scutil --set ComputerName {{ inventory_hostname }}.nodejs.org"
+    - "sudo scutil --set HostName {{ inventory_hostname }}"
+    - "sudo scutil --set ComputerName {{ inventory_hostname }}"
     - "dscacheutil -flushcache"
   when: os|startswith("macos")
 
 - name: Set hostname to inventory_hostname AIX
-  command: " hostname {{ inventory_hostname }}.nodejs.org"
+  command: " hostname {{ inventory_hostname }}"
   when: os|startswith("aix")
 
 - name: disable joyent smartconnect
