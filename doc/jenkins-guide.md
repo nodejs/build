@@ -12,6 +12,7 @@ A guide on maintaining Node.js' Test and Release Jenkins clusters
 * [Solving problems](#solving-problems)
   * [Out of memory](#out-of-memory)
   * [Out of space](#out-of-space)
+    * [AIX Space Issues](#AIX-Space-Issues)
   * [General issues with Jenkins agent: "normal machines" edition](#general-issues-with-jenkins-agent-normal-machines-edition)
   * [Read-only filesystem](#read-only-filesystem)
   * [Restart the machine](#restart-the-machine)
@@ -159,6 +160,61 @@ If the `Use%` column appears very high for the worker's largest disk,
 then it is probably appropriate to clean out part of the worker's
 workspace (where Jenkins jobs are performed). To clean out part of the
 workspace, run `rm -rf ~/build/workspace/node-test-commit*`.
+
+#### AIX Space Issues
+
+The AIX machines are often under provisoned in terms of how much diskspace they have.
+You can just increase the size of mount points themselves.
+
+To check space run `df -g`
+
+```sh
+$ df -g
+Filesystem    GB blocks      Free %Used    Iused %Iused Mounted on
+/dev/hd4           0.09      0.06   41%     2543    16% /
+/dev/hd2           6.12      4.25   31%    38189     4% /usr
+/dev/hd9var        5.19      4.75    9%     1254     1% /var
+/dev/hd3           4.22      4.21    1%       42     1% /tmp
+/dev/hd1          20.03     17.73   12%    44911     2% /home
+/dev/hd11admin      0.12      0.12    1%        5     1% /admin
+/proc                 -         -    -        -      - /proc
+/dev/hd10opt      10.41      8.77   16%    24532     2% /opt
+/dev/livedump      0.25      0.25    1%        4     1% /var/adm/ras/livedump
+/dev/repo00        8.41      0.01  100%     2656    42% /usr/sys/inst.images
+```
+
+To check the amount of space left on the volume group:
+
+Find the volume group `lsvg`
+
+List information about the volume group `lsvg rootvg`
+
+Check the amount of `FREE PPs` to see how much space is left on the volume group:
+```bash
+VOLUME GROUP:       rootvg                   VG IDENTIFIER:  00f6db0a00004c000000016fe89cbde6
+VG STATE:           active                   PP SIZE:        32 megabyte(s)
+VG PERMISSION:      read/write               TOTAL PPs:      3838 (122816 megabytes)
+MAX LVs:            256                      FREE PPs:       2033 (65056 megabytes) *HERE*
+LVs:                13                       USED PPs:       1805 (57760 megabytes)
+OPEN LVs:           12                       QUORUM:         2 (Enabled)
+TOTAL PVs:          2                        VG DESCRIPTORS: 3
+STALE PVs:          0                        STALE PPs:      0
+ACTIVE PVs:         2                        AUTO ON:        yes
+MAX PPs per VG:     32512
+MAX PPs per PV:     16256                    MAX PVs:        2
+LTG size (Dynamic): 512 kilobyte(s)          AUTO SYNC:      no
+HOT SPARE:          no                       BB POLICY:      relocatable
+PV RESTRICTION:     none                     INFINITE RETRY: no
+DISK BLOCK SIZE:    512                      CRITICAL VG:    no
+FS SYNC OPTION:     no
+```
+
+To increase the size of `/home` run: `sudo chfs -a size=+XG /home` where X is the number of GBs to increase the system.
+
+If you hit an error about the maximum allocation of the logical volume you can increase the max with: 
+`sudo chlv -x <size> <logical volume>`
+
+*If you are unsure about any of the commands please ask a Red Hat/IBM member of the build working group for assistance*
 
 ### General issues with Jenkins agent: "normal machines" edition
 
