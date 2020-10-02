@@ -30,7 +30,6 @@ to the resources we manage.
 
 - [@addaleax](https://github.com/addaleax) - Anna Henningsen
 - [@AshCripps](https://github.com/AshCripps) - Ash Cripps
-- [@bnoordhuis](https://github.com/bnoordhuis) - Ben Noordhuis
 - [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
@@ -130,6 +129,7 @@ accesses and team roles see [GOVERNANCE.md][].
 
 ### Emeriti
 
+- [@bnoordhuis](https://github.com/bnoordhuis) - Ben Noordhuis
 - [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
 - [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
