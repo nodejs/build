@@ -52,7 +52,6 @@ hosts:
         macos10.10-x64-1: {ip: 207.254.58.162, port: 10014, user: administrator}
 
     - marist:
-        zos13-s390x-1: {ip: 148.100.36.135, user: Unix1}
         zos24-s390x-1: {ip: 148.100.36.157, user: unix1}
 
     - nearform:
@@ -144,26 +143,6 @@ hosts:
         macos11.0-arm64-2: {ip: 199.7.163.10, user: administrator}
 
     - marist:
-        zos13-s390x-1:
-            ip: 148.100.36.133
-            user: Unix1
-            ansible_python_interpreter: /NODEJS2/python-2017-04-12-py27/python27/bin/python
-            cmake_path_env: "{{ home }}/{{ server_user }}:/bin:/NODEJS2/bin:/NODEJS/bin"
-            git_cmd: /NODEJS2/bin/git
-            remote_env:
-                LIBPATH: /lib:/usr/lib:.:/NODEJS2/lib/perl5/5.24.0/os390/CORE.pod:/NODEJS2/python-2017-04-12-py27/python27/lib/
-                PATH: /NODEJS2/python-2017-04-12-py27/python27/bin:/bin:/NODEJS2/bin:/NODEJS/bin
-            server_jobs: 4
-        zos13-s390x-2:
-            ip: 148.100.36.134
-            user: Unix1
-            ansible_python_interpreter: /NODEJS2/python-2017-04-12-py27/python27/bin/python
-            cmake_path_env: "{{ home }}/{{ server_user }}:/bin:/NODEJS2/bin:/NODEJS/bin"
-            git_cmd: /NODEJS2/bin/git
-            remote_env:
-                LIBPATH: /lib:/usr/lib:.:/NODEJS2/lib/perl5/5.24.0/os390/CORE.pod:/NODEJS2/python-2017-04-12-py27/python27/lib/
-                PATH: /NODEJS2/python-2017-04-12-py27/python27/bin:/bin:/NODEJS2/bin:/NODEJS/bin
-            server_jobs: 4
         zos24-s390x-1:
             ip: 148.100.36.155
             user: unix1
