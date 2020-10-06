@@ -52,4 +52,6 @@
   raw: mkdir /aha
 
 - name: Mount /aha filesystem
-  raw: mount -v ahafs /aha /aha
+  when: ahafs.stat.exists == false
+  shell:
+    cmd: mount -v ahafs /aha /aha

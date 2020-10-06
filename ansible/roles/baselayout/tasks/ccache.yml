@@ -5,25 +5,40 @@
 #
 
 - name: "ccache : fetch samba ccache HTML page"
+  when: not os|startswith("aix")
   # This depends on ansible being able to run curl locally, YMMV, if it doesn't
   # work, try changing the local_action to a remote one:
   #  raw: curl -sL https://www.samba.org/ftp/ccache/
   local_action: shell curl -sL https://www.samba.org/ftp/ccache/ | sed -n -e 's/.*"ccache-\([0-9.]*\).tar.gz".*/\1/p' | tail -1
   register: ccache_html_content
 
+- name: "ccache : fetch tarbal - aix"
+  when: os|startswith("aix")
+  shell:
+    chdir: "/tmp"
+    cmd: "curl -L -o ccache-3.7.4.tar.gz https://github.com/ccache/ccache/releases/download/v3.7.4/ccache-3.7.4.tar.gz"
+
 - name: "ccache : extract ccache latest version"
+  when: not os|startswith("aix")
   set_fact:
     ccache_latest: "{{ ccache_html_content.stdout }}"
 
 - name: "ccache : download and extract"
+  when: not os|startswith("aix")
   unarchive:
     dest: /tmp/
     remote_src: yes
     src: "https://www.samba.org/ftp/ccache/ccache-{{ ccache_latest }}.tar.gz"
   register: new_archive
 
+- name: "ccache : extract tarbal - aix"
+  when: os|startswith("aix")
+  shell:
+    chdir: "/tmp"
+    cmd: "/opt/freeware/bin/tar -xzf ccache-3.7.4.tar.gz"
+
 - name: "ccache : prepare for compilation"
-  when: not os|startswith("smartos")
+  when: not os|startswith("smartos") and not os|startswith("aix")
   shell: ./configure -q
   args:
     chdir: "/tmp/ccache-{{ ccache_latest }}"
@@ -34,17 +49,42 @@
   args:
     chdir: "/tmp/ccache-{{ ccache_latest }}"
 
+- name: "ccache : compile - aix"
+  when: os|startswith("aix")
+  shell:
+    chdir: "/tmp/ccache-3.7.4"
+    cmd: './configure CC="gcc -maix64" && gmake'
+
 - name: "ccache : compile"
+  when: not os|startswith("aix")
   make: chdir="/tmp/ccache-{{ ccache_latest }}"
 
 - name: "ccache : install"
+  when: not os|startswith("aix")
   copy:
     dest: "/usr/local/bin"
     mode: 0755
     remote_src: yes
     src: "/tmp/ccache-{{ ccache_latest }}/ccache"
 
+- name: "ccache : install - create directory aix"
+  when: os|startswith("aix")
+  file:
+    path: /opt/ccache-3.7.4/{{ item.dest }}
+    state: directory
+    mode: '0755'
+  loop:
+    - { dest: bin }
+    - { dest: libexec }
+
+- name: "ccache : install - move file aix"
+  when: os|startswith("aix")
+  shell:
+    chdir: "/tmp"
+    cmd: "mv ccache-3.7.4/ccache /opt/ccache-3.7.4/bin"
+
 - name: "ccache : create symlinks"
+  when: not os|startswith("aix")
   loop_control:
     loop_var: destination
   with_items: [ 'gcc', 'cc', 'g++', 'c++' ]
@@ -53,5 +93,33 @@
     src: /usr/local/bin/ccache
     state: link
 
+- name: "ccache : create symlinks - aix"
+  when: os|startswith("aix")
+  file:
+    src: /opt/ccache-3.7.4/bin/ccache
+    dest: /opt/ccache-3.7.4/libexec/{{ item.dest }}
+    owner: root
+    group: system
+    state: link
+  loop:
+    - { dest: gcc }
+    - { dest: g++ }
+    - { dest: gcov }
+    - { dest: cpp }
+    - { dest: c++ }
+
 - name: "ccache : cleanup"
+  when: not os|startswith("aix")
   file: path="/tmp/ccache-{{ ccache_latest }}" state=absent
+
+- name: "ccache : cleanup - aix tarball"
+  when: os|startswith("aix")
+  file:
+    path: "/tmp/ccache-3.7.4.tar.gz"
+    state: absent
+
+- name: "ccache : cleanup - aix directory"
+  when: os|startswith("aix")
+  file:
+    path: /tmp/ccache-3.7.4
+    state: absent
