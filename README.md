@@ -127,8 +127,12 @@ accesses and team roles see [GOVERNANCE.md][].
 
 ### Emeriti
 
+- [@addaleax](https://github.com/addaleax) - Anna Henningsen
 - [@bnoordhuis](https://github.com/bnoordhuis) - Ben Noordhuis
 - [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
+- [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil
+- [@LucaLanziani](https://github.com/LucaLanziani) - Luca Lanziani
+- [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
 
