@@ -28,14 +28,10 @@ to the resources we manage.
 
 <!-- ncu-team-sync.team(nodejs/build) -->
 
-- [@addaleax](https://github.com/addaleax) - Anna Henningsen
 - [@AshCripps](https://github.com/AshCripps) - Ash Cripps
-- [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
-- [@LucaLanziani](https://github.com/LucaLanziani) - Luca Lanziani
-- [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@mmarchini](https://github.com/mmarchini) - mary marchini
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
@@ -73,7 +69,6 @@ Admin access to https://ci.nodejs.org/.
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
-- [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
