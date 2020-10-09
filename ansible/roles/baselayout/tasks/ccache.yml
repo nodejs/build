@@ -12,7 +12,7 @@
   local_action: shell curl -sL https://www.samba.org/ftp/ccache/ | sed -n -e 's/.*"ccache-\([0-9.]*\).tar.gz".*/\1/p' | tail -1
   register: ccache_html_content
 
-- name: "ccache : fetch tarbal - aix"
+- name: "ccache : fetch tarball - aix"
   when: os|startswith("aix")
   shell:
     chdir: "/tmp"
@@ -31,7 +31,7 @@
     src: "https://www.samba.org/ftp/ccache/ccache-{{ ccache_latest }}.tar.gz"
   register: new_archive
 
-- name: "ccache : extract tarbal - aix"
+- name: "ccache : extract tarball - aix"
   when: os|startswith("aix")
   shell:
     chdir: "/tmp"

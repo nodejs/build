@@ -36,6 +36,7 @@ hosts:
 
     - ibm:
         aix71-ppc64_be-1: {ip: 129.33.196.199, user: b9s010a}
+        aix71-ppc64_be-2: {ip: 169.48.19.173}
         rhel7-s390x-1: {ip: 148.100.86.101, user: linux1}
 
     - iinthecloud:
