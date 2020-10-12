@@ -61,6 +61,12 @@
   stat: path="{{ binary_dest }}"
   register: has_ccache
 
+- name: check for ccache aix
+  when: os|startswith("aix")
+  stat: 
+    path: /opt/ccache-3.7.4/bin/ccache
+  register: has_ccache
+
 - name: check for a recent enough git
   when: os in git_no_binpkg
   stat: path="{{ binary_dest }}"
@@ -204,6 +210,13 @@
   when: os in ccache_no_binpkg and not has_ccache.stat.exists
   include: ccache.yml
   static: false
+
+- name: run ccache installer
+  when: os|startswith("aix") and not has_ccache.stat.exists
+  include: ccache.yml
+  static: false
+  vars:
+    - version: 3.7.4
 
 - name: set up ntp
   include: "{{ ntp_include }}"
