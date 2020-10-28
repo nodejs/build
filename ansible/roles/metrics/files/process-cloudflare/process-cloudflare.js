@@ -161,7 +161,7 @@ async function processLogs (bucket, filename) {
 
   return new Promise((resolve, reject) => {
     pipeline(
-      storage.bucket(bucket).file(filename).createReadStream()
+      storage.bucket(bucket).file(filename).createReadStream({ emitClose: true })
       .on("close", () => {
         console.log("Stream closed");
       })
@@ -171,8 +171,8 @@ async function processLogs (bucket, filename) {
       split2(),
       jsonStream,
       logTransformStream,
-      //storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({ resumable: false }),
-      process.stdout
+      storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({ resumable: false })
+      //process.stdout
       .on("end", () => {
         console.log("FINISHED");
       }),
