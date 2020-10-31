@@ -19,7 +19,7 @@ Generation/publication of the code coverage results consists of the following:
 
 * Nightly scheduled job - We have a job in jenkins which is scheduled to run at
   11 EST each night.
-  [node-test-commit-linux-coverage](https://ci.nodejs.org/view/All/job/node-test-commit-linux-coverage/).
+  [node-test-commit-linux-coverage-daily](https://ci.nodejs.org/view/All/job/node-test-commit-linux-coverage-daily/).
 * At the end of the scheduled job it rsync's the generated data to the
   benchmarking data machine.  We do this so that once the job is complete
   the data is in a place where we know we can pull it from, and that pulling
