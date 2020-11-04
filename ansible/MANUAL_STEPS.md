@@ -229,7 +229,9 @@ mount /aha
 ```bash
 cd /opt/ibm-xlc
 uncompress 16.1.0.3-IBM-xlCcmp-AIX-FP003.tar.Z
+tar -xvf 16.1.0.3-IBM-xlCcmp-AIX-FP003.tar
 uncompress IBM_XL_C_CPP_V16.1.0.0_AIX.tar.Z
+tar -xvf IBM_XL_C_CPP_V16.1.0.0_AIX.tar
 installp -aXYgd ./usr/sys/inst.images -e /tmp/install.log all
 inutoc
 installp -aXgd ./ -e /tmp/install.log all
