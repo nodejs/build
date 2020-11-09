@@ -145,5 +145,5 @@ jobs_variants: {
   armv6l: '1',
   armv7l: '2',
   arm64: '3',
-  smartos: '2'  
+  smartos: '2'
 }
