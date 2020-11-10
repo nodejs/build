@@ -141,6 +141,7 @@ scaleway_armv7: {
 # primarily for raspberry pi workers, some arm64 workers may need `server_jobs` defined in inventory
 # to override these low numbers
 jobs_variants: {
+  aix: '6',
   armv6l: '1',
   armv7l: '2',
   arm64: '3',
