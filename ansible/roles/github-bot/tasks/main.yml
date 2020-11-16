@@ -15,7 +15,7 @@
 
 - name: Bootstrap | Add nodesource repo
   apt_repository:
-    repo: deb https://deb.nodesource.com/node_10.x jessie main
+    repo: deb https://deb.nodesource.com/node_14.x jessie main
     state: present
 
 - name: Bootstrap | APT Update and upgrade
