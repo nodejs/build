@@ -1,24 +1,31 @@
 #!/usr/bin/env node
 
-const { pipeline, Transform } = require('stream')
+'use strict'
+
+//const { pipeline, Transform } = require('stream')
+const { Transform } = require('stream')
+const { pipeline } = require('stream').promises
 const split2 = require('split2')
 const strftime = require('strftime').timezone(0)
 const {Storage} = require('@google-cloud/storage');
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 const app = express();
 
 app.use(bodyParser.json());
 
-const storage = new Storage({keyFilename: "metrics-processor-service-key.json"});
+
 
 const jsonStream = new Transform({
   readableObjectMode: true,
   transform (chunk, encoding, callback) {
+    //console.log("JSONSTREAM \n")
     try {
       this.push(JSON.parse(chunk.toString()))
       callback()
     } catch (e) {
+      console.log("JSON STREAM CATCH", e)
       callback()
     }
   }
@@ -93,24 +100,25 @@ function determineArch (fileType, winArch, os) {
 const logTransformStream = new Transform({
   writableObjectMode: true,
   transform (chunk, encoding, callback) {
-    if (chunk.ClientRequestMethod !== 'GET' ||
+    //console.log("TRANSFORMER")
+    if (chunk.ClientRequestMethod !== 'GET' || // Drop anything that isnt a GET or a 200 range response
         chunk.EdgeResponseStatus < 200 ||
         chunk.EdgeResponseStatus >= 300) {
-      return callback()
+      return callback(null, null)
     }
 
     if (chunk.EdgeResponseBytes < 1024) { // unreasonably small for something we want to measure
-      return callback()
+      return callback(null, null)
     }
 
     if (!extensionRe.test(chunk.ClientRequestPath)) { // not a file we care about
-      return callback()
+      return callback(null, null)
     }
 
     const requestPath = chunk.ClientRequestPath.replace(/\/\/+/g, '/')
-    const uriMatch = requestPath.match(uriRe)
+    const uriMatch = requestPath.match(uriRe) //Check that the request is for an actual node file
     if (!uriMatch) { // what is this then?
-      return callback()
+      return callback(null, null)
     }
 
     const path = uriMatch[1]
@@ -148,87 +156,170 @@ const logTransformStream = new Transform({
   }
 })
 
+function logTransform2(jsonObj) {
+    if (jsonObj.ClientRequestMethod !== 'GET' || // Drop anything that isnt a GET or a 200 range response
+        jsonObj.EdgeResponseStatus < 200 ||
+        jsonObj.EdgeResponseStatus >= 300) {
+      return
+    }
 
-async function processLogs (bucket, filename) {
+    if (jsonObj.EdgeResponseBytes < 1024) { // unreasonably small for something we want to measure
+      return
+    }
+
+    if (!extensionRe.test(jsonObj.ClientRequestPath)) { // not a file we care about
+      return
+    }
+
+    const requestPath = jsonObj.ClientRequestPath.replace(/\/\/+/g, '/')
+    const uriMatch = requestPath.match(uriRe) //Check that the request is for an actual node file
+    if (!uriMatch) { // what is this then?
+      return
+    }
+
+    const path = uriMatch[1]
+    const pathVersion = uriMatch[4]
+    const file = uriMatch[5]
+    const winArch = uriMatch[6]
+    const fileVersion = uriMatch[8]
+    const fileType = uriMatch[9]
+
+    let version = ''
+    // version can come from the filename or the path, filename is best
+    // but it may not be there (e.g. node.exe) so fall back to path version
+    if (versionRe.test(fileVersion)) {
+      version = fileVersion
+    } else if (versionRe.test(pathVersion)) {
+      version = pathVersion
+    }
+
+    const os = determineOS(path, file, fileType)
+    const arch = determineArch(fileType, winArch, os)
+
+    const line = []
+    line.push(strftime('%Y-%m-%d', new Date(jsonObj.EdgeStartTimestamp / 1000 / 1000))) // date
+    line.push(jsonObj.ClientCountry.toUpperCase()) // country
+    line.push('') // state/province, derived from chunk.EdgeColoCode probably
+    line.push(jsonObj.ClientRequestPath) // URI
+    line.push(version) // version
+    line.push(os) // os
+    line.push(arch) // arch
+    line.push(jsonObj.EdgeResponseBytes)
+
+    return(`${line.join(',')}\n`)
+
+
+  }
+
+
+// async function processLogs (bucket, filename, callback) {
+module.exports.processLogs = async function processLogs (bucket, filename, callback) {
   console.log('Node version is: ' + process.version);
   console.log("BUCKET " + bucket);
   console.log("FILENAME " + filename);
   let processedFile = filename.split(".")[0];
   processedFile = processedFile.split("_")[0].concat("_", processedFile.split("_")[1]);
   console.log("PROCESSEDFILENAME " + processedFile);
+  createPipeline(bucket, filename, processedFile, callback)
 
-
-
-  return new Promise((resolve, reject) => {
-    pipeline(
-      storage.bucket(bucket).file(filename).createReadStream()
-      .on("close", () => {
-        console.log("Stream closed");
-      })
-      .on("end", () => {
-        console.log("READ STREAM ENDED");
-      }),
-      split2(),
-      jsonStream,
-      logTransformStream,
-      //storage.bucket('processed-logs-nodejs').file(processedFile).createWriteStream({ resumable: false }),
-      process.stdout
-      .on("end", () => {
-        console.log("FINISHED");
-      }),
-      (err) => {
-        if (err) {
-          console.log("PIPELINE HAS FAILED", err)
-          reject();
-        } else {
-          console.log("PIPELINE SUCCESS")
-          resolve();
-        }
-      }
-    )
-    .on("error", (err) =>{
-      console.log("ERROR IN PIPELINE, ", err);
-    })
-  })
 }
 
+  function createPipeline(bucket, filename, processedFile, callback) {
+    const storage = new Storage({
+      keyFilename: "metrics-processor-service-key.json",
+    });
+    console.log("INSIDE CREATE PIPELINE");
 
-app.post('/', async (req, res) => {
+    const readBucket = storage.bucket(bucket);
+    const writeBucket = storage.bucket("processed-logs-nodejs");
+    let x = 1;
 
-  if (!req.body) {
-    const msg = "No Pub/Sub Message received";
-    console.error(msg);
-    res.status(400).send("Bad Request: " + msg);
-    return;
+    readBucket.file(filename).download(function(err, contents) {
+      if (err) {
+        console.log("ERROR IN DOWNLOAD ", filename, err);
+        // callback(500);
+        callback();
+      } else {
+      // else {
+      //   console.log("DOWNLOAD SUCCESS", filename, contents.length)
+      //   callback(200)
+      // }
+      const stringContents = contents.toString()
+      console.log("String length: ", stringContents.length)
+      const contentsArray = stringContents.split('\n');
+      // console.log(contentsArray)
+      console.log("Array Length: ", contentsArray.length)
+      let results = ""
+      for (const line of contentsArray){
+        //console.log(JSON.parse(contentsArray(line)))
+        //console.log(JSON.parse(contentsArray[line]))
+        //console.log(x, " out of ", contentsArray.length)
+        x++
+        try {
+          const jsonparse = JSON.parse(line)
+          const printout = logTransform2(jsonparse)
+          if (printout != undefined) { results = results.concat(printout)}
+        } catch (err) {console.log(err)}
+      }
+
+      writeBucket.file(processedFile).save(results, function(err){
+        if (err) {
+          console.log("ERROR UPLOADING: ", err);
+          // callback(500);
+          callback();
+        } else {
+          console.log("Upload complete")
+          //callback(200);
+          callback();
+
+        }
+        })
+      }
+    })
+
+
+
   }
-  if (!req.body.message) {
-    const msg = 'invalid Pub/Sub message format';
-    console.error(`error: ${msg}`);
-    res.status(400).send(`Bad Request: ${msg}`);
-    return;
-  }
 
-  const eventType = req.body.message.attributes.eventType;
 
-  if (eventType != "OBJECT_FINALIZE"){
-    const msg = `Event type is ${eventType} not OBJECT_FINALIZE`;
-    console.error(`error ${msg}`);
-    res.status(400).send(`Bad Request: ${msg}`);
-    return;
-  }
+// app.post('/', async (req, res) => {
 
-  const bucket = req.body.message.attributes.bucketId;
-  const filename = req.body.message.attributes.objectId;
-  console.log("EVENT TYPE: ", eventType);
+//   if (!req.body) {
+//     const msg = "No Pub/Sub Message received";
+//     console.error(msg);
+//     res.status(400).send("Bad Request: " + msg);
+//     return;
+//   }
+//   if (!req.body.message) {
+//     const msg = 'invalid Pub/Sub message format';
+//     console.error(`error: ${msg}`);
+//     res.status(400).send(`Bad Request: ${msg}`);
+//     return;
+//   }
 
-  await processLogs(bucket, filename);
+//   const eventType = req.body.message.attributes.eventType;
 
-  res.status(200).send();
-});
+//   if (eventType != "OBJECT_FINALIZE"){
+//     const msg = `Event type is ${eventType} not OBJECT_FINALIZE`;
+//     console.error(`error ${msg}`);
+//     res.status(400).send(`Bad Request: ${msg}`);
+//     return;
+//   }
 
-const port = process.env.PORT || 8080;
-app.listen(port, () => {
-  console.log("Listening on port: ", port);
-});
+//   const bucket = req.body.message.attributes.bucketId;
+//   const filename = req.body.message.attributes.objectId;
 
-module.exports = app;
+//   console.log("EVENT TYPE: ", eventType);
+
+//   processLogs(bucket, filename, function(status) {
+//     res.status(status).send();
+//   });
+
+// });
+
+// const port = process.env.PORT || 8080;
+// app.listen(port, () => {
+//   console.log("Listening on port: ", port);
+// });
+
+// module.exports = app;

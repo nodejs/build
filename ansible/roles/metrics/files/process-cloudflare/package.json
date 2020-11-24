@@ -5,7 +5,7 @@
   "main": "process-cloudflare.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "processLogs": "node process-cloudflare.js"
+    "processLogs": "node --trace-warnings process-cloudflare.js"
   },
   "author": "Rod <rod@vagg.org> (http://r.va.gg/)",
   "contributors": [
