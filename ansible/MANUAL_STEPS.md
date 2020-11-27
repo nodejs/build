@@ -462,7 +462,7 @@ pxe-service=0,"Raspberry Pi Boot"
 * Copy the entirety of the boot partition of the Raspbian disk image into a subdirectory for each Pi. Symlinks are acceptable to map serial numbers to the names of the Pi's to keep them organised properly.
 * Edit cmdline.txt inside the tftp subdirectory for each file and replace the contents with:
 
-``
+```
 modprobe.blacklist=bcm2835_v4l2 root=/dev/nfs nfsroot=NFS_ROOT_SERVER_IP:/NFS_ROOT_FOR_THIS_PI,vers=3 rw ip=dhcp rootwait elevator=deadline
 ```
 
@@ -477,8 +477,6 @@ An NFS root server can be separate from NFS boot server, and could be different 
 * The NFS root server should export a root directory for each Pi. The IP of the server along with the path to the directory should be put in cmdline.txt on the NFS boot server. The exports should have roughly these options: `(rw,sync,no_subtree_check,no_root_squash)`/
 * The ext4 partition of the Raspbian image file (second partition, not the boot FAT partition) should be extracted into this root directory.
 * `etc/fstab` in the root directory should be edited to make it NFS compatible. Remove the existing `/boot` and `/` entries and replace them with:
-
-```
 
 ```
 /dev/mmcblk0p1 /mnt/mmcblk0p1 vfat defaults 0 0
