@@ -19,7 +19,7 @@ Ash Cripps (@AshCripps)
  
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
-* Ash - Node.js orca cloud will do down on Dec 10th
+* Ash - Node.js Orka cloud will do down on Dec 10th
 
 ### nodejs/build
 
