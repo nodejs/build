@@ -12,7 +12,8 @@
 * Michael Dawson (@mhdawson)
 * Rod Vagg
 * Rich Trott
-Ash Cripps (@AshCripps)
+* Ash Cripps (@AshCripps)
+
 ## Agenda
 
 ## Announcements
