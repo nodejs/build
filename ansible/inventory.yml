@@ -152,7 +152,11 @@ hosts:
 
     - macstadium:
         macos11.0-arm64-1: {ip: 199.7.163.9, user: administrator}
-        macos11.0-arm64-2: {ip: 199.7.163.10, user: administrator}
+        macos11.0-arm64-2:
+            ip: 199.7.163.10
+            user: administrator
+            remote_env:
+                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
 
     - marist:
         zos24-s390x-1:
