@@ -19,3 +19,5 @@ jobs:
       uses: ludeeus/action-shellcheck@1.0.0
       with:
         check_together: 'yes'
+      env:
+        SHELLCHECK_OPTS: -e SC1004 -e SC1007 -e SC1090 -e SC1091 -e SC2001 -e SC2002 -e SC2006 -e SC2010 -e SC2012 -e SC2034 -e SC2035 -e SC2046 -e SC2086 -e SC2091 -e SC2115 -e SC2129 -e SC2148 -e SC2154 -e SC2155 -e SC2162 -e SC2164 -e SC2166 -e SC2196 -e SC2209 -e SC2219 -e SC2242
