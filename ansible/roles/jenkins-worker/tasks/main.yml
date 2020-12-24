@@ -104,9 +104,8 @@
     cmd: "./bootstrap --verbose && make -j6 VERBOSE=1 && make install"
     creates: "/usr/local/bin/cmake"
 
-# @TODO(mhdawson): get tap2junit working on zOS
 - name: prepare installing tap2junit
-  when: type != "release" and not os|startswith("zos")
+  when: type != "release"
   include: "{{ pip_include }}"
   loop_control:
     loop_var: pip_include
