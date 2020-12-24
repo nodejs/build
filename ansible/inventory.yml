@@ -156,6 +156,7 @@ hosts:
             remote_env:
                 LIBPATH: /lib:/usr/lib:.:/rsusr/rocket/lib/perl5/5.24.0/os390/CORE.pod:/rsusr/rocket/python-2017-04-12-py27/python27/lib/
                 PATH: /rsusr/rocket/python-2017-04-12-py27/python27/bin:/bin:/rsusr/rocket/bin
+                SSL_CERT_FILE: "{{ home }}/{{ server_user }}/ca-bundle.crt"
             server_jobs: 4
         zos24-s390x-2:
             ip: 148.100.36.156
@@ -167,6 +168,7 @@ hosts:
             remote_env:
                 LIBPATH: /lib:/usr/lib:.:/rsusr/rocket/lib/perl5/5.24.0/os390/CORE.pod:/rsusr/rocket/python-2017-04-12-py27/python27/lib/
                 PATH: /rsusr/rocket/python-2017-04-12-py27/python27/bin:/bin:/rsusr/rocket/bin
+                SSL_CERT_FILE: "{{ home }}/{{ server_user }}/ca-bundle.crt"
             server_jobs: 4
 
     - mininodes:
