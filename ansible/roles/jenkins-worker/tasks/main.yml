@@ -149,6 +149,19 @@
   command: systemctl restart iptables
   when: "'rhel7-s390x' in inventory_hostname"
 
+- name: install root certificates
+  copy:
+    dest: "{{ home }}/{{ server_user }}/ca-bundle.crt"
+    force: yes
+    src: "{{ role_path }}/files/cacert.pem"
+  register: root_certs
+  when: os|startswith("zos")
+
+- name: tag root certificate file on z/OS
+  shell:
+    cmd: "chtag -t -c iso8859-1 {{ root_certs.dest }}"
+  when: os|startswith("zos")
+
 - name: download slave.jar
   get_url:
     url: "{{ jenkins_worker_jar }}"
@@ -156,7 +169,6 @@
     mode: 0644
     timeout: 60
     force: yes
-    validate_certs: '{{ os|startswith("zos")|ternary("no", omit) }}'
 
 - name: Resolver | ipnodes needs to be present on zos, similar to hosts file
   when: os|startswith("zos")
@@ -244,8 +256,7 @@
   when: os|startswith("zos")
   shell:
     cmd: "iconv -f utf8 -t ibm-1047 {{ initscript.dest }} > {{ (initscript.dest | splitext)[0] }}"
-    creates: "{{ (initscript.dest | splitext)[0] }}"
-
+  
 - name: centos6 | render sysconfig into place
   when: "os == 'centos6'"
   template:
