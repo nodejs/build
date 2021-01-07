@@ -121,6 +121,7 @@
   package:
     name: nodejs
     state: present
+    update_cache: yes
 
 - name: Upgrade pip2
   pip:
