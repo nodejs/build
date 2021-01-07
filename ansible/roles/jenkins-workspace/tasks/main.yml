@@ -114,7 +114,7 @@
 
 - name: Add nodesource repo
   apt_repository:
-    repo: deb https://deb.nodesource.com/node_12.x xenial main
+    repo: deb https://deb.nodesource.com/node_14.x xenial main
     state: present
 
 - name: Install node
