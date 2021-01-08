@@ -212,8 +212,7 @@ function logTransform2(jsonObj) {
   }
 
 
-// async function processLogs (bucket, filename, callback) {
-module.exports.processLogs = async function processLogs (bucket, filename, callback) {
+async function processLogs (bucket, filename, callback) {
   console.log('Node version is: ' + process.version);
   console.log("BUCKET " + bucket);
   console.log("FILENAME " + filename);
@@ -240,20 +239,12 @@ module.exports.processLogs = async function processLogs (bucket, filename, callb
         // callback(500);
         callback();
       } else {
-      // else {
-      //   console.log("DOWNLOAD SUCCESS", filename, contents.length)
-      //   callback(200)
-      // }
       const stringContents = contents.toString()
       console.log("String length: ", stringContents.length)
       const contentsArray = stringContents.split('\n');
-      // console.log(contentsArray)
       console.log("Array Length: ", contentsArray.length)
       let results = ""
       for (const line of contentsArray){
-        //console.log(JSON.parse(contentsArray(line)))
-        //console.log(JSON.parse(contentsArray[line]))
-        //console.log(x, " out of ", contentsArray.length)
         x++
         try {
           const jsonparse = JSON.parse(line)
@@ -265,13 +256,18 @@ module.exports.processLogs = async function processLogs (bucket, filename, callb
       writeBucket.file(processedFile).save(results, function(err){
         if (err) {
           console.log("ERROR UPLOADING: ", err);
-          // callback(500);
-          callback();
+          const used = process.memoryUsage();
+          for (let key in used) {
+            console.log(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+          }
+          callback(500);
         } else {
           console.log("Upload complete")
-          //callback(200);
-          callback();
-
+          const used = process.memoryUsage();
+          for (let key in used) {
+            console.log(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+          }
+          callback(200);
         }
         })
       }
@@ -282,44 +278,44 @@ module.exports.processLogs = async function processLogs (bucket, filename, callb
   }
 
 
-// app.post('/', async (req, res) => {
+app.post('/', async (req, res) => {
 
-//   if (!req.body) {
-//     const msg = "No Pub/Sub Message received";
-//     console.error(msg);
-//     res.status(400).send("Bad Request: " + msg);
-//     return;
-//   }
-//   if (!req.body.message) {
-//     const msg = 'invalid Pub/Sub message format';
-//     console.error(`error: ${msg}`);
-//     res.status(400).send(`Bad Request: ${msg}`);
-//     return;
-//   }
+  if (!req.body) {
+    const msg = "No Pub/Sub Message received";
+    console.error(msg);
+    res.status(400).send("Bad Request: " + msg);
+    return;
+  }
+  if (!req.body.message) {
+    const msg = 'invalid Pub/Sub message format';
+    console.error(`error: ${msg}`);
+    res.status(400).send(`Bad Request: ${msg}`);
+    return;
+  }
 
-//   const eventType = req.body.message.attributes.eventType;
+  const eventType = req.body.message.attributes.eventType;
 
-//   if (eventType != "OBJECT_FINALIZE"){
-//     const msg = `Event type is ${eventType} not OBJECT_FINALIZE`;
-//     console.error(`error ${msg}`);
-//     res.status(400).send(`Bad Request: ${msg}`);
-//     return;
-//   }
+  if (eventType != "OBJECT_FINALIZE"){
+    const msg = `Event type is ${eventType} not OBJECT_FINALIZE`;
+    console.error(`error ${msg}`);
+    res.status(400).send(`Bad Request: ${msg}`);
+    return;
+  }
 
-//   const bucket = req.body.message.attributes.bucketId;
-//   const filename = req.body.message.attributes.objectId;
+  const bucket = req.body.message.attributes.bucketId;
+  const filename = req.body.message.attributes.objectId;
 
-//   console.log("EVENT TYPE: ", eventType);
+  console.log("EVENT TYPE: ", eventType);
 
-//   processLogs(bucket, filename, function(status) {
-//     res.status(status).send();
-//   });
+  processLogs(bucket, filename, function(status) {
+    res.status(status).send();
+  });
 
-// });
+});
 
-// const port = process.env.PORT || 8080;
-// app.listen(port, () => {
-//   console.log("Listening on port: ", port);
-// });
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log("Listening on port: ", port);
+});
 
-// module.exports = app;
+module.exports = app;
