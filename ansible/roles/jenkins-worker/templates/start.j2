@@ -7,6 +7,6 @@ export OSTYPE=osx
 export ARCH=x64
 export DESTCPU=x64
 
-PATH="/usr/local/opt/ccache/libexec:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" {{ java_path[os] }} -Xmx{{ server_ram|default('128m') }} \
+PATH="/usr/local/opt/ccache/libexec:/usr/local/opt/python3/Frameworks/Python.framework/Versions/Current/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" {{ java_path[os] }} -Xmx{{ server_ram|default('128m') }} \
     -jar {{ home }}/{{ server_user }}/slave.jar -secret {{ secret }} \
     -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp
