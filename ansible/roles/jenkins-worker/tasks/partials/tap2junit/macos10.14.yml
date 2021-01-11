@@ -1,0 +1,11 @@
+---
+
+#
+# install tap2junit from pip
+#
+
+- name: install tap2junit
+  pip:
+    name: tap2junit
+    state: latest
+    executable: /usr/local/bin/pip3
