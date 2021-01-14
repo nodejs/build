@@ -32,9 +32,9 @@
     * Summaries can be handled outside of GCP
   * Discussion around merging existing data, first GCP file is 29th Oct 2019
   * Storage alternatives
-        * Github
-            * Just store in GCP itself
-            * Possibly move to metrics.nodejs.org
+    * Github
+    * Just store in GCP itself
+  * Possibly move to metrics.nodejs.org
 
 ## Q&A, Other
 
