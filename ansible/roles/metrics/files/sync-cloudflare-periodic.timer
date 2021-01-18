@@ -1,0 +1,14 @@
+[Unit]
+Description=Schedule periodic cloudflare sync
+RefuseManualStart=no
+RefuseManualStop=no
+
+[Timer]
+Persistent=true
+OnBootSec=300
+RandomizedDelaySec=300
+OnUnitActiveSec=3600
+Unit=sync-cloudflare-periodic.service
+
+[Install]
+WantedBy=multi-user.target

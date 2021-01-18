@@ -1,0 +1,12 @@
+---
+
+#
+# sets up the host that runs metrics collection and storage
+#
+
+- hosts: infra-digitalocean-ubuntu1804-x64-3
+  roles:
+    - bootstrap
+    - package-upgrade
+    - baselayout
+    - metrics
