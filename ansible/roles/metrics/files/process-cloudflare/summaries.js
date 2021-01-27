@@ -8,6 +8,7 @@
 
 const { pipeline, Transform } = require('stream')
 const split2 = require('split2')
+const { Storage } = require('@google-cloud/storage')
 
 const csvStream = new Transform({
   readableObjectMode: true,
@@ -68,17 +69,64 @@ const summaryStream = new Transform({
   }
 })
 
-pipeline(
-  process.stdin,
-  split2(),
-  csvStream,
-  summaryStream,
-  (err) => {
-    prepare()
-    console.log(JSON.stringify(counts, null, 2))
-    if (err) {
-      console.error('ERROR', err)
-      process.exit(1)
-    }
-  }
-)
+const storage = new Storage({
+  keyFilename: "metrics-processor-service-key.json",
+});
+
+storage.bucket('processed-logs-nodejs').getFiles({ prefix: '20210112/'}, function(err, files) {
+  if (!err){
+    for (const file of files){
+      //storage.bucket('processed-logs-nodejs').file('20210114/20210114T081500Z_20210114T082000Z').download(function(err, contents) {
+        // if (err) {
+        //   console.log("ERROR IN DOWNLOAD ",  err);
+        //   // callback(500);
+        //   callback();
+        // } else {
+        // const stringContents = contents.toString()
+        // console.log("String length: ", stringContents.length)
+        // const contentsArray = stringContents.split('\n');
+        // console.log("Array Length: ", contentsArray.length)
+        // let results = ""
+        // for (const line of contentsArray){
+        //   x++
+        //   try {
+        //     const csvparse = csvStream(line)
+        //     console.log(csvparse);
+        //     //const printout = logTransform2(jsonparse)
+        //     //if (printout != undefined) { results = results.concat(printout)}
+        //   } catch (err) {console.log(err)}
+        // }
+
+
+      pipeline(
+        storage.bucket('processed-logs-nodejs').file(file.name).createReadStream(),
+        split2(),
+        csvStream,
+        summaryStream,
+        (err) => {
+          prepare()
+          console.log(JSON.stringify(counts, null, 2))
+          if (err) {
+            console.error('ERROR', err)
+            process.exit(1)
+          }
+        }
+      )
+}
+}
+})
+
+// pipeline(
+//   process.stdin,
+//   split2(),
+//   csvStream,
+//   summaryStream,
+//   (err) => {
+//     prepare()
+//     console.log(JSON.stringify(counts, null, 2))
+//     if (err) {
+//       console.error('ERROR', err)
+//       process.exit(1)
+//     }
+//   }
+// )
