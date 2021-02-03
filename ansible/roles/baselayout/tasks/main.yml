@@ -199,6 +199,19 @@
     regexp: '^127\.0\.1\.1\s+\w.+$'
     line: '127.0.1.1        {{safe_hostname}}'
 
+- name: aix | update curl symlinks
+  when: os|startswith("aix")
+  file:
+    src: "/opt/freeware/bin/{{ curl }}"
+    dest: "/usr/bin/{{ curl }}"
+    state: link
+  loop_control:
+    loop_var: curl
+  with_items:
+    - curl
+    - curl_32
+    - curl_64
+
 - name: run ccache installer
   when: os == "rhel7" and arch == "s390x" and not has_ccache.stat.exists
   include: ccache.yml
