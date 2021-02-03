@@ -118,6 +118,7 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
       if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
         export PATH="/opt/ccache-3.7.4/libexec:/opt/freeware/gcc6/bin:/opt/freeware/bin:$PATH"
         export CC="gcc" CXX="g++" CXX_host="g++"
+        unset LIBPATH
         echo "Compiler set to 6.3"
         return
       else
