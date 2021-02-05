@@ -14,7 +14,6 @@
   * [ccache 3.7.4 on AIX 7.2](#ccache-374-on-aix-72)
   * [Enable the AHA fs](#enable-the-aha-fs)
   * [Install XL compilers](#install-xl-compilers)
-  * [Fix "Missing" shared objects](#fix-missing-shared-objects)
   * [Preparing gcc distributables](#preparing-gcc-distributables)
 * [Windows (Azure/Rackspace)](#windows-azurerackspace)
   * [Control machine (where Ansible is run)](#control-machine-where-ansible-is-run)
@@ -237,29 +236,6 @@ inutoc
 installp -aXgd ./ -e /tmp/install.log all
 ```
 4. Find compilers in `/opt/IBM/xl[cC]/16.1.0/bin/`
-
-
-### Fix "Missing" shared objects
-
-On the 7.1 machines we were facing this issues when yum installed packages were
-not able to find some of the shared objects they needed
-
-```sh
-bash-5.0$ gmake -v
-exec(): 0509-036 Cannot load program gmake because of the following errors:
-        0509-022 Cannot load module /opt/freeware/lib/libintl.a(libintl.so.8).
-        0509-150   Dependent module /usr/lib/libiconv.a(libiconv.so.2) could not be loaded.
-        0509-152   Member libiconv.so.2 is not found in archive
-        0509-022 Cannot load module make_64.
-        0509-150   Dependent module /opt/freeware/lib/libintl.a(libintl.so.8) could not be loaded.
-        0509-022 Cannot load module .
-```
-
-The fix is as follows:
-
-```sh
-sudo rm /usr/lib/libiconv.a && sudo ln -s /opt/freeware/lib/libiconv.a /usr/lib
-```
 
 ### Preparing gcc distributables
 
