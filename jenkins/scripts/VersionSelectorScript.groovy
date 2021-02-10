@@ -92,7 +92,8 @@ def buildExclusions = [
 
   // AIX PPC64 ---------------------------------------------
   [ /aix71/,                          anyType,     lt(10)  ],
-  [ /aix72/,                          anyType,     lt(14)  ],
+  [ /aix71/,                          anyType,     gte(15)  ],
+  [ /aix72/,                          anyType,     lt(15)  ],
 
   // Shared libs docker containers -------------------------
   [ /ubi81_sharedlibs/,               anyType,     lt(13)  ],
