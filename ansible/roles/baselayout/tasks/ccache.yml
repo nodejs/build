@@ -53,7 +53,7 @@
   when: os|startswith("aix")
   shell:
     chdir: "/tmp/ccache-3.7.4"
-    cmd: './configure CC="gcc -maix64" && gmake'
+    cmd: './configure CC="/opt/freeware/bin/gcc -maix64" && /opt/freeware/bin/gmake'
 
 - name: "ccache : compile"
   when: not os|startswith("aix")
