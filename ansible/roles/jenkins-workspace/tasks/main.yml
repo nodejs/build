@@ -114,13 +114,19 @@
 
 - name: Add nodesource repo
   apt_repository:
-    repo: deb https://deb.nodesource.com/node_12.x xenial main
+    repo: deb https://deb.nodesource.com/node_14.x xenial main
     state: present
+
+- name: Remove earlier nodesource repos
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_12.x xenial main
+    state: absent
 
 - name: Install node
   package:
     name: nodejs
     state: present
+    update_cache: yes
 
 - name: Upgrade pip2
   pip:
