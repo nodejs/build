@@ -6,24 +6,24 @@
 // 2019-10-31,US,,/dist/v13.0.1/node-v13.0.1-linux-x64.tar.xz,v13.0.1,linux,x64,20102340
 //
 
-const { pipeline, Transform } = require('stream')
-const split2 = require('split2')
 const { Storage } = require('@google-cloud/storage')
+const moment = require('moment')
 
-const csvStream = new Transform({
-  readableObjectMode: true,
-  transform (chunk, encoding, callback) {
+
+function csvStream (chunk) {
     try {
+      const line = []
       const schunk = chunk.toString()
       if (!schunk.startsWith('day,country')) { // ignore header
-        this.push(schunk.split(','))
+        line.push(schunk.split(','))
+        return(line)
       }
-      callback()
+      return
     } catch (e) {
-      callback(e)
+      console.log(e)
     }
-  }
-})
+  
+}
 
 const counts = { bytes: 0, total: 0 }
 function increment (type, key) {
@@ -55,78 +55,46 @@ function prepare () {
   'country version os arch'.split(' ').forEach(sort)
 }
 
-const summaryStream = new Transform({
-  writableObjectMode: true,
-  transform (chunk, encoding, callback) {
-    const [date, country, region, path, version, os, arch, bytes] = chunk
-    increment('country', country)
-    increment('version', version)
-    increment('os', os)
-    increment('arch', arch)
-    counts.bytes += parseInt(bytes, 10)
-    counts.total++
-    callback()
-  }
-})
+function summary (chunk) {
+  const [date, country, region, path, version, os, arch, bytes] = chunk[0]
+  increment('country', country)
+  increment('version', version)
+  increment('os', os)
+  increment('arch', arch)
+  counts.bytes += parseInt(bytes, 10)
+  counts.total++
+  return
+ }
 
-const storage = new Storage({
-  keyFilename: "metrics-processor-service-key.json",
-});
+async function collectData () {
 
-storage.bucket('processed-logs-nodejs').getFiles({ prefix: '20210112/'}, function(err, files) {
-  if (!err){
-    for (const file of files){
-      //storage.bucket('processed-logs-nodejs').file('20210114/20210114T081500Z_20210114T082000Z').download(function(err, contents) {
-        // if (err) {
-        //   console.log("ERROR IN DOWNLOAD ",  err);
-        //   // callback(500);
-        //   callback();
-        // } else {
-        // const stringContents = contents.toString()
-        // console.log("String length: ", stringContents.length)
-        // const contentsArray = stringContents.split('\n');
-        // console.log("Array Length: ", contentsArray.length)
-        // let results = ""
-        // for (const line of contentsArray){
-        //   x++
-        //   try {
-        //     const csvparse = csvStream(line)
-        //     console.log(csvparse);
-        //     //const printout = logTransform2(jsonparse)
-        //     //if (printout != undefined) { results = results.concat(printout)}
-        //   } catch (err) {console.log(err)}
-        // }
+  const storage = new Storage({
+    keyFilename: "metrics-processor-service-key.json",
+  });
 
+  let date = moment(new Date())
+  date = moment(date, 'YYYYMMDD').subtract(1, 'days').format('YYYYMMDD')
+  const filePrefix = date.toString().concat('/')
+  console.log(filePrefix)
 
-      pipeline(
-        storage.bucket('processed-logs-nodejs').file(file.name).createReadStream(),
-        split2(),
-        csvStream,
-        summaryStream,
-        (err) => {
-          prepare()
-          console.log(JSON.stringify(counts, null, 2))
-          if (err) {
-            console.error('ERROR', err)
-            process.exit(1)
-          }
-        }
-      )
+  const [files] = await storage.bucket('processed-logs-nodejs').getFiles({ prefix: `${filePrefix}`})
+  for (const file of files){
+    const data = await storage.bucket('processed-logs-nodejs').file(file.name).download() 
+    const stringContents = data[0].toString()
+    const contentsArray = stringContents.split('\n')
+          
+    for (const line of contentsArray) {
+      try {
+        const csvparse = csvStream(line)
+        if (csvparse !== undefined && csvparse[0][0] !== '') { summary(csvparse) }
+      } catch (err) { console.log(err) }
+    }
+    }
 }
-}
-})
 
-// pipeline(
-//   process.stdin,
-//   split2(),
-//   csvStream,
-//   summaryStream,
-//   (err) => {
-//     prepare()
-//     console.log(JSON.stringify(counts, null, 2))
-//     if (err) {
-//       console.error('ERROR', err)
-//       process.exit(1)
-//     }
-//   }
-// )
+async function produceSummaries () {
+  await collectData()
+  console.log(counts)
+}
+
+produceSummaries()
