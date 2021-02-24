@@ -94,6 +94,7 @@ async function collectData () {
 
 async function produceSummaries () {
   await collectData()
+  prepare()
   console.log(counts)
 }
 
