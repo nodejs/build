@@ -8,6 +8,7 @@
 
 const { Storage } = require('@google-cloud/storage')
 const moment = require('moment')
+const fs = require('fs')
 
 
 function csvStream (chunk) {
@@ -95,7 +96,13 @@ async function collectData () {
 async function produceSummaries () {
   await collectData()
   prepare()
-  console.log(counts)
+  let date = moment(new Date())
+  date = moment(date, 'YYYYMMDD').subtract(1, 'days').format('YYYYMMDD')
+  let outputFile = "nodejs.org-access.log." + date.toString() + ".json"
+  fs.writeFile(outputFile, JSON.stringify(counts), function(err) {
+    if (err) console.log(err)
+    console.log("File Written")
+  })
 }
 
 produceSummaries()
