@@ -43,7 +43,6 @@ hosts:
         ibmi72-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
 
     - joyent:
-        smartos15-x64-2: {ip: 165.225.148.139}
         smartos17-x64-2: {ip: 165.225.149.208}
         smartos18-x64-2: {ip: 165.225.148.12}
         ubuntu1804_docker-x64-1: {ip: 165.225.150.76, user: ubuntu}
@@ -136,10 +135,6 @@ hosts:
         ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
 
     - joyent:
-        smartos15-x64-3: {ip: 165.225.148.128}
-        smartos15-x64-4: {ip: 165.225.149.91}
-        smartos16-x64-3: {ip: 165.225.151.106}
-        smartos16-x64-4: {ip: 165.225.149.158}
         smartos17-x64-3: {ip: 165.225.148.15}
         smartos17-x64-4: {ip: 165.225.148.16}
         smartos18-x64-3: {ip: 165.225.151.114}
