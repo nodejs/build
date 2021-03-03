@@ -81,10 +81,6 @@ def buildExclusions = [
   [ /win10.*COMPILED_BY-vs2017/,      testType,    gte(13)       ], // vs2019 runs on win10 for >=13
 
   // SmartOS -----------------------------------------------
-  [ /^smartos15/,                     anyType,     lt(8)   ],
-  [ /^smartos15/,                     anyType,     gte(10) ],
-  [ /^smartos16/,                     anyType,     lt(8)   ],
-  [ /^smartos16/,                     anyType,     gte(12) ],
   [ /^smartos17/,                     anyType,     lt(10)  ],
   [ /^smartos17/,                     anyType,     gte(12) ],
   [ /^smartos18/,                     anyType,     lt(12)  ],
