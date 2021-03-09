@@ -99,11 +99,16 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
   case $NODE_NAME in
     *aix72* )
       echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX7.2"
-
-      if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
-        export LIBPATH=/opt/gcc-6.3/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/ppc64:/opt/gcc-6.3/lib
+      if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
+        export PATH="/opt/ccache-3.7.4/libexec:/opt/freeware/bin:$PATH"
+        export CC="gcc" CXX="g++" CXX_host="g++"
+        unset LIBPATH
+        echo "Compiler set to 8.3"
+        return
+      elif [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
         export PATH="/opt/ccache-3.7.4/libexec:/opt/gcc-6.3/bin:/opt/freeware/bin:$PATH"
         export CC="gcc" CXX="g++" CXX_host="g++"
+        export LIBPATH=/opt/gcc-6.3/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/ppc64:/opt/gcc-6.3/lib
         echo "Compiler set to 6.3"
         return
       else
@@ -114,10 +119,15 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
     
     *aix71* )
       echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX7.1"
-
-      if [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
-        export PATH="/opt/ccache-3.7.4/libexec:/opt/freeware/gcc6/bin:/opt/freeware/bin:$PATH"
+      if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
+        export PATH="/opt/ccache-3.7.4/libexec:/opt/freeware/bin:$PATH"
         export CC="gcc" CXX="g++" CXX_host="g++"
+        unset LIBPATH
+        echo "Compiler set to 8.3"
+        return
+      elif [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
+        export PATH="/opt/ccache-3.7.4/libexec:/opt/freeware/gcc6/bin:/opt/freeware/bin:$PATH"
+        export CC="gcc-6" CXX="g++-6" CXX_host="g++-6"
         unset LIBPATH
         echo "Compiler set to 6.3"
         return
