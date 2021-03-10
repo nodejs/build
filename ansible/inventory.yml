@@ -50,8 +50,9 @@ hosts:
         ubuntu1804_docker-x64-1: {ip: 165.225.150.76, user: ubuntu}
 
     - macstadium:
-        macos10.11-x64-1: {ip: 207.254.58.162, port: 10013, user: administrator}
-        macos10.10-x64-1: {ip: 207.254.58.162, port: 10014, user: administrator}
+        macos11.0-arm64-1:
+            ip: 207.254.38.74
+            user: administrator
 
     - marist:
         zos24-s390x-1: {ip: 148.100.36.157, user: unix1}
@@ -157,6 +158,12 @@ hosts:
             user: administrator
             remote_env:
                 PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+        macos11.0-arm64-3:
+            ip: 207.254.38.86
+            user: administrator
+        macos11.0-arm64-4:
+            ip: 207.254.38.89
+            user: administrator
 
     - marist:
         zos24-s390x-1:
