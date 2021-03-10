@@ -43,14 +43,17 @@
 # This is to mount the AIX file event infrastructure to get the file watcher tests passing
 
 - name: check for /aha filesystem
-  stat:
-    path: /aha
+  ansible.builtin.find:
+    file_type: any
+    paths: /aha
   register: ahafs
 
 - name: create /aha filesystem
-  when: ahafs.stat.exists == false
-  raw: mkdir /aha
+  ansible.builtin.file:
+    path: /aha
+    state: directory
 
 - name: Mount /aha filesystem
   shell:
     cmd: mount -v ahafs /aha /aha
+  when: ahafs.matched == 0
