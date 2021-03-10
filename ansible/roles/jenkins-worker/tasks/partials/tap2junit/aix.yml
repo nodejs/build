@@ -17,11 +17,11 @@
 
 - name: install pip AIX71
   raw: /usr/bin/python /home/iojs/get-pip.py
-  when: pip_exists.stat.exists == False && os == "aix71"
+  when: pip_exists.stat.exists == False and os == "aix71"
 
 - name: install pip AIX72
   raw: /opt/bin/python3 /home/iojs/get-pip.py
-  when: pip_exists.stat.exists == False && os == "aix72"
+  when: pip_exists.stat.exists == False and os == "aix72"
 
 - name: create symbolic link AIX71
   file:
