@@ -155,7 +155,11 @@ hosts:
         ubuntu1804-x64-1: {ip: 165.225.149.88, user: ubuntu}
 
     - macstadium:
-        macos11.0-arm64-1: {ip: 199.7.163.9, user: administrator}
+        macos11.0-arm64-1:
+            ip: 199.7.163.9
+            user: administrator
+            remote_env:
+                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
         macos11.0-arm64-2:
             ip: 199.7.163.10
             user: administrator
@@ -204,14 +208,6 @@ hosts:
         ubuntu1604-arm64_odroid_c2-1: {ip: 70.167.220.147}
         ubuntu1604-arm64_odroid_c2-2: {ip: 70.167.220.148}
         ubuntu1604-arm64_odroid_c2-3: {ip: 70.167.220.149, user: odroid}
-
-    - macstadium:
-        macos10.10-x64-1: {ip: 207.254.58.162, port: 10005, user: administrator}
-        macos10.10-x64-2: {ip: 207.254.58.162, port: 10006, user: administrator}
-        macos10.11-x64-1: {ip: 207.254.58.162, port: 10003, user: administrator}
-        macos10.11-x64-2: {ip: 207.254.58.162, port: 10004, user: administrator}
-        macos10.12-x64-1: {ip: 207.254.58.162, port: 10001, user: administrator}
-        macos10.12-x64-2: {ip: 207.254.58.162, port: 10002, user: administrator}
 
     - msft:
         win10_vs2017-arm64-1: {}
