@@ -54,7 +54,7 @@ packages: {
   ],
 
   aix: [
-    'bash,cmake,curl,gcc-c++,gcc6-c++,tar,unzip,git,make,sudo,python-setuptools',
+    'bash,cmake,curl,gcc-c++,gcc6-c++,tar,unzip,git,make,sudo,python-setuptools,python3',
   ],
 
   ibmi: [
