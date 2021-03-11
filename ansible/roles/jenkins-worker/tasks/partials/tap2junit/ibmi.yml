@@ -8,4 +8,4 @@
   pip:
     name: tap2junit
     state: present
-    executable: /QOpenSys/pkgs/bin/pip2
+    executable: /QOpenSys/pkgs/bin/pip3
