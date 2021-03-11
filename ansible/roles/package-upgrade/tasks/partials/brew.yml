@@ -16,7 +16,7 @@
   - name: Check if Homebrew is already installed (Apple Sillicon)
     stat:
       path: /opt/homebrew/bin/brew
-    register: brew
+    register: armbrew
     when: os == "macos11.0"
 
   - name: Check if Homebrew is already installed
@@ -28,7 +28,12 @@
   - name: Install Homebrew
     become_user: administrator
     script: files/install-homebrew.sh
-    when: not brew.stat.exists
+    when: os != "macos11.0" and not brew.stat.exists
+
+  - name: Install Homebrew
+    become_user: administrator
+    script: files/install-homebrew.sh
+    when: os == "macos11.0" and not armbrew.stat.exists
 
   - name: Upgrade installed packages
     become_user: administrator
