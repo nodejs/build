@@ -22,13 +22,13 @@
   - name: Check if Homebrew is already installed
     stat:
       path: /usr/local/bin/brew
-    register: armbrew
+    register: brew
     when: os != "macos11.0"
 
   - name: Install Homebrew
     become_user: administrator
     script: files/install-homebrew.sh
-    when: not brew.stat.exists and os != "macos11.0"
+    when: not brew.stat.exists
 
   - name: Upgrade installed packages
     become_user: administrator
