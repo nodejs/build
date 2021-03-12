@@ -17,6 +17,7 @@ hosts:
         ubuntu1804-x64-3: {ip: 157.245.7.159, alias: metrics}
 
     - joyent:
+        debian10-x64-1: {ip: 147.75.88.62, alias: grafana}
         smartos15-x64-1: {ip: 139.178.83.227, alias: backup}
         ubuntu1604-x64-1: {ip: 147.75.88.57, alias: unencrypted}
 
