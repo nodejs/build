@@ -87,10 +87,6 @@ needs_monit: [
   'debian7',
   ]
 
-archtype: {
-  macos11.0: 'arm64'
-}
-
 # some os'es needs different paths to java. add them here.
 java_path: {
   'ibmi72': '/QOpenSys/pkgs/lib/jvm/openjdk-11/bin/java',
