@@ -140,7 +140,6 @@ hosts:
         smartos17-x64-4: {ip: 147.75.88.61}
         smartos18-x64-3: {ip: 147.75.88.54}
         smartos18-x64-4: {ip: 147.75.88.55}
-        ubuntu1804_docker-x64-1: {ip: 165.225.151.201, user: ubuntu}
         ubuntu1804-x64-1: {ip: 147.75.88.51, user: ubuntu}
 
     - macstadium:
