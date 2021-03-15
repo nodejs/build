@@ -4,11 +4,6 @@
 # variables shared in baselayout
 #
 
-binary_dest: '/usr/local/bin/ccache'
-
-ccache_no_binpkg: ['smartos15', 'smartos16', 'smartos17']
-ccache_version: 3.3.2
-
 git_no_binpkg: ['debian7']
 git_version: 2.10.2
 

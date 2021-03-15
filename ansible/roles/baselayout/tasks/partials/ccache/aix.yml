@@ -1,0 +1,70 @@
+---
+#
+# Downloads and installs ccache
+#
+
+- name: "ccache : check for a recent enough ccache"
+  stat:
+    path: "/opt/ccache-3.7.4/bin/ccache"
+  register: has_ccache
+
+- name: "ccache : fetch tarball - aix"
+  shell:
+    chdir: "/tmp"
+    cmd: "curl -L -o ccache-3.7.4.tar.gz https://github.com/ccache/ccache/releases/download/v3.7.4/ccache-3.7.4.tar.gz"
+  when: not has_ccache.stat.exists
+
+- name: "ccache : extract tarball - aix"
+  shell:
+    chdir: "/tmp"
+    cmd: "/opt/freeware/bin/tar -xzf ccache-3.7.4.tar.gz"
+  when: not has_ccache.stat.exists
+
+- name: "ccache : compile - aix"
+  shell:
+    chdir: "/tmp/ccache-3.7.4"
+    cmd: './configure CC="/opt/freeware/bin/gcc -maix64" && /opt/freeware/bin/gmake'
+  when: not has_ccache.stat.exists
+
+- name: "ccache : install - create directory aix"
+  file:
+    path: /opt/ccache-3.7.4/{{ item.dest }}
+    state: directory
+    mode: '0755'
+  loop:
+    - { dest: bin }
+    - { dest: libexec }
+  when: not has_ccache.stat.exists
+
+- name: "ccache : install - move file aix"
+  shell:
+    chdir: "/tmp"
+    cmd: "mv ccache-3.7.4/ccache /opt/ccache-3.7.4/bin"
+  when: not has_ccache.stat.exists
+
+- name: "ccache : create symlinks - aix"
+  file:
+    src: /opt/ccache-3.7.4/bin/ccache
+    dest: /opt/ccache-3.7.4/libexec/{{ item.dest }}
+    owner: root
+    group: system
+    state: link
+  loop:
+    - { dest: gcc }
+    - { dest: g++ }
+    - { dest: gcov }
+    - { dest: cpp }
+    - { dest: c++ }
+  when: not has_ccache.stat.exists
+
+- name: "ccache : cleanup - aix tarball"
+  file:
+    path: "/tmp/ccache-3.7.4.tar.gz"
+    state: absent
+  when: not has_ccache.stat.exists
+
+- name: "ccache : cleanup - aix directory"
+  file:
+    path: /tmp/ccache-3.7.4
+    state: absent
+  when: not has_ccache.stat.exists

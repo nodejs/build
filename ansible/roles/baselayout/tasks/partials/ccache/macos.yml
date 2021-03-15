@@ -1,0 +1,13 @@
+- name: "ccache : check whether /etc/paths contains '/usr/local/opt/ccache/libexec' (macos)"
+  command: grep -Fxq "/usr/local/opt/ccache/libexec" /etc/paths
+  register: ccache_mac
+  check_mode: no
+  ignore_errors: yes
+  changed_when: no
+
+- name: "ccache : add ccache to the path (macos)"
+  when: ccache_mac.rc == 1
+  lineinfile:
+    dest: "etc/paths"
+    insertbefore: BOF
+    line: "usr/local/opt/ccache/libexec"

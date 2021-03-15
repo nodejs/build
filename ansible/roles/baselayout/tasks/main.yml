@@ -56,17 +56,6 @@
         - "{{ role_path }}/tasks/partials/repo/{{ os|stripversion }}.yml"
       skip: true
 
-- name: check for a recent enough ccache
-  when: os in ccache_no_binpkg or 'rhel7-s390x' in inventory_hostname
-  stat: path="{{ binary_dest }}"
-  register: has_ccache
-
-- name: check for ccache aix
-  when: os|startswith("aix")
-  stat: 
-    path: /opt/ccache-3.7.4/bin/ccache
-  register: has_ccache
-
 - name: check for a recent enough git
   when: os in git_no_binpkg
   stat: path="{{ binary_dest }}"
@@ -106,20 +95,6 @@
     - "{{ packages[os]|default('[]') }}"
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"
-
-- name: Check whether /etc/paths contains "/usr/local/opt/ccache/libexec" (macos)
-  when: os|startswith("macos")
-  command: grep -Fxq "/usr/local/opt/ccache/libexec" /etc/paths
-  register: ccache_mac
-  check_mode: no
-  ignore_errors: yes
-  changed_when: no
-
-- name: add ccache to the path (macos)
-  when: os|startswith("macos") and ccache_mac.rc == 1
-  lineinfile: dest=/etc/paths
-    insertbefore=BOF
-    line='/usr/local/opt/ccache/libexec'
 
 - name: centos7_ppc64 | update package alternatives
   when: os == "centos7" and arch == "ppc64"
@@ -213,23 +188,15 @@
     - curl_64
 
 - name: run ccache installer
-  when: os == "rhel7" and arch == "s390x" and not has_ccache.stat.exists
-  include: ccache.yml
-  static: false
-  vars:
-    - version: 3.3.3
-
-- name: run ccache installer
-  when: os in ccache_no_binpkg and not has_ccache.stat.exists
-  include: ccache.yml
-  static: false
-
-- name: run ccache installer
-  when: os|startswith("aix") and not has_ccache.stat.exists
-  include: ccache.yml
-  static: false
-  vars:
-    - version: 3.7.4
+  include: "{{ ccache_include }}"
+  loop_control:
+    loop_var: ccache_include
+  with_first_found:
+    - files:
+        - "{{ role_path }}/tasks/partials/ccache/{{ os }}-{{ arch }}.yml"
+        - "{{ role_path }}/tasks/partials/ccache/{{ os }}.yml"
+        - "{{ role_path }}/tasks/partials/ccache/{{ os|stripversion }}.yml"
+      skip: true
 
 - name: set up ntp
   include: "{{ ntp_include }}"
