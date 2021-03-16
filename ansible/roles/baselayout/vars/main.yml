@@ -137,12 +137,14 @@ packages: {
   ],
 
   smartos17: [
-    'gcc7'
+    'gcc7',
+    'python36'
   ],
 
   smartos18: [
     'gcc7',
-    'ccache'
+    'ccache',
+    'python37'
   ],
 
   ubuntu: [
