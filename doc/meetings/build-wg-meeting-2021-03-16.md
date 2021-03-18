@@ -12,7 +12,7 @@
 * Richard Lau (@richardlau)
 * Ash Cripps (@AshCripps
 
- ## Agenda
+## Agenda
 
 ## Announcements
  
@@ -22,7 +22,7 @@
 
 * Interest in establishing a "Build Helper" role [#2550](https://github.com/nodejs/build/issues/2550)
   * some discussion, no objections
-  * next step is to open issue in core report to see if there is interest
+  * next step is to open issue/discussion in core repo to see if there is interest
   * how do we track perms
 
 * Apple silicon builds [#2474](https://github.com/nodejs/build/issues/2474)
