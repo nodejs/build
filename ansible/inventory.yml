@@ -17,8 +17,9 @@ hosts:
         ubuntu1804-x64-3: {ip: 157.245.7.159, alias: metrics}
 
     - joyent:
-        smartos15-x64-1: {ip: 165.225.151.21, alias: backup}
-        ubuntu1604-x64-1: {ip: 165.225.149.55, alias: unencrypted}
+        debian10-x64-1: {ip: 147.75.88.62, alias: grafana}
+        smartos15-x64-1: {ip: 139.178.83.227, alias: backup}
+        ubuntu1604-x64-1: {ip: 147.75.88.57, alias: unencrypted}
 
     - rackspace:
         debian8-x64-1: {ip: 23.253.100.79, alias: gh-bot}
@@ -45,9 +46,9 @@ hosts:
         ibmi72-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
 
     - joyent:
-        smartos17-x64-2: {ip: 165.225.149.208}
-        smartos18-x64-2: {ip: 165.225.148.12}
-        ubuntu1804_docker-x64-1: {ip: 165.225.150.76, user: ubuntu}
+        smartos17-x64-2: {ip: 147.75.88.60}
+        smartos18-x64-2: {ip: 147.75.88.53}
+        ubuntu1804_docker-x64-1: {ip: 147.75.88.56, user: ubuntu}
 
     - macstadium:
         macos10.11-x64-1: {ip: 207.254.58.162, port: 10013, user: administrator}
@@ -143,12 +144,11 @@ hosts:
         ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
 
     - joyent:
-        smartos17-x64-3: {ip: 165.225.148.15}
-        smartos17-x64-4: {ip: 165.225.148.16}
-        smartos18-x64-3: {ip: 165.225.151.114}
-        smartos18-x64-4: {ip: 165.225.149.13}
-        ubuntu1804_docker-x64-1: {ip: 165.225.151.201, user: ubuntu}
-        ubuntu1804-x64-1: {ip: 165.225.149.88, user: ubuntu}
+        smartos17-x64-3: {ip: 147.75.88.59}
+        smartos17-x64-4: {ip: 147.75.88.61}
+        smartos18-x64-3: {ip: 147.75.88.54}
+        smartos18-x64-4: {ip: 147.75.88.55}
+        ubuntu1804-x64-1: {ip: 147.75.88.51, user: ubuntu}
 
     - macstadium:
         macos11.0-arm64-1: {ip: 199.7.163.9, user: administrator}
