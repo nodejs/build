@@ -56,6 +56,7 @@ hosts:
             user: administrator
             remote_env:
                 PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+            server_jobs: 6
 
     - marist:
         zos24-s390x-1: {ip: 148.100.36.157, user: unix1}

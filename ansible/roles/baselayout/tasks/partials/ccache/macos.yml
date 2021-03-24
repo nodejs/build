@@ -10,4 +10,4 @@
   lineinfile:
     dest: "/etc/paths"
     insertbefore: BOF
-    line: "usr/local/opt/ccache/libexec"
+    line: "/usr/local/opt/ccache/libexec"
