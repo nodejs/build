@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // data example:
 //
 // day,country,region,path,version,os,arch,bytes
@@ -9,6 +7,11 @@
 const { Storage } = require('@google-cloud/storage')
 const moment = require('moment')
 const fs = require('fs')
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
+
+app.use(bodyParser.json())
 
 
 function csvStream (chunk) {
@@ -94,15 +97,36 @@ async function collectData () {
 }
 
 async function produceSummaries () {
+
+  const storage = new Storage({
+    keyFilename: "metrics-processor-service-key.json",
+  });
+  
   await collectData()
   prepare()
   let date = moment(new Date())
   date = moment(date, 'YYYYMMDD').subtract(1, 'days').format('YYYYMMDD')
   let outputFile = "nodejs.org-access.log." + date.toString() + ".json"
-  fs.writeFile(outputFile, JSON.stringify(counts), function(err) {
-    if (err) console.log(err)
-    console.log("File Written")
+  storage.bucket('access-logs-summaries-nodejs').file(outputFile).save(JSON.stringify(counts), function (err) {
+    if (err) {
+      console.log('ERROR UPLOADING: ', err)
+    } else {
+      console.log('Upload complete')
+    }
   })
 }
 
-produceSummaries()
+
+app.post('/', async (req, res) => {
+
+  await produceSummaries()
+  res.status(200).send();
+
+})
+
+const port = process.env.PORT || 8080
+app.listen(port, () => {
+  console.log('Listening on port: ', port)
+})
+
+module.exports = app

@@ -1,0 +1,21 @@
+{
+  "name": "summaries",
+  "version": "1.0.0",
+  "description": "",
+  "main": "summaries.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "produceSummaries": "node --trace-warnings summaries.js"
+  },
+  "author": "Ash <email@ashleycripps.co.uk>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@google-cloud/storage": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.8.1"
+  }
+}
