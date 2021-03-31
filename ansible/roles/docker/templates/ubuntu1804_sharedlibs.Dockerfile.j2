@@ -44,15 +44,25 @@ RUN mkdir -p /tmp/openssl_1.1.0l && \
     make install && \
     rm -rf /tmp/openssl_1.1.0l
 
-ENV OPENSSL111DIR /opt/openssl-1.1.1g
+ENV OPENSSL111DIR /opt/openssl-1.1.1k
 
-RUN mkdir -p /tmp/openssl_1.1.1g && \
-    cd /tmp/openssl_1.1.1g && \
-    curl -sL https://www.openssl.org/source/openssl-1.1.1g.tar.gz | tar zxv --strip=1 && \
+RUN mkdir -p /tmp/openssl_1.1.1k && \
+    cd /tmp/openssl_1.1.1k && \
+    curl -sL https://www.openssl.org/source/openssl-1.1.1k.tar.gz | tar zxv --strip=1 && \
     ./config --prefix=$OPENSSL111DIR && \
     make -j 6 && \
     make install && \
-    rm -rf /tmp/openssl_1.1.1g
+    rm -rf /tmp/openssl_1.1.1k
+
+ENV OPENSSL300DIR /opt/openssl-3.0.0
+
+RUN mkdir -p /tmp/openssl_3.0.0 && \
+    cd /tmp/openssl_3.0.0 && \
+    curl -sL https://www.openssl.org/source/openssl-3.0.0-alpha13.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$OPENSSL300DIR && \
+    make -j 6 && \
+    make install && \
+    rm -rf /tmp/openssl_3.0.0
 
 ENV ZLIB12DIR /opt/zlib_1.2.11
 
