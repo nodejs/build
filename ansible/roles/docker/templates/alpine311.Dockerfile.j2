@@ -29,6 +29,7 @@ RUN apk add --no-cache --virtual .build-deps \
         make \
         paxctl \
         python \
+        python3 \
         tar \
         ccache \
         openjdk8 \
@@ -41,7 +42,7 @@ RUN apk add --no-cache --virtual .build-deps \
         libtool \
         autoconf
 
-RUN pip install tap2junit
+RUN pip3 install tap2junit
 
 RUN addgroup -g {{ server_user_gid.stdout_lines[0] }} {{ server_user }}
 
