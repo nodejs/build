@@ -6,7 +6,6 @@
 
 const { Storage } = require('@google-cloud/storage')
 const moment = require('moment')
-const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
@@ -25,8 +24,7 @@ function csvStream (chunk) {
       return
     } catch (e) {
       console.log(e)
-    }
-  
+    }  
 }
 
 const counts = { bytes: 0, total: 0 }
@@ -34,11 +32,9 @@ function increment (type, key) {
   if (!key) {
     key = 'unknown'
   }
-
   if (!counts[type]) {
     counts[type] = {}
   }
-
   if (counts[type][key] === undefined) {
     counts[type][key] = 1
   } else {
@@ -55,7 +51,6 @@ function prepare () {
       return p
     }, {})
   }
-
   'country version os arch'.split(' ').forEach(sort)
 }
 
@@ -71,37 +66,31 @@ function summary (chunk) {
  }
 
 async function collectData () {
-
   const storage = new Storage({
     keyFilename: "metrics-processor-service-key.json",
-  });
-
+  })
   let date = moment(new Date())
   date = moment(date, 'YYYYMMDD').subtract(1, 'days').format('YYYYMMDD')
   const filePrefix = date.toString().concat('/')
   console.log(filePrefix)
-
   const [files] = await storage.bucket('processed-logs-nodejs').getFiles({ prefix: `${filePrefix}`})
-  for (const file of files){
+  for (const file of files) {
     const data = await storage.bucket('processed-logs-nodejs').file(file.name).download() 
     const stringContents = data[0].toString()
-    const contentsArray = stringContents.split('\n')
-          
+    const contentsArray = stringContents.split('\n')   
     for (const line of contentsArray) {
       try {
         const csvparse = csvStream(line)
         if (csvparse !== undefined && csvparse[0][0] !== '') { summary(csvparse) }
       } catch (err) { console.log(err) }
     }
-    }
+  }
 }
 
 async function produceSummaries () {
-
   const storage = new Storage({
     keyFilename: "metrics-processor-service-key.json",
-  });
-  
+  })  
   await collectData()
   prepare()
   let date = moment(new Date())
@@ -116,12 +105,9 @@ async function produceSummaries () {
   })
 }
 
-
 app.post('/', async (req, res) => {
-
   await produceSummaries()
-  res.status(200).send();
-
+  res.status(200).send()
 })
 
 const port = process.env.PORT || 8080
