@@ -4,7 +4,6 @@
 # variables shared in baselayout
 #
 
-git_no_binpkg: ['debian7']
 git_version: 2.10.2
 
 ssh_config: /etc/ssh/sshd_config
@@ -54,10 +53,6 @@ packages: {
 
   ibmi: [
     'autoconf,automake,ca-certificates-mozilla,ccache,cmake,coreutils-gnu,gcc,gcc-cplusplus,gcc-cpp,git,libstdcplusplus-devel,m4-gnu,openssl-devel,python3,python3-pip,sed-gnu,zlib-devel',
-  ],
-
-  debian7: [
-    'gcc-4.8,g++-4.8,sudo',
   ],
 
   debian8: [
