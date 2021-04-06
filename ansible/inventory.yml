@@ -156,16 +156,6 @@ hosts:
         ubuntu1804-x64-1: {ip: 165.225.149.88, user: ubuntu}
 
     - macstadium:
-        macos11.0-arm64-1:
-            ip: 199.7.163.9
-            user: administrator
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
-        macos11.0-arm64-2:
-            ip: 199.7.163.10
-            user: administrator
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
         macos11.0-arm64-3:
             ansible_python_interpreter: /usr/bin/python3
             ip: 207.254.38.86
