@@ -40,7 +40,8 @@ RUN apk add --no-cache --virtual .build-deps \
         bash \
         automake \
         libtool \
-        autoconf
+        autoconf \
+        libcap-dev
 
 RUN pip3 install tap2junit
 

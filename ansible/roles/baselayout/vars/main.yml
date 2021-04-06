@@ -41,11 +41,11 @@ packages: {
   # centos-release-scl is required to enable SCLo but we do it manually in
   # partials/repo/centos7.yml for arm64
   centos7_arm64: ['git,python3'], # git2u not available for aarch64 (yet)
-  centos7_x64: ['devtoolset-6-libatomic-devel,git222,centos-release-scl,python3'],
-  centos7_ppc64: ['cmake3,devtoolset-6-libatomic-devel,glib2-devel,git,python3'],
+  centos7_x64: ['devtoolset-6-libatomic-devel,git222,centos-release-scl,python3,libcap-devel'],
+  centos7_ppc64: ['cmake3,devtoolset-6-libatomic-devel,glib2-devel,git,python3,libcap-devel'],
 
   centos7: [
-    'bzip2-devel,openssl-devel,ccache,gcc-c++,devtoolset-6,sudo,zlib-devel,libffi-devel,devtoolset-8,devtoolset-8-libatomic-devel',
+    'bzip2-devel,openssl-devel,ccache,gcc-c++,devtoolset-6,sudo,zlib-devel,libffi-devel,devtoolset-8,devtoolset-8-libatomic-devel,libcap-devel',
   ],
 
   aix: [
@@ -57,23 +57,23 @@ packages: {
   ],
 
   debian8: [
-    'ccache,git,gcc-4.9,g++-4.9,libfontconfig1,binutils-2.26,sudo',
+    'ccache,git,gcc-4.9,g++-4.9,libfontconfig1,binutils-2.26,sudo,libcap-dev',
   ],
 
   debian9: [
-    'gcc-6,g++-6,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo',
+    'gcc-6,g++-6,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,libcap-dev',
   ],
 
   debian10: [
-    'gcc-8,g++-8,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-pip',
+    'gcc-8,g++-8,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-pip,libcap-dev',
   ],
 
   fedora: [
-    'bzip2,ccache,gcc-c++,git,fontconfig,sudo,make',
+    'bzip2,ccache,gcc-c++,git,fontconfig,sudo,make,libcap-devel',
   ],
 
   freebsd: [
-    'ccache,git,gmake,sudo,python3'
+    'ccache,git,gmake,sudo,python3,libcap-dev'
   ],
 
   'macos10.10': [
@@ -111,7 +111,7 @@ packages: {
   ],
 
   rhel7: [
-    'gcc-c++,sudo,git,zip,unzip,iptables-services,GConf2-devel,openssl-devel,python3',
+    'gcc-c++,sudo,git,zip,unzip,iptables-services,GConf2-devel,openssl-devel,python3,libcap-devel',
   ],
 
   smartos: [
@@ -144,7 +144,7 @@ packages: {
   ],
 
   ubuntu: [
-    'ccache,git,libfontconfig1,sudo,python3-pip',
+    'ccache,git,libfontconfig1,sudo,python3-pip,libcap-dev',
   ],
 
   ubuntu1404: [

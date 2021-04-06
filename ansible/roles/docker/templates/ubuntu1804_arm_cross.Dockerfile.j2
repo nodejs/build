@@ -24,7 +24,8 @@ RUN apt-get update \
     gcc-6-multilib \
     g++-6-multilib \
     gcc-8-multilib \
-    g++-8-multilib
+    g++-8-multilib \
+    libcap-dev
 
 RUN pip install tap2junit \
   && pip3 install tap2junit
