@@ -8,6 +8,6 @@
 - name: "ccache : add ccache to the path (macos)"
   when: ccache_mac.rc == 1
   lineinfile:
-    dest: "etc/paths"
+    dest: "/etc/paths"
     insertbefore: BOF
-    line: "usr/local/opt/ccache/libexec"
+    line: "/usr/local/opt/ccache/libexec"

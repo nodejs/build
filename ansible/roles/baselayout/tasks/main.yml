@@ -86,7 +86,7 @@
 - name: install packages (macos)
   when: os|startswith("macos")
   become_user: administrator
-  package: name="{{ package }}" state=present
+  community.general.homebrew: name="{{ package }}" state=present
   loop_control:
     loop_var: package
   with_items:

@@ -53,17 +53,29 @@
 
 - name: install java tap (macOS)
   become_user: administrator
-  when: java.rc > 0 and os|startswith("macos")
+  when: java.rc > 0 and os|startswith("macos10")
   homebrew_tap:
         name: AdoptOpenJDK/openjdk
         state: present
 
 - name: install java (macOS)
   become_user: administrator
-  when: java.rc > 0 and os|startswith("macos")
+  when: java.rc > 0 and os|startswith("macos10")
   homebrew_cask:
         name: "{{ java_package_name }}"
         state: present
+
+- name: Fetch java (Apple Silicon)
+  when: os|startswith("macos11")
+  shell:
+    chdir: "/Users/administrator"
+    cmd: "curl -L -o zulu8.52.0.23-ca-jdk8.0.282-macosx_aarch64.tar.gz https://cdn.azul.com/zulu/bin/zulu8.52.0.23-ca-jdk8.0.282-macosx_aarch64.tar.gz"
+
+- name: Extract java (Apple Silicon)
+  when: os|startswith("macos11")
+  shell:
+    chdir: "/Users/administrator"
+    cmd: "tar -xf zulu8.52.0.23-ca-jdk8.0.282-macosx_aarch64.tar.gz"
 
 - name: install webupd8 oracle java 8 extras
   when: java.rc > 0 and os == "ubuntu1404" and arch != "ppc64"

@@ -84,7 +84,7 @@
   - "!test-ibm-ubuntu1804-x64-1"
   tasks:
     - name: remove node and npm packages
-      when: not os|startswith("win") and not os|startswith("zos") and not os|startswith("ibmi")
+      when: not os|startswith("win") and not os|startswith("zos") and not os|startswith("ibmi") and os != "macos11.0"
       package:
         name: "{{ package }}"
         state: absent
