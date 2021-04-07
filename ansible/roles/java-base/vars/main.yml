@@ -9,7 +9,7 @@ packages: {
   'debian7': 'openjdk-7-jre-headless',
   'debian8': 'oracle-java8-installer',
   'debian9': 'openjdk-8-jre-headless',
-  'debian10': 'openjdk-8-jre-headless',
+  'debian10': 'openjdk-11-jre-headless',
   'fedora': 'java-1.8.0-openjdk-headless',
   'freebsd': 'openjdk8-jre',
   'ibmi': 'openjdk-11-ea',
