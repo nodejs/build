@@ -14,17 +14,17 @@ app.use(bodyParser.json())
 
 
 function csvStream (chunk) {
-    try {
-      const line = []
-      const schunk = chunk.toString()
-      if (!schunk.startsWith('day,country')) { // ignore header
-        line.push(schunk.split(','))
-        return(line)
-      }
-      return
-    } catch (e) {
-      console.log(e)
-    }  
+  try {
+    const line = []
+    const schunk = chunk.toString()
+    if (!schunk.startsWith('day,country')) { // ignore header
+      line.push(schunk.split(','))
+      return(line)
+    }
+    return
+  } catch (e) {
+    console.log(e)
+  }  
 }
 
 const counts = { bytes: 0, total: 0 }
