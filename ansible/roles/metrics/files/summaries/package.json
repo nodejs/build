@@ -1,24 +1,19 @@
 {
-  "name": "process-cloudflare",
+  "name": "summaries",
   "version": "1.0.0",
   "description": "",
-  "main": "process-cloudflare.js",
+  "main": "summaries.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "processLogs": "node --trace-warnings process-cloudflare.js"
+    "produceSummaries": "node --trace-warnings summaries.js"
   },
-  "author": "Rod <rod@vagg.org> (http://r.va.gg/)",
-  "contributors": [
-    "Ash <email@ashleycripps.co.uk>"
-  ],
+  "author": "Ash <email@ashleycripps.co.uk>",
   "license": "Apache-2.0",
   "dependencies": {
     "@google-cloud/storage": "^5.0.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "moment": "^2.29.1",
-    "split2": "~3.1.1",
-    "strftime": "~0.10.0"
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "eslint": "^7.8.1"
