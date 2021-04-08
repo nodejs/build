@@ -208,3 +208,10 @@
         - "{{ role_path }}/tasks/partials/ntp/{{ os|stripversion }}.yml"
         - "{{ role_path }}/tasks/partials/ntp/{{ os|match_key(ntp_service, raise_error=False) }}.yml"
       skip: true
+
+- name: reset default OpenSSL security level
+  ansible.builtin.replace:
+    path: /etc/ssl/openssl.cnf
+    regexp: "SECLEVEL=2"
+    replace: "SECLEVEL=1"
+  when: "os == 'debian10'"
