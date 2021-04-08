@@ -58,7 +58,7 @@ ENV OPENSSL300DIR /opt/openssl-3.0.0
 
 RUN mkdir -p /tmp/openssl_3.0.0 && \
     cd /tmp/openssl_3.0.0 && \
-    curl -sL https://www.openssl.org/source/openssl-3.0.0-alpha14.tar.gz | tar zxv --strip=1 && \
+    git clone git@github.com:quictls/openssl.git && cd openssl && \
     ./config --prefix=$OPENSSL300DIR && \
     make -j 6 && \
     make install && \
