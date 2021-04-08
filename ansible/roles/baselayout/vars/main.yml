@@ -40,7 +40,7 @@ packages: {
 
   # centos-release-scl is required to enable SCLo but we do it manually in
   # partials/repo/centos7.yml for arm64
-  centos7_arm64: ['git'], # git2u not available for aarch64 (yet)
+  centos7_arm64: ['git,python3'], # git2u not available for aarch64 (yet)
   centos7_x64: ['devtoolset-6-libatomic-devel,git2u,centos-release-scl'],
   centos7_ppc64: ['cmake3,devtoolset-6-libatomic-devel,git,python3'],
 
