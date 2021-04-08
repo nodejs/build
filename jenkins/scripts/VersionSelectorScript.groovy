@@ -50,6 +50,8 @@ def buildExclusions = [
   [ /^cross-compiler-ubuntu1604-armv[67]-gcc-6/,   anyType, lt(12)  ],
   [ /^cross-compiler-ubuntu1604-armv[67]-gcc-6/,   anyType, gte(14) ],
   [ /^cross-compiler-ubuntu1804-armv7-gcc-6/,      anyType, lt(14)  ],
+  [ /^cross-compiler-ubuntu1804-armv7-gcc-6/,      anyType, gte(16) ],
+  [ /^cross-compiler-ubuntu1804-armv7-gcc-8/,      anyType, lt(16)  ],
   [ /^ubuntu1604-arm64/,              anyType,     gte(14) ],
 
   // Windows -----------------------------------------------
