@@ -29,6 +29,7 @@ def buildExclusions = [
   [ /^centos7-64/,                    releaseType, lt(12)  ],
   [ /debian8-x86/,                    anyType,     gte(10) ], // 32-bit linux for <10 only
   [ /debian8/,                        anyType,     gte(13) ],
+  [ /debian9/,                        anyType,     gte(16) ],
   [ /^ubuntu1804/,                    anyType,     lt(10)  ], // probably temporary
   [ /^ubuntu1404-32/,                 anyType,     gte(10) ], // 32-bit linux for <10 only
   [ /^ubuntu1404-64/,                 anyType,     gte(12) ],
