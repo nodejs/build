@@ -5,12 +5,14 @@ ENV LC_ALL=C
 RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get install -y software-properties-common \
-  && add-apt-repository ppa:ubuntu-toolchain-r/test \
+  && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
   && apt-get update \
   && apt-get install -y \
     ccache \
     g++ \
     gcc \
+    g++-8 \
+    gcc-8 \
     git \
     openjdk-8-jre-headless \
     curl \
@@ -20,7 +22,9 @@ RUN apt-get update \
     libfontconfig1 \
     make \
     gcc-6-multilib \
-    g++-6-multilib
+    g++-6-multilib \
+    gcc-8-multilib \
+    g++-8-multilib
 
 RUN pip install tap2junit \
   && pip3 install tap2junit
