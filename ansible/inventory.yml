@@ -87,11 +87,6 @@ hosts:
     - requireio:
         rvagg-debian10-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi, alias: iojs-ns-pi1p-1 }
         andineck-debian10-armv6l_pi1p-1: {ip: 192.168.2.41, user: pi, alias: iojs-ns-pi1p-2 }
-        osx1010-x64-1: {ip: 192.168.2.211, user: iojs}
-
-    - scaleway:
-        ubuntu1604-armv7l-1: {ip: 212.47.245.242}
-        ubuntu1604-armv7l-2: {ip: 212.47.234.107}
 
     - softlayer:
         centos6-x64-1: {ip: 50.97.245.10}
@@ -326,12 +321,6 @@ hosts:
         notthetup_sayanee-debian10-arm64_pi3-1: {ip: 192.168.2.88, user: pi, alias: iojs-ns-pi3-9 }
         piccoloaiutante-debian10-arm64_pi3-1:   {ip: 192.168.2.89, user: pi, alias: iojs-ns-pi3-10 }
         kahwee-debian10-arm64_pi3-1:            {ip: 192.168.2.90, user: pi, alias: iojs-ns-pi3-11 }
-
-        rvagg-ubuntu1404-arm64_odroidxu3-1: {ip: 192.168.2.10, user: odroid}
-        rvagg-ubuntu1404-arm64_odroidxu-1: {ip: 192.168.2.15}
-        rvagg-ubuntu1404-arm64_odroidxu-2: {ip: 192.168.2.16}
-
-        osx1010-x64-1: {ip: 192.168.2.210, user: iojs}
 
     - scaleway:
         ubuntu1804-armv7l-1: {ip: 212.47.233.202}
