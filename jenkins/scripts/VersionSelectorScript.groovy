@@ -34,6 +34,7 @@ def buildExclusions = [
   [ /^ubuntu1404-32/,                 anyType,     gte(10) ], // 32-bit linux for <10 only
   [ /^ubuntu1404-64/,                 anyType,     gte(12) ],
   [ /^ubuntu1604-32/,                 anyType,     gte(10) ], // 32-bit linux for <10 only
+  [ /^ubuntu1604-64/,                 anyType,     gte(16) ],
   [ /^alpine-latest-x64$/,            anyType,     lt(13)  ], // Alpine 3.12 doesn't have Python 2
 
   // Linux PPC LE ------------------------------------------
