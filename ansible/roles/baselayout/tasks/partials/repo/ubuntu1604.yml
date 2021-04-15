@@ -10,3 +10,10 @@
     state: present
     update_cache: yes
   register: has_updated_package_repo
+
+# add PPA for Python 3
+- name: "repo : add deadsnakes PPA"
+  apt_repository:
+    repo: 'ppa:deadsnakes/ppa'
+    state: present
+    update_cache: yes
