@@ -153,5 +153,9 @@ packages: {
 
   ubuntu1404: [
     'ntp,gcc-8,g++-8,gcc-6,g++-6,g++-4.8,gcc-4.8,g++-4.9,gcc-4.9,binutils-2.26',
-  ]
+  ],
+
+  ubuntu1604: [
+    'python3.9,python3.9-distutils',
+  ],
 }

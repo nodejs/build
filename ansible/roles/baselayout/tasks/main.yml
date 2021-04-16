@@ -127,6 +127,13 @@
     - gcc
     - g++
 
+- name: ubuntu1604 | update python package alternatives
+  when: os == "ubuntu1604"
+  alternatives:
+    link: "/usr/bin/python3"
+    name: python3
+    path: "/usr/bin/python3.9"
+
 - name: smartos17 | update gcc symlinks
   when: os == "smartos17"
   file:
