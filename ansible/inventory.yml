@@ -16,6 +16,9 @@ hosts:
         ubuntu1804-x64-2: {ip: 45.55.45.227, alias: unofficial-builds}
         ubuntu1804-x64-3: {ip: 157.245.7.159, alias: metrics}
 
+    - ibm:
+        ubuntu1804-x64-1: {ip: 169.45.166.50, alias: ci-release}
+
     - joyent:
         debian10-x64-1: {ip: 147.75.88.62, alias: grafana}
         smartos15-x64-1: {ip: 139.178.83.227, alias: backup}
@@ -26,7 +29,6 @@ hosts:
 
     - softlayer:
         debian8-x64-1: {ip: 184.172.29.199, alias: registry-mirror}
-        ubuntu1404-x64-1: {ip: 169.44.16.104, alias: ci-release}
         ubuntu1404-x64-2: {ip: 50.23.85.254}
 
 
