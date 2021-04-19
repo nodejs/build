@@ -122,11 +122,9 @@ raspberry_pi: {
       { name: 'jessie', template: 'rpi_jessie.Dockerfile.j2' }
     ],
     armv7l: [
-      { name: 'jessie', template: 'rpi_jessie.Dockerfile.j2' },
       { name: 'stretch', template: 'rpi_stretch.Dockerfile.j2' }
     ],
     arm64: [
-      { name: 'jessie', template: 'rpi_jessie.Dockerfile.j2' },
       { name: 'stretch', template: 'rpi_stretch.Dockerfile.j2' }
     ]
   }

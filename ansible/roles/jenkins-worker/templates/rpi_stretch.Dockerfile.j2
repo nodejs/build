@@ -1,4 +1,4 @@
-FROM resin/rpi-raspbian:stretch
+FROM balenalib/rpi-raspbian:stretch
 
 ENV LC_ALL=C \
     USER={{ server_user }} \
@@ -26,7 +26,9 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
       openssh-client \
       gzip \
       xz-utils \
-      curl && \
+      curl \
+      libffi-dev \
+      zlib1g-dev && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
 
@@ -35,6 +37,15 @@ RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 50 && \
     update-alternatives --install /usr/bin/cpp cpp /usr/bin/gcc-6 50 && \
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 && \
     update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-6 50
+
+RUN mkdir /python && \
+    cd /python && \
+    curl https://github.com/python/cpython/archive/refs/tags/v3.9.4.tar.gz -L --output v3.9.4.tar.gz && \
+    tar xf v3.9.4.tar.gz && \
+    cd cpython-3.9.4 && \
+    ./configure && \
+    make install && \
+    rm -rf /python
 
 RUN addgroup \
       --gid {{ server_user_gid.stdout_lines[0] }} \
