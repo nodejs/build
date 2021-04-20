@@ -9,12 +9,12 @@
 
 - hosts:
   - infra-digitalocean-ubuntu1404-x64-1 # ci.nodejs.org
-  - infra-softlayer-ubuntu1404-x64-1 # ci-release.nodejs.org
+  - infra-ibm-ubuntu1804-x64-1 # ci-release.nodejs.org
 
   vars:
     hostgroups: {
       'infra-digitalocean-ubuntu1404-x64-1': 'test',
-      'infra-softlayer-ubuntu1404-x64-1': 'release'
+      'infra-ibm-ubuntu1804-x64-1': 'release'
       }
     jumphost: 'vagg-arm.nodejs.org'
 

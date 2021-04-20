@@ -6,7 +6,7 @@
 
 - hosts:
   - infra-digitalocean-ubuntu1404-x64-1
-  - infra-softlayer-ubuntu1404-x64-1
+  - infra-ibm-ubuntu1804-x64-1
 
   roles:
   - bootstrap
