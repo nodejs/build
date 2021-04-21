@@ -69,6 +69,12 @@ hosts:
             ip: 83.147.191.69
             user: administrator
             ansible_python_interpreter: /usr/bin/python3
+        macos11.0-arm64-1:
+            ansible_python_interpreter: /usr/bin/python3
+            ip: 83.147.191.76
+            user: admin
+            remote_env:
+                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
 
     - osuosl:
         centos7-ppc64_le-1: {ip: 140.211.168.61, user: centos}
@@ -214,6 +220,12 @@ hosts:
             ip: 83.147.191.72
             user: administrator
             ansible_python_interpreter: /usr/bin/python3
+        macos11.0-arm64-1:
+            ansible_python_interpreter: /usr/bin/python3
+            ip: 83.147.191.75
+            user: admin
+            remote_env:
+                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
         intel-ubuntu1604-x64-1: {ip: 92.51.196.114}
         intel-ubuntu1604-x64-2: {ip: 92.51.196.115}
 
