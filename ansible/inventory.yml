@@ -192,11 +192,6 @@ hosts:
                 SSL_CERT_FILE: "{{ home }}/{{ server_user }}/ca-bundle.crt"
             server_jobs: 4
 
-    - mininodes:
-        ubuntu1604-arm64_odroid_c2-1: {ip: 70.167.220.147}
-        ubuntu1604-arm64_odroid_c2-2: {ip: 70.167.220.148}
-        ubuntu1604-arm64_odroid_c2-3: {ip: 70.167.220.149, user: odroid}
-
     - msft:
         win10_vs2017-arm64-1: {}
         win10_vs2017-arm64-2: {}
@@ -326,8 +321,6 @@ hosts:
 
     - scaleway:
         ubuntu1804-armv7l-1: {ip: 212.47.233.202}
-        ubuntu1804-armv7l-2: {ip: 212.47.246.3}
-        ubuntu1804-armv7l-3: {ip: 212.47.227.202}
 
     - softlayer:
         centos6-x64-1: {ip: 169.61.75.51}
