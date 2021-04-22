@@ -22,6 +22,7 @@
 #
 
 import re
+import subprocess
 
 from ansible.errors import AnsibleFilterError
 
@@ -53,11 +54,18 @@ def stripversion(value):
     return match.group() if match else False
 
 
+def dig(value):
+    return subprocess.check_output(
+        ['dig', '+short', value], universal_newlines=True
+    ).splitlines()[0]
+
+
 class FilterModule(object):
     ''' Query filter '''
 
     def filters(self):
         return {
+            'dig': dig,
             'match_key': match_key,
             'startswith': starts_with,
             'stripversion': stripversion

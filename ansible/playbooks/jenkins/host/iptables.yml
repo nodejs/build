@@ -26,34 +26,29 @@
       - hostgroups[inventory_hostname] == hostvars[host].type
       # Following condition filters out entries without an IP address.
       - hostvars[host]['ansible_host'] is defined
-      # Following condition filters out entries that specify a hostname instead
-      # of an address (i.e. the Windows hosts). Ansible has a ipaddr filter but
-      # that requires an additional Python package (netaddr) to be installed.
-      - hostvars[host]['ansible_host'] | regex_findall('^[0-9.]+$')
     iptables:
       table: filter
       chain: jnlp
       jump: ACCEPT
-      comment: "{{ host }}"
-      source: "{{ hostvars[host]['ansible_host'] }}/32"
+      comment: "{{ comment }}"
+      source: "{{ ip_address }}/32"
     loop_control:
       loop_var: host
     with_inventory_hostnames: "{{ hostgroups[inventory_hostname] }}"
+    vars:
+      # Some hosts specify a hostname rather than a numeric IP address in the
+      # inventory. In such cases, add the supplied hostname instead of the
+      # name of the host to iptables rules.
+      comment: "{{ host if is_numeric_ip else host_or_ip }}"
+      host_or_ip: "{{ hostvars[host]['ansible_host'] }}"
+      ip_address: "{{ host_or_ip if is_numeric_ip else (comment | dig) }}"
+      # Use this regexp as ipaddr filter requires netaddr to be installed.
+      is_numeric_ip: "{{ host_or_ip | regex_findall('^[0-9.]+$') }}"
 
-  # we _could_ use lookup('dig') here but it requires dnspython
-  - name: lookup ip address for proxy host
-    check_mode: no
-    run_once: true
-    local_action: raw dig +short {{ jumphost }}
-    register: jumphost_ip
-    failed_when: not jumphost_ip.stdout_lines[0]
-
-  # awful awful. should really look up this somehow but i can't figure out
-  # how to do it properly.
   - name: add proxy host(s) to firewall
     iptables:
       table: filter
       chain: jnlp
       jump: ACCEPT
       comment: "{{ jumphost }}"
-      source: "{{ jumphost_ip.stdout_lines[0] }}/32"
+      source: "{{ jumphost | dig }}/32"
