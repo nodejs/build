@@ -319,9 +319,6 @@ hosts:
         piccoloaiutante-debian10-arm64_pi3-1:   {ip: 192.168.2.89, user: pi, alias: iojs-ns-pi3-10 }
         kahwee-debian10-arm64_pi3-1:            {ip: 192.168.2.90, user: pi, alias: iojs-ns-pi3-11 }
 
-    - scaleway:
-        ubuntu1804-armv7l-1: {ip: 212.47.233.202}
-
     - softlayer:
         centos6-x64-1: {ip: 169.61.75.51}
         centos6-x64-2: {ip: 169.61.75.58}
