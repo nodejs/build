@@ -4,6 +4,7 @@
 # variables shared in baselayout
 #
 
+git_no_binpkg: [ ]
 git_version: 2.10.2
 
 ssh_config: /etc/ssh/sshd_config
