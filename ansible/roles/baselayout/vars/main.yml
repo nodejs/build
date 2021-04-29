@@ -53,7 +53,7 @@ packages: {
   ],
 
   ibmi: [
-    'autoconf,automake,ca-certificates-mozilla,ccache,cmake,coreutils-gnu,gcc,gcc-cplusplus,gcc-cpp,git,libstdcplusplus-devel,m4-gnu,openssl-devel,python3,python3-pip,sed-gnu,zlib-devel',
+    'autoconf,automake,ca-certificates-mozilla,tar-gnu,gzip,ccache,cmake,coreutils-gnu,gcc10,gcc10-cplusplus,gcc10-cpp,git,libstdcplusplus6-10-devel,m4-gnu,openssl-devel,python3,python3-pip,sed-gnu,zlib-devel,icu-devel,c-ares-devel,brotli-devel,grep-gnu,pkg-config,xz',
   ],
 
   debian8: [

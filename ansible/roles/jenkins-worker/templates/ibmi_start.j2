@@ -1,13 +1,13 @@
 #!/QOpenSys/pkgs/bin/bash
 CIJOBNAME="JENKINS_CI"
-SBMJOB_OPTS="JOB($CIJOBNAME) USER(IOJS)"
+SBMJOB_OPTS="JOB($CIJOBNAME) USER(IOJS) JOBQ(QUSRNOMAX)"
 
 export PATH=/QOpenSys/pkgs/lib/ccache:/QOpenSys/pkgs/bin:/QOpenSys/usr/bin:/usr/ccs/bin:/QOpenSys/usr/bin/X11:/usr/sbin:.:/usr/bin
 export PASE_PATH=$PATH
-export HOME={{ home }}/{{ server_user }}
+export HOME={{ home }}/{{ server_user|upper }}
 export NODE_COMMON_PIPE="$HOME/test.pipe"
 export NODE_TEST_DIR="$HOME/tmp"
-export JOBS=4
+export JOBS=$(qsh -c "db2 -s 'SELECT configured_cpus*8 as cpus FROM TABLE(qsys2.system_status()) x'" | egrep "^\s*[0-9]+\s*$" | tr -d ' ')
 export OSTYPE=ibmi
 export QIBM_USE_DESCRIPTOR_STDIO=Y
 
@@ -19,8 +19,27 @@ then
   exit 1
 fi
 
+############### Create fresh temp UDFS
+UDFS_DIR="$HOME/build/workspace"
+UDFS_DIR_REAL="/dev/QASP01/jenkins.tmpudfs"
+/QOpenSys/usr/bin/system -vkpieb "UNMOUNT TYPE(*UDFS) MNTOVRDIR('$UDFS_DIR')"
+if [ -e $UDFS_DIR_REAL ]; then
+    echo "UDFS already exists. Removing old UDFS."
+    /QOpenSys/usr/bin/system -vkpieb "DLTUDFS UDFS('$UDFS_DIR_REAL')"
+fi
+echo "Creating UDFS at $UDFS_DIR"
+rm -fr $UDFS_DIR && mkdir -p $UDFS_DIR && rm -f $UDFS_DIR_REAL
+/QOpenSys/usr/bin/system -vkpieb "CRTUDFS UDFS('$UDFS_DIR_REAL') CASE(*MIXED)" || exit 17
+echo "UDFS created. Mounting UDFS at $UDFS_DIR"
+rm -r $UDFS_DIR && mkdir -p $UDFS_DIR
+/QOpenSys/usr/bin/system -vkpieb "MOUNT TYPE(*UDFS) MFS('$UDFS_DIR_REAL') MNTOVRDIR('$UDFS_DIR')" || exit 18
+chown -R {{ server_user|upper }} "$UDFS_DIR"
+export CCACHE_DIR="$UDFS_DIR/.ccache"
+mkdir -p "$CCACHE_DIR" && chown -R {{ server_user|upper }} "$CCACHE_DIR"
+echo "done"
+
+########################### Now start our agent
+
 export START_CMD="{{ java_path[os] }} -Xmx{{ server_ram|default('128m') }} -Dos400.stdio.convert=N -Djava.net.preferIPv4Stack=true -jar {{ home }}/{{ server_user }}/slave.jar -secret {{ secret }} -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp >{{ home }}/{{ server_user }}/jenkins.log 2>&1 "
-
 echo $START_CMD
-
 exec /QOpenSys/usr/bin/system -v -kpiveO "SBMJOB CMD(QSH CMD('echo starting Jenkins slave && cd $HOME && env && touch $HOME/jenkins.log && setccsid 1208 $HOME/jenkins.log && exec $START_CMD')) CPYENVVAR(*YES) PRTDEV(*USRPRF) ALWMLTTHD(*YES) $SBMJOB_OPTS"

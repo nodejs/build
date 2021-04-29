@@ -41,6 +41,15 @@
   args:
     creates: "/QSYS.LIB/IOJS.USRPRF"
 
+- name: setup user home directory for ibmi
+  when: os|startswith("ibmi")
+  file:
+    path: "{{ home }}/{{ server_user|upper }}"
+    state: directory
+    owner: "{{ server_user }}"
+    mode: 0755
+    recurse: yes
+
 - name: add ::1 to /etc/hosts for ipv6 compat
   when: not os|startswith("zos") and not os|startswith("ibmi")
   lineinfile:
