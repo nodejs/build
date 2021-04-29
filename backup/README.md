@@ -8,16 +8,18 @@ currently being backed up.
 
  - ci.nodejs.org:
    - full backup of /var/lib/jenkins (rotated, excluding workdirs)
+   - full backup of /etc (rotated)
    - iptables rules (rotated)
  - ci-release.nodejs.org:
    - full backup of /var/lib/jenkins (rotated, excluding workdirs)
+   - full backup of /etc (rotated)
    - iptables rules (rotated)
- - iojs-softlayer-benchmark: mysql dump (rotated)
  - nodejs-www:
    - /home/dist/iojs: all artifacts for iojs.org (static, no deletion)
    - /home/dist/nodejs: all artifacts for nodejs.org (static, no deletion)
    - /home/libuv/www/dist: all artifacts for libuv.org (static, no deletion)
    - /var/log/nginx: all logs for nodejs, iojs and libuv (rotated)
+   - full backup of /etc (rotated)
 
 
 ### Folder structure
