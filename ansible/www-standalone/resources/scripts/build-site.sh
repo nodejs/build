@@ -37,12 +37,12 @@ git checkout origin/master
 nodeuid=$(grep ^nodejs: /etc/passwd | awk -F: '{print $3}')
 nodegid=$(grep ^nodejs: /etc/passwd | awk -F: '{print $4}')
 
-docker pull node:latest
+docker pull node:lts
 docker run \
   --rm \
   -v ${clonedir}:/website/ \
   -v /home/nodejs/.npm:/npm/ \
-  node:latest \
+  node:lts \
   bash -c " \
     apt-get update && apt-get install -y rsync && \
     addgroup nodejs --gid ${nodeuid} && \
