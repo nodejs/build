@@ -47,8 +47,8 @@ monitor_pidfile="/var/run/${name}/${name}_monitor.pid"
 required_files="${procname} ${jenkins_jar}"
 
 command="/usr/sbin/daemon"
-command_args="-f -r -p ${pidfile} -P ${monitor_pidfile} \
-              ${procname} ${jenkins_args} -slaveLog ${jenkins_log_file}"
+command_args="-f -r -p ${pidfile} -P ${monitor_pidfile} -o ${jenkins_log_file} \
+              ${procname} ${jenkins_args}"
 
 start_precmd="jenkins_prestart"
 start_cmd="jenkins_start"
