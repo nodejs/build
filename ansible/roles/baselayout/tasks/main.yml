@@ -134,6 +134,13 @@
     name: python3
     path: "/usr/bin/python3.9"
 
+- name: freebsd | update python package alternatives
+  when: os == "freebsd11"
+  file:
+    dest: "/usr/local/bin/python"
+    state: link
+    src: "/usr/local/bin/python2"
+
 - name: smartos17 | update gcc symlinks
   when: os == "smartos17"
   file:
