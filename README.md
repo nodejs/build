@@ -40,6 +40,7 @@ to the resources we manage.
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+- [@sxa](https://github.com/sxa) - Stewart X Addison
 - [@Trott](https://github.com/Trott) - Rich Trott
 
 <!-- ncu-team-sync end -->
@@ -74,6 +75,7 @@ Admin access to https://ci.nodejs.org/.
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@sxa](https://github.com/sxa) - Stewart X Addison
 - [@Trott](https://github.com/Trott) - Rich Trott
 
 <!-- ncu-team-sync end -->
