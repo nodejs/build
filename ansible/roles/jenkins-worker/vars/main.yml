@@ -44,11 +44,6 @@ jenkins_init: {
     src: 'org.nodejs.osx.jenkins.plist',
     mode: '0755'
     },
-  openrc: {
-    dest: '/etc/init.d/jenkins',
-    src: 'openrc.initd.j2',
-    mode: '0755'
-    },
   rhel7: {
     dest: '/usr/lib/systemd/system/jenkins.service',
     src: 'systemd.service.j2',
