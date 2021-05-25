@@ -144,14 +144,20 @@ packages: {
   ],
 
   ubuntu: [
-    'ccache,g++,gcc,g++-6,gcc-6,git,libfontconfig1,sudo,python3-pip',
+    'ccache,g++,gcc,git,libfontconfig1,sudo,python3-pip',
   ],
 
   ubuntu1404: [
     'ntp,gcc-8,g++-8,gcc-6,g++-6,g++-4.8,gcc-4.8,g++-4.9,gcc-4.9,binutils-2.26',
   ],
 
+  # Default gcc/g++ package is 5.
   ubuntu1604: [
-    'python3.9,python3.9-distutils',
+    'gcc-6,g++-6,python3.9,python3.9-distutils',
+  ],
+
+  # Default gcc/g++ package is 7.
+  ubuntu1804: [
+    'gcc-6,g++-6,gcc-8,g++-8',
   ],
 }
