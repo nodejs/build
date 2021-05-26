@@ -168,9 +168,9 @@ elif [ "$SELECT_ARCH" = "X64" ]; then
         export CXX="ccache g++-8"
         export LINK="g++-8"
       else
-        export CC="ccache gcc"
-        export CXX="ccache g++"
-        export LINK="g++"
+        export CC="ccache gcc-6"
+        export CXX="ccache g++-6"
+        export LINK="g++-6"
       fi
       echo "Compiler set to GCC" `$CXX -dumpversion`
       ;;

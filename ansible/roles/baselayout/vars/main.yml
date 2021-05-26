@@ -144,7 +144,7 @@ packages: {
   ],
 
   ubuntu: [
-    'ccache,g++,gcc,git,libfontconfig1,sudo,python3-pip',
+    'ccache,git,libfontconfig1,sudo,python3-pip',
   ],
 
   ubuntu1404: [
@@ -153,7 +153,7 @@ packages: {
 
   # Default gcc/g++ package is 5.
   ubuntu1604: [
-    'gcc-6,g++-6,python3.9,python3.9-distutils',
+    'gcc-8,g++-6,gcc-6,g++-6,python3.9,python3.9-distutils',
   ],
 
   # Default gcc/g++ package is 7.

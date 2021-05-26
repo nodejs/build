@@ -17,8 +17,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install apt-utils -y && \
     apt-get dist-upgrade -y && apt-get install -y \
       ccache \
-      g++ \
-      gcc \
+      g++-6 \
+      gcc-6 \
       g++-8 \
       gcc-8 \
       git \
