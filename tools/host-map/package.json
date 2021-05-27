@@ -1,0 +1,21 @@
+{
+  "name": "host-map",
+  "version": "1.0.0",
+  "description": "Show distribution of CI hosts across providers.",
+  "main": "host-map.mjs",
+  "scripts": {
+    "lint": "semistandard",
+    "start": "node .",
+    "test": "npm run lint"
+  },
+  "type": "module",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "columnify": "^1.5.4"
+  },
+  "devDependencies": {
+    "semistandard": "^16.0.0"
+  }
+}
