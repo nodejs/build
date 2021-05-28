@@ -15,8 +15,10 @@ ENV ARCH x64
 
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
     ccache \
-    g++ \
-    gcc \
+    g++-6 \
+    gcc-6 \
+    g++-8 \
+    gcc-8 \
     git \
     openjdk-8-jre-headless \
     curl \
