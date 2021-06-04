@@ -29,7 +29,6 @@ hosts:
 
     - softlayer:
         debian8-x64-1: {ip: 184.172.29.199, alias: registry-mirror}
-        ubuntu1404-x64-2: {ip: 50.23.85.254}
 
 
   - release:
