@@ -7,8 +7,6 @@
 - hosts:
   - test
   - release
-  # Benchmarking machine
-  - infra-softlayer-ubuntu1404-x64-2
   - "!*-win*"
 
   roles:
