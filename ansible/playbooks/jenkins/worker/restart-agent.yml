@@ -1,0 +1,32 @@
+---
+
+#
+# restart the agent on jenkins workers
+#
+
+- hosts: test
+  gather_facts: yes
+  # tasks:
+  #   - name: download slave.jar
+  #     get_url:
+  #       url: "{{ jenkins_worker_jar }}"
+  #       dest: /home/{{ server_user }}/slave.jar
+  #       mode: 0644
+
+  #   - name: restart jenkins
+  #     service: name=jenkins state=restarted
+  tasks:
+
+    - name: Kill jenkins process - AIX
+      shell: ps awwx | grep jenkins | grep -v grep | awk '{ print $1 }' | xargs kill
+      when: os|startswith("aix")
+
+    - name: Kill any hanging build processes - AIX
+      shell: ps awwx | grep bash | grep -v grep | awk '{ print $1 }' | xargs kill
+      when: os|startswith("aix")
+
+    - name: Restart Jenkins agent - AIX
+      shell: /etc/rc.d/rc2.d/S20jenkins start
+      become: yes
+      become_user: root
+      when: os|startswith("aix")
