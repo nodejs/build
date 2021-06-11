@@ -1,0 +1,12 @@
+---
+
+#
+# sets up the host that runs the awx instance
+#
+
+- hosts: infra-ibm-ubuntu2004-x64-1
+  gather_facts: yes
+  roles:
+    - bootstrap
+    - package-upgrade
+    - awx

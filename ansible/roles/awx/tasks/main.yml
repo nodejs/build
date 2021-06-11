@@ -1,0 +1,119 @@
+---
+
+- name: set hostname
+  hostname: name="ansible.nodejs.org"
+
+- name: update /etc/hosts file - 127.0.0.1
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "^(.*)127.0.0.1 ansible.nodejs.org(.*)$"
+    line: "127.0.0.1 ansible.nodejs.org ansible-tower"
+    state: present
+    backup: yes
+
+- name: install apt dependencies
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+  vars:
+    packages:
+      - docker.io
+      - git
+      - libffi-dev
+      - python3-pip
+
+- name: install pip dependencies
+  pip:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - ansible
+      - ansible-tower-cli
+      - docker-compose
+      - pyYAML
+
+- name: create /opt/awx_install_files
+  file: path=/opt/awx_install_files state=directory
+
+- name: clone awx github repository
+  git:
+    repo: https://github.com/ansible/awx.git
+    dest: /opt/awx_install_files/awx
+    version: "17.1.0"
+    force: yes
+
+- name: enable admin password
+  lineinfile:
+    path: /opt/awx_install_files/awx/installer/inventory
+    regexp: '^# admin_password'
+    line: admin_password=password
+
+- name: run awx install files, this can take ~20 mins
+  command: chdir=/opt/awx_install_files/awx/installer/ ansible-playbook -i inventory install.yml
+
+- name: change awx admin password
+  expect:
+    command: docker exec -it awx_task awx-manage changepassword admin
+    responses:
+      (?i)password: "admin"
+
+#TODO: change this to be https://ansible.nodejs.org and remove verify_ssl
+- name: create /root/.tower_cli.cfg
+  blockinfile:
+    path: /root/.tower_cli.cfg
+    block: |
+      host: http://169.60.150.91
+      username: admin
+      password: admin
+      verify_ssl: False
+    create: yes
+    mode: 0700
+
+- name: delete Default organization created at install
+  command: tower-cli organization delete Default
+
+- name: create new organization (set in hosts file)
+  command: tower-cli organization create --name nodejs
+
+- name: create new team belonging to organization
+  command: tower-cli team create --name nodejs --organization nodejs
+
+- name: add nodejs/build repo to AWX
+  command: tower-cli project create --organization nodejs --name nodejs/build --scm-type git --scm-url https://github.com/AshCripps/build --scm-branch fix-invent-path --scm-update-on-launch true
+
+- name: create inventory
+  command: tower-cli inventory create --organization nodejs --name nodejs_inventory_github
+
+- name: create automate fetching inventory from inventory.yml
+  command: tower-cli inventory_source create --name github --inventory nodejs_inventory_github --source scm  --source-project nodejs/build --source-path ansible/plugins/inventory/nodejs_yaml.py --overwrite true --overwrite-vars true --update-on-launch true
+
+- name: prevent ubuntu deleting /tmp folder on reboot
+  command: echo > /etc/init/mounted-tmp.conf
+
+- name: create /backup
+  file: path=/backup state=directory
+
+- name: setup Backups for AWX docker containers
+  blockinfile:
+    path: /backup/backup_docker_AWX.sh
+    block: |
+      DATE=`date +%m-%d-%Y`
+      # Create Tar backups from the containers
+      docker save -o /backup/awx_test_backup_$DATE.tar ansible/awx_task
+      docker save -o /backup/awx_web_backup_$DATE.tar ansible/awx_web
+      docker save -o /backup/rabbitmq_backup_$DATE.tar rabbitmq
+      docker save -o /backup/postgres_backup_$DATE.tar postgres
+      docker save -o /backup/memcached_backup_$DATE.tar memcached
+      tar -cvf /backup/postgres_tmp_backup_$DATE.tar /tmp/pgdocker
+    create: yes
+
+- name: make backup_docker_AWX.sh executable
+  command: chmod +x /backup/backup_docker_AWX.sh
+
+- name: backup AWX's docker containers weekly at 5am on Mondays
+  cron:
+    name: "/backup/backup_docker_AWX.sh"
+    minute: "0"
+    hour: "5"
+    weekday: "mon"
+    job: "/backup/backup_docker_AWX.sh"
