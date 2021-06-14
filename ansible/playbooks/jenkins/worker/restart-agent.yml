@@ -6,18 +6,9 @@
 
 - hosts: test
   gather_facts: yes
-  # tasks:
-  #   - name: download slave.jar
-  #     get_url:
-  #       url: "{{ jenkins_worker_jar }}"
-  #       dest: /home/{{ server_user }}/slave.jar
-  #       mode: 0644
-
-  #   - name: restart jenkins
-  #     service: name=jenkins state=restarted
   tasks:
 
-    - name: Kill jenkins process - AIX
+    - name: Kill Jenkins process - AIX
       shell: ps awwx | grep jenkins | grep -v grep | awk '{ print $1 }' | xargs kill
       when: os|startswith("aix")
 
@@ -30,3 +21,19 @@
       become: yes
       become_user: root
       when: os|startswith("aix")
+
+    - name: Stop Jenkins process - macos
+      when: os|startswith("macos")
+      command: launchctl unload /Library/LaunchDaemons/org.nodejs.osx.jenkins.plist
+
+    - name: Reload Jenkins process - macos
+      when: os|startswith("macos")
+      command: launchctl load /Library/LaunchDaemons/org.nodejs.osx.jenkins.plist
+
+    - name: Restart Jenkins service - generic
+      when:
+        - not os|startswith("aix")
+        - not os|startswith("ibmi")
+        - not os|startswith("macos")
+        - not os|startswith("zos")
+      service: name=jenkins state=restarted
