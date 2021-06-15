@@ -29,6 +29,7 @@ import json
 import os
 import subprocess
 import sys
+from os import path
 
 import yaml
 try:
@@ -74,7 +75,9 @@ def main():
     config.read('ansible.cfg')
 
     # load public inventory
-    export = parse_yaml(load_yaml_file(INVENTORY_FILENAME), config)
+    basepath = path.dirname(__file__)
+    inventory_path = path.abspath(path.join(basepath, "..", "..", "inventory.yml"))
+    export = parse_yaml(load_yaml_file(inventory_path), config)
 
     # try to load a secret inventory for each access level
     if check_decrypt_tool():
