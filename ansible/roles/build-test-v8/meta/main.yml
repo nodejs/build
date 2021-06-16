@@ -1,0 +1,16 @@
+# Build/testing V8 requires ninja and gn. V8's depot_tools toolchain provides
+# prebuilt binaries for x64 but for ppc64 and s390x we need to compile these
+# ourselves.
+dependencies:
+  - role: ninja
+    when: arch == 'ppc64' or arch == 's390x'
+    vars:
+      ninja_dest_dir: "{{ tools_dest_dir }}"
+      ninja_git_dir: "{{ tools_git_dir }}/ninja"
+      ninja_user: "{{ tools_user }}"
+  - role: gn
+    when: arch == 'ppc64' or arch == 's390x'
+    vars:
+      gn_dest_dir: "{{ tools_dest_dir }}"
+      gn_git_dir: "{{ tools_git_dir }}/gn"
+      gn_user: "{{ tools_user }}"

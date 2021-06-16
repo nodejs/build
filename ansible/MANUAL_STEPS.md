@@ -7,7 +7,6 @@
     * [Full Xcode](#full-xcode)
     * [Signing certificates](#signing-certificates)
 * [RHEL7-S390X](#rhel7-s390x)
-  * [V8 build-tools](#v8-build-tools)
   * [devtoolset-6 install](#devtoolset-6-install)
 * [macOS](#macos)
 * [AIX 7.2 Install](#aix-72-install)
@@ -127,18 +126,6 @@ Not After : Jan 22 03:40:05 2025 GMT
 ```
 
 ## RHEL7-S390X
-
-### V8 build-tools
-
-Copy `/home/iojs/build-tools/{gn,ninja}` from any other RHEL7-S390X host that
-has them to the newly provisioned one. Confirm `gn --version` is at least
-`1620`.
-
-If building from scratch, gn is built from  https://gn.googlesource.com/gn,
-and ninja is built from https://github.com/ninja-build/ninja.
-
-Note: If https://bugs.chromium.org/p/chromium/issues/detail?id=1029662 is
-resolved this will no longer be necessary.
 
 ### devtoolset-6 install
 

@@ -1,0 +1,17 @@
+argument_specs:
+  main:
+    short_description: The main task for prereqs for build/testing V8.
+    options:
+      tools_dest_dir:
+        description: The location to place the symlink to the binaries.
+        required: yes
+        type: "str"
+      tools_git_dir:
+        description: The location to put git checkouts.
+        required: yes
+        type: "str"
+      tools_user:
+        default: "{{ server_user|default(omit) }}"
+        description: The user to install binaries under.
+        type: "str"
+
