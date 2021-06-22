@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install apt-utils -y && \
       gcc-8 \
       git \
       openjdk-8-jre-headless \
+      pkg-config \
       curl \
       python-pip \
       python3-pip \
@@ -35,6 +36,27 @@ RUN pip3 install tap2junit
 RUN addgroup --gid {{ server_user_gid.stdout_lines[0] }} {{ server_user }}
 
 RUN adduser --gid {{ server_user_gid.stdout_lines[0] }} --uid {{ server_user_uid.stdout_lines[0] }} --disabled-password --gecos {{ server_user }} {{ server_user }}
+
+ENV ICU64DIR=/opt/icu-64.1 \
+    ICU65DIR=/opt/icu-65.1 \
+    ICU67DIR=/opt/icu-67.1 \
+    ICU68DIR=/opt/icu-68.2 \
+    ICU69DIR=/opt/icu-69.1
+
+RUN for ICU_ENV in $(env | grep ICU..DIR); do \
+    ICU_PREFIX=$(echo $ICU_ENV | cut -d '=' -f 2) && \
+    ICU_VERSION=$(echo $ICU_PREFIX | cut -d '-' -f 2) && \
+    ICU_MAJOR=$(echo $ICU_VERSION | cut -d '.' -f 1) && \
+    ICU_MINOR=$(echo $ICU_VERSION | cut -d '.' -f 2) && \
+    mkdir -p /tmp/icu-$ICU_VERSION && \
+    cd /tmp/icu-$ICU_VERSION && \
+    curl -sL "https://github.com/unicode-org/icu/releases/download/release-$ICU_MAJOR-$ICU_MINOR/icu4c-${ICU_MAJOR}_$ICU_MINOR-src.tgz" | tar zxv --strip=1 && \
+    cd source && \
+    ./runConfigureICU Linux --prefix=$ICU_PREFIX && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/icu-$ICU_VERSION; \
+    done
 
 ENV OPENSSL110DIR /opt/openssl-1.1.0l
 
