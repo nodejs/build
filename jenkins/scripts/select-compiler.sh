@@ -164,15 +164,7 @@ elif [ "$SELECT_ARCH" = "X64" ]; then
       export CXX="ccache g++"
       echo "Compiler set to GCC" `$CXX -dumpversion`
       ;;
-    *ubuntu1604-*64|benchmark )
-      if [ "$NODEJS_MAJOR_VERSION" -gt "12" ]; then
-        export CC="gcc-6"
-        export CXX="g++-6"
-        export LINK="g++-6"
-        echo "Compiler set to GCC 6 for $NODEJS_MAJOR_VERSION"
-      fi
-      ;;
-    *ubuntu1804*64 )
+    *ubuntu1804*64|*ubuntu1604-*64|benchmark )
       if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
         export CC="ccache gcc-8"
         export CXX="ccache g++-8"
