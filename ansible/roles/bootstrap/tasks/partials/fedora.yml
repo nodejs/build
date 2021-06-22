@@ -9,6 +9,7 @@
 
 - name: check for python
   raw: stat /usr/bin/python2
+  check_mode: no
   register: has_python
   failed_when: has_python.rc > 1
 
@@ -22,6 +23,7 @@
 
 - name: check for {{ 'libselinux-python' if os in ("fedora30") else 'python3-libselinux' }} bindings
   raw: dnf info {{ 'libselinux-python' if os in ("fedora30") else 'python3-libselinux' }} | grep Installed
+  check_mode: no
   register: has_libselinux
   failed_when:  has_libselinux.rc > 1
 
@@ -40,6 +42,7 @@
 
 - name: check for firewalld
   raw: stat /usr/sbin/firewalld
+  check_mode: no
   register: has_firewalld
   failed_when: has_firewalld.rc > 1
 

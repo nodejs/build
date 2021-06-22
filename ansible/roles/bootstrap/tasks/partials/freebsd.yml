@@ -6,6 +6,7 @@
 
 - name: check for python
   raw: stat /usr/local/bin/python
+  check_mode: no
   register: has_python
   failed_when: has_python.rc > 1
 

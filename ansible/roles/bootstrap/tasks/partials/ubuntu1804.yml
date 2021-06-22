@@ -6,11 +6,13 @@
 
 - name: check for python
   raw: stat /usr/bin/python
+  check_mode: no
   failed_when: has_python.rc > 1
   register: has_python
 
 - name: check for aptitude
   raw: stat /usr/bin/aptitude
+  check_mode: no
   failed_when: has_aptitude.rc > 1
   register: has_aptitude
 
