@@ -104,6 +104,17 @@
     cmd: "./bootstrap --verbose && make -j6 VERBOSE=1 && make install"
     creates: "/usr/local/bin/cmake"
 
+# Running the role for build/testing V8 is currently called here as we require
+# `/home/{{ server_user }}` to have been created.
+- name: build/test V8 role
+  when: build_test_v8|default(False)
+  include_role:
+    name: build-test-v8
+  vars:
+    tools_dest_dir: "/home/{{ server_user }}/build-tools"
+    tools_git_dir: "/home/{{ server_user }}"
+    tools_user: "{{ server_user }}"
+
 - name: prepare installing tap2junit
   when: type != "release"
   include: "{{ pip_include }}"

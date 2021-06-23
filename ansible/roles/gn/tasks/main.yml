@@ -1,0 +1,45 @@
+- name: check existing gn
+  ansible.builtin.command: "{{ gn_dest_dir }}/gn --version"
+  changed_when: no
+  failed_when: no
+  register: gn_installed_version
+
+- name: clone/update gn repository
+  ansible.builtin.git:
+    dest: "{{ gn_git_dir }}"
+    repo: "https://gn.googlesource.com/gn"
+  become: "{{ gn_user|default(omit)|bool }}"
+  become_user: "{{ gn_user|default(omit) }}"
+  register: gn_git
+
+# `gn --version` includes the first seven characters of the commit hash the
+# binary was built from: e.g. 1620 (570aaed)
+- name: check if gn needs to be rebuilt
+  ansible.builtin.set_fact:
+    rebuild_gn: "{{ not gn_installed_version.stdout|default('') is search(gn_git.after[:7]) }}"
+
+# Requires a C++17 compiler. At the moment we're only building on CentOS/RHEL
+# so have devtoolset-8 available.
+- name: build gn
+  ansible.builtin.shell: |
+    python3 build/gen.py && \
+    . /opt/rh/devtoolset-8/enable && \
+    {{ gn_dest_dir }}/ninja -C out && \
+    out/gn_unittests
+  args:
+    chdir: "{{ gn_git_dir }}"
+  become: "{{ gn_user|default(omit)|bool }}"
+  become_user: "{{ gn_user|default(omit) }}"
+  environment:
+    CC: gcc
+    CXX: g++
+  when: rebuild_gn
+
+- name: create symlink
+  ansible.builtin.file:
+    dest: "{{ gn_dest_dir }}/gn"
+    src: "{{ gn_git_dir }}/out/gn"
+    state: link
+  become: "{{ gn_user|default(omit)|bool }}"
+  become_user: "{{ gn_user|default(omit) }}"
+  when: rebuild_gn
