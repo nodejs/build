@@ -6,6 +6,7 @@
 
 - name: check for apt-transport-https
   raw: stat /usr/lib/apt/methods/https
+  check_mode: no
   register: has_apt_transport
   failed_when: has_apt_transport.rc > 1
 

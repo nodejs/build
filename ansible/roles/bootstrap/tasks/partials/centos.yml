@@ -1,5 +1,6 @@
 - name: check for firewalld
   raw: stat /usr/sbin/firewalld
+  check_mode: no
   register: has_firewalld
   failed_when: has_firewalld.rc > 1
 

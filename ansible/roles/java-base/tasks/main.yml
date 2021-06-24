@@ -37,6 +37,7 @@
 
 - name: Check if java is already installed
   raw: java -version
+  check_mode: no
   register: java
   ignore_errors: yes
 
