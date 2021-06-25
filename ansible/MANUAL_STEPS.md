@@ -9,6 +9,8 @@
 * [RHEL7-S390X](#rhel7-s390x)
   * [devtoolset-6 install](#devtoolset-6-install)
 * [macOS](#macos)
+* [AIX 7.1](#aix-71)
+  * [Remove en1 network interface](#remove-en1-network-interface)
 * [AIX 7.2 Install](#aix-72-install)
   * [ccache 3.7.4 on AIX 7.2](#ccache-374-on-aix-72)
   * [Enable the AHA fs](#enable-the-aha-fs)
@@ -162,6 +164,27 @@ to
 
 ```bash
 sudo systemsetup -setremotelogin on
+```
+
+## AIX 7.1
+
+### Remove en1 network interface
+
+Some libuv/Node.js tests currently fail on AIX with a network interface
+containing a link local address. This is being tracked in 
+https://github.com/nodejs/node/issues/39143. In the meantime the `en1`
+interface containing the link local address is removed.
+```
+sudo ifconfig en1 down detach
+```
+
+Use
+```
+ifconfig -a
+```
+to list the available interfaces. To add back the `en1` interface, run
+```
+sudo autoconf6 -i en1
 ```
 
 ## AIX 7.2 Install
