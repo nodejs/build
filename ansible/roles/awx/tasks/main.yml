@@ -42,6 +42,24 @@
     version: "17.1.0"
     force: yes
 
+- name: generate self-signed cert
+  shell:
+    chdir: /opt/awx_install_files
+    cmd: openssl req -x509 -nodes -days 1000 -newkey rsa:4096 -keyout server.key -out server.crt -subj "/C=GB/ST=UK/L=London/O=nodejs/CN=ansible.nodejs.org"
+
+- name: Set cert location
+  lineinfile:
+    path: /opt/awx_install_files/awx/installer/inventory
+    regexp: '#ssl_certificate='
+    line: ssl_certificate=/opt/awx_install_files/server.crt
+
+- name: Set cert key location
+  lineinfile:
+    path: /opt/awx_install_files/awx/installer/inventory
+    regexp: '#ssl_certificate_key='
+    line: ssl_certificate_key=/opt/awx_install_files/server.key
+
+# This is needed becasue its commented out by default and the script wont run whilst its not set
 - name: enable admin password
   lineinfile:
     path: /opt/awx_install_files/awx/installer/inventory
@@ -55,17 +73,17 @@
   expect:
     command: docker exec -it awx_task awx-manage changepassword admin
     responses:
-      (?i)password: "admin"
+      (?i)password: "{{ awx_password }}"
 
 #TODO: change this to be https://ansible.nodejs.org and remove verify_ssl
 - name: create /root/.tower_cli.cfg
   blockinfile:
     path: /root/.tower_cli.cfg
     block: |
-      host: http://169.60.150.91
+      host: https://ansible.nodejs.org
       username: admin
       password: admin
-      verify_ssl: False
+      certificate: /opt/awx_install_files/server.crt
     create: yes
     mode: 0700
 
@@ -73,16 +91,16 @@
   command: tower-cli organization delete Default
 
 - name: create new organization (set in hosts file)
-  command: tower-cli organization create --name nodejs
+  command: tower-cli organization create --name {{ awx_org }}
 
 - name: create new team belonging to organization
-  command: tower-cli team create --name nodejs --organization nodejs
+  command: tower-cli team create --name {{ awx_org }} --organization {{ awx_org }}
 
 - name: add nodejs/build repo to AWX
-  command: tower-cli project create --organization nodejs --name nodejs/build --scm-type git --scm-url https://github.com/AshCripps/build --scm-branch fix-invent-path --scm-update-on-launch true
+  command: tower-cli project create --organization {{ awx_org }} --name nodejs/build --scm-type git --scm-url https://github.com/nodejs/build --scm-branch master --scm-update-on-launch true
 
 - name: create inventory
-  command: tower-cli inventory create --organization nodejs --name nodejs_inventory_github
+  command: tower-cli inventory create --organization {{ awx_org }} --name nodejs_inventory_github
 
 - name: create automate fetching inventory from inventory.yml
   command: tower-cli inventory_source create --name github --inventory nodejs_inventory_github --source scm  --source-project nodejs/build --source-path ansible/plugins/inventory/nodejs_yaml.py --overwrite true --overwrite-vars true --update-on-launch true
