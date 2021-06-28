@@ -10,7 +10,7 @@ cd /home/{{ server_user }}/github-bot
 git reset --hard
 git clean -fdx
 git fetch origin
-git checkout origin/master
+git checkout origin/main
 
 npm install --cache-min 1440 --production
 sudo systemctl restart github-bot
