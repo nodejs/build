@@ -1,0 +1,43 @@
+# Node.js  Build WorkGroup Meeting 2021-06-29
+
+## Links
+
+* **Recording**:  
+* **GitHub Issue**: https://github.com/nodejs/build/issues/2690
+
+## Present
+
+* Build team: @nodejs/build
+* Richard Lau (@richardlau)
+* Ash Cripps (@AshCripps)
+* Michael Dawson (@mhdawson)
+* Stewart Addison (@sxa)
+
+## Agenda
+
+## Announcements
+
+* Richard - Jenkins CI will be locked down for security releases until Thursday after the releases
+   go out.
+
+*Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
+
+### nodejs/build
+
+* #node-build IRC channel [#2687](https://github.com/nodejs/build/issues/2687)
+  * Discussion going on in slack, visible for team members?
+  * Used to have IRC bridge to slack, but no longer in place
+  * There has been a move from freenode to libera chat
+  * Richard will reach out with direct mentions to Build team members who could not make the
+     call.
+
+* Interest in establishing a "Build Helper" role [#2550](https://github.com/nodejs/build/issues/2550)
+  * Making good progress on getting upstream of Ansible tower (AWX)
+
+## Q&A, Other
+
+## Upcoming Meetings
+
+* **Node.js Foundation Calendar**: <https://nodejs.org/calendar>
+
+Click `+GoogleCalendar` at the bottom right to add to your own Google calendar.
