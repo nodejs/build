@@ -26,7 +26,7 @@
 ### nodejs/build
 
 * #node-build IRC channel [#2687](https://github.com/nodejs/build/issues/2687)
-  * Discussion going on in Slack --not all team members may have seen it.
+  * Discussion going on in Slack -- not all team members may have seen it.
   * Used to have IRC bridge to Slack, but no longer in place after recent events at Freenode.
   * There has been a move from freenode to libera chat
   * Richard will reach out with direct mentions to Build team members who could not make the
