@@ -1,8 +1,8 @@
-# Node.js  Build WorkGroup Meeting 2021-06-29
+# Node.js Build WorkGroup Meeting 2021-06-29
 
 ## Links
 
-* **Recording**:  
+* **Recording**:  https://www.youtube.com/watch?v=QWuKmmY6wjE
 * **GitHub Issue**: https://github.com/nodejs/build/issues/2690
 
 ## Present
@@ -17,7 +17,8 @@
 
 ## Announcements
 
-* Richard - Jenkins CI will be locked down for security releases until Thursday after the releases
+* Richard - Jenkins CI will be locked down on Wednesday morning for security releases after the releases on Thursday.
+  * Discussed if it made any sense to do any CI maintenance (e.g. OS updates) before unlocking the CI. Conclusion was nothing to do at this time.
    go out.
 
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
@@ -25,8 +26,8 @@
 ### nodejs/build
 
 * #node-build IRC channel [#2687](https://github.com/nodejs/build/issues/2687)
-  * Discussion going on in slack, visible for team members?
-  * Used to have IRC bridge to slack, but no longer in place
+  * Discussion going on in Slack --not all team members may have seen it.
+  * Used to have IRC bridge to Slack, but no longer in place after recent events at Freenode.
   * There has been a move from freenode to libera chat
   * Richard will reach out with direct mentions to Build team members who could not make the
      call.
