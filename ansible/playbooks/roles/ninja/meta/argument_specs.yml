@@ -1,0 +1,16 @@
+argument_specs:
+  main:
+    short_description: The main task for compiling ninja from source.
+    options:
+      ninja_dest_dir:
+        description: The location to place the symlink to the ninja binary.
+        required: yes
+        type: "str"
+      ninja_git_dir:
+        description: The location to put the git checkout.
+        required: yes
+        type: "str"
+      ninja_user:
+        default: "{{ server_user|default(omit) }}"
+        description: The user to install ninja under.
+        type: "str"
