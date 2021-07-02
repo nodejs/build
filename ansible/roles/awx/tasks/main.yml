@@ -75,6 +75,12 @@
     responses:
       (?i)password: "{{ awx_password }}"
 
+- name: uninstall ansible
+  command: docker exec awx_task /usr/bin/pip3 uninstall -y ansible
+
+- name: install ansible
+  command: docker exec awx_task /usr/bin/pip3 install ansible
+
 #TODO: change this to be https://ansible.nodejs.org and remove verify_ssl
 - name: create /root/.tower_cli.cfg
   blockinfile:
