@@ -88,7 +88,7 @@
     block: |
       host: https://ansible.nodejs.org
       username: admin
-      password: admin
+      password: {{ awx_password }}
       certificate: /opt/awx_install_files/server.crt
     create: yes
     mode: 0700

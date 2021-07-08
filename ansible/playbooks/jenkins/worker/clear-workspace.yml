@@ -1,0 +1,14 @@
+---
+
+#
+# Clear the workspace on jenkins agents
+#
+
+- hosts: test
+  gather_facts: yes
+  tasks:
+
+  - name: remove workspace
+    file: 
+      path: "{{ home }}/{{ server_user }}/build/workspace"
+      state: absent
