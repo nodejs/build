@@ -132,7 +132,7 @@
   alternatives:
     link: "/usr/bin/python3"
     name: python3
-    path: "/usr/bin/python3.9"
+    path: "/usr/bin/python3.7"
 
 - name: freebsd | update python package alternatives
   when: os == "freebsd11"
