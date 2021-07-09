@@ -168,10 +168,12 @@ elif [ "$SELECT_ARCH" = "X64" ]; then
       if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
         export CC="ccache gcc-8"
         export CXX="ccache g++-8"
+        export GCOV="gcov-8"
         export LINK="g++-8"
       else
         export CC="ccache gcc-6"
         export CXX="ccache g++-6"
+        export GCOV="gcov-6"
         export LINK="g++-6"
       fi
       echo "Compiler set to GCC" `$CXX -dumpversion`
