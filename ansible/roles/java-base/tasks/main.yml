@@ -89,6 +89,7 @@
 # to discover the most recent release for the given adoptopenjdk_version and
 # platform.
 - name: fetch adoptopenjdk metadata
+  check_mode: no
   register: adoptopenjdk_metadata
   uri:
     body_format: json

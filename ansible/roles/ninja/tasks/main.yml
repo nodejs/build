@@ -8,6 +8,7 @@
   ansible.builtin.uri:
     return_content: yes
     url: https://api.github.com/repos/ninja-build/ninja/releases/latest
+  check_mode: no
   register: ninja_latest
 
 # Tag in GitHub is prefixed with 'v' but the output from `ninja --version` is not.
