@@ -47,7 +47,7 @@ These are the follow fields you need to fill in:
 
 ## Permissions
 
-Unfortunatly you have to give everyone elevated permissions manually - there isnt a way to do this automatically that fits our use case. Best way to do this is to let the user log in so their profile is automatically created, then you can assign them roles/teams as fitting - Make sure you set the members of the build team as system administrators.
+Unfortunately you have to give everyone elevated permissions manually - there isn't a way to do this automatically that fits our use case. Best way to do this is to let the user log in so their profile is automatically created, then you can assign them roles/teams as fitting - Make sure you set the members of the build team as system administrators.
 
 ### Teams 
 
