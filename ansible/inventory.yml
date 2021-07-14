@@ -18,6 +18,7 @@ hosts:
 
     - ibm:
         ubuntu1804-x64-1: {ip: 169.45.166.50, alias: ci-release}
+        ubuntu2004-x64-1: {ip: 169.60.150.91, alias: ansible}
 
     - joyent:
         debian10-x64-1: {ip: 147.75.88.62, alias: grafana}
