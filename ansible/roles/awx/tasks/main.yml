@@ -59,7 +59,7 @@
     regexp: '#ssl_certificate_key='
     line: ssl_certificate_key=/opt/awx_install_files/server.key
 
-# This is needed becasue its commented out by default and the script wont run whilst its not set
+# This is needed becasue it's commented out by default and the script wont run whilst its not set
 - name: enable admin password
   lineinfile:
     path: /opt/awx_install_files/awx/installer/inventory
@@ -81,7 +81,6 @@
 - name: install ansible
   command: docker exec awx_task /usr/bin/pip3 install ansible
 
-#TODO: change this to be https://ansible.nodejs.org and remove verify_ssl
 - name: create /root/.tower_cli.cfg
   blockinfile:
     path: /root/.tower_cli.cfg
