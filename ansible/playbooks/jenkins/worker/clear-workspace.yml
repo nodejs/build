@@ -5,8 +5,17 @@
 #
 
 - hosts: test
-  gather_facts: yes
+  gather_facts: no
   tasks:
+
+  - name: Check for limit
+    fail:
+      msg: "No limit set!"
+    when: ansible_limit is not defined
+    run_once: true
+
+  - name: Gathering facts
+    setup:
 
   - name: remove workspace
     file: 

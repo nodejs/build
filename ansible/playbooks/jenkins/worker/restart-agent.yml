@@ -5,8 +5,16 @@
 #
 
 - hosts: test
-  gather_facts: yes
+  gather_facts: no
   tasks:
+    - name: Check for limit
+      fail:
+        msg: "No limit set!"
+      when: ansible_limit is not defined
+      run_once: true
+
+    - name: Gathering facts
+      setup:
 
     - name: Kill Jenkins process - AIX
       shell: ps awwx | grep jenkins | grep -v grep | awk '{ print $1 }' | xargs kill
