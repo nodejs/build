@@ -45,7 +45,7 @@ hosts:
         rhel7-s390x-1: {ip: 148.100.86.101, user: linux1}
 
     - iinthecloud:
-        ibmi72-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
+        ibmi73-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
 
     - joyent:
         smartos17-x64-2: {ip: 147.75.88.60}
@@ -267,8 +267,14 @@ hosts:
             user: administrator
 
     - iinthecloud:
-        ibmi72-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
-        ibmi72-ppc64_be-2: {ip: 65.183.160.59, user: nodejs}
+        ibmi73-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
+        ibmi73-ppc64_be-2: {ip: 65.183.160.59, user: nodejs}
+
+    - rzkh:
+        ibmi73-ppc64_be-1:
+            ip: 185.113.4.148
+            user: nodejs
+            server_jobs: 32
 
     - rackspace:
         centos7-x64-1: {ip: 119.9.27.82}

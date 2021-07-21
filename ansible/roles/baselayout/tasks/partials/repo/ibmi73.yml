@@ -1,0 +1,7 @@
+---
+
+- name: ibmi73 | install IBM i 7.3 repo
+  get_url:
+    url: https://public.dhe.ibm.com/software/ibmi/products/pase/rpms/ibm-7.3.repo
+    dest: /QOpenSys/etc/yum/repos.d/ibm-7.3.repo
+    mode: 0644

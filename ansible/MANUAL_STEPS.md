@@ -497,6 +497,10 @@ another job.
 ### Install open source ecosystem
 See http://ibm.biz/ibmi-rpms (see "Installation" section)
 
+### Create Nodejs user
+```
+/QOpenSys/usr/bin/system -kpib 'CRTUSRPRF USRPRF(NODEJS) PASSWORD() USRCLS(*SECOFR) SPCAUT(*USRCLS) PWDEXPITV(*NOMAX)'
+```
 ### Create Nodejs user's home directory
 ```
 mkdir -p /home/NODEJS
@@ -517,10 +521,11 @@ echo 'export PATH' >> /QOpenSys/etc/profile
 After that is completed, copy to the `.bashrc` file for the nodejs user
 `cp /QOpenSys/etc/profile /home/NODEJS/.bashrc`
 
-### Use bash as the default shell (maintainer convenience only)
+### Use bash as the default shell for your user (maintainer convenience) and the nodejs user
 ```
-yum install chsh
-chsh -s /QOpenSys/pkgs/bin/bash
+/QOpenSys/pkgs/bin/yum install chsh
+/QOpenSys/pkgs/bin/chsh -s /QOpenSys/pkgs/bin/bash
+/QOpenSys/pkgs/bin/chsh -s /QOpenSys/pkgs/bin/bash nodejs
 ```
 
 ## z/OS

@@ -36,8 +36,8 @@
 # as appropriate -- try to use generic os family if available.
 
 - name: Check if java is already installed
-  raw: java -version
   check_mode: no
+  raw: "{{ java_path[os] | default(\"java\") }} -version"
   register: java
   ignore_errors: yes
 
@@ -45,7 +45,6 @@
   when:
     - java.rc > 0
     - not os|startswith("zos")
-    - (arch != "ppc64" or os|startswith("ibmi"))
     - not os|startswith("macos")
   package:
     name: "{{ java_package_name }}"

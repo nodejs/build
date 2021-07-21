@@ -9,7 +9,7 @@ init: {
   centos6: 'centos6',
   debian: 'debian7',
   freebsd: 'freebsd',
-  ibmi: 'ibmi72',
+  ibmi: 'ibmi73',
   macos: 'macos',
   rhel7: 'rhel7',
   systemd: ['centos7', 'debian8', 'debian9', 'debian10', 'fedora', 'ubuntu1604', 'ubuntu1804'],
@@ -84,7 +84,7 @@ needs_monit: [
 
 # some os'es needs different paths to java. add them here.
 java_path: {
-  'ibmi72': '/QOpenSys/pkgs/lib/jvm/openjdk-11/bin/java',
+  'ibmi73': '/QOpenSys/pkgs/lib/jvm/openjdk-11/bin/java',
   'macos10.10': 'java',
   'macos10.11': 'java',
   'macos10.12': 'java',
