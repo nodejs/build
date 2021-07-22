@@ -158,6 +158,6 @@ packages: {
 
   # Default gcc/g++ package is 7.
   ubuntu1804: [
-    'gcc-6,g++-6,gcc-8,g++-8',
+    'gcc-6,g++-6,gcc-8,g++-8,libcap-dev',
   ],
 }
