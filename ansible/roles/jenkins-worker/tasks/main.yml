@@ -115,6 +115,16 @@
 
 # Running the role for build/testing V8 is currently called here as we require
 # `/home/{{ server_user }}` to have been created.
+
+- name: make v8 tool dir 
+  when: build_test_v8|default(False)
+  file: 
+    path: "/home/{{ server_user }}/build-tools"
+    state: directory
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: 0755
+
 - name: build/test V8 role
   when: build_test_v8|default(False)
   include_role:

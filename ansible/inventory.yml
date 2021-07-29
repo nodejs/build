@@ -238,6 +238,8 @@ hosts:
             server_jobs: 6
         centos7-ppc64_le-1: {ip: 140.211.168.193, user: centos, build_test_v8: yes}
         centos7-ppc64_le-2: {ip: 140.211.168.244, user: centos, build_test_v8: yes}
+        centos7-ppc64_le-3: {ip: 140.211.168.239, user: centos, build_test_v8: yes}
+        centos7-ppc64_le-4: {ip: 140.211.168.194, user: centos, build_test_v8: yes}
 
     - orka:
         macos10.15-x64-1:

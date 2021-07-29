@@ -12,4 +12,7 @@
     - python-setuptools
 
 - name: install tap2junit
-  raw: easy_install tap2junit
+  pip: 
+    name: tap2junit
+    state: present
+    executable: /usr/bin/pip3
