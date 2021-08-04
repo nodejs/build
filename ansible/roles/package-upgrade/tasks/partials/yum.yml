@@ -3,8 +3,10 @@
 #
 # Updates all packages for centos-based distributions
 #
+- name: clean yum packages cache
+  ansible.builtin.command: yum clean packages
 
-  - name: upgrade installed packages
-    yum: name=* state=latest use_backend=yum expire-cache=yes
+- name: upgrade installed packages
+  yum: name=* state=latest use_backend=yum expire-cache=yes
 # If difficulty recognizing yum is encountered, see https://github.com/ansible/ansible/pull/69484, it is possible
 # to apply that patch manually to a local install of ansible (if necessary).
