@@ -188,18 +188,15 @@
     regexp: '^127\.0\.1\.1\s+\w.+$'
     line: '127.0.1.1        {{safe_hostname}}'
 
-- name: aix | update curl symlinks
+- name: aix | update symlinks
   when: os|startswith("aix")
   file:
-    src: "/opt/freeware/bin/{{ curl }}"
-    dest: "/usr/bin/{{ curl }}"
+    src: "/opt/freeware/bin/{{ item.0 }}"
+    dest: "/usr/bin/{{ item.1 }}"
     state: link
-  loop_control:
-    loop_var: curl
-  with_items:
-    - curl
-    - curl_32
-    - curl_64
+  with_together:
+    - [ 'curl', 'curl_32', 'curl_64', 'tar' ]
+    - [ 'curl', 'curl_32', 'curl_64', 'gtar' ]
 
 - name: run ccache installer
   include: "{{ ccache_include }}"
