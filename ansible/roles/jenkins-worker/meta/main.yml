@@ -2,3 +2,13 @@
 
 #
 # this role depends on java-base
+
+dependencies:
+  - role: user-create
+  - role: java-base
+  - role: build-test-v8
+    when: build_test_v8|default(False)
+    vars:
+      tools_dest_dir: "/home/{{ server_user }}/build-tools"
+      tools_git_dir: "/home/{{ server_user }}"
+      tools_user: "{{ server_user }}"
