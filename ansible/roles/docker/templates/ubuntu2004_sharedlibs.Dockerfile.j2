@@ -1,0 +1,108 @@
+FROM ubuntu:18.04
+
+ENV LC_ALL C
+ENV USER {{ server_user }}
+ENV JOBS {{ server_jobs | default(ansible_processor_vcpus) }}
+ENV SHELL /bin/bash
+ENV HOME /home/{{ server_user }}
+ENV PATH /usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV NODE_COMMON_PIPE /home/{{ server_user }}/test.pipe
+ENV NODE_TEST_DIR /home/{{ server_user }}/tmp
+ENV OSTYPE linux-gnu
+ENV OSVARIANT docker
+ENV DESTCPU x64
+ENV ARCH x64
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get install apt-utils -y && \
+    apt-get dist-upgrade -y && apt-get install -y \
+      ccache \
+      g++-8 \
+      gcc-8 \
+      git \
+      openjdk-8-jre-headless \
+      pkg-config \
+      curl \
+      python3-pip \
+      libfontconfig1
+
+RUN pip3 install tap2junit
+
+RUN addgroup --gid {{ server_user_gid.stdout_lines[0] }} {{ server_user }}
+
+RUN adduser --gid {{ server_user_gid.stdout_lines[0] }} --uid {{ server_user_uid.stdout_lines[0] }} --disabled-password --gecos {{ server_user }} {{ server_user }}
+
+ENV ICU64DIR=/opt/icu-64.1 \
+    ICU65DIR=/opt/icu-65.1 \
+    ICU67DIR=/opt/icu-67.1 \
+    ICU68DIR=/opt/icu-68.2 \
+    ICU69DIR=/opt/icu-69.1
+
+RUN for ICU_ENV in $(env | grep ICU..DIR); do \
+    ICU_PREFIX=$(echo $ICU_ENV | cut -d '=' -f 2) && \
+    ICU_VERSION=$(echo $ICU_PREFIX | cut -d '-' -f 2) && \
+    ICU_MAJOR=$(echo $ICU_VERSION | cut -d '.' -f 1) && \
+    ICU_MINOR=$(echo $ICU_VERSION | cut -d '.' -f 2) && \
+    mkdir -p /tmp/icu-$ICU_VERSION && \
+    cd /tmp/icu-$ICU_VERSION && \
+    curl -sL "https://github.com/unicode-org/icu/releases/download/release-$ICU_MAJOR-$ICU_MINOR/icu4c-${ICU_MAJOR}_$ICU_MINOR-src.tgz" | tar zxv --strip=1 && \
+    cd source && \
+    ./runConfigureICU Linux --prefix=$ICU_PREFIX && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/icu-$ICU_VERSION; \
+    done
+
+ENV OPENSSL110DIR /opt/openssl-1.1.0l
+
+RUN mkdir -p /tmp/openssl_1.1.0l && \
+    cd /tmp/openssl_1.1.0l && \
+    curl -sL https://www.openssl.org/source/openssl-1.1.0l.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$OPENSSL110DIR && \
+    make -j 6 && \
+    make install && \
+    rm -rf /tmp/openssl_1.1.0l
+
+ENV OPENSSL111DIR /opt/openssl-1.1.1k
+
+RUN mkdir -p /tmp/openssl_1.1.1k && \
+    cd /tmp/openssl_1.1.1k && \
+    curl -sL https://www.openssl.org/source/openssl-1.1.1k.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$OPENSSL111DIR && \
+    make -j 6 && \
+    make install && \
+    rm -rf /tmp/openssl_1.1.1k
+
+ENV OPENSSL300DIR /opt/openssl-3.0.0
+
+RUN mkdir -p /tmp/openssl_3.0.0 && \
+    cd /tmp/openssl_3.0.0 && \
+    git clone https://github.com/quictls/openssl.git -b openssl-3.0.0-alpha16+quic --depth 1 && \
+    cd openssl && \
+    ./config --prefix=$OPENSSL300DIR && \
+    make -j 6 && \
+    make install && \
+    rm -rf /tmp/openssl_3.0.0
+
+ENV ZLIB12DIR /opt/zlib_1.2.11
+
+RUN mkdir -p /tmp/zlib_1.2.11 && \
+    cd /tmp/zlib_1.2.11 && \
+    curl -sL https://zlib.net/zlib-1.2.11.tar.gz | tar zxv --strip=1 && \
+    ./configure --prefix=$ZLIB12DIR && \
+    make -j 6 && \
+    make install && \
+    rm -rf /tmp/zlib_1.2.11
+
+VOLUME /home/{{ server_user }}/ /home/{{ server_user }}/.ccache
+
+USER iojs:iojs
+
+ENV CCACHE_TEMPDIR /home/iojs/.ccache/{{ item.name }}
+
+CMD cd /home/iojs \
+  && curl https://ci.nodejs.org/jnlpJars/slave.jar -O \
+  && java -Xmx{{ server_ram|default('128m') }} \
+          -jar /home/{{ server_user }}/slave.jar \
+          -jnlpUrl {{ jenkins_url }}/computer/{{ item.name }}/slave-agent.jnlp \
+          -secret {{ item.secret }}

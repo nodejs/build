@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env /usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 # Copyright Node.js contributors. All rights reserved.
@@ -46,7 +46,7 @@ valid = {
     'type': ('infra', 'release', 'test'),
 
     # providers - validated for consistency
-    'provider': ('azure', 'digitalocean', 'ibm', 'iinthecloud', 'joyent',
+    'provider': ('azure', 'digitalocean', 'equinix', 'ibm', 'iinthecloud', 'joyent',
                  'linuxonecc', 'macstadium', 'marist', 'mininodes', 'msft',
                  'nearform', 'orka', 'osuosl', 'packetnet', 'rackspace',
                  'requireio', 'rzkh', 'scaleway', 'softlayer', 'voxer')

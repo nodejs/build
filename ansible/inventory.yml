@@ -14,22 +14,18 @@ hosts:
         ubuntu1604-x64-1: {ip: 138.197.224.240, alias: www}
         ubuntu1804-x64-1: {ip: 178.128.202.158, alias: gzemnid}
         ubuntu1804-x64-2: {ip: 45.55.45.227, alias: unofficial-builds}
-        ubuntu1804-x64-3: {ip: 157.245.7.159, alias: metrics}
-
-    - ibm:
-        ubuntu1804-x64-1: {ip: 169.45.166.50, alias: ci-release}
-        ubuntu2004-x64-1: {ip: 169.60.150.91, alias: ansible}
 
     - joyent:
-        debian10-x64-1: {ip: 147.75.88.62, alias: grafana}
-        smartos15-x64-1: {ip: 139.178.83.227, alias: backup}
-        ubuntu1604-x64-1: {ip: 147.75.88.57, alias: unencrypted}
+        smartos15-x64-1: {ip: 165.225.151.21, alias: backup}
+        ubuntu1604-x64-1: {ip: 165.225.149.55, alias: unencrypted}
 
     - rackspace:
         debian8-x64-1: {ip: 23.253.100.79, alias: gh-bot}
 
     - softlayer:
         debian8-x64-1: {ip: 184.172.29.199, alias: registry-mirror}
+        ubuntu1404-x64-1: {ip: 169.44.16.104, alias: ci-release}
+        ubuntu1404-x64-2: {ip: 50.23.85.254}
 
 
   - release:
@@ -39,55 +35,33 @@ hosts:
         centos7-x64-1: {ip: 138.68.12.105}
 
     - ibm:
-        aix71-ppc64_be-2:
-            ip: 169.48.19.173
-            server_jobs: 6
+        aix71-ppc64_be-1: {ip: 129.33.196.199, user: b9s010a}
         rhel7-s390x-1: {ip: 148.100.86.101, user: linux1}
 
     - iinthecloud:
         ibmi73-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
 
     - joyent:
-        smartos17-x64-2: {ip: 147.75.88.60}
-        smartos18-x64-2: {ip: 147.75.88.53}
-        ubuntu1804_docker-x64-1: {ip: 147.75.88.56, user: ubuntu}
+        smartos15-x64-2: {ip: 165.225.148.139}
+        smartos17-x64-2: {ip: 165.225.149.208}
+        smartos18-x64-2: {ip: 165.225.148.12}
+        ubuntu1804_docker-x64-1: {ip: 165.225.150.76, user: ubuntu}
 
     - macstadium:
-        macos11.0-arm64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 207.254.38.74
-            user: administrator
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
-            server_jobs: 6
+        macos10.11-x64-1: {ip: 207.254.58.162, port: 10013, user: administrator}
+        macos10.10-x64-1: {ip: 207.254.58.162, port: 10014, user: administrator}
 
     - marist:
-        zos24-s390x-1: {ip: 148.100.36.157, user: unix1}
+        zos13-s390x-1: {ip: 148.100.36.135, user: Unix1}
 
     - nearform:
-        macos10.15-x64-1:
-            ip: 83.147.191.69
-            user: administrator
-            ansible_python_interpreter: /usr/bin/python3
-        macos11.0-arm64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 83.147.191.76
-            user: admin
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+        macos10.15-x64-1: {ip: 83.147.191.69, user: administrator}
 
     - osuosl:
         centos7-ppc64_le-1: {ip: 140.211.168.61, user: centos}
-        aix72-ppc64_be-1:
-            ip: 140.211.9.77
-            server_jobs: 6
 
     - orka:
-        macos10.15-x64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.101
-            port: 8822
-            user: administrator
+        macos10.15-x64-1: {ip: 199.7.167.101, port: 8822, user: administrator}
 
     - packetnet:
         centos7-arm64-1: {ip: 147.75.104.218}
@@ -95,6 +69,11 @@ hosts:
     - requireio:
         rvagg-debian10-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi, alias: iojs-ns-pi1p-1 }
         andineck-debian10-armv6l_pi1p-1: {ip: 192.168.2.41, user: pi, alias: iojs-ns-pi1p-2 }
+        osx1010-x64-1: {ip: 192.168.2.211, user: iojs}
+
+    - scaleway:
+        ubuntu1604-armv7l-1: {ip: 212.47.245.242}
+        ubuntu1604-armv7l-2: {ip: 212.47.234.107}
 
     - softlayer:
         centos6-x64-1: {ip: 50.97.245.10}
@@ -125,7 +104,7 @@ hosts:
     - digitalocean:
         debian8-x64-1: {ip: 159.203.103.52}
         debian9-x64-1: {ip: 138.197.97.208}
-        fedora32-x64-1: {ip: 159.203.117.50}
+        fedora27-x64-1: {ip: 159.203.117.50}
         fedora30-x64-1: {ip: 178.62.236.249}
         fedora30-x64-2: {ip: 159.203.98.84}
         freebsd11-x64-1: {ip: 45.55.90.237, user: freebsd}
@@ -138,89 +117,67 @@ hosts:
         ubuntu1804_docker-x64-2: {ip: 159.89.183.200}
         ubuntu1804-x64-1: {ip: 178.128.181.213}
 
+    - equinix:
+        ubuntu2004_docker-arm64-1: {ip: 145.40.81.219}
+
     - ibm:
-        aix71-ppc64_be-3: 
-            ip: 169.48.22.38
-            server_jobs: 6
-        aix71-ppc64_be-4:  
-            ip: 169.48.22.51
-            server_jobs: 6
-        rhel7-s390x-1: {ip: 148.100.86.21, user: linux1, build_test_v8: yes}
-        rhel7-s390x-2: {ip: 148.100.86.117, user: linux1, build_test_v8: yes}
-        rhel7-s390x-3: {ip: 148.100.86.28, user: linux1, build_test_v8: yes}
-        rhel7-s390x-4: {ip: 148.100.86.94, user: linux1, build_test_v8: yes}
+        aix71-ppc64_be-1: {ip: 129.33.196.197, user: b9s010a}
+        aix71-ppc64_be-2: {ip: 129.33.196.198, user: b9s010a}
+        rhel7-s390x-1: {ip: 148.100.86.21, user: linux1}
+        rhel7-s390x-2: {ip: 148.100.86.117, user: linux1}
+        rhel7-s390x-3: {ip: 148.100.86.28, user: linux1}
+        rhel7-s390x-4: {ip: 148.100.86.94, user: linux1}
         ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
 
     - joyent:
-        smartos17-x64-3: {ip: 147.75.88.59}
-        smartos17-x64-4: {ip: 147.75.88.61}
-        smartos18-x64-3: {ip: 147.75.88.54}
-        smartos18-x64-4: {ip: 147.75.88.55}
-        ubuntu1804-x64-1: {ip: 147.75.88.51, user: ubuntu}
-
-    - macstadium:
-        macos11.0-arm64-3:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 207.254.38.86
-            user: administrator
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
-        macos11.0-arm64-4:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 207.254.38.89
-            user: administrator
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+        smartos15-x64-3: {ip: 165.225.148.128}
+        smartos15-x64-4: {ip: 165.225.149.91}
+        smartos16-x64-3: {ip: 165.225.151.106}
+        smartos16-x64-4: {ip: 165.225.149.158}
+        smartos17-x64-3: {ip: 165.225.148.15}
+        smartos17-x64-4: {ip: 165.225.148.16}
+        smartos18-x64-3: {ip: 165.225.151.114}
+        smartos18-x64-4: {ip: 165.225.149.13}
+        ubuntu1804_docker-x64-1: {ip: 165.225.151.201, user: ubuntu}
+        ubuntu1804-x64-1: {ip: 165.225.149.88, user: ubuntu}
 
     - marist:
-        zos24-s390x-1:
-            ip: 148.100.36.155
-            user: unix1
-            ansible_python_interpreter: /rsusr/rocket/python-2017-04-12-py27/python27/bin/python
-            become_method: su
-            cmake_path_env: "{{ home }}/{{ server_user }}:/rsusr/rocket/bin:/bin"
-            git_cmd: /rsusr/rocket/bin/git
+        zos13-s390x-1:
+            ip: 148.100.36.133
+            user: Unix1
             remote_env:
-                LIBPATH: /lib:/usr/lib:.:/rsusr/rocket/lib/perl5/5.24.0/os390/CORE.pod:/rsusr/rocket/python-2017-04-12-py27/python27/lib/
-                PATH: /rsusr/rocket/python-2017-04-12-py27/python27/bin:/bin:/rsusr/rocket/bin
-                SSL_CERT_FILE: "{{ home }}/{{ server_user }}/ca-bundle.crt"
+                LIBPATH: /lib:/usr/lib:.:/NODEJS2/lib/perl5/5.24.0/os390/CORE.pod:/NODEJS2/python-2017-04-12-py27/python27/lib/
+                PATH: /NODEJS2/python-2017-04-12-py27/python27/bin:/bin:/NODEJS2/bin:/NODEJS/bin
             server_jobs: 4
-        zos24-s390x-2:
-            ip: 148.100.36.156
-            user: unix1
-            ansible_python_interpreter: /rsusr/rocket/python-2017-04-12-py27/python27/bin/python
-            become_method: su
-            cmake_path_env: "{{ home }}/{{ server_user }}:/rsusr/rocket/bin:/bin"
-            git_cmd: /rsusr/rocket/bin/git
+        zos13-s390x-2:
+            ip: 148.100.36.134
+            user: Unix1
             remote_env:
-                LIBPATH: /lib:/usr/lib:.:/rsusr/rocket/lib/perl5/5.24.0/os390/CORE.pod:/rsusr/rocket/python-2017-04-12-py27/python27/lib/
-                PATH: /rsusr/rocket/python-2017-04-12-py27/python27/bin:/bin:/rsusr/rocket/bin
-                SSL_CERT_FILE: "{{ home }}/{{ server_user }}/ca-bundle.crt"
+                LIBPATH: /lib:/usr/lib:.:/NODEJS2/lib/perl5/5.24.0/os390/CORE.pod:/NODEJS2/python-2017-04-12-py27/python27/lib/
+                PATH: /NODEJS2/python-2017-04-12-py27/python27/bin:/bin:/NODEJS2/bin:/NODEJS/bin
             server_jobs: 4
+
+    - mininodes:
+        ubuntu1604-arm64_odroid_c2-1: {ip: 70.167.220.147}
+        ubuntu1604-arm64_odroid_c2-2: {ip: 70.167.220.148}
+        ubuntu1604-arm64_odroid_c2-3: {ip: 70.167.220.149, user: odroid}
+
+    - macstadium:
+        macos10.10-x64-1: {ip: 207.254.58.162, port: 10005, user: administrator}
+        macos10.10-x64-2: {ip: 207.254.58.162, port: 10006, user: administrator}
+        macos10.11-x64-1: {ip: 207.254.58.162, port: 10003, user: administrator}
+        macos10.11-x64-2: {ip: 207.254.58.162, port: 10004, user: administrator}
+        macos10.12-x64-1: {ip: 207.254.58.162, port: 10001, user: administrator}
+        macos10.12-x64-2: {ip: 207.254.58.162, port: 10002, user: administrator}
 
     - msft:
         win10_vs2017-arm64-1: {}
         win10_vs2017-arm64-2: {}
 
     - nearform:
-        macos10.15-x64-1: 
-            ip: 83.147.191.70
-            user: administrator
-            ansible_python_interpreter: /usr/bin/python3
-        macos10.15-x64-2:
-            ip: 83.147.191.71
-            user: administrator
-            ansible_python_interpreter: /usr/bin/python3
-        macos10.15-x64-3: 
-            ip: 83.147.191.72
-            user: administrator
-            ansible_python_interpreter: /usr/bin/python3
-        macos11.0-arm64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 83.147.191.75
-            user: admin
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+        macos10.15-x64-1: {ip: 83.147.191.70, user: administrator}
+        macos10.15-x64-2: {ip: 83.147.191.71, user: administrator}
+        macos10.15-x64-3: {ip: 83.147.191.72, user: administrator}
         intel-ubuntu1604-x64-1: {ip: 92.51.196.114}
         intel-ubuntu1604-x64-2: {ip: 92.51.196.115}
 
@@ -242,31 +199,11 @@ hosts:
         centos7-ppc64_le-4: {ip: 140.211.168.194, user: centos, build_test_v8: yes}
 
     - orka:
-        macos10.15-x64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.100
-            port: 8823
-            user: administrator
-        macos10.15-x64-2:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.99
-            port: 8823
-            user: administrator
-        macos10.14-x64-1:
-            ansible_python_interpreter: /usr/local/bin/python3
-            ip: 199.7.167.99
-            port: 8822
-            user: administrator
-        macos10.14-x64-2:
-            ansible_python_interpreter: /usr/local/bin/python3
-            ip: 199.7.167.100
-            port: 8824
-            user: administrator
-        macos10.14-x64-3:
-            ansible_python_interpreter: /usr/local/bin/python3
-            ip: 199.7.167.101
-            port: 8824
-            user: administrator
+        macos10.15-x64-1: {ip: 199.7.167.100, port: 8823, user: administrator}
+        macos10.15-x64-2: {ip: 199.7.167.99, port: 8823, user: administrator}
+        macos10.14-x64-1: {ip: 199.7.167.99, port: 8822, user: administrator}
+        macos10.14-x64-2: {ip: 199.7.167.100, port: 8824, user: administrator}
+        macos10.14-x64-3: {ip: 199.7.167.101, port: 8824, user: administrator}
 
     - iinthecloud:
         ibmi73-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
@@ -281,8 +218,8 @@ hosts:
     - rackspace:
         centos7-x64-1: {ip: 119.9.27.82}
         debian8-x64-1: {ip: 23.253.109.216}
-        debian10-x64-1: {ip: 104.239.140.184}
-        fedora32-x64-1: {ip: 119.9.51.79}
+        debian8-x64-2: {ip: 104.239.140.184}
+        fedora27-x64-1: {ip: 119.9.51.79}
         ubuntu1604-x64-1: {ip: 119.9.51.176}
         ubuntu1604-x64-2: {ip: 104.130.124.194}
         win2012r2_vs2013-x64-1: {ip: 104.239.174.165}
@@ -339,12 +276,23 @@ hosts:
         piccoloaiutante-debian10-arm64_pi3-1:   {ip: 192.168.2.89, user: pi, alias: iojs-ns-pi3-10 }
         kahwee-debian10-arm64_pi3-1:            {ip: 192.168.2.90, user: pi, alias: iojs-ns-pi3-11 }
 
+        rvagg-ubuntu1404-arm64_odroidxu3-1: {ip: 192.168.2.10, user: odroid}
+        rvagg-ubuntu1404-arm64_odroidxu-1: {ip: 192.168.2.15}
+        rvagg-ubuntu1404-arm64_odroidxu-2: {ip: 192.168.2.16}
+
+        osx1010-x64-1: {ip: 192.168.2.210, user: iojs}
+
+    - scaleway:
+        ubuntu1804-armv7l-1: {ip: 212.47.233.202}
+        ubuntu1804-armv7l-2: {ip: 212.47.246.3}
+        ubuntu1804-armv7l-3: {ip: 212.47.227.202}
+
     - softlayer:
         centos6-x64-1: {ip: 169.61.75.51}
         centos6-x64-2: {ip: 169.61.75.58}
         centos7-x64-1: {ip: 50.23.85.250}
-        debian9-x64-1: {ip: 169.60.150.88}
-        debian10-x64-1: {ip: 169.44.16.126}
+        debian8-x86-1: {ip: 169.44.16.126}
+        debian9-x64-1: {ip: 169.60.150.91}
         ubuntu1404-x64-1: {ip: 50.97.245.5}
         ubuntu1404-x86-1: {ip: 50.97.245.9}
         ubuntu1804_docker-x64-1: {ip: 52.117.26.9}
