@@ -25,13 +25,6 @@ hosts:
         smartos15-x64-1: {ip: 139.178.83.227, alias: backup}
         ubuntu1604-x64-1: {ip: 147.75.88.57, alias: unencrypted}
 
-    - rackspace:
-        debian8-x64-1: {ip: 23.253.100.79, alias: gh-bot}
-
-    - softlayer:
-        debian8-x64-1: {ip: 184.172.29.199, alias: registry-mirror}
-
-
   - release:
 
     - digitalocean:
@@ -123,7 +116,6 @@ hosts:
         msft-win2016_vs2017-x64-6: {ip: nodejs.westus2.cloudapp.azure.com}
 
     - digitalocean:
-        debian8-x64-1: {ip: 159.203.103.52}
         debian9-x64-1: {ip: 138.197.97.208}
         fedora32-x64-1: {ip: 159.203.117.50}
         fedora30-x64-1: {ip: 178.62.236.249}
@@ -139,10 +131,10 @@ hosts:
         ubuntu1804-x64-1: {ip: 178.128.181.213}
 
     - ibm:
-        aix71-ppc64_be-3: 
+        aix71-ppc64_be-3:
             ip: 169.48.22.38
             server_jobs: 6
-        aix71-ppc64_be-4:  
+        aix71-ppc64_be-4:
             ip: 169.48.22.51
             server_jobs: 6
         rhel7-s390x-1: {ip: 148.100.86.21, user: linux1, build_test_v8: yes}
@@ -203,7 +195,7 @@ hosts:
         win10_vs2017-arm64-2: {}
 
     - nearform:
-        macos10.15-x64-1: 
+        macos10.15-x64-1:
             ip: 83.147.191.70
             user: administrator
             ansible_python_interpreter: /usr/bin/python3
@@ -211,7 +203,7 @@ hosts:
             ip: 83.147.191.71
             user: administrator
             ansible_python_interpreter: /usr/bin/python3
-        macos10.15-x64-3: 
+        macos10.15-x64-3:
             ip: 83.147.191.72
             user: administrator
             ansible_python_interpreter: /usr/bin/python3
@@ -230,7 +222,7 @@ hosts:
         aix72-ppc64_be-2:
             ip: 140.211.9.30
             server_jobs: 3 # Using anything higher than 3 causes crashes on this machine
-        aix72-ppc64_be-3: 
+        aix72-ppc64_be-3:
             ip: 140.211.9.131
             server_jobs: 6
         aix72-ppc64_be-4:
@@ -280,7 +272,6 @@ hosts:
 
     - rackspace:
         centos7-x64-1: {ip: 119.9.27.82}
-        debian8-x64-1: {ip: 23.253.109.216}
         debian10-x64-1: {ip: 104.239.140.184}
         fedora32-x64-1: {ip: 119.9.51.79}
         ubuntu1604-x64-1: {ip: 119.9.51.176}

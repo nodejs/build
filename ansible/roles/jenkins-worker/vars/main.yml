@@ -7,12 +7,12 @@
 init: {
   aix: ['aix71', 'aix72'],
   centos6: 'centos6',
-  debian: 'debian7',
+  debian: 'debian9',
   freebsd: 'freebsd',
   ibmi: 'ibmi73',
   macos: 'macos',
   rhel7: 'rhel7',
-  systemd: ['centos7', 'debian8', 'debian9', 'debian10', 'fedora', 'ubuntu1604', 'ubuntu1804'],
+  systemd: ['centos7', 'debian9', 'debian10', 'fedora', 'ubuntu1604', 'ubuntu1804'],
   svc: 'smartos',
   upstart: ['ubuntu12', 'ubuntu1404'],
   zos_start: 'zos'
@@ -79,7 +79,6 @@ jenkins: "{{ jenkins_init[init_type] }}"
 
 needs_monit: [
   'centos6',
-  'debian7',
   ]
 
 # some os'es needs different paths to java. add them here.

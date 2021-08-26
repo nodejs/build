@@ -5,10 +5,10 @@
 #
 # To properly run with secrets, copy and paste the YAML from
 # `build/github-bot/deployment_secrets.md` in the `nodejs/secrets` repo into
-# `ansible/host_vars/infra-rackspace-debian8-x64-1` in this repo (nodejs/build)
+# `ansible/host_vars/infra-rackspace-debian9-x64-1` in this repo (nodejs/build)
 #
 
-- hosts: infra-rackspace-debian8-x64-1
+- hosts: infra-rackspace-debian9-x64-1
   roles:
     - bootstrap
     - package-upgrade

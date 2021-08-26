@@ -85,7 +85,6 @@
     <hudson.matrix.LabelAxis>
       <name>nodes</name>
       <values>
-        <string>debian8-64</string>
         <string>debian9-64</string>
       </values>
     </hudson.matrix.LabelAxis>

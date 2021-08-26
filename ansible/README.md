@@ -25,9 +25,9 @@ below. To ensure that the secrets are in place and test the connection to a
 host use:
 
 ```console
-$ ansible test-digitalocean-debian8-x64-1 -m ping -vvvv
+$ ansible test-digitalocean-debian9-x64-1 -m ping -vvvv
 ## Or, for Windows hosts:
-$ ansible test-rackspace-win2008r2-x64-1 -m win_ping -vvvv
+$ ansible test-msft-win2016_vs2017-x64-1 -m win_ping -vvvv
 ```
 
 If you're adding a new host, limiting Ansible to just running on that host is
@@ -36,7 +36,7 @@ when you just need to edit a few set of hosts:
 
 ```console
 $ ansible-playbook playbooks/jenkins/worker/create.yml \
-    --limit "test-digitalocean-debian8-x64-1" -vv
+    --limit "test-digitalocean-debian9-x64-1" -vv
 ```
 
 If you only want to run a specific set of steps, you can use `--step`. This is
@@ -133,7 +133,7 @@ subelements:
 ```yaml
 - test:
   - digitalocean:
-    - debian8-x64-1: {ip: 1.2.3.4}
+    - debian9-x64-1: {ip: 1.2.3.4}
 ```
 
 Make sure you follow the naming convention. There are scripts in place that
