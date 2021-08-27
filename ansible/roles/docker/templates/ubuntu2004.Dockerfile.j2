@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM ubuntu:20.04
 
 ENV LC_ALL C
 ENV USER {{ server_user }}
@@ -13,40 +13,21 @@ ENV OSVARIANT docker
 ENV DESTCPU {{ arch }}
 ENV ARCH {{ arch }}
 
-RUN apk add --no-cache --upgrade apk-tools
-
-RUN apk add --no-cache libstdc++
-
-RUN apk add --no-cache --virtual .build-deps \
-        shadow \
-        binutils-gold \
-        curl \
-        g++ \
-        gcc \
-        gnupg \
-        libgcc \
-        linux-headers \
-        make \
-        python3 \
-        tar \
-        ccache \
-        openjdk8 \
-        git \
-        procps \
-        openssh-client \
-        py3-pip \
-        bash \
-        automake \
-        libtool \
-        autoconf
+RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
+    ccache \
+    g++-8 \
+    gcc-8 \
+    git \
+    openjdk-8-jre-headless \
+    curl \
+    python3-pip \
+    libfontconfig1
 
 RUN pip3 install tap2junit
 
-RUN addgroup -g {{ server_user_gid.stdout_lines[0] }} {{ server_user }}
+RUN addgroup --gid {{ server_user_gid.stdout_lines[0] }} {{ server_user }}
 
-RUN adduser -G {{ server_user }} -D -u {{ server_user_uid.stdout_lines[0] }} {{ server_user }}
-
-RUN ln -s /usr/bin/python3 /usr/local/bin/python
+RUN adduser --gid {{ server_user_gid.stdout_lines[0] }} --uid {{ server_user_uid.stdout_lines[0] }} --disabled-password --gecos {{ server_user }} {{ server_user }}
 
 VOLUME /home/{{ server_user }}/ /home/{{ server_user }}/.ccache
 

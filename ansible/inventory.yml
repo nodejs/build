@@ -138,6 +138,9 @@ hosts:
         ubuntu1804_docker-x64-2: {ip: 159.89.183.200}
         ubuntu1804-x64-1: {ip: 178.128.181.213}
 
+    - equinix:
+        ubuntu2004_docker-arm64-1: {ip: 145.40.81.219}
+
     - ibm:
         aix71-ppc64_be-3: 
             ip: 169.48.22.38

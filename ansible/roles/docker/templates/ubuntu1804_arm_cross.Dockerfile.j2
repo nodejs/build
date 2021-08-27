@@ -51,8 +51,8 @@ ENV USER={{ server_user }} \
   NODE_TEST_DIR=/home/{{ server_user }}/tmp \
   OSTYPE=linux-gnu \
   OSVARIANT=docker \
-  DESTCPU=x64 \
-  ARCH=x64 \
+  DESTCPU={{ arch }} \
+  ARCH={{ arch }} \
   CCACHE_TEMPDIR=/home/{{ server_user }}/.ccache/{{ item.name }}
 
 CMD cd /home/{{ server_user }} \

@@ -10,8 +10,8 @@ ENV NODE_COMMON_PIPE /home/{{ server_user }}/test.pipe
 ENV NODE_TEST_DIR /home/{{ server_user }}/tmp
 ENV OSTYPE linux-gnu
 ENV OSVARIANT docker
-ENV DESTCPU x64
-ENV ARCH x64
+ENV DESTCPU {{ arch }}
+ENV ARCH {{ arch }}
 
 RUN apk add --no-cache --upgrade apk-tools
 
