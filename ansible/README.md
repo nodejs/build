@@ -226,7 +226,9 @@ containers that are managed there.
 The docker-host playbook sets up services which are managed via `systemctl`. 
 If you log into the host sytsem you can view them with `systemctl | grep
 jenkins-` and start and stop individual ones using `systemctl start` and
-`systemctl stop` commands as and when required.
+`systemctl stop` commands as and when required. For more information on
+debugging problems, see the
+[separate guide to fixing docker machines](https://github.com/nodejs/build/blob/master/doc/jenkins-guide.md#fixing-machines-with-docker)
 
 ### TODO
 
