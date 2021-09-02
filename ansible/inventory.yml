@@ -126,8 +126,8 @@ hosts:
         debian8-x64-1: {ip: 159.203.103.52}
         debian9-x64-1: {ip: 138.197.97.208}
         fedora32-x64-1: {ip: 159.203.117.50}
-        fedora30-x64-1: {ip: 178.62.236.249}
-        fedora30-x64-2: {ip: 159.203.98.84}
+        fedora34-x64-1: {ip: 178.62.236.249}
+        fedora34-x64-2: {ip: 159.203.98.84}
         freebsd11-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd11-x64-2: {ip: 107.170.28.213, user: freebsd}
         ubuntu1404-x64-1: {ip: 45.55.252.223}
