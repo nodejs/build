@@ -23,9 +23,9 @@ RUN yum -y update && \
       pkgconfig \
       curl \
       python3-pip \
-      fontconfig-devel
-
-RUN yum -y install libtool automake
+      fontconfig-devel \
+      libtool \
+      automake
 
 RUN pip3 install tap2junit
 
