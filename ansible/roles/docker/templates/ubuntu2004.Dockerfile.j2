@@ -21,6 +21,7 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
     openjdk-8-jre-headless \
     curl \
     python3-pip \
+    python-is-python3 \
     libfontconfig1
 
 RUN pip3 install tap2junit
