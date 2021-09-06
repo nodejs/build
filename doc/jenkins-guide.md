@@ -17,6 +17,7 @@ A guide on maintaining Node.js' Test and Release Jenkins clusters
   * [Read-only filesystem](#read-only-filesystem)
   * [Restart the machine](#restart-the-machine)
   * [Fixing machines with Docker](#fixing-machines-with-docker)
+  * [Windows](#windows)
   * [IDK what to do](#idk-what-to-do)
 
 
