@@ -113,7 +113,7 @@
     - '*/30 *    * * *   dist    /home/staging/tools/promote/promote_nightly.sh nodejs'
     - '*/5  *    * * *   nodejs  /home/nodejs/check-build-site.sh nodejs'
     - '*/5  *    * * *   root    /home/nodejs/cdn-purge.sh'
-    - '* */4   * * *   nodejs  /home/nodejs/sync-benchmarking.sh'
+    - '0 */4   * * *   nodejs  /home/nodejs/sync-benchmarking.sh'
   tags: setup
 
 - name: Site Setup | Add dist-perms script in cron.daily
