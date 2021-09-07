@@ -27,11 +27,6 @@
   when: os == "ubuntu1404" and arch != "ppc64" or os == "debian8"
   debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
 
-- name: update packages
-  when: arch != "ppc64"
-  include_role:
-    name: package-upgrade
-
 # if this fails you want to check in vars/main.yml and add package name
 # as appropriate -- try to use generic os family if available.
 
