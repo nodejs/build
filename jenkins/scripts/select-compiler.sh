@@ -196,6 +196,20 @@ elif [ "$SELECT_ARCH" = "ARM64" ]; then
       . /opt/rh/devtoolset-6/enable
       echo "Compiler set to devtoolset-6"
       ;;
+    *ubuntu1804* )
+      if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
+        export CC="ccache gcc-8"
+        export CXX="ccache g++-8"
+        export GCOV="gcov-8"
+        export LINK="g++-8"
+      else
+        export CC="ccache gcc-6"
+        export CXX="ccache g++-6"
+        export GCOV="gcov-6"
+        export LINK="g++-6"
+      fi
+      echo "Compiler set to GCC" `$CXX -dumpversion`
+      ;;
   esac
 
 fi
