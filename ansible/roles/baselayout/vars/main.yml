@@ -139,6 +139,7 @@ packages: {
 
   smartos18: [
     'gcc7',
+    'gcc8',
     'ccache',
     'python37'
   ],
