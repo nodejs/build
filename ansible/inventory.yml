@@ -38,6 +38,9 @@ hosts:
         centos6-x86-1: {ip: 162.243.248.28}
         centos7-x64-1: {ip: 138.68.12.105}
 
+    - equinix:
+        centos7-arm64-1: {ip: 139.178.85.110, server_jobs: 32}
+
     - ibm:
         aix71-ppc64_be-2:
             ip: 169.48.19.173
