@@ -181,6 +181,14 @@ elif [ "$SELECT_ARCH" = "X64" ]; then
       fi
       echo "Compiler set to GCC" `$CXX -dumpversion`
       ;;
+    smartos18* )
+      if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
+        export PATH="/opt/local/gcc8/bin:$PATH"
+      fi
+      export CC="ccache gcc"
+      export CXX="ccache g++"
+      echo "Compiler set to GCC" `$CXX -dumpversion`
+      ;;
   esac
 
 elif [ "$SELECT_ARCH" = "ARM64" ]; then
