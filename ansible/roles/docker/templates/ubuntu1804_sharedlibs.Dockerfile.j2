@@ -80,7 +80,7 @@ ENV OPENSSL300DIR /opt/openssl-3.0.0
 
 RUN mkdir -p /tmp/openssl_3.0.0 && \
     cd /tmp/openssl_3.0.0 && \
-    git clone https://github.com/quictls/openssl.git -b openssl-3.0.0-beta1+quic --depth 1 && \
+    git clone https://github.com/quictls/openssl.git -b openssl-3.0.0+quic --depth 1 && \
     cd openssl && \
     ./config --prefix=$OPENSSL300DIR && \
     make -j 6 && \
