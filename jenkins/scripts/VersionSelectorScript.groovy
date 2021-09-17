@@ -43,6 +43,7 @@ def buildExclusions = [
 
   // Linux S390X --------------------------------------------
   [ /s390x/,                          anyType,     lt(6)   ],
+  [ /lto-s390x/,                      anyType,     lt(16)  ],
 
   // ARM  --------------------------------------------------
   [ /^debian8-docker-armv7$/,         releaseType, lt(10)  ],
