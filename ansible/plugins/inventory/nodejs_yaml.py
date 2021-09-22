@@ -144,6 +144,12 @@ def get_secrets_path():
             print("It must be the path to a local checkout of https://github.com/nodejs-private/secrets", file=sys.stderr)
             return None
 
+    path = os.path.realpath('../secrets/build/')
+    if os.path.isdir(path):
+        return path
+
+    print("Checked ../secrets/build/: it is not a directory", file=sys.stderr)
+
     path = os.path.realpath('../../secrets/build/')
     if os.path.isdir(path):
         return path
