@@ -91,6 +91,7 @@ def buildExclusions = [
   [ /^smartos17/,                     anyType,     gte(12) ],
   [ /^smartos18/,                     anyType,     lt(12)  ],
   [ /^smartos18/,                     releaseType, gte(14) ],
+  [ /^smartos18/,                     anyType,     gte(16)  ],
 
   // AIX PPC64 ---------------------------------------------
   [ /aix71/,                          anyType,     lt(10)  ],

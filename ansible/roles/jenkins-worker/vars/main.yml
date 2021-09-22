@@ -98,6 +98,7 @@ java_path: {
   'smartos16': '/opt/local/java/openjdk8/bin/java',
   'smartos17': '/opt/local/java/openjdk8/bin/java',
   'smartos18': '/opt/local/java/openjdk8/bin/java',
+  'smartos20': '/opt/local/java/openjdk8/bin/java',
   'zos24': '/usr/lpp/java/J8.0_64/bin/java'
   }
 
