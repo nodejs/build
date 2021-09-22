@@ -6,7 +6,7 @@
   "rules": [
     {
       "event": "push",
-      "match": "ref == \"refs/heads/master\" && repository.full_name == \"nodejs/nodejs.org\"",
+      "match": "ref == \"refs/heads/main\" && repository.full_name == \"nodejs/nodejs.org\"",
       "exec": "/home/nodejs/build-site.sh nodejs"
     },
     {

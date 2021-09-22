@@ -32,7 +32,7 @@ cd $clonedir
 git reset --hard
 git clean -fdx
 git fetch origin
-git checkout origin/master
+git checkout origin/main
 
 nodeuid=$(grep ^nodejs: /etc/passwd | awk -F: '{print $3}')
 nodegid=$(grep ^nodejs: /etc/passwd | awk -F: '{print $4}')
