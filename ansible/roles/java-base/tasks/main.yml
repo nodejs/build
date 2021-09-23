@@ -89,7 +89,7 @@
     body_format: json
     return_content: yes
     status_code: 200
-    url: "https://api.adoptopenjdk.net/v3/assets/feature_releases/{{ adoptopenjdk_version }}/ga?architecture={{ adoptopenjdk_arch }}&image_type=jre&jvm_impl=openj9&os={{ adoptopenjdk_os }}&project=jdk&heap_size=normal&page_size=1&sort_method=DEFAULT&sort_order=DESC&vendor=adoptopenjdk"
+    url: "https://api.adoptopenjdk.net/v3/assets/feature_releases/{{ adoptopenjdk_version }}/{{ adoptopenjdk_type }}?architecture={{ adoptopenjdk_arch }}&image_type=jre&jvm_impl=openj9&os={{ adoptopenjdk_os }}&project=jdk&heap_size=normal&page_size=1&sort_method=DEFAULT&sort_order=DESC&vendor=adoptopenjdk"
   when: use_adoptopenjdk == True
 
 # If we're already using the latest there is no need to do anything.
