@@ -135,7 +135,7 @@
     path: "/usr/bin/python3.7"
 
 - name: freebsd | update python package alternatives
-  when: os == "freebsd11"
+  when: os == "freebsd12"
   file:
     dest: "/usr/local/bin/python"
     state: link

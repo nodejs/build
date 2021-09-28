@@ -8,7 +8,7 @@
   package: name=py38-pip state=present
 
 - name: freebsd | update pip3 symlink
-  when: os == "freebsd11"
+  when: os == "freebsd12"
   file:
     dest: "/usr/local/bin/pip3"
     state: link
