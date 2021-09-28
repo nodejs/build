@@ -23,7 +23,10 @@ common_packages: [
 # you can either add os family or os to this list (see smartos)
 # but the playbook chooses os over family - not both
 packages: {
-  ubuntu: [
+  ubuntu2004: [
+    'docker.io',
+  ],
+  ubuntu1804: [
     'docker-ce',
   ],
 }
