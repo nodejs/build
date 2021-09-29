@@ -99,7 +99,7 @@ packages: {
   ],
 
   freebsd: [
-    'ccache,git,gmake,sudo,python3'
+    'ccache,git,gmake,sudo,python2,python3'
   ],
 
   'macos10.10': [
