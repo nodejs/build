@@ -93,12 +93,11 @@ fake secrets to the inventory instead and
 `export NODE_BUILD_SECRETS=/invalid/path/` to make sure the real secrets are
 not accessible.
 
-While in the `ansible` directory, run the playbook using the following
+While in the `build` directory, run the playbook using the following
 command:
 
 ```bash
-$ cd ansible
-$ ansible-playbook playbooks/create-github-bot.yml
+$ ansible-playbook ansible/playbooks/create-github-bot.yml
 ```
 
 Don't forget to run `vagrant down` once you are down with the virtual machine.
