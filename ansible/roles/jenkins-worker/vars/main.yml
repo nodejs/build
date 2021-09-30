@@ -92,6 +92,7 @@ java_path: {
   'macos10.14': 'java',
   'macos10.15': 'java',
   'macos10.16': 'java',
+  'macos11': 'java',
   # Currently hardcoded untill adopt have their build available
   'macos11.0': '/Users/administrator/zulu8.52.0.23-ca-jdk8.0.282-macosx_aarch64/bin/java',
   'smartos15': '/opt/local/java/openjdk8/bin/java',
