@@ -169,6 +169,13 @@ packages: {
     'python37'
   ],
 
+  smartos20: [
+    'gcc9',
+    'ccache',
+    'python38',
+    'py38-pip'
+  ],
+
   ubuntu: [
     'ccache,git,libfontconfig1,sudo,python3-pip',
   ],
