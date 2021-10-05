@@ -117,6 +117,7 @@ def buildExclusions = [
 
   // osx1015 enabled for all up, and builds all releases to support notarization
   // osx11 only for 15+ and builds the fat binary
+  // This will need splitting into arm + x64 when the release machines move up from 10.15
 
   // FreeBSD -----------------------------------------------
   [ /^freebsd10/,                     anyType,     gte(11) ],
