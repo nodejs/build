@@ -110,10 +110,11 @@ def buildExclusions = [
   [ /sharedlibs_shared/,              anyType,     lt(9)   ],
 
   // OSX ---------------------------------------------------
-  [ /osx11-release-pkg/,              releaseType, lt(16) ],
-  [ /osx11-release-tar/,              releaseType, lt(16) ],
-  [ /osx1015-release-pkg/,            releaseType, gte(16)  ],
+  [ /osx11-release-pkg/,              releaseType, lt(16)  ],
+  [ /osx11-release-tar/,              releaseType, lt(16)  ],
+  [ /osx1015-release-pkg/,            releaseType, gte(16) ],
   [ /^osx11/,                         testType,    lt(15)  ],
+  [ /osx1014/,                        anyType,     gt(16)  ],
 
   // osx1015 enabled for all up, and builds all releases to support notarization
   // osx11 only for 15+ and builds the fat binary
