@@ -68,6 +68,19 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
 
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on s390x"
 
+  # LTO builds need later compilers
+  case $nodes in
+    rhel7-lto-s390x)
+      # Setup devtoolset-10, sets LD_LIBRARY_PATH, PATH, etc.
+      . /opt/rh/devtoolset-10/enable
+      export CC="ccache s390x-redhat-linux-gcc"
+      export CXX="ccache s390x-redhat-linux-g++"
+      export LINK="s390x-redhat-linux-g++"
+      echo "Compiler set to devtoolset-10"
+      return;
+      ;;
+  esac
+
   if [ "$NODEJS_MAJOR_VERSION" -gt "13" ]; then
     # Setup devtoolset-8, sets LD_LIBRARY_PATH, PATH, etc.
     . /opt/rh/devtoolset-8/enable
