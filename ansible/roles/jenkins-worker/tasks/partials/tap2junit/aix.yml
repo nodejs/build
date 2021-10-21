@@ -28,14 +28,14 @@
    src: "/opt/freeware/bin/pip"
    dest: "/usr/bin/pip"
    state: link
-  when: pip_exists.stat.exists == False
+  when: pip_exists.stat.exists == False and os == "aix71"
 
 - name: create symbolic link AIX72
   file:
    src: "/opt/bin/pip"
    dest: "/usr/bin/pip"
    state: link
-  when: pip_exists.stat.exists == False
+  when: pip_exists.stat.exists == False and os == "aix72"
 
 - name: install tap2junit
   pip: 
