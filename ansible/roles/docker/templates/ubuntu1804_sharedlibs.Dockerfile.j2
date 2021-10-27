@@ -27,7 +27,9 @@ RUN apt-get update && apt-get install apt-utils -y && \
       curl \
       python-pip \
       python3-pip \
-      libfontconfig1
+      libfontconfig1 \
+      libtool \
+      automake
 
 RUN pip install tap2junit
 

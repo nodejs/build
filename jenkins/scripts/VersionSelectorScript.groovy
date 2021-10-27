@@ -35,7 +35,7 @@ def buildExclusions = [
   [ /^ubuntu1404-64/,                 anyType,     gte(12) ],
   [ /^ubuntu1604-32/,                 anyType,     gte(10) ], // 32-bit linux for <10 only
   [ /^ubuntu1604-64/,                 anyType,     gte(16) ],
-  [ /^ubuntu2004-(arm|x)?64/,         anyType,     lt(13)  ], // Ubuntu 20 doesn't have Python 2
+  [ /^ubuntu2004/,                    anyType,     lt(13)  ], // Ubuntu 20 doesn't have Python 2
   [ /^alpine-latest-x64$/,            anyType,     lt(13)  ], // Alpine 3.12 doesn't have Python 2
 
   // Linux PPC LE ------------------------------------------
@@ -91,6 +91,7 @@ def buildExclusions = [
   [ /^smartos17/,                     anyType,     gte(12) ],
   [ /^smartos18/,                     anyType,     lt(12)  ],
   [ /^smartos18/,                     releaseType, gte(14) ],
+  [ /^smartos18/,                     anyType,     gte(16)  ],
 
   // AIX PPC64 ---------------------------------------------
   [ /aix71/,                          anyType,     lt(10)  ],
@@ -110,13 +111,15 @@ def buildExclusions = [
   [ /sharedlibs_shared/,              anyType,     lt(9)   ],
 
   // OSX ---------------------------------------------------
-  [ /osx11-release-pkg/,              releaseType, lt(16) ],
-  [ /osx11-release-tar/,              releaseType, lt(16) ],
-  [ /osx1015-release-pkg/,            releaseType, gte(16)  ],
+  [ /osx11-release-pkg/,              releaseType, lt(16)  ],
+  [ /osx11-release-tar/,              releaseType, lt(16)  ],
+  [ /osx1015-release-pkg/,            releaseType, gte(16) ],
   [ /^osx11/,                         testType,    lt(15)  ],
+  [ /osx1014/,                        anyType,     gte(17)  ],
 
   // osx1015 enabled for all up, and builds all releases to support notarization
   // osx11 only for 15+ and builds the fat binary
+  // This will need splitting into arm + x64 when the release machines move up from 10.15
 
   // FreeBSD -----------------------------------------------
   [ /^freebsd10/,                     anyType,     gte(11) ],

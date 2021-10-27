@@ -13,7 +13,7 @@ packages: {
   'fedora': 'java-1.8.0-openjdk-headless',
   'freebsd': 'openjdk8-jre',
   'ibmi': 'openjdk-11-ea',
-  'macos10': 'adoptopenjdk8',
+  'macos': 'adoptopenjdk8',
   'rhel7': 'java-1.8.0-openjdk',
   'smartos': 'openjdk8',
   'ubuntu': 'openjdk-8-jre-headless',

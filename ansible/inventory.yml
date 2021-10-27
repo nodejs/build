@@ -51,8 +51,8 @@ hosts:
         ibmi73-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
 
     - joyent:
-        smartos17-x64-2: {ip: 147.75.88.60}
         smartos18-x64-2: {ip: 147.75.88.53}
+        smartos20-x64-2: {ip: 147.75.88.60}
         ubuntu1804_docker-x64-1: {ip: 147.75.88.56, user: ubuntu}
 
     - macstadium:
@@ -131,8 +131,8 @@ hosts:
         fedora32-x64-1: {ip: 159.203.117.50}
         fedora34-x64-1: {ip: 178.62.236.249}
         fedora34-x64-2: {ip: 159.203.98.84}
-        freebsd11-x64-1: {ip: 45.55.90.237, user: freebsd}
-        freebsd11-x64-2: {ip: 107.170.28.213, user: freebsd}
+        freebsd12-x64-1: {ip: 45.55.90.237, user: freebsd}
+        freebsd12-x64-2: {ip: 107.170.28.213, user: freebsd}
         ubuntu1404-x64-1: {ip: 45.55.252.223}
         ubuntu1404-x86-1: {ip: 159.203.115.220}
         ubuntu1604-x86-1: {ip: 159.203.77.233}
@@ -156,12 +156,13 @@ hosts:
         rhel7-s390x-3: {ip: 148.100.86.28, user: linux1, build_test_v8: yes}
         rhel7-s390x-4: {ip: 148.100.86.94, user: linux1, build_test_v8: yes}
         ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
+        ubuntu1804-x64-2: {ip: 50.97.245.9}
 
     - joyent:
-        smartos17-x64-3: {ip: 147.75.88.59}
-        smartos17-x64-4: {ip: 147.75.88.61}
         smartos18-x64-3: {ip: 147.75.88.54}
         smartos18-x64-4: {ip: 147.75.88.55}
+        smartos20-x64-3: {ip: 147.75.88.59}
+        smartos20-x64-4: {ip: 147.75.88.61}
         ubuntu1804-x64-1: {ip: 147.75.88.51, user: ubuntu}
 
     - macstadium:
@@ -273,6 +274,16 @@ hosts:
             ip: 199.7.167.101
             port: 8824
             user: administrator
+        macos11-x64-1:
+            ansible_python_interpreter: /usr/bin/python3
+            ip: 199.7.167.101
+            port: 8823
+            user: administrator
+        macos11-x64-2:
+            ansible_python_interpreter: /usr/bin/python3
+            ip: 199.7.167.99
+            port: 8824
+            user: administrator
 
     - iinthecloud:
         ibmi73-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
@@ -352,7 +363,6 @@ hosts:
         debian9-x64-1: {ip: 169.60.150.88}
         debian10-x64-1: {ip: 169.44.16.126}
         ubuntu1404-x64-1: {ip: 50.97.245.5}
-        ubuntu1404-x86-1: {ip: 50.97.245.9}
         ubuntu1804_docker-x64-1: {ip: 52.117.26.9}
 
     - packetnet:

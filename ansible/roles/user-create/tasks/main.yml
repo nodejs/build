@@ -30,6 +30,15 @@
     mode: 0755
     recurse: yes
 
+- name: set ulimits for AIX
+  changed_when: False
+  command: chsec -f /etc/security/limits -s {{ server_user }} -a {{ item }}
+  when: os|startswith("aix")
+  with_items:
+  - "data=-1"
+  - "fsize=-1"
+  - "nofiles=-1"
+
 - name: create NODE_TEST_DIR directory
   file: path="{{ home }}/{{ server_user }}/tmp" state=directory
 
