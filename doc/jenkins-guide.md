@@ -301,7 +301,9 @@ reboot
 ```
 
 On the advice of the system adminstrators managing the AIX machines, please do
-not restart them without good reason, it will make things worse.
+not restart them without good reason, it will make things worse. It may help to
+run the https://ci.nodejs.org/job/aix-cleanup/ to kill any stray processes from
+earlier failed job runs.
 
 ### Fixing machines with Docker
 
