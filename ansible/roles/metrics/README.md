@@ -1,4 +1,11 @@
+### Accesing the GCP from command line
+
+* Copy secrets/build/infra/gcp-metrics-service-acct-key.json to ~nodejs/
+* As user `nodejs` run `gcloud auth activate-service-account --key-file gcp-metrics-service-acct-key.json`
+* Set up new SSH key with access to root@direct.nodejs.org and root@backup-www.nodejs.org under user `nodejs`
+
 ### Current Work Flow
+
 * The logs from cloudflare come in five minute intervals (e.g 20210105/20210105T141000Z_20210105T141500Z_adbdac1f.log.gz contains every log from the period of 1410 - 1415 on 2021/01/05 UTC)
 * Every time a new log file is created it is automatically pushed to GCP to the bucket `cloudflare-logs-nodejs`
 * When a new file is uploaded to `cloudflare-logs-nodejs` this triggers a "notification". This notification then sends a message to the `cloudflare-logs` topic.
@@ -9,9 +16,4 @@
 * If any error occurs in the processing a 500 code is sent back and the subscription will try to resend the message after a time delay.
 * The Cloud Run instance has 1GiB of memory assigned to it which should be enough to handle the size of the files we see.
 
-
-### Accesing the GCP from command line
-
-* Copy secrets/build/infra/gcp-metrics-service-acct-key.json to ~nodejs/
-* As user `nodejs` run `gcloud auth activate-service-account --key-file gcp-metrics-service-acct-key.json`
-* Set up new SSH key with access to root@direct.nodejs.org and root@backup-www.nodejs.org under user `nodejs`
+![Metrics Flow](../../../static-assets/metrics_flow.png)
