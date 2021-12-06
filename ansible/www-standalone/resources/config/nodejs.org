@@ -347,7 +347,7 @@ server {
     }
 
     rewrite ^/security.txt$                                       https://$server_name/.well-known/security.txt permanent;
-    rewrite ^/about/security/?$                                   https://$server_name/en/security/ permanent;
+    rewrite ^/about/security/?$                                   https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
     rewrite ^/contribute/?$                                       https://$server_name/en/get-involved/ permanent;
     rewrite ^/contribute/accepting_contributions.html$            https://github.com/nodejs/dev-policy permanent;
     rewrite ^/contribute/becoming_collaborator.html$              https://$server_name/en/get-involved/ permanent;
@@ -370,10 +370,11 @@ server {
     rewrite ^/about/?$                                            https://$server_name/en/about/ permanent;
     rewrite ^/about/releases/?$                                   https://$server_name/en/about/releases/ permanent;
     rewrite ^/about/resources/?$                                  https://$server_name/en/about/resources/ permanent;
-    rewrite ^/about/security/?$                                   https://$server_name/en/security/ permanent;
+    rewrite ^/about/security/?$                                   https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
     rewrite ^/about/trademark/?$                                  https://$server_name/en/about/trademark/ permanent;
     rewrite ^/blog/?$                                             https://$server_name/en/blog/ permanent;
     rewrite ^/community/?$                                        https://$server_name/en/get-involved/ permanent;
+    rewrite ^/en/security                                         https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
 
     rewrite ^/dist/staging/(.*)$                                  https://$server_name/dist/$1 permanent;
 
