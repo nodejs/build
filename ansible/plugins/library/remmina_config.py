@@ -84,6 +84,11 @@ def find_remmina():
     if os.path.isfile(config) and os.path.isdir(target):
         return (config, target)
 
+    config = os.path.expanduser('~/.var/app/org.remmina.Remmina/config/remmina/remmina.pref')
+    target = os.path.expanduser('~/.var/app/org.remmina.Remmina/data/remmina')
+    if os.path.isfile(config) and os.path.isdir(target):
+        return (config, target)
+
     config = os.path.expanduser('~/.remmina/remmina.pref')
     target = os.path.expanduser('~/.remmina')
     if os.path.isfile(config) and os.path.isdir(target):
