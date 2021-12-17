@@ -56,36 +56,29 @@ RUN for ICU_ENV in $(env | grep ICU..DIR); do \
     rm -rf /tmp/icu-$ICU_VERSION; \
     done
 
-ENV OPENSSL110DIR /opt/openssl-1.1.0l
+ENV OPENSSL111DIR /opt/openssl-1.1.1m
 
-RUN mkdir -p /tmp/openssl_1.1.0l && \
-    cd /tmp/openssl_1.1.0l && \
-    curl -sL https://www.openssl.org/source/openssl-1.1.0l.tar.gz | tar zxv --strip=1 && \
-    ./config --prefix=$OPENSSL110DIR && \
-    make -j 6 && \
-    make install && \
-    rm -rf /tmp/openssl_1.1.0l
-
-ENV OPENSSL111DIR /opt/openssl-1.1.1l
-
-RUN mkdir -p /tmp/openssl_1.1.1l && \
-    cd /tmp/openssl_1.1.1l && \
-    curl -sL https://www.openssl.org/source/openssl-1.1.1l.tar.gz | tar zxv --strip=1 && \
+RUN mkdir -p /tmp/openssl_1.1.1m && \
+    cd /tmp/openssl_1.1.1m && \
+    curl -sL https://www.openssl.org/source/openssl-1.1.1m.tar.gz | tar zxv --strip=1 && \
     ./config --prefix=$OPENSSL111DIR && \
     make -j 6 && \
     make install && \
-    rm -rf /tmp/openssl_1.1.1l
+    rm -rf /tmp/openssl_1.1.1m
 
-ENV OPENSSL300DIR /opt/openssl-3.0.0
+ENV OPENSSL3VER 3.0.1+quic
+ENV OPENSSL3DIR /opt/openssl-$OPENSSL3VER
+# TODO(richardlau) remove OPENSSL300DIR when the CI has been updated to use OPENSSL3DIR
+ENV OPENSSL300DIR $OPENSSL3DIR
 
-RUN mkdir -p /tmp/openssl_3.0.0 && \
-    cd /tmp/openssl_3.0.0 && \
-    git clone https://github.com/quictls/openssl.git -b openssl-3.0.0+quic --depth 1 && \
+RUN mkdir -p /tmp/openssl-$OPENSSL3VER && \
+    cd /tmp/openssl-$OPENSSL3VER && \
+    git clone https://github.com/quictls/openssl.git -b openssl-$OPENSSL3VER --depth 1 && \
     cd openssl && \
-    ./config --prefix=$OPENSSL300DIR && \
+    ./config --prefix=$OPENSSL3DIR && \
     make -j 6 && \
     make install && \
-    rm -rf /tmp/openssl_3.0.0
+    rm -rf /tmp/openssl-$OPENSSL3VER
 
 ENV ZLIB12DIR /opt/zlib_1.2.11
 
