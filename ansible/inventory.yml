@@ -89,7 +89,7 @@ hosts:
         macos10.15-x64-1:
             ansible_python_interpreter: /usr/bin/python3
             ip: 199.7.167.101
-            port: 8822
+            port: 8825
             user: administrator
 
     - packetnet:
@@ -251,38 +251,38 @@ hosts:
     - orka:
         macos10.15-x64-1:
             ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.100
-            port: 8823
+            ip: 199.7.167.102
+            port: 8824
             user: administrator
         macos10.15-x64-2:
             ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.99
-            port: 8823
+            ip: 199.7.167.101
+            port: 8824
             user: administrator
         macos10.14-x64-1:
             ansible_python_interpreter: /usr/local/bin/python3
-            ip: 199.7.167.99
+            ip: 199.7.167.101
             port: 8822
             user: administrator
         macos10.14-x64-2:
             ansible_python_interpreter: /usr/local/bin/python3
-            ip: 199.7.167.100
-            port: 8824
-            user: administrator
-        macos10.14-x64-3:
-            ansible_python_interpreter: /usr/local/bin/python3
-            ip: 199.7.167.101
-            port: 8824
-            user: administrator
-        macos11-x64-1:
-            ansible_python_interpreter: /usr/bin/python3
             ip: 199.7.167.101
             port: 8823
             user: administrator
+        macos10.14-x64-3:
+            ansible_python_interpreter: /usr/local/bin/python3
+            ip: 199.7.167.102
+            port: 8825
+            user: administrator
+        macos11-x64-1:
+            ansible_python_interpreter: /usr/bin/python3
+            ip: 199.7.167.102
+            port: 8822
+            user: administrator
         macos11-x64-2:
             ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.99
-            port: 8824
+            ip: 199.7.167.102
+            port: 8823
             user: administrator
 
     - iinthecloud:
