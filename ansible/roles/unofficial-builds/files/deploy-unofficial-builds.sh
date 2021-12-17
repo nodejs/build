@@ -10,6 +10,6 @@ cd /home/nodejs/unofficial-builds
 git reset --hard
 git clean -fdx
 git fetch origin
-git checkout origin/master
+git checkout origin/main
 
 bash -c ./bin/deploy.sh
