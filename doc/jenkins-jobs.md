@@ -11,7 +11,7 @@ be able to complete the validation.
 If validation fails an email notification is sent to the
 `release-validation-alert` email alias. If you would like to get these
 notifications submit a PR to have your email added for that alias in
-https://github.com/nodejs/email/blob/master/iojs.org/aliases.json.
+https://github.com/nodejs/email/blob/HEAD/iojs.org/aliases.json.
 
 This job needs to be updated each time a we roll over to a new Current
 release.

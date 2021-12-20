@@ -45,7 +45,7 @@ steps are executed, to avoid disrupting the machines.
 
 You can't run any playbooks on a host until you've manually created a
 `build:ansible/host_vars/HOST` file for that host (same name as the argument
-to limit, above). Use `host_vars/test-marist-zos13-s390x-templat` as an
+to limit, above). Use `host_vars/test-marist-zos13-s390x-template` as an
 example. The `secret:` doesn't have to be the real Jenkins secret until the
 worker actually has to connect to the master.
 
@@ -214,7 +214,7 @@ Where each item corresponds to a container to be set up and run on the host.
 
 Each `name` should exist as a node in Jenkins and the corresponding `secret`
 should be given.  The `os` determines the `Dockerfile` to use to build the
-host.  The templates for these can be found in `roles/docker/templates/`. 
+host.  The templates for these can be found in `roles/docker/templates/`.
 
 For testing purposes, the stanza above can be added into
 `host_vars/<docker_host>`, then the master record should be in the
@@ -223,7 +223,7 @@ For testing purposes, the stanza above can be added into
 Note that the Docker host itself doesn't need to be known by Jenkins, just the
 containers that are managed there.
 
-The docker-host playbook sets up services which are managed via `systemctl`. 
+The docker-host playbook sets up services which are managed via `systemctl`.
 If you log into the host sytsem you can view them with `systemctl | grep
 jenkins-` and start and stop individual ones using `systemctl start` and
 `systemctl stop` commands as and when required. For more information on

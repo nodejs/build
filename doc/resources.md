@@ -185,7 +185,7 @@ jenkins-release-admins membership who do not have infra or release membership.
 
 ### [GitHub Bot][]
 
-The `github-bot` is the server that runs different [automation scripts](https://github.com/nodejs/github-bot/tree/master/scripts) within the Node.js Foundation GitHub organization. For example, the bot automatically applies labels to new pull requests in `nodejs/node`, and can trigger Jenkins builds or report their statuses on pull requests. Its Ansible configuration lives in [`playbooks/create-github-bot.yml`](https://github.com/nodejs/build/tree/master/ansible/playbooks/create-github-bot.yml)
+The `github-bot` is the server that runs different [automation scripts](https://github.com/nodejs/github-bot/tree/HEAD/scripts) within the Node.js Foundation GitHub organization. For example, the bot automatically applies labels to new pull requests in `nodejs/node`, and can trigger Jenkins builds or report their statuses on pull requests. Its Ansible configuration lives in [`playbooks/create-github-bot.yml`](https://github.com/nodejs/build/tree/master/ansible/playbooks/create-github-bot.yml)
 
 Those with `github-bot` access have access to the GitHub Bot's configuration,
 including GitHub and Jenkins secrets. The list of members is

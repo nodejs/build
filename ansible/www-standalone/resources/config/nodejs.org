@@ -445,7 +445,7 @@ server {
     rewrite ^/advisory-board                                      https://github.com/nodejs/TSC permanent;
     rewrite ^/about/advisory-board                                https://github.com/nodejs/TSC permanent;
     rewrite ^/about/organization/?$                               https://github.com/nodejs/TSC permanent;
-    rewrite ^/about/organization/tsc-meetings                     https://github.com/nodejs/TSC/tree/master/meetings permanent;
+    rewrite ^/about/organization/tsc-meetings                     https://github.com/nodejs/TSC/tree/HEAD/meetings permanent;
     rewrite ^/(en|es|uk)/foundation/?$                            https://foundation.nodejs.org/ permanent;
     rewrite ^/(en|uk)/foundation/case-studies/?$                  https://foundation.nodejs.org/resources permanent;
     rewrite ^/(en|uk)/foundation/members/?$                       https://foundation.nodejs.org/about/members permanent;
