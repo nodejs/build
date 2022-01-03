@@ -1,0 +1,23 @@
+/home/nodejs/github-webhook.log
+{
+        monthly
+        missingok
+        compresscmd /usr/bin/xz
+        uncompresscmd /usr/bin/unxz
+        compressext .xz
+        compress
+        notifempty
+        create 0640 nodejs nodejs
+        dateext
+        dateformat .%Y%m%d.%s
+        dateyesterday
+        maxsize 500M
+        sharedscripts
+        rotate 36500
+        prerotate
+                systemctl stop github-webhook
+        endscript
+        postrotate
+                systemctl start github-webhook
+        endscript
+}

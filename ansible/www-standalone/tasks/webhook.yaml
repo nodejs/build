@@ -21,3 +21,13 @@
     state: restarted
     enabled: yes
   tags: webhook
+
+- name: GitHub Webhook | Copy logrotate config
+  copy:
+    src: ./resources/config/logrotate-github-webhook
+    dest: /etc/logrotate.d/github-webhook
+    mode: 0644
+    owner: root
+    group: root
+  tags: webhook
+
