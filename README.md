@@ -4,7 +4,7 @@ generations of Raspberry Pi and other ARMv7 & ARM64 hardware</small></i></p>
 
 # Node.js Build Working Group
 
-Chat with us! We use IRC: [#node-build at Freenode][1].
+Chat with us on [Slack][1].
 
 ## Purpose
 
@@ -284,7 +284,7 @@ months after the release goes End-of-Life, in case further build or test runs
 are required. After that the configuration will be removed.
 
 
-[1]:    irc://irc.freenode.net/node-build
+[1]:    https://node-js.slack.com/archives/C16SCB5JQ
 [2]:    https://digitalocean.com/
 [3]:    https://www.rackspace.com/
 [5]:    https://www.mailgun.com/
