@@ -9,6 +9,7 @@
 * [RHEL7-S390X](#rhel7-s390x)
   * [devtoolset-6 install](#devtoolset-6-install)
 * [macOS](#macos)
+  * [Install Command Line Tools for Xcode](#install-command-line-tools-for-xcode)
 * [AIX 7.1](#aix-71)
   * [Remove en1 network interface](#remove-en1-network-interface)
 * [AIX 7.2 Install](#aix-72-install)
@@ -164,6 +165,62 @@ to
 
 ```bash
 sudo systemsetup -setremotelogin on
+```
+
+### Install Command Line Tools for Xcode
+
+Older versions of `gyp` in Node.js 12 and npm 6 (included in Node.js 12
+and 14) cannot detect Command Line Tools for Xcode unless they have
+been installed manually. Later versions of `gyp` in Node.js 16 and
+above, and npm 7/8 use an additional way to detect the Command Line
+Tools for Xcode and do not need this step done to build.
+
+`gyp` only checks for Command Line Tools for Xcode if a full Xcode
+install was not detected (e.g. on the release machines). We do not
+install the full Xcode on the test machines to save disk space (the
+Command Line Tools are much smaller).
+
+To check if this needs to be done on a macOS instance that will build
+Node.js 12 or 14, run
+```console
+pkgutil --pkg-info=com.apple.pkg.CLTools_Executables
+```
+
+This should return something like
+```console
+package-id: com.apple.pkg.CLTools_Executables
+version: 11.5.0.0.1.1588476445
+volume: /
+location: /
+install-time: 1642786943
+groups: com.apple.FindSystemFiles.pkg-group
+```
+
+If instead this errors with:
+```console
+No receipt for 'com.apple.pkg.CLTools_Executables' found at '/'.
+```
+
+then manually download and install:
+1. Go to https://developer.apple.com/download/all/?q=command with an
+Apple Developer account (it does not need to be the Build WG's account)
+and find `Command Line Tools for Xcode 11.5`. Click the `View Details`
+twisty to reveal the download link and download the 
+`Command_Line_Tools_for_Xcode_11.5.dmg` file.
+2. Mount the `.dmg` disk image. This creates 
+`/Volumes/Command Line Developer Tools`
+```console
+sudo hdiutil attach Command_Line_Tools_for_Xcode_11.5.dmg
+```
+3. Install the `.pkg` inside the mounted disk image.
+```console
+sudo installer -package /Volumes/Command\ Line\ Developer\ Tools/Command\ Line\ Tools.pkg -target /
+```
+4. Verify with the earlier `pkgutil` command that the installation is
+detectable.
+5. Unmount the disk image.
+```console
+sudo hdiutil detach /Volumes/Command\ Line\ Developer\ Tools
 ```
 
 ## AIX 7.1
