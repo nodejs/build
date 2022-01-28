@@ -16,6 +16,8 @@
     - { role: 'benchmarking',
         when: is_benchmark is defined and is_benchmark|bool == True }
     - jenkins-worker
+    - { role: release-builder,
+        when: '"release" in group_names' }
 
   pre_tasks:
 # Requires `secret: XXX` to be in the ansible/host_vars/HOST

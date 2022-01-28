@@ -15,6 +15,7 @@ packages: {
   'ibmi': 'openjdk-11-ea',
   'macos': 'adoptopenjdk8',
   'rhel7': 'java-1.8.0-openjdk',
+  'rhel8': 'java-17-openjdk',
   'smartos': 'openjdk8',
   'ubuntu': 'openjdk-8-jre-headless',
   'ubuntu1404': 'oracle-java8-installer',

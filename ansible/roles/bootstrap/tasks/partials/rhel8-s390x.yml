@@ -1,0 +1,42 @@
+---
+
+# Red Hat Enterprise Linux 8 on s390x (LinuxONE)
+
+- name: run common RHEL 8 tasks
+  ansible.builtin.include_tasks: rhel8.yml
+
+- name: Firewall | install iptables-services
+  ansible.builtin.dnf:
+    name: iptables-services
+    state: present
+
+- name: Firewall | enable iptables
+  ansible.builtin.systemd:
+    enabled: yes
+    name: iptables
+
+- name: Firewall | remove firewalld
+  ansible.builtin.dnf:
+    name: firewalld
+    state: absent
+
+- name: Firewall | add rule to allow accepting multicast
+  lineinfile:
+    dest: /etc/sysconfig/iptables
+    insertafter: ":OUTPUT ACCEPT.*]"
+    line: "-A INPUT -m pkttype --pkt-type multicast -j ACCEPT"
+  notify: restart iptables
+
+- name: Firewall | add basic rule to allow communication locally
+  lineinfile:
+    dest: /etc/sysconfig/iptables
+    insertafter: ":OUTPUT ACCEPT.*]"
+    line: "-A INPUT -s 127.0.0.1/32 -d 127.0.0.1/32 -j ACCEPT"
+  notify: restart iptables
+
+- name: Firewall | add additional rule to allow communication from 127.0.0.2
+  lineinfile:
+    dest: /etc/sysconfig/iptables
+    insertafter: ":OUTPUT ACCEPT.*]"
+    line: "-A INPUT -s 127.0.0.2/32 -d 127.0.0.1/32 -j ACCEPT"
+  notify: restart iptables

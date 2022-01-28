@@ -31,6 +31,7 @@
 # as appropriate -- try to use generic os family if available.
 
 - name: Check if java is already installed
+  changed_when: no
   check_mode: no
   raw: "{{ java_path[os] | default(\"java\") }} -version"
   register: java

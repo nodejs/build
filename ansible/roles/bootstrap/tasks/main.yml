@@ -10,6 +10,7 @@
       loop_var: bootstrap_include
     with_first_found:
       - files:
+        - "{{ role_path }}/tasks/partials/{{ os }}-{{ arch }}.yml"
         - "{{ role_path }}/tasks/partials/{{ os }}.yml"
         - "{{ role_path }}/tasks/partials/{{ os|stripversion }}.yml"
         skip: true

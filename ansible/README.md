@@ -234,10 +234,10 @@ debugging problems, see the
 
 Unsorted stuff of things we need to do/think about
 
-- [ ] playbook: copy keys and config to release machines
+- [x] playbook: copy keys and config to release machines
 - [ ] avoid messing with keys on machines that has multiple usage such as jump
       hosts (or set up a new jump host)
-- [ ] copy release (staging) keys to release machines
+- [x] copy release (staging) keys to release machines
 - [ ] backup host: generate config, install rsnapshot
 - [ ] switch to slaveLog for all jenkins instances lacking stdout redirection
       (note: this depends on init type!)
@@ -262,7 +262,7 @@ Unsorted stuff of things we need to do/think about
       setup/raspberry-pi/README.md, some of these can be automated)
 - [ ] epel-release for centos - required for centos7 on packet.net arm64
       before ccache can be installed
-- [ ] make .ssh/config and .ssh/id_rsa for release machines, adding config
+- [x] make .ssh/config and .ssh/id_rsa for release machines, adding config
       for `node-www` and record host key for node-www
 - [ ] add explicit ARCH and DESTCPU for release machines (RV: I'm adding
       "arm64" manually for both to force the right thing, from memory I've

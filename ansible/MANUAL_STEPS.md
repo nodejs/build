@@ -50,6 +50,14 @@ To add an entry do the following:
 
 ## `release-*` machines
 
+Release machines must be able to upload release artifacts to the nodejs.org
+web server. The [release-builder](roles/release-builder) Ansible role will
+write the necessary key and ssh config onto the release machine, automating
+the previously manual steps.
+
+<details>
+<summary>Manual steps</summary>
+
 Once setup, they must have `~iojs/.ssh` cloned from another machine, so they
 have the ssh setup and keys required to upload release artifacts to the
 nodejs.org web server. The result will be 2 files, an `id_rsa` containing
@@ -72,6 +80,7 @@ the release builds will fail. After setting up .ssh, do something like this:
 ssh node-www date
 // ... accept the host keys
 ```
+</details>
 
 ### `release-*container*` machines
 
