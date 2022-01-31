@@ -5,8 +5,9 @@
 #
 
 # https://github.com/wixtoolset/issues/issues/5661
-- name: install Dot Net 3.5
-  win_chocolatey: name=dotnet3.5
+# Disabled, as this currently crashes the playbook.
+#- name: install Dot Net 3.5
+#  win_chocolatey: name=dotnet3.5
 
 - name: install WiX Toolset
   win_chocolatey: name=wixtoolset
