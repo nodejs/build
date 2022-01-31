@@ -46,6 +46,10 @@ username={{ metadata.ansible_user }}
 password={{ password }}
 colordepth=15
 scale=1
+window_width=800
+window_height=600
+window_maximize=1
+viewmode=1
 
 '''
 
