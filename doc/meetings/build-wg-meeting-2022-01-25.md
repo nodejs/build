@@ -31,7 +31,7 @@
 
 * Certificate expiry 18 January 2022 [#2811](https://github.com/nodejs/build/issues/2811)
   * One report on macOS Monterey of not being able to download headers? But seems strange
-    since have not seem issues on other OSX levels or any other reports.
+    since have not seem issues on other macOS levels or any other reports.
   * Remaining issue is to update the documentation. Richard has action to land those
     instructions.
   * Even though we have a 5 year cert we still need to re-issue and re-install every 13 months.
