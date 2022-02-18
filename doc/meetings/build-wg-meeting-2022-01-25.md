@@ -24,7 +24,7 @@
 * Platform requirements for Node.js 18 [#2815](https://github.com/nodejs/build/issues/2815)
   * Planned to last until ~ April 2025, so looking at what platforms which still be in support
     at that time
-  * Main change is that centos 7 will EOL before then so planning to move to RHEL 8
+  * Main change is that CentOS 7 will EOL before then so planning to move to RHEL 8
   * Applying for no cost RHEL subscription from Open Source program. 
   * For most architectures at least one provider we can install versus provide templates, for the
     others we can likely build our own images.
