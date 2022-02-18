@@ -30,7 +30,7 @@
     others we can likely build our own images.
 
 * Certificate expiry 18 January 2022 [#2811](https://github.com/nodejs/build/issues/2811)
-  * One report on OSX Monterey of not being able to download headers? But seems strange
+  * One report on macOS Monterey of not being able to download headers? But seems strange
     since have not seem issues on other OSX levels or any other reports.
   * Remaining issue is to update the documentation. Richard has action to land those
     instructions.
