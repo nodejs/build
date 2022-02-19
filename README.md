@@ -12,13 +12,13 @@ The Node.js Build Working Group maintains and controls infrastructure used for
 continuous integration (CI), releases, benchmarks, web hosting
 (of [nodejs.org][node] and other Node.js web properties) and more.
 
-Our mission is to provide Node.js Foundation projects with solid computing
+Our mission is to provide Node.js Project and libuv with solid computing
 infrastructure in order to improve the quality of the software itself by
 targeting correctness, speed and compatibility and to ensure streamlined
 delivery of binaries and source code to end-users.
 
 This repository contains information used to set up and maintain the various
-pieces of Node.js Foundation infrastructure managed by the Build Working Group.
+pieces of Node.js Project infrastructure managed by the Build Working Group.
 It is intended to be open and transparent, if you see any relevant information
 missing please open an issue. If you are interested in joining, please read
 [GOVERNANCE.md][] to understand the process and reasoning we use for granting access
@@ -140,7 +140,7 @@ accesses and team roles see [GOVERNANCE.md][].
 
 ## Infrastructure Providers
 
-The Node.js Foundation is proud to receive contributions from many companies,
+The Node.js Project is proud to receive contributions from many companies,
 both in the form of monetary contributions in exchange for membership or
 in-kind contributions for required resources. The Build Working Group
 collaborates with the following companies who contribute various kinds of
@@ -149,7 +149,7 @@ cloud and physical hardware to the Node.js project.
 
 ### Tier-1 Providers
 
-The Node.js Foundation's tier-1 infrastructure providers contribute the largest
+The Node.js Project's tier-1 infrastructure providers contribute the largest
 share of infrastructure to the Node.js project. Without these companies,
 the project would not be able to provide the quality, speed and availability of
 test coverage that it does today.
@@ -168,7 +168,7 @@ test coverage that it does today.
 
 ### Tier-2 Providers
 
-The Node.js Foundation's tier-2 infrastructure providers fill essential gaps
+The Node.js Project's tier-2 infrastructure providers fill essential gaps
 in architecture and operating system variations and shoulder some of the burden
 from the tier-1 providers, contributing to availability
 and speed in our CI system.
@@ -220,7 +220,7 @@ From time to time, the Node.js Build Working group calls for, and receives
 donations of hardware in order to expand the breadth of the build and test
 infrastructure it maintains.
 
-The Node.js Foundation would like to thank the following individuals and
+The Node.js Project would like to thank the following individuals and
 companies that have donated miscellaneous hardware:
 
 - [NodeSource][ns] for a Raspberry Pi B, a Raspberry Pi B+,
@@ -259,7 +259,7 @@ companies that have donated miscellaneous hardware:
 - Chris Lea [@chrislea](https://github.com/chrislea) for a Raspberry Pi 1 B+
 
 
-If you would like to donate hardware to the Node.js Foundation, please
+If you would like to donate hardware to the Node.js Project, please
 reach out to the Build Working Group, via IRC (details at the top of this page)
 or contact [Rod Vagg](mailto:rod@vagg.org) directly. The Build Working Group
 reserves the right to choose what hardware is actively used and how it is used,
