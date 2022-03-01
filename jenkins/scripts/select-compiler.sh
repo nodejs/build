@@ -32,6 +32,29 @@ if [ -z ${NODEJS_MAJOR_VERSION+x} ]; then
   NODEJS_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
 fi
 
+# Linux distros should be arch agnostic
+case $NODE_NAME in
+  *rhel8*)
+    case "$CONFIG_FLAGS" in
+      *--enable-lto*)
+        echo "Setting compiler for Node.js $NODEJS_MAJOR_VERSION (LTO) on" `cat /etc/redhat-release`
+        . /opt/rh/gcc-toolset-11/enable
+        export CC="ccache gcc"
+        export CXX="ccache g++"
+        echo "Selected compiler:" `${CXX} -dumpversion`  
+        return
+        ;;
+      *)
+        echo "Setting compiler for Node.js $NODEJS_MAJOR_VERSION on" `cat /etc/redhat-release`
+        # Default gcc on RHEL 8 is gcc 8
+        echo "Compiler left as system default:" `g++ -dumpversion`
+        return
+        ;;
+    esac
+    return
+    ;;
+esac
+
 if [ "$SELECT_ARCH" = "PPC64LE" ]; then
   # Set default
   export COMPILER_LEVEL="4.8"

@@ -1,0 +1,14 @@
+---
+
+# Red Hat Enterprise Linux 8
+
+- name: install GPG key for EPEL 8
+  become: yes
+  ansible.builtin.rpm_key:
+    key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
+    state: present
+
+- name: install EPEL 8
+  ansible.builtin.dnf:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    state: present

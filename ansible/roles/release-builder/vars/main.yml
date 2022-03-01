@@ -1,0 +1,5 @@
+---
+
+# The path to the secrets repository. 
+# See also `ansible/plugins/inventory/nodejs_yaml.py`.
+secrets_repo_root: "{{ lookup('env', 'NODE_BUILD_SECRETS')|default('../../../../../secrets', True) }}"

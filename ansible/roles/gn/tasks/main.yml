@@ -8,6 +8,7 @@
   ansible.builtin.git:
     dest: "{{ gn_git_dir }}"
     repo: "https://gn.googlesource.com/gn"
+    version: "{{ gn_version|default(omit) }}"
   become: "{{ gn_user|default(omit)|bool }}"
   become_user: "{{ gn_user|default(omit) }}"
   register: gn_git
@@ -23,7 +24,7 @@
 - name: build gn
   ansible.builtin.shell: |
     python3 build/gen.py && \
-    . /opt/rh/devtoolset-8/enable && \
+    {{ gn_select_compiler }} && \
     {{ gn_dest_dir }}/ninja -C out && \
     out/gn_unittests
   args:

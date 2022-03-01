@@ -1,0 +1,15 @@
+---
+
+#
+# generic handlers for jenkins-worker
+#
+
+- name: restart Jenkins
+  ansible.builtin.service:
+    name: jenkins
+    state: restarted
+  when:
+    - not os|startswith("aix")
+    - not os|startswith("ibmi")
+    - not os|startswith("macos")
+    - not os|startswith("zos")

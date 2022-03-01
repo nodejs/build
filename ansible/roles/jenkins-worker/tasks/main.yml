@@ -131,6 +131,7 @@
     mode: 0644
     timeout: 60
     force: yes
+  notify: restart Jenkins
 
 - name: Resolver | ipnodes needs to be present on zos, similar to hosts file
   when: os|startswith("zos")
@@ -208,6 +209,7 @@
   shell: "sh {{ home }}/{{ server_user }}/gen_runAsciiBash.sh"
 
 - name: render init script into place
+  notify: restart Jenkins
   template:
     src: "{{ jenkins.src }}"
     dest: "{{ jenkins.dest }}"
@@ -334,12 +336,14 @@
 
 
 - name: enable jenkins at startup - general
+  ansible.builtin.service:
+    name: jenkins
+    enabled: yes
   when:
     - not os|startswith("aix")
     - not os|startswith("ibmi")
     - not os|startswith("macos")
     - not os|startswith("zos")
-  service: name=jenkins state=restarted enabled=yes
 
 - name: Unload org.nodejs.osx.jenkins.plist from launchctl
   when: os|startswith("macos")

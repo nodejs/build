@@ -144,6 +144,14 @@ packages: {
     'gcc-c++,sudo,git,zip,unzip,iptables-services,GConf2-devel,openssl-devel,python3',
   ],
 
+  rhel8_s390x: [
+    'GConf2-devel,python2' # Needed for V8 builds
+  ],
+
+  rhel8: [
+    'ccache,cmake,gcc-c++,gcc-toolset-11,git,make,python3',
+  ],
+
   smartos: [
     'gccmakedep',
     'git',
