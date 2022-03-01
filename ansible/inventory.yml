@@ -232,7 +232,7 @@ hosts:
             user: admin
             remote_env:
                 PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
-        intel-ubuntu1604-x64-1: {ip: 92.51.196.114}
+        intel-ubuntu1604-x64-1: {ip: 92.51.196.114, build_test_v8: yes}
         intel-ubuntu1604-x64-2: {ip: 92.51.196.115}
 
 

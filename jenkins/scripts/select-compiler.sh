@@ -46,8 +46,17 @@ case $NODE_NAME in
         ;;
       *)
         echo "Setting compiler for Node.js $NODEJS_MAJOR_VERSION on" `cat /etc/redhat-release`
-        # Default gcc on RHEL 8 is gcc 8
-        echo "Compiler left as system default:" `g++ -dumpversion`
+        # Default gcc on RHEL 8 is gcc 8.
+        if [ "$v8test" != "" ]; then
+          # For V8 builds make `gcc` and `g++` point to non-ccache shims.
+          export PATH=/usr/bin:$PATH
+          export CC="ccache gcc"
+          export CXX="ccache g++"
+        else
+          export CC="gcc"
+          export CXX="g++"
+        fi
+        echo "Compiler left as system default:" `${CXX} -dumpversion`
         return
         ;;
     esac
