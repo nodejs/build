@@ -11,8 +11,7 @@ if errorlevel 1 exit /b
 
 :: Basic sanity check
 :: Test compiling and running a native add-on
-python tools\test.py --create-knownGlobals-json
 %node_gyp_exe% rebuild --directory=test\addons\hello-world --nodedir="%CD%"
 if errorlevel 1 exit /b
-Debug\node.exe test\addons\hello-world\test.js
+python tools\test.py --shell=Debug\node.exe test\addons\hello-world\test.js
 if errorlevel 1 exit /b
