@@ -1,0 +1,33 @@
+---
+
+#
+# Install packages for V8 builds.
+#
+
+# RHEL 7 doesn't have a package for pip and EPEL 7 doesn't support s390x.
+# Install pip via `get-pip.py`.
+- name: download pip install script
+  ansible.builtin.get_url:
+    dest: "{{ home }}/{{ server_user }}/get-pip.py"
+    url: https://bootstrap.pypa.io/pip/2.7/get-pip.py
+
+- name: install pip
+  ansible.builtin.shell:
+    cmd: python {{ home }}/{{ server_user }}/get-pip.py
+    creates: /usr/bin/pip2
+
+# With pip2 we're getting a `No module named glob` error when pep517 is used
+# (defaults to use). httplib2 0.18.0 is the last version that is installable
+# with `--no-use-pep517`.
+- name: install httplib2 for python 2
+  ansible.builtin.pip:
+    executable: pip2
+    extra_args: --no-use-pep517
+    name: httplib2==0.18.0
+    state: present
+
+- name: install httplib2 for python 3
+  ansible.builtin.pip:
+    executable: pip-3
+    name: httplib2
+    state: present

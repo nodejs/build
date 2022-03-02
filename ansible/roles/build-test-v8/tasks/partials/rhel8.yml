@@ -1,0 +1,24 @@
+---
+
+#
+# Install packages for V8 builds.
+#
+
+# V8 builds still require Python 2.
+- name: install packages required to build V8
+  ansible.builtin.dnf:
+    name: ['GConf2-devel', 'python2', 'python2-pip', 'python3-httplib2']
+    state: present
+
+- name: update python package alternatives
+  community.general.alternatives:
+    link: /usr/bin/python
+    name: python
+    path: /usr/bin/python2
+
+# RHEL 8 doesn't have a package for httplib2 for Python 2 so install via pip.
+- name: install httplib2
+  ansible.builtin.pip:
+    executable: pip2
+    name: httplib2
+    state: present

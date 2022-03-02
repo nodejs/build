@@ -1,0 +1,9 @@
+---
+
+# Red Hat Enterprise Linux 7
+
+- name: register Red Hat subscription
+  community.general.redhat_subscription:
+    activationkey: "{{ type }}"
+    org_id: "{{ rh_org }}"
+    state: present

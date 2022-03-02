@@ -14,7 +14,7 @@ packages: {
   'freebsd': 'openjdk8-jre',
   'ibmi': 'openjdk-11-ea',
   'macos': 'adoptopenjdk8',
-  'rhel7': 'java-1.8.0-openjdk',
+  'rhel7': 'java-11-openjdk',
   'rhel8': 'java-17-openjdk',
   'smartos': 'openjdk8',
   'ubuntu': 'openjdk-8-jre-headless',
@@ -30,8 +30,7 @@ java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default('
 adoptopenjdk: {
   aix71_ppc64: { arch: ppc64 },
   aix72_ppc64: { arch: ppc64 },
-  centos7_ppc64: {},
-  rhel7_s390x: {}
+  centos7_ppc64: {}
 }
 
 adoptopenjdk_arch: "{{ adoptopenjdk[os+'_'+arch].arch | default(ansible_architecture) }}"

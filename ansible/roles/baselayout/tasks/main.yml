@@ -141,16 +141,6 @@
     state: link
     src: "/usr/local/bin/python2"
 
-# Required for V8 builds
-- name: rhel8 | update python package alternatives
-  community.general.alternatives:
-    link: /usr/bin/python
-    name: python
-    path: /usr/bin/python2
-  when:
-    - os == "rhel8"
-    - build_test_v8|default(False)
-
 - name: smartos17 | update gcc symlinks
   when: os == "smartos17"
   file:

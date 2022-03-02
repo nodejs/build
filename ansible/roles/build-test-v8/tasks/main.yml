@@ -1,0 +1,16 @@
+---
+
+#
+# Install packages for V8 builds.
+#
+
+- name: install packages required for V8 builds
+  include: "{{ v8deps_include }}"
+  loop_control:
+    loop_var: v8deps_include
+  with_first_found:
+    - files:
+      - "{{ role_path }}/tasks/partials/{{ os }}-{{ arch }}.yml"
+      - "{{ role_path }}/tasks/partials/{{ os }}.yml"
+      - "{{ role_path }}/tasks/partials/{{ os|stripversion }}.yml"
+      skip: true
