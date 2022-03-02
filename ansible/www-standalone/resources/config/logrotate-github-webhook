@@ -7,7 +7,7 @@
         compressext .xz
         compress
         notifempty
-        create 0640 nodejs nodejs
+        create 0644 nodejs nodejs
         dateext
         dateformat .%Y%m%d.%s
         dateyesterday
