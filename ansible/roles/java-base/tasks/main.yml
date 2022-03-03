@@ -39,12 +39,13 @@
 
 - name: install java
   when:
-    - java.rc > 0
     - not os|startswith("zos")
     - not os|startswith("macos")
+  notify:
+    - restart Jenkins
   package:
     name: "{{ java_package_name }}"
-    state: present
+    state: latest
     use: "{{ os|startswith(\"ibmi\")|ternary(\"yum\", omit) }}"
 
 - name: install java tap (macOS)
@@ -144,6 +145,8 @@
     src: "/opt/{{ adoptopenjdk_unpacked.files[0].split('/')[0] }}/bin/java"
     dest: "/usr/bin/java"
     state: link
+  notify:
+    - restart Jenkins
   when:
     - use_adoptopenjdk == True
     - update_adoptopenjdk == True

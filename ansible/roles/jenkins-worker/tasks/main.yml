@@ -208,6 +208,25 @@
       runAsciiBashExists.stat.exists == False
   shell: "sh {{ home }}/{{ server_user }}/gen_runAsciiBash.sh"
 
+# We should probably create a git reference repository for all hosts but
+# limit for now to newer ones where we know we have enough disk space.
+- name: create directory for git reference repository
+  ansible.builtin.file:
+    group: "{{ server_user }}"
+    owner: "{{ server_user }}"
+    path: "{{ git_reference_path | dirname }}"
+    state: directory
+  when: os == 'rhel8'
+
+- name: create git reference repository
+  ansible.builtin.command:
+    chdir: "{{ git_reference_path | dirname }}"
+    cmd: git clone --mirror https://github.com/nodejs/node "{{ git_reference_path | basename }}"
+    creates: "{{ git_reference_path }}"
+  become: yes
+  become_user: "{{ server_user }}"
+  when: os == 'rhel8'
+
 - name: render init script into place
   notify: restart Jenkins
   template:

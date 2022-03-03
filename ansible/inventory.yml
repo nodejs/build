@@ -47,6 +47,8 @@ hosts:
             server_jobs: 6
         rhel7-s390x-1: {ip: 148.100.86.101, user: linux1}
         rhel8-s390x-1: {ip: 148.100.84.27, user: linux1}
+        rhel8-x64-1: {ip: 169.62.77.228}
+        rhel8-x64-2: {ip: 50.97.245.10}
 
     - iinthecloud:
         ibmi73-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
@@ -100,12 +102,6 @@ hosts:
         rvagg-debian10-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi, alias: iojs-ns-pi1p-1 }
         andineck-debian10-armv6l_pi1p-1: {ip: 192.168.2.41, user: pi, alias: iojs-ns-pi1p-2 }
 
-    - softlayer:
-        centos6-x64-1: {ip: 50.97.245.10}
-
-
-
-
 
 
   - test:
@@ -157,6 +153,9 @@ hosts:
         rhel8-s390x-2: {ip: 148.100.84.240, user: linux1, build_test_v8: yes}
         rhel8-s390x-3: {ip: 148.100.84.56, user: linux1, build_test_v8: yes}
         rhel8-s390x-4: {ip: 148.100.84.150, user: linux1, build_test_v8: yes}
+        rhel8-x64-1: {ip: 169.61.75.51, build_test_v8: yes}
+        rhel8-x64-2: {ip: 169.61.75.58, build_test_v8: yes}
+        rhel8-x64-3: {ip: 52.117.26.13, build_test_v8: yes}
         ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
         ubuntu1804-x64-2: {ip: 50.97.245.9}
 
@@ -361,8 +360,6 @@ hosts:
         kahwee-debian10-arm64_pi3-1:            {ip: 192.168.2.90, user: pi, alias: iojs-ns-pi3-11 }
 
     - softlayer:
-        centos6-x64-1: {ip: 169.61.75.51}
-        centos6-x64-2: {ip: 169.61.75.58}
         centos7-x64-1: {ip: 50.23.85.250}
         debian9-x64-1: {ip: 169.60.150.88}
         debian10-x64-1: {ip: 169.44.16.126}
