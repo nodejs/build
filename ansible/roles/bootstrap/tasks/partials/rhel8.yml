@@ -2,6 +2,14 @@
 
 # Red Hat Enterprise Linux 8
 
+# Set the hostname as it will be used by subscription manager.
+- name: gather facts
+  setup:
+
+- name: set hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname | regex_replace('_', '--') }}"
+
 - name: register Red Hat subscription
   community.general.redhat_subscription:
     activationkey: "{{ type }}"

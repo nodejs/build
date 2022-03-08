@@ -3,4 +3,5 @@ jenkins_url: "https://ci-release.nodejs.org"
 jenkins_worker_jar: "https://ci.nodejs.org/jnlpJars/slave.jar"
 server_user: "iojs"
 home: "/home"
+git_reference_path: "{{ home }}/{{ server_user }}/.ccache/node.shared.reference"
 remote_env: {}
