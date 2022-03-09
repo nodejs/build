@@ -83,10 +83,11 @@ hosts:
                 PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
 
     - osuosl:
-        centos7-ppc64_le-1: {ip: 140.211.168.61, user: centos}
         aix72-ppc64_be-1:
             ip: 140.211.9.77
             server_jobs: 6
+        centos7-ppc64_le-1: {ip: 140.211.168.61, user: centos}
+        rhel8-ppc64_le-1: {ip: 140.211.168.185, user: cloud-user}
 
     - orka:
         macos10.15-x64-1:
@@ -249,7 +250,10 @@ hosts:
         centos7-ppc64_le-1: {ip: 140.211.168.32, user: centos, build_test_v8: yes}
         centos7-ppc64_le-2: {ip: 140.211.168.78, user: centos, build_test_v8: yes}
         centos7-ppc64_le-3: {ip: 140.211.168.239, user: centos, build_test_v8: yes}
-        centos7-ppc64_le-4: {ip: 140.211.168.194, user: centos, build_test_v8: yes}
+        rhel8-ppc64_le-1: {ip: 140.211.168.183, user: cloud-user, build_test_v8: yes}
+        rhel8-ppc64_le-2: {ip: 140.211.168.76, user: cloud-user, build_test_v8: yes}
+        rhel8-ppc64_le-3: {ip: 140.211.168.221, user: cloud-user, build_test_v8: yes}
+        rhel8-ppc64_le-4: {ip: 140.211.168.194, user: cloud-user, build_test_v8: yes}
 
     - orka:
         macos10.15-x64-1:

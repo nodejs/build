@@ -42,6 +42,7 @@
     - not os|startswith("zos")
     - not os|startswith("macos")
   notify:
+    - package updated
     - restart Jenkins
   package:
     name: "{{ java_package_name }}"

@@ -5,4 +5,7 @@
 #
 
   - name: upgrade installed packages
-    dnf: name=* state=latest
+    ansible.builtin.dnf:
+      name: "*"
+      state: latest
+    notify: package updated

@@ -75,6 +75,7 @@
     use: "{{ os|startswith(\"ibmi\")|ternary(\"yum\", omit) }}"
   loop_control:
     loop_var: package
+  notify: package updated
   with_items:
     # ansible doesn't like empty lists
     - "{{ packages[os+'_'+arch]|default('[]') }}"
