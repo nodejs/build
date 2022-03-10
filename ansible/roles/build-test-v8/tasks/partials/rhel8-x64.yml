@@ -9,6 +9,7 @@
   ansible.builtin.dnf:
     name: ['python2', 'python2-pip']
     state: present
+  notify: package updated
 
 - name: update python package alternatives
   community.general.alternatives:

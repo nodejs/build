@@ -358,6 +358,7 @@
   ansible.builtin.service:
     name: jenkins
     enabled: yes
+    state: started
   when:
     - not os|startswith("aix")
     - not os|startswith("ibmi")

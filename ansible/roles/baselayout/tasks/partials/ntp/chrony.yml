@@ -1,0 +1,18 @@
+---
+
+# ntpd via chrony
+
+- name: install chrony
+  ansible.builtin.package:
+    name: chrony
+    state: latest
+    update_cache: yes
+  notify:
+  - restart chronyd
+  - package updated
+
+- name: enable chronyd at start
+  ansible.builtin.service:
+    enabled: yes
+    name: chronyd
+    state: started

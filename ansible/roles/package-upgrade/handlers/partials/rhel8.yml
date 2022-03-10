@@ -1,0 +1,19 @@
+---
+
+# Red Hat Enterpise Linux 8 bootstrap handlers
+
+# If packages are updated, force a check-in with Subscription Manager to
+# reflect the current state.
+- name: clear rhsm cache
+  ansible.builtin.file:
+    name: /var/lib/rhsm/cache/profile.json
+    state: absent
+
+- name: stop rhsmcertd
+  ansible.builtin.systemd:
+    name: rhsmcertd
+    state: stopped
+
+- name: run rhsmcertd
+  ansible.builtin.command:
+    cmd: rhsmcertd --now

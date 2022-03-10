@@ -4,6 +4,11 @@
 # generic handlers for baselayout stuff
 #
 
+- name: restart chronyd
+  ansible.builtin.service:
+    name: chronyd
+    state: restarted
+
 - name: restart sshd
   when: not os|startswith("macos")
   service: name="{{ sshd_service_name }}" state=restarted
