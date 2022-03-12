@@ -1,0 +1,23 @@
+---
+
+# Reads data from secrets into Ansible facts.
+
+- name: decrypt group secrets
+  ansible.builtin.set_fact:
+    secrets: "{{ lookup('pipe', 'gpg -d ' + group_vars | quote) | from_yaml }}"
+  no_log: yes
+  loop_control:
+    loop_var: group_vars
+  with_first_found:
+    - files:
+      - "{{ secrets_repo_root }}/build/{{ type }}/ansible_vars.yml"
+      skip: true
+
+- name: decrypt additional secrets
+  include: "{{ additional_include }}"
+  loop_control:
+    loop_var: additional_include
+  with_first_found:
+    - files:
+      - "{{ role_path }}/tasks/partials/{{ type }}.yml"
+      skip: true
