@@ -20,6 +20,14 @@
     name: firewalld
     state: absent
 
+# The presence of /etc/sysconfig/iptables.save appears to be interfering
+# with rules being loaded after a system reboot, so remove.
+- name: Firewall | remove iptables.save
+  ansible.builtin.file:
+    path: /etc/sysconfig/iptables.save
+    state: absent
+  notify: restart iptables
+
 - name: Firewall | add rule to allow accepting multicast
   lineinfile:
     dest: /etc/sysconfig/iptables
