@@ -68,7 +68,7 @@ RUN mkdir -p /tmp/openssl_1.1.1m && \
     make install && \
     rm -rf /tmp/openssl_1.1.1m
 
-ENV OPENSSL3VER 3.0.1+quic
+ENV OPENSSL3VER 3.0.2+quic
 ENV OPENSSL3DIR /opt/openssl-$OPENSSL3VER
 # TODO(richardlau) remove OPENSSL300DIR when the CI has been updated to use OPENSSL3DIR
 ENV OPENSSL300DIR $OPENSSL3DIR
