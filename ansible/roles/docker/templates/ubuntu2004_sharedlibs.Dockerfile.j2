@@ -56,15 +56,16 @@ RUN for ICU_ENV in $(env | grep ICU..DIR); do \
     rm -rf /tmp/icu-$ICU_VERSION; \
     done
 
-ENV OPENSSL111DIR /opt/openssl-1.1.1m
+ENV OPENSSL111VER 1.1.1n
+ENV OPENSSL111DIR /opt/openssl-$OPENSSL111VER
 
-RUN mkdir -p /tmp/openssl_1.1.1m && \
-    cd /tmp/openssl_1.1.1m && \
-    curl -sL https://www.openssl.org/source/openssl-1.1.1m.tar.gz | tar zxv --strip=1 && \
+RUN mkdir -p /tmp/openssl_$OPENSSL111VER && \
+    cd /tmp/openssl_$OPENSSL111VER && \
+    curl -sL https://www.openssl.org/source/openssl-$OPENSSL111VER.tar.gz | tar zxv --strip=1 && \
     ./config --prefix=$OPENSSL111DIR && \
     make -j 6 && \
     make install && \
-    rm -rf /tmp/openssl_1.1.1m
+    rm -rf /tmp/openssl_$OPENSSL111VER
 
 ENV OPENSSL3VER 3.0.2+quic
 ENV OPENSSL3DIR /opt/openssl-$OPENSSL3VER
