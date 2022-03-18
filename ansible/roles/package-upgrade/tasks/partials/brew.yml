@@ -26,32 +26,32 @@
     when: os != "macos11.0"
 
   - name: Install Homebrew
-    become_user: administrator
+    become_user: "{{ ansible_user }}"
     script: files/install-homebrew.sh
     when: os != "macos11.0" and not brew.stat.exists
 
   - name: Install Homebrew
-    become_user: administrator
+    become_user: "{{ ansible_user }}"
     script: files/install-homebrew.sh
     when: os == "macos11.0" and not armbrew.stat.exists
 
   - name: Upgrade installed packages
-    become_user: administrator
+    become_user: "{{ ansible_user }}"
     homebrew:
       upgrade_all: yes
 
   - name: Install brew cu
-    become_user: administrator
+    become_user: "{{ ansible_user }}"
     homebrew_tap:
       name: buo/cask-upgrade
 
   - name: Add AdoptOpenJDK Java Repo
-    become_user: administrator
+    become_user: "{{ ansible_user }}"
     homebrew_tap:
       name: AdoptOpenJDK/openjdk
 
   - name: Update Casks
-    become_user: administrator
+    become_user: "{{ ansible_user }}"
     homebrew_cask:
       upgrade_all: yes
 
