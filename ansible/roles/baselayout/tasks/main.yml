@@ -86,7 +86,7 @@
 # Currently does not work on the DTK for 11.0 - The unsupported warnings cause the task to fail
 - name: install packages (macos)
   when: os|startswith("macos")
-  become_user: administrator
+  become_user: "{{ ansible_user }}"
   community.general.homebrew: name="{{ package }}" state=present
   loop_control:
     loop_var: package
