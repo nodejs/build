@@ -1,0 +1,5 @@
+---
+
+argument_specs:
+  main:
+    short_description: Sets facts based on data from secrets.

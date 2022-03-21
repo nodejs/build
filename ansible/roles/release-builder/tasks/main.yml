@@ -14,13 +14,11 @@
 
 - name: copy key to access staging server
   ansible.builtin.copy:
-    content: "{{ lookup('pipe', 'gpg -d ' + staging_key | quote) }}"
+    content: "{{ secrets.staging_key }}"
     dest: "{{ home }}/{{ server_user }}/.ssh/id_rsa"
     mode: "0600"
     owner: "{{ server_user }}"
     group: "{{ server_user }}"
-  vars:
-    staging_key: "{{ secrets_repo_root }}/build/release/staging_id_rsa_private.key"
 
 - name: write ssh_config
   ansible.builtin.copy:
@@ -33,10 +31,8 @@
 - name: write known_hosts
   ansible.builtin.known_hosts:
     name: direct.nodejs.org
-    key: "{{ lookup('pipe', 'gpg -d ' + known_hosts | quote) }}"
+    key: "{{ secrets.known_hosts }}"
     path: "{{ home }}/{{ server_user }}/.ssh/known_hosts"
     state: present
   become: yes
   become_user: "{{ server_user }}"
-  vars:
-    known_hosts: "{{ secrets_repo_root }}/build/release/known_hosts"

@@ -1,0 +1,14 @@
+---
+
+# Decrypt files from secrets into facts.
+
+- name: decrypt files from secrets
+  ansible.builtin.set_fact:
+    secrets: "{{ secrets | combine({item.key: content}, recursive=True) }}"
+  no_log: yes
+  vars:
+    content: "{{ lookup('pipe', 'gpg -d ' + release_root + '/' + item.file | quote) }}"
+    release_root: "{{ secrets_repo_root }}/build/release"
+  with_items:
+    - { 'key': 'staging_key', 'file': "staging_id_rsa_private.key" }
+    - { 'key': 'known_hosts', 'file': "known_hosts" }

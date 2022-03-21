@@ -1,0 +1,5 @@
+---
+
+argument_specs:
+  main:
+    short_description: bootstrap packages required for ansible to work
