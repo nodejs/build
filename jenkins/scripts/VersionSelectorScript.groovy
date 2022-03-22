@@ -27,11 +27,11 @@ def buildExclusions = [
   [ /^centos7-(arm)?(64)-gcc8/,       anyType,     lt(14)  ], // 14.x: gcc8 builds start
   [ /^centos6-32-gcc6/,               releaseType, gte(10) ], // 32-bit linux for <10 only
   [ /^centos7-64/,                    releaseType, lt(12)  ],
-  [ /^centos7-64/,                    releaseType, gte(18) ],
+  [ /^centos7-64/,                    anyType,     gte(18) ],
   [ /debian8-x86/,                    anyType,     gte(10) ], // 32-bit linux for <10 only
   [ /debian8/,                        anyType,     gte(13) ],
   [ /debian9/,                        anyType,     gte(16) ],
-  [ /rhel7/,                          releaseType, gte(18) ],
+  [ /rhel7/,                          anyType,     gte(18) ],
   [ /rhel8/,                          releaseType, lt(18)  ],
   [ /rhel8/,                          anyType,     lt(14)  ],
   [ /^ubuntu1804/,                    anyType,     lt(10)  ], // probably temporary
