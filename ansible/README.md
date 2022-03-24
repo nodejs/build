@@ -19,6 +19,9 @@
 Most of your work will probably include editing `inventory.yml`, followed by
 running one (or multiple) of below playbooks.
 
+The example show running ansible from the directory in which you have cloned
+the build directory (not the ansible subdirectory).
+
 See the [manual setup instructions](../doc/non-ansible-configuration-notes.md)
 for how to prepare both the control and target machines to run the commands
 below. To ensure that the secrets are in place and test the connection to a
