@@ -4,6 +4,6 @@
 
 - name: register Red Hat subscription
   community.general.redhat_subscription:
-    activationkey: "{{ type }}"
-    org_id: "{{ rh_org }}"
+    activationkey: "{{ secrets.rh_activationkey }}"
+    org_id: "{{ secrets.rh_org }}"
     state: present
