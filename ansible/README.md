@@ -38,7 +38,7 @@ probably quicker. In fact, you most likely want to use `--limit` for everything
 when you just need to edit a few set of hosts:
 
 ```console
-$ ansible-playbook playbooks/jenkins/worker/create.yml \
+$ ansible-playbook ansible/playbooks/jenkins/worker/create.yml \
     --limit "test-digitalocean-debian8-x64-1" -vv
 ```
 
