@@ -259,14 +259,14 @@ companies that have donated miscellaneous hardware:
 - Chris Lea [@chrislea](https://github.com/chrislea) for a Raspberry Pi 1 B+
 
 
-If you would like to donate hardware to the Node.js Project, please
-reach out to the Build Working Group, via IRC (details at the top of this page)
-or contact [Rod Vagg](mailto:rod@vagg.org) directly. The Build Working Group
-reserves the right to choose what hardware is actively used and how it is used,
-donating hardware does not guarantee its use within the testing infrastructure
-as there are many other factors that must be considered. Some donated hardware,
-while not used actively in the CI infrastructure, is used from time to time for
-R&D purposes by the project.
+If you would like to donate hardware to the Node.js Project, please reach
+out to the Build Working Group, via the [#build channel on the Node.js slack
+instance][1] or contact [Rod Vagg](mailto:rod@vagg.org) directly. The Build
+Working Group reserves the right to choose what hardware is actively used
+and how it is used, donating hardware does not guarantee its use within the
+testing infrastructure as there are many other factors that must be
+considered.  Some donated hardware, while not used actively in the CI
+infrastructure, is used from time to time for R&D purposes by the project.
 
 
 ## CI Software
