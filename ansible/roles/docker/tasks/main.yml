@@ -89,6 +89,17 @@
     - "{{ containers }}"
   when: containers is defined
 
+- name: set up for release builders
+  include_role:
+    name: release-builder
+  vars:
+    release_home_dir: "/{{ home }}/{{ server_user }}/{{ item.name }}/"
+  with_items:
+    - "{{ containers }}"
+  when:
+    - containers is defined
+    - "'release' in group_names"
+
 - name: create NODE_TEST_DIR directory
   file:
     path: "/home/{{ server_user }}/{{ item.name }}/tmp"

@@ -1,0 +1,15 @@
+---
+
+#
+# add Docker repo
+#
+
+- name: "repo : add Ubuntu Docker repo key"
+  raw: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+- name: "repo : add Ubuntu Docker repo"
+  raw: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  register: has_updated_package_repo
+
+- name: "repo : update apt cache"
+  apt: update_cache=yes

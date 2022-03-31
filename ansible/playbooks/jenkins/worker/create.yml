@@ -17,6 +17,7 @@
         when: is_benchmark is defined and is_benchmark|bool == True }
     - jenkins-worker
     - { role: release-builder,
+        release_home_dir: "{{ home }}/{{ server_user }}",
         when: '"release" in group_names' }
 
   pre_tasks:
