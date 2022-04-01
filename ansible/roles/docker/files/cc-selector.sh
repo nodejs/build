@@ -56,7 +56,6 @@ function run {
   fi
   export CC="ccache ${!base_varname}gcc ${!flags_varname}"
   export CXX="ccache ${!base_varname}g++ ${!flags_varname}"
-  env | grep ccache
 }
 
 run $1
