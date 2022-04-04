@@ -413,5 +413,4 @@
 
 - name: install monit
   when: os in needs_monit
-  include: monit.yml
-  static: false
+  include_tasks: monit.yml
