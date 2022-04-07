@@ -48,6 +48,16 @@ function run {
   export ARCH="${arm_type}l"
   export DESTCPU=arm
   if [ "$host_os" = "rhel8" ]; then
+    current_gcc_version="$(gcc -dumpversion)"
+    # Additional gcc versions are installed via gcc-toolset-<n> packages.
+    # No such package exists for the default gcc version (8 on RHEL 8).
+    if [ "${current_gcc_version}" != "${gcc_host_version}" ]; then
+      . /opt/gcc-toolset-${gcc_host_version}/enable
+      if [ "$?" != 0 ]; then
+        echo "Host gcc version mismatch (wanted ${gcc_host_version} but got ${current_gcc_version})."
+        exit 1
+      fi
+    fi
     export CC_host="ccache gcc -m32"
     export CXX_host="ccache g++ -m32"
   else
