@@ -52,7 +52,7 @@ function run {
     # Additional gcc versions are installed via gcc-toolset-<n> packages.
     # No such package exists for the default gcc version (8 on RHEL 8).
     if [ "${current_gcc_version}" != "${gcc_host_version}" ]; then
-      if . /opt/gcc-toolset-${gcc_host_version}/enable; then
+      if ! . /opt/gcc-toolset-${gcc_host_version}/enable; then
         echo "Host gcc version mismatch (wanted ${gcc_host_version} but got ${current_gcc_version})."
         exit 1
       fi
