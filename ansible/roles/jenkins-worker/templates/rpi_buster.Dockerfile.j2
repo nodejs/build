@@ -61,4 +61,7 @@ VOLUME /home/{{ server_user }}/
 
 USER iojs:iojs
 
+# Prevent Node.js picking up the OS's openssl.cnf, https://github.com/nodejs/node/issues/27862
+ENV OPENSSL_CONF /dev/null
+
 ENTRYPOINT [ "tail", "-f", "/dev/null" ]
