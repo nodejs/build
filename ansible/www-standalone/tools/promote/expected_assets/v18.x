@@ -23,17 +23,9 @@ node-{VERSION}.tar.gz
 node-{VERSION}.tar.xz
 node-{VERSION}-win-x64.7z
 node-{VERSION}-win-x64.zip
-node-{VERSION}-win-x86.7z
-node-{VERSION}-win-x86.zip
 node-{VERSION}-x64.msi
-node-{VERSION}-x86.msi
 win-x64/
 win-x64/node.exe
 win-x64/node.lib
 win-x64/node_pdb.7z
 win-x64/node_pdb.zip
-win-x86/
-win-x86/node.exe
-win-x86/node.lib
-win-x86/node_pdb.7z
-win-x86/node_pdb.zip
