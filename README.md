@@ -260,7 +260,7 @@ companies that have donated miscellaneous hardware:
 
 
 If you would like to donate hardware to the Node.js Project, please reach
-out to the Build Working Group, via the [#build channel on the Node.js slack
+out to the Build Working Group, via the [#nodejs-build channel on the OpenJS Foundation Slack
 instance][1] or contact [Rod Vagg](mailto:rod@vagg.org) directly. The Build
 Working Group reserves the right to choose what hardware is actively used
 and how it is used, donating hardware does not guarantee its use within the
@@ -284,7 +284,7 @@ months after the release goes End-of-Life, in case further build or test runs
 are required. After that the configuration will be removed.
 
 
-[1]:    https://node-js.slack.com/archives/C16SCB5JQ
+[1]:    https://openjs-foundation.slack.com/archives/C03BJP63CH0
 [2]:    https://digitalocean.com/
 [3]:    https://www.rackspace.com/
 [5]:    https://www.mailgun.com/

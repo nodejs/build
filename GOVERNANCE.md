@@ -71,8 +71,8 @@ all reflect on the Build WG.
 
 If you are interested in helping out with the Build WG, please reach out to
 existing members to let us know. The best means for communication with the Build
-WG are either here via GitHub issues or through the `#node-build` channel on
-Freenode [IRC][].
+WG are either here via GitHub issues or through the `#nodejs-build` channel on
+the OpenJS Foundation [Slack][].
 
 Membership is granted by way of a pull request adding a new individual to the
 members list on the README (e.g. [#524][]). New members can open such a pull
@@ -158,9 +158,9 @@ These Pull Requests must be:
   * Use the squash merge button workflow on Github
 
 
-[IRC], specifically `#node-build` is important for communicating with
+[Slack], specifically `#nodejs-build` is important for communicating with
 other Node.js project members, and how we receive many initial signals
-of downtime. IRC logs are maintained at http://logs.libuv.org/node-build
+of downtime.
 
 
 ### Special Access Requests
@@ -343,6 +343,6 @@ The [Node.js Code of Conduct][] applies to this WG.
 [Node.js Moderation Policy]: https://github.com/nodejs/TSC/blob/HEAD/Moderation-Policy.md
 [Node.js Foundation calendar]: https://nodejs.org/calendar
 [the onboarding doc]: /ONBOARDING.md
-[IRC]: /README.md#nodejs-build-working-group
+[Slack]: https://openjs-foundation.slack.com/archives/C03BJP63CH0
 [#524]: https://github.com/nodejs/build/pull/524
 [resources.md]: /doc/resources.md
