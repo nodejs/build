@@ -33,7 +33,6 @@ to the resources we manage.
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
-- [@mmarchini](https://github.com/mmarchini) - mary marchini
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
@@ -54,7 +53,6 @@ Above list is manually synced with the [gpg member list](https://github.com/node
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
-- [@mmarchini](https://github.com/mmarchini) - mary marchini
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 
@@ -117,7 +115,6 @@ Admin access to https://ci-release.nodejs.org/.
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 - [@maclover7](https://github.com/maclover7) - Jon Moss
-- [@mmarchini](https://github.com/mmarchini) - mary marchini
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@williamkapke](https://github.com/williamkapke) - William Kapke
@@ -137,6 +134,7 @@ accesses and team roles see [GOVERNANCE.md][].
 - [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
+- [@mmarchini](https://github.com/mmarchini) - mary marchini
 
 ## Infrastructure Providers
 
