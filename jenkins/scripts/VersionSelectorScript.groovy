@@ -4,6 +4,7 @@
 // Helper closures to make our buildExclusions DSL terse and readable
 def lt = { v -> { nodeVersion -> nodeVersion < v } }
 def gte = { v -> { nodeVersion -> nodeVersion >= v } }
+def gteLt = { vGte, vLt -> { nodeVersion -> gte(vGte)(nodeVersion) && lt(vLt)(nodeVersion) } }
 def ltGte = { vLt, vGte -> { nodeVersion -> lt(vLt)(nodeVersion) || gte(vGte)(nodeVersion) } }
 def allVer = { nodeVersion -> true }
 def noVer = { nodeVersion -> false }
@@ -73,7 +74,7 @@ def buildExclusions = [
   [ /vs2015/,                         releaseType, ltGte(6, 10)  ],
   [ /vs2017/,                         releaseType, ltGte(10, 14) ],
   [ /vs2019/,                         releaseType, lt(14)        ],
-  [ /vs2019-x86/,                     releaseType, gte(18)       ], // Temporary, https://github.com/nodejs/node/pull/42666
+  [ /vs2019-x86/,                     releaseType, gteLt(18, 19) ], // Temporary, https://github.com/nodejs/node/pull/42666
   // VS versions supported to compile Node.js - also matches labels used by test runners
   [ /vs2013(-\w+)?$/,                 testType,    gte(6)        ],
   [ /vs2015(-\w+)?$/,                 testType,    gte(10)       ],
@@ -83,7 +84,7 @@ def buildExclusions = [
   [ /vs2015-x86$/,                    testType,    gte(10)       ], // compile arm64/x86 only once
   [ /vs2017-x86$/,                    testType,    ltGte(10, 14) ],
   [ /vs2019-x86$/,                    testType,    lt(14)        ],
-  [ /vs2019-x86$/,                    testType,    gte(18)       ], // Temporary, https://github.com/nodejs/node/pull/42666
+  [ /vs2019-x86$/,                    testType,    gteLt(18, 19) ], // Temporary, https://github.com/nodejs/node/pull/42666
   [ /vs2019-arm64$/,                  testType,    lt(14)        ],
   // VS versions supported to build add-ons
   [ /vs2013-COMPILED_BY/,             testType,    gte(9)        ],
