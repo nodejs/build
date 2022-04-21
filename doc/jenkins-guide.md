@@ -51,7 +51,7 @@ ansible-playbook playbooks/jenkins/worker/create.yml --limit test-rackspace-free
 If all goes according to plan, then Ansible should be able to run the
 playbook with no errors. If you do encounter problems, there are usually
 some WG members available in the
-[Node.js Build Slack channel](https://node-js.slack.com/archives/C16SCB5JQ), who can try and
+[Node.js Build Slack channel][], who can try and
 lend a hand.
 
 ## Security releases
@@ -129,7 +129,7 @@ Relevant logs:
 ## Solving problems
 
 Issues with the Jenkins clusters are usually reported to either the
-[Node.js Build Slack channel](https://node-js.slack.com/archives/C16SCB5JQ), or to the
+[Node.js Build Slack channel][], or to the
 [`nodejs/build` issue tracker](https://github.com/nodejs/build/issues).
 
 When trying to fix a worker, ensure that you `mark the node as offline`,
@@ -369,7 +369,7 @@ to its desired state, including refreshing and restarting the Jenkins
 agent configuration.
 
 If none of the above steps work, please post in the
-[Node.js Build Slack channel](https://node-js.slack.com/archives/C16SCB5JQ), or the
+[Node.js Build Slack channel][], or the
 [`nodejs/build` issue tracker](https://github.com/nodejs/build/issues), to allow
 for escalation and other WG members to troubleshoot.
 
@@ -381,3 +381,4 @@ take a look.
 [secrets repo]: https://github.com/nodejs-private/secrets
 [ci]: https://ci.nodejs.org/computer/test-softlayer-ubuntu1804_container-x64-1/
 [1]: https://ci.nodejs.org/computer/test-softlayer-ubuntu1804_container-x64-1/
+[Node.js Build Slack channel]: https://openjs-foundation.slack.com/archives/C03BJP63CH0
