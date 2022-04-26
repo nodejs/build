@@ -82,15 +82,16 @@ RUN mkdir -p /tmp/openssl-$OPENSSL3VER && \
     make install && \
     rm -rf /tmp/openssl-$OPENSSL3VER
 
-ENV ZLIB12DIR /opt/zlib_1.2.11
+ENV ZLIBVER 1.2.12
+ENV ZLIB12DIR /opt/zlib_$ZLIBVER
 
-RUN mkdir -p /tmp/zlib_1.2.11 && \
-    cd /tmp/zlib_1.2.11 && \
-    curl -sL https://zlib.net/zlib-1.2.11.tar.gz | tar zxv --strip=1 && \
+RUN mkdir -p /tmp/zlib_$ZLIBVER && \
+    cd /tmp/zlib_$ZLIBVER && \
+    curl -sL https://zlib.net/zlib-$ZLIBVER.tar.gz | tar zxv --strip=1 && \
     ./configure --prefix=$ZLIB12DIR && \
     make -j 6 && \
     make install && \
-    rm -rf /tmp/zlib_1.2.11
+    rm -rf /tmp/zlib_$ZLIBVER
 
 VOLUME /home/{{ server_user }}/ /home/{{ server_user }}/.ccache
 
