@@ -43,7 +43,8 @@ ENV ICU64DIR=/opt/icu-64 \
     ICU65DIR=/opt/icu-65 \
     ICU67DIR=/opt/icu-67 \
     ICU68DIR=/opt/icu-68 \
-    ICU69DIR=/opt/icu-69
+    ICU69DIR=/opt/icu-69 \
+    ICU71DIR=/opt/icu-71
 
 RUN for ICU_ENV in $(env | grep ICU..DIR); do \
     ICU_PREFIX=$(echo $ICU_ENV | cut -d '=' -f 2) && \
