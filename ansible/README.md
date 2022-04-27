@@ -245,7 +245,7 @@ Unsorted stuff of things we need to do/think about
 - [ ] switch to slaveLog for all jenkins instances lacking stdout redirection
       (note: this depends on init type!)
 - [ ] add iptables-save-persistent to cron on ci hosts
-- [ ] [unencrypted host](https://git.io/v6H1z)
+- [ ] [unencrypted host](https://gist.github.com/jbergstroem/5c308089c26e7ae7529a0ef2df92a7f9)
 - [ ] when creating additional jenkins labels based on `labels=` add os/arch
       as part of hte label (ref: rvagg long irc talk see 2016-08-29 logs)
 - [ ] follow up ansible upstream wrt hostname support for smartos
