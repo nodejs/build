@@ -132,9 +132,9 @@ accesses and team roles see [GOVERNANCE.md][].
 - [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil
 - [@LucaLanziani](https://github.com/LucaLanziani) - Luca Lanziani
 - [@maclover7](https://github.com/maclover7) - Jon Moss
+- [@mmarchini](https://github.com/mmarchini) - mary marchini
 - [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
-- [@mmarchini](https://github.com/mmarchini) - mary marchini
 
 ## Infrastructure Providers
 
