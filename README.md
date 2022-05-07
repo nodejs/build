@@ -7,7 +7,7 @@ generations of Raspberry Pi and other ARMv7 & ARM64 hardware</small></i></p>
 Chat with us on [Slack][1].
 
 ## Purpose
-
+ 
 The Node.js Build Working Group maintains and controls infrastructure used for
 continuous integration (CI), releases, benchmarks, web hosting
 (of [nodejs.org][node] and other Node.js web properties) and more.
