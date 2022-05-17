@@ -47,7 +47,7 @@ hosts:
         aix71-ppc64_be-2:
             ip: 169.48.19.173
             server_jobs: 6
-        rhel7-s390x-1: {ip: 148.100.86.101, user: linux1}
+        rhel7-s390x-1: {ip: 148.100.84.166, user: linux1}
         rhel8-s390x-1: {ip: 148.100.84.45, user: linux1}
         rhel8-x64-1: {ip: 169.62.77.228}
         rhel8-x64-2: {ip: 50.97.245.10}
@@ -151,10 +151,10 @@ hosts:
         aix73-ppc64_be-1:
             ip: 163.68.64.114
             server_jobs: 6
-        rhel7-s390x-1: {ip: 148.100.86.21, user: linux1, build_test_v8: yes}
-        rhel7-s390x-2: {ip: 148.100.86.117, user: linux1, build_test_v8: yes}
-        rhel7-s390x-3: {ip: 148.100.86.28, user: linux1, build_test_v8: yes}
-        rhel7-s390x-4: {ip: 148.100.86.94, user: linux1, build_test_v8: yes}
+        rhel7-s390x-1: {ip: 148.100.84.221, user: linux1, build_test_v8: yes}
+        rhel7-s390x-2: {ip: 148.100.84.114, user: linux1, build_test_v8: yes}
+        rhel7-s390x-3: {ip: 148.100.84.50, user: linux1, build_test_v8: yes}
+        rhel7-s390x-4: {ip: 148.100.84.235, user: linux1, build_test_v8: yes}
         rhel8-s390x-1: {ip: 148.100.84.98, user: linux1, build_test_v8: yes}
         rhel8-s390x-2: {ip: 148.100.84.38, user: linux1, build_test_v8: yes}
         rhel8-s390x-3: {ip: 148.100.84.17, user: linux1, build_test_v8: yes}

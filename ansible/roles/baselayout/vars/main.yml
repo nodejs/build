@@ -142,7 +142,7 @@ packages: {
   ],
 
   rhel7: [
-    'gcc-c++,sudo,git,zip,unzip,iptables-services,GConf2-devel,openssl-devel,python3',
+    'cmake,devtoolset-6,devtoolset-6-libatomic-devel,devtoolset-8,devtoolset-8-libatomic-devel,devtoolset-10,devtoolset-11,gcc-c++,sudo,git,make,zip,unzip,iptables-services,openssl-devel,python3',
   ],
 
   rhel8: [

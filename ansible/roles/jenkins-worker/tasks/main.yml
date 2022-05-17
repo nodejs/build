@@ -39,33 +39,6 @@
   when: "'scaleway-ubuntu1804-armv7l' in inventory_hostname"
   include: "{{ role_path }}/tasks/partials/scaleway-armv7.yml"
 
-- name: rhel7 install cmake - create directory
-  when: os|startswith("rhel7")
-  file:
-    path: "/tmp/cmake"
-    state: directory
-
-- name: rhel7 install cmake - download tarball
-  when: os|startswith("rhel7")
-  shell:
-    chdir: "/tmp/cmake"
-    cmd: "curl -sL -o cmake-3.17.2.tar.gz https://github.com/Kitware/CMake/releases/download/v3.17.2/cmake-3.17.2.tar.gz"
-    creates:  "/tmp/cmake/cmake-3.17.2.tar.gz"
-
-- name: rhel7 install cmake - extract tarball
-  when: os|startswith("rhel7")
-  shell:
-    chdir: "/tmp/cmake"
-    cmd: "tar -xzf cmake-3.17.2.tar.gz"
-    creates:  "/tmp/cmake/cmake-3.17.2"
-
-- name: rhel7 install cmake - build
-  when: os|startswith("rhel7")
-  shell:
-    chdir: "/tmp/cmake/cmake-3.17.2"
-    cmd: "./bootstrap --verbose && make -j6 VERBOSE=1 && make install"
-    creates: "/usr/local/bin/cmake"
-
 - name: prepare installing tap2junit
   when: type != "release"
   include: "{{ pip_include }}"
@@ -77,39 +50,6 @@
         - "{{ role_path }}/tasks/partials/tap2junit/{{ os|stripversion }}.yml"
         - "{{ role_path }}/tasks/partials/tap2junit/pip.yml"
       skip: true
-
-- name: Firewall | enable iptables
-  command: systemctl enable iptables
-  when: "'rhel7-s390x' in inventory_hostname"
-
-- name: Firewall | remove firewalld
-  raw: yum remove -y firewalld
-  when: "'rhel7-s390x' in inventory_hostname"
-
-- name: Firewall | add rule to allow accepting multicast
-  lineinfile:
-    dest: /etc/sysconfig/iptables
-    insertafter: ":OUTPUT ACCEPT.*]"
-    line: "-A INPUT -m pkttype --pkt-type multicast -j ACCEPT"
-  when: "'rhel7-s390x' in inventory_hostname"
-
-- name: Firewall | add basic rule to allow communication locally
-  lineinfile:
-    dest: /etc/sysconfig/iptables
-    insertafter: ":OUTPUT ACCEPT.*]"
-    line: "-A INPUT -s 127.0.0.1/32 -d 127.0.0.1/32 -j ACCEPT"
-  when: "'rhel7-s390x' in inventory_hostname"
-
-- name: Firewall | add additional rule to allow communication from 127.0.0.2
-  lineinfile:
-    dest: /etc/sysconfig/iptables
-    insertafter: ":OUTPUT ACCEPT.*]"
-    line: "-A INPUT -s 127.0.0.2/32 -d 127.0.0.1/32 -j ACCEPT"
-  when: "'rhel7-s390x' in inventory_hostname"
-
-- name: Firewall | make the new firewall rules take effect
-  command: systemctl restart iptables
-  when: "'rhel7-s390x' in inventory_hostname"
 
 - name: install root certificates
   copy:
@@ -216,7 +156,7 @@
     owner: "{{ server_user }}"
     path: "{{ git_reference_path | dirname }}"
     state: directory
-  when: os == 'rhel8'
+  when: os == 'rhel8' or os == 'rhel7'
 
 - name: create git reference repository
   ansible.builtin.command:
@@ -225,7 +165,7 @@
     creates: "{{ git_reference_path }}"
   become: yes
   become_user: "{{ server_user }}"
-  when: os == 'rhel8'
+  when: os == 'rhel8' or os == 'rhel7'
 
 - name: render init script into place
   notify: restart Jenkins

@@ -4,6 +4,13 @@
 # Install packages for V8 builds.
 #
 
+# V8 builds still require Python 2.
+- name: install packages required to build V8
+  ansible.builtin.yum:
+    name: ['GConf2-devel', 'python', 'python3']
+    state: present
+  notify: package updated
+
 # RHEL 7 doesn't have a package for pip and EPEL 7 doesn't support s390x.
 # Install pip via `get-pip.py`.
 - name: download pip install script
