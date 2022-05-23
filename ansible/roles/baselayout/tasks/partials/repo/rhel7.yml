@@ -1,0 +1,11 @@
+---
+
+# Red Hat Enterprise Linux 7
+
+- name: Enable RHEL 7 repositories
+  community.general.rhsm_repository:
+    name:
+    - rhel-7-server-for-system-z-rhscl-rpms
+    - rhel-7-server-for-system-z-rhscl-debug-rpms
+    - rhel-7-server-for-system-z-rhscl-source-rpms
+    state: enabled

@@ -6,8 +6,6 @@
   * [macOS release machines](#macos-release-machines)
     * [Full Xcode](#full-xcode)
     * [Signing certificates](#signing-certificates)
-* [RHEL7-S390X](#rhel7-s390x)
-  * [devtoolset-6 install](#devtoolset-6-install)
 * [macOS](#macos)
   * [Install Command Line Tools for Xcode](#install-command-line-tools-for-xcode)
 * [AIX 7.1](#aix-71)
@@ -135,28 +133,6 @@ Example:
 ```
 Not Before: Jan 22 03:40:05 2020 GMT
 Not After : Jan 22 03:40:05 2025 GMT
-```
-
-## RHEL7-S390X
-
-### devtoolset-6 install
-
-First copy the rpms from a machine that already has them
-
-```
-scp -r test-ibm-rhel7-s390x-1:/data/devtoolset-6-s390x-rpms/ ~/devtoolset-6-s390x-rpms
-```
-
-Then copy them over to the target machine
-
-```
-scp -r ~/devtoolset-6-s390x-rpms {target host}:~/devtoolset-6-s390x-rpms/
-```
-
-Then install the rpms
-
-```
-yum install -y devtoolset-6-s390x-rpms/*
 ```
 
 ## macOS

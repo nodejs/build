@@ -37,7 +37,7 @@
 
 - name: "ccache : compile"
   make:
-    chdir: "tmp/ccache-{{ ccache_latest }}"
+    chdir: "/tmp/ccache-{{ ccache_latest }}"
   when: not has_ccache.stat.exists
 
 - name: "ccache : install"
