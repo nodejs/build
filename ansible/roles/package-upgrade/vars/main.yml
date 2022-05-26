@@ -5,9 +5,9 @@
 #
 
   pm: {
-    'yum': ['centos', 'rhel7', 'aix', 'ibmi'],
+    'yum': ['centos', 'rhel7', 'aix71', 'aix72', 'ibmi'],
     'apt': ['debian', 'ubuntu'],
-    'dnf': ['fedora', 'rhel8'],
+    'dnf': ['aix73', 'fedora', 'rhel8'],
     'pkg': 'freebsd',
     'pkgin': 'smartos',
     'chocolatey': 'win',

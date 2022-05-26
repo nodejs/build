@@ -16,7 +16,7 @@ start )
               export HOME=/home/{{server_user}}; \
               export NODE_TEST_DIR=$HOME/tmp; \
               export NODE_COMMON_PIPE="$HOME/test.pipe"; \
-              export PATH="$PATH:/opt/freeware/bin"; \
+              export PATH="/opt/freeware/bin:/usr/opt/python3/bin/:$PATH"; \
               export OSTYPE=AIX72; \
               export JOBS={{ jobs_env }}; \
         /usr/bin/java -Xmx128m -Dorg.jenkinsci.plugins.gitclient.Git.timeOut=30 -jar "$HOME/slave.jar" \

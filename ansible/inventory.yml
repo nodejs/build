@@ -45,7 +45,7 @@ hosts:
 
     - ibm:
         aix71-ppc64_be-2:
-            ip: 169.48.19.173
+            ip: 169.59.74.10
             server_jobs: 6
         rhel7-s390x-1: {ip: 148.100.84.166, user: linux1}
         rhel8-s390x-1: {ip: 148.100.84.45, user: linux1}
@@ -143,13 +143,17 @@ hosts:
 
     - ibm:
         aix71-ppc64_be-3: 
-            ip: 169.48.22.38
+            ip: 169.48.23.70
             server_jobs: 6
         aix71-ppc64_be-4:  
-            ip: 169.48.22.51
+            ip: 169.59.74.12
             server_jobs: 6
         aix73-ppc64_be-1:
+            ansible_python_interpreter: /opt/freeware/bin/python3
+            ansible_remote_tmp: /tmp/.ansible
             ip: 163.68.64.114
+            remote_env:
+                PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
             server_jobs: 6
         rhel7-s390x-1: {ip: 148.100.84.221, user: linux1, build_test_v8: yes}
         rhel7-s390x-2: {ip: 148.100.84.114, user: linux1, build_test_v8: yes}

@@ -16,7 +16,7 @@
   when: pip_exists.stat.exists == False
 
 - name: install pip AIX71
-  raw: /usr/bin/python /home/iojs/get-pip.py
+  raw: /opt/freeware/bin/python3 /home/iojs/get-pip.py
   when: pip_exists.stat.exists == False and os == "aix71"
 
 - name: install pip AIX72

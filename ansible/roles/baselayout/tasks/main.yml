@@ -28,10 +28,6 @@
     - "dscacheutil -flushcache"
   when: os|startswith("macos")
 
-- name: Set hostname to inventory_hostname AIX
-  command: " hostname {{ inventory_hostname }}"
-  when: os|startswith("aix")
-
 - name: disable joyent smartconnect
   when: os|startswith("smartos")
   notify: restart sshd
@@ -72,7 +68,8 @@
   package: 
     name: "{{ package }}"
     state: present
-    use: "{{ os|startswith(\"ibmi\")|ternary(\"yum\", omit) }}"
+    # Package manager mapping in ansible/roles/package-upgrade/vars/main.yml.
+    use: "{{ os|match_key(pm)|default(omit) }}"
   loop_control:
     loop_var: package
   notify: package updated

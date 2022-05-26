@@ -21,7 +21,7 @@ packages: {
   'ubuntu1404': 'oracle-java8-installer',
   }
 
-java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default('missing') }}"
+java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default(omit) }}"
 
 # Add os_arch combinations here that should install and use AdoptOpenJDK
 # binaries. Override any variables in the dictionary. 
@@ -30,6 +30,7 @@ java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default('
 adoptopenjdk: {
   aix71_ppc64: { arch: ppc64 },
   aix72_ppc64: { arch: ppc64 },
+  aix73_ppc64: { arch: ppc64, version: 17 },
   centos7_ppc64: {}
 }
 

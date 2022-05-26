@@ -8,6 +8,8 @@
     * [Signing certificates](#signing-certificates)
 * [macOS](#macos)
   * [Install Command Line Tools for Xcode](#install-command-line-tools-for-xcode)
+* [AIX](#aix)
+  * [Disk layout](#disk-layout)
 * [AIX 7.1](#aix-71)
   * [Remove en1 network interface](#remove-en1-network-interface)
 * [AIX 7.2 Install](#aix-72-install)
@@ -206,6 +208,187 @@ detectable.
 5. Unmount the disk image.
 ```console
 sudo hdiutil detach /Volumes/Command\ Line\ Developer\ Tools
+```
+
+## AIX
+
+### Disk Layout
+
+[Our AIX Ansible bootstrap role](roles/bootstrap/tasks/partials/aix.yml) 
+attempts to resize filesystems to be large enough to install packages from the
+AIX Toolbox and to hold workspaces for CI builds. The server instances will
+need to have enough disk space available to fit the requested disk space. On
+IBM Cloud, for example, this involves having a second disk added in addition to
+the default one (e.g. 20Gb standard disk and an additional 100Gb one).
+
+If not enough space is availble the Jenkins worker create playbook will fail
+with an `allocp` error, e.g.
+
+```console
+TASK [bootstrap : Set size of /tmp to 1G] ******************************************************************************************************************
+task path: /home/rlau/sandbox/github/build/ansible/roles/bootstrap/tasks/partials/aix.yml:25
+redirecting (type: modules) ansible.builtin.aix_filesystem to community.general.aix_filesystem
+fatal: [test-ibm-aix73-ppc64_be-1]: FAILED! => {"changed": false, "msg": "Failed to run chfs. Error message: 0516-404 allocp: This system cannot fulfill the allocation request.\n\tThere are not enough free partitions or not enough physical volumes \n\tto keep strictness and satisfy allocation requests.  The command\n\tshould be retried with different allocation characteristics.\n"}
+```
+
+On AIX disks are organised into physical volumes (the disks) and logical
+volumes. Disks can be added to a volume group (where AIX will then manage the
+storage for the group). Useful commands are:
+
+```console
+lspv
+```
+
+this will list the physical volumes attached to the server, e.g.
+
+```console
+hdisk0          00c8d470fdbc3b5e                    rootvg          active
+hdisk1          00f6db0a6c7aece5                    rootvg          active
+```
+
+shows two disks attached to one volume group named `rootvg`. If this shows one
+of the disks as `None` this indicates that the disk has not been included in
+the volume group.
+
+```console
+hdisk0          00fa00d6b552f41b                    rootvg          active
+hdisk1          none                                None
+```
+
+[`lspv <disk name>`](https://www.ibm.com/docs/en/aix/7.3?topic=l-lspv-command)
+will show further information about disks.
+
+```console
+# lspv hdisk0
+PHYSICAL VOLUME:    hdisk0                   VOLUME GROUP:     rootvg
+PV IDENTIFIER:      00fa00d6b552f41b VG IDENTIFIER     00fa00d600004c000000017d43623707
+PV STATE:           active
+STALE PARTITIONS:   0                        ALLOCATABLE:      yes
+PP SIZE:            32 megabyte(s)           LOGICAL VOLUMES:  13
+TOTAL PPs:          639 (20448 megabytes)    VG DESCRIPTORS:   2
+FREE PPs:           4 (128 megabytes)        HOT SPARE:        no
+USED PPs:           635 (20320 megabytes)    MAX REQUEST:      512 kilobytes
+FREE DISTRIBUTION:  00..00..00..00..04
+USED DISTRIBUTION:  128..128..127..128..124
+MIRROR POOL:        None
+# lspv hdisk1
+0516-1396 : The physical volume hdisk1, was not found in the
+system database.
+#
+```
+
+To add a disk to a volume group:
+
+```console
+extendvg rootvg hdisk1
+```
+
+This may fail:
+
+```console
+0516-1254 extendvg: Changing the PVID in the ODM.
+0516-1162 extendvg: The Physical Partition Size of 32 requires the creation of
+        3200 partitions for hdisk1.  The limitation for volume group rootvg is
+        1016 physical partitions per physical volume.  Use chvg command with -t
+        option to attempt to change the maximum Physical Partitions per Physical
+        volume for this volume group.
+0516-792 extendvg: Unable to extend volume group.
+```
+
+Information about a volume group can be obtained via [`lsvg`](https://www.ibm.com/docs/en/aix/7.3?topic=l-lsvg-command),
+e.g.
+
+```console
+# lsvg rootvg
+VOLUME GROUP:       rootvg                   VG IDENTIFIER:  00fa00d600004c000000017d43623707
+VG STATE:           active                   PP SIZE:        32 megabyte(s)
+VG PERMISSION:      read/write               TOTAL PPs:      639 (20448 megabytes)
+MAX LVs:            256                      FREE PPs:       4 (128 megabytes)
+LVs:                13                       USED PPs:       635 (20320 megabytes)
+OPEN LVs:           12                       QUORUM:         2 (Enabled)
+TOTAL PVs:          1                        VG DESCRIPTORS: 2
+STALE PVs:          0                        STALE PPs:      0
+ACTIVE PVs:         1                        AUTO ON:        yes
+MAX PPs per VG:     32512
+MAX PPs per PV:     1016                     MAX PVs:        32
+LTG size (Dynamic): 512 kilobyte(s)          AUTO SYNC:      no
+HOT SPARE:          no                       BB POLICY:      relocatable
+PV RESTRICTION:     none                     INFINITE RETRY: no
+DISK BLOCK SIZE:    512                      CRITICAL VG:    no
+FS SYNC OPTION:     no                       CRITICAL PVs:   no
+ENCRYPTION:         yes
+#
+```
+
+where the earlier error is referring to `MAX PPs per PV`. This can be changed,
+as indicated by the error message, with [`chvg -t`](https://www.ibm.com/docs/en/aix/7.3?topic=c-chvg-command). 
+Note that `-t` takes a scaling factor which is multiplied by 1016. For our
+100Gb disks we use a factor of 16 which then allows the
+[`extendvg`](https://www.ibm.com/docs/en/aix/7.3?topic=e-extendvg-command)
+command to succeed:
+
+```console
+# chvg -t 16 rootvg
+0516-1164 chvg: Volume group rootvg changed.  With given characteristics rootvg
+        can include up to 2 physical volumes with 16256 physical partitions each.
+# extendvg rootvg hdisk1
+#
+```
+
+After extending the `rootvg` volume group you may still run into an error with
+the playbook:
+```console
+TASK [bootstrap : Set size of /home to 50G] ****************************************************************************************************************
+ok: [test-ibm-aix73-ppc64_be-1] => {"changed": false, "msg": "0516-787 extendlv: Maximum allocation for logical volume hd1\n\tis 512.\n"}
+```
+
+We can use `lslv <logical volume name>` to view the volume:
+
+```console
+# lslv hd1
+LOGICAL VOLUME:     hd1                    VOLUME GROUP:   rootvg
+LV IDENTIFIER:      00fa00d600004c000000017d43623707.8 PERMISSION:     read/write
+VG STATE:           active/complete        LV STATE:       opened/syncd
+TYPE:               jfs2                   WRITE VERIFY:   off
+MAX LPs:            512                    PP SIZE:        32 megabyte(s)
+COPIES:             1                      SCHED POLICY:   parallel
+LPs:                1                      PPs:            1
+STALE PPs:          0                      BB POLICY:      relocatable
+INTER-POLICY:       minimum                RELOCATABLE:    yes
+INTRA-POLICY:       center                 UPPER BOUND:    32
+MOUNT POINT:        /home                  LABEL:          /home
+MIRROR WRITE CONSISTENCY: on/ACTIVE
+EACH LP COPY ON A SEPARATE PV ?: yes
+Serialize IO ?:     NO
+INFINITE RETRY:     no                     PREFERRED READ: 0
+ENCRYPTION:         no
+#
+```
+
+and use [`chlv -x`](https://www.ibm.com/docs/en/aix/7.3?topic=c-chlv-command)
+to increase the maximum logical partitions (`MAX LPs`). For our 100Gb we use
+`6000` (to match what we have for our AIX 7.1 IBM Cloud instances):
+
+```
+# chlv -x 6000 hd1
+# lslv hd1
+LOGICAL VOLUME:     hd1                    VOLUME GROUP:   rootvg
+LV IDENTIFIER:      00fa00d600004c000000017d43623707.8 PERMISSION:     read/write
+VG STATE:           active/complete        LV STATE:       opened/syncd
+TYPE:               jfs2                   WRITE VERIFY:   off
+MAX LPs:            6000                   PP SIZE:        32 megabyte(s)
+COPIES:             1                      SCHED POLICY:   parallel
+LPs:                1                      PPs:            1
+STALE PPs:          0                      BB POLICY:      relocatable
+INTER-POLICY:       minimum                RELOCATABLE:    yes
+INTRA-POLICY:       center                 UPPER BOUND:    32
+MOUNT POINT:        /home                  LABEL:          /home
+MIRROR WRITE CONSISTENCY: on/ACTIVE
+EACH LP COPY ON A SEPARATE PV ?: yes
+Serialize IO ?:     NO
+INFINITE RETRY:     no                     PREFERRED READ: 0
+ENCRYPTION:         no
+#
 ```
 
 ## AIX 7.1
