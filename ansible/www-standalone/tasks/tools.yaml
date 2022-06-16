@@ -31,6 +31,6 @@
     line: "{{ item }}"
   with_items:
   # 07:00UTC is 00:00PST and 03:00EST
-    - '0 6     * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/master --config /etc/nightly-builder.json'
+    - '0 6     * * *   dist    /usr/bin/nodejs-nightly-builder --type nightly --ref heads/main --config /etc/nightly-builder.json'
     - '0 10    * * *   dist    /usr/bin/nodejs-nightly-builder --type v8-canary --ref heads/canary --config /etc/nightly-builder-v8-canary.json'
   tags: tools
