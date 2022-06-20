@@ -139,7 +139,7 @@ hosts:
 
     - equinix:
         ubuntu2004_docker-arm64-1: {ip: 145.40.81.219}
-        ubuntu2004_docker-arm64-2: {ip: 139.178.85.13}
+        ubuntu2004_docker-arm64-3: {ip: 145.40.99.31}
 
     - ibm:
         aix71-ppc64_be-3: 
