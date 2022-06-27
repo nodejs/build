@@ -4,7 +4,7 @@ cd ~binary_tmp/binary_tmp.git
 (echo; date) >> ~binary_tmp/clean_binary_tmp.log
 du -sh ~binary_tmp/binary_tmp.git/ >> ~binary_tmp/clean_binary_tmp.log
 
-git fetch origin +master:master
+git fetch origin +main:main
 
 for b in $(git branch | sed /\*/d); do
   if [ -z "$(git log -1 --since='7 days ago' -s $b)" ]; then
