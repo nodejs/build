@@ -103,6 +103,8 @@
     regexp: "clean_binary_tmp"
 
 - name: Disable automatic garbage collection
+  become: true
+  become_user: binary_tmp
   command: "git config gc.auto 0"
   args:
     chdir: "~binary_tmp/binary_tmp.git/"
