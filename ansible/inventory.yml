@@ -39,7 +39,6 @@ hosts:
         rhel8-x64-1: {ip: 159.203.115.217}
 
     - equinix:
-        centos7-arm64-1: {ip: 139.178.85.110, server_jobs: 32}
         ubuntu2004_docker-arm64-1: {ip: 145.40.80.210}
         ubuntu2004_docker-arm64-2: {ip: 147.75.47.90}
 
