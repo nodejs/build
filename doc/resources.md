@@ -123,7 +123,7 @@ In addition to servers, release has access to:
 
 ### nodejs.org
 
-`nodejs.org` is the main website for the Node.js Foundation. Its Ansible configuration lives in [`setup/www`](https://github.com/nodejs/build/tree/master/setup/www)
+`nodejs.org` is the main website for the Node.js Foundation. Its Ansible configuration lives in [`setup/www`](https://github.com/nodejs/build/tree/main/setup/www)
 
 ### [ci.nodejs.org](https://ci.nodejs.org)
 
@@ -149,9 +149,9 @@ cluster:
 
 | Type  | Jenkins Agent | Jenkins Workspace | Playbook | Notes |
 |---|---|---|---|---|
-| "Normal"  | On machine | On machine | [`jenkins/worker/create.yml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/worker/create.yml) | Run-of-the-mill, most common type of worker |
-| "Half Docker"  | On machine | Docker container | [`jenkins/worker/create.yml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/worker/create.yml) |  Raspbery Pi, Scaleway ARM v7 |
-| "Full Docker"  |  Docker container | Docker container  | [`jenkins/docker-host.yaml`](https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/docker-host.yaml) | Special case Linux machines |
+| "Normal"  | On machine | On machine | [`jenkins/worker/create.yml`](https://github.com/nodejs/build/blob/main/ansible/playbooks/jenkins/worker/create.yml) | Run-of-the-mill, most common type of worker |
+| "Half Docker"  | On machine | Docker container | [`jenkins/worker/create.yml`](https://github.com/nodejs/build/blob/main/ansible/playbooks/jenkins/worker/create.yml) |  Raspbery Pi, Scaleway ARM v7 |
+| "Full Docker"  |  Docker container | Docker container  | [`jenkins/docker-host.yaml`](https://github.com/nodejs/build/blob/main/ansible/playbooks/jenkins/docker-host.yaml) | Special case Linux machines |
 
 [`nodejs-ci-health`](https://nodejs-ci-health.mmarchini.me/),
 [`node-build-monitor`](http://node-build-monitor.herokuapp.com/), and
@@ -185,7 +185,7 @@ jenkins-release-admins membership who do not have infra or release membership.
 
 ### [GitHub Bot][]
 
-The `github-bot` is the server that runs different [automation scripts](https://github.com/nodejs/github-bot/tree/HEAD/scripts) within the Node.js Foundation GitHub organization. For example, the bot automatically applies labels to new pull requests in `nodejs/node`, and can trigger Jenkins builds or report their statuses on pull requests. Its Ansible configuration lives in [`playbooks/create-github-bot.yml`](https://github.com/nodejs/build/tree/master/ansible/playbooks/create-github-bot.yml)
+The `github-bot` is the server that runs different [automation scripts](https://github.com/nodejs/github-bot/tree/HEAD/scripts) within the Node.js Foundation GitHub organization. For example, the bot automatically applies labels to new pull requests in `nodejs/node`, and can trigger Jenkins builds or report their statuses on pull requests. Its Ansible configuration lives in [`playbooks/create-github-bot.yml`](https://github.com/nodejs/build/tree/main/ansible/playbooks/create-github-bot.yml)
 
 Those with `github-bot` access have access to the GitHub Bot's configuration,
 including GitHub and Jenkins secrets. The list of members is

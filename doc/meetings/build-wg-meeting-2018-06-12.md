@@ -58,7 +58,7 @@
     * Improve tests 
     * Can also improve the overall user experience in using the CI
   * Next steps
-    * Jon - working on guide - https://github.com/nodejs/build/blob/master/doc/jenkins-guide.md
+    * Jon - working on guide - https://github.com/nodejs/build/blob/main/doc/jenkins-guide.md
       * volunteers to review the jenkins-guide.md, ask Jon for clarity where necessary
       * ask volunteers to join node-build on freenode, start responding to issues  
       * ask volunteers to start reading through the documentation.
