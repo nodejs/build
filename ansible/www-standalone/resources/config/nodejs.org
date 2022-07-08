@@ -51,7 +51,7 @@ server {
     }
 
     location /dist {
-        alias /home/dist/nodejs/release/;
+        alias /home/dist/nodejs/release;
         autoindex on;
         default_type text/plain;
 
@@ -296,7 +296,7 @@ server {
         sendfile_max_chunk 1m;
         tcp_nopush on;
 
-        alias /home/dist/nodejs/release/;
+        alias /home/dist/nodejs/release;
         autoindex on;
         default_type text/plain;
 
@@ -306,7 +306,7 @@ server {
     }
 
     location /docs {
-        alias /home/dist/nodejs/docs/;
+        alias /home/dist/nodejs/docs;
         autoindex on;
         default_type text/html;
 
@@ -341,7 +341,7 @@ server {
     }
 
     location /metrics {
-        alias /home/dist/metrics/;
+        alias /home/dist/metrics;
         autoindex on;
         default_type text/plain;
     }
@@ -361,7 +361,7 @@ server {
     rewrite ^/images/node-foundation-by-laws.pdf$                 https://$server_name/static/documents/node-foundation-by-laws.pdf permanent;
     rewrite ^/images/.*trademark-policy.pdf$                      https://$server_name/static/documents/trademark-policy.pdf permanent;
     rewrite ^/video(.*)$                                          https://$server_name/static/video$1 permanent;
-    rewrite ^/changelog.html$                                     https://github.com/nodejs/node/blob/master/CHANGELOG.md permanent;
+    rewrite ^/changelog.html$                                     https://github.com/nodejs/node/blob/HEAD/CHANGELOG.md permanent;
     rewrite ^/api.html$                                           https://$server_name/api/ permanent;
     rewrite ^/index.html$                                         https://$server_name/ permanent;
 

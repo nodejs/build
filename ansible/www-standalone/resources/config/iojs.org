@@ -61,7 +61,7 @@ server {
     }
 
     location /dist {
-        alias /home/dist/iojs/release/;
+        alias /home/dist/iojs/release;
         autoindex on;
         default_type text/plain;
 
@@ -71,7 +71,7 @@ server {
     }
 
     location /docs {
-        alias /home/dist/iojs/docs/;
+        alias /home/dist/iojs/docs;
         autoindex on;
         default_type text/html;
 
