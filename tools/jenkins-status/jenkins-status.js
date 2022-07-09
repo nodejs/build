@@ -28,7 +28,7 @@ function log (t, s) {
 
 function onData (err, computers) {
   if (err) {
-    err.statusCode && console.error(`HTPPS request to Jenkins returned ${err.statusCode}`)
+    err.statusCode && console.error(`HTTPS request to Jenkins returned ${err.statusCode}`)
     if (err.data) {
       console.error('Try adding your Jenkins username to .ncurc with:\nncu-config --global set jenkins_username USERNAME')
       console.error('\n some lines from the error page:\n')
