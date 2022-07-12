@@ -128,7 +128,7 @@ As root:
 
 The last two steps will show the details of the certificates allowing to see expiry dates.
 
-Example: 
+Example:
 
 ```
 Not Before: Jan 22 03:40:05 2020 GMT
@@ -190,9 +190,9 @@ then manually download and install:
 1. Go to https://developer.apple.com/download/all/?q=command with an
 Apple Developer account (it does not need to be the Build WG's account)
 and find `Command Line Tools for Xcode 11.5`. Click the `View Details`
-twisty to reveal the download link and download the 
+twisty to reveal the download link and download the
 `Command_Line_Tools_for_Xcode_11.5.dmg` file.
-2. Mount the `.dmg` disk image. This creates 
+2. Mount the `.dmg` disk image. This creates
 `/Volumes/Command Line Developer Tools`
 ```console
 sudo hdiutil attach Command_Line_Tools_for_Xcode_11.5.dmg
@@ -213,7 +213,7 @@ sudo hdiutil detach /Volumes/Command\ Line\ Developer\ Tools
 ### Remove en1 network interface
 
 Some libuv/Node.js tests currently fail on AIX with a network interface
-containing a link local address. This is being tracked in 
+containing a link local address. This is being tracked in
 https://github.com/nodejs/node/issues/39143. In the meantime the `en1`
 interface containing the link local address is removed.
 ```
@@ -524,14 +524,14 @@ NFS_BOOT_SERVER_IP:PATH_TO_TFTP_BOOT_EXPORT /boot nfs4 nfsvers=3,rw,noexec,async
 After these steps are performed and the Pi's are running, Ansible can be run to finish setup. A reboot is recommended after initial setup to ensure the environment is configured correctly (locale and other settings that are changed).
 
 [Setting up a Windows Host]: https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html
-[newer Ansible configuration]: https://github.com/nodejs/build/tree/master/ansible
-[stand-alone]: https://github.com/nodejs/build/tree/master/setup/windows
+[newer Ansible configuration]: https://github.com/nodejs/build/tree/main/ansible
+[stand-alone]: https://github.com/nodejs/build/tree/main/setup/windows
 
 ## IBM i
 
 There isn't a system start service on IBMi -- the machine should not be
 rebooted, and after ansible is run, jenkins needs to be started with
-`jenkins-start.sh`. This will submit the job under the iojs user. If the 
+`jenkins-start.sh`. This will submit the job under the iojs user. If the
 job is already running, the `jenkins-start.sh` script will not start
 another job.
 

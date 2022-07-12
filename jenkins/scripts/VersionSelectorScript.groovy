@@ -68,7 +68,7 @@ def buildExclusions = [
   [ /^ubuntu1604-arm64/,              anyType,     gte(14) ],
 
   // Windows -----------------------------------------------
-  // https://github.com/nodejs/build/blob/master/doc/windows-visualstudio-supported-versions.md
+  // https://github.com/nodejs/build/blob/main/doc/windows-visualstudio-supported-versions.md
   // Release Builders - should only match one VS version per Node.js version
   [ /vs2013/,                         releaseType, gte(6)        ],
   [ /vs2015/,                         releaseType, ltGte(6, 10)  ],
@@ -91,7 +91,7 @@ def buildExclusions = [
   [ /vs2017-COMPILED_BY/,             testType,    lt(8)         ],
   [ /vs2019-COMPILED_BY/,             testType,    lt(12)        ],
   // Exclude some redundant configurations
-  // https://github.com/nodejs/build/blob/master/doc/node-test-commit-matrix.md
+  // https://github.com/nodejs/build/blob/main/doc/node-test-commit-matrix.md
   [ /win10.*COMPILED_BY-vs2017/,      testType,    lt(10)        ], // vcbt2015 runs on win10 for <10
   [ /win10.*COMPILED_BY-vs2017/,      testType,    gte(13)       ], // vs2019 runs on win10 for >=13
 

@@ -41,7 +41,7 @@
     * (P.S. libuv is happy for Centos 5 to be removed https://github.com/libuv/libuv/issues/1935 + https://github.com/libuv/libuv/pull/1940#issuecomment-411744257)
 * Use of Docker in Build CI [#1226](https://github.com/nodejs/build/issues/1226)
   * Waiting for Michael to be back for walkthrough
-  * Jon has written a guide for debugging (https://github.com/nodejs/build/blob/master/doc/jenkins-guide.md#fixing-machines-with-docker)
+  * Jon has written a guide for debugging (https://github.com/nodejs/build/blob/main/doc/jenkins-guide.md#fixing-machines-with-docker)
 * Setting `core.autocrlf` on workers to avoid git “autofix” [#1443](https://github.com/nodejs/build/issues/1443)
   * Been happening for a while (a file marked as “Modified” breaks rebasing)
   * V8 file checked in with CRLF file endings

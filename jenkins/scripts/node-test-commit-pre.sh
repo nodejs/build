@@ -44,5 +44,5 @@ LOCAL_SCRIPT="${WORKSPACE}/build/jenkins/scripts/node-test-commit-diagnostics.sh
 if [ -e "${LOCAL_SCRIPT}" ]; then
   bash -ex "${LOCAL_SCRIPT}" before
 else
-  curl https://raw.githubusercontent.com/nodejs/build/master/jenkins/scripts/node-test-commit-diagnostics.sh | bash -ex -s before
+  curl https://raw.githubusercontent.com/nodejs/build/main/jenkins/scripts/node-test-commit-diagnostics.sh | bash -ex -s before
 fi

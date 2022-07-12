@@ -58,9 +58,9 @@ The [iptables ansible playbook] can also be used to add every known host
 in the ansible inventory beginning with `release-` or `test-` prefixes to
 the iptables rules for the respective CI server.
 
-[backup server]: https://github.com/nodejs/build/tree/master/backup
-[iptables ansible playbook]: https://github.com/nodejs/build/blob/master/ansible/playbooks/jenkins/host/iptables.yml
-[Jenkins host playbooks]: https://github.com/nodejs/build/tree/master/ansible/playbooks/jenkins/host
+[backup server]: https://github.com/nodejs/build/tree/main/backup
+[iptables ansible playbook]: https://github.com/nodejs/build/blob/main/ansible/playbooks/jenkins/host/iptables.yml
+[Jenkins host playbooks]: https://github.com/nodejs/build/tree/main/ansible/playbooks/jenkins/host
 [Recovering iptables configuration]: #recovering-iptables-configuration
 [Recovering Jenkins configuration]: #recovering-jenkins-configuration
  
