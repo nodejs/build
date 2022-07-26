@@ -1,0 +1,5 @@
+- name: install tap2junit
+  ansible.builtin.pip:
+    name: tap2junit
+    state: present
+    executable: /usr/bin/pip3

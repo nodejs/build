@@ -39,6 +39,7 @@
 
 - name: install java
   when:
+    - java_package_name is defined and java_package_name != ""
     - not os|startswith("zos")
     - not os|startswith("macos")
   notify:
@@ -47,7 +48,8 @@
   package:
     name: "{{ java_package_name }}"
     state: latest
-    use: "{{ os|startswith(\"ibmi\")|ternary(\"yum\", omit) }}"
+    # Package manager mapping in ansible/roles/package-upgrade/vars/main.yml.
+    use: "{{ os|match_key(pm)|default(omit) }}"
 
 - name: install java tap (macOS)
   become_user: administrator

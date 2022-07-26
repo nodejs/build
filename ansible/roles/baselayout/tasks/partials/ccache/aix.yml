@@ -50,11 +50,15 @@
     group: system
     state: link
   loop:
-    - { dest: gcc }
-    - { dest: g++ }
-    - { dest: gcov }
-    - { dest: cpp }
     - { dest: c++ }
+    - { dest: cpp }
+    - { dest: g++ }
+    - { dest: gcc }
+    - { dest: gcov }
+    - { dest: g++-6 }
+    - { dest: gcc-6 }
+    - { dest: g++-8 }
+    - { dest: gcc-8 }
   when: not has_ccache.stat.exists
 
 - name: "ccache : cleanup - aix tarball"

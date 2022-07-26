@@ -145,6 +145,15 @@ elif [ "$SELECT_ARCH" = "IBMI73" ]; then
 
 elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
   case $NODE_NAME in
+    *aix73* )
+      export COMPILER_LEVEL="10"
+      echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX 7.3"
+      export CC="ccache-swig gcc-${COMPILER_LEVEL}"
+      export CXX="ccache-swig g++-${COMPILER_LEVEL}"
+      export LINK="g++-${COMPILER_LEVEL}"
+      echo "Compiler set to:" `$CXX -dumpversion`
+      return
+      ;;
     *aix72* )
       echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX7.2"
       if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then

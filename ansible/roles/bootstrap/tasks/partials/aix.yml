@@ -57,3 +57,19 @@
   shell:
     cmd: mount -v ahafs /aha /aha
   when: ahafs.matched == 0
+
+- name: Set maximum processes per user
+  community.general.aix_devices:
+    device: sys0
+    attributes:
+      maxuproc: "512"
+
+# Set consistent hostname with Ansible inventory.
+- name: Check hostname
+  ansible.builtin.command: hostname
+  changed_when: no
+  register: current_hostname
+
+- name: Set hostname to inventory_hostname AIX
+  ansible.builtin.command: hostname {{ inventory_hostname }}
+  when: current_hostname.stdout != inventory_hostname

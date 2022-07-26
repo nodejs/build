@@ -76,7 +76,15 @@ packages: {
   ],
 
   aix: [
-    'bash,cmake,curl,gcc-c++,gcc6-c++,tar,unzip,git,make,sudo,python-setuptools,python3',
+    'bash,cmake,coreutils,curl,gcc-c++,tar,unzip,git,make,sudo,python-setuptools,python3',
+  ],
+
+  aix71: [
+    'gcc6-c++',
+  ],
+
+  aix72: [
+    'gcc6-c++',
   ],
 
   ibmi: [
