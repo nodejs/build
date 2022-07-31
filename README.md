@@ -1,3 +1,4 @@
+![587E9EAB-FDB1-4B1D-9A4C-6807E85B3CBF](https://user-images.githubusercontent.com/37724858/182030128-8a5ab476-0b76-4efa-ba60-b6b419870f6f.jpeg)
 ![ARM Cluster](./static-assets/ns-arm-cluster.jpg)
 <p align="center"><i><small>Some of the Node.js Build ARM resources: 3
 generations of Raspberry Pi and other ARMv7 & ARM64 hardware</small></i></p>
