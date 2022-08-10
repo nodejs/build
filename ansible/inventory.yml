@@ -167,6 +167,18 @@ hosts:
         rhel8-x64-3: {ip: 52.117.26.13, build_test_v8: yes}
         ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
         ubuntu1804-x64-2: {ip: 50.97.245.9}
+        zos24-s390x-1:
+            ip: 128.168.135.56
+            user: ibmuser 
+            ansible_python_interpreter: /usr/lpp/IBM/cyp/v3r9/pyz/bin/python3
+            become_method: su
+            cmake_path_env: "{{ home }}/{{ server_user }}:/rsusr/ported/bin/:bin"
+            git_cmd: /rsusr/ported/bin/git
+            remote_env:
+                LIBPATH: /lib:/usr/lib:.:/rsusr/ported/lib/perl5/5.24.4/CORE.pod:/usr/lpp/IBM/cyp/v3r9/pyz/lib/
+                PATH: /usr/lpp/IBM/cyp/v3r9/pyz/bin/:/bin:/rsusr/ported/bin/
+                SSL_CERT_FILE: "{{ home }}/{{ server_user }}/ca-bundle.crt"
+            server_jobs: 2
 
     - joyent:
         smartos18-x64-3: {ip: 147.75.88.54}
