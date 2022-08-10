@@ -169,9 +169,9 @@ hosts:
         ubuntu1804-x64-2: {ip: 50.97.245.9}
         zos24-s390x-1:
             ip: 128.168.135.56
+            ansible_become: false
             user: ibmuser 
             ansible_python_interpreter: /usr/lpp/IBM/cyp/v3r9/pyz/bin/python3
-            become_method: su
             cmake_path_env: "{{ home }}/{{ server_user }}:/rsusr/ported/bin/:bin"
             git_cmd: /rsusr/ported/bin/git
             remote_env:
