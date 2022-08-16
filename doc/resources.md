@@ -153,10 +153,6 @@ cluster:
 | "Half Docker"  | On machine | Docker container | [`jenkins/worker/create.yml`](https://github.com/nodejs/build/blob/main/ansible/playbooks/jenkins/worker/create.yml) |  Raspbery Pi, Scaleway ARM v7 |
 | "Full Docker"  |  Docker container | Docker container  | [`jenkins/docker-host.yaml`](https://github.com/nodejs/build/blob/main/ansible/playbooks/jenkins/docker-host.yaml) | Special case Linux machines |
 
-[`nodejs-ci-health`](https://nodejs-ci-health.mmarchini.me/),
-[`node-build-monitor`](http://node-build-monitor.herokuapp.com/)
-can all be used to monitor the health of `ci.nodejs.org`.
-
 #### Jenkins admins
 
 [@nodejs/jenkins-admins][] have administrator access to ci.nodejs.org. They are
