@@ -160,7 +160,8 @@ int nodeMajorVersion = -1
 if (parameters['NODEJS_MAJOR_VERSION'])
   nodeMajorVersion = new String(parameters['NODEJS_MAJOR_VERSION']).toInteger()
 println "Node.js major version: $nodeMajorVersion"
-println "Node.js version: ${new String(parameters['NODEJS_VERSION'])}"
+if (parameters['NODEJS_VERSION'])
+  println "Node.js version: ${new String(parameters['NODEJS_VERSION'])}"
 
 // NOTE: this assumes that the default "Slaves"->"Name" in the Configuration
 // Matrix is left as "nodes", if it's changed then `it.nodes` below won't work
