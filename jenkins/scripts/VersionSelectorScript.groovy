@@ -158,7 +158,11 @@ def canBuild = { nodeVersion, builderLabel, buildType ->
 
 int nodeMajorVersion = -1
 if (parameters['NODEJS_MAJOR_VERSION'])
-  nodeMajorVersion = new String(parameters['NODEJS_MAJOR_VERSION']).toInteger()
+  if (parameters['NODEJS_MAJOR_VERSION'] instanceof Integer) {
+    nodeMajorVersion = parameters['NODEJS_MAJOR_VERSION']
+  } else {
+    nodeMajorVersion = (new String(parameters['NODEJS_MAJOR_VERSION'])).toInteger()
+  }
 println "Node.js major version: $nodeMajorVersion"
 if (parameters['NODEJS_VERSION'])
   println "Node.js version: ${new String(parameters['NODEJS_VERSION'])}"
