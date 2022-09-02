@@ -10,11 +10,11 @@ hosts:
   - infra:
 
     - digitalocean:
-        ubuntu1404-x64-1: {ip: 107.170.240.62, alias: ci}
         ubuntu1604-x64-1: {ip: 138.197.224.240, alias: www}
         ubuntu1804-x64-1: {ip: 178.128.202.158, alias: gzemnid}
         ubuntu1804-x64-2: {ip: 45.55.45.227, alias: unofficial-builds}
         ubuntu1804-x64-3: {ip: 157.245.7.159, alias: metrics}
+        ubuntu2204-x64-1: {ip: 107.170.240.62, alias: ci}
 
     - ibm:
         ubuntu1804-x64-1: {ip: 169.45.166.50, alias: ci-release}
