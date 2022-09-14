@@ -12,13 +12,14 @@ ENV OSTYPE linux-gnu
 ENV OSVARIANT docker
 ENV DESTCPU {{ arch }}
 ENV ARCH {{ arch }}
+ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
     ccache \
     g++-8 \
     gcc-8 \
     git \
-    openjdk-8-jre-headless \
+    openjdk-17-jre-headless \
     curl \
     python3-pip \
     python-is-python3 \

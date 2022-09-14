@@ -14,7 +14,6 @@ RUN apt-get update \
     g++-8 \
     gcc-8 \
     git \
-    openjdk-8-jre-headless \
     curl \
     python-pip \
     python3-pip \
@@ -25,6 +24,9 @@ RUN apt-get update \
     g++-6-multilib \
     gcc-8-multilib \
     g++-8-multilib
+# openjdk-17-jre-headless pulls in ca-certificates-java which conflicts with
+# something in the list of package above when installed at the same time.
+RUN apt-get install -y openjdk-17-jre-headless
 
 RUN pip install tap2junit \
   && pip3 install tap2junit

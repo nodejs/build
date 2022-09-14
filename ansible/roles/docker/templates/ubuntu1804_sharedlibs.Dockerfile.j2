@@ -22,7 +22,6 @@ RUN apt-get update && apt-get install apt-utils -y && \
       g++-8 \
       gcc-8 \
       git \
-      openjdk-8-jre-headless \
       pkg-config \
       curl \
       python-pip \
@@ -30,6 +29,10 @@ RUN apt-get update && apt-get install apt-utils -y && \
       libfontconfig1 \
       libtool \
       automake
+# openjdk-17-jre-headless pulls in ca-certificates-java which conflicts with
+# something in the list of package above when installed at the same time.
+RUN apt-get install -y openjdk-17-jre-headless
+
 
 RUN pip install tap2junit
 

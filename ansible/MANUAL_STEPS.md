@@ -12,6 +12,7 @@
   * [Disk layout](#disk-layout)
 * [AIX 7.1](#aix-71)
   * [Remove en1 network interface](#remove-en1-network-interface)
+  * [Update XL C/C++ Runtime](#update-xl-cc-runtime)
 * [AIX 7.2 Install](#aix-72-install)
   * [ccache 3.7.4 on AIX 7.2](#ccache-374-on-aix-72)
   * [Enable the AHA fs](#enable-the-aha-fs)
@@ -410,6 +411,33 @@ ifconfig -a
 to list the available interfaces. To add back the `en1` interface, run
 ```
 sudo autoconf6 -i en1
+```
+
+### Update XL C/C++ Runtime
+
+Java 17 requires XL C/C++ Runtime 16.1 available from https://www.ibm.com/support/pages/fix-list-xl-cc-runtime-aix#161X.
+Once downloaded, unpack the files with `zcat`:
+```
+zcat 16.1.0.9-IBM-xlCrte-AIX-FP009.tar.Z |  tar -xvf -
+```
+and then install with `installp`:
+```
+installp -aXYgd . -e /tmp/install.log all
+```
+
+Use `lslpp -l xlC\*` to view the curently installed version.
+
+```
+# lslpp -l xlC\*
+  Fileset                      Level  State      Description
+  ----------------------------------------------------------------------------
+Path: /usr/lib/objrepos
+  xlC.aix61.rte             13.1.3.3  COMMITTED  IBM XL C++ Runtime for AIX 6.1
+                                                 and later
+  xlC.cpp                    9.0.0.0  COMMITTED  C for AIX Preprocessor
+  xlC.rte                   13.1.3.3  COMMITTED  IBM XL C++ Runtime for AIX
+  xlC.sup.aix50.rte          9.0.0.1  COMMITTED  XL C/C++ Runtime for AIX 5.2
+#
 ```
 
 ## AIX 7.2 Install
