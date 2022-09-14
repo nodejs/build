@@ -5,19 +5,21 @@
 #
 
 packages: {
-  'centos': 'java-1.8.0-openjdk-headless',
+  'centos': 'java-11-openjdk-headless',
   'debian7': 'openjdk-7-jre-headless',
   'debian8': 'oracle-java8-installer',
   'debian9': 'openjdk-8-jre-headless',
   'debian10': 'openjdk-11-jre-headless',
-  'fedora': 'java-1.8.0-openjdk-headless',
+  'fedora': 'java-17-openjdk-headless',
+  'fedora32': 'java-11-openjdk-headless',
   'freebsd': 'openjdk8-jre',
   'ibmi': 'openjdk-11-ea',
   'macos': 'adoptopenjdk8',
   'rhel7': 'java-11-openjdk',
   'rhel8': 'java-17-openjdk',
   'smartos': 'openjdk8',
-  'ubuntu': 'openjdk-8-jre-headless',
+  'ubuntu': 'openjdk-17-jre-headless',
+  'ubuntu1604': 'openjdk-8-jre-headless',
   'ubuntu1404': 'oracle-java8-installer',
   'ubuntu2204': 'openjdk-17-jre-headless',
   }
@@ -31,11 +33,11 @@ java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default(o
 adoptopenjdk: {
   aix71_ppc64: { arch: ppc64 },
   aix72_ppc64: { arch: ppc64 },
-  aix73_ppc64: { arch: ppc64, version: 17 },
+  aix73_ppc64: { arch: ppc64 },
   centos7_ppc64: {}
 }
 
 adoptopenjdk_arch: "{{ adoptopenjdk[os+'_'+arch].arch | default(ansible_architecture) }}"
 adoptopenjdk_os: "{{ adoptopenjdk[os+'_'+arch].os | default(ansible_system | lower) }}"
-adoptopenjdk_version: "{{ adoptopenjdk[os+'_'+arch].version | default('8') }}"
+adoptopenjdk_version: "{{ adoptopenjdk[os+'_'+arch].version | default('17') }}"
 use_adoptopenjdk: "{{ adoptopenjdk[os+'_'+arch] is defined | bool }}"
