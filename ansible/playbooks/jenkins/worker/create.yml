@@ -57,6 +57,8 @@
 #
 
 - hosts:
+    - test-equinix-ubuntu2204-x64-1
+    - test-equinix-ubuntu2204-x64-2
     - test-packetnet-ubuntu1804-x64-1
     - test-packetnet-ubuntu1804-x64-2
     - test-ibm-ubuntu1804-x64-1
@@ -80,6 +82,8 @@
 - hosts:
   - test
   - release
+  - "!test-equinix-ubuntu2204-x64-1"
+  - "!test-equinix-ubuntu2204-x64-2"
   - "!test-packetnet-ubuntu1804-x64-1"
   - "!test-packetnet-ubuntu1804-x64-2"
   - "!test-ibm-ubuntu1804-x64-1"

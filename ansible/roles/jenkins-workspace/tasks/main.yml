@@ -40,6 +40,14 @@
 
 # Repository needs to be created in /home/iojs/build because the partition with
 # free space might be mounted in a way that does not include /home/binary_tmp
+- name: Create repository parent directory
+  file:
+    path: "{{ home }}/{{ server_user }}/build/"
+    state: directory
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: 0755
+
 - name: Create repository directory
   file:
     path: "{{ home }}/{{ server_user }}/build/binary_tmp.git"
@@ -114,14 +122,20 @@
     url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
     state: present
 
+- name: Get Ubuntu codename
+  ansible.builtin.command: "lsb_release -s -c"
+  changed_when: no
+  check_mode: no
+  register: release_codename
+
 - name: Add nodesource repo
   apt_repository:
-    repo: deb https://deb.nodesource.com/node_14.x xenial main
+    repo: deb https://deb.nodesource.com/node_14.x {{ release_codename.stdout }} main
     state: present
 
 - name: Remove earlier nodesource repos
   apt_repository:
-    repo: deb https://deb.nodesource.com/node_12.x xenial main
+    repo: deb https://deb.nodesource.com/node_12.x {{ release_codename.stdout }} main
     state: absent
 
 - name: Install node
@@ -129,12 +143,6 @@
     name: nodejs
     state: present
     update_cache: yes
-
-- name: Upgrade pip2
-  pip:
-    name: pip
-    executable: pip2
-    state: latest
 
 - name: Upgrade pip3
   pip:

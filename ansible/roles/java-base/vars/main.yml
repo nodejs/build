@@ -19,6 +19,7 @@ packages: {
   'smartos': 'openjdk8',
   'ubuntu': 'openjdk-8-jre-headless',
   'ubuntu1404': 'oracle-java8-installer',
+  'ubuntu2204': 'openjdk-17-jre-headless',
   }
 
 java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default(omit) }}"
