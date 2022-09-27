@@ -139,6 +139,10 @@ hosts:
     - equinix:
         ubuntu2004_docker-arm64-1: {ip: 145.40.81.219}
         ubuntu2004_docker-arm64-3: {ip: 145.40.99.31}
+# when adding, removing or changing the IPs below,
+# remember to update Jenkins worker IP whitelist in github-bot
+        ubuntu2204-x64-1: {ip: 147.75.72.255, alias: jenkins-workspace-7}
+        ubuntu2204-x64-2: {ip: 145.40.96.123, alias: jenkins-workspace-8}
 
     - ibm:
         aix71-ppc64_be-3: 
