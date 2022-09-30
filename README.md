@@ -55,6 +55,7 @@ Above list is manually synced with the [gpg member list](https://github.com/node
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@sxa](https://github.com/sxa) - Stewart X Addison
 
 <!-- ncu-team-sync end -->
 
@@ -88,6 +89,7 @@ Access to [release secrets][].
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@sxa](https://github.com/sxa) - Stewart X Addison
 
 Above list is manually synced with the [gpg member list](https://github.com/nodejs-private/secrets/tree/master/build/release/.gpg).
 
@@ -105,6 +107,7 @@ Admin access to https://ci-release.nodejs.org/.
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@sxa](https://github.com/sxa) - Stewart X Addison
 
 <!-- ncu-team-sync end -->
 
