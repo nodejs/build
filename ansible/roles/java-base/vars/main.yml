@@ -12,7 +12,7 @@ packages: {
   'debian10': 'openjdk-11-jre-headless',
   'fedora': 'java-17-openjdk-headless',
   'fedora32': 'java-11-openjdk-headless',
-  'freebsd': 'openjdk8-jre',
+  'freebsd': 'openjdk11-jre',
   'ibmi': 'openjdk-11-ea',
   'macos': 'adoptopenjdk8',
   'rhel7': 'java-11-openjdk',

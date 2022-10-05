@@ -5,14 +5,19 @@
 #
 
 - name: install pip
-  package: name=py38-pip state=present
+  package:
+    name: py39-pip
+    state: present
 
 - name: freebsd | update pip3 symlink
   when: os == "freebsd12"
   file:
     dest: "/usr/local/bin/pip3"
     state: link
-    src: "/usr/local/bin/pip-3.8"
+    src: "/usr/local/bin/pip-3.9"
 
 - name: install tap2junit
-  pip: name=tap2junit state=present
+  pip:
+    executable: pip3
+    name: tap2junit
+    state: present
