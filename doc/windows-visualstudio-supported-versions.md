@@ -10,10 +10,10 @@ Supported versions for running the Node.js installer and executable as released.
 
 | Node.js Version | Windows Version            |
 |-----------------|----------------------------|
-| v10             | 7 / 2008 R2                |
-| v12             | 7 / 2008 R2                |
 | v14             | 8.1 / 2012 R2              |
-| v15             | 8.1 / 2012 R2              |
+| v16             | 8.1 / 2012 R2              |
+| v18             | 10 / 2016                  |
+| v19             | 10 / 2016                  |
 
 ## For building Node.js Core
 
@@ -21,10 +21,10 @@ Supported versions for building Node.js from source.
 
 | Node.js Version | Visual Studio Version               |
 |-----------------|-------------------------------------|
-| v10             | 2017 <sup>[1]</sup>                 |
-| v12             | 2017, 2019 (flag) <sup>[2]</sup>    |
 | v14             | 2017, 2019                          |
-| v15             | 2019 <sup>[4]</sup>                |
+| v16             | 2019 <sup>[1]</sup>                 |
+| v18             | 2019                                |
+| v19             | 2019                                |
 
 ## For building Node.js Addons
 
@@ -32,10 +32,10 @@ Supported versions for building Node.js addons. End-users should have one of the
 
 | Node.js Version | Visual Studio Version                     |
 |-----------------|-------------------------------------------|
-| v10             | 2015, VCBT2015, 2017                      |
-| v12             | 2015, VCBT2015, 2017, 2019 <sup>[3]</sup> |
 | v14             | 2015, VCBT2015, 2017, 2019                |
-| v15             | 2015, VCBT2015, 2017, 2019                |
+| v16             | 2015, VCBT2015, 2017, 2019                |
+| v18             | 2015, VCBT2015, 2017, 2019                |
+| v19             | 2017, 2019 <sup>[2]</sup>                 |
 
 ## Official Releases
 
@@ -43,20 +43,14 @@ These versions are used to build the official releases.
 
 | Node.js Version | Windows Version | Visual Studio Version |
 |-----------------|-----------------|-----------------------|
-| v10             | 2012 R2         | 2017 <sup>[1]</sup>   |
-| v12             | 2012 R2         | 2017                  |
 | v14             | 2012 R2         | 2019                  |
-| v15             | 2012 R2         | 2019                  |
+| v16             | 2012 R2         | 2019                  |
+| v18             | 2012 R2         | 2019                  |
+| v19             | 2012 R2         | 2019                  |
 
 ## References
 
-1. Support for Visual Studio 2015 was removed in v10.0.0.
-   - Pull Request: https://github.com/nodejs/node/pull/16868
-   - Pull Request: https://github.com/nodejs/node/pull/16969
-2. Support for Visual Studio 2019 was added behind a flag in v12.8.0.
-   - Pull Request: https://github.com/nodejs/node/pull/28781
-3. Support for **building addons** with Visual Studio 2019 was added in v12.8.0 (node-gyp 5.0.0).
-   - Pull Request: https://github.com/nodejs/node-gyp/pull/1762
-   - Pull Request: https://github.com/nodejs/node/pull/28853
-4. Support for Visual Studio 2017 was removed in v15.0.0.
+1. Support for Visual Studio 2017 was removed in v15.0.0.
    - Pull Request: https://github.com/nodejs/node/pull/33694
+2. Support for building addons with Visual Studio 2015 was removed in v19.0.0.
+   - Pull Request: https://github.com/nodejs/node-gyp/pull/2746
