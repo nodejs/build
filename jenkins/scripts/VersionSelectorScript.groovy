@@ -86,8 +86,8 @@ def buildExclusions = [
   [ /vs2019-arm64$/,                  testType,    lt(14)        ],
   // VS versions supported to build add-ons
   [ /vs2013-COMPILED_BY/,             testType,    gte(9)        ],
-  [ /vs2015-COMPILED_BY/,             testType,    noVer         ],
-  [ /vcbt2015-COMPILED_BY/,           testType,    noVer         ],
+  [ /vs2015-COMPILED_BY/,             testType,    gte(19)       ],
+  [ /vcbt2015-COMPILED_BY/,           testType,    gte(19)       ],
   [ /vs2017-COMPILED_BY/,             testType,    lt(8)         ],
   [ /vs2019-COMPILED_BY/,             testType,    lt(12)        ],
   // Exclude some redundant configurations
