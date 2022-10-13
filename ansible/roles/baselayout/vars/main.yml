@@ -43,36 +43,12 @@ packages: {
   # partials/repo/centos7.yml for arm64
   centos7_arm64: [
     'git,python3', # git2u not available for aarch64 (yet)
-    'https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-runtime-6.1-1.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-elfutils-libs-0.168-3.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-systemtap-runtime-3.0-8s.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-ltrace-0.7.91-17.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-strace-4.12-3.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-systemtap-client-3.0-8s.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-gcc-gfortran-6.3.1-3.1.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-binutils-2.27-12.el7.1.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-elfutils-libelf-0.168-3.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-elfutils-0.168-3.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-gdb-7.12.1-48.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-make-4.1-3.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-gcc-c++-6.3.1-3.1.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-memstomp-0.1.5-5.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-dwz-0.12-1.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-systemtap-3.0-8s.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-toolchain-6.1-1.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-gcc-6.3.1-3.1.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-valgrind-3.12.0-1.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-libstdc++-devel-6.3.1-3.1.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-oprofile-1.1.0-4.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-systemtap-devel-3.0-8s.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-perftools-6.1-1.el7.aarch64.rpm,
-    https://buildlogs.centos.org/c7-devtoolset-6.aarch64/Packages/devtoolset-6-6.1-1.el7.aarch64.rpm',
   ],
   centos7_x64: ['devtoolset-6-libatomic-devel,git222,centos-release-scl,python3'],
   centos7_ppc64: ['cmake3,glib2-devel,git,python3'],
 
   centos7: [
-    'bzip2-devel,openssl-devel,ccache,gcc-c++,devtoolset-6,sudo,zlib-devel,libffi-devel,devtoolset-8,devtoolset-8-libatomic-devel',
+    'bzip2-devel,openssl-devel,ccache,gcc-c++,sudo,zlib-devel,libffi-devel,devtoolset-8,devtoolset-8-libatomic-devel',
   ],
 
   aix: [
