@@ -170,7 +170,7 @@ packages: {
   ],
 
   ubuntu: [
-    'ccache,git,libfontconfig1,sudo,python3-pip',
+    'ccache,curl,git,libfontconfig1,sudo,python3-pip',
   ],
 
   ubuntu1404: [

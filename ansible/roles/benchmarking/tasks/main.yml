@@ -33,13 +33,9 @@
   args:
     chdir: "/home/{{ server_user }}/wrk"
 
-- name: Install Rscript repo | ubuntu1404
-  when: os == "ubuntu1404"
-  shell: echo "deb https://ftp.heanet.ie/mirrors/cran.r-project.org/bin/linux/ubuntu trusty/" > /etc/apt/sources.list.d/r.list
-
-- name: Install Rscript repo | ubuntu1604
-  when: os == "ubuntu1604"
-  shell: echo "deb https://ftp.heanet.ie/mirrors/cran.r-project.org/bin/linux/ubuntu xenial/" > /etc/apt/sources.list.d/r.list
+- name: Install Rscript repo | {{ os }}
+  when: os|startswith("ubuntu")
+  shell: echo "deb https://ftp.heanet.ie/mirrors/cran.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/" > /etc/apt/sources.list.d/r.list
 
 - name: Add R key
   apt_key:

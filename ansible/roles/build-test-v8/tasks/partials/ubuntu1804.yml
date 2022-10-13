@@ -1,0 +1,10 @@
+---
+
+#
+# Install packages for V8 builds.
+#
+
+- name: install httplib2
+  ansible.builtin.apt:
+    name: ['python-httplib2', 'python3-httplib2']
+    state: present
