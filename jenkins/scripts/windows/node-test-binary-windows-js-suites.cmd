@@ -6,7 +6,7 @@ call %~dp0git-checkout.cmd
 if errorlevel 1 exit /b
 
 :: Run tests
-set "test_ci_args=--run=%RUN_SUBSET%,4"
+set "test_ci_args=--run=%RUN_SUBSET%,4 --measure-flakiness 9"
 set VCBUILD_TARGET=test-ci-js
 call %~dp0test.cmd
 if errorlevel 1 exit /b
