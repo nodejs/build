@@ -9,7 +9,7 @@
 
 - name: download Jenkins icon
   win_get_url:
-    url: 'http://mirrors.jenkins-ci.org/art/jenkins-logo/favicon.ico'
+    url: '{{ jenkins_icon }}'
     dest: 'C:\jenkins.ico'
     force: no
 
