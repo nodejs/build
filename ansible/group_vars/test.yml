@@ -1,5 +1,6 @@
 jenkins_url: "https://ci.nodejs.org"
 jenkins_worker_jar: "{{ jenkins_url }}/jnlpJars/slave.jar"
+jenkins_icon: "{{ jenkins_url }}/favicon.ico"
 server_user: iojs
 home: "/home"
 git_reference_path: "{{ home }}/{{ server_user }}/git/io.js.reference"
