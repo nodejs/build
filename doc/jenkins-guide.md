@@ -76,9 +76,12 @@ Add a Jenkins "system message" in https://ci.nodejs.org/configure. Something lik
 <h1 style="color:red">system is under embargo for a security release</h1>
 <h2>For solidarity, even if you have access, please don't start unrelated jobs</h2>
 ```
-And some fancy "extra-css" to the Theme at https://ci.nodejs.org/configure#section122:
+And some fancy "extra-css" to "Theme" -> "Theme elements" -> "Extra CSS".
+This should already exist but commented out like this:
 ```css
-#header, .task-icon-link[href="/"] {
+/* Uncomment for security releases */
+/*
+#page-header, .task-icon-link[href="/"] {
   background-color: red;
 }
 a#jenkins-home-link:after {
@@ -87,6 +90,23 @@ a#jenkins-home-link:after {
   color: yellow;
   margin-left: 250px;
 }
+/* */
+```
+
+Uncomment by adding `*/` before the `#page-header` line:
+```css
+/* Uncomment for security releases */
+/* */
+#page-header, .task-icon-link[href="/"] {
+  background-color: red;
+}
+a#jenkins-home-link:after {
+  content: "Under security embargo!";
+  font-size: larger;
+  color: yellow;
+  margin-left: 250px;
+}
+/* */
 ```
 
 
@@ -99,7 +119,7 @@ table should look like before the release testing:
 
 ![](../static-assets/jenkins-authorization-normal.png)
 
-***Note: the Jenkins UI changes occaisonally, as does the permissions. Make a
+***Note: the Jenkins UI changes occasionally, as does the permissions. Make a
 screenshot of the "before" state if it does not exactly match the documented
 screenshot (and update the documented screenshot).***
 
@@ -125,6 +145,8 @@ earlier configuration.
 Relevant logs:
 1. system (includes security matrix) - https://ci.nodejs.org/jobConfigHistory/history?name=config
 2. CSS - https://ci.nodejs.org/jobConfigHistory/history?name=org.codefirst.SimpleThemeDecorator
+
+Undo the "system message" and "extra css" theme changes to https://ci.nodejs.org/configure.
 
 ## Solving problems
 
