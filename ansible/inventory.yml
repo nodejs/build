@@ -38,10 +38,6 @@ hosts:
         centos7-x64-1: {ip: 138.68.12.105}
         rhel8-x64-1: {ip: 159.203.115.217}
 
-    - equinix:
-        ubuntu2004_docker-arm64-1: {ip: 145.40.80.210}
-        ubuntu2004_docker-arm64-2: {ip: 147.75.47.90}
-
     - ibm:
         aix71-ppc64_be-2:
             ip: 169.59.74.10
@@ -98,9 +94,6 @@ hosts:
             ip: 199.7.167.101
             port: 8825
             user: administrator
-
-    - packetnet:
-        centos7-arm64-1: {ip: 147.75.104.218}
 
     - requireio:
         rvagg-debian10-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi, alias: iojs-ns-pi1p-1 }
@@ -383,13 +376,3 @@ hosts:
         debian10-x64-1: {ip: 169.44.16.126}
         ubuntu1404-x64-1: {ip: 50.97.245.5}
         ubuntu1804_docker-x64-1: {ip: 52.117.26.9}
-
-    - packetnet:
-        centos7-arm64-1: {ip: 147.75.193.230}
-        centos7-arm64-2: {ip: 147.75.74.254}
-        ubuntu1604-arm64-1: {ip: 147.75.77.130}
-        ubuntu1604-arm64-2: {ip: 147.75.74.174}
-# when adding, removing or changing the IPs below,
-# remember to update Jenkins worker IP whitelist in github-bot
-        ubuntu1804-x64-1: {ip: 147.75.66.203, alias: jenkins-workspace-4}
-        ubuntu1804-x64-2: {ip: 147.75.81.67, alias: jenkins-workspace-5}
