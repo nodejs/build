@@ -72,6 +72,7 @@
 
 - hosts:
     - test-*-ubuntu1604-x*
+    - test-*intel-ubuntu1804-x*
   roles:
     - linux-perf
 

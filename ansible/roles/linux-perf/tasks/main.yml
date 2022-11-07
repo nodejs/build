@@ -44,3 +44,14 @@
       file:
         state: absent
         path: "{{ tmp_folder }}"
+
+- name: Allow monitoring
+  ansible.builtin.lineinfile:
+    create: yes
+    dest: "/etc/sysctl.d/20-perf.conf"
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
+  notify: update sysctl settings
+  with_items:
+  - { regexp: "kernel.perf_event_paranoid", line: "kernel.perf_event_paranoid = 2" }
+  tags: linux_perf

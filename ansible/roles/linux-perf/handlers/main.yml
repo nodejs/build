@@ -1,0 +1,6 @@
+---
+
+# sysctl handler
+
+- name: update sysctl settings
+  ansible.builtin.command: sysctl -p /etc/sysctl.d/20-perf.conf
