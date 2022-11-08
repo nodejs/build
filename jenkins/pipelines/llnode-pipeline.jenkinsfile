@@ -3,7 +3,7 @@
 properties([
   parameters([
     string(name: 'GIT_REPO', defaultValue: 'nodejs/llnode', description: 'Fetch from this repo (e.g. gibfahn/llnode)'),
-    string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'Branch to test (e.g. master, refs/pull/999/head).'),
+    string(name: 'GIT_BRANCH', defaultValue: 'main', description: 'Branch to test (e.g. main, refs/pull/999/head).'),
     string(name: 'NODE_VERSIONS', defaultValue: 'v6 v8 v9 v10 nightly canary', description: 'Space separated list of NODE_VERSIONS to pass to llnode-continuous-integration.'),
     string(name: 'LLDB_VERSIONS', defaultValue: '3.9 4.0 5.0 6.0', description: 'Space separated list of LLDB_VERSIONS to pass to llnode-continuous-integration.'),
     string(name: 'MACHINES', defaultValue: 'all', description: '''Can be "all" or a space-separated list of nodes, eg:

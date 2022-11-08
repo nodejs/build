@@ -11,7 +11,7 @@ helpText="Download the node binary for your machine from nodejs.org.
   ${CYAN}USAGE:${NC}
   $0 8.9.1
 
-  8.9.0            $sep Node to download (8.9.0, master, 8, 8.9.0-nightly, latest, 6.2.)
+  8.9.0            $sep Node to download (8.9.0, main, 8, 8.9.0-nightly, latest, 6.2.)
                         Inexact values get most recent from range."
 
 ################################################################################

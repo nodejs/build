@@ -5,7 +5,7 @@ pipeline {
     parameters{
         string(name: 'GITHUB_ORG', defaultValue: 'nodejs', description: 'The user/org of the GitHub repo')
         string(name: 'REPO_NAME', defaultValue: 'node', description: 'The name of the repo')
-        string(name: 'GIT_REMOTE_REF', defaultValue: 'refs/heads/master', description: 'The remote portion of the Git refspec to fetch and test')
+        string(name: 'GIT_REMOTE_REF', defaultValue: 'refs/heads/main', description: 'The remote portion of the Git refspec to fetch and test')
     }
 
     stages {
@@ -26,7 +26,7 @@ pipeline {
 
         stage('Pre-flight') {
             steps {
-                sh "curl -L -s https://raw.githubusercontent.com/nodejs/build/master/jenkins/scripts/node-test-commit-pre.sh -s | bash -xe"
+                sh "curl -L -s https://raw.githubusercontent.com/nodejs/build/main/jenkins/scripts/node-test-commit-pre.sh -s | bash -xe"
                 sendBuildStatus("pending", env)
                 checkMake()
                 // Make sure we have a node binary in the path 
