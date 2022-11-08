@@ -51,13 +51,13 @@
 examples:
 refs/heads/:branch |
 refs/pull/:pr-number/head</description>
-          <defaultValue>refs/heads/master</defaultValue>
+          <defaultValue>refs/heads/main</defaultValue>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>REBASE_ONTO</name>
           <description>Optionally, rebase onto the given ref before testing. Leave blank to skip rebasing. |
 examples:
-origin/master</description>
+origin/main</description>
           <defaultValue></defaultValue>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>

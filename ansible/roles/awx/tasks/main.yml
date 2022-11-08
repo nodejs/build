@@ -102,7 +102,7 @@
   command: tower-cli team create --name {{ awx_org }} --organization {{ awx_org }}
 
 - name: add nodejs/build repo to AWX
-  command: tower-cli project create --organization {{ awx_org }} --name nodejs/build --scm-type git --scm-url https://github.com/nodejs/build --scm-branch master --scm-update-on-launch true
+  command: tower-cli project create --organization {{ awx_org }} --name nodejs/build --scm-type git --scm-url https://github.com/nodejs/build --scm-branch main --scm-update-on-launch true
 
 - name: create inventory
   command: tower-cli inventory create --organization {{ awx_org }} --name nodejs_inventory_github

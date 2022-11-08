@@ -61,7 +61,7 @@ def getBranchName(params) {
     if (params.PR_ID) {
         return "refs/pull/${params.PR_ID}/head"
     } else {
-        return "refs/heads/master"
+        return "refs/heads/main"
     }
 }
 

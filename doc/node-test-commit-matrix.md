@@ -150,7 +150,7 @@ The following combinations are used:
 
 - Machines for "Test Only" don't build Node.js, but are still used to build add-ons so Visual Studio is necessary.
 - Machines in Rackspace have more capacity, so avoid building on Azure, at least the current Node.js version.
-- Optimize resources for the current Node.js master.
+- Optimize resources for the current Node.js main.
 - Ensure Node.js LTS versions have full coverage, even if with possible bottlenecks in certain versions.
 
 ### Jenkins Labels
