@@ -40,7 +40,9 @@ to the resources we manage.
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@sxa](https://github.com/sxa) - Stewart X Addison
+- [@targos](https://github.com/targos) - Michaël Zasso
 - [@Trott](https://github.com/Trott) - Rich Trott
+- [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
 
 <!-- ncu-team-sync end -->
 
@@ -56,6 +58,7 @@ Above list is manually synced with the [gpg member list](https://github.com/node
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@sxa](https://github.com/sxa) - Stewart X Addison
+- [@targos](https://github.com/targos) - Michaël Zasso
 
 <!-- ncu-team-sync end -->
 
@@ -75,6 +78,7 @@ Admin access to https://ci.nodejs.org/.
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@sxa](https://github.com/sxa) - Stewart X Addison
+- [@targos](https://github.com/targos) - Michaël Zasso
 - [@Trott](https://github.com/Trott) - Rich Trott
 
 <!-- ncu-team-sync end -->
@@ -108,6 +112,7 @@ Admin access to https://ci-release.nodejs.org/.
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@sxa](https://github.com/sxa) - Stewart X Addison
+- [@targos](https://github.com/targos) - Michaël Zasso
 
 <!-- ncu-team-sync end -->
 
@@ -117,10 +122,8 @@ Admin access to https://ci-release.nodejs.org/.
 
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
-- [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
-- [@williamkapke](https://github.com/williamkapke) - William Kapke
 
 <!-- ncu-team-sync end -->
 
