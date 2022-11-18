@@ -21,9 +21,9 @@ for build working group members.
    comments:
 
     ```
-     # begin: node.js template
+    # begin: node.js template
 
-     # end: node.js template
+    # end: node.js template
     ```
 4. Follow the instructions in the [ansible guide](../ansible/README.md) to
    install ansible on your local machine.
