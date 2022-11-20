@@ -13,7 +13,7 @@
     script: files/install-xcode.sh
     when: xcode.rc > 1
 
-  - name: Check if Homebrew is already installed (Apple Sillicon)
+  - name: Check if Homebrew is already installed (Apple Silicon)
     stat:
       path: /opt/homebrew/bin/brew
     register: armbrew
