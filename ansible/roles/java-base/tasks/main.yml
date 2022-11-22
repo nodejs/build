@@ -52,7 +52,7 @@
     use: "{{ os|match_key(pm)|default(omit) }}"
 
 - name: install java (macOS)
-  become_user: administrator
+  become_user: "{{ ansible_user }}"
   when: java.rc > 0 and os|startswith("macos")
   homebrew_cask:
         name: "{{ java_package_name }}"
