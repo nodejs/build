@@ -45,6 +45,7 @@
     become_user: "{{ ansible_user }}"
     homebrew_tap:
       name: buo/cask-upgrade
+
   - name: Install brew cask-versions
     become_user: "{{ ansible_user }}"
     homebrew_tap:
