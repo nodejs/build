@@ -14,7 +14,7 @@ packages: {
   'fedora32': 'java-11-openjdk-headless',
   'freebsd': 'openjdk11-jre',
   'ibmi': 'openjdk-11-ea',
-  'macos': 'adoptopenjdk8',
+  'macos': 'temurin17',
   'rhel7': 'java-11-openjdk',
   'rhel8': 'java-17-openjdk',
   'smartos': 'openjdk8',

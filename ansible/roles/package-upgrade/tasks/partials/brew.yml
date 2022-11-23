@@ -8,12 +8,13 @@
     raw: xcode-select --print-path &> /dev/null
     register: xcode
     ignore_errors: yes
+    check_mode: no
 
   - name: Install xcode-tools
     script: files/install-xcode.sh
     when: xcode.rc > 1
 
-  - name: Check if Homebrew is already installed (Apple Sillicon)
+  - name: Check if Homebrew is already installed (Apple Silicon)
     stat:
       path: /opt/homebrew/bin/brew
     register: armbrew
@@ -45,10 +46,10 @@
     homebrew_tap:
       name: buo/cask-upgrade
 
-  - name: Add AdoptOpenJDK Java Repo
+  - name: Install brew cask-versions
     become_user: "{{ ansible_user }}"
     homebrew_tap:
-      name: AdoptOpenJDK/openjdk
+      name: homebrew/cask-versions
 
   - name: Update Casks
     become_user: "{{ ansible_user }}"
