@@ -47,7 +47,7 @@
     - restart Jenkins
   package:
     name: "{{ java_package_name }}"
-    state: latest
+    state: "{{ 'present' if os|match_key(pm) == 'pkgin' else 'latest' }}"
     # Package manager mapping in ansible/roles/package-upgrade/vars/main.yml.
     use: "{{ os|match_key(pm)|default(omit) }}"
 
