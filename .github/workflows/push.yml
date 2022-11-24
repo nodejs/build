@@ -1,5 +1,9 @@
 name: Lint
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - "dependabot/*"
+  pull_request:
 jobs:
   Python:
     runs-on: ubuntu-20.04
