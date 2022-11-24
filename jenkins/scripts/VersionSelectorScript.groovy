@@ -193,7 +193,7 @@ combinations.each{
   }
   // Run tests on Windows ARM64 only if explicitly requested
   if (builderLabel =~ /^win.*COMPILED_BY.*-arm64$/) {
-    if (!parameters['RUN_ARM64_TESTS'].toString().equalsIgnoreCase("true")){
+    if (!new String(parameters['RUN_ARM64_TESTS']).equalsIgnoreCase("true")){
       println "Skipping $builderLabel because RUN_ARM64_TESTS is not selected"
       return
     }
