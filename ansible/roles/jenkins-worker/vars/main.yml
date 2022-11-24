@@ -86,13 +86,9 @@ java_path: {
   'macos10.14': 'java',
   'macos10.15': 'java',
   'macos11': 'java',
-  # Currently hardcoded untill adopt have their build available
-  'macos11.0': '/Users/{{ ansible_user }}/zulu8.52.0.23-ca-jdk8.0.282-macosx_aarch64/bin/java',
-  'smartos15': '/opt/local/java/openjdk8/bin/java',
-  'smartos16': '/opt/local/java/openjdk8/bin/java',
-  'smartos17': '/opt/local/java/openjdk8/bin/java',
-  'smartos18': '/opt/local/java/openjdk8/bin/java',
-  'smartos20': '/opt/local/java/openjdk8/bin/java',
+  'macos11.0': 'java',
+  'smartos18': '/opt/local/java/openjdk11/bin/java',
+  'smartos20': '/opt/local/java/openjdk11/bin/java',
   'zos24': '/usr/lpp/java/J8.0_64/bin/java'
   }
 

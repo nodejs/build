@@ -4,12 +4,12 @@
 # Install the Jenkins worker
 #
 
-- name: install Java 8
-  win_chocolatey: name=jdk8
+- name: install Java 17
+  win_chocolatey: name=Temurin17
 
 - name: download Jenkins icon
   win_get_url:
-    url: 'http://mirrors.jenkins-ci.org/art/jenkins-logo/favicon.ico'
+    url: '{{ jenkins_icon }}'
     dest: 'C:\jenkins.ico'
     force: no
 

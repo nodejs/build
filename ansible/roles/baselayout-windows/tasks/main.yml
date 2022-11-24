@@ -13,7 +13,18 @@
     install_args: 'ADD_CMAKE_TO_PATH=System'
 
 - name: install Python 3
-  win_chocolatey: name=python
+  win_chocolatey:
+    install_args: Include_launcher=1
+    name: python3
+    pinned: yes
+    version: "3.10.8"
+
+- name: install Python 3
+  win_chocolatey:
+    install_args: Include_launcher=1
+    name: python
+    pinned: yes
+    version: "3.10.8"
 
 - name: install Python 2
   win_chocolatey: name=python2
