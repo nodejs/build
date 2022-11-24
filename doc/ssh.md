@@ -27,8 +27,8 @@ for build working group members.
     ```
 4. Follow the instructions in the [ansible guide](../ansible/README.md) to
    install ansible on your local machine.
-5. Run `ansible-playbook playbooks/write-ssh-config.yml` from the `ansible/`
-   directory in the root of this repo, then the host information will be
+5. Run `ansible-playbook ansible/playbooks/write-ssh-config.yml` from the root of this repo, 
+   then the host information will be
    written into your `~/.ssh/config`.  If you got here from the top-level
    README.md, you get to this step before getting to the Secrets section, go
    do that setup. You may get an ERROR, but all the playbook commands  were run,
