@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright Node.js contributors. All rights reserved.
@@ -83,16 +83,27 @@ def remmina_get_secret(remmina_config):
 
 
 def find_remmina():
+    # Snap packaged Remmina.
     config = os.path.expanduser('~/snap/remmina/current/.config/remmina/remmina.pref')
     target = os.path.expanduser('~/snap/remmina/current/.local/share/remmina')
     if os.path.isfile(config) and os.path.isdir(target):
         return (config, target)
 
+    # Flatpak packaged Remmina.
     config = os.path.expanduser('~/.var/app/org.remmina.Remmina/config/remmina/remmina.pref')
     target = os.path.expanduser('~/.var/app/org.remmina.Remmina/data/remmina')
     if os.path.isfile(config) and os.path.isdir(target):
         return (config, target)
 
+    # Current versions of Remmina follows XDG directories.
+    xdg_config_home = os.environ.get('XDG_CONFIG_HOME', os.path.expanduser('~/.config'))
+    xdg_data_home = os.environ.get('XDG_DATA_HOME', os.path.expanduser('~/.local/share'))
+    config = os.path.join(xdg_config_home, 'remmina/remmina.pref')
+    target = os.path.join(xdg_data_home, 'remmina')
+    if os.path.isfile(config) and os.path.isdir(target):
+        return (config, target)
+
+    # Older versions of Remmina.
     config = os.path.expanduser('~/.remmina/remmina.pref')
     target = os.path.expanduser('~/.remmina')
     if os.path.isfile(config) and os.path.isdir(target):
