@@ -30,6 +30,11 @@ fi
 # If the provided NODE_VERSION is inexact, e.g. `v8`, get the most recent matching version.
 LINK=`rsync rsync://unencrypted.nodejs.org/nodejs/$downloadDir/ | grep $NODE_VERSION | sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -1 | awk '{print $5}'`
 
+if [ -z "$LINK" ]; then
+  echo "No matches found for '$NODE_VERSION' in https://unencrypted.nodejs.org/nodejs/$downloadDir/"
+  exit 1
+fi
+
 # Remove old files
 rm -rf v*
 [ "$tapFile" ] && rm -rf "$tapFile" && echo "TAP version 13" > $tapFile
