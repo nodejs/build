@@ -1,0 +1,83 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent { label 'postject' }
+    parameters{
+        string(name: 'GITHUB_ORG', defaultValue: 'nodejs', description: 'The user/org of the GitHub repo')
+        string(name: 'REPO_NAME', defaultValue: 'postject', description: 'The name of the repo')
+        string(name: 'GIT_REMOTE_REF', defaultValue: 'refs/heads/main', description: 'The remote portion of the Git refspec to fetch and test')
+    }
+
+    stages {
+        stage("Setup repository") {
+            steps {
+                checkout(changelog: false, poll: false, scm: [
+                    $class: 'GitSCM',
+                    branches: [[
+                        name: 'refs/heads/_jenkins_local_branch'
+                    ]],
+                    userRemoteConfigs: [[
+                        credentialsId: "96d5f81c-e9ad-45f7-ba5d-bc8107c0ae2c",
+                        url: "git@github.com:${params.GITHUB_ORG}/${params.REPO_NAME}",
+                    ]]
+                ])
+            }
+        }
+
+        stage('Pre-flight') {
+            steps {
+                // Make sure we have these binaries in the path 
+                sh 'node --version'
+                sh 'npm --version'
+                sh 'git --version'
+                sh 'cmake --version'
+                sh 'ninja --version'
+            }
+        }
+
+
+        stage('Build postject') {
+            steps {
+                // Calling with `returnStatus` suppresses automatic failures
+                sh(script: "npm install", returnStatus: true)
+                sh(script: "git clone https://github.com/emscripten-core/emsdk.git", returnStatus: true)
+                sh(script: "(cd emsdk && ./emsdk install latest)", returnStatus: true)
+                sh(script: "(cd emsdk && ./emsdk activate latest)", returnStatus: true)
+                sh(script: "(cd emsdk && source ./emsdk_env.sh && cd .. && npm run build -- --jobs=3)", returnStatus: true)
+            }
+        }
+
+        stage('Lint') {
+            steps {
+                sh(script: "npm run lint", returnStatus: true)
+            }
+        }
+         
+        stage('Run tests') {
+            steps {
+                sh(script: "npm test -- --reporter mocha-junit-reporter", returnStatus: true)
+            }
+        }
+    }
+
+    post {
+        success {
+            sendBuildStatus("success", env)
+        }
+
+        failure {
+            sendBuildStatus("failure", env)
+        }
+    }
+}
+
+def sendBuildStatus(status, env) {
+    build job: 'post-build-status-update', parameters: [
+              string(name: 'REPO', value: 'postject'),
+              string(name: 'IDENTIFIER', value: 'linter'),
+              string(name: 'URL', value: env.BUILD_URL),
+              string(name: 'COMMIT', value: sh(script: 'git rev-parse HEAD', returnStdout: true).trim()),
+              string(name: 'REF', value: env.GIT_REMOTE_REF),
+              string(name: 'STATUS', value: status)
+          ]
+}
