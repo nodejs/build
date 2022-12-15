@@ -60,7 +60,6 @@ case $NODE_NAME in
         return
         ;;
     esac
-    return
     ;;
 esac
 
