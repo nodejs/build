@@ -167,7 +167,7 @@ hosts:
         ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
         ubuntu1804-x64-2: {ip: 50.97.245.9}
 
-    - joyent:
+    - equinix_mnx:
         smartos18-x64-3: {ip: 147.28.162.102}
         smartos18-x64-4: {ip: 147.28.162.103}
         smartos20-x64-3: {ip: 147.28.162.107}
