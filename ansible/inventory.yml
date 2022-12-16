@@ -21,9 +21,9 @@ hosts:
         ubuntu2004-x64-1: {ip: 169.60.150.91, alias: ansible}
 
     - joyent:
-        debian10-x64-1: {ip: 147.75.88.62, alias: grafana}
-        smartos15-x64-1: {ip: 139.178.83.227, alias: backup}
-        ubuntu1604-x64-1: {ip: 147.75.88.57, alias: unencrypted}
+        debian10-x64-1: {ip: 147.28.162.110, alias: grafana}
+        smartos15-x64-1: {ip: 147.28.183.83, alias: backup}
+        ubuntu1604-x64-1: {ip: 147.28.162.105, alias: unencrypted}
 
     - rackspace:
         debian8-x64-1: {ip: 23.253.100.79, alias: gh-bot}
@@ -51,9 +51,9 @@ hosts:
         ibmi73-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
 
     - joyent:
-        smartos18-x64-2: {ip: 147.75.88.53}
-        smartos20-x64-2: {ip: 147.75.88.60}
-        ubuntu1804_docker-x64-1: {ip: 147.75.88.56, user: ubuntu}
+        smartos18-x64-2: {ip: 147.28.162.101}
+        smartos20-x64-2: {ip: 147.28.162.108}
+        ubuntu1804_docker-x64-1: {ip: 147.28.162.104, user: ubuntu}
 
     - macstadium:
         macos11.0-arm64-1:
@@ -168,11 +168,11 @@ hosts:
         ubuntu1804-x64-2: {ip: 50.97.245.9}
 
     - joyent:
-        smartos18-x64-3: {ip: 147.75.88.54}
-        smartos18-x64-4: {ip: 147.75.88.55}
-        smartos20-x64-3: {ip: 147.75.88.59}
-        smartos20-x64-4: {ip: 147.75.88.61}
-        ubuntu1804-x64-1: {ip: 147.75.88.51, user: ubuntu}
+        smartos18-x64-3: {ip: 147.28.162.102}
+        smartos18-x64-4: {ip: 147.28.162.103}
+        smartos20-x64-3: {ip: 147.28.162.107}
+        smartos20-x64-4: {ip: 147.28.162.109}
+        ubuntu1804-x64-1: {ip: 147.28.162.99, user: ubuntu}
 
     - macstadium:
         macos11.0-arm64-3:
