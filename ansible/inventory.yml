@@ -245,7 +245,6 @@ hosts:
             is_benchmark: yes
         intel-ubuntu1804-x64-2:
             ip: 92.51.196.115
-            is_benchmark: yes
 
     - osuosl:
 # secret for -1 was compromised, do not use -1 name
