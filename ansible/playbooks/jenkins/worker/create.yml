@@ -67,12 +67,11 @@
     - jenkins-workspace
 
 #
-# Install Linux perf on Ubuntu 16.04 servers
+# Install Linux perf on Ubuntu Intel servers
 #
 
 - hosts:
-    - test-*-ubuntu1604-x*
-    - test-*intel-ubuntu1804-x*
+    - test-*intel-ubuntu*-x*
   roles:
     - linux-perf
 

@@ -239,9 +239,12 @@ hosts:
             user: admin
             remote_env:
                 PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
-        intel-ubuntu1804-x64-1: {ip: 92.51.196.114, build_test_v8: yes, is_benchmark: yes}
-        intel-ubuntu1604-x64-2: {ip: 92.51.196.115}
-
+        intel-ubuntu1804-x64-1:
+            ip: 92.51.196.114
+            build_test_v8: yes
+            is_benchmark: yes
+        intel-ubuntu1804-x64-2:
+            ip: 92.51.196.115
 
     - osuosl:
 # secret for -1 was compromised, do not use -1 name
