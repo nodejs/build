@@ -36,10 +36,12 @@
     script: files/install-homebrew.sh
     when: os == "macos11.0" and not armbrew.stat.exists
 
-  - name: Upgrade installed packages
+  # Ignoring deprecation errors in MacOS 10.x
+  - name: Upgrade installed packages 
     become_user: "{{ ansible_user }}"
     homebrew:
       upgrade_all: yes
+    ignore_errors: os == "macos10.15" or os == "macos10.14"
 
   - name: Install brew cu
     become_user: "{{ ansible_user }}"
