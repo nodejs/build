@@ -1,12 +1,3 @@
-# default combined nginx log_format:
-#log_format combined '$remote_addr - $remote_user [$time_local] '
-#                    '"$request" $status $body_bytes_sent '
-#                    '"$http_referer" "$http_user_agent"';
-
-log_format joyent    '$remote_addr - $remote_user [$time_local] '
-                     '$request "$status" $body_bytes_sent '
-                     '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
-
 log_format nodejs    '$remote_addr - $remote_user [$time_local] '
                      '"$request" $status $body_bytes_sent '
                      '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
