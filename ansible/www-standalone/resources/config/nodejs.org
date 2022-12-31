@@ -22,10 +22,6 @@ server {
     keepalive_timeout 60;
     server_tokens off;
 
-    location ~ ^/(?!(dist/|dist$|\.json$)) {
-        rewrite ^ https://nodejs.org$request_uri permanent;
-    }
-
     location / {
         return 301 https://nodejs.org$request_uri;
     }
