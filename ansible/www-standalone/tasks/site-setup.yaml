@@ -7,7 +7,6 @@
     group: nodejs
   with_items:
     - build-site.sh
-    - build-benchmarking-site.sh
     - check-build-site.sh
   tags: setup
 
@@ -22,7 +21,6 @@
     - /home/www/iojs
     - /home/www/nodejs
     - /home/www/github
-    - /home/www/benchmarking
     - /home/www/coverage
   tags: setup
 
@@ -70,15 +68,6 @@
     group: root
   tags: setup
 
-- name: Site Setup | Copy sync-benchmarking.sh script
-  copy:
-    src: ./resources/scripts/sync-benchmarking.sh
-    dest: /home/nodejs/sync-benchmarking.sh
-    mode: 0755
-    owner: root
-    group: root
-  tags: setup
-
 - name: Site Setup | Make /home/nodejs/.npm
   file:
     path: /home/nodejs/.npm
@@ -95,14 +84,13 @@
     owner: nodejs
   tags: setup
 
-- name: Site Setup | Initial nodejs, iojs and benchmarking clone and update
+- name: Site Setup | Initial nodejs, iojs clone and update
   become: yes
   become_user: "nodejs"
   command: "{{ item }}"
   with_items:
     - "/home/nodejs/build-site.sh nodejs"
     - "/home/nodejs/build-site.sh iojs"
-    - "/home/nodejs/build-benchmarking-site.sh"
   tags: setup
 
 - name: Site Setup | Add periodic tasks to crontab
@@ -110,10 +98,9 @@
     dest: /etc/crontab
     line: "{{ item }}"
   with_items:
-    - '*/30 *    * * *   dist    /home/staging/tools/promote/promote_nightly.sh nodejs'
-    - '*/5  *    * * *   nodejs  /home/nodejs/check-build-site.sh nodejs'
-    - '*/5  *    * * *   root    /home/nodejs/cdn-purge.sh'
-    - '0 */4   * * *   nodejs  /home/nodejs/sync-benchmarking.sh'
+    - "*/30 *    * * *   dist    /home/staging/tools/promote/promote_nightly.sh nodejs"
+    - "*/5  *    * * *   nodejs  /home/nodejs/check-build-site.sh nodejs"
+    - "*/5  *    * * *   root    /home/nodejs/cdn-purge.sh"
   tags: setup
 
 - name: Site Setup | Add dist-perms script in cron.daily

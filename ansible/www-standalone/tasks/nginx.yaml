@@ -13,8 +13,8 @@
 
 - name: nginx | Create nginx config symlinks
   file:
-    src: '/etc/nginx/sites-available/{{ item.src }}'
-    dest: '/etc/nginx/sites-enabled/{{ item.dest }}'
+    src: "/etc/nginx/sites-available/{{ item.src }}"
+    dest: "/etc/nginx/sites-enabled/{{ item.dest }}"
     state: link
   with_items:
     - { src: nodejs.org, dest: 00-nodejs.org }
@@ -81,12 +81,12 @@
 - name: nginx | Add extra mime-type
   lineinfile:
     dest: /etc/nginx/mime.types
-    line: '{{ item }}'
-    insertafter: '^types.*'
+    line: "{{ item }}"
+    insertafter: "^types.*"
   with_items:
-    - 'application/octet-stream pkg;'
-    - 'application/x-xz xz;'
-    - 'application/gzip gz;'
+    - "application/octet-stream pkg;"
+    - "application/x-xz xz;"
+    - "application/gzip gz;"
   tags: nginx
 
 - name: nginx | Copy nginx logrotate config
@@ -100,17 +100,16 @@
 
 - name: nginx | Make /var/log/nginx/ subdirectories
   file:
-    path: '/var/log/nginx/{{ item }}'
+    path: "/var/log/nginx/{{ item }}"
     state: directory
     mode: 0755
     owner: www-data
     group: adm
   with_items:
-      - 'nodejs'
-      - 'iojs'
-      - 'libuv'
-      - 'benchmarking'
-      - 'coverage'
+    - "nodejs"
+    - "iojs"
+    - "libuv"
+    - "coverage"
   tags: nginx
 
 - name: nginx | Restart service

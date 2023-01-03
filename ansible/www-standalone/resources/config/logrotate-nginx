@@ -6,8 +6,6 @@
 /var/log/nginx/iojs/iojs.org-error.log
 /var/log/nginx/libuv/libuv.org-access.log
 /var/log/nginx/libuv/libuv.org-error.log
-/var/log/nginx/benchmarking/benchmarking.nodejs.org-access.log
-/var/log/nginx/benchmarking/benchmarking.nodejs.org-error.log
 /var/log/nginx/coverage/coverage.nodejs.org-access.log
 /var/log/nginx/coverage/coverage.nodejs.org-error.log
 {
