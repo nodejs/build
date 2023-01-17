@@ -39,6 +39,7 @@ to the resources we manage.
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
 - [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+- [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 - [@sxa](https://github.com/sxa) - Stewart X Addison
 - [@targos](https://github.com/targos) - Michaël Zasso
 - [@Trott](https://github.com/Trott) - Rich Trott
