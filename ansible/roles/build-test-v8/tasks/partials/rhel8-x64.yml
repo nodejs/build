@@ -5,9 +5,10 @@
 #
 
 # V8 builds still require Python 2.
+# Newer V8 builds require Python 3.8, or later.
 - name: install packages required to build V8
   ansible.builtin.dnf:
-    name: ['python2', 'python2-pip']
+    name: ['python2', 'python2-pip', 'python39']
     state: present
   notify: package updated
 
@@ -16,6 +17,12 @@
     link: /usr/bin/python
     name: python
     path: /usr/bin/python2
+
+- name: update python3 package alternatives
+  community.general.alternatives:
+    link: /usr/bin/python3
+    name: python3
+    path: /usr/bin/python3.9
 
 - name: install dependencies for V8 build tools (Python 2)
   ansible.builtin.pip:
