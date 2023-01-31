@@ -1,0 +1,43 @@
+name: Check for upcoming web certificate expiry
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * *
+
+permissions:
+  contents: read
+  issues: write
+
+env:
+  NODE_VERSION: lts/*
+
+jobs:
+  check-certificates:
+    runs-on: ubuntu-latest
+    outputs:
+      report: ${{ steps.check_certificates.outputs.report }}
+    steps:
+      - name: Checkout current repository
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Check web ceritificate expiry
+        id: check_certificates
+        run: node tools/check-certificates/check-certificates.mjs >> $GITHUB_OUTPUT
+      - name: Create issue
+        if: ${{ failure() }}
+        uses: dblock/create-a-github-issue@v3
+        with:
+          filename: .github/workflows/certificate-check-template.md
+          search_existing: all
+          update_existing: true
+        env:
+          ACTION_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CERT_EXPIRY: ${{ steps.check_certificates.outputs.earliestExpiry }}
+          CERT_CHECKS: ${{ steps.check_certificates.outputs.certificates }}
