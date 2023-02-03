@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto';
 
 const daysThreshold = 30;
 const now = Date.now();
-const secondsPerDay = 86_400_000;
+const msPerDay = 86_400_000;
 const servers = [
   'ci.nodejs.org',
   'ci-release.nodejs.org',
@@ -12,7 +12,7 @@ const servers = [
   'unencrypted.nodejs.org',
 ];
 function expiringSoon(dateString) {
-  return (Date.parse(dateString) - now) / secondsPerDay < daysThreshold;
+  return (Date.parse(dateString) - now) / msPerDay < daysThreshold;
 };
 function formatDate(date) {
   // Return date in ISO format but without the time component.

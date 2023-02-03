@@ -15,8 +15,6 @@ env:
 jobs:
   check-certificates:
     runs-on: ubuntu-latest
-    outputs:
-      report: ${{ steps.check_certificates.outputs.report }}
     steps:
       - name: Checkout current repository
         uses: actions/checkout@v3
