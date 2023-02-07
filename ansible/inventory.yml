@@ -94,6 +94,11 @@ hosts:
             ip: 199.7.167.101
             port: 8825
             user: administrator
+        macos11-x64-1:
+            ansible_python_interpreter: /usr/bin/python3
+            ip: 199.7.167.100
+            port: 8822
+            user: administrator
 
     - requireio:
         rvagg-debian10-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi, alias: iojs-ns-pi1p-1 }
