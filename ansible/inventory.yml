@@ -177,7 +177,7 @@ hosts:
     - macstadium:
         macos11.0-arm64-3:
             ansible_python_interpreter: /usr/bin/python3
-            ip: 207.254.38.86
+            ip: 207.254.55.247
             user: administrator
             remote_env:
                 PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
