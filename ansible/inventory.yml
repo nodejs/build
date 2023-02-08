@@ -183,7 +183,7 @@ hosts:
                 PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
         macos11.0-arm64-4:
             ansible_python_interpreter: /usr/bin/python3
-            ip: 207.254.38.89
+            ip: 207.254.55.248
             user: administrator
             remote_env:
                 PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
