@@ -60,7 +60,11 @@ packages: {
   ],
 
   aix72: [
-    'gcc6-c++',
+    'gcc6-c++,gcc8-c++,gcc10-c++'
+  ],
+
+  aix73: [
+    'gcc8-c++,gcc10-c++'
   ],
 
   ibmi: [

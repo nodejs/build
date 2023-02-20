@@ -14,7 +14,7 @@ start )
 	      export TERM=ansi; \
               export jenkins_log_file="/home/{{server_user}}/jenkins_console.log"; \
               export HOME=/home/{{server_user}}; \
-              export LIBPATH=/opt/freeware/lib64:/usr/lib:/lib; \
+              export LIBPATH=/opt/freeware/lib64:/opt/freeware/lib:/usr/lib:/lib; \
               export NODE_TEST_DIR=$HOME/tmp; \
               export NODE_COMMON_PIPE="$HOME/test.pipe"; \
               export PATH="/opt/freeware/bin:/usr/opt/python3/bin/:$PATH"; \
