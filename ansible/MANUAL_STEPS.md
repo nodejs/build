@@ -617,8 +617,34 @@ Install the `pywinrm` pip module: `pip install pywinrm`
 The preparation script needs to be run in PowerShell (run as Administrator):
 
 ```powershell
-iwr -useb https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 | iex
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Invoke-WebRequest "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1" -OutFile "ConfigureRemotingForAnsible.ps1"
+.\ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert true -CertValidityDays 3650
 ```
+
+#### Port Configuration
+
+Delete the unencrypted WinRM endpoint:
+
+```powershell
+winrm delete winrm/config/Listener?Address=*+Transport=HTTP
+```
+
+On Rackspace hosts, it is necessary to change the port to match the value found in secrets (change 12345):
+
+```powershell
+winrm set winrm/config/Listener?Address=*+Transport=HTTPS '@{Port="12345"}'
+```
+
+On Azure, changing the ports is done in the Load Balancer configuration using the Azure Portal.
+
+To see the status of running listeners:
+
+```powershell
+winrm enumerate winrm/config/listener
+```
+
+#### Test
 
 Test the connection to the target machine with `ansible HOST -m win_ping -vvvv`. If there is any issue, please refer to the official Ansible documentation in [Setting up a Windows Host][].
 
@@ -734,9 +760,6 @@ NFS_BOOT_SERVER_IP:PATH_TO_TFTP_BOOT_EXPORT /boot nfs4 nfsvers=3,rw,noexec,async
 
 After these steps are performed and the Pi's are running, Ansible can be run to finish setup. A reboot is recommended after initial setup to ensure the environment is configured correctly (locale and other settings that are changed).
 
-[Setting up a Windows Host]: https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html
-[newer Ansible configuration]: https://github.com/nodejs/build/tree/main/ansible
-[stand-alone]: https://github.com/nodejs/build/tree/main/setup/windows
 
 ## IBM i
 
@@ -800,3 +823,9 @@ mkdir -p /u/unix1/java
 cd /u/unix1/java
 pax -rf /u/unix1/SDK8_64bit_SR6_FP10.PAX.Z -ppx
 ```
+
+
+
+[Setting up a Windows Host]: https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html
+[newer Ansible configuration]: https://github.com/nodejs/build/tree/main/ansible
+[stand-alone]: https://github.com/nodejs/build/tree/main/setup/windows
