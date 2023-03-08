@@ -36,7 +36,7 @@ for VERSION in `seq $STARTVERSION 20`; do
    [ -z "$LATEST" -o ! -d "$LATEST" ] && echo Could not validate latest version "$LATEST" for Node v${VERSION} && exit 1
 
    # Versions that aren't from the last two calendar years - keep 1st of the month
-   SELECTED=`ls -1d v${VERSION}.* | egrep -v "${PRODUCT}$THISYEAR|${PRODUCT}$LASTYEAR" | grep -v ${PRODUCT}20....01 | grep -v "${LATEST}"`
+   SELECTED=`ls -1d v${VERSION}.* | egrep -v "${PRODUCT}${THISYEAR}|${PRODUCT}${LASTYEAR}" | grep -v ${PRODUCT}20....01 | grep -v "${LATEST}"`
    SELECTEDCOUNT=`echo $SELECTED | wc -w`
    echo V$VERSION: Selected $SELECTEDCOUNT of `ls -1d v${VERSION}.* | wc -l` from two calendar years ago
    if [ $SELECTEDCOUNT -ne 0 ]; then
