@@ -21,10 +21,10 @@ fi
 # Location to start the search for candidates for removal
 cd "/home/dist/nodejs/$PRODUCT" || exit 1
 
-THISYEAR=`date +%Y`
-LASTYEAR=`date --date="1 year ago" +%Y`
-THISMONTH=`date +%Y%m`
-LASTMONTH=`date --date="1 month ago" +%Y%m`
+THISYEAR=`date -u +%Y`
+LASTYEAR=`date -u --date="1 year ago" +%Y`
+THISMONTH=`date -u +%Y%m`
+LASTMONTH=`date -u --date="1 month ago" +%Y%m`
 case $PRODUCT in
 	v8-canary) STARTVERSION=9;;
 	nightly) STARTVERSION=5;;
