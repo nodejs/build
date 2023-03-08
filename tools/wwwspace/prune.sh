@@ -8,8 +8,8 @@
 #
 
 [ $# -lt 2 ] && echo Usage: $0 '[nightly|v8-canary]' '[show|delete]' && exit 1
-PRODUCT=$1
 [ "$1" != "nightly" -a "$1" != "v8-canary" ] && echo Parameter mist be one of: nightly v8-canary && exit 1
+PRODUCT=$1
 if [ "$2" = "show" ]; then
   RMCOMMAND="echo rm -rv"
 elif [ "$2" = "delete" ]; then
