@@ -138,16 +138,6 @@ server {
         }
     }
 
-    location /robots.txt {
-        alias /home/www/nodejs/static/robots.txt;
-        default_type text/plain;
-    }
-
-    location /.well-known/security.txt {
-        alias /home/www/nodejs/static/security.txt;
-        default_type text/plain;
-    }
-
     location /github-webhook.log {
         alias /home/nodejs/github-webhook.log;
         default_type text/plain;
