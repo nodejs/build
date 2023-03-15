@@ -64,7 +64,7 @@ server {
     location / {
         rewrite ^/$ /en/ redirect;
 
-        try_files $uri $uri/ @english_fallback;
+        try_files $uri $uri/ @english_fallback =404;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
