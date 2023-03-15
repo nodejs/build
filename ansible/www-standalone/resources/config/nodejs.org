@@ -12,6 +12,8 @@ server {
 
     keepalive_timeout 60;
     server_tokens off;
+    
+    error_page 404 /en/404.html;
 
     location / {
         return 301 https://nodejs.org$request_uri;
@@ -30,7 +32,7 @@ server {
             add_header access-control-allow-origin *;
         }
         
-        try_files $uri $uri/ /en/404.html;
+        try_files $uri $uri/ =404;
     }
 }
 
@@ -82,7 +84,7 @@ server {
             add_header access-control-allow-origin *;
         }
         
-        try_files $uri $uri/ /en/404.html;
+        try_files $uri $uri/ =404;
     }
 
     # instead of serving a 404 page when a page hasn't been translated
@@ -118,7 +120,7 @@ server {
             add_header access-control-allow-origin *;
         }
         
-        try_files $uri $uri/ /en/404.html;
+        try_files $uri $uri/ =404;
     }
 
     location /docs {
@@ -130,7 +132,7 @@ server {
             add_header access-control-allow-origin *;
         }
         
-        try_files $uri $uri/ /en/404.html;
+        try_files $uri $uri/ =404;
     }
 
     location /api {
@@ -142,7 +144,7 @@ server {
             add_header access-control-allow-origin *;
         }
         
-        try_files $uri $uri/ /en/404.html;
+        try_files $uri $uri/ =404;
     }
 
     location /github-webhook.log {
@@ -154,6 +156,8 @@ server {
         alias /home/dist/metrics;
         autoindex on;
         default_type text/plain;
+        
+        try_files $uri $uri/ =404;
     }
 
     rewrite ^/security.txt$                                       https://$server_name/.well-known/security.txt permanent;
