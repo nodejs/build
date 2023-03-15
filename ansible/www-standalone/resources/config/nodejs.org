@@ -87,21 +87,6 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    # instead of serving a 404 page when a page hasn't been translated
-    # @todo: use next.js for localization rewrite instead of nginx
-    location @english_fallback {
-        if ($uri ~* ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/) {
-            set $lang $1;
-        }
-        rewrite ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
-    }
-
-    # serve a localized 404 page if we've got $lang set from @english_fallback
-    # @todo: use next.js for localization rewrite instead of nginx
-    location @localized_404 {
-        try_files /$lang/404.html /en/404.html;
-    }
-
     location /documentation/ {
         rewrite ^/documentation/api(.*)$ /api$1 permanent;
     }
@@ -158,6 +143,21 @@ server {
         default_type text/plain;
         
         try_files $uri $uri/ =404;
+    }
+    
+    # instead of serving a 404 page when a page hasn't been translated
+    # @todo: use next.js for localization rewrite instead of nginx
+    location @english_fallback {
+        if ($uri ~* ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/) {
+            set $lang $1;
+        }
+        rewrite ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
+    }
+
+    # serve a localized 404 page if we've got $lang set from @english_fallback
+    # @todo: use next.js for localization rewrite instead of nginx
+    location @localized_404 {
+        try_files /$lang/404.html /en/404.html;
     }
 
     rewrite ^/security.txt$                                       https://$server_name/.well-known/security.txt permanent;
