@@ -1,12 +1,3 @@
-# default combined nginx log_format:
-#log_format combined '$remote_addr - $remote_user [$time_local] '
-#                    '"$request" $status $body_bytes_sent '
-#                    '"$http_referer" "$http_user_agent"';
-
-log_format joyent    '$remote_addr - $remote_user [$time_local] '
-                     '$request "$status" $body_bytes_sent '
-                     '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
-
 log_format nodejs    '$remote_addr - $remote_user [$time_local] '
                      '"$request" $status $body_bytes_sent '
                      '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
@@ -22,35 +13,15 @@ server {
     keepalive_timeout 60;
     server_tokens off;
 
-    gzip on;
-    gzip_static on;
-    gzip_disable "MSIE [1-6]\.";
-    gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
-
-    # let the blog.nodejs.org redirector handle this
-    location ~ ^/blog(.*) {
-        rewrite ^/blog(.*) http://blog.nodejs.org/$1 permanent;
-    }
-
-    location ~ ^/(?!(dist/|dist$|\.json$)) {
-        rewrite ^ https://nodejs.org$request_uri permanent;
-    }
-
-    root /home/www/nodejs;
-    default_type text/plain;
-    index index.html;
-
-    error_page 404 @localized_404;
-
     location / {
-        try_files $uri $uri/ @english_fallback;
-
-        location ~ \.json$ {
-            add_header access-control-allow-origin *;
-        }
+        return 301 https://nodejs.org$request_uri;
     }
 
     location /dist {
+        sendfile on;
+        sendfile_max_chunk 1m;
+        tcp_nopush on;
+
         alias /home/dist/nodejs/release;
         autoindex on;
         default_type text/plain;
@@ -59,170 +30,11 @@ server {
             add_header access-control-allow-origin *;
         }
     }
-
-    # instead of serving a 404 page when a page hasn't been translated
-    location @english_fallback {
-        if ($uri ~* ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/) {
-            set $lang $1;
-        }
-        rewrite ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
-    }
-
-    # serve a localized 404 page if we've got $lang set from @english_fallback
-    location @localized_404 {
-        try_files /$lang/404.html /en/404.html;
-    }
-}
-
-server {
-    listen *:80;
-    listen [::]:80;
-    server_name www.nodejs.org;
-
-    return 301 https://nodejs.org$request_uri;
-}
-
-server {
-    listen *:80;
-    server_name blog.nodejs.org;
-
-    rewrite ^/\d+/\d+/\d+/(?:node-v(?:ersion-)?|version-)(\d+)[-\.](\d+)[-\.](\d+).*$ https://nodejs.org/en/blog/release/v$1.$2.$3/ permanent;
-
-    rewrite ^/2015/05/16/node-leaders-are-building-an-open-foundation/$ https://nodejs.org/en/blog/community/node-leaders-building-open-neutral-foundation/ permanent;
-    rewrite ^/2015/05/16/the-nodejs-foundation-benefits-all/$ https://nodejs.org/en/blog/community/foundation-benefits-all/ permanent;
-    rewrite ^/2014/01/17/nodejs-road-ahead/$ https://nodejs.org/en/blog/nodejs-road-ahead/ permanent;
-    rewrite ^/2013/12/03/bnoordhuis-departure/$ https://nodejs.org/en/blog/uncategorized/bnoordhuis-departure/ permanent;
-    rewrite ^/2013/11/26/npm-post-mortem/$ https://nodejs.org/en/blog/npm/2013-outage-postmortem/ permanent;
-    rewrite ^/2013/10/22/cve-2013-4450-http-server-pipeline-flood-dos/$ https://nodejs.org/en/blog/vulnerability/http-server-pipeline-flood-dos/ permanent;
-    rewrite ^/2015/05/08/transitions/$ https://nodejs.org/en/blog/community/transitions/ permanent;
-    rewrite ^/2015/05/08/next-chapter/$ https://nodejs.org/en/blog/community/next-chapter/ permanent;
-    rewrite ^/2013/02/08/peer-dependencies/$ https://nodejs.org/en/blog/npm/peer-dependencies/ permanent;
-    rewrite ^/2012/12/21/streams2/$ https://nodejs.org/en/blog/feature/streams2/ permanent;
-    rewrite ^/2012/09/30/bert-belder-libuv-lxjs-2012/$ https://nodejs.org/en/blog/video/bert-belder-libuv-lxjs-2012/ permanent;
-    rewrite ^/2012/05/08/bryan-cantrill-instrumenting-the-real-time-web/$ https://nodejs.org/en/blog/video/bryan-cantrill-instrumenting-the-real-time-web/ permanent;
-    rewrite ^/2012/05/07/http-server-security-vulnerability-please-upgrade-to-0-6-17/$ https://nodejs.org/en/blog/vulnerability/http-server-security-vulnerability-please-upgrade-to-0-6-17/ permanent;
-    rewrite ^/2012/05/02/multi-server-continuous-deployment-with-fleet/$ https://nodejs.org/en/blog/module/multi-server-continuous-deployment-with-fleet/ permanent;
-    rewrite ^/2012/04/25/profiling-node-js/$ https://nodejs.org/en/blog/uncategorized/profiling-node-js/ permanent;
-    rewrite ^/2012/03/28/service-logging-in-json-with-bunyan/$ https://nodejs.org/en/blog/module/service-logging-in-json-with-bunyan/ permanent;
-    rewrite ^/2012/02/27/managing-node-js-dependencies-with-shrinkwrap/$ https://nodejs.org/en/blog/npm/managing-node-js-dependencies-with-shrinkwrap/ permanent;
-    rewrite ^/2011/12/15/growing-up/$ https://nodejs.org/en/blog/uncategorized/growing-up/ permanent;
-    rewrite ^/2011/10/26/version-0-6/$ https://nodejs.org/en/blog/uncategorized/version-0-6/ permanent;
-    rewrite ^/2011/10/05/an-easy-way-to-build-scalable-network-programs/$ https://nodejs.org/en/blog/uncategorized/an-easy-way-to-build-scalable-network-programs/ permanent;
-    rewrite ^/2011/09/23/libuv-status-report/$ https://nodejs.org/en/blog/uncategorized/libuv-status-report/ permanent;
-    rewrite ^/2011/09/08/ldapjs-a-reprise-of-ldap/$ https://nodejs.org/en/blog/uncategorized/ldapjs-a-reprise-of-ldap/ permanent;
-    rewrite ^/2011/08/29/some-new-node-projects/$ https://nodejs.org/en/blog/uncategorized/some-new-node-projects/ permanent;
-    rewrite ^/2011/08/12/the-videos-from-node-meetup/$ https://nodejs.org/en/blog/uncategorized/the-videos-from-node-meetup/ permanent;
-    rewrite ^/2011/08/03/node-meetup-this-thursday/$ https://nodejs.org/en/blog/uncategorized/node-meetup-this-thursday/ permanent;
-    rewrite ^/2011/07/11/evolving-the-node-js-brand/$ https://nodejs.org/en/blog/uncategorized/evolving-the-node-js-brand/ permanent;
-    rewrite ^/2011/06/24/porting-node-to-windows-with-microsoft.+s-help/$ https://nodejs.org/en/blog/uncategorized/porting-node-to-windows-with-microsofts-help/ permanent;
-    rewrite ^/2011/05/01/npm-1-0-released/$ https://nodejs.org/en/blog/npm/npm-1-0-released/ permanent;
-    rewrite ^/2011/04/29/trademark/$ https://nodejs.org/en/blog/uncategorized/trademark/ permanent;
-    rewrite ^/2011/04/28/node-office-hours-cut-short/$ https://nodejs.org/en/blog/uncategorized/node-office-hours-cut-short/ permanent;
-    rewrite ^/2011/04/07/npm-1-0-link/$ https://nodejs.org/en/blog/npm/npm-1-0-link/ permanent;
-    rewrite ^/2011/04/05/development-environment/$ https://nodejs.org/en/blog/uncategorized/development-environment/ permanent;
-    rewrite ^/2014/12/05/listening-to-the-community/$ https://nodejs.org/en/blog/advisory-board/listening-to-the-community/ permanent;
-    rewrite ^/2014/12/03/advisory-board-update/$ https://nodejs.org/en/blog/advisory-board/advisory-board-update/ permanent;
-    rewrite ^/2011/03/25/jobs-nodejs-org/$ https://nodejs.org/en/blog/uncategorized/jobs-nodejs-org/ permanent;
-    rewrite ^/2011/03/24/npm-1-0-global-vs-local-installation/$ https://nodejs.org/en/blog/npm/npm-1-0-global-vs-local-installation/ permanent;
-    rewrite ^/2011/03/24/office-hours/$ https://nodejs.org/en/blog/uncategorized/office-hours/ permanent;
-    rewrite ^/2011/03/18/npm-1-0-the-new-ls/$ https://nodejs.org/en/blog/npm/npm-1-0-the-new-ls/ permanent;
-    rewrite ^/2011/03/18/welcome-to-the-node-blog/$ https://nodejs.org/en/blog/video/welcome-to-the-node-blog/ permanent;
-    rewrite ^/2014/07/31/v8-memory-corruption-stack-overflow/$ https://nodejs.org/en/blog/vulnerability/v8-memory-corruption-stack-overflow/ permanent;
-    rewrite ^/2014/07/29/building-nodejs-together/$ https://nodejs.org/en/blog/community/building-nodejs-together/ permanent;
-    rewrite ^/2014/06/16/openssl-and-breaking-utf-8-change/$ https://nodejs.org/en/blog/vulnerability/openssl-and-utf8/ permanent;
-    rewrite ^/2014/06/11/notes-from-the-road/$ https://nodejs.org/en/blog/uncategorized/notes-from-the-road/ permanent;
-
-    rewrite ^/(feed/)?release/?$                 https://nodejs.org/en/feed/releases.xml permanent;
-    rewrite ^/(feed/)?vulnerability/?$           https://nodejs.org/en/feed/vulnerability.xml permanent;
-    rewrite ^/(atom|feed|rss).*$                 https://nodejs.org/en/feed/blog.xml permanent;
-
-    rewrite ^/(.*)$ https://nodejs.org/en/blog/ permanent;
-}
-
-server {
-    listen *:80;
-    server_name doc.nodejs.org docs.nodejs.org;
-
-    return 301 https://nodejs.org/en/docs/;
-}
-
-server {
-    listen *:80;
-    server_name api.nodejs.org;
-
-    return 301 https://nodejs.org/api/;
-}
-
-server {
-    listen *:80;
-    server_name dist.nodejs.org;
-
-    return 301 https://nodejs.org/dist/;
-}
-
-server {
-    listen *:80;
-    server_name interactive.nodejs.org;
-
-    return 301 http://events.linuxfoundation.org/events/node-interactive;
-}
-
-server {
-    listen *:80;
-    server_name foundation.nodejs.org;
-
-    return 301 https://openjsf.org/;
-}
-
-server {
-    listen *:443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name foundation.nodejs.org;
-
-    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Nasa_FNL.pdf$         https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-NASA.pdf permanent;
-    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Fusion_Final.pdf$     https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-Fusion.pdf permanent;
-    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Walmart_final-1.pdf$  https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-Walmart.pdf permanent;
-    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_HomeAway.pdf$         https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-HomeAway.pdf permanent;
-    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CapitalOne_FINAL_casestudy.pdf$ https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-CapitalOne.pdf permanent;
-
-    rewrite ^/(.*)$ https://openjsf.org/ permanent;
-}
-
-server {
-    listen *:80;
-    server_name newsletter.nodejs.org;
-
-    return 301 http://us14.campaign-archive2.com/home/?u=c7c2e114a827812354112c23b&id=f006b61f29;
-}
-
-server {
-    listen *:443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name www.nodejs.org;
-
-    return 301 https://nodejs.org$request_uri;
-}
-
-server {
-    listen *:443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name blog.nodejs.org;
-
-    return 301 http://blog.nodejs.org$request_uri;
-}
-
-server {
-    listen *:443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name newsletter.nodejs.org;
-
-    return 301 http://us14.campaign-archive2.com/home/?u=c7c2e114a827812354112c23b&id=f006b61f29;
 }
 
 server {
     listen *:443 default_server ssl http2 backlog=4096;
     listen [::]:443 default_server ipv6only=on ssl http2 backlog=4096;
-
     server_name nodejs.org;
 
     keepalive_timeout 60;
@@ -230,10 +42,6 @@ server {
 
     resolver 8.8.4.4 8.8.8.8 valid=300s;
     resolver_timeout 10s;
-
-    #add_header Strict-Transport-Security max-age=63072000;
-    #add_header X-Frame-Options DENY;
-    #add_header X-Content-Type-Options nosniff;
 
     access_log /var/log/nginx/nodejs/nodejs.org-access.log nodejs;
     error_log /var/log/nginx/nodejs/nodejs.org-error.log;
@@ -258,8 +66,23 @@ server {
             add_header access-control-allow-origin *;
         }
     }
+    
+    location /dist {
+        sendfile on;
+        sendfile_max_chunk 1m;
+        tcp_nopush on;
+
+        alias /home/dist/nodejs/release;
+        autoindex on;
+        default_type text/plain;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
+    }
 
     # instead of serving a 404 page when a page hasn't been translated
+    # @todo: use next.js for localization rewrite instead of nginx
     location @english_fallback {
         if ($uri ~* ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/) {
             set $lang $1;
@@ -268,6 +91,7 @@ server {
     }
 
     # serve a localized 404 page if we've got $lang set from @english_fallback
+    # @todo: use next.js for localization rewrite instead of nginx
     location @localized_404 {
         try_files /$lang/404.html /en/404.html;
     }
@@ -291,20 +115,8 @@ server {
         }
     }
 
-    location /dist {
-        sendfile on;
-        sendfile_max_chunk 1m;
-        tcp_nopush on;
-
-        alias /home/dist/nodejs/release;
-        autoindex on;
-        default_type text/plain;
-
-        location ~ \.json$ {
-            add_header access-control-allow-origin *;
-        }
-    }
-
+    # @todo: adopt new api doc tooling to generate docs in the same existing format here
+    # whilst also maintaining nodejs.org/api/ with next.js
     location /docs {
         alias /home/dist/nodejs/docs;
         autoindex on;
@@ -315,6 +127,7 @@ server {
         }
     }
 
+    # @todo: use api location from next.js and remove this directive
     location /api {
         alias /home/dist/nodejs/docs/latest/api;
         autoindex on;
@@ -323,16 +136,6 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
-    }
-
-    location /robots.txt {
-        alias /home/www/nodejs/static/robots.txt;
-        default_type text/plain;
-    }
-
-    location /.well-known/security.txt {
-        alias /home/www/nodejs/static/security.txt;
-        default_type text/plain;
     }
 
     location /github-webhook.log {
@@ -350,6 +153,9 @@ server {
     rewrite ^/about/security/?$                                   https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
     rewrite ^/contribute/?$                                       https://$server_name/en/get-involved/ permanent;
     rewrite ^/contribute/accepting_contributions.html$            https://github.com/nodejs/dev-policy permanent;
+    
+    # @todo: use next.js to do these rewrites
+    # it might require special rewriting to let next.js handle the rewrites instead of nginx
     rewrite ^/contribute/becoming_collaborator.html$              https://$server_name/en/get-involved/ permanent;
     rewrite ^/contribute/code_contributions/?$                    https://$server_name/en/get-involved/ permanent;
     rewrite ^/contribute/code_contributions/workflow.html$        https://$server_name/en/get-involved/ permanent;
@@ -365,8 +171,10 @@ server {
     rewrite ^/api.html$                                           https://$server_name/api/ permanent;
     rewrite ^/index.html$                                         https://$server_name/ permanent;
 
-    rewrite ^/(20\d\d/\d\d/\d\d/.*)$                              http://blog.nodejs.org/$1 permanent;
+    rewrite ^/(20\d\d/\d\d/\d\d/.*)$                              https://nodejs.org/en/blog/$1 permanent;
 
+    # @todo: use next.js to do these rewrites
+    # it might require special rewriting to let next.js handle the rewrites instead of nginx
     rewrite ^/about/?$                                            https://$server_name/en/about/ permanent;
     rewrite ^/about/releases/?$                                   https://github.com/nodejs/release#release-schedule permanent;
     rewrite ^/en/about/releases/?$                                https://github.com/nodejs/release#release-schedule permanent;
@@ -376,6 +184,7 @@ server {
     rewrite ^/blog/?$                                             https://$server_name/en/blog/ permanent;
     rewrite ^/community/?$                                        https://$server_name/en/get-involved/ permanent;
     rewrite ^/en/security                                         https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
+    rewrite ^/en/docs/inspector/?$                                https://$server_name/en/docs/guides/debugging-getting-started/ permanent;
 
     rewrite ^/dist/staging/(.*)$                                  https://$server_name/dist/$1 permanent;
 
@@ -385,17 +194,20 @@ server {
     rewrite ^/feed/vulnerability/?$                               https://$server_name/en/feed/vulnerability.xml permanent;
 
     # Asset rewrites
+    # @todo: rewrite the /static/ folder to / (as the /public/ folder is automatically indexed by next.js)
     rewrite ^/layouts/css/styles\.css$                            https://$server_name/static/css/styles.css permanent;
     rewrite ^/(static/)?favicon\.ico$                             https://$server_name/static/images/favicons/favicon.ico permanent;
     rewrite ^/(static/)?favicon\.png$                             https://$server_name/static/images/favicons/favicon-32x32.png permanent;
     rewrite ^/(static/)?apple-touch-icon.*\.png$                  https://$server_name/static/images/favicons/apple-touch-icon.png permanent;
     rewrite ^/trademark-policy.pdf$                               https://$server_name/static/documents/trademark-policy.pdf permanent;
 
+    # @todo: rewrite the /static/ folder to / (as the /public/ folder is automatically indexed by next.js)
     rewrite ^/logos/                                              https://$server_name/static/images/logos/ permanent;
     rewrite ^/logos/monitor.png                                   https://$server_name/static/images/logos/monitor.png permanent;
     rewrite ^/logos/nodejs(.*)$                                   https://$server_name/static/images/logos/nodejs$1 permanent;
 
     # legacy v0.12.x docs/ html
+    # @todo: rewrite the /static/ folder to / (as the /public/ folder is automatically indexed by next.js)
     rewrite ^/lfcollab.css$                                       https://$server_name/static/legacy/lfcollab.css permanent;
     rewrite ^/pipe.css$                                           https://$server_name/static/legacy/pipe.css permanent;
     rewrite ^/sh_javascript.min.js$                               https://$server_name/static/legacy/sh_javascript.min.js permanent;
@@ -448,19 +260,123 @@ server {
     rewrite ^/about/organization/?$                               https://github.com/nodejs/TSC permanent;
     rewrite ^/about/organization/tsc-meetings                     https://github.com/nodejs/TSC/tree/HEAD/meetings permanent;
     rewrite ^/(en|es|uk)/foundation/?$                            https://foundation.nodejs.org/ permanent;
-    rewrite ^/(en|uk)/foundation/case-studies/?$                  https://foundation.nodejs.org/resources permanent;
-    rewrite ^/(en|uk)/foundation/members/?$                       https://foundation.nodejs.org/about/members permanent;
-    rewrite ^/(en|uk)/foundation/board/?$                         https://foundation.nodejs.org/about/leadership permanent;
+    rewrite ^/(en|uk)/foundation/case-studies/?$                  https://openjsf.org/projects permanent;
+    rewrite ^/(en|uk)/foundation/members/?$                       https://openjsf.org/about/members permanent;
+    rewrite ^/(en|uk)/foundation/board/?$                         https://openjsf.org/about/governance permanent;
     rewrite ^/(en|uk)/foundation/tsc/?$                           https://github.com/nodejs/TSC permanent;
-    rewrite ^/(en|uk)/foundation/certification/?$                 https://foundation.nodejs.org/resources/certification permanent;
-    rewrite ^/(en|uk)/foundation/in-the-news/?$                   https://foundation.nodejs.org/news/in-the-news permanent;
-    rewrite ^/(en|uk)/foundation/announcements/?$                 https://foundation.nodejs.org/news/announcements permanent;
-    rewrite ^/(en|uk)/foundation/education/?$                     https://foundation.nodejs.org/resources/certification permanent;
-    rewrite ^/foundation/?$                                       https://foundation.nodejs.org/ permanent;
-    rewrite ^/foundation/members.html$                            https://foundation.nodejs.org/about/members permanent;
+    rewrite ^/(en|uk)/foundation/certification/?$                 https://openjsf.org/certification permanent;
+    rewrite ^/(en|uk)/foundation/in-the-news/?$                   https://openjsf.org permanent;
+    rewrite ^/(en|uk)/foundation/announcements/?$                 https://openjsf.org/blog permanent;
+    rewrite ^/(en|uk)/foundation/education/?$                     https://openjsf.org/certification permanent;
+    rewrite ^/foundation/?$                                       https://openjsf.org/ permanent;
+    rewrite ^/foundation/members.html$                            https://openjsf.org/about/members permanent;
 
+    # @todo: check if these links are still needed
     rewrite ^/static/documents/casestudies/(.*)$                                    https://foundation.nodejs.org/wp-content/uploads/sites/50/2017/09/$1 permanent;
     rewrite ^/static/documents/minutes/nodejs-foundation-board-meeting-(.*).pdf$    https://github.com/nodejs/board/blob/master/minutes/$1.md permanent;
+}
 
-    rewrite ^/en/docs/inspector/?$                                https://$server_name/en/docs/guides/debugging-getting-started/ permanent;
+server {
+    listen *:80;
+    listen *:443 ssl http2;
+    server_name www.nodejs.org;
+
+    return 301 https://nodejs.org$request_uri;
+}
+
+server {
+    listen *:80;
+    listen *:443 ssl http2;
+    server_name doc.nodejs.org docs.nodejs.org;
+
+    return 301 https://nodejs.org/en/docs/;
+}
+
+server {
+    listen *:80;
+    listen *:443 ssl http2;
+    server_name api.nodejs.org;
+
+    return 301 https://nodejs.org/api/;
+}
+
+server {
+    listen *:80;
+    listen *:443 ssl http2;
+    server_name dist.nodejs.org;
+
+    return 301 https://nodejs.org/dist/;
+}
+
+server {
+    listen *:80;
+    listen *:443 ssl http2;
+    server_name foundation.nodejs.org;
+
+    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Nasa_FNL.pdf$         https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-NASA.pdf permanent;
+    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Fusion_Final.pdf$     https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-Fusion.pdf permanent;
+    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Walmart_final-1.pdf$  https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-Walmart.pdf permanent;
+    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_HomeAway.pdf$         https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-HomeAway.pdf permanent;
+    rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CapitalOne_FINAL_casestudy.pdf$ https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-CapitalOne.pdf permanent;
+
+    rewrite ^/(.*)$ https://openjsf.org/ permanent;
+}
+
+server {
+    listen *:80;
+    listen *:443 ssl http2;
+    server_name blog.nodejs.org;
+
+    rewrite ^/\d+/\d+/\d+/(?:node-v(?:ersion-)?|version-)(\d+)[-\.](\d+)[-\.](\d+).*$ https://nodejs.org/en/blog/release/v$1.$2.$3/ permanent;
+
+    # @todo: check if these redirects can be done through next.js
+    rewrite ^/2015/05/16/node-leaders-are-building-an-open-foundation/$ https://nodejs.org/en/blog/community/node-leaders-building-open-neutral-foundation/ permanent;
+    rewrite ^/2015/05/16/the-nodejs-foundation-benefits-all/$ https://nodejs.org/en/blog/community/foundation-benefits-all/ permanent;
+    rewrite ^/2014/01/17/nodejs-road-ahead/$ https://nodejs.org/en/blog/nodejs-road-ahead/ permanent;
+    rewrite ^/2013/12/03/bnoordhuis-departure/$ https://nodejs.org/en/blog/uncategorized/bnoordhuis-departure/ permanent;
+    rewrite ^/2013/11/26/npm-post-mortem/$ https://nodejs.org/en/blog/npm/2013-outage-postmortem/ permanent;
+    rewrite ^/2013/10/22/cve-2013-4450-http-server-pipeline-flood-dos/$ https://nodejs.org/en/blog/vulnerability/http-server-pipeline-flood-dos/ permanent;
+    rewrite ^/2015/05/08/transitions/$ https://nodejs.org/en/blog/community/transitions/ permanent;
+    rewrite ^/2015/05/08/next-chapter/$ https://nodejs.org/en/blog/community/next-chapter/ permanent;
+    rewrite ^/2013/02/08/peer-dependencies/$ https://nodejs.org/en/blog/npm/peer-dependencies/ permanent;
+    rewrite ^/2012/12/21/streams2/$ https://nodejs.org/en/blog/feature/streams2/ permanent;
+    rewrite ^/2012/09/30/bert-belder-libuv-lxjs-2012/$ https://nodejs.org/en/blog/video/bert-belder-libuv-lxjs-2012/ permanent;
+    rewrite ^/2012/05/08/bryan-cantrill-instrumenting-the-real-time-web/$ https://nodejs.org/en/blog/video/bryan-cantrill-instrumenting-the-real-time-web/ permanent;
+    rewrite ^/2012/05/07/http-server-security-vulnerability-please-upgrade-to-0-6-17/$ https://nodejs.org/en/blog/vulnerability/http-server-security-vulnerability-please-upgrade-to-0-6-17/ permanent;
+    rewrite ^/2012/05/02/multi-server-continuous-deployment-with-fleet/$ https://nodejs.org/en/blog/module/multi-server-continuous-deployment-with-fleet/ permanent;
+    rewrite ^/2012/04/25/profiling-node-js/$ https://nodejs.org/en/blog/uncategorized/profiling-node-js/ permanent;
+    rewrite ^/2012/03/28/service-logging-in-json-with-bunyan/$ https://nodejs.org/en/blog/module/service-logging-in-json-with-bunyan/ permanent;
+    rewrite ^/2012/02/27/managing-node-js-dependencies-with-shrinkwrap/$ https://nodejs.org/en/blog/npm/managing-node-js-dependencies-with-shrinkwrap/ permanent;
+    rewrite ^/2011/12/15/growing-up/$ https://nodejs.org/en/blog/uncategorized/growing-up/ permanent;
+    rewrite ^/2011/10/26/version-0-6/$ https://nodejs.org/en/blog/uncategorized/version-0-6/ permanent;
+    rewrite ^/2011/10/05/an-easy-way-to-build-scalable-network-programs/$ https://nodejs.org/en/blog/uncategorized/an-easy-way-to-build-scalable-network-programs/ permanent;
+    rewrite ^/2011/09/23/libuv-status-report/$ https://nodejs.org/en/blog/uncategorized/libuv-status-report/ permanent;
+    rewrite ^/2011/09/08/ldapjs-a-reprise-of-ldap/$ https://nodejs.org/en/blog/uncategorized/ldapjs-a-reprise-of-ldap/ permanent;
+    rewrite ^/2011/08/29/some-new-node-projects/$ https://nodejs.org/en/blog/uncategorized/some-new-node-projects/ permanent;
+    rewrite ^/2011/08/12/the-videos-from-node-meetup/$ https://nodejs.org/en/blog/uncategorized/the-videos-from-node-meetup/ permanent;
+    rewrite ^/2011/08/03/node-meetup-this-thursday/$ https://nodejs.org/en/blog/uncategorized/node-meetup-this-thursday/ permanent;
+    rewrite ^/2011/07/11/evolving-the-node-js-brand/$ https://nodejs.org/en/blog/uncategorized/evolving-the-node-js-brand/ permanent;
+    rewrite ^/2011/06/24/porting-node-to-windows-with-microsoft.+s-help/$ https://nodejs.org/en/blog/uncategorized/porting-node-to-windows-with-microsofts-help/ permanent;
+    rewrite ^/2011/05/01/npm-1-0-released/$ https://nodejs.org/en/blog/npm/npm-1-0-released/ permanent;
+    rewrite ^/2011/04/29/trademark/$ https://nodejs.org/en/blog/uncategorized/trademark/ permanent;
+    rewrite ^/2011/04/28/node-office-hours-cut-short/$ https://nodejs.org/en/blog/uncategorized/node-office-hours-cut-short/ permanent;
+    rewrite ^/2011/04/07/npm-1-0-link/$ https://nodejs.org/en/blog/npm/npm-1-0-link/ permanent;
+    rewrite ^/2011/04/05/development-environment/$ https://nodejs.org/en/blog/uncategorized/development-environment/ permanent;
+    rewrite ^/2014/12/05/listening-to-the-community/$ https://nodejs.org/en/blog/advisory-board/listening-to-the-community/ permanent;
+    rewrite ^/2014/12/03/advisory-board-update/$ https://nodejs.org/en/blog/advisory-board/advisory-board-update/ permanent;
+    rewrite ^/2011/03/25/jobs-nodejs-org/$ https://nodejs.org/en/blog/uncategorized/jobs-nodejs-org/ permanent;
+    rewrite ^/2011/03/24/npm-1-0-global-vs-local-installation/$ https://nodejs.org/en/blog/npm/npm-1-0-global-vs-local-installation/ permanent;
+    rewrite ^/2011/03/24/office-hours/$ https://nodejs.org/en/blog/uncategorized/office-hours/ permanent;
+    rewrite ^/2011/03/18/npm-1-0-the-new-ls/$ https://nodejs.org/en/blog/npm/npm-1-0-the-new-ls/ permanent;
+    rewrite ^/2011/03/18/welcome-to-the-node-blog/$ https://nodejs.org/en/blog/video/welcome-to-the-node-blog/ permanent;
+    rewrite ^/2014/07/31/v8-memory-corruption-stack-overflow/$ https://nodejs.org/en/blog/vulnerability/v8-memory-corruption-stack-overflow/ permanent;
+    rewrite ^/2014/07/29/building-nodejs-together/$ https://nodejs.org/en/blog/community/building-nodejs-together/ permanent;
+    rewrite ^/2014/06/16/openssl-and-breaking-utf-8-change/$ https://nodejs.org/en/blog/vulnerability/openssl-and-utf8/ permanent;
+    rewrite ^/2014/06/11/notes-from-the-road/$ https://nodejs.org/en/blog/uncategorized/notes-from-the-road/ permanent;
+
+    rewrite ^/(feed/)?release/?$                 https://nodejs.org/en/feed/releases.xml permanent;
+    rewrite ^/(feed/)?vulnerability/?$           https://nodejs.org/en/feed/vulnerability.xml permanent;
+    rewrite ^/(atom|feed|rss).*$                 https://nodejs.org/en/feed/blog.xml permanent;
+
+    rewrite ^/(.*)$ https://nodejs.org/en/blog/ permanent;
 }
