@@ -29,6 +29,8 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+        
+        try_files $uri $uri/ /en/404.html;
     }
 }
 
@@ -79,6 +81,8 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+        
+        try_files $uri $uri/ /en/404.html;
     }
 
     # instead of serving a 404 page when a page hasn't been translated
@@ -113,10 +117,10 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+        
+        try_files $uri $uri/ /en/404.html;
     }
 
-    # @todo: adopt new api doc tooling to generate docs in the same existing format here
-    # whilst also maintaining nodejs.org/api/ with next.js
     location /docs {
         alias /home/dist/nodejs/docs;
         autoindex on;
@@ -125,9 +129,10 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+        
+        try_files $uri $uri/ /en/404.html;
     }
 
-    # @todo: use api location from next.js and remove this directive
     location /api {
         alias /home/dist/nodejs/docs/latest/api;
         autoindex on;
@@ -136,6 +141,8 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+        
+        try_files $uri $uri/ /en/404.html;
     }
 
     location /github-webhook.log {
