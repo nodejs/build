@@ -149,7 +149,7 @@ server {
         default_type text/plain;
     }
 
-    rewrite ^/security.txt$                                       https://$server_name/.well-known/security.txt permanent;
+    rewrite ^/.well-known/security.txt$                           https://$server_name/security.txt permanent;
     rewrite ^/about/security/?$                                   https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
     rewrite ^/contribute/?$                                       https://$server_name/en/get-involved/ permanent;
     rewrite ^/contribute/accepting_contributions.html$            https://github.com/nodejs/dev-policy permanent;
