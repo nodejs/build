@@ -12,6 +12,8 @@ server {
 
     keepalive_timeout 60;
     server_tokens off;
+    
+    error_page 404 /en/404.html;
 
     location / {
         return 301 https://nodejs.org$request_uri;
@@ -29,6 +31,8 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+        
+        try_files $uri $uri/ =404;
     }
 }
 
@@ -60,7 +64,7 @@ server {
     location / {
         rewrite ^/$ /en/ redirect;
 
-        try_files $uri $uri/ @english_fallback;
+        try_files $uri $uri/ @english_fallback =404;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
@@ -79,21 +83,8 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
-    }
-
-    # instead of serving a 404 page when a page hasn't been translated
-    # @todo: use next.js for localization rewrite instead of nginx
-    location @english_fallback {
-        if ($uri ~* ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/) {
-            set $lang $1;
-        }
-        rewrite ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
-    }
-
-    # serve a localized 404 page if we've got $lang set from @english_fallback
-    # @todo: use next.js for localization rewrite instead of nginx
-    location @localized_404 {
-        try_files /$lang/404.html /en/404.html;
+        
+        try_files $uri $uri/ =404;
     }
 
     location /documentation/ {
@@ -113,10 +104,10 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+        
+        try_files $uri $uri/ =404;
     }
 
-    # @todo: adopt new api doc tooling to generate docs in the same existing format here
-    # whilst also maintaining nodejs.org/api/ with next.js
     location /docs {
         alias /home/dist/nodejs/docs;
         autoindex on;
@@ -125,9 +116,10 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+        
+        try_files $uri $uri/ =404;
     }
 
-    # @todo: use api location from next.js and remove this directive
     location /api {
         alias /home/dist/nodejs/docs/latest/api;
         autoindex on;
@@ -136,6 +128,8 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+        
+        try_files $uri $uri/ =404;
     }
 
     location /github-webhook.log {
@@ -147,6 +141,23 @@ server {
         alias /home/dist/metrics;
         autoindex on;
         default_type text/plain;
+        
+        try_files $uri $uri/ =404;
+    }
+    
+    # instead of serving a 404 page when a page hasn't been translated
+    # @todo: use next.js for localization rewrite instead of nginx
+    location @english_fallback {
+        if ($uri ~* ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/) {
+            set $lang $1;
+        }
+        rewrite ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
+    }
+
+    # serve a localized 404 page if we've got $lang set from @english_fallback
+    # @todo: use next.js for localization rewrite instead of nginx
+    location @localized_404 {
+        try_files /$lang/404.html /en/404.html;
     }
 
     rewrite ^/security.txt$                                       https://$server_name/.well-known/security.txt permanent;
