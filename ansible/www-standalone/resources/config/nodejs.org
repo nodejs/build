@@ -199,7 +199,7 @@ server {
     
     # instead of serving a 404 page when a page hasn't been translated
     location @english_fallback {
-        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/(.*)$ /en/$1 permanent;
+        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/(.*)$ /en/$1;
     }
 
     # serve a localized 404 page if we've got $lang set from @english_fallback
