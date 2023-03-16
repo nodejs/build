@@ -2,6 +2,11 @@ log_format nodejs    '$remote_addr - $remote_user [$time_local] '
                      '"$request" $status $body_bytes_sent '
                      '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
 
+map $request_uri $language {
+    default 'en';
+    ~/(?<lang>(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw))($|/) $lang;
+}
+
 server {
     listen *:80 default_server;
     listen [::]:80 default_server ipv6only=on;
@@ -99,7 +104,7 @@ server {
     location / {
         rewrite ^/(.*)/$ /$1 permanent;
 
-        try_files $uri $uri.html $uri/ @english_fallback =404;
+        try_files $uri $uri.html $uri/ =404;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
@@ -204,10 +209,8 @@ server {
 
     # serve a localized 404 page if we've got $lang set from @english_fallback
     location @localized_404 {
-        add_header Cache-Control "private, no-store, max-age=0" always;
-    
-        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw) /$1/404.html break;
-        rewrite ^ /en/404.html break;
+        add_header Cache-Control "private, no-store, max-age=0" always;        
+        try_files /$language/404.html =404;
     }
 
     rewrite ^/.well-known/security.txt$                           https://$server_name/security.txt permanent;
