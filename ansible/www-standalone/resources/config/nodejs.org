@@ -13,7 +13,7 @@ server {
     keepalive_timeout 60;
     server_tokens off;
     
-    error_page 404 @english_404;
+    error_page 404 /en/404.html;
 
     location / {
         return 301 https://nodejs.org$request_uri;
@@ -35,9 +35,7 @@ server {
         try_files $uri $uri/ =404;
     }
     
-    location @english_404 {
-        try_files /en/404.html;
-
+    location = /en/404.html {
         add_header Cache-Control "no-cache" always;
     }
 }
