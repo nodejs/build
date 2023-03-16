@@ -13,7 +13,7 @@ server {
     keepalive_timeout 60;
     server_tokens off;
     
-    error_page 404 @english_404;
+    error_page 404 /404.html;
 
     location / {
         return 301 https://nodejs.org$request_uri;
@@ -35,7 +35,7 @@ server {
         try_files $uri $uri/ =404;
     }
     
-    location = /404/index.html {
+    location = /404.html {
         add_header Cache-Control "no-cache" always;
     }
 }
@@ -59,7 +59,7 @@ server {
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
 
-    error_page 404 /404/index.html;
+    error_page 404 @localized_404;
 
     root /home/www/nodejs;
     default_type text/plain;
@@ -159,7 +159,7 @@ server {
 
     # serve a localized 404 page if we've got $lang set from @english_fallback
     location @localized_404 {
-        try_files /$lang/404/index.html /404/index.html;
+        try_files /$lang/404.html /en/404.html;
 
         add_header Cache-Control "no-cache" always;
     }
