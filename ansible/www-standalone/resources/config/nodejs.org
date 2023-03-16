@@ -22,27 +22,26 @@ server {
     default_type text/plain;
     index index.html;
     
-    error_page 404 @localized_404;
+    error_page 404 /404.html;
 
     location ~ ^/(?!(dist/|dist$|\.json$)) {
         rewrite ^ https://$host$uri permanent;
     }
     
-    location = / {
-        rewrite ^ /en break;
+    location = /404.html {
+        add_header Cache-Control "no-cache" always;
     }
     
+    # website requests will never be served through here
     location / {
-        rewrite ^/(.*)/$ /$1 permanent;
-
-        try_files $uri $uri.html $uri/ @english_fallback =404;
+        try_files $uri $uri/ =404;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
     }
 
-    location /dist {
+    location ^~ /dist {
         alias /home/dist/nodejs/release;
         autoindex on;
         default_type text/plain;
@@ -52,22 +51,6 @@ server {
         }
         
         try_files $uri $uri/ =404;
-    }
-    
-    # instead of serving a 404 page when a page hasn't been translated
-    location @english_fallback {
-        if ($uri ~* ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/) {
-            set $lang $1;
-        }
-
-        rewrite ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
-    }
-
-    # serve a localized 404 page if we've got $lang set from @english_fallback
-    location @localized_404 {
-        try_files /$lang/404.html /en/404.html;
-
-        add_header Cache-Control "no-cache" always;
     }
 }
 
@@ -110,7 +93,23 @@ server {
         }
     }
     
-    location /dist {
+    # specific rule for handling next.js requests without overrides
+    location ^~ /static {
+        access_log off;
+        log_not_found off;
+
+        try_files $uri =404;
+    }
+
+    # specific rule for handling next.js requests without overrides
+    location ^~ /_next {
+        access_log off;
+        log_not_found off;
+
+        try_files $uri =404;
+    }
+    
+    location ^~ /dist {
         sendfile on;
         sendfile_max_chunk 1m;
         tcp_nopush on;
@@ -126,11 +125,11 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    location /documentation/ {
+    location ^~ /documentation/ {
         rewrite ^/documentation/api(.*)$ /api$1 permanent;
     }
 
-    location /download {
+    location ^~ /download {
         sendfile on;
         sendfile_max_chunk 1m;
         tcp_nopush on;
@@ -147,7 +146,7 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    location /docs {
+    location ^~ /docs {
         alias /home/dist/nodejs/docs;
         autoindex on;
         default_type text/html;
@@ -159,7 +158,7 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    location /api {
+    location ^~ /api {
         alias /home/dist/nodejs/docs/latest/api;
         autoindex on;
         default_type text/plain;
@@ -171,12 +170,7 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    location /github-webhook.log {
-        alias /home/nodejs/github-webhook.log;
-        default_type text/plain;
-    }
-
-    location /metrics {
+    location ^~ /metrics {
         alias /home/dist/metrics;
         autoindex on;
         default_type text/plain;
@@ -184,17 +178,24 @@ server {
         try_files $uri $uri/ =404;
     }
     
+    location = /github-webhook.log {
+        alias /home/nodejs/github-webhook.log;
+        default_type text/plain;
+    }
+    
     # instead of serving a 404 page when a page hasn't been translated
     location @english_fallback {
         if ($uri ~* ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/) {
-            set $lang $1;
+            rewrite ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
         }
-
-        rewrite ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
     }
 
     # serve a localized 404 page if we've got $lang set from @english_fallback
     location @localized_404 {
+        if ($uri ~* ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/) {
+            set $lang $1;
+        }
+    
         try_files /$lang/404.html /en/404.html;
 
         add_header Cache-Control "no-cache" always;
