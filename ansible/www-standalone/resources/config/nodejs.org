@@ -28,12 +28,15 @@ server {
         rewrite ^ https://nodejs.org$request_uri permanent;
     }
     
+    location = / {
+        return 301 https://nodejs.org/en;
+    }
+    
     location / {
         rewrite ^(/.*)\.html(\?.*)?$ $1$2 permanent;
         rewrite ^/(.*)/$ /$1 permanent;
-        rewrite ^/$ /en redirect;
     
-        try_files $uri/index.html $uri.html $uri/ $uri @english_fallback =404;
+        try_files $uri.html $uri/ $uri @english_fallback =404;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
@@ -93,13 +96,16 @@ server {
     root /home/www/nodejs;
     default_type text/plain;
     index index.html;
+    
+    location = / {
+        return 301 https://nodejs.org/en;
+    }
 
     location / {
         rewrite ^(/.*)\.html(\?.*)?$ $1$2 permanent;
         rewrite ^/(.*)/$ /$1 permanent;
-        rewrite ^/$ /en redirect;
     
-        try_files $uri/index.html $uri.html $uri/ $uri @english_fallback =404;
+        try_files $uri.html $uri/ $uri @english_fallback =404;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
