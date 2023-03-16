@@ -140,7 +140,7 @@ server {
     }
 
     location ^~ /documentation/ {
-        rewrite ^/documentation/api(.*)$ /api$1 permanent;
+        rewrite ^/documentation/api(.*)$ /api$1 redirect;
     }
 
     location ^~ /download {
@@ -206,8 +206,8 @@ server {
     location @localized_404 {
         add_header Cache-Control "private, no-store, max-age=0" always;
     
-        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw) /$1/404.html last;
-        rewrite ^ /en/404.html last;
+        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw) /$1/404.html break;
+        rewrite ^ /en/404.html break;
     }
 
     rewrite ^/.well-known/security.txt$                           https://$server_name/security.txt permanent;
