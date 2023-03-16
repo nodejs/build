@@ -25,7 +25,7 @@ server {
     error_page 404 @localized_404;
 
     location ~ ^/(?!(dist/|dist$|\.json$)) {
-        rewrite ^ https://nodejs.org$request_uri permanent;
+        rewrite ^ https://$host$uri permanent;
     }
     
     location = / {
