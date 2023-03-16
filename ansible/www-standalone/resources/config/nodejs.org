@@ -199,20 +199,15 @@ server {
     
     # instead of serving a 404 page when a page hasn't been translated
     location @english_fallback {
-        if ($uri ~* ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/) {
-            rewrite ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
-        }
+        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
     }
 
     # serve a localized 404 page if we've got $lang set from @english_fallback
     location @localized_404 {
-        if ($uri ~* ^/(ar|ca|de|es|fa|fr|gl|it|ja|ko|pt-br|uk|zh-cn|zh-tw)/) {
-            set $lang $1;
-        }
-    
-        try_files /$lang/404.html /en/404.html;
-
         add_header Cache-Control "private, no-store, max-age=0" always;
+    
+        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw) /$1/404.html last;
+        rewrite ^ /en/404.html last;
     }
 
     rewrite ^/.well-known/security.txt$                           https://$server_name/security.txt permanent;
