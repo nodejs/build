@@ -51,6 +51,7 @@ server {
         alias /home/dist/nodejs/release;
         autoindex on;
         default_type text/plain;
+        open_file_cache_errors on;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
@@ -129,6 +130,7 @@ server {
         alias /home/dist/nodejs/release;
         autoindex on;
         default_type text/plain;
+        open_file_cache_errors on;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
