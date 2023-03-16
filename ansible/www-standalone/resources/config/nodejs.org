@@ -13,17 +13,30 @@ server {
     keepalive_timeout 60;
     server_tokens off;
     
+    gzip on;
+    gzip_static on;
+    gzip_disable "MSIE [1-6]\.";
+    gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
+    
+    root /home/www/nodejs;
+    default_type text/plain;
+    index /en/index.html;
+    
     error_page 404 /404.html;
 
+    location ~ ^/(?!(dist/|dist$|\.json$)) {
+        rewrite ^ https://nodejs.org$request_uri permanent;
+    }
+    
     location / {
-        return 301 https://nodejs.org$request_uri;
+        try_files $uri $uri/ @english_fallback;
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
     }
 
     location /dist {
-        sendfile on;
-        sendfile_max_chunk 1m;
-        tcp_nopush on;
-
         alias /home/dist/nodejs/release;
         autoindex on;
         default_type text/plain;
@@ -63,7 +76,7 @@ server {
 
     root /home/www/nodejs;
     default_type text/plain;
-    index index.html;
+    index /en/index.html;
 
     location / {
         rewrite ^/$ /en/ redirect;
