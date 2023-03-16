@@ -36,7 +36,7 @@ server {
     }
     
     location @english_404 {
-        alias /home/dist/nodejs/en/404.html;
+        alias /home/www/nodejs/404/index.html;
 
         add_header Cache-Control "no-cache" always;
     }
@@ -161,7 +161,7 @@ server {
 
     # serve a localized 404 page if we've got $lang set from @english_fallback
     location @localized_404 {
-        try_files /$lang/404.html /en/404.html;
+        try_files /$lang/404/index.html /404/index.html;
 
         add_header Cache-Control "no-cache" always;
     }
