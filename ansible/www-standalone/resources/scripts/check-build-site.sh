@@ -11,6 +11,6 @@ indexjson=/home/dist/${site}/release/index.json
 indexhtml=/home/www/${site}/en/index.html
 buildsite=/home/nodejs/build-site.sh
 
-[ "X$site" = "Xnodejs" ] && indexhtml = /home/www/nodejs/en.html
+[ "X$site" == "Xnodejs" ] && indexhtml = /home/www/nodejs/en.html
 
 [ $indexjson -nt $indexhtml ] && $buildsite $site
