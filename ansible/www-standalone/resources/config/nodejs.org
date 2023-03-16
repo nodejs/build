@@ -29,7 +29,7 @@ server {
     }
     
     location = / {
-        return 301 https://nodejs.org/en;
+        rewrite ^ /en break;
     }
     
     location / {
@@ -97,7 +97,7 @@ server {
     index index.html;
     
     location = / {
-        return 301 https://nodejs.org/en;
+        rewrite ^ /en break;
     }
 
     location / {
