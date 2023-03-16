@@ -33,10 +33,9 @@ server {
     }
     
     location / {
-        rewrite ^(/.*)\.html(\?.*)?$ $1$2 permanent;
         rewrite ^/(.*)/$ /$1 permanent;
     
-        try_files $uri.html $uri/ $uri @english_fallback =404;
+        try_files $uri $uri.html $uri/ @english_fallback =404;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
@@ -102,10 +101,9 @@ server {
     }
 
     location / {
-        rewrite ^(/.*)\.html(\?.*)?$ $1$2 permanent;
         rewrite ^/(.*)/$ /$1 permanent;
     
-        try_files $uri.html $uri/ $uri @english_fallback =404;
+        try_files $uri $uri.html $uri/ @english_fallback =404;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
