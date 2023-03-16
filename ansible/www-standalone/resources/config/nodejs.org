@@ -21,6 +21,7 @@ server {
     root /home/www/nodejs;
     default_type text/plain;
     index index.html;
+    add_header Cache-Control "public, max-age=3600, s-maxage=14400";
     
     error_page 404 /404.html;
 
@@ -78,6 +79,7 @@ server {
     root /home/www/nodejs;
     default_type text/plain;
     index index.html;
+    add_header Cache-Control "public, max-age=3600, s-maxage=14400";
     
     location = / {
         rewrite ^ /en break;
