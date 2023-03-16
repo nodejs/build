@@ -29,7 +29,7 @@ server {
     }
     
     location = /404.html {
-        add_header Cache-Control "no-store, max-age=0" always;
+        add_header Cache-Control "private, no-store, max-age=0" always;
     }
     
     # website requests will never be served through here
@@ -198,7 +198,7 @@ server {
     
         try_files /$lang/404.html /en/404.html;
 
-        add_header Cache-Control "no-store, max-age=0" always;
+        add_header Cache-Control "private, no-store, max-age=0" always;
     }
 
     rewrite ^/.well-known/security.txt$                           https://$server_name/security.txt permanent;
