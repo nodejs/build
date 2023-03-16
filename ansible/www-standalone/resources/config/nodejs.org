@@ -2,11 +2,6 @@ log_format nodejs    '$remote_addr - $remote_user [$time_local] '
                      '"$request" $status $body_bytes_sent '
                      '"$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
 
-map $request_uri $language {
-    default 'en';
-    ~/(?<lang>(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw))($|/) $lang;
-}
-
 server {
     listen *:80 default_server;
     listen [::]:80 default_server ipv6only=on;
@@ -104,7 +99,7 @@ server {
     location / {
         rewrite ^/(.*)/$ /$1 permanent;
 
-        try_files $uri $uri.html $uri/ =404;
+        try_files $uri $uri.html $uri/ @english_fallback;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
@@ -202,16 +197,23 @@ server {
         default_type text/plain;
     }
     
-    # instead of serving a 404 page when a page hasn't been translated
     location @english_fallback {
-        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/(.*)$ /en/$1;
+        # Store the original language of the request
+        # We'll use this for the 404 in the try_files in @localized_404
+        if ($uri ~* ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/) {
+            set $lang $1;
+        }
+
+        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
     }
 
-    # serve a localized 404 page if we've got $lang set from @english_fallback
     location @localized_404 {
         add_header Cache-Control "private, no-store, max-age=0" always;        
-        try_files /$language/404.html =404;
-    }
+
+        # If this was a rewritten i18n request from @english_fallback, use the localized 404
+        # Otherwise, fallback to the English 404 file
+        try_files /$lang/404.html /en/404.html =404;
+    } 
 
     rewrite ^/.well-known/security.txt$                           https://$server_name/security.txt permanent;
     rewrite ^/about/security/?$                                   https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
