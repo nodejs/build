@@ -18,6 +18,11 @@ server {
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
     
+    open_file_cache max=10000 inactive=300s;
+    open_file_cache_valid 120s;
+    open_file_cache_min_uses 2;
+    open_file_cache_errors off;
+    
     root /home/www/nodejs;
     default_type text/plain;
     index index.html;
@@ -73,6 +78,11 @@ server {
     gzip_static on;
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
+    
+    open_file_cache max=10000 inactive=300s;
+    open_file_cache_valid 120s;
+    open_file_cache_min_uses 2;
+    open_file_cache_errors off;
 
     error_page 404 @localized_404;
 
