@@ -35,9 +35,7 @@ server {
         try_files $uri $uri/ =404;
     }
     
-    location @english_404 {
-        alias /home/www/nodejs/404/index.html;
-
+    location = /404/index.html {
         add_header Cache-Control "no-cache" always;
     }
 }
@@ -61,7 +59,7 @@ server {
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
 
-    error_page 404 @localized_404;
+    error_page 404 /404/index.html;
 
     root /home/www/nodejs;
     default_type text/plain;
