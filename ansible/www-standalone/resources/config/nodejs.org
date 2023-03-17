@@ -28,7 +28,7 @@ server {
     index index.html;
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
 
-    error_page 404 = /404.html;
+    error_page 404 /404.html;
 
     location ~ ^/(?!(dist/|dist$|\.json$)) {
         rewrite ^ https://$host$uri permanent;
@@ -90,7 +90,7 @@ server {
     index index.html;
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
 
-    error_page 404 = @localized_404;
+    error_page 404 @localized_404;
 
     location = / {
         rewrite ^ /en break;
