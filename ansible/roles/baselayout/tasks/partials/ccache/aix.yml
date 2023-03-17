@@ -28,12 +28,12 @@
 
 - name: "ccache : install - create directory aix"
   file:
-    path: /opt/ccache-3.7.4/{{ item.dest }}
+    path: /opt/ccache-3.7.4/{{ item }}
     state: directory
     mode: '0755'
   loop:
-    - { dest: bin }
-    - { dest: libexec }
+    - bin
+    - libexec
   when: not has_ccache.stat.exists
 
 - name: "ccache : install - move file aix"
@@ -45,21 +45,22 @@
 - name: "ccache : create symlinks - aix"
   file:
     src: /opt/ccache-3.7.4/bin/ccache
-    dest: /opt/ccache-3.7.4/libexec/{{ item.dest }}
+    dest: /opt/ccache-3.7.4/libexec/{{ item }}
     owner: root
     group: system
     state: link
   loop:
-    - { dest: c++ }
-    - { dest: cpp }
-    - { dest: g++ }
-    - { dest: gcc }
-    - { dest: gcov }
-    - { dest: g++-6 }
-    - { dest: gcc-6 }
-    - { dest: g++-8 }
-    - { dest: gcc-8 }
-  when: not has_ccache.stat.exists
+    - c++
+    - cpp
+    - g++
+    - gcc
+    - gcov
+    - g++-6
+    - gcc-6
+    - g++-8
+    - gcc-8
+    - gcc-10
+    - g++-10
 
 - name: "ccache : cleanup - aix tarball"
   file:

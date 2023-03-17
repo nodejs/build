@@ -10,8 +10,9 @@
   * [Install Command Line Tools for Xcode](#install-command-line-tools-for-xcode)
 * [AIX](#aix)
   * [Disk layout](#disk-layout)
-* [AIX 7.1](#aix-71)
+  * [OpenSSL](#openssl)
   * [Remove en1 network interface](#remove-en1-network-interface)
+* [AIX 7.1](#aix-71)
   * [Update XL C/C++ Runtime](#update-xl-cc-runtime)
 * [AIX 7.2 Install](#aix-72-install)
   * [ccache 3.7.4 on AIX 7.2](#ccache-374-on-aix-72)
@@ -392,13 +393,41 @@ ENCRYPTION:         no
 #
 ```
 
-## AIX 7.1
+### OpenSSL
+
+On AIX OpenSSL is not available as an rpm via yum/dnf and is instead an
+installp fileset that must be manually downloaded and installed.
+
+Go to https://www.ibm.com/resources/mrs/assets?source=aixbp&S_PKG=openssl
+and pick the most recent OpenSSL release (each package should contain
+compatibility libraries for older versions). Download/copy the `.tar.Z`
+package (URL will be temporary) on to the machine into a temporary directory
+e.g. `/tmp/openssl`.
+
+```console
+curl -sL openssl-3.0.8.1000.tar.Z https://iwm.dhe.ibm.com/.../openssl-3.0.8.1000.tar.Z
+```
+
+Then unpack the compressed archive:
+```console
+zcat openssl-3.0.8.1000.tar.Z | tar -xvf -
+```
+
+and install:
+```console
+installp -aXYgd openssl-3.0.8.1000 -e /tmp/install.log all
+```
+
+To see a list of installed packages, run:
+```console
+lslpp -L all
+```
 
 ### Remove en1 network interface
 
 Some libuv/Node.js tests currently fail on AIX with a network interface
 containing a link local address. This is being tracked in
-https://github.com/nodejs/node/issues/39143. In the meantime the `en1`
+https://github.com/nodejs/node/issues/46792. In the meantime the `en1`
 interface containing the link local address is removed.
 ```
 sudo ifconfig en1 down detach
@@ -412,6 +441,8 @@ to list the available interfaces. To add back the `en1` interface, run
 ```
 sudo autoconf6 -i en1
 ```
+
+## AIX 7.1
 
 ### Update XL C/C++ Runtime
 

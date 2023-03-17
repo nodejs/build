@@ -1,6 +1,0 @@
-# Install ccache via AIX Toolbox
-
-- name: install ccache
-  ansible.builtin.dnf:
-    name: ccache-swig
-    state: present
