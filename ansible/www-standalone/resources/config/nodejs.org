@@ -172,8 +172,6 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
-
-        try_files $uri =404;
     }
 
     location ^~ /documentation {
