@@ -82,6 +82,8 @@ server {
     open_file_cache_valid 120s;
     open_file_cache_min_uses 2;
     open_file_cache_errors off;
+    
+    set $lang en;
 
     error_page 404 @localized_404;
 
