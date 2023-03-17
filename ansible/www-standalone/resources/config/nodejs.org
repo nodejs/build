@@ -179,6 +179,7 @@ server {
 
     location ^~ /metrics {
         alias /home/dist/metrics;
+        autoindex on;
         default_type text/plain;
     }
     
