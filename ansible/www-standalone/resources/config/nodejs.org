@@ -12,6 +12,7 @@ server {
 
     keepalive_timeout 60;
     server_tokens off;
+    log_not_found off;
     
     gzip on;
     gzip_static on;
@@ -66,6 +67,7 @@ server {
 
     keepalive_timeout 60;
     server_tokens off;
+    log_not_found off;
 
     resolver 8.8.4.4 8.8.8.8 valid=300s;
     resolver_timeout 10s;
