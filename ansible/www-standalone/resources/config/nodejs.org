@@ -205,7 +205,13 @@ server {
         # If this was a rewritten i18n request from @english_fallback, use the localized 404
         # Otherwise, fallback to the English 404 file
         try_files /$lang/404.html /en/404.html =404;
-    } 
+    }
+
+    location = /traffic-manager {
+        access_log off;
+
+        return 204;
+    }
 
     rewrite ^/.well-known/security.txt$                           https://$server_name/security.txt last;
 
