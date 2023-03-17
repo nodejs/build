@@ -136,7 +136,7 @@ server {
             add_header access-control-allow-origin *;
         }
         
-        try_files $uri =404;
+        try_files $uri $uri/ =404;
     }
 
     location ^~ /documentation {
@@ -151,13 +151,15 @@ server {
         alias /home/dist/nodejs;
         autoindex on;
         default_type text/plain;
+        open_file_cache_errors on;
+
         add_header X-Robots-Tag noindex;
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
 
-        try_files $uri =404;
+        try_files $uri $uri/ =404;
     }
 
     location ^~ /docs {
@@ -169,12 +171,11 @@ server {
             add_header access-control-allow-origin *;
         }
 
-        try_files $uri =404;
+        try_files $uri $uri/ =404;
     }
 
     location ^~ /api {
         alias /home/dist/nodejs/docs/latest/api;
-        autoindex on;
         default_type text/plain;
 
         location ~ \.json$ {
@@ -186,7 +187,6 @@ server {
 
     location ^~ /metrics {
         alias /home/dist/metrics;
-        autoindex on;
         default_type text/plain;
         
         try_files $uri =404;
