@@ -165,6 +165,8 @@ server {
     }
 
     location ^~ /api {
+        error_page 404 @localized_404;
+
         alias /home/dist/nodejs/docs/latest/api;
         default_type text/plain;
 
