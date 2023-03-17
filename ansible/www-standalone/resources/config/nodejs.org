@@ -166,6 +166,7 @@ server {
 
     location ^~ /api {
         alias /home/dist/nodejs/docs/latest/api;
+        autoindex on;
         default_type text/plain;
 
         location ~ \.json$ {
