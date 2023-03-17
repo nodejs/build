@@ -15,7 +15,6 @@ server {
     log_not_found off;
     
     gzip on;
-    gzip_static on;
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
     
@@ -28,8 +27,6 @@ server {
     default_type text/plain;
     index index.html;
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
-    
-    error_page 404 /404.html;
 
     location ~ ^/(?!(dist/|dist$|\.json$)) {
         rewrite ^ https://$host$uri permanent;
@@ -41,6 +38,8 @@ server {
     
     # website requests will never be served through here
     location / {
+        error_page 404 /404.html;
+
         try_files $uri $uri/ =404;
 
         location ~ \.json$ {
@@ -76,7 +75,6 @@ server {
     error_log /var/log/nginx/nodejs/nodejs.org-error.log;
 
     gzip on;
-    gzip_static on;
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
     
@@ -86,8 +84,6 @@ server {
     open_file_cache_errors off;
     
     set $lang en;
-
-    error_page 404 @localized_404;
 
     root /home/www/nodejs;
     default_type text/plain;
@@ -99,6 +95,8 @@ server {
     }
 
     location / {
+        error_page 404 @localized_404;
+
         rewrite ^/(.*)/$ /$1 permanent;
 
         try_files $uri $uri.html @english_fallback;
