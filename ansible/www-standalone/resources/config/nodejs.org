@@ -14,11 +14,16 @@ server {
     server_tokens off;
     log_not_found off;
 
+    # We gzip the responses that NGINX does for the following mime-types. We don't use gzip_static as otherwise it would
+    # request a pre-gzip version of each file on the file system, which would hammer the file system with requqests.
     gzip on;
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
 
-    open_file_cache max=10000 inactive=300s;
+    # These directives are used to prevent our server to continuously attempt to open the same requested files on the file_system
+    # W use this so that file_system accesses get cached during this period of time.
+    # For specific Location directives, such as /dist we also cache the 404's and any other Server Error
+    open_file_cache max=100000 inactive=300s;
     open_file_cache_valid 120s;
     open_file_cache_min_uses 2;
     open_file_cache_errors off;
@@ -26,19 +31,20 @@ server {
     root /home/www/nodejs;
     default_type text/plain;
     index index.html;
+
+    # We set a default cache of 1 hour and a max age of 4 hours
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
 
     error_page 404 /404.html;
 
+    # For the unencrypted Node.js server, if a request is not done within the /dist folder
+    # We basically rewrite/redirect the request to the https:// schema/protocol
     location ~ ^/(?!(dist/|dist$|\.json$)) {
         rewrite ^ https://$host$uri permanent;
     }
 
-    location = /404.html {
-        add_header Cache-Control "private, no-store, max-age=0" always;
-    }
-
-    # website requests will never be served through here
+    # This should handle any other possible request done to the unencrypted server
+    # Even tho as seen on the previous Location block for ~ we redirect all non /dist requests to https://
     location / {
         try_files $uri $uri/ =404;
 
@@ -47,6 +53,14 @@ server {
         }
     }
 
+    # This Location directive redirects to the list of all Node.js binaries available
+    # of all existing Node.js versions
+    # We use `open_file_cache_errors` that allows the NGINX file cache to also cache that
+    # certain files gave 404's, so that it doesn't keep retrying to open this file that doesn't exist
+    # This policy will still follow the expiry time of the file_cache. It is used mostly to avoid our file system
+    # to be hammered by concurrent requests and mitigate situations where the fs stops fulfiling requests
+    # because of maximum concurrent sockets being open.
+    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
     location ^~ /dist {
         alias /home/dist/nodejs/release;
         autoindex on;
@@ -56,6 +70,13 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
+    }
+
+    location = /404.html {
+        # We disable caching of 404 pages as we want to avoid CloudFlare accidentally thinking that a 404 is permanent
+        # many cases 404 pages happen due to the server reaching maximum concurrent file system open() requests
+        # disabling cache allows CloudFlare to re-evaluate the same $uri once our server recovers and then properly cache the page
+        add_header Cache-Control "private, no-store, max-age=0" always;
     }
 }
 
@@ -74,31 +95,61 @@ server {
     access_log /var/log/nginx/nodejs/nodejs.org-access.log nodejs;
     error_log /var/log/nginx/nodejs/nodejs.org-error.log;
 
+    # We gzip the responses that NGINX does for the following mime-types. We don't use gzip_static as otherwise it would
+    # request a pre-gzip version of each file on the file system, which would hammer the file system with requqests.
     gzip on;
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
 
+    # These directives are used to prevent our server to continuously attempt to open the same requested files on the file_system
+    # W use this so that file_system accesses get cached during this period of time.
+    # For specific Location directives, such as /dist we also cache the 404's and any other Server Error
     open_file_cache max=100000 inactive=300s;
     open_file_cache_valid 120s;
     open_file_cache_min_uses 2;
     open_file_cache_errors off;
 
+    # We set a default language to "en". This is used for the Localized 404 pages
     set $lang en;
 
     root /home/www/nodejs;
     default_type text/plain;
     index index.html;
+    
+    # We set a default cache of 1 hour and a max age of 4 hours
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
 
+    # Sets a custom 404 error page for the whole Server region
+    # we use the Next.js generated 404 page for all the 404's of our Website
+    # including for binaries, assets and et cetera.
     error_page 404 @localized_404;
 
+    # As we don't have a /index.html, we redirect to /en
     location = / {
-        rewrite ^ /en break;
+        rewrite ^ /en permanent;
     }
 
+    # This Location directive is the primary Location directive for any request not handled by the
+    # mutual exclusivity Location directives (the ones started by ^~) and pretty much handles the requests for the Website pages
+    # as in general all other requests should either not fall here.
     location / {
+        # We rewrite all Website pages ending with a trailing slash, removing the trailing slash
+        # This is done because our Next.js deployment doesn't use trailingSlash, in other words
+        # /en/blog actually translates into /en/blog.html within Next.js built (exported) files
+        # Removing the trailing slash from the request allows us to do an external permanent redirect
+        # that will that fallback to this same Location block.
+        # For all Website pages we won't have any single **/index.html, meaning that we don't need to
+        # test for $uri/
         rewrite ^/(.*)/$ /$1 permanent;
 
+        # Tries the $uri first and if there's no $uri for that e.g. /en/blog
+        # it attempts with /en/blog.html, which for the Website it will exist.
+        # This is basically a rewrite to remove the ".html" extension from our Website pages
+        # NOTE: By disabling trailingSlash config option on Next.js, less folders need to be created.
+        # If a file doesn't exist, it attempts to invoke the @english_fallback, as in most of cases
+        # for the Website, it means that, for example, /es/blog will not exist, but /en/blog exists
+        # so it attempts to open that page on its English version. Note that @english_fallback
+        # will only redirect two-letter-code pages to english ones, everything else goes right to 404.
         try_files $uri $uri.html @english_fallback;
 
         location ~ \.json$ {
@@ -106,22 +157,36 @@ server {
         }
     }
 
-    # specific rule for handling next.js requests without overrides
-    location ^~ /static {
+    # This Location is used for handling static Next.js files. As we don't want to log access
+    # to static directories and also we don't want to log not found requests here
+    # As this is a static directory that in theory should not change over time, we disable access
+    # logs and also cache 404's errors as this folder contents change completely on every 
+    # We don't use ^~ as there are other Rewrite directives below that should also be taken into consideration
+    # before failing the request with a 404 if it doesn't exist
+    location /static {
         access_log off;
         log_not_found off;
-
-        try_files $uri =404;
+        open_file_cache_errors on;
     }
 
-    # specific rule for handling next.js requests without overrides
+    # This Location directy is used to handle Next.js internal _next directory
+    # As this is an internal directory requested by Next.js itself, we disable access
+    # logs and also cache 404's errors as this folder contents change completely on every build
+    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
     location ^~ /_next {
         access_log off;
         log_not_found off;
-
-        try_files $uri =404;
+        open_file_cache_errors on;
     }
 
+    # This Location directive redirects to the list of all Node.js binaries available
+    # of all existing Node.js versions
+    # We use `open_file_cache_errors` that allows the NGINX file cache to also cache that
+    # certain files gave 404's, so that it doesn't keep retrying to open this file that doesn't exist
+    # This policy will still follow the expiry time of the file_cache. It is used mostly to avoid our file system
+    # to be hammered by concurrent requests and mitigate situations where the fs stops fulfiling requests
+    # because of maximum concurrent sockets being open.
+    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
     location ^~ /dist {
         sendfile on;
         sendfile_max_chunk 1m;
@@ -132,11 +197,21 @@ server {
         default_type text/plain;
         open_file_cache_errors on;
 
+        # This rewrite is done to redirect legacy /dist/staging requests to /dist directly
+        rewrite ^/dist/staging/(.*)$ /dist/$1 permanent;
+
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
     }
 
+    # This Location directive redirects to the overall available Downloads on this Server
+    # We use `open_file_cache_errors` that allows the NGINX file cache to also cache that
+    # certain files gave 404's, so that it doesn't keep retrying to open this file that doesn't exist
+    # This policy will still follow the expiry time of the file_cache. It is used mostly to avoid our file system
+    # to be hammered by concurrent requests and mitigate situations where the fs stops fulfiling requests
+    # because of maximum concurrent sockets being open.
+    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
     location ^~ /download {
         sendfile on;
         sendfile_max_chunk 1m;
@@ -154,6 +229,9 @@ server {
         }
     }
 
+    # This Location directive is used for browsing all the versions of the Node.js docs
+    # We use `autoindex` as there are multiple folders to be browsed
+    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
     location ^~ /docs {
         alias /home/dist/nodejs/docs;
         autoindex on;
@@ -164,6 +242,9 @@ server {
         }
     }
 
+    # This Location directive is used for the latest versions of the Node.js API docs
+    # We keep `autoindex` on so that it will automatically accept the /api as /api/ as an index
+    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
     location ^~ /api {
         alias /home/dist/nodejs/docs/latest/api;
         autoindex on;
@@ -174,53 +255,72 @@ server {
         }
     }
 
+    # Redirects the Legacy /documentation endpoint to /api
+    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
     location ^~ /documentation {
         rewrite ^/documentation/api(.*)$ /api$1 redirect;
     }
 
+    # This Location is used for our Metrics Pages
+    # We keep `autoindex` on as some folders are autoindex (do not have an index.html)
+    # even tho the main /metric endpoint is a build page (statically generated over time)
+    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
     location ^~ /metrics {
         alias /home/dist/metrics;
         autoindex on;
         default_type text/plain;
     }
 
-    location = /github-webhook.log {
-        alias /home/nodejs/github-webhook.log;
-        default_type text/plain;
-    }
-
+    # Store the original language of the request
+    # We'll use this for the 404 in the try_files in @localized_404
     location @english_fallback {
-        # Store the original language of the request
-        # We'll use this for the 404 in the try_files in @localized_404
+        # @TODO: Handle Localization Fallback through Next.js SSR as this is a hacky approach and requires
+        # continuous maintenance of the supported languages
         if ($uri ~* ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/) {
             set $lang $1;
         }
 
-        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/(.*)$ /en/$2 last;
+        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
     }
 
+    # This Location directive is used for handling all 404's requests coming to this Server
+    # by default if the request doesn't come from a /two-letter-code/ localized page (extracted from the @english_fallback Location)
+    # it will then fallback to $lang as being "en" as defined numerous lines above
     location @localized_404 {
+        # We disable caching of 404 pages as we want to avoid CloudFlare accidentally thinking that a 404 is permanent
+        # many cases 404 pages happen due to the server reaching maximum concurrent file system open() requests
+        # disabling cache allows CloudFlare to re-evaluate the same $uri once our server recovers and then properly cache the page
         add_header Cache-Control "private, no-store, max-age=0" always;        
 
         # If this was a rewritten i18n request from @english_fallback, use the localized 404
-        # Otherwise, fallback to the English 404 file
+        # if there is no 404 page for that Localized page we will fallback to the English Website 404
+        # as last resort we fallback to NGINX's default 404 on worst scenario. Notice that this result as a [crit] and should never happen
         try_files /$lang/404.html /en/404.html =404;
     }
 
+    # This Location directive is used to expose our Website GitHub WebHook Logs
+    location = /github-webhook.log {
+        alias /home/nodejs/github-webhook.log;
+        default_type text/plain;
+        access_log off;
+    }
+
+    # This Location directive is used as the health-check/load-balancer endpoint for CloudFlare
+    # it does requests here from its different colos every 60s. We decided to use a direct empty response here
+    # to avoid having the file system being requested for every time CloudFlare does the health_check
+    # We also disabled access logs as we honestly don't need these access_logs
     location = /traffic-manager {
         access_log off;
-
         return 204;
     }
 
-    rewrite ^/.well-known/security.txt$                           https://$server_name/security.txt last;
+    # This allows the security.txt to be served directly from /.well-known/security.txt
+    rewrite ^/.well-known/security.txt$ /security.txt last;
 
+    # Numerous Legacy Pages to matching current Pages
     rewrite ^/about/security/?$                                   https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
     rewrite ^/contribute/?$                                       https://$server_name/en/get-involved permanent;
     rewrite ^/contribute/accepting_contributions.html$            https://github.com/nodejs/dev-policy permanent;
-
-    # @todo: use next.js to do these rewrites
-    # it might require special rewriting to let next.js handle the rewrites instead of nginx
     rewrite ^/contribute/becoming_collaborator.html$              https://$server_name/en/get-involved permanent;
     rewrite ^/contribute/code_contributions/?$                    https://$server_name/en/get-involved permanent;
     rewrite ^/contribute/code_contributions/workflow.html$        https://$server_name/en/get-involved permanent;
@@ -235,11 +335,7 @@ server {
     rewrite ^/changelog.html$                                     https://github.com/nodejs/node/blob/HEAD/CHANGELOG.md permanent;
     rewrite ^/api.html$                                           https://$server_name/api/ permanent;
     rewrite ^/index.html$                                         https://$server_name/en permanent;
-
     rewrite ^/(20\d\d/\d\d/\d\d/.*)$                              https://nodejs.org/en/blog/$1 permanent;
-
-    # @todo: use next.js to do these rewrites
-    # it might require special rewriting to let next.js handle the rewrites instead of nginx
     rewrite ^/about/?$                                            https://$server_name/en/about permanent;
     rewrite ^/about/releases/?$                                   https://github.com/nodejs/release#release-schedule permanent;
     rewrite ^/en/about/releases/?$                                https://github.com/nodejs/release#release-schedule permanent;
@@ -251,28 +347,24 @@ server {
     rewrite ^/en/security                                         https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
     rewrite ^/en/docs/inspector/?$                                https://$server_name/en/docs/guides/debugging-getting-started/ permanent;
 
-    rewrite ^/dist/staging/(.*)$                                  https://$server_name/dist/$1 permanent;
-
     # RSS Feeds
     rewrite ^/((atom|feed|rss)(/|\.xml)|(feed))$                  https://$server_name/en/feed/blog.xml permanent;
     rewrite ^/feed/release/?$                                     https://$server_name/en/feed/releases.xml permanent;
     rewrite ^/feed/vulnerability/?$                               https://$server_name/en/feed/vulnerability.xml permanent;
 
-    # Asset rewrites
-    # @todo: rewrite the /static/ folder to / (as the /public/ folder is automatically indexed by next.js)
+    # Legacy Assets
     rewrite ^/layouts/css/styles\.css$                            https://$server_name/static/css/styles.css permanent;
     rewrite ^/(static/)?favicon\.ico$                             https://$server_name/static/images/favicons/favicon.png permanent;
     rewrite ^/(static/)?favicon\.png$                             https://$server_name/static/images/favicons/favicon.png permanent;
     rewrite ^/(static/)?apple-touch-icon.*\.png$                  https://$server_name/static/images/favicons/favicon.png permanent;
     rewrite ^/trademark-policy.pdf$                               https://$server_name/static/documents/trademark-policy.pdf permanent;
 
-    # @todo: rewrite the /static/ folder to / (as the /public/ folder is automatically indexed by next.js)
+    # Legacy Logos
     rewrite ^/logos/                                              https://$server_name/static/images/logos/ permanent;
     rewrite ^/logos/monitor.png                                   https://$server_name/static/images/logos/monitor.png permanent;
     rewrite ^/logos/nodejs(.*)$                                   https://$server_name/static/images/logos/nodejs$1 permanent;
 
-    # legacy v0.12.x docs/ html
-    # @todo: rewrite the /static/ folder to / (as the /public/ folder is automatically indexed by next.js)
+    # Legacy Node.js v0.12 Website Rewrites
     rewrite ^/lfcollab.css$                                       https://$server_name/static/legacy/lfcollab.css permanent;
     rewrite ^/pipe.css$                                           https://$server_name/static/legacy/pipe.css permanent;
     rewrite ^/sh_javascript.min.js$                               https://$server_name/static/legacy/sh_javascript.min.js permanent;
@@ -301,10 +393,9 @@ server {
     rewrite ^/images/twitter-bird.png                             https://$server_name/static/legacy/images/twitter-bird.png permanent;
     rewrite ^/images/walmart-thumb.jpg$                           https://$server_name/static/legacy/images/walmart-thumb.jpg permanent;
     rewrite ^/images/yahoo-logo.png                               https://$server_name/static/legacy/images/yahoo-logo.png permanent;
-
     rewrite ^/images/(.*)                                         https://$server_name/static/images/$1 permanent;
 
-    rewrite ^/windows-environment$                                https://github.com/nodejs/node/wiki/Windows-Environment permanent;
+    # Calendar Rewrites
     rewrite ^/calendar$                                           https://calendar.google.com/calendar/embed?src=nodejs.org_nr77ama8p7d7f9ajrpnu506c98%40group.calendar.google.com permanent;
     rewrite ^/calendar.ics$                                       https://calendar.google.com/calendar/ical/nodejs.org_nr77ama8p7d7f9ajrpnu506c98%40group.calendar.google.com/public/basic.ics permanent;
 
@@ -319,11 +410,13 @@ server {
     rewrite ^/download/v8.1.1/node-v8.1.1-headers.tar.gz$         https://$server_name/download/release/v8.1.1/node-v8.1.1-headers.tar.gz permanent;
     rewrite ^/download/v8.1.1/SHASUMS256.txt$                     https://$server_name/download/release/v8.1.1/SHASUMS256.txt permanent;
 
-    # Rewrite resources to new Foundation website
+    # Redirects to the TSC repository
     rewrite ^/advisory-board                                      https://github.com/nodejs/TSC permanent;
     rewrite ^/about/advisory-board                                https://github.com/nodejs/TSC permanent;
     rewrite ^/about/organization/?$                               https://github.com/nodejs/TSC permanent;
     rewrite ^/about/organization/tsc-meetings                     https://github.com/nodejs/TSC/tree/HEAD/meetings permanent;
+
+    # Legacy Node.js Foundation Redirects
     rewrite ^/(en|es|uk)/foundation/?$                            https://foundation.nodejs.org/ permanent;
     rewrite ^/(en|uk)/foundation/case-studies/?$                  https://openjsf.org/projects permanent;
     rewrite ^/(en|uk)/foundation/members/?$                       https://openjsf.org/about/members permanent;
@@ -336,9 +429,11 @@ server {
     rewrite ^/foundation/?$                                       https://openjsf.org/ permanent;
     rewrite ^/foundation/members.html$                            https://openjsf.org/about/members permanent;
 
-    # @todo: check if these links are still needed
-    rewrite ^/static/documents/casestudies/(.*)$                                    https://foundation.nodejs.org/wp-content/uploads/sites/50/2017/09/$1 permanent;
-    rewrite ^/static/documents/minutes/nodejs-foundation-board-meeting-(.*).pdf$    https://github.com/nodejs/board/blob/master/minutes/$1.md permanent;
+    # Rewrites to the case_studies shown below on the foundation.nodejs.org server block
+    rewrite ^/static/documents/casestudies/(.*)$ https://foundation.nodejs.org/wp-content/uploads/sites/50/2017/09/$1 permanent;
+
+    # Rewrites to the legacy Node.js Foundation Board of Directors meeting notes
+    rewrite ^/static/documents/minutes/nodejs-foundation-board-meeting-(.*).pdf$ https://github.com/nodejs/board/blob/master/minutes/$1.md permanent;
 }
 
 server {
@@ -378,13 +473,15 @@ server {
     listen *:443 ssl http2;
     server_name foundation.nodejs.org;
 
+    # these are 1:1 redirects from pages being served on the old foundation.nodejs.org to OpenJS Foundation website
     rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Nasa_FNL.pdf$         https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-NASA.pdf permanent;
     rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Fusion_Final.pdf$     https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-Fusion.pdf permanent;
     rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_Walmart_final-1.pdf$  https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-Walmart.pdf permanent;
     rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CaseStudy_HomeAway.pdf$         https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-HomeAway.pdf permanent;
     rewrite ^/wp-content/uploads/sites/50/2017/09/Node_CapitalOne_FINAL_casestudy.pdf$ https://openjsf.org/wp-content/uploads/sites/84/2020/02/Case_Study-Node.js-CapitalOne.pdf permanent;
 
-    rewrite ^/(.*)$ https://openjsf.org/ permanent;
+    # redirects all remaining links to the OpenJS Foundation website
+    rewrite ^ https://openjsf.org/ permanent;
 }
 
 server {
@@ -392,56 +489,59 @@ server {
     listen *:443 ssl http2;
     server_name blog.nodejs.org;
 
+    # These redirects are used for redirecting the old release versions from the old node.js blog to the current node.js website release blog category
     rewrite ^/\d+/\d+/\d+/(?:node-v(?:ersion-)?|version-)(\d+)[-\.](\d+)[-\.](\d+).*$ https://nodejs.org/en/blog/release/v$1.$2.$3 permanent;
 
-    # @todo: check if these redirects can be done through next.js
-    rewrite ^/2015/05/16/node-leaders-are-building-an-open-foundation/$ https://nodejs.org/en/blog/community/node-leaders-building-open-neutral-foundation permanent;
-    rewrite ^/2015/05/16/the-nodejs-foundation-benefits-all/$ https://nodejs.org/en/blog/community/foundation-benefits-all permanent;
-    rewrite ^/2014/01/17/nodejs-road-ahead/$ https://nodejs.org/en/blog/nodejs-road-ahead permanent;
-    rewrite ^/2013/12/03/bnoordhuis-departure/$ https://nodejs.org/en/blog/uncategorized/bnoordhuis-departure permanent;
-    rewrite ^/2013/11/26/npm-post-mortem/$ https://nodejs.org/en/blog/npm/2013-outage-postmortem permanent;
-    rewrite ^/2013/10/22/cve-2013-4450-http-server-pipeline-flood-dos/$ https://nodejs.org/en/blog/vulnerability/http-server-pipeline-flood-dos permanent;
-    rewrite ^/2015/05/08/transitions/$ https://nodejs.org/en/blog/community/transitions permanent;
-    rewrite ^/2015/05/08/next-chapter/$ https://nodejs.org/en/blog/community/next-chapter permanent;
-    rewrite ^/2013/02/08/peer-dependencies/$ https://nodejs.org/en/blog/npm/peer-dependencies permanent;
-    rewrite ^/2012/12/21/streams2/$ https://nodejs.org/en/blog/feature/streams2 permanent;
-    rewrite ^/2012/09/30/bert-belder-libuv-lxjs-2012/$ https://nodejs.org/en/blog/video/bert-belder-libuv-lxjs-2012 permanent;
-    rewrite ^/2012/05/08/bryan-cantrill-instrumenting-the-real-time-web/$ https://nodejs.org/en/blog/video/bryan-cantrill-instrumenting-the-real-time-web permanent;
+    # These are 1:1 redirects from pages being served on the old blog.nodejs.org to the new node.js website blog
+    rewrite ^/2015/05/16/node-leaders-are-building-an-open-foundation/$                https://nodejs.org/en/blog/community/node-leaders-building-open-neutral-foundation permanent;
+    rewrite ^/2015/05/16/the-nodejs-foundation-benefits-all/$                          https://nodejs.org/en/blog/community/foundation-benefits-all permanent;
+    rewrite ^/2014/01/17/nodejs-road-ahead/$                                           https://nodejs.org/en/blog/nodejs-road-ahead permanent;
+    rewrite ^/2013/12/03/bnoordhuis-departure/$                                        https://nodejs.org/en/blog/uncategorized/bnoordhuis-departure permanent;
+    rewrite ^/2013/11/26/npm-post-mortem/$                                             https://nodejs.org/en/blog/npm/2013-outage-postmortem permanent;
+    rewrite ^/2013/10/22/cve-2013-4450-http-server-pipeline-flood-dos/$                https://nodejs.org/en/blog/vulnerability/http-server-pipeline-flood-dos permanent;
+    rewrite ^/2015/05/08/transitions/$                                                 https://nodejs.org/en/blog/community/transitions permanent;
+    rewrite ^/2015/05/08/next-chapter/$                                                https://nodejs.org/en/blog/community/next-chapter permanent;
+    rewrite ^/2013/02/08/peer-dependencies/$                                           https://nodejs.org/en/blog/npm/peer-dependencies permanent;
+    rewrite ^/2012/12/21/streams2/$                                                    https://nodejs.org/en/blog/feature/streams2 permanent;
+    rewrite ^/2012/09/30/bert-belder-libuv-lxjs-2012/$                                 https://nodejs.org/en/blog/video/bert-belder-libuv-lxjs-2012 permanent;
+    rewrite ^/2012/05/08/bryan-cantrill-instrumenting-the-real-time-web/$              https://nodejs.org/en/blog/video/bryan-cantrill-instrumenting-the-real-time-web permanent;
     rewrite ^/2012/05/07/http-server-security-vulnerability-please-upgrade-to-0-6-17/$ https://nodejs.org/en/blog/vulnerability/http-server-security-vulnerability-please-upgrade-to-0-6-17 permanent;
-    rewrite ^/2012/05/02/multi-server-continuous-deployment-with-fleet/$ https://nodejs.org/en/blog/module/multi-server-continuous-deployment-with-fleet permanent;
-    rewrite ^/2012/04/25/profiling-node-js/$ https://nodejs.org/en/blog/uncategorized/profiling-node-js permanent;
-    rewrite ^/2012/03/28/service-logging-in-json-with-bunyan/$ https://nodejs.org/en/blog/module/service-logging-in-json-with-bunyan permanent;
-    rewrite ^/2012/02/27/managing-node-js-dependencies-with-shrinkwrap/$ https://nodejs.org/en/blog/npm/managing-node-js-dependencies-with-shrinkwrap permanent;
-    rewrite ^/2011/12/15/growing-up/$ https://nodejs.org/en/blog/uncategorized/growing-up permanent;
-    rewrite ^/2011/10/26/version-0-6/$ https://nodejs.org/en/blog/uncategorized/version-0-6 permanent;
-    rewrite ^/2011/10/05/an-easy-way-to-build-scalable-network-programs/$ https://nodejs.org/en/blog/uncategorized/an-easy-way-to-build-scalable-network-programs permanent;
-    rewrite ^/2011/09/23/libuv-status-report/$ https://nodejs.org/en/blog/uncategorized/libuv-status-report permanent;
-    rewrite ^/2011/09/08/ldapjs-a-reprise-of-ldap/$ https://nodejs.org/en/blog/uncategorized/ldapjs-a-reprise-of-ldap permanent;
-    rewrite ^/2011/08/29/some-new-node-projects/$ https://nodejs.org/en/blog/uncategorized/some-new-node-projects permanent;
-    rewrite ^/2011/08/12/the-videos-from-node-meetup/$ https://nodejs.org/en/blog/uncategorized/the-videos-from-node-meetup permanent;
-    rewrite ^/2011/08/03/node-meetup-this-thursday/$ https://nodejs.org/en/blog/uncategorized/node-meetup-this-thursday permanent;
-    rewrite ^/2011/07/11/evolving-the-node-js-brand/$ https://nodejs.org/en/blog/uncategorized/evolving-the-node-js-brand permanent;
-    rewrite ^/2011/06/24/porting-node-to-windows-with-microsoft.+s-help/$ https://nodejs.org/en/blog/uncategorized/porting-node-to-windows-with-microsofts-help permanent;
-    rewrite ^/2011/05/01/npm-1-0-released/$ https://nodejs.org/en/blog/npm/npm-1-0-released permanent;
-    rewrite ^/2011/04/29/trademark/$ https://nodejs.org/en/blog/uncategorized/trademark permanent;
-    rewrite ^/2011/04/28/node-office-hours-cut-short/$ https://nodejs.org/en/blog/uncategorized/node-office-hours-cut-short permanent;
-    rewrite ^/2011/04/07/npm-1-0-link/$ https://nodejs.org/en/blog/npm/npm-1-0-link permanent;
-    rewrite ^/2011/04/05/development-environment/$ https://nodejs.org/en/blog/uncategorized/development-environment permanent;
-    rewrite ^/2014/12/05/listening-to-the-community/$ https://nodejs.org/en/blog/advisory-board/listening-to-the-community permanent;
-    rewrite ^/2014/12/03/advisory-board-update/$ https://nodejs.org/en/blog/advisory-board/advisory-board-update permanent;
-    rewrite ^/2011/03/25/jobs-nodejs-org/$ https://nodejs.org/en/blog/uncategorized/jobs-nodejs-org permanent;
-    rewrite ^/2011/03/24/npm-1-0-global-vs-local-installation/$ https://nodejs.org/en/blog/npm/npm-1-0-global-vs-local-installation permanent;
-    rewrite ^/2011/03/24/office-hours/$ https://nodejs.org/en/blog/uncategorized/office-hours permanent;
-    rewrite ^/2011/03/18/npm-1-0-the-new-ls/$ https://nodejs.org/en/blog/npm/npm-1-0-the-new-ls permanent;
-    rewrite ^/2011/03/18/welcome-to-the-node-blog/$ https://nodejs.org/en/blog/video/welcome-to-the-node-blog permanent;
-    rewrite ^/2014/07/31/v8-memory-corruption-stack-overflow/$ https://nodejs.org/en/blog/vulnerability/v8-memory-corruption-stack-overflow permanent;
-    rewrite ^/2014/07/29/building-nodejs-together/$ https://nodejs.org/en/blog/community/building-nodejs-together permanent;
-    rewrite ^/2014/06/16/openssl-and-breaking-utf-8-change/$ https://nodejs.org/en/blog/vulnerability/openssl-and-utf8 permanent;
-    rewrite ^/2014/06/11/notes-from-the-road/$ https://nodejs.org/en/blog/uncategorized/notes-from-the-road permanent;
+    rewrite ^/2012/05/02/multi-server-continuous-deployment-with-fleet/$               https://nodejs.org/en/blog/module/multi-server-continuous-deployment-with-fleet permanent;
+    rewrite ^/2012/04/25/profiling-node-js/$                                           https://nodejs.org/en/blog/uncategorized/profiling-node-js permanent;
+    rewrite ^/2012/03/28/service-logging-in-json-with-bunyan/$                         https://nodejs.org/en/blog/module/service-logging-in-json-with-bunyan permanent;
+    rewrite ^/2012/02/27/managing-node-js-dependencies-with-shrinkwrap/$               https://nodejs.org/en/blog/npm/managing-node-js-dependencies-with-shrinkwrap permanent;
+    rewrite ^/2011/12/15/growing-up/$                                                  https://nodejs.org/en/blog/uncategorized/growing-up permanent;
+    rewrite ^/2011/10/26/version-0-6/$                                                 https://nodejs.org/en/blog/uncategorized/version-0-6 permanent;
+    rewrite ^/2011/10/05/an-easy-way-to-build-scalable-network-programs/$              https://nodejs.org/en/blog/uncategorized/an-easy-way-to-build-scalable-network-programs permanent;
+    rewrite ^/2011/09/23/libuv-status-report/$                                         https://nodejs.org/en/blog/uncategorized/libuv-status-report permanent;
+    rewrite ^/2011/09/08/ldapjs-a-reprise-of-ldap/$                                    https://nodejs.org/en/blog/uncategorized/ldapjs-a-reprise-of-ldap permanent;
+    rewrite ^/2011/08/29/some-new-node-projects/$                                      https://nodejs.org/en/blog/uncategorized/some-new-node-projects permanent;
+    rewrite ^/2011/08/12/the-videos-from-node-meetup/$                                 https://nodejs.org/en/blog/uncategorized/the-videos-from-node-meetup permanent;
+    rewrite ^/2011/08/03/node-meetup-this-thursday/$                                   https://nodejs.org/en/blog/uncategorized/node-meetup-this-thursday permanent;
+    rewrite ^/2011/07/11/evolving-the-node-js-brand/$                                  https://nodejs.org/en/blog/uncategorized/evolving-the-node-js-brand permanent;
+    rewrite ^/2011/06/24/porting-node-to-windows-with-microsoft.+s-help/$              https://nodejs.org/en/blog/uncategorized/porting-node-to-windows-with-microsofts-help permanent;
+    rewrite ^/2011/05/01/npm-1-0-released/$                                            https://nodejs.org/en/blog/npm/npm-1-0-released permanent;
+    rewrite ^/2011/04/29/trademark/$                                                   https://nodejs.org/en/blog/uncategorized/trademark permanent;
+    rewrite ^/2011/04/28/node-office-hours-cut-short/$                                 https://nodejs.org/en/blog/uncategorized/node-office-hours-cut-short permanent;
+    rewrite ^/2011/04/07/npm-1-0-link/$                                                https://nodejs.org/en/blog/npm/npm-1-0-link permanent;
+    rewrite ^/2011/04/05/development-environment/$                                     https://nodejs.org/en/blog/uncategorized/development-environment permanent;
+    rewrite ^/2014/12/05/listening-to-the-community/$                                  https://nodejs.org/en/blog/advisory-board/listening-to-the-community permanent;
+    rewrite ^/2014/12/03/advisory-board-update/$                                       https://nodejs.org/en/blog/advisory-board/advisory-board-update permanent;
+    rewrite ^/2011/03/25/jobs-nodejs-org/$                                             https://nodejs.org/en/blog/uncategorized/jobs-nodejs-org permanent;
+    rewrite ^/2011/03/24/npm-1-0-global-vs-local-installation/$                        https://nodejs.org/en/blog/npm/npm-1-0-global-vs-local-installation permanent;
+    rewrite ^/2011/03/24/office-hours/$                                                https://nodejs.org/en/blog/uncategorized/office-hours permanent;
+    rewrite ^/2011/03/18/npm-1-0-the-new-ls/$                                          https://nodejs.org/en/blog/npm/npm-1-0-the-new-ls permanent;
+    rewrite ^/2011/03/18/welcome-to-the-node-blog/$                                    https://nodejs.org/en/blog/video/welcome-to-the-node-blog permanent;
+    rewrite ^/2014/07/31/v8-memory-corruption-stack-overflow/$                         https://nodejs.org/en/blog/vulnerability/v8-memory-corruption-stack-overflow permanent;
+    rewrite ^/2014/07/29/building-nodejs-together/$                                    https://nodejs.org/en/blog/community/building-nodejs-together permanent;
+    rewrite ^/2014/06/16/openssl-and-breaking-utf-8-change/$                           https://nodejs.org/en/blog/vulnerability/openssl-and-utf8 permanent;
+    rewrite ^/2014/06/11/notes-from-the-road/$                                         https://nodejs.org/en/blog/uncategorized/notes-from-the-road permanent;
 
+    # Rewrites RSS Feeds from the old blog to the new website
     rewrite ^/(feed/)?release/?$                 https://nodejs.org/en/feed/releases.xml permanent;
     rewrite ^/(feed/)?vulnerability/?$           https://nodejs.org/en/feed/vulnerability.xml permanent;
     rewrite ^/(atom|feed|rss).*$                 https://nodejs.org/en/feed/blog.xml permanent;
 
-    rewrite ^/(.*)$ https://nodejs.org/en/blog/ permanent;
+    # Rewrites all remaining blog pages to the new node.js website blog (it will not carry over the uri
+    rewrite ^ https://nodejs.org/en/blog permanent;
 }
