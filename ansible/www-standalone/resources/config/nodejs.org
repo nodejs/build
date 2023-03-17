@@ -13,16 +13,16 @@ server {
     keepalive_timeout 60;
     server_tokens off;
     log_not_found off;
-    
+
     gzip on;
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
-    
+
     open_file_cache max=10000 inactive=300s;
     open_file_cache_valid 120s;
     open_file_cache_min_uses 2;
     open_file_cache_errors off;
-    
+
     root /home/www/nodejs;
     default_type text/plain;
     index index.html;
@@ -31,15 +31,13 @@ server {
     location ~ ^/(?!(dist/|dist$|\.json$)) {
         rewrite ^ https://$host$uri permanent;
     }
-    
+
     location = /404.html {
         add_header Cache-Control "private, no-store, max-age=0" always;
     }
-    
+
     # website requests will never be served through here
     location / {
-        error_page 404 /404.html;
-
         try_files $uri $uri/ =404;
 
         location ~ \.json$ {
@@ -77,25 +75,25 @@ server {
     gzip on;
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
-    
+
     open_file_cache max=100000 inactive=300s;
     open_file_cache_valid 120s;
     open_file_cache_min_uses 2;
     open_file_cache_errors off;
-    
+
     set $lang en;
 
     root /home/www/nodejs;
     default_type text/plain;
     index index.html;
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
-    
+
     location = / {
         rewrite ^ /en break;
     }
 
     location / {
-        error_page 404 @localized_404;
+        error_page 404 = @localized_404;
 
         rewrite ^/(.*)/$ /$1 permanent;
 
@@ -105,7 +103,7 @@ server {
             add_header access-control-allow-origin *;
         }
     }
-    
+
     # specific rule for handling next.js requests without overrides
     location ^~ /static {
         access_log off;
@@ -121,7 +119,7 @@ server {
 
         try_files $uri =404;
     }
-    
+
     location ^~ /dist {
         sendfile on;
         sendfile_max_chunk 1m;
@@ -165,7 +163,7 @@ server {
     }
 
     location ^~ /api {
-        error_page 404 @localized_404;
+        error_page 404 = @localized_404;
 
         alias /home/dist/nodejs/docs/latest/api;
         default_type text/plain;
@@ -176,7 +174,7 @@ server {
 
         try_files $uri =404;
     }
-    
+
     location ^~ /documentation {
         rewrite ^/documentation/api(.*)$ /api$1 redirect;
     }
@@ -186,12 +184,12 @@ server {
         autoindex on;
         default_type text/plain;
     }
-    
+
     location = /github-webhook.log {
         alias /home/nodejs/github-webhook.log;
         default_type text/plain;
     }
-    
+
     location @english_fallback {
         # Store the original language of the request
         # We'll use this for the 404 in the try_files in @localized_404
@@ -199,7 +197,7 @@ server {
             set $lang $1;
         }
 
-        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
+        rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/(.*)$ /en/$2 last;
     }
 
     location @localized_404 {
@@ -207,7 +205,7 @@ server {
 
         # If this was a rewritten i18n request from @english_fallback, use the localized 404
         # Otherwise, fallback to the English 404 file
-        try_files /$lang/404.html /en/404.html =404;
+        rewrite ^ /$lang/404.html break;
     } 
 
     rewrite ^/.well-known/security.txt$                           https://$server_name/security.txt last;
@@ -215,7 +213,7 @@ server {
     rewrite ^/about/security/?$                                   https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
     rewrite ^/contribute/?$                                       https://$server_name/en/get-involved permanent;
     rewrite ^/contribute/accepting_contributions.html$            https://github.com/nodejs/dev-policy permanent;
-    
+
     # @todo: use next.js to do these rewrites
     # it might require special rewriting to let next.js handle the rewrites instead of nginx
     rewrite ^/contribute/becoming_collaborator.html$              https://$server_name/en/get-involved permanent;
