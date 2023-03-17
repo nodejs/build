@@ -28,6 +28,8 @@ server {
     index index.html;
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
 
+    error_page 404 = /404.html;
+
     location ~ ^/(?!(dist/|dist$|\.json$)) {
         rewrite ^ https://$host$uri permanent;
     }
@@ -87,6 +89,8 @@ server {
     default_type text/plain;
     index index.html;
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
+
+    error_page 404 = @localized_404;
 
     location = / {
         rewrite ^ /en break;
@@ -205,7 +209,7 @@ server {
 
         # If this was a rewritten i18n request from @english_fallback, use the localized 404
         # Otherwise, fallback to the English 404 file
-        rewrite ^ /$lang/404.html break;
+        try_files /$lang/404.html /en/404.html =404;
     } 
 
     rewrite ^/.well-known/security.txt$                           https://$server_name/security.txt last;
