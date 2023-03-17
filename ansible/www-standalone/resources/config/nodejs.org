@@ -56,8 +56,6 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
-        
-        try_files $uri $uri/ =404;
     }
 }
 
@@ -135,12 +133,6 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
-        
-        try_files $uri $uri/ =404;
-    }
-
-    location ^~ /documentation {
-        rewrite ^/documentation/api(.*)$ /api$1 redirect;
     }
 
     location ^~ /download {
@@ -158,8 +150,6 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
-
-        try_files $uri $uri/ =404;
     }
 
     location ^~ /docs {
@@ -170,8 +160,6 @@ server {
         location ~ \.json$ {
             add_header access-control-allow-origin *;
         }
-
-        try_files $uri $uri/ =404;
     }
 
     location ^~ /api {
@@ -184,12 +172,14 @@ server {
 
         try_files $uri =404;
     }
+    
+    location ^~ /documentation {
+        rewrite ^/documentation/api(.*)$ /api$1 redirect;
+    }
 
     location ^~ /metrics {
         alias /home/dist/metrics;
         default_type text/plain;
-        
-        try_files $uri =404;
     }
     
     location = /github-webhook.log {
