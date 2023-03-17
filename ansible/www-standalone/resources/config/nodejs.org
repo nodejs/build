@@ -97,8 +97,6 @@ server {
     }
 
     location / {
-        error_page 404 = @localized_404;
-
         rewrite ^/(.*)/$ /$1 permanent;
 
         try_files $uri $uri.html @english_fallback;
@@ -167,8 +165,6 @@ server {
     }
 
     location ^~ /api {
-        error_page 404 = @localized_404;
-
         alias /home/dist/nodejs/docs/latest/api;
         default_type text/plain;
 
