@@ -14,15 +14,15 @@ server {
     server_tokens off;
     log_not_found off;
 
-    # We gzip the responses that NGINX does for the following mime-types. We don't use gzip_static as otherwise it would
-    # request a pre-gzip version of each file on the file system, which would hammer the file system with requqests.
+    # We on-the-fly gzip the responses that NGINX does for the following mime-types
+    # We don't use gzip_static as that looks for pre-gzipped files on disk for each request, which we don't have
     gzip on;
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
 
-    # These directives are used to prevent our server to continuously attempt to open the same requested files on the file_system
-    # W use this so that file_system accesses get cached during this period of time.
-    # For specific Location directives, such as /dist we also cache the 404's and any other Server Error
+    # These directives prevent our server from continuously attempting to open the same requested files on disk
+    # Open file descriptors and basic metadata for each file requested gets cached
+    # For specific location blocks, such as /dist, we also cache file not found (404) and other disk errors
     open_file_cache max=100000 inactive=300s;
     open_file_cache_valid 120s;
     open_file_cache_min_uses 2;
@@ -32,19 +32,19 @@ server {
     default_type text/plain;
     index index.html;
 
-    # We set a default cache of 1 hour and a max age of 4 hours
+    # We set a default cache for browsers of 1 hour, and ask Cloudflare to cache for 4 hours
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
 
     error_page 404 /404.html;
 
-    # For the unencrypted Node.js server, if a request is not done within the /dist folder
-    # We basically rewrite/redirect the request to the https:// schema/protocol
+    # For the unencrypted Node.js server, we redirect any request to the HTTPS site
+    # Unless it is within /dist or is for a JSON file
     location ~ ^/(?!(dist/|dist$|\.json$)) {
         rewrite ^ https://$host$uri permanent;
     }
 
-    # This should handle any other possible request done to the unencrypted server
-    # Even tho as seen on the previous Location block for ~ we redirect all non /dist requests to https://
+    # This handles any other possible requests to the unencrypted server
+    # With the location block above, and the one below, this should just be JSON files
     location / {
         try_files $uri $uri/ =404;
 
@@ -53,14 +53,13 @@ server {
         }
     }
 
-    # This Location directive redirects to the list of all Node.js binaries available
-    # of all existing Node.js versions
-    # We use `open_file_cache_errors` that allows the NGINX file cache to also cache that
-    # certain files gave 404's, so that it doesn't keep retrying to open this file that doesn't exist
-    # This policy will still follow the expiry time of the file_cache. It is used mostly to avoid our file system
-    # to be hammered by concurrent requests and mitigate situations where the fs stops fulfiling requests
+    # This location directive exposes the dist directory, including index listings
+    # This provides access to all Node.js binaries available for all Node.js versions
+    # We use `open_file_cache_errors` here to allow NGINX to also cache metadata for missing files on disk
+    # This still follows the expiry time of the open_file_cache. It is used mostly to avoid our file system
+    # being hammered by concurrent requests and mitigate situations where the fs stops fulfiling requests
     # because of maximum concurrent sockets being open.
-    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
+    # We use ^~ to tell NGINX to not process any other location directive or rewrite after this match
     location ^~ /dist {
         alias /home/dist/nodejs/release;
         autoindex on;
@@ -73,9 +72,9 @@ server {
     }
 
     location = /404.html {
-        # We disable caching of 404 pages as we want to avoid CloudFlare accidentally thinking that a 404 is permanent
-        # many cases 404 pages happen due to the server reaching maximum concurrent file system open() requests
-        # disabling cache allows CloudFlare to re-evaluate the same $uri once our server recovers and then properly cache the page
+        # We disable caching of 404 pages as we always want Cloudflare to check if the file now exists
+        # Some 404s may be caused by the server reaching maximum concurrent file system open() requests
+        # Disabling cache allows Cloudflare to re-evaluate the same $uri once our server recovers and then properly cache it
         add_header Cache-Control "private, no-store, max-age=0" always;
     }
 }
@@ -95,15 +94,15 @@ server {
     access_log /var/log/nginx/nodejs/nodejs.org-access.log nodejs;
     error_log /var/log/nginx/nodejs/nodejs.org-error.log;
 
-    # We gzip the responses that NGINX does for the following mime-types. We don't use gzip_static as otherwise it would
-    # request a pre-gzip version of each file on the file system, which would hammer the file system with requqests.
+    # We on-the-fly gzip the responses that NGINX does for the following mime-types
+    # We don't use gzip_static as that looks for pre-gzipped files on disk for each request, which we don't have
     gzip on;
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
 
-    # These directives are used to prevent our server to continuously attempt to open the same requested files on the file_system
-    # W use this so that file_system accesses get cached during this period of time.
-    # For specific Location directives, such as /dist we also cache the 404's and any other Server Error
+    # These directives prevent our server from continuously attempting to open the same requested files on disk
+    # Open file descriptors and basic metadata for each file requested gets cached
+    # For specific location blocks, such as /dist, we also cache file not found (404) and other disk errors
     open_file_cache max=100000 inactive=300s;
     open_file_cache_valid 120s;
     open_file_cache_min_uses 2;
@@ -116,7 +115,7 @@ server {
     default_type text/plain;
     index index.html;
     
-    # We set a default cache of 1 hour and a max age of 4 hours
+    # We set a default cache for browsers of 1 hour, and ask Cloudflare to cache for 4 hours
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
 
     # Sets a custom 404 error page for the whole Server region
@@ -179,14 +178,13 @@ server {
         open_file_cache_errors on;
     }
 
-    # This Location directive redirects to the list of all Node.js binaries available
-    # of all existing Node.js versions
-    # We use `open_file_cache_errors` that allows the NGINX file cache to also cache that
-    # certain files gave 404's, so that it doesn't keep retrying to open this file that doesn't exist
-    # This policy will still follow the expiry time of the file_cache. It is used mostly to avoid our file system
-    # to be hammered by concurrent requests and mitigate situations where the fs stops fulfiling requests
+    # This location directive exposes the dist directory, including index listings
+    # This provides access to all Node.js binaries available for all Node.js versions
+    # We use `open_file_cache_errors` here to allow NGINX to also cache metadata for missing files on disk
+    # This still follows the expiry time of the open_file_cache. It is used mostly to avoid our file system
+    # being hammered by concurrent requests and mitigate situations where the fs stops fulfiling requests
     # because of maximum concurrent sockets being open.
-    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
+    # We use ^~ to tell NGINX to not process any other location directive or rewrite after this match
     location ^~ /dist {
         sendfile on;
         sendfile_max_chunk 1m;
@@ -205,13 +203,12 @@ server {
         }
     }
 
-    # This Location directive redirects to the overall available Downloads on this Server
-    # We use `open_file_cache_errors` that allows the NGINX file cache to also cache that
-    # certain files gave 404's, so that it doesn't keep retrying to open this file that doesn't exist
-    # This policy will still follow the expiry time of the file_cache. It is used mostly to avoid our file system
-    # to be hammered by concurrent requests and mitigate situations where the fs stops fulfiling requests
+    # This location directive exposes the download directory, including index listings
+    # We use `open_file_cache_errors` here to allow NGINX to also cache metadata for missing files on disk
+    # This still follows the expiry time of the open_file_cache. It is used mostly to avoid our file system
+    # being hammered by concurrent requests and mitigate situations where the fs stops fulfiling requests
     # because of maximum concurrent sockets being open.
-    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
+    # We use ^~ to tell NGINX to not process any other location directive or rewrite after this match
     location ^~ /download {
         sendfile on;
         sendfile_max_chunk 1m;
@@ -271,8 +268,10 @@ server {
         default_type text/plain;
     }
 
-    # Store the original language of the request
-    # We'll use this for the 404 in the try_files in @localized_404
+    # When a website 404 occurs, attempt to load the English version of the page
+    # if the request was for a localised page.
+    # Also, store the original language of the request if it was localised
+    # We'll use this language for the 404 in the try_files in @localized_404
     location @english_fallback {
         # @TODO: Handle Localization Fallback through Next.js SSR as this is a hacky approach and requires
         # continuous maintenance of the supported languages
@@ -283,18 +282,19 @@ server {
         rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/(.*)$ /en/$2;
     }
 
-    # This Location directive is used for handling all 404's requests coming to this Server
-    # by default if the request doesn't come from a /two-letter-code/ localized page (extracted from the @english_fallback Location)
-    # it will then fallback to $lang as being "en" as defined numerous lines above
+    # This location directive handles all 404 responses for the server
+    # If the request was a localised website page, use the requested language
+    # as set by the @english_fallback location block
+    # Otherwise, this will fallback to $lang being "en" as defined numerous lines above
     location @localized_404 {
-        # We disable caching of 404 pages as we want to avoid CloudFlare accidentally thinking that a 404 is permanent
-        # many cases 404 pages happen due to the server reaching maximum concurrent file system open() requests
-        # disabling cache allows CloudFlare to re-evaluate the same $uri once our server recovers and then properly cache the page
+        # We disable caching of 404 pages as we always want Cloudflare to check if the file now exists
+        # Some 404s may be caused by the server reaching maximum concurrent file system open() requests
+        # Disabling cache allows Cloudflare to re-evaluate the same $uri once our server recovers and then properly cache it
         add_header Cache-Control "private, no-store, max-age=0" always;        
 
         # If this was a rewritten i18n request from @english_fallback, use the localized 404
-        # if there is no 404 page for that Localized page we will fallback to the English Website 404
-        # as last resort we fallback to NGINX's default 404 on worst scenario. Notice that this result as a [crit] and should never happen
+        # If there is no 404 page for that locale, fallback to the English 404
+        # As a last resort, fallback to NGINX's default 404. This should never happen, and will emit a [crit]
         try_files /$lang/404.html /en/404.html =404;
     }
 
@@ -305,10 +305,10 @@ server {
         access_log off;
     }
 
-    # This Location directive is used as the health-check/load-balancer endpoint for CloudFlare
-    # it does requests here from its different colos every 60s. We decided to use a direct empty response here
-    # to avoid having the file system being requested for every time CloudFlare does the health_check
-    # We also disabled access logs as we honestly don't need these access_logs
+    # This location directive is used as the health-check/load-balancer endpoint for Cloudflare
+    # Each Cloudflare colo sends a request here every 60s to check we're up
+    # We use a direct response from NGINX to avoid file system load for these requests
+    # We also disabled access logs here to avoid noise caused by the continuous checks
     location = /traffic-manager {
         access_log off;
         return 204;
