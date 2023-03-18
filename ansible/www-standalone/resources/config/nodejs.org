@@ -290,7 +290,7 @@ server {
         # We disable caching of 404 pages as we always want Cloudflare to check if the file now exists
         # Some 404s may be caused by the server reaching maximum concurrent file system open() requests
         # Disabling cache allows Cloudflare to re-evaluate the same $uri once our server recovers and then properly cache it
-        add_header Cache-Control "private, no-store, max-age=0" always;        
+        add_header Cache-Control "private, no-store, max-age=0" always;
 
         # If this was a rewritten i18n request from @english_fallback, use the localized 404
         # If there is no 404 page for that locale, fallback to the English 404
@@ -300,6 +300,8 @@ server {
 
     # This Location directive is used to expose our Website GitHub WebHook Logs
     location = /github-webhook.log {
+        add_header Cache-Control "private, no-store, max-age=0" always;
+
         alias /home/nodejs/github-webhook.log;
         default_type text/plain;
         access_log off;
@@ -310,6 +312,8 @@ server {
     # We use a direct response from NGINX to avoid file system load for these requests
     # We also disabled access logs here to avoid noise caused by the continuous checks
     location = /traffic-manager {
+        add_header Cache-Control "private, no-store, max-age=0" always;
+
         access_log off;
         return 204;
     }
@@ -318,116 +322,115 @@ server {
     rewrite ^/.well-known/security.txt$ /security.txt last;
 
     # Numerous Legacy Pages to matching current Pages
-    rewrite ^/about/security/?$                                   https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
-    rewrite ^/contribute/?$                                       https://$server_name/en/get-involved permanent;
-    rewrite ^/contribute/accepting_contributions.html$            https://github.com/nodejs/dev-policy permanent;
-    rewrite ^/contribute/becoming_collaborator.html$              https://$server_name/en/get-involved permanent;
-    rewrite ^/contribute/code_contributions/?$                    https://$server_name/en/get-involved permanent;
-    rewrite ^/contribute/code_contributions/workflow.html$        https://$server_name/en/get-involved permanent;
-    rewrite ^/documentation(.*)$                                  https://$server_name/en/docs permanent;
-    rewrite ^/foundation/blog.html$                               https://$server_name/en/blog permanent;
-    rewrite ^/images/foundation-visual-guidelines.pdf$            https://$server_name/static/documents/foundation-visual-guidelines.pdf permanent;
-    rewrite ^/images/logos/js-black(.*)$                          https://$server_name/static/images/logos/js-black$1 permanent;
-    rewrite ^/images/logos/nodejs-(.*)$                           https://$server_name/static/images/logos/nodejs-$1 permanent;
-    rewrite ^/images/node-foundation-by-laws.pdf$                 https://$server_name/static/documents/node-foundation-by-laws.pdf permanent;
-    rewrite ^/images/.*trademark-policy.pdf$                      https://$server_name/static/documents/trademark-policy.pdf permanent;
-    rewrite ^/video(.*)$                                          https://$server_name/static/video$1 permanent;
-    rewrite ^/changelog.html$                                     https://github.com/nodejs/node/blob/HEAD/CHANGELOG.md permanent;
-    rewrite ^/api.html$                                           https://$server_name/api/ permanent;
-    rewrite ^/index.html$                                         https://$server_name/en permanent;
-    rewrite ^/(20\d\d/\d\d/\d\d/.*)$                              https://nodejs.org/en/blog/$1 permanent;
-    rewrite ^/about/?$                                            https://$server_name/en/about permanent;
-    rewrite ^/about/releases/?$                                   https://github.com/nodejs/release#release-schedule permanent;
-    rewrite ^/en/about/releases/?$                                https://github.com/nodejs/release#release-schedule permanent;
-    rewrite ^/about/resources/?$                                  https://$server_name/en/about/resources permanent;
-    rewrite ^/about/security/?$                                   https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
-    rewrite ^/about/trademark/?$                                  https://$server_name/en/about/trademark permanent;
-    rewrite ^/blog/?$                                             https://$server_name/en/blog permanent;
-    rewrite ^/community/?$                                        https://$server_name/en/get-involved permanent;
-    rewrite ^/en/security                                         https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
-    rewrite ^/en/docs/inspector/?$                                https://$server_name/en/docs/guides/debugging-getting-started/ permanent;
+    rewrite ^/about/security/?$                            https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
+    rewrite ^/contribute/?$                                /en/get-involved permanent;
+    rewrite ^/contribute/accepting_contributions.html$     https://github.com/nodejs/dev-policy permanent;
+    rewrite ^/contribute/becoming_collaborator.html$       /en/get-involved permanent;
+    rewrite ^/contribute/code_contributions/?$             /en/get-involved permanent;
+    rewrite ^/contribute/code_contributions/workflow.html$ /en/get-involved permanent;
+    rewrite ^/documentation(.*)$                           /en/docs permanent;
+    rewrite ^/foundation/blog.html$                        /en/blog permanent;
+    rewrite ^/images/foundation-visual-guidelines.pdf$     /static/documents/foundation-visual-guidelines.pdf permanent;
+    rewrite ^/images/logos/js-black(.*)$                   /static/images/logos/js-black$1 permanent;
+    rewrite ^/images/logos/nodejs-(.*)$                    /static/images/logos/nodejs-$1 permanent;
+    rewrite ^/images/node-foundation-by-laws.pdf$          /static/documents/node-foundation-by-laws.pdf permanent;
+    rewrite ^/images/.*trademark-policy.pdf$               /static/documents/trademark-policy.pdf permanent;
+    rewrite ^/video(.*)$                                   /static/video$1 permanent;
+    rewrite ^/changelog.html$                              https://github.com/nodejs/node/blob/HEAD/CHANGELOG.md permanent;
+    rewrite ^/api.html$                                    /api/ permanent;
+    rewrite ^/index.html$                                  /en permanent;
+    rewrite ^/(20\d\d/\d\d/\d\d/.*)$                       /en/blog/$1 permanent;
+    rewrite ^/about/?$                                     /en/about permanent;
+    rewrite ^/about/releases/?$                            https://github.com/nodejs/release#release-schedule permanent;
+    rewrite ^/en/about/releases/?$                         https://github.com/nodejs/release#release-schedule permanent;
+    rewrite ^/about/resources/?$                           /en/about/resources permanent;
+    rewrite ^/about/security/?$                            https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
+    rewrite ^/about/trademark/?$                           /en/about/trademark permanent;
+    rewrite ^/blog/?$                                      /en/blog permanent;
+    rewrite ^/community/?$                                 /en/get-involved permanent;
+    rewrite ^/en/security                                  https://github.com/nodejs/node/blob/HEAD/SECURITY.md#security permanent;
+    rewrite ^/en/docs/inspector/?$                         /en/docs/guides/debugging-getting-started permanent;
 
     # RSS Feeds
-    rewrite ^/((atom|feed|rss)(/|\.xml)|(feed))$                  https://$server_name/en/feed/blog.xml permanent;
-    rewrite ^/feed/release/?$                                     https://$server_name/en/feed/releases.xml permanent;
-    rewrite ^/feed/vulnerability/?$                               https://$server_name/en/feed/vulnerability.xml permanent;
+    rewrite ^/((atom|feed|rss)(/|\.xml)|(feed))$ /en/feed/blog.xml permanent;
+    rewrite ^/feed/release/?$                    /en/feed/releases.xml permanent;
+    rewrite ^/feed/vulnerability/?$              /en/feed/vulnerability.xml permanent;
 
     # Legacy Assets
-    rewrite ^/layouts/css/styles\.css$                            https://$server_name/static/css/styles.css permanent;
-    rewrite ^/(static/)?favicon\.ico$                             https://$server_name/static/images/favicons/favicon.png permanent;
-    rewrite ^/(static/)?favicon\.png$                             https://$server_name/static/images/favicons/favicon.png permanent;
-    rewrite ^/(static/)?apple-touch-icon.*\.png$                  https://$server_name/static/images/favicons/favicon.png permanent;
-    rewrite ^/trademark-policy.pdf$                               https://$server_name/static/documents/trademark-policy.pdf permanent;
+    rewrite ^/layouts/css/styles\.css$           /static/css/styles.css permanent;
+    rewrite ^/(static/)?favicon\.ico$            /static/images/favicons/favicon.png permanent;
+    rewrite ^/(static/)?favicon\.png$            /static/images/favicons/favicon.png permanent;
+    rewrite ^/(static/)?apple-touch-icon.*\.png$ /static/images/favicons/favicon.png permanent;
+    rewrite ^/trademark-policy.pdf$              /static/documents/trademark-policy.pdf permanent;
 
     # Legacy Logos
-    rewrite ^/logos/                                              https://$server_name/static/images/logos/ permanent;
-    rewrite ^/logos/monitor.png                                   https://$server_name/static/images/logos/monitor.png permanent;
-    rewrite ^/logos/nodejs(.*)$                                   https://$server_name/static/images/logos/nodejs$1 permanent;
+    rewrite ^/logos/            /static/images/logos/ permanent;
+    rewrite ^/logos/monitor.png /static/images/logos/monitor.png permanent;
+    rewrite ^/logos/nodejs(.*)$ /static/images/logos/nodejs$1 permanent;
 
     # Legacy Node.js v0.12 Website Rewrites
-    rewrite ^/lfcollab.css$                                       https://$server_name/static/legacy/lfcollab.css permanent;
-    rewrite ^/pipe.css$                                           https://$server_name/static/legacy/pipe.css permanent;
-    rewrite ^/sh_javascript.min.js$                               https://$server_name/static/legacy/sh_javascript.min.js permanent;
-    rewrite ^/sh_main.js$                                         https://$server_name/static/legacy/sh_main.js permanent;
-    rewrite ^/sh_vim-dark.css$                                    https://$server_name/static/legacy/sh_vim-dark.css permanent;
-    rewrite ^/images/anchor.png                                   https://$server_name/static/legacy/images/anchor.png permanent;
-    rewrite ^/images/close-downloads.png                          https://$server_name/static/legacy/images/close-downloads.png permanent;
-    rewrite ^/images/community-icons.png                          https://$server_name/static/legacy/images/community-icons.png permanent;
-    rewrite ^/images/download-logo.png                            https://$server_name/static/legacy/images/download-logo.png permanent;
-    rewrite ^/images/ebay-logo.png                                https://$server_name/static/legacy/images/ebay-logo.png permanent;
-    rewrite ^/images/footer-logo-alt.png                          https://$server_name/static/legacy/images/footer-logo-alt.png permanent;
-    rewrite ^/images/footer-logo.png                              https://$server_name/static/legacy/images/footer-logo.png permanent;
-    rewrite ^/images/forkme.png                                   https://$server_name/static/legacy/images/forkme.png permanent;
-    rewrite ^/images/home-icons.png                               https://$server_name/static/legacy/images/home-icons.png permanent;
-    rewrite ^/images/icons-interior.png                           https://$server_name/static/legacy/images/icons-interior.png permanent;
-    rewrite ^/images/icons.png                                    https://$server_name/static/legacy/images/icons.png permanent;
-    rewrite ^/images/joyent-logo_orange_nodeorg-01.png            https://$server_name/static/legacy/images/joyent-logo_orange_nodeorg-01.png permanent;
-    rewrite ^/images/linkedin-logo.png                            https://$server_name/static/legacy/images/linkedin-logo.png permanent;
-    rewrite ^/images/logo-light.png                               https://$server_name/static/legacy/images/logo-light.png permanent;
-    rewrite ^/images/logo.png                                     https://$server_name/static/legacy/images/logo.png permanent;
-    rewrite ^/images/microsoft-logo.png                           https://$server_name/static/legacy/images/microsoft-logo.png permanent;
-    rewrite ^/images/not-invented-here.png                        https://$server_name/static/legacy/images/not-invented-here.png permanent;
-    rewrite ^/images/ryan-speaker.jpg                             https://$server_name/static/legacy/images/ryan-speaker.jpg permanent;
-    rewrite ^/images/sponsored.png                                https://$server_name/static/legacy/images/sponsored.png permanent;
-    rewrite ^/images/stripe.png$                                  https://$server_name/static/legacy/images/stripe.png permanent;
-    rewrite ^/images/twitter-bird.png                             https://$server_name/static/legacy/images/twitter-bird.png permanent;
-    rewrite ^/images/walmart-thumb.jpg$                           https://$server_name/static/legacy/images/walmart-thumb.jpg permanent;
-    rewrite ^/images/yahoo-logo.png                               https://$server_name/static/legacy/images/yahoo-logo.png permanent;
-    rewrite ^/images/(.*)                                         https://$server_name/static/images/$1 permanent;
+    rewrite ^/lfcollab.css$                            /static/legacy/lfcollab.css permanent;
+    rewrite ^/pipe.css$                                /static/legacy/pipe.css permanent;
+    rewrite ^/sh_javascript.min.js$                    /static/legacy/sh_javascript.min.js permanent;
+    rewrite ^/sh_main.js$                              /static/legacy/sh_main.js permanent;
+    rewrite ^/sh_vim-dark.css$                         /static/legacy/sh_vim-dark.css permanent;
+    rewrite ^/images/anchor.png                        /static/legacy/images/anchor.png permanent;
+    rewrite ^/images/close-downloads.png               /static/legacy/images/close-downloads.png permanent;
+    rewrite ^/images/community-icons.png               /static/legacy/images/community-icons.png permanent;
+    rewrite ^/images/download-logo.png                 /static/legacy/images/download-logo.png permanent;
+    rewrite ^/images/ebay-logo.png                     /static/legacy/images/ebay-logo.png permanent;
+    rewrite ^/images/footer-logo-alt.png               /static/legacy/images/footer-logo-alt.png permanent;
+    rewrite ^/images/footer-logo.png                   /static/legacy/images/footer-logo.png permanent;
+    rewrite ^/images/forkme.png                        /static/legacy/images/forkme.png permanent;
+    rewrite ^/images/home-icons.png                    /static/legacy/images/home-icons.png permanent;
+    rewrite ^/images/icons-interior.png                /static/legacy/images/icons-interior.png permanent;
+    rewrite ^/images/icons.png                         /static/legacy/images/icons.png permanent;
+    rewrite ^/images/joyent-logo_orange_nodeorg-01.png /static/legacy/images/joyent-logo_orange_nodeorg-01.png permanent;
+    rewrite ^/images/linkedin-logo.png                 /static/legacy/images/linkedin-logo.png permanent;
+    rewrite ^/images/logo-light.png                    /static/legacy/images/logo-light.png permanent;
+    rewrite ^/images/logo.png                          /static/legacy/images/logo.png permanent;
+    rewrite ^/images/microsoft-logo.png                /static/legacy/images/microsoft-logo.png permanent;
+    rewrite ^/images/not-invented-here.png             /static/legacy/images/not-invented-here.png permanent;
+    rewrite ^/images/ryan-speaker.jpg                  /static/legacy/images/ryan-speaker.jpg permanent;
+    rewrite ^/images/sponsored.png                     /static/legacy/images/sponsored.png permanent;
+    rewrite ^/images/stripe.png$                       /static/legacy/images/stripe.png permanent;
+    rewrite ^/images/twitter-bird.png                  /static/legacy/images/twitter-bird.png permanent;
+    rewrite ^/images/walmart-thumb.jpg$                /static/legacy/images/walmart-thumb.jpg permanent;
+    rewrite ^/images/yahoo-logo.png                    /static/legacy/images/yahoo-logo.png permanent;
+    rewrite ^/images/(.*)                              /static/images/$1 permanent;
 
     # Calendar Rewrites
-    rewrite ^/calendar$                                           https://calendar.google.com/calendar/embed?src=nodejs.org_nr77ama8p7d7f9ajrpnu506c98%40group.calendar.google.com permanent;
-    rewrite ^/calendar.ics$                                       https://calendar.google.com/calendar/ical/nodejs.org_nr77ama8p7d7f9ajrpnu506c98%40group.calendar.google.com/public/basic.ics permanent;
+    rewrite ^/calendar$     https://calendar.google.com/calendar/embed?src=nodejs.org_nr77ama8p7d7f9ajrpnu506c98%40group.calendar.google.com permanent;
+    rewrite ^/calendar.ics$ https://calendar.google.com/calendar/ical/nodejs.org_nr77ama8p7d7f9ajrpnu506c98%40group.calendar.google.com/public/basic.ics permanent;
 
     # Rename 'Stable' release to 'Current'
-    rewrite ^/(.*)/download/stable$                               https://$server_name/$1/download/current permanent;
+    rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/download/stable$ /$1/download/current permanent;
 
     # Fix underscores vs. dashes
-    rewrite ^/en/docs/guides/debugging_getting_started/           https://$server_name/en/docs/guides/debugging-getting-started/ permanent;
-    rewrite ^/ko/docs/guides/debugging_getting_started/           https://$server_name/ko/docs/guides/debugging-getting-started/ permanent;
+    rewrite ^/(ar|be|ca|de|es|fa|fr|gl|id|it|ja|ka|ko|nl|pt-br|ro|ru|tr|uk|zh-cn|zh-tw)/docs/guides/debugging_getting_started/ /$1/docs/guides/debugging-getting-started permanent;
 
     # Fix borked process.release in 8.1.1
-    rewrite ^/download/v8.1.1/node-v8.1.1-headers.tar.gz$         https://$server_name/download/release/v8.1.1/node-v8.1.1-headers.tar.gz permanent;
-    rewrite ^/download/v8.1.1/SHASUMS256.txt$                     https://$server_name/download/release/v8.1.1/SHASUMS256.txt permanent;
+    rewrite ^/download/v8.1.1/node-v8.1.1-headers.tar.gz$ /download/release/v8.1.1/node-v8.1.1-headers.tar.gz permanent;
+    rewrite ^/download/v8.1.1/SHASUMS256.txt$             /download/release/v8.1.1/SHASUMS256.txt permanent;
 
     # Redirects to the TSC repository
-    rewrite ^/advisory-board                                      https://github.com/nodejs/TSC permanent;
-    rewrite ^/about/advisory-board                                https://github.com/nodejs/TSC permanent;
-    rewrite ^/about/organization/?$                               https://github.com/nodejs/TSC permanent;
-    rewrite ^/about/organization/tsc-meetings                     https://github.com/nodejs/TSC/tree/HEAD/meetings permanent;
+    rewrite ^/advisory-board                  https://github.com/nodejs/TSC permanent;
+    rewrite ^/about/advisory-board            https://github.com/nodejs/TSC permanent;
+    rewrite ^/about/organization/?$           https://github.com/nodejs/TSC permanent;
+    rewrite ^/about/organization/tsc-meetings https://github.com/nodejs/TSC/tree/HEAD/meetings permanent;
 
     # Legacy Node.js Foundation Redirects
-    rewrite ^/(en|es|uk)/foundation/?$                            https://foundation.nodejs.org/ permanent;
-    rewrite ^/(en|uk)/foundation/case-studies/?$                  https://openjsf.org/projects permanent;
-    rewrite ^/(en|uk)/foundation/members/?$                       https://openjsf.org/about/members permanent;
-    rewrite ^/(en|uk)/foundation/board/?$                         https://openjsf.org/about/governance permanent;
-    rewrite ^/(en|uk)/foundation/tsc/?$                           https://github.com/nodejs/TSC permanent;
-    rewrite ^/(en|uk)/foundation/certification/?$                 https://openjsf.org/certification permanent;
-    rewrite ^/(en|uk)/foundation/in-the-news/?$                   https://openjsf.org permanent;
-    rewrite ^/(en|uk)/foundation/announcements/?$                 https://openjsf.org/blog permanent;
-    rewrite ^/(en|uk)/foundation/education/?$                     https://openjsf.org/certification permanent;
-    rewrite ^/foundation/?$                                       https://openjsf.org/ permanent;
-    rewrite ^/foundation/members.html$                            https://openjsf.org/about/members permanent;
+    rewrite ^/(en|es|uk)/foundation/?$            https://foundation.nodejs.org/ permanent;
+    rewrite ^/(en|uk)/foundation/case-studies/?$  https://openjsf.org/projects permanent;
+    rewrite ^/(en|uk)/foundation/members/?$       https://openjsf.org/about/members permanent;
+    rewrite ^/(en|uk)/foundation/board/?$         https://openjsf.org/about/governance permanent;
+    rewrite ^/(en|uk)/foundation/tsc/?$           https://github.com/nodejs/TSC permanent;
+    rewrite ^/(en|uk)/foundation/certification/?$ https://openjsf.org/certification permanent;
+    rewrite ^/(en|uk)/foundation/in-the-news/?$   https://openjsf.org permanent;
+    rewrite ^/(en|uk)/foundation/announcements/?$ https://openjsf.org/blog permanent;
+    rewrite ^/(en|uk)/foundation/education/?$     https://openjsf.org/certification permanent;
+    rewrite ^/foundation/?$                       https://openjsf.org/ permanent;
+    rewrite ^/foundation/members.html$            https://openjsf.org/about/members permanent;
 
     # Rewrites to the case_studies shown below on the foundation.nodejs.org server block
     rewrite ^/static/documents/casestudies/(.*)$ https://foundation.nodejs.org/wp-content/uploads/sites/50/2017/09/$1 permanent;
@@ -538,9 +541,9 @@ server {
     rewrite ^/2014/06/11/notes-from-the-road/$                                         https://nodejs.org/en/blog/uncategorized/notes-from-the-road permanent;
 
     # Rewrites RSS Feeds from the old blog to the new website
-    rewrite ^/(feed/)?release/?$                 https://nodejs.org/en/feed/releases.xml permanent;
-    rewrite ^/(feed/)?vulnerability/?$           https://nodejs.org/en/feed/vulnerability.xml permanent;
-    rewrite ^/(atom|feed|rss).*$                 https://nodejs.org/en/feed/blog.xml permanent;
+    rewrite ^/(feed/)?release/?$       https://nodejs.org/en/feed/releases.xml permanent;
+    rewrite ^/(feed/)?vulnerability/?$ https://nodejs.org/en/feed/vulnerability.xml permanent;
+    rewrite ^/(atom|feed|rss).*$       https://nodejs.org/en/feed/blog.xml permanent;
 
     # Rewrites all remaining blog pages to the new node.js website blog (it will not carry over the uri
     rewrite ^ https://nodejs.org/en/blog permanent;
