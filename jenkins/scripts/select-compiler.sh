@@ -166,6 +166,7 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
   export CC="gcc-${COMPILER_LEVEL}"
   export CXX="g++-${COMPILER_LEVEL}"
   export LINK="g++-${COMPILER_LEVEL}"
+  unset LIBPATH
   export PATH="/opt/ccache-3.7.4/libexec:/opt/freeware/bin:$PATH"
   echo "Compiler set to GCC" `$CXX -dumpversion`
 
