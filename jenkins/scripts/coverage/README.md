@@ -109,4 +109,4 @@ The results are pushed to /home/benchmark/coverage-out/out.
 
 # Transfer to the website
 
-The banchmark.nodejs.org website is archived and the data is not synced anymore.
+The benchmark.nodejs.org website is archived and the data is not synced anymore.
