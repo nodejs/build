@@ -24,6 +24,10 @@
   when: "'vs2019' in inventory_hostname"
   include_tasks: "partials/vs2019.yml"
 
+- name: install Visual Studio 2022
+  when: "'vs2022' in inventory_hostname"
+  include_tasks: "partials/vs2022.yml"
+
 # Install clcache and apply patches known to work
 - block:
   - name: check if clcache is already cloned
