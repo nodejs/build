@@ -4,7 +4,9 @@
 # upgrade `slave.jar` at jenkins workers
 #
 
--  hosts: test
+-  hosts:
+    - test
+    - release
 
    tasks:
     - name: download slave.jar

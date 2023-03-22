@@ -21,9 +21,9 @@ hosts:
         ubuntu2004-x64-1: {ip: 169.60.150.91, alias: ansible}
 
     - joyent:
-        debian10-x64-1: {ip: 147.75.88.62, alias: grafana}
-        smartos15-x64-1: {ip: 139.178.83.227, alias: backup}
-        ubuntu1604-x64-1: {ip: 147.75.88.57, alias: unencrypted}
+        debian10-x64-1: {ip: 147.28.162.110, alias: grafana}
+        smartos15-x64-1: {ip: 147.28.183.83, alias: backup}
+        ubuntu1604-x64-1: {ip: 147.28.162.105, alias: unencrypted}
 
     - rackspace:
         debian8-x64-1: {ip: 23.253.100.79, alias: gh-bot}
@@ -42,6 +42,11 @@ hosts:
         aix71-ppc64_be-2:
             ip: 169.59.74.10
             server_jobs: 6
+        aix72-ppc64_be-1:
+            ip: 169.54.113.163
+            remote_env:
+                PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
+            server_jobs: 8
         rhel7-s390x-1: {ip: 148.100.84.166, user: linux1}
         rhel8-s390x-1: {ip: 148.100.84.45, user: linux1}
         rhel8-x64-1: {ip: 169.62.77.228}
@@ -51,9 +56,9 @@ hosts:
         ibmi73-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
 
     - joyent:
-        smartos18-x64-2: {ip: 147.75.88.53}
-        smartos20-x64-2: {ip: 147.75.88.60}
-        ubuntu1804_docker-x64-1: {ip: 147.75.88.56, user: ubuntu}
+        smartos18-x64-2: {ip: 147.28.162.101}
+        smartos20-x64-2: {ip: 147.28.162.108}
+        ubuntu1804_docker-x64-1: {ip: 147.28.162.104, user: ubuntu}
 
     - macstadium:
         macos11.0-arm64-1:
@@ -108,6 +113,12 @@ hosts:
         msft-win10_vs2019-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
         msft-win10_vs2019-x64-3: {ip: nodejs.australiaeast.cloudapp.azure.com}
         msft-win10_vs2019-x64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
+        msft-win11_vs2019-arm64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
+        msft-win11_vs2019-arm64-2: {ip: nodejs2.eastus.cloudapp.azure.com}
+        msft-win11_vs2019-arm64-3: {ip: nodejs.westeurope.cloudapp.azure.com}
+        msft-win11_vs2019-arm64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
+        msft-win11_vs2019-arm64-5: {ip: nodejs.westeurope.cloudapp.azure.com}
+        msft-win11_vs2019-arm64-6: {ip: nodejs2.eastus.cloudapp.azure.com}
         msft-win2016_vs2017-x64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win2016_vs2017-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
         msft-win2016_vs2017-x64-3: {ip: nodejs.australiaeast.cloudapp.azure.com}
@@ -146,6 +157,16 @@ hosts:
         aix71-ppc64_be-4:  
             ip: 169.59.74.12
             server_jobs: 6
+        aix72-ppc64_be-1:
+            ip: 169.54.113.142
+            remote_env:
+                PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
+            server_jobs: 8
+        aix72-ppc64_be-2:
+            ip: 169.54.113.165
+            remote_env:
+                PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
+            server_jobs: 8
         aix73-ppc64_be-1:
             ansible_python_interpreter: /opt/freeware/bin/python3
             ansible_remote_tmp: /tmp/.ansible
@@ -167,12 +188,12 @@ hosts:
         ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
         ubuntu1804-x64-2: {ip: 50.97.245.9}
 
-    - joyent:
-        smartos18-x64-3: {ip: 147.75.88.54}
-        smartos18-x64-4: {ip: 147.75.88.55}
-        smartos20-x64-3: {ip: 147.75.88.59}
-        smartos20-x64-4: {ip: 147.75.88.61}
-        ubuntu1804-x64-1: {ip: 147.75.88.51, user: ubuntu}
+    - equinix_mnx:
+        smartos18-x64-3: {ip: 147.28.162.102}
+        smartos18-x64-4: {ip: 147.28.162.103}
+        smartos20-x64-3: {ip: 147.28.162.107}
+        smartos20-x64-4: {ip: 147.28.162.109}
+        ubuntu1804-x64-1: {ip: 147.28.162.99, user: ubuntu}
 
     - macstadium:
         macos11.0-arm64-3:

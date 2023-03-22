@@ -10,8 +10,9 @@
   * [Install Command Line Tools for Xcode](#install-command-line-tools-for-xcode)
 * [AIX](#aix)
   * [Disk layout](#disk-layout)
-* [AIX 7.1](#aix-71)
+  * [OpenSSL](#openssl)
   * [Remove en1 network interface](#remove-en1-network-interface)
+* [AIX 7.1](#aix-71)
   * [Update XL C/C++ Runtime](#update-xl-cc-runtime)
 * [AIX 7.2 Install](#aix-72-install)
   * [ccache 3.7.4 on AIX 7.2](#ccache-374-on-aix-72)
@@ -392,13 +393,41 @@ ENCRYPTION:         no
 #
 ```
 
-## AIX 7.1
+### OpenSSL
+
+On AIX OpenSSL is not available as an rpm via yum/dnf and is instead an
+installp fileset that must be manually downloaded and installed.
+
+Go to https://www.ibm.com/resources/mrs/assets?source=aixbp&S_PKG=openssl
+and pick the most recent OpenSSL release (each package should contain
+compatibility libraries for older versions). Download/copy the `.tar.Z`
+package (URL will be temporary) on to the machine into a temporary directory
+e.g. `/tmp/openssl`.
+
+```console
+curl -sL openssl-3.0.8.1000.tar.Z https://iwm.dhe.ibm.com/.../openssl-3.0.8.1000.tar.Z
+```
+
+Then unpack the compressed archive:
+```console
+zcat openssl-3.0.8.1000.tar.Z | tar -xvf -
+```
+
+and install:
+```console
+installp -aXYgd openssl-3.0.8.1000 -e /tmp/install.log all
+```
+
+To see a list of installed packages, run:
+```console
+lslpp -L all
+```
 
 ### Remove en1 network interface
 
 Some libuv/Node.js tests currently fail on AIX with a network interface
 containing a link local address. This is being tracked in
-https://github.com/nodejs/node/issues/39143. In the meantime the `en1`
+https://github.com/nodejs/node/issues/46792. In the meantime the `en1`
 interface containing the link local address is removed.
 ```
 sudo ifconfig en1 down detach
@@ -412,6 +441,8 @@ to list the available interfaces. To add back the `en1` interface, run
 ```
 sudo autoconf6 -i en1
 ```
+
+## AIX 7.1
 
 ### Update XL C/C++ Runtime
 
@@ -617,8 +648,34 @@ Install the `pywinrm` pip module: `pip install pywinrm`
 The preparation script needs to be run in PowerShell (run as Administrator):
 
 ```powershell
-iwr -useb https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 | iex
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Invoke-WebRequest "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1" -OutFile "ConfigureRemotingForAnsible.ps1"
+.\ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert true -CertValidityDays 3650
 ```
+
+#### Port Configuration
+
+Delete the unencrypted WinRM endpoint:
+
+```powershell
+winrm delete winrm/config/Listener?Address=*+Transport=HTTP
+```
+
+On Rackspace hosts, it is necessary to change the port to match the value found in secrets (change 12345):
+
+```powershell
+winrm set winrm/config/Listener?Address=*+Transport=HTTPS '@{Port="12345"}'
+```
+
+On Azure, changing the ports is done in the Load Balancer configuration using the Azure Portal.
+
+To see the status of running listeners:
+
+```powershell
+winrm enumerate winrm/config/listener
+```
+
+#### Test
 
 Test the connection to the target machine with `ansible HOST -m win_ping -vvvv`. If there is any issue, please refer to the official Ansible documentation in [Setting up a Windows Host][].
 
@@ -734,9 +791,6 @@ NFS_BOOT_SERVER_IP:PATH_TO_TFTP_BOOT_EXPORT /boot nfs4 nfsvers=3,rw,noexec,async
 
 After these steps are performed and the Pi's are running, Ansible can be run to finish setup. A reboot is recommended after initial setup to ensure the environment is configured correctly (locale and other settings that are changed).
 
-[Setting up a Windows Host]: https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html
-[newer Ansible configuration]: https://github.com/nodejs/build/tree/main/ansible
-[stand-alone]: https://github.com/nodejs/build/tree/main/setup/windows
 
 ## IBM i
 
@@ -800,3 +854,9 @@ mkdir -p /u/unix1/java
 cd /u/unix1/java
 pax -rf /u/unix1/SDK8_64bit_SR6_FP10.PAX.Z -ppx
 ```
+
+
+
+[Setting up a Windows Host]: https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html
+[newer Ansible configuration]: https://github.com/nodejs/build/tree/main/ansible
+[stand-alone]: https://github.com/nodejs/build/tree/main/setup/windows

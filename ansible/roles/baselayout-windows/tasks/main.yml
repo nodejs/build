@@ -26,9 +26,6 @@
     pinned: yes
     version: "3.10.8"
 
-- name: install Python 2
-  win_chocolatey: name=python2
-
 - block:
   - name: install Git
     win_chocolatey:
@@ -57,26 +54,6 @@
     win_command: 'git pull'
     args: { chdir: 'C:\gyp' }
     when: gyp_stat.stat.exists
-
-# Necessary for releases of older versions of Node
-- block:
-  - name: create node-icu directory
-    win_file: path='C:\\node-icu' state=directory
-  - name: download ICU2C 54 zip
-    win_get_url:
-      url: 'http://download.icu-project.org/files/icu4c/54.1/icu4c-54_1-src.zip'
-      dest: 'C:\node-icu\icu4c-54_1-src.zip'
-      force: no
-  - name: download ICU2C 55 zip
-    win_get_url:
-      url: 'http://download.icu-project.org/files/icu4c/55.1/icu4c-55_1-src.zip'
-      dest: 'C:\node-icu\icu4c-55_1-src.zip'
-      force: no
-  - name: download ICU2C 56 zip
-    win_get_url:
-      url: 'http://download.icu-project.org/files/icu4c/56.1/icu4c-56_1-src.zip'
-      dest: 'C:\node-icu\icu4c-56_1-src.zip'
-      force: no
 
 # Necessary for compressing the Node package
 - name: install 7Zip

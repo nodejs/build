@@ -46,3 +46,17 @@
       name: Enabled
       data: 0
       type: dword
+
+- block:
+  - name: disable Let's Finish Setting up Your Device screen
+    win_regedit:
+      path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\UserProfileEngagement'
+      name: ScoobeSystemSettingEnabled
+      data: 0
+      type: dword
+  - name: disable Windows Welcome Experience
+    win_regedit:
+      path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+      name: SubscribedContent-310093Enabled
+      data: 0
+      type: dword

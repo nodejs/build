@@ -84,9 +84,10 @@
     line: "{{ item }}"
     insertafter: "^types.*"
   with_items:
-    - "application/octet-stream pkg;"
-    - "application/x-xz xz;"
-    - "application/gzip gz;"
+    - 'application/octet-stream lib;'
+    - 'application/octet-stream pkg;'
+    - 'application/x-xz xz;'
+    - 'application/gzip gz;'
   tags: nginx
 
 - name: nginx | Copy nginx logrotate config

@@ -15,12 +15,17 @@
     dest: /home/iojs/get-pip.py
   when: pip_exists.stat.exists == False
 
+- name: Locate Python 3
+  changed_when: No
+  command: command -v python3
+  register: python3_path
+
 - name: install pip AIX71
   raw: /opt/freeware/bin/python3 /home/iojs/get-pip.py
   when: pip_exists.stat.exists == False and os == "aix71"
 
 - name: install pip AIX72
-  raw: /opt/bin/python3 /home/iojs/get-pip.py
+  ansible.builtin.command: python3 /home/iojs/get-pip.py
   when: pip_exists.stat.exists == False and os == "aix72"
 
 - name: create symbolic link AIX71
@@ -32,7 +37,7 @@
 
 - name: create symbolic link AIX72
   file:
-   src: "/opt/bin/pip"
+   src: "{{ python3_path.stdout | dirname }}/pip"
    dest: "/usr/bin/pip"
    state: link
   when: pip_exists.stat.exists == False and os == "aix72"

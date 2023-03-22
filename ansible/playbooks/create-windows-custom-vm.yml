@@ -1,0 +1,34 @@
+---
+
+#
+# set up a windows test vm that is not to be connected to jenkins
+#
+
+- hosts:
+  - "*-win*"
+  gather_facts: yes
+
+  roles:
+    - bootstrap
+    - package-upgrade
+    - baselayout-windows
+    - visual-studio
+
+  post_tasks:
+    - block:
+      - name: check if Node is already cloned
+        win_stat: path='{{ansible_facts["env"]["USERPROFILE"]}}\Desktop\\node'
+        register: node_stat
+      - name: clone Node repository
+        win_command: 'git clone https://github.com/nodejs/node.git {{ansible_facts["env"]["USERPROFILE"]}}\Desktop\\node'
+        when: not node_stat.stat.exists
+      - name: update Node repository
+        win_command: 'git pull'
+        args: { chdir: '{{ansible_facts["env"]["USERPROFILE"]}}\Desktop\\node' }
+        when: node_stat.stat.exists
+
+    - name: reboot Windows machines
+      win_reboot:
+
+  environment: '{{remote_env}}'
+  

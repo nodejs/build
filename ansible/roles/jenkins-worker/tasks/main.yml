@@ -31,6 +31,24 @@
     state: present
     line: ::1 localhost.localdomain localhost
 
+- name: create .ssh directory
+  ansible.builtin.file:
+    dest: "{{ home }}/{{ server_user }}/.ssh"
+    mode: "0700"
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    state: directory
+
+- name: write github.com entry in known_hosts
+  ansible.builtin.known_hosts:
+    name: github.com
+    key: "{{ item }}"
+    path: "{{ home }}/{{ server_user }}/.ssh/known_hosts"
+    state: present
+  become: yes
+  become_user: "{{ server_user }}"
+  loop: "{{ lookup('file', 'files/github_known_hosts').splitlines() }}"
+
 - name: run raspberry pi jenkins-worker setup
   when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
   include: "{{ role_path }}/tasks/partials/raspberry-pi.yml"

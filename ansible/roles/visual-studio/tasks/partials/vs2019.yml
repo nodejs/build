@@ -8,10 +8,11 @@
 - name: install Visual Studio Community 2019
   win_chocolatey: name=visualstudio2019community
 
+# Note: The .NET SDK was added as a prerequisite for WiX4 - https://github.com/nodejs/node/pull/45943
 - name: install Visual Studio Community 2019 Native Desktop Workload
   win_chocolatey:
       name: visualstudio2019-workload-nativedesktop
-      params: '--add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64'
+      params: '--add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64 --add Microsoft.NetCore.Component.SDK'
 
 - name: install WiX Toolset
   import_tasks: 'wixtoolset.yml'
