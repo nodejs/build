@@ -13,8 +13,8 @@ onboarding session.
 - [ ] Before the meeting the Onboardee is to:
   - [ ] Install Ruby and the `dotgpg` gem
   - [ ] Install Python and Ansible
-  - [ ] Read `services.md`. `jenkins-guide.md`,
-    `GOVERNANCE.md` and have any questions ready
+  - [ ] Read [`resources.md`](./doc/resources.md), [`jenkins-guide.md`](./doc/jenkins-guide.md),
+    [`GOVERNANCE.md`](./GOVERNANCE.md) and have any questions ready
 - [ ] Schedule a meeting with the member to:
     - [ ] Walk them through the infrastructure and what other members do
     - [ ] Explain how to decrypt nodejs/secrets 
