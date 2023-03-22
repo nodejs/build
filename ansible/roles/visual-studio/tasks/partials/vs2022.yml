@@ -1,0 +1,29 @@
+---
+
+#
+# Install Visual Studio 2022
+#
+
+
+- name: install Visual Studio Community 2022
+  win_chocolatey: name=visualstudio2022community
+
+# Note: The .NET SDK was added as a prerequisite for WiX4 - https://github.com/nodejs/node/pull/45943
+- name: install Visual Studio Community 2022 Native Desktop Workload
+  win_chocolatey:
+      name: visualstudio2022-workload-nativedesktop
+      params: '--add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64 --add Microsoft.NetCore.Component.SDK'
+
+- name: install WiX Toolset
+  import_tasks: 'wixtoolset.yml'
+
+# Note: https://chocolatey.org/docs/helpers-install-chocolatey-vsix-package exists, but
+# can't be used with VS2022 yet: https://github.com/chocolatey/choco/issues/1201
+
+- name: download WiX Toolset Visual Studio Extension
+  win_get_url:
+    url: 'https://github.com/wixtoolset/VisualStudioExtension/releases/download/v1.0.0.22/Votive2022.vsix'
+    dest: 'C:\TEMP\Votive2022.vsix'
+
+- name: install WiX Toolset Visual Studio Extension
+  win_shell: '& "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\VSIXInstaller.exe" /quiet C:\TEMP\Votive2022.vsix'
