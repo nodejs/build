@@ -19,8 +19,17 @@ if not defined DISABLE_CLCACHE if exist C:\clcache\dist\clcache_main\clcache_mai
 
 :: Call vcbuild
 if "%nodes:~-6%" == "-arm64" (
-  :: Building MSI is not yet supported for ARM64
-  set "VCBUILD_EXTRA_ARGS=arm64 release"
+  :: Building MSI is not yet supported for ARM64 with WiX 3.
+  :: Since PR with WiX 4 migration changed folder structure,
+  :: this check can determine which WiX is used for the MSI.
+  :: Refs: https://github.com/nodejs/node/pull/45943
+  if exist tools\msvs\msi\nodemsi.wixproj (
+    :: WiX 3 - doesn't build ARM64 MSI
+    set "VCBUILD_EXTRA_ARGS=arm64 release"
+  ) else (
+    :: WiX 4 - builds ARM64 MSI
+    set "VCBUILD_EXTRA_ARGS=arm64 %VCBUILD_EXTRA_ARGS%"
+  )
 ) else if "%nodes:~-4%" == "-x86" (
   set "VCBUILD_EXTRA_ARGS=x86 %VCBUILD_EXTRA_ARGS%"
 ) else (
