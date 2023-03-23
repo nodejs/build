@@ -67,7 +67,7 @@ release.
 
 Create a tracking issue in the [`nodejs/build` issue tracker](https://github.com/nodejs/build/issues) announcing the lockdown.
 
-Make a post in the `nodejs/collaborators` [discussion page](https://github.com/orgs/nodejs/teams/collaborators)
+Make a post in the `nodejs/collaborators` [discussion page](https://github.com/nodejs/collaborators/discussions/categories/announcements)
 to let users of the public CI know that their access will be curtailed.
 Be sure to insert a link to the `nodejs/build` tracking issue.
 
