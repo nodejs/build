@@ -323,6 +323,11 @@ hosts:
             ip: 199.7.167.102
             port: 8823
             user: administrator
+        macos12-x64-1:
+            ansible_python_interpreter: /usr/bin/python3
+            ip: 199.7.167.100
+            port: 8823
+            user: admin
 
     - iinthecloud:
         ibmi73-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
