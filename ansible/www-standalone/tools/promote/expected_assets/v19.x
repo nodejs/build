@@ -25,8 +25,11 @@ node-{VERSION}-win-x64.7z
 node-{VERSION}-win-x64.zip
 node-{VERSION}-win-x86.7z
 node-{VERSION}-win-x86.zip
+node-{VERSION}-win-arm64.7z
+node-{VERSION}-win-arm64.zip
 node-{VERSION}-x64.msi
 node-{VERSION}-x86.msi
+node-{VERSION}-arm64.msi
 win-x64/
 win-x64/node.exe
 win-x64/node.lib
@@ -37,3 +40,8 @@ win-x86/node.exe
 win-x86/node.lib
 win-x86/node_pdb.7z
 win-x86/node_pdb.zip
+win-arm64/
+win-arm64/node.exe
+win-arm64/node.lib
+win-arm64/node_pdb.7z
+win-arm64/node_pdb.zip
