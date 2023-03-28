@@ -24,7 +24,7 @@ BEGIN {
 
 {
   success = match($0, \
-      / \[([^:]+).* "?GET (\/+(dist|download\/+release)\/+(node-latest\.tar\.gz|([^/]+)\/+((win-x64|win-x86|x64)?\/+?node\.exe|(x64\/)?node-+(v[0-9\.]+)[\-\.]([^\? ]+))))(\?[^ ]+)? HTTP\/[12]\.[01][" ]/ \
+      / \[([^:]+).* "?GET (\/+(dist|download\/+release)\/+(node-latest\.tar\.gz|([^/]+)\/+((win-x64|win-x86|win-arm64|x64)?\/+?node\.exe|(x64\/)?node-+(v[0-9\.]+)[\-\.]([^\? ]+))))(\?[^ ]+)? HTTP\/[12]\.[01][" ]/ \
     , m \
   )
 
