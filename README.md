@@ -79,6 +79,7 @@ Admin access to https://ci.nodejs.org/.
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 - [@sxa](https://github.com/sxa) - Stewart X Addison
 - [@targos](https://github.com/targos) - Michaël Zasso
 - [@Trott](https://github.com/Trott) - Rich Trott
@@ -95,6 +96,7 @@ Access to [release secrets][].
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 - [@sxa](https://github.com/sxa) - Stewart X Addison
 
 Above list is manually synced with the [gpg member list](https://github.com/nodejs-private/secrets/tree/master/build/release/.gpg).
@@ -113,6 +115,7 @@ Admin access to https://ci-release.nodejs.org/.
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 - [@sxa](https://github.com/sxa) - Stewart X Addison
 - [@targos](https://github.com/targos) - Michaël Zasso
 
