@@ -49,6 +49,15 @@
   become_user: "{{ server_user }}"
   loop: "{{ lookup('file', 'files/github_known_hosts').splitlines() }}"
 
+- name: remove old github.com ssh keys
+  ansible.builtin.lineinfile:
+    path: "{{ home }}/{{ server_user }}/.ssh/known_hosts"
+    search_string: "{{ item }}"
+    state: absent
+  become: yes
+  become_user: "{{ server_user }}"
+  loop: "{{ lookup('file', 'files/github_bad_hosts').splitlines() }}"
+
 - name: run raspberry pi jenkins-worker setup
   when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
   include: "{{ role_path }}/tasks/partials/raspberry-pi.yml"
