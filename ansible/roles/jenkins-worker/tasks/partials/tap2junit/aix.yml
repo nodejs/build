@@ -4,16 +4,11 @@
 # aix: python2.7 is default
 #
 
-- name: check if pip exists
-  stat:
-    path: /usr/bin/pip
-  register: pip_exists
 
 - name: download get-pip.py
   get_url:
     url: https://bootstrap.pypa.io/get-pip.py
     dest: /home/iojs/get-pip.py
-  when: pip_exists.stat.exists == False
 
 - name: Locate Python 3
   changed_when: No
@@ -22,28 +17,28 @@
 
 - name: install pip AIX71
   raw: /opt/freeware/bin/python3 /home/iojs/get-pip.py
-  when: pip_exists.stat.exists == False and os == "aix71"
+  when: os == "aix71"
 
 - name: install pip AIX72
   ansible.builtin.command: python3 /home/iojs/get-pip.py
-  when: pip_exists.stat.exists == False and os == "aix72"
+  when: os == "aix72"
 
 - name: create symbolic link AIX71
   file:
    src: "/opt/freeware/bin/pip"
    dest: "/usr/bin/pip"
    state: link
-  when: pip_exists.stat.exists == False and os == "aix71"
+  when: os == "aix71"
 
 - name: create symbolic link AIX72
   file:
    src: "{{ python3_path.stdout | dirname }}/pip"
    dest: "/usr/bin/pip"
    state: link
-  when: pip_exists.stat.exists == False and os == "aix72"
+  when: os == "aix72"
 
 - name: install tap2junit
   pip: 
-    name: tap2junit
+    name: tap2junit=={{ tap2junit_version }}
     state: present
     executable: /usr/bin/pip

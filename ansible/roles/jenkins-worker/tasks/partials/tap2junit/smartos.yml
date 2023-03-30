@@ -1,11 +1,18 @@
 ---
 
 #
-# smartos: python 2.7
+# smartos
 #
 
-- name: install pip
-  package: name=py27-pip state=present
+- name: smartos | update pip3 symlink
+  when: os == "smartos18"
+  file:
+    dest: "/opt/local/bin/pip3"
+    state: link
+    src: "/opt/local/bin/pip3.7"
 
 - name: install tap2junit
-  pip: name=tap2junit state=present
+  pip:
+    executable: /opt/local/bin/pip3
+    name: tap2junit=={{ tap2junit_version }}
+    state: present

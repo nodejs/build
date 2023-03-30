@@ -163,7 +163,8 @@ packages: {
   smartos18: [
     'gcc7',
     'ccache',
-    'python37'
+    'python37',
+    'py37-pip'
   ],
 
   smartos20: [
@@ -183,12 +184,12 @@ packages: {
 
   # Default gcc/g++ package is 5.
   ubuntu1604: [
-    'gcc-8,g++-8,gcc-6,g++-6,python3.7,python3.7-distutils',
+    'gcc-8,g++-8,gcc-6,g++-6,python3.9,python3.9-distutils',
   ],
 
   # Default gcc/g++ package is 7.
   ubuntu1804: [
-    'gcc-6,g++-6,gcc-8,g++-8',
+    'gcc-6,g++-6,gcc-8,g++-8,python3.8',
   ],  
 
   ubuntu2204: [

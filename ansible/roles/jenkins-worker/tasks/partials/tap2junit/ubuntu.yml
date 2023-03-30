@@ -1,11 +1,21 @@
 ---
 
 #
-# ubuntu series: python 2.7
+# ubuntu series
 #
 
+# Install pip via `get-pip.py`.
+- name: download pip install script
+  ansible.builtin.get_url:
+    dest: "{{ home }}/{{ server_user }}/get-pip.py"
+    url: https://bootstrap.pypa.io/get-pip.py
+
 - name: install pip
-  package: name=python-pip state=present
+  ansible.builtin.shell:
+    cmd: python3 {{ home }}/{{ server_user }}/get-pip.py
 
 - name: install tap2junit
-  pip: name=tap2junit state=present
+  pip: 
+    name: tap2junit=={{ tap2junit_version }}
+    state: present
+    executable: pip3
