@@ -37,7 +37,7 @@ RUN update-crypto-policies --set LEGACY
 
 VOLUME /home/{{ server_user }}/ /home/{{ server_user }}/.ccache
 
-RUN pip3 install tap2junit
+RUN pip3 install tap2junit=={{ tap2junit_version }}
 
 USER iojs:iojs
 

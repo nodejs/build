@@ -43,7 +43,7 @@ VOLUME /home/{{ server_user }}/ /home/{{ server_user }}/.ccache
 
 ENV PYTHON /usr/bin/python3
 
-RUN pip3 install tap2junit
+RUN pip3 install tap2junit=={{ tap2junit_version }}
 
 RUN git clone https://github.com/rvagg/rpi-newer-crosstools.git /opt/raspberrypi/rpi-newer-crosstools
 
