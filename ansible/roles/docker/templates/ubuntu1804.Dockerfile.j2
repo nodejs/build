@@ -30,7 +30,7 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
 # something in the list of package above when installed at the same time.
 RUN apt-get install -y openjdk-17-jre-headless
 
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1 &&\
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1 && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2 &&\
     update-alternatives  --set python3 /usr/bin/python3.8
 
