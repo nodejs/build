@@ -15,7 +15,6 @@ RUN apt-get update \
     gcc-8 \
     git \
     curl \
-    python-pip \
     python3-pip \
     python-all \
     libfontconfig1 \
@@ -28,8 +27,7 @@ RUN apt-get update \
 # something in the list of package above when installed at the same time.
 RUN apt-get install -y openjdk-17-jre-headless
 
-RUN pip install tap2junit \
-  && pip3 install tap2junit
+RUN pip3 install tap2junit
 
 RUN git clone https://github.com/rvagg/rpi-newer-crosstools.git /opt/raspberrypi/rpi-newer-crosstools
 

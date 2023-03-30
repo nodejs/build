@@ -21,7 +21,6 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
     gcc-8 \
     git \
     curl \
-    python-pip \
     python3-pip \
     libfontconfig1 \
     libtool \
@@ -29,8 +28,6 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
 # openjdk-17-jre-headless pulls in ca-certificates-java which conflicts with
 # something in the list of package above when installed at the same time.
 RUN apt-get install -y openjdk-17-jre-headless
-
-RUN pip install tap2junit
 
 RUN pip3 install tap2junit
 
