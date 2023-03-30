@@ -14,7 +14,6 @@ RUN apt-get update \
     git \
     openjdk-8-jre-headless \
     curl \
-    python-pip \
     python3-pip \
     python-all \
     python-software-properties \
@@ -25,8 +24,7 @@ RUN apt-get update \
     gcc-6-multilib \
     g++-6-multilib
 
-RUN pip install tap2junit \
-  && pip3 install tap2junit
+RUN pip3 install tap2junit=={{ tap2junit_version }}
 
 RUN git clone https://github.com/rvagg/rpi-newer-crosstools.git /opt/raspberrypi/rpi-newer-crosstools
 

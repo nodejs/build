@@ -30,3 +30,5 @@ packages: {
     'docker-ce',
   ],
 }
+
+tap2junit_version: 0.1.6
