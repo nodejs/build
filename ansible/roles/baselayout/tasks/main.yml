@@ -130,7 +130,14 @@
   alternatives:
     link: "/usr/bin/python3"
     name: python3
-    path: "/usr/bin/python3.7"
+    path: "/usr/bin/python3.9"
+
+- name: ubuntu1804 | update python package alternatives
+  when: os == "ubuntu1804"
+  alternatives:
+    link: "/usr/bin/python3"
+    name: python3
+    path: "/usr/bin/python3.8"
 
 - name: freebsd | update python package alternatives
   when: os == "freebsd12"
@@ -193,8 +200,8 @@
     dest: "/usr/bin/{{ item.1 }}"
     state: link
   with_together:
-    - [ 'curl', 'curl_32', 'curl_64', 'tar' ]
-    - [ 'curl', 'curl_32', 'curl_64', 'gtar' ]
+    - [ 'curl', 'curl_32', 'curl_64', 'tar', 'python3.9' ]
+    - [ 'curl', 'curl_32', 'curl_64', 'gtar', 'python3' ]
 
 - name: run ccache installer
   include: "{{ ccache_include }}"

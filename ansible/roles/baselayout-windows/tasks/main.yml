@@ -40,7 +40,7 @@
 
 # Necessary for junit output in Jenkins jobs
 - name: install tap2junit
-  win_command: 'pip3 install --upgrade tap2junit'
+  win_command: 'pip3 install --upgrade tap2junit=={{ tap2junit_version }}'
 
 # Necessary for the libuv test job
 - block:

@@ -133,3 +133,5 @@ jobs_variants: {
   arm64: '3',
   smartos: '2'
 }
+
+tap2junit_version: 0.1.6

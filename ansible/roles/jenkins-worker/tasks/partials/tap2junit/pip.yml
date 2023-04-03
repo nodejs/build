@@ -5,4 +5,4 @@
 #
 
 - name: install tap2junit
-  pip: name=tap2junit state=present
+  pip: name=tap2junit=={{ tap2junit_version }} state=present
