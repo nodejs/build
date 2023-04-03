@@ -74,6 +74,7 @@ def buildExclusions = [
   [ /vs2015/,                         releaseType, ltGte(6, 10)  ],
   [ /vs2017/,                         releaseType, ltGte(10, 14) ],
   [ /vs2019/,                         releaseType, lt(14)        ],
+  [ /vs2019-arm64/,                   releaseType, lt(19)        ],
   // VS versions supported to compile Node.js - also matches labels used by test runners
   [ /vs2013(-\w+)?$/,                 testType,    gte(6)        ],
   [ /vs2015(-\w+)?$/,                 testType,    gte(10)       ],
