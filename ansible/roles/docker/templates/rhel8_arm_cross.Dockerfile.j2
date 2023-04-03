@@ -22,14 +22,21 @@ RUN dnf install --disableplugin=subscription-manager -y \
       git \
       glibc-devel.i686 \
       java-17-openjdk-headless \
-      make \
       libatomic.i686 \
       libstdc++-devel \
       libstdc++-devel.i686 \
+      make \
       python3.8 \
       procps-ng \
       xz \
     && dnf --disableplugin=subscription-manager clean all
+
+RUN dnf install --disableplugin=subscription-manager -y \
+      http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/gcc-toolset-10-gcc-10.3.1-1.2.el8_5.x86_64.rpm \
+      http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/gcc-toolset-10-gcc-c++-10.3.1-1.2.el8_5.x86_64.rpm \
+      http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/gcc-toolset-10-libstdc++-devel-10.3.1-1.2.el8_5.i686.rpm \
+      http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/gcc-toolset-10-libstdc++-devel-10.3.1-1.2.el8_5.x86_64.rpm \
+      http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/gcc-toolset-10-runtime-10.1-0.el8.x86_64.rpm
 
 RUN groupadd -r -g {{ server_user_gid.stdout_lines[0] }} {{ server_user }} \
     && adduser -r -m -d /home/{{ server_user }}/ \
@@ -45,7 +52,7 @@ ENV PYTHON /usr/bin/python3
 
 RUN pip3 install tap2junit=={{ tap2junit_version }}
 
-RUN git clone https://github.com/rvagg/rpi-newer-crosstools.git /opt/raspberrypi/rpi-newer-crosstools
+RUN git clone --depth=1 https://github.com/rvagg/rpi-newer-crosstools.git /opt/raspberrypi/rpi-newer-crosstools
 
 COPY cc-selector.sh /opt/raspberrypi/cc-selector.sh
 
