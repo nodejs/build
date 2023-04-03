@@ -10,32 +10,14 @@
     url: https://bootstrap.pypa.io/get-pip.py
     dest: /home/iojs/get-pip.py
 
-- name: Locate Python 3
-  changed_when: No
-  command: command -v python3
-  register: python3_path
-
-- name: install pip AIX71
-  raw: /opt/freeware/bin/python3 /home/iojs/get-pip.py
-  when: os == "aix71"
-
-- name: install pip AIX72
+- name: install pip
   ansible.builtin.command: python3 /home/iojs/get-pip.py
-  when: os == "aix72"
 
-- name: create symbolic link AIX71
+- name: create pip symbolic link
   file:
-   src: "/opt/freeware/bin/pip"
+   src: "/opt/freeware/bin/pip3"
    dest: "/usr/bin/pip"
    state: link
-  when: os == "aix71"
-
-- name: create symbolic link AIX72
-  file:
-   src: "{{ python3_path.stdout | dirname }}/pip"
-   dest: "/usr/bin/pip"
-   state: link
-  when: os == "aix72"
 
 - name: install tap2junit
   pip: 

@@ -52,7 +52,7 @@ packages: {
   ],
 
   aix: [
-    'bash,cmake,coreutils,curl,gcc-c++,tar,unzip,git,make,sudo,python-setuptools,python3',
+    'bash,cmake,coreutils,curl,gcc-c++,tar,unzip,git,make,sudo,python-setuptools,python3.9',
   ],
 
   aix71: [
