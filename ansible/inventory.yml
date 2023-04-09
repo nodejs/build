@@ -264,7 +264,7 @@ hosts:
             ip: 92.51.196.114
             build_test_v8: yes
             is_benchmark: yes
-        intel-ubuntu1804-x64-2:
+        intel-ubuntu2204-x64-2:
             ip: 92.51.196.115
 
     - osuosl:
