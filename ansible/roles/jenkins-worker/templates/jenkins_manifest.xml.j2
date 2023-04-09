@@ -28,7 +28,7 @@
 
       <exec_method type='method'
                    name='start'
-                   exec='{{ java_path[os] }} -Dsun.security.pkcs11.enable-solaris=false -Xmx{{ server_ram|default('128m') }} -jar /home/{{ server_user }}/slave.jar -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp -secret {{ secret }}'
+                   exec='{{ java_path[os] }} -Dsun.security.pkcs11.enable-solaris=false -Xmx{{ server_ram|default('128m') }} -jar /home/{{ server_user }}/slave.jar -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/agent.jnlp -secret {{ secret }}'
                    timeout_seconds='30' />
 
       <exec_method type="method"

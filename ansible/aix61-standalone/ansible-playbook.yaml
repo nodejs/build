@@ -16,8 +16,8 @@
       user: name="{{ server_user }}" shell=/bin/bash
       tags: user
 
-    - name: Jenkins | Download Jenkins slave.jar
-      get_url: url=https://ci.nodejs.org/jnlpJars/slave.jar dest=/home/{{ server_user }}/slave.jar validate_certs=no
+    - name: Jenkins | Download Jenkins agent.jar
+      get_url: url=https://ci.nodejs.org/jnlpJars/agent.jar dest=/home/{{ server_user }}/slave.jar validate_certs=no
       tags: jenkins
 
     - name: Jenkins | Copy S20jenkins

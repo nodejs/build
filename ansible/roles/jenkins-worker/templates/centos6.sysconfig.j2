@@ -2,7 +2,7 @@ JENKINS_SLAVE_USER="iojs"
 JENKINS_SLAVE_JAR="/home/iojs/slave.jar"
 JENKINS_SLAVE_LOG="/home/iojs/$NAME.log"
 JENKINS_SECRET="{{ secret }}"
-JENKINS_SLAVE_ARGS="-jnlpUrl {{ jenkins_url }}/computer/{{ ansible_hostname }}/slave-agent.jnlp -secret $JENKINS_SECRET"
+JENKINS_SLAVE_ARGS="-jnlpUrl {{ jenkins_url }}/computer/{{ ansible_hostname }}/agent.jnlp -secret $JENKINS_SECRET"
 JENKINS_PATH=""
 JENKINS_ENV="JOBS={{ jobs_env }} \
   HOME=/home/{{ server_user }} \

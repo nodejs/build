@@ -5,7 +5,7 @@ $StartupLnk = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Jenkin
 
 $Shortcut = $WshShell.CreateShortcut($DesktopLnk)
 $Shortcut.Arguments = "/c C:\jenkins.bat"
-$Shortcut.Description = "Runs the Jenkins slave"
+$Shortcut.Description = "Runs the Jenkins agent"
 $Shortcut.IconLocation = "C:\jenkins.ico,0"
 $Shortcut.TargetPath = "%windir%\system32\cmd.exe"
 $Shortcut.WorkingDirectory = "C:\"
