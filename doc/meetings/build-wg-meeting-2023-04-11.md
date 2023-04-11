@@ -76,11 +76,11 @@
   * It was a misunderstanding on the onboarding process
   * Ulises will close the issue
 * Interest in establishing a "Build Helper" role [#2550](https://github.com/nodejs/build/issues/2550)
- * There is an ansible tower/AWX instance that can be used to run ansible playbooks against the jenkins agents.
- * You can restart machines currently and the users needs to be added to the AWX.
- * There are other potential tasks that can be added, but that will require some extra work if we want to avoid running ansible in the user’s machine
- * There is potential to articulate manual task that we do quite often like clean macos disk, etc… and let other people that we trust to manage this rutinary executions/jobs with a good UI.
- * We keep this item in the agenda
+  * There is an ansible tower/AWX instance that can be used to run ansible playbooks against the jenkins agents.
+  * You can restart machines currently and the users needs to be added to the AWX.
+  * There are other potential tasks that can be added, but that will require some extra work if we want to avoid running ansible in the user’s machine
+  * There is potential to articulate manual task that we do quite often like clean macos disk, etc… and let other people that we trust to manage this rutinary executions/jobs with a good UI.
+  * We keep this item in the agenda
 
 ### nodejs/node
 
