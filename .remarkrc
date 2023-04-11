@@ -1,0 +1,7 @@
+{
+  "plugins": [
+    "remark-preset-lint-node",
+    ["remark-lint-maximum-line-length", false],
+    ["remark-lint-prohibited-strings", false]
+  ]
+}

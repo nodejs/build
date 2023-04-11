@@ -1,6 +1,5 @@
 # tools/jenkins-status:
 node_modules/
-package-lock.json
 # setup secrets files, delete with setup/:
 setup/*/host_vars/iojs-*
 setup/*/host_vars/node-*

@@ -1,0 +1,24 @@
+{
+  "name": "build",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The Node.js Build Working Group maintains and controls infrastructure.",
+  "scripts": {
+    "test": "remark -qf ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodejs/build.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nodejs/build/issues"
+  },
+  "homepage": "https://github.com/nodejs/build#readme",
+  "devDependencies": {
+    "remark-cli": "^11.0.0",
+    "remark-preset-lint-node": "^3.4.0"
+  }
+}
