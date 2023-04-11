@@ -49,4 +49,4 @@ max-complexity = 15
 max-args = 5
 max-branches = 15
 max-returns = 7
-# max-statements = 50
+max-statements = 50
