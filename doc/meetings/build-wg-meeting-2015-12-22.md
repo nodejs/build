@@ -32,17 +32,17 @@
 
 ## Minutes
 
-### Option to run V8 test suite [#199]
+### Option to run V8 test suite \[#199]
 
 No updates.
 
-### PPC platforms as part of standard release [#205]
+### PPC platforms as part of standard release \[#205]
 
 Machines not available. Adding machines to release job.
 
 ### How to add node-gyp and nan in Jenkins
 
-Alexis: Nan runs with appveyor and travis [#206], will follow the pattern of
+Alexis: Nan runs with appveyor and travis \[#206], will follow the pattern of
 [serialport-test-commit-windows](https://ci.nodejs.org/job/serialport-test-commit-windows/build)
 
 Rod: best to run a variety of versions of node. Same deal for node-gyp and nan.

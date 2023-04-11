@@ -42,13 +42,13 @@
 
 ## Previous meeting followup
 
-### Option to run V8 test suite [#199]
+### Option to run V8 test suite \[#199]
 
 Michael: getting a job will land this week
 
 ## Minutes
 
-### Alpine Linux / Docker Build [#75 #79]
+### Alpine Linux / Docker Build \[#75 #79]
 
 Hans: look into getting it into ansible
 
@@ -58,11 +58,11 @@ Johan: start a docker vm at digitalocean to host this.
 
 Michael: add docker to required packages in one of our ansible hosts
 
-### New readme, new company listing incl logos, new team listing [#294]
+### New readme, new company listing incl logos, new team listing \[#294]
 
 Find a way to distinct between tiers (possibly number of vm deploys)
 
-### Backup of configs / Config History [#295]
+### Backup of configs / Config History \[#295]
 
 Myles: how do we improve backing up jenkins configs?
 

@@ -12,9 +12,9 @@ IP addresses and exact times are not reported, only days and geolocation data fo
 
 ## What format is the data in?
 
-Raw log files are available in the **[./logs/](./logs/)** sub-directory where each file's name takes the form: `nodejs.org-access.log.YYYYMMDD.TTTTTTTTTT.csv`, where the last entry in the file is used to create the string `YYYYMMDD` from the year, month and day of the month respectively and `TTTTTTTTTT` as the unix epoch timestamp. There may zero, one or two log files for a given day. However, when stitched together they should form a continuous record of the downloads from nodejs.org.
+Raw log files are available in the **`./logs/`** sub-directory where each file's name takes the form: `nodejs.org-access.log.YYYYMMDD.TTTTTTTTTT.csv`, where the last entry in the file is used to create the string `YYYYMMDD` from the year, month and day of the month respectively and `TTTTTTTTTT` as the unix epoch timestamp. There may zero, one or two log files for a given day. However, when stitched together they should form a continuous record of the downloads from nodejs.org.
 
-There is always a [nodejs.org-access.log.csv](./logs/nodejs.org-access.log.csv) file which represents the _current day's_ data and **is not final**, i.e. it will change from update to update, either appending new data or starting again for a new day. The other log files can be considered final until we decide to adjust the format at some point in the future.
+There is always a `./logs/nodejs.org-access.log.csv` file which represents the _current day's_ data and **is not final**, i.e. it will change from update to update, either appending new data or starting again for a new day. The other log files can be considered final until we decide to adjust the format at some point in the future.
 
 The raw log files are comma-separated value format with the following columns: day, country, region, path, version, os, arch, bytes.
 
@@ -31,7 +31,7 @@ The **arch** field is blank when **os** is `src` or `headers`.
 
 ## Pre-processed summary data
 
-A set of pre-processed summary data is also made available in the **[./summaries/](./summaries/)** sub-directory. Each type of summary consists of:
+A set of pre-processed summary data is also made available in the **`./summaries/`** sub-directory. Each type of summary consists of:
 
  * A directory containing CSV files with names matching the raw log file names and rows containing aggregated per-day data for the given summary datatype. Most of these files contain two rows, for two days, as the raw log files don't span neatly across day boundaries.
  * An aggregation file, in CSV format, where each row is a single day during the full period for which there is available data.
@@ -41,9 +41,9 @@ A set of pre-processed summary data is also made available in the **[./summaries
 
 Contains two data columns: ***downloads*** and ***TiB***, where TiB is 2<sup>40</sup> bytes.
 
-Source data: [./summaries/total/](./summaries/total/)
+Source data: ./summaries/total/
 
-Aggregate data: [./summaries/total.csv](./summaries/total.csv)
+Aggregate data: ./summaries/total.csv
 
 Plot:
 
@@ -53,9 +53,9 @@ Plot:
 
 Contains a data column per distributed architecture, including ***unknown*** where the architecture cannot be determined (source or header tarballs). The columns are ordered by totals where the architecture that has the highest total is listed first and so on, the column ordering may therefore change over time. The list is not fixed and may expand when additional architectures are distributed from nodejs.org. The **.pkg** OS X installers are counted as ***x64*** even though, prior to Node.js v4, they were "universal binaries" containing both x64 and x86 versions, usable on both architectures.
 
-Source data: [./summaries/arch/](./summaries/arch/)
+Source data: ./summaries/arch/
 
-Aggregate data: [./summaries/arch.csv](./summaries/arch.csv)
+Aggregate data: ./summaries/arch.csv
 
 Plot:
 
@@ -65,9 +65,9 @@ Plot:
 
 Contains a data column per country from the geolocation data, including ***unknown*** where a country could not be determined. The column names take the form of [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166) country codes. The columns are ordered by totals where the country with the highest total is listed first and so on, the column ordering may therefore change over time. The list is not fixed and may expand if additional countries not already listed are discovered via geolocation.
 
-Source data: [./summaries/country/](./summaries/country/)
+Source data: ./summaries/country/
 
-Aggregate data: [./summaries/country.csv](./summaries/country.csv)
+Aggregate data: ./summaries/country.csv
 
 Plot:
 
@@ -77,9 +77,9 @@ Plot:
 
 Contains a data column per distributed operating system, including ***unknown*** where the operating system cannot be determined (due to `node-latest.tar.gz`), ***src*** for source tarballs and ***headers*** for header tarballs. The columns are ordered by totals where the operating system that has the highest total is listed first and so on, the column ordering may therefore change over time. The list is not fixed and may expand when additional operating systems are distributed from nodejs.org.
 
-Source data: [./summaries/os/](./summaries/os/)
+Source data: ./summaries/os/
 
-Aggregate data: [./summaries/os.csv](./summaries/os.csv)
+Aggregate data: ./summaries/os.csv
 
 Plot:
 
@@ -89,9 +89,9 @@ Plot:
 
 Contains a data column per significant version number of Node.js. For <= 0.12, the semver-minor version number is listed, for >= 4.x the semver-major version number is listed. The ***unknown*** column contains counts of downloads where the version number could not be determined (see above note about `node-latest.tar.gz` and the `latest` directory symlinks coupled with `node.exe`). The columns are ordered by totals where the version that has the highest total is listed first and so on, the column ordering may therefore change over time. The list is not fixed and will expand when additional significant Node.js versions are made available for download.
 
-Source data: [./summaries/version/](./summaries/version/)
+Source data: ./summaries/version/
 
-Aggregate data: [./summaries/version.csv](./summaries/version.csv)
+Aggregate data: ./summaries/version.csv
 
 Plot:
 

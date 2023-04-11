@@ -223,37 +223,32 @@ encrypted form in the [secrets repo][].
 [@nodejs/collaborators]: https://github.com/orgs/nodejs/teams/collaborators/members
 [@nodejs/jenkins-admins]: https://github.com/orgs/nodejs/teams/jenkins-admins/members
 [@nodejs/jenkins-release-admins]: https://github.com/orgs/nodejs/teams/jenkins-release-admins/members
-[@nodejs/post-mortem-admins]: https://github.com/orgs/nodejs/teams/post-mortem-admins/members
 [@nodejs/post-mortem]: https://github.com/orgs/nodejs/teams/post-mortem/members
+[@nodejs/post-mortem-admins]: https://github.com/orgs/nodejs/teams/post-mortem-admins/members
 [@nodejs/releasers]: https://github.com/orgs/nodejs/teams/releasers/members
-[SSH guide]: ./ssh.md
-[libuv]: https://github.com/libuv/libuv/
-[Build WG members]: /README.md#build-wg-members
-[GitHub Bot Admins]: /README.md#github-bot-admins
-[Infra Admins]: /README.md#infra-admins
-[Jenkins access doc]: /doc/process/jenkins_job_configuration_access.md
-[Release Admins]: /README.md#release-admins
+[Apple]: https://developer.apple.com/support/certificates/
+[Cloudflare]: https://www.cloudflare.com/
+[Digicert for Authenticode]: https://www.digicert.com/code-signing/microsoft-authenticode.htm
+[DigitalOcean Droplets]: https://cloud.digitalocean.com/droplets
 [GitHub Bot]: https://github.com/nodejs/github-bot
-[inventory.yml]: /ansible/inventory.yml
+[GitHub Bot Admins]: ../README.md#github-bot-admins
+[GoGetSSL for SSL]: https://www.gogetssl.com/
+[Infra Admins]: ../README.md#infra-admins
+[Jenkins access doc]: ../GOVERNANCE.md#jenkins_job_configuration_access
+[Joyent]: https://www.joyent.com/
+[Letsencrypt]: https://www.gogetssl.com/
+[MacStadium]: https://www.macstadium.com/
+[Mailgun email]: https://www.mailgun.com/
+[Packet.net]: https://app.packet.net/portal
+[Rackspace]: https://www.rackspace.com/
+[Release Admins]: ../README.md#release-admins
+[SSH guide]: ./ssh.md
+[Scaleway]: https://www.scaleway.com/
+[SoftLayer]: https://control.softlayer.com/
+[`nodejs-foundation`]: https://www.npmjs.com/~nodejs-foundation
+[inventory.yml]: ../ansible/inventory.yml
+[libuv]: https://github.com/libuv/libuv/
+[linuxOne]: https://www.ibm.com/linuxone
 [org owners]: https://github.com/orgs/nodejs/people?utf8=%E2%9C%93&query=%20role%3Aowner
 [post-mortem jobs]: https://ci.nodejs.org/view/post-mortem/
 [secrets repo]: https://github.com/nodejs/secrets
-[DigitalOcean Droplets]: https://cloud.digitalocean.com/droplets
-[Packet.net]: https://app.packet.net/portal
-[Joyent]: https://www.joyent.com/
-[MacStadium]: https://www.macstadium.com/
-[Rackspace]: https://www.rackspace.com/
-[Scaleway]: https://www.scaleway.com/
-[SoftLayer]: https://control.softlayer.com/
-[linuxOne]: https://www.ibm.com/linuxone
-[Apple]: https://developer.apple.com/support/certificates/
-[Digicert for Authenticode]: https://www.digicert.com/code-signing/microsoft-authenticode.htm
-[GoGetSSL for SSL]: https://www.gogetssl.com/
-[Letsencrypt]: https://www.gogetssl.com/
-[Cloudflare]: https://www.cloudflare.com/
-[Mailgun email]: https://www.mailgun.com/
-[#524]: https://github.com/nodejs/build/pull/524
-[IRC]: /README.md#nodejs-build-working-group
-[the Readme]: /README.md
-[the onboarding doc]: /ONBOARDING.md
-[`nodejs-foundation`]: https://www.npmjs.com/~nodejs-foundation

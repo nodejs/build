@@ -40,7 +40,7 @@
   * Refael, may be better to ask for larger companies to dedicate resources
   * nodejs/build: 203 open issues, 50 open PRs
 
-[#625](Build jobs for node-inspect under auspices of diagnostics WG)
+* \[#625](Build jobs for node-inspect under auspices of diagnostics WG)
   * Michael agreed to close.
 
 * Build updates for 12.x state:

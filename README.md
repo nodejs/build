@@ -294,13 +294,6 @@ are required. After that the configuration will be removed.
 
 
 [1]:    https://openjs-foundation.slack.com/archives/C03BJP63CH0
-[2]:    https://digitalocean.com/
-[3]:    https://www.rackspace.com/
-[5]:    https://www.mailgun.com/
-[6]:    https://github.com/nodejs/email
-[7]:    https://www.microsoft.com/
-[8]:    https://azure.microsoft.com
-[9]:    https://www.joyent.com/
 [10]:   https://www.ibm.com/
 [11]:   https://www.ibm.com/cloud
 [12]:   https://osuosl.org/services/powerdev
@@ -310,12 +303,18 @@ are required. After that the configuration will be removed.
 [17]:   https://www.arm.com/
 [18]:   https://www.mininodes.com/
 [19]:   http://techtribe.nl
+[2]:    https://digitalocean.com/
 [20]:   https://tessel.io/
 [21]:   https://jenkins.io/
 [22]:   https://www.intel.com/
 [23]:   https://www.macstadium.com/
 [24]:   https://www.packet.net/
-[resources.md]: ./doc/resources.md
+[3]:    https://www.rackspace.com/
+[5]:    https://www.mailgun.com/
+[6]:    https://github.com/nodejs/email
+[7]:    https://www.microsoft.com/
+[8]:    https://azure.microsoft.com
+[9]:    https://www.joyent.com/
 [GOVERNANCE.md]: ./GOVERNANCE.md
 [node]: https://nodejs.org/
 [ns]:   https://nodesource.com/

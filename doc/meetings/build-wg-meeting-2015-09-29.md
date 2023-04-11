@@ -56,7 +56,7 @@ process. Old Jenkins is still available.
 ## Follow-ups
 
 * [ ] Add Windows machines to Azure subscription, freeing some resources from
-  RackSpace [Alexis]
+  RackSpace \[Alexis]
 * [ ] Extract or build an inventory of slaves per label (ansible inventory?
   Jenkins UI)?
 * [ ] Make CI slaves redundant / ensure at least 2 slaves of each type
@@ -65,7 +65,7 @@ process. Old Jenkins is still available.
 ### Release
 
 * [ ] Remove dangling processes, reset to a “normal state” -- suggestively
-  invoking `make clean` on successful build/test runs. [Alexis, Johan]
-* [ ] Look for possible tests that uses common.PORT in parallel. [Johan]
-* [ ] Open an issue about improving redundancy for slaves [Johan]
-* [ ] Open an issue for introducing release builds for ppc [Michael]
+  invoking `make clean` on successful build/test runs. \[Alexis, Johan]
+* [ ] Look for possible tests that uses common.PORT in parallel. \[Johan]
+* [ ] Open an issue about improving redundancy for slaves \[Johan]
+* [ ] Open an issue for introducing release builds for ppc \[Michael]

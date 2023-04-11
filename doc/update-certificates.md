@@ -169,9 +169,9 @@ Push your branch in nodejs-private and then create a pull request.
 
 Delete any local copies of the non-encrypted key/certificate files
 
-[ci.nodejs.org]: https://ci.nodejs.org
-[ci-release.nodejs.org]: https://ci-release.nodejs.org
 [GoGetSSL]: https://www.gogetssl.com/
+[ci-release.nodejs.org]: https://ci-release.nodejs.org
+[ci.nodejs.org]: https://ci.nodejs.org
 [multi-year subscription]: https://www.gogetssl.com/wiki/general/multi-year-subscription-ssl/
 [nodejs.org]: https://nodejs.org
 [secrets repository]: https://github.com/nodejs-private/secrets

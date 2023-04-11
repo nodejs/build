@@ -2,6 +2,24 @@
   "plugins": [
     "remark-preset-lint-node",
     ["remark-lint-maximum-line-length", false],
-    ["remark-lint-prohibited-strings", false]
+    ["remark-lint-prohibited-strings", false],
+    ["remark-lint-fenced-code-flag", false],
+    ["remark-lint-final-newline", false],
+    ["remark-lint-first-heading-level", false],
+    ["remark-lint-hard-break-spaces", false],
+    ["remark-lint-list-item-bullet-indent", false],
+    ["remark-lint-list-item-indent", false],
+    ["remark-lint-no-blockquote-without-marker", false],
+    ["remark-lint-no-consecutive-blank-lines", false],
+    ["remark-lint-no-heading-indent", false],
+    ["remark-lint-no-literal-urls", false],
+    ["remark-lint-no-multiple-toplevel-headings", false],
+    ["remark-lint-no-shell-dollars", false],
+    ["remark-lint-no-tabs", false],
+    ["remark-lint-no-trailing-spaces", false],
+    ["remark-lint-strong-marker", false],
+    ["remark-lint-table-cell-padding", false],
+    ["remark-lint-table-pipes", false],
+    ["remark-lint-unordered-list-marker-style", false]
   ]
 }

@@ -74,4 +74,4 @@ GitHub Issue: https://github.com/nodejs/build/issues/1330
 * Automatic maintenance (allowing scripted kill and rm by anyone)
 * Bookmarklet/Browser Extension to trigger CI
 * Find out more about existing scripts and plugins to work with Jenkins so we do not need to do the work ourselves
-* [Dream] Integrate Node.js With Jenkins so we can write plugins and pipelines in JS
+* \[Dream] Integrate Node.js With Jenkins so we can write plugins and pipelines in JS

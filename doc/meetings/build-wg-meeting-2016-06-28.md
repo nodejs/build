@@ -33,9 +33,9 @@ Previous meetings: https://docs.google.com/document/d/165tby7jyuYo4cXVrwQxUAQAzZ
 
 Talked through/reviewed this issues:
 
- * OS X buildbots/ci: call to action [#367]
- * rsync endpoint to mirror the releases [#55]
- * Run and deploy nodejs-github-bot [#404]
+ * OS X buildbots/ci: call to action \[#367]
+ * rsync endpoint to mirror the releases \[#55]
+ * Run and deploy nodejs-github-bot \[#404]
 
 Not many updates so we did not discuss them in depth.  On 404 will
 see if we can find a time people are around as opposed to just

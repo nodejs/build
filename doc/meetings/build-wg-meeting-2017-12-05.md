@@ -56,7 +56,7 @@
 * Make it easier for people to join the Build WG [#941](https://github.com/nodejs/build/issues/941)
 * Permission to start culling all pre-v4 infra and build logic [#926](https://github.com/nodejs/build/issues/926)
 * suggestion: investigate a commit-queue solution [#705](https://github.com/nodejs/build/issues/705)
-* [#1030] https://github.com/nodejs/build/issues/1030
+* [#1030](https://github.com/nodejs/build/issues/1030)
 * Blue overview
 
 ## Minutes
@@ -104,7 +104,7 @@
 * Possibly start with script that will help with person doing it
 * Jon has created one - https://github.com/maclover7/committer-tools-rb
 
-### [#1030] https://github.com/nodejs/build/issues/1030
+### [#1030](https://github.com/nodejs/build/issues/1030)
 * Some advocacy to cut it at 10.11 ?, We currently build on 10.10
 * Agreed to leave 10.8, 10.9 as experimental.
 

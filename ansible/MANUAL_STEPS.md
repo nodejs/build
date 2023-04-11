@@ -216,7 +216,7 @@ sudo hdiutil detach /Volumes/Command\ Line\ Developer\ Tools
 
 ### Disk Layout
 
-[Our AIX Ansible bootstrap role](roles/bootstrap/tasks/partials/aix.yml) 
+[Our AIX Ansible bootstrap role](roles/bootstrap/tasks/partials/aix.yml)
 attempts to resize filesystems to be large enough to install packages from the
 AIX Toolbox and to hold workspaces for CI builds. The server instances will
 need to have enough disk space available to fit the requested disk space. On
@@ -323,7 +323,7 @@ ENCRYPTION:         yes
 ```
 
 where the earlier error is referring to `MAX PPs per PV`. This can be changed,
-as indicated by the error message, with [`chvg -t`](https://www.ibm.com/docs/en/aix/7.3?topic=c-chvg-command). 
+as indicated by the error message, with [`chvg -t`](https://www.ibm.com/docs/en/aix/7.3?topic=c-chvg-command).
 Note that `-t` takes a scaling factor which is multiplied by 1016. For our
 100Gb disks we use a factor of 16 which then allows the
 [`extendvg`](https://www.ibm.com/docs/en/aix/7.3?topic=e-extendvg-command)
@@ -858,5 +858,3 @@ pax -rf /u/unix1/SDK8_64bit_SR6_FP10.PAX.Z -ppx
 
 
 [Setting up a Windows Host]: https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html
-[newer Ansible configuration]: https://github.com/nodejs/build/tree/main/ansible
-[stand-alone]: https://github.com/nodejs/build/tree/main/setup/windows

@@ -121,7 +121,7 @@ to member of the Working Groups see [resources.md][]
 
 ### WG Meetings
 
-The WG meets every three weeks on a Zoom Webinar, schedule is available on the [Node.js Foundation calendar].
+The WG meets every three weeks on a Zoom Webinar, schedule is available on the [Node.js Foundation calendar][].
 A designated moderator approved by the WG runs the meeting. Each meeting should be
 published to YouTube.
 
@@ -158,7 +158,7 @@ These Pull Requests must be:
   * Use the squash merge button workflow on Github
 
 
-[Slack], specifically `#nodejs-build` is important for communicating with
+[Slack][], specifically `#nodejs-build` is important for communicating with
 other Node.js project members, and how we receive many initial signals
 of downtime.
 
@@ -333,16 +333,16 @@ Note that changes to WG membership require unanimous consensus.  See
 
 ### Moderation Policy
 
-The [Node.js Moderation Policy] applies to this WG.
+The [Node.js Moderation Policy][] applies to this WG.
 
 ### Code of Conduct
 
 The [Node.js Code of Conduct][] applies to this WG.
 
-[Node.js Code of Conduct]: https://github.com/nodejs/TSC/blob/HEAD/CODE_OF_CONDUCT.md
-[Node.js Moderation Policy]: https://github.com/nodejs/TSC/blob/HEAD/Moderation-Policy.md
-[Node.js Foundation calendar]: https://nodejs.org/calendar
-[the onboarding doc]: /ONBOARDING.md
-[Slack]: https://openjs-foundation.slack.com/archives/C03BJP63CH0
 [#524]: https://github.com/nodejs/build/pull/524
-[resources.md]: /doc/resources.md
+[Node.js Code of Conduct]: https://github.com/nodejs/TSC/blob/HEAD/CODE_OF_CONDUCT.md
+[Node.js Foundation calendar]: https://nodejs.org/calendar
+[Node.js Moderation Policy]: https://github.com/nodejs/TSC/blob/HEAD/Moderation-Policy.md
+[Slack]: https://openjs-foundation.slack.com/archives/C03BJP63CH0
+[resources.md]: doc/resources.md
+[the onboarding doc]: ONBOARDING.md

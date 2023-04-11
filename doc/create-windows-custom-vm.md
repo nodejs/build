@@ -22,7 +22,7 @@ The full name of the machine should follow this format: `test-{Provider}[_{Spons
 
 ### Group
 
-The inventory file is located [here](/ansible/inventory.yml). The newly created machine needs to be added to it in order to run ansible playbooks on it. Hosts are divided into three groups: `infra`, `release`, and `test`. Each of them is further separated into subgroups based on machine providers. For Windows machines, these will in most cases be `azure` and `rackspace` (unless Windows on ARM64 is in case). Your machine should be added to the `test` group and to the provider it belongs to.
+The inventory file is located [here](../ansible/inventory.yml). The newly created machine needs to be added to it in order to run ansible playbooks on it. Hosts are divided into three groups: `infra`, `release`, and `test`. Each of them is further separated into subgroups based on machine providers. For Windows machines, these will in most cases be `azure` and `rackspace` (unless Windows on ARM64 is in case). Your machine should be added to the `test` group and to the provider it belongs to.
 
 **Note:** There is no provider group for local VMs, so feel free to add it to some of the existing ones as long as you do not push that change.
 
@@ -71,7 +71,7 @@ If running the ping command fails, try running it with `-vvvv` for more informat
 
 ## 4. Configuring the machine
 
-After adding the machine to the inventory and running the ping command to check everything is correct, it is now time to set the machine up for building and testing Node. This is done by the create-windows-custom-vm.yml playbook found [here](/ansible/playbooks/create-windows-custom-vm.yml).
+After adding the machine to the inventory and running the ping command to check everything is correct, it is now time to set the machine up for building and testing Node. This is done by the create-windows-custom-vm.yml playbook found [here](../ansible/playbooks/create-windows-custom-vm.yml).
 
 It is important to run a playbook on that host only, especially if you have access to other Node CI machines. For that, you'll need to use `--limit "{FullHostName}"`, where `{FullHostName}` is the full name starting with `test-`.
 

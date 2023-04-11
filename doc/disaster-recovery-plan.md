@@ -22,12 +22,12 @@ Each server:
 * Controls connections from Jenkins agents via iptables rules.
 * Is connected to our grafana server via a telegraf agent.
 * Run a script to sync the Jenkins job configurations to GitHub via `crontab`
-(see [Recovering Jenkins configuration] below).
+(see [Recovering Jenkins configuration](#recovering-jenkins-configuration) below).
 
 If setting up replacement servers:
 * `/var/lib/jenkins` should reside on a disk with 300GB capacity.
 * The IP address will need to be updated in the DNS settings at CloudFlare.
-* The Ansible inventory and [Jenkins host playbooks] updated.
+* The Ansible inventory and [Jenkins host playbooks][] updated.
 
 For reference, at the time of writing the hosts are configured:
 host | vCPUs | Memory
@@ -38,7 +38,7 @@ ci-release.nodejs.org | 4 | 8 GB
 ### Recovering Jenkins configuration
 
 For each Jenkins server periodic snapshots of `/var/lib/jenkins` are
-taken by the [backup server]. The snapshots retain the directory layout
+taken by the [backup server][]. The snapshots retain the directory layout
 and can be copied over a clean installation of the same version of Jenkins.
 
 In addition to the backups on the backup server, the job configuration for
@@ -52,15 +52,12 @@ file, renamed to `jobs/<jobname>.xml`, from each job is saved.
 ### Recovering iptables configuration
 
 For each Jenkins server periodic backups of the results of `iptables-save`
-are taken by the [backup server].
+are taken by the [backup server][].
 
-The [iptables ansible playbook] can also be used to add every known host
+The [iptables ansible playbook][] can also be used to add every known host
 in the ansible inventory beginning with `release-` or `test-` prefixes to
 the iptables rules for the respective CI server.
 
+[Jenkins host playbooks]: https://github.com/nodejs/build/tree/main/ansible/playbooks/jenkins/host
 [backup server]: https://github.com/nodejs/build/tree/main/backup
 [iptables ansible playbook]: https://github.com/nodejs/build/blob/main/ansible/playbooks/jenkins/host/iptables.yml
-[Jenkins host playbooks]: https://github.com/nodejs/build/tree/main/ansible/playbooks/jenkins/host
-[Recovering iptables configuration]: #recovering-iptables-configuration
-[Recovering Jenkins configuration]: #recovering-jenkins-configuration
- 

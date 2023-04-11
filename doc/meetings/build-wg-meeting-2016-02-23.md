@@ -21,7 +21,7 @@ Skipped
 
 ## Minutes
 
-### Jenkins access [#331]
+### Jenkins access \[#331]
 
 * Some discussion on what levels of access we should provide and to who.
   * collaborators
@@ -40,13 +40,13 @@ Skipped
 * Will offer test team machine/mentoring to explore if they can set up their
   own instance.
 
-### Setup to publish benchmark results to nodejs.org [#281]
+### Setup to publish benchmark results to nodejs.org \[#281]
 
 Michael: what needs to be happening: rsync and pull from github repo
 
 Rod: I’ll take it on. Will ping the right people for public review.
 
-### Backups for our resources [#308]
+### Backups for our resources \[#308]
 
 Rod: what's the status here, what can we do to move forward or is it done?
 

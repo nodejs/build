@@ -35,7 +35,7 @@
 
 * Rod Vagg
   * Not much to report for Build
-  * xz compression for 0.12, 0.10 releases (inc headers) [#284]
+  * xz compression for 0.12, 0.10 releases (inc headers) \[#284]
 
 * Hans Kristian Flaatten
   * Jenkins monitor. Reduce noise. It now takes a 15 minutes downtime to send a
@@ -58,7 +58,7 @@
 
 ## Minutes
 
-### Alpine Linux / Docker Build [#75 #21]
+### Alpine Linux / Docker Build \[#75 #21]
 
 Hans: Will run Jenkins slaves in Docker containers. Next steps: provision a
 machine, write ansible configuration.
@@ -67,13 +67,13 @@ Someone mentioned [dante](https://github.com/retrohacker/dante).
 
 Rod: which tag of Alpine Linux? Is this going to be a constant or a job parameter?
 
-### Option to run V8 test suite [#199]
+### Option to run V8 test suite \[#199]
 
 Doesn’t run on windows at the moment.
 
 Add subversion to a subset of the machines to expand testing
 
-### Make sure all init scripts has JOBS and NODE_TEST_DIR [#291]
+### Make sure all init scripts has JOBS and NODE_TEST_DIR \[#291]
 
 Now supporting running tests in parallel.
 

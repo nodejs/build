@@ -48,17 +48,17 @@
 
 ## Minutes
 
-### Option to run V8 test suite [#199]
+### Option to run V8 test suite \[#199]
 
 Running tests should be fairly easy, hardest part is to figure out how to
 configure all the prerequisites. Michael to follow up and report on progress.
 First deliverable: a quick and dirty job in Jenkins to run this daily. We can
 improve the process as we go.
 
-### PPC platforms as part of standard release [#205]
+### PPC platforms as part of standard release \[#205]
 
 
-### Add FIPS mode build to CI [#264]
+### Add FIPS mode build to CI \[#264]
 
 
 ## Previous meeting review

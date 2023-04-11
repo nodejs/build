@@ -1,6 +1,6 @@
 # Getting SSH access
 
-See [special access to buildresources](./process/special_access_to_build_resources.md)
+See [special access to buildresources](../GOVERNANCE.md#special_access_requests)
 for the detailed policy on access to machines.
 
 If you are not a member of the build working group, open an issue in

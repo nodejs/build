@@ -67,7 +67,7 @@ $ ssh -p 2200 root@127.0.0.1
 
 You will have to create an SSH alias for the hosts you're running the Ansible playbook against.
 
-In this [github-bot] example, that means `infra-rackspace-debian8-x64-1` because
+In this [github-bot][] example, that means `infra-rackspace-debian8-x64-1` because
 the playbook declares this hostname as the host it runs on.
 
 Add the following to your `~/.ssh/config` file:

@@ -48,7 +48,7 @@
 * Richard, release cadence may naturally drive flow.
   * 12 is slated for the mid this month, then next is 14 of next month.
 
-* TODO list to make this happen[#1] (https://github.com/nodejs/commit-queue/issues/1)
+* TODO list to make this happen[#1](https://github.com/nodejs/commit-queue/issues/1)
   * Rich: there was an attempt about 5 years ago. CI/testing was not stable enough and pitchforks 
     came out, quickly backed off of requiring commit queue.
   * For next 2 years any mention of commit queue was not well received

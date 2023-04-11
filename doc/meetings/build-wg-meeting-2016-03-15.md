@@ -57,7 +57,7 @@
 
 ## Minutes
 
-### Ratify Testing WG Charter [nodejs/node#5461]
+### Ratify Testing WG Charter \[nodejs/node#5461]
 
 Discussion about the scope, longer term mandate for test working group. Key
 part is that access to jenkins and machines is still through build working group
@@ -87,7 +87,7 @@ Rod: Rpi primary ARM target for Node. Test coverage is important. Pi3 is a
 completely different platform (ARM64)
 
 We do need more help on figuring out which platforms should be supported.
-Hardware WG has gone inactive. What platforms do we actively support? [alexis
+Hardware WG has gone inactive. What platforms do we actively support? \[alexis
 to open an issue on github]
 
 Rod: is going to do call for P1’s

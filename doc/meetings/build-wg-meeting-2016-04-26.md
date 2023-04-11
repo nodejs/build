@@ -53,7 +53,7 @@
 
 ## Minutes
 
-### Access to build resources [#354]
+### Access to build resources \[#354]
 
 Michael: taken the action to create the straw man, this is more of a reminder
 
@@ -90,7 +90,7 @@ Alexis: people who have ongoing access can give access to others
 
 Michael: procedure for approving ongoing access is detailed in #354
 
-### OS X buildbots/ci [#367]
+### OS X buildbots/ci \[#367]
 
 Johan: the problem is growing, we do not have enough testing on OS X. The
 current platform we are testing on, Voxer, are shutting down? We might not have
@@ -102,7 +102,7 @@ Michael: Do we know anyone in Apple?
 
 Johan: have checked with Apple Sidney HQ, without much luck
 
-Alexis: macstadium, what ranges of OS X does they offer? You [Johan] estimated
+Alexis: macstadium, what ranges of OS X does they offer? You \[Johan] estimated
 $800/month?
 
 Johan: Apple does not provide old versions of Mac OS X, macstadium gives us a
@@ -193,7 +193,7 @@ Johan: seconds that
 
 Alexis: links up with Myles after he have talked with Mikeal
 
-### Accept terms of use for linuxOne machines [#386]
+### Accept terms of use for linuxOne machines \[#386]
 
 Michael: awaiting reply
 
@@ -228,7 +228,7 @@ Alexis: no
 
 Michael: +1 from me then
 
-### GitHub team name for CI Working Group [nodejs/CI#7]
+### GitHub team name for CI Working Group \[nodejs/CI#7]
 
 Alexis: We could have a quick discussion about GitHub team names for CI.
 Related: nodejs/CI#7
@@ -261,6 +261,6 @@ Alexis: I’ll open a PR to document this and leave the CI group name as it is f
 
 ## Previous meeting review
 
-[skipped due to time constraints]
+\[skipped due to time constraints]
 
 ## Follow-ups

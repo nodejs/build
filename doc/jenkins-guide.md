@@ -30,7 +30,7 @@ The playbooks provision a machine, and handle tasks such as installing
 compilers, Java versions, and managing the local Jenkins agent.
 
 To see which playbooks correspond to which worker, check the [services
-document](./services.md).
+document](./resources.md).
 
 ### Running playbooks
 
@@ -400,7 +400,6 @@ of the members of the [infra](https://github.com/nodejs/build#infra-admins) or
 [release](https://github.com/nodejs/build#release-admins) administrators to
 take a look.
 
-[secrets repo]: https://github.com/nodejs-private/secrets
-[ci]: https://ci.nodejs.org/computer/test-softlayer-ubuntu1804_container-x64-1/
 [1]: https://ci.nodejs.org/computer/test-softlayer-ubuntu1804_container-x64-1/
 [Node.js Build Slack channel]: https://openjs-foundation.slack.com/archives/C03BJP63CH0
+[secrets repo]: https://github.com/nodejs-private/secrets
