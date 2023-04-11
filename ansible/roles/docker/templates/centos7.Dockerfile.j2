@@ -49,8 +49,8 @@ USER iojs:iojs
 ENV CCACHE_TEMPDIR /home/iojs/.ccache/{{ item.name }}
 
 CMD cd /home/iojs \
-  && curl https://ci.nodejs.org/jnlpJars/slave.jar -O \
+  && curl https://ci.nodejs.org/jnlpJars/agent.jar -O \
   && java -Xmx{{ server_ram|default('128m') }} \
-          -jar /home/{{ server_user }}/slave.jar \
-          -jnlpUrl {{ jenkins_url }}/computer/{{ item.name }}/slave-agent.jnlp \
+          -jar /home/{{ server_user }}/agent.jar \
+          -jnlpUrl {{ jenkins_url }}/computer/{{ item.name }}/agent.jnlp \
           -secret {{ item.secret }}

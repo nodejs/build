@@ -158,7 +158,7 @@ For more information refer to other hosts in `inventory.yml` or the
 
 You will always have to set the following variables to configure a host:
 
-- `secret`: the Jenkins slave secrets (use a dummy value for testing the
+- `secret`: the Jenkins agent secrets (use a dummy value for testing the
   scripts on machines that will not be connected to Jenkins)
 - `ip`: the IP or DNS address of the machine
 
@@ -174,7 +174,7 @@ the machine system and role:
 - `is_benchmark`: set to `true`/`false`. If true, will run the
   `benchmarking` role on the machine
 - `server_jobs`: the number of parallel jobs to run on a host
-- `server_ram`: how much memory the slave should assign to java-base
+- `server_ram`: how much memory the agent should assign to java-base
   (defaults to "128m")
 - `vs`: Visual Studio version to install on Windows hosts
 - `rdp_port`: port to use for Windows remote desktop connections

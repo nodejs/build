@@ -91,9 +91,9 @@
     cmd: "chtag -t -c iso8859-1 {{ root_certs.dest }}"
   when: os|startswith("zos")
 
-- name: download slave.jar
+- name: download agent.jar
   get_url:
-    url: "{{ jenkins_worker_jar }}"
+    url: "{{ jenkins_agent_jar }}"
     dest: '{{ home }}/{{ server_user }}/slave.jar'
     mode: 0644
     timeout: 60

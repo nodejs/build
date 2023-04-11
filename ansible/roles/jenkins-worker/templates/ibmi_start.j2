@@ -40,6 +40,6 @@ echo "done"
 
 ########################### Now start our agent
 
-export START_CMD="{{ java_path[os] }} -Xmx{{ server_ram|default('128m') }} -Dos400.stdio.convert=N -Djava.net.preferIPv4Stack=true -jar {{ home }}/{{ server_user }}/slave.jar -secret {{ secret }} -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp >{{ home }}/{{ server_user }}/jenkins.log 2>&1 "
+export START_CMD="{{ java_path[os] }} -Xmx{{ server_ram|default('128m') }} -Dos400.stdio.convert=N -Djava.net.preferIPv4Stack=true -jar {{ home }}/{{ server_user }}/slave.jar -secret {{ secret }} -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/agent.jnlp >{{ home }}/{{ server_user }}/jenkins.log 2>&1 "
 echo $START_CMD
-exec /QOpenSys/usr/bin/system -v -kpiveO "SBMJOB CMD(QSH CMD('echo starting Jenkins slave && cd $HOME && env && touch $HOME/jenkins.log && setccsid 1208 $HOME/jenkins.log && exec $START_CMD')) CPYENVVAR(*YES) PRTDEV(*USRPRF) ALWMLTTHD(*YES) $SBMJOB_OPTS"
+exec /QOpenSys/usr/bin/system -v -kpiveO "SBMJOB CMD(QSH CMD('echo starting Jenkins agent && cd $HOME && env && touch $HOME/jenkins.log && setccsid 1208 $HOME/jenkins.log && exec $START_CMD')) CPYENVVAR(*YES) PRTDEV(*USRPRF) ALWMLTTHD(*YES) $SBMJOB_OPTS"

@@ -30,5 +30,5 @@ script
 
   exec java -Xmx{{ server_ram|default('128m') }} \
         -jar /home/{{ server_user }}/slave.jar -secret {{ secret }} \
-        -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp
+        -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/agent.jnlp
 end script

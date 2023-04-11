@@ -1,5 +1,5 @@
 [Unit]
-Description=Jenkins Slave
+Description=Jenkins agent
 Wants=network.target
 After=network.target
 
@@ -27,5 +27,5 @@ Environment="ARCH={{ arch }}"
 
 ExecStart=/usr/bin/java -Xmx{{ server_ram|default('128m') }} \
           -jar /home/{{ server_user }}/slave.jar \
-          -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/slave-agent.jnlp \
+          -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/agent.jnlp \
           -secret {{ secret }}
