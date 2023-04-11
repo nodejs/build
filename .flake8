@@ -1,5 +1,0 @@
-[flake8]
-exclude=.venv
-max-line-length=250
-import-order-style=google
-ignore=E111

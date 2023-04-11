@@ -25,9 +25,9 @@
 import os
 import re
 
-from ansible.module_utils.basic import AnsibleModule
 from jinja2 import Environment
 
+from ansible.module_utils.basic import AnsibleModule
 
 pre_match = '# begin: node.js template'
 post_match = '# end: node.js template'

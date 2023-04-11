@@ -27,9 +27,11 @@ from __future__ import print_function
 import base64
 import os
 
-from ansible.module_utils.basic import AnsibleModule
 from Crypto.Cipher import DES3
 from jinja2 import Environment
+
+from ansible.module_utils.basic import AnsibleModule
+
 try:
     import configparser  # Python 3
 except ImportError:

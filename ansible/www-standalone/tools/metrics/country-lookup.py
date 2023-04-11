@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-import sys
 import csv
-import geoip2.database
 import os
+import sys
+
+import geoip2.database
 
 reader = geoip2.database.Reader(os.path.dirname(os.path.realpath(__file__)) + '/GeoLite2-City.mmdb')
 

@@ -32,6 +32,7 @@ import sys
 from os import path
 
 import yaml
+
 try:
     import configparser
 except ImportError:
@@ -278,7 +279,7 @@ def parse_yaml(hosts, config):
 def parse_host(host):
     """Parses a host and validates it against our naming conventions"""
 
-    hostinfo = dict()
+    hostinfo = {}
     info = host.split('-')
 
     expected = ['type', 'provider', 'os', 'arch', 'uid']
