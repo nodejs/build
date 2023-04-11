@@ -26,7 +26,7 @@
 * Enable HSTS on website [#2857](https://github.com/nodejs/build/issues/2857)
   * We just need to pick a date
   * Rod, would we get rid of encrypted as well?
-  * Rich, volunteered to write the blog post, 
+  * Rich, volunteered to write the blog post,
   * We’ll plan to do July 13th
 
 * Interest in establishing a "Build Helper" role [#2550](https://github.com/nodejs/build/issues/2550)

@@ -2,7 +2,7 @@
 
 ## Links
 
-* **Recording**: https://youtu.be/qFq4IvGHxR8  
+* **Recording**: https://youtu.be/qFq4IvGHxR8
 * **GitHub Issue**: https://github.com/nodejs/build/issues/2513
 
 ## Present
@@ -15,14 +15,14 @@
 ## Agenda
 
 ## Announcements
- 
+
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 ### nodejs/build
 
 * Apple silicon builds [#2474](https://github.com/nodejs/build/issues/2474)
   * One more test that needs to pass before it can be added to the CI
-    * Ash will open issue in core to see we can help find a volunteer to fix, don’t think it’s a build issue. 
+    * Ash will open issue in core to see we can help find a volunteer to fix, don’t think it’s a build issue.
   * Target is 16.x for binaries that support both without Rosetta 2.
 
 * Metrics

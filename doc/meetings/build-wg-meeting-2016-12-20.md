@@ -32,7 +32,7 @@ Next meeting: January 10, 2017
     - Citgm parallelization
     - Engaged in discussion for node.js installer: https://github.com/nodejs/version-management
     - New debugger/repl talks
-	https://github.com/nodejs/node/pull/10187
+      https://github.com/nodejs/node/pull/10187
 
 ## Agenda
 

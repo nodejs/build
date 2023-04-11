@@ -234,7 +234,7 @@ FS SYNC OPTION:     no
 
 To increase the size of `/home` run: `sudo chfs -a size=+XG /home` where X is the number of GBs to increase the system.
 
-If you hit an error about the maximum allocation of the logical volume you can increase the max with: 
+If you hit an error about the maximum allocation of the logical volume you can increase the max with:
 `sudo chlv -x <size> <logical volume>`
 
 *If you are unsure about any of the commands please ask a Red Hat/IBM member of the build working group for assistance*
@@ -302,11 +302,11 @@ sudo df                        # to determine the device for `/`
 sudo e2fsck -y /dev/mmcblk0p2  # replace mmcblk0p2 with proper device for `/`
 ```
 
-After running the steps above, follow instructions below to 
+After running the steps above, follow instructions below to
 [restart the machine](#restart-the-machine).
 
 Note: the occurrence of read-only root filesystem indicates there's probably a
-more concerning issue going on. Remember to open an issue on nodejs/build to 
+more concerning issue going on. Remember to open an issue on nodejs/build to
 investigate further, as it might be required to reprovision the machine.
 
 ### Restart the machine
@@ -338,7 +338,7 @@ Below is a quick guide using [`test-softlayer-ubuntu1804_container-x64-1`][1] as
 the [worker's view][1] on Jenkins
 2. Verify the existence of the container:
     * To view a list of all active Docker containers, you can run: `docker ps`
-    * To view a list of all active services, you can run:  
+    * To view a list of all active services, you can run:
       ```bash
       systemctl list-units | grep jenkins
       ```

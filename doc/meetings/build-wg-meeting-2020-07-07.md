@@ -17,7 +17,7 @@
 ## Agenda
 
 ## Announcements
- 
+
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 * Align on biggest concerns
@@ -40,9 +40,9 @@
 * Johan
   * Set up grafana, to monitor our machines
   * Want to achieve red/green dashboard. Something needs to be done or not
-  * challenge is in gradient, machine does not go down, 
+  * challenge is in gradient, machine does not go down,
   * how to collect info on “not working as intended”
-  * Cloudflare load balancer issue   
+  * Cloudflare load balancer issue
 
 
 * Jenkins ecosystem: timely responses to issues like things going offline
@@ -59,7 +59,7 @@
     * Job to test, looking to add to run nightly
   * Rich Trott (@Trott)
     * Opening a file on rpi in ci keeps event loop open (nodejs issue: )
-    * Looking and thinking about debug 
+    * Looking and thinking about debug
     * Supporting Matheus in using github actions for a commit queue
   * Johan Bergström (@jbergstroem)
     * Cleaning old jenkins jobs / backup
@@ -74,9 +74,9 @@
   * John Kleinschmidt (@jkleinsc)
     * Looking into Apple Silicon for CI (electron)
   * Michael Dawson (@mhdawson)
-    * Nothing interesting, mostly talking to Ash/Richard on the items they 
+    * Nothing interesting, mostly talking to Ash/Richard on the items they
       are working on.
-    * Back and forth on Build resources with Foundation team 
+    * Back and forth on Build resources with Foundation team
 
 
 ## Q&A, Other

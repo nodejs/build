@@ -2,7 +2,7 @@
 
 ## Links
 
-* **Recording**: https://www.youtube.com/watch?v=vDSZEBvHduU 
+* **Recording**: https://www.youtube.com/watch?v=vDSZEBvHduU
 * **GitHub Issue**: https://github.com/nodejs/build/issues/1500
 
 ## Present
@@ -16,7 +16,7 @@
 ## Agenda
 
 ## Announcements
- 
+
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 No announcements
@@ -39,7 +39,7 @@ No announcements
 * State of Ansible [#1277](https://github.com/nodejs/build/issues/1277)
   * all planned migration work done
 * Use of Docker in Build CI [#1226](https://github.com/nodejs/build/issues/1226)
-  * Rod gave a good overview 
+  * Rod gave a good overview
 
 ## Q&A, Other
 

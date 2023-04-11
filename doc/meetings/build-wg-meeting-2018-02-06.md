@@ -2,7 +2,7 @@
 
 ## Links
 
-* **Recording**:  
+* **Recording**:
 * **GitHub Issue**: https://github.com/nodejs/build/issues/1096
 * **Minutes Google Doc**: https://docs.google.com/document/d/1zMzNvTNunkVzk6u27mm8LaMXtkm9SDPsx2-3ruBlri4/
 
@@ -13,14 +13,14 @@
 * Kyle Farnung (@kfarnung)
 * Rod Vagg
 * Rich Trott
-* Jordan Harband 
+* Jordan Harband
 
 ## Agenda
 
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 ## Announcements
- 
+
 * Rod looking at Raspberry PI issues, some strange things going on, may need to take offline
 Until Rod has time to figure what is going on.
 
@@ -30,7 +30,7 @@ Until Rod has time to figure what is going on.
   * They are similar to Raspberry PI 3’s, at this point we have a fair amount of modern arm
      coverage. It’s ubuntu which is not that different.
   *  Rod will chat with Dave from Mininodes about issues and if we can’t resolve them we will
-      remove as we don’t have the cycles to keep them up and running. 
+      remove as we don’t have the cycles to keep them up and running.
 * Remove Fedora 22, 23, 24 [#962](https://github.com/nodejs/build/issues/962)
   * remove tag
   * Rod has action to PR in proposal
@@ -40,7 +40,7 @@ Until Rod has time to figure what is going on.
     seems to add to the jobs significantly which makes the problem worse.
   * Jon will open up new issue to consider moving the post-status-update job to dedicated
      machines, to avoid jenkins-workspace and general queue clogging issues.
-  * Last issue related to this one is making sure we have individual emails.  Being covered in 
+  * Last issue related to this one is making sure we have individual emails.  Being covered in
     different issue, will close this one.
 * Security: please pay careful attention to code running through CI [#1070](https://github.com/nodejs/build/issues/1070)
   * Discussed and Jon will consolidate into issue that targets remaining things to do.
@@ -63,12 +63,12 @@ Until Rod has time to figure what is going on.
     as system level install.
   * Rich one issue is how to deal with old installations, etc.
   * Michael/Jon in agreement with Rich that version management team make initial suggestion.
-  * Rich, if path to where official installers will install there will be discussions, but version 
+  * Rich, if path to where official installers will install there will be discussions, but version
      management team is right team to deal.
-* Flaky tests, 
+* Flaky tests,
   * Rich, issue in node.js with tag indicating flag.
   * Add to collaborator guide, maybe already there just need to check.
-  * Open issue to discussion, 
+  * Open issue to discussion,
 * Michael, find or open issue about paid resources for build, restart discussion and get onto
    agenda
 

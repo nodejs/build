@@ -25,7 +25,7 @@
   * Planned to last until ~ April 2025, so looking at what platforms which still be in support
     at that time
   * Main change is that CentOS 7 will EOL before then so planning to move to RHEL 8
-  * Applying for no cost [RHEL subscription for Open Source Infrastructure](https://www.redhat.com/en/blog/extending-no-cost-red-hat-enterprise-linux-open-source-organizations) program. 
+  * Applying for no cost [RHEL subscription for Open Source Infrastructure](https://www.redhat.com/en/blog/extending-no-cost-red-hat-enterprise-linux-open-source-organizations) program.
   * For most architectures at least one provider we can install versus provide templates, for the
     others we can likely build our own images.
 
@@ -42,7 +42,7 @@
 * Interest in establishing a "Build Helper" role    [#2550](https://github.com/nodejs/build/issues/2550)
   * nothing to report on this front.
   * Ash did some hand over to Richard and Stewart but have not progressed since.
-    
+
 * Memory issue on fedora in latest V8 (8.8) requirement [#2527](https://github.com/nodejs/build/issues/2527)
   * Been ok since Richard added swap
   * Need to add to ansible before closing out

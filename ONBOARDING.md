@@ -17,7 +17,7 @@ onboarding session.
     [`GOVERNANCE.md`](./GOVERNANCE.md) and have any questions ready
 - [ ] Schedule a meeting with the member to:
     - [ ] Walk them through the infrastructure and what other members do
-    - [ ] Explain how to decrypt nodejs/secrets 
+    - [ ] Explain how to decrypt nodejs/secrets
     - [ ] Practice running the `jenkins/worker/create.yml` playbook on one of the machines in the test CI cluster
     - [ ] Answer any questions they may have
 - [ ] PR changes to [README.md](./README.md#build-wg-members) to add the member to build-test

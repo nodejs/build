@@ -48,7 +48,7 @@ GitHub Issue: https://github.com/nodejs/build/issues/1330
  * From the node-core-utils side
     * Make node-core-utils more CI friendly (logs mode)
     * Autosquashing
-    
+
 ### Tracking failures in node-test-commit
  * Joyee has started working on `ncu-ci walk` command
     * Walks a node-test-commit job, and sorts through all failures
@@ -64,9 +64,9 @@ GitHub Issue: https://github.com/nodejs/build/issues/1330
  * Run the CI failure parser in the worker post-build to print the relevant information at the end of the log
     * https://github.com/nodejs/node-core-utils/blob/master/lib/ci_failure_parser.js
     * Need a marker between the logs and the results coming out of node-core-utils to make sure node-core-utils do not read its own output
- 
+
  ### Other topics
- 
+
 * Three topics from @refack
    * Different repos
    * Automating CI trigger

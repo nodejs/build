@@ -52,7 +52,7 @@
 * Gibson: I’ll raise an issue for it later, just need to make sure that existing
   admins can still access ci-release.
 ### New OSX infra walkthrough [#1026](https://github.com/nodejs/build/issues/1026)
-* Michael: I can give a quick overview, though I won’t be able to 
+* Michael: I can give a quick overview, though I won’t be able to
 * Michael: Docs are available in secrets/build/infra/macstadium.md
 * Rod: I recall that you have to add a new host first before you can get Vsphere
   access for it.

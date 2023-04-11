@@ -2,7 +2,7 @@
 
 ## Links
 
-* **Recording**: https://youtu.be/qngUIR5WIMs 
+* **Recording**: https://youtu.be/qngUIR5WIMs
 * **GitHub Issue**: https://github.com/nodejs/build/issues/2483
 
 ## Present
@@ -17,7 +17,7 @@
 ## Agenda
 
 ## Announcements
- 
+
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 * Ash - Node.js Orka cloud will do down on Dec 10th

@@ -16,11 +16,11 @@ You will need build-infra level access to be able to retrieve the certificate an
 
 ## New or reissue certificate
 
-GoGetSSL should send notifications to the Build WG email address from 30 days before the existing certificate expires. If we are within the multi-year subscription period, we can [reissue the certificate](#reissue-certificate), otherwise a new ceriticate will need to be purchased via a request to the OpenJS Foundation. 
+GoGetSSL should send notifications to the Build WG email address from 30 days before the existing certificate expires. If we are within the multi-year subscription period, we can [reissue the certificate](#reissue-certificate), otherwise a new ceriticate will need to be purchased via a request to the OpenJS Foundation.
 
 ### Generating new certificate and key
 
-Create a new key each time you renew the certificate. 
+Create a new key each time you renew the certificate.
 
 Currently we use RSA, 4096 bits (validate on each renewal that this is still the recommended/reasonable values).
 
@@ -64,11 +64,11 @@ If downloading via the web UI some assembly will be required to construct the `s
 
 Go to https://my.gogetssl.com and then choose `SSL Certificates`->(The new certificate) -> `View`.
 ![](update-certificates.png)
- 
+
  You will either need to download the files from either:
  * Both `Certificate` and `Intermediate CA`. Paste the contents of both files into `/root/tmp/star_nodejs_org_chained.crt`.
  * Download `All files`. This will be a `.zip` file containing three files. Paste the contents of all three unzipped files into `/root/tmp/star_nodejs_org_chained.crt`.
-  
+
 ### Certificate from confirmation email
 
 As part of the renewal/reissue process we will get two emails:
@@ -126,7 +126,7 @@ Delete `/root/tmp` on the server
 
 Encrypt the key and certificate. We generally DO NOT fork projects in the nodejs-private organization. Instead we clone the [secrets repository][] directly from nodejs-private and create a new branch in that private repo.
 
-From where you have temporarily stored the certificates/key and assuming you have checked out the secrets repo at ~/secrets and have created a new branch. 
+From where you have temporarily stored the certificates/key and assuming you have checked out the secrets repo at ~/secrets and have created a new branch.
 
 ```
 cat star_nodejs_org_chained.crt | dotgpg create ~/secrets/build/infra/star_nodejs_org_chained.crt
@@ -150,7 +150,7 @@ cat ~/secrets/build/infra/star_nodejs_org_chained.crt
 
 The should have similar footers/trailers to the existing content of https://github.com/nodejs-private/secrets/blob/master/build/infra/star_nodejs_org_chained.crt with the middle content being the encrypted part.
 
-Decrypt the new files with 
+Decrypt the new files with
 
 ```
 dotgpg cat ~/secrets/build/infra/star_nodejs_org.key
@@ -164,7 +164,7 @@ dotgpg cat ~/secrets/build/infra/star_nodejs_org_chained.crt
 
 and compare against the original files you had encrypted.
 
-Add the new files in git and commit. 
+Add the new files in git and commit.
 Push your branch in nodejs-private and then create a pull request.
 
 Delete any local copies of the non-encrypted key/certificate files

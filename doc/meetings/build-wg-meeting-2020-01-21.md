@@ -31,10 +31,10 @@
       changes to assigned IPs
   * certs
     * Rod is working to figure out how we renew our Developer certs to be able to test out the
-      notarization flow.  
+      notarization flow.
     * New apple membership. Membership is tied to a single physical machine or ipad, etc.
       should be able to have team and their apple teams. 2 factor (sms), 2 factor authentication
-      need higher level to renew, not sure if needed to be members of team.  
+      need higher level to renew, not sure if needed to be members of team.
   * Build changes?
     * Once Rod has the certs he’s going to work on a proposal
 
@@ -42,7 +42,7 @@
 * Tracking Jenkins changes
   * Discussion, about how to we keep revision history. Pipelines could do that, but they way we
     used them we were not doing that. UI also seemed much less direct.
-  * Used to have plugin that would track changes, but only tracked changes through the UI. 
+  * Used to have plugin that would track changes, but only tracked changes through the UI.
     seems to work for some jobs but not others
   * Rod has proposal to check jenkins config xmls into private repo. Cron job that runs every 5
     mins on both jenkins machines. Copy config.xml to git repo, if any changes commit and push
@@ -58,7 +58,7 @@
 * Node 14, build infra requirements
   * Richard to create issue and tag for agenda.
 
-* Ashley, should we audit membership? 
+* Ashley, should we audit membership?
   * Agreed, Ashley will start the membership review process.
 
 ## Q&A, Other

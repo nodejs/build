@@ -12,11 +12,11 @@
 * Richard Lau (@richardlau)
 * Michael Dawson (@mhdawson)
 * Rod Vagg (@rvagg)
- 
+
 ## Agenda
 
 ## Announcements
- 
+
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 ### nodejs/build

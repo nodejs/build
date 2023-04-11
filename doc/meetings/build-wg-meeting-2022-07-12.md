@@ -53,7 +53,7 @@
       * Access to the test machines
         *  Michael how to give them access
         *  Stewart -> give them the remote desktop password
-          * Will do that afterwards. 
+          * Will do that afterwards.
         * Michael to added Pierrick/Niyas to add to the job
       * Niyas/Pierrick to get up to speed on ansible scripts
         * Make sure current ones are well configured/we know how to recreate

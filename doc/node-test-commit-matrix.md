@@ -41,14 +41,14 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - smartos16-64 (Node >= 8 < 12)
     - smartos17-64 (Node >= 10 < 12)
     - smartos18-64 (Node >= 12)
-  - **node-test-commit-windows-fanned**  
+  - **node-test-commit-windows-fanned**
     [See below for detailed information](#windows-test-matrix). Sub-jobs are:
     - **node-compile-windows**
     - **node-test-commit-windows-debug**
     - **node-test-binary-windows-js-suites**
     - **node-test-binary-windows-native-suites**
   - **node-test-commit-linux-containered**
-    - ubuntu1604_sharedlibs_debug_x64 
+    - ubuntu1604_sharedlibs_debug_x64
       1. `CONFIG_FLAGS="$CONFIG_FLAGS --debug" make build-ci -j $JOBS`
       1. `python tools/test.py -j $JOBS -p tap --logfile test.tap --mode=debug --flaky-tests=skip async-hooks default known_issues`
     - ubuntu1604_sharedlibs_fips20_x64 (Node < 10)
@@ -73,7 +73,7 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - debian7-docker-armv7 (Node < 10)
     - debian8-docker-armv7 (Node < 12)
     - debian9-docker-armv7 (Node >= 10)
-    - ubuntu1604-arm64 
+    - ubuntu1604-arm64
   - **node-test-commit-linuxone**
     - rhel7-s390x (Node >= 6)
   - **node-test-commit-aix**

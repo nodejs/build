@@ -28,7 +28,7 @@ Oct 12, 2017 10 PM UTC
   - lots of putting out fires
   - AIX machines, RAM disk was filling up and CITGM jobs were hanging, was having to
     Clean those out
- - Looking at centos situation 
+ - Looking at centos situation
 - Michael Dawson (@mhdawson)
   - updating PPC machines to Java 8
   - working on getting the libuv tests running on zOS and updating the ansible scripts
@@ -52,7 +52,7 @@ Oct 12, 2017 10 PM UTC
 ### tmp dir needed on ubuntu 1604 and fedora23 [#873](https://github.com/build/issues/873)
 
 - Main issue was the prioritization as this seemed to hang out there a while (6 months)
-- Today its takes quite a bit of pushing to get things prioritization  
+- Today its takes quite a bit of pushing to get things prioritization
 - Myles had suggested project board
 - Myles has also suggested paid resource from the Foundation
 - João do we need to ask for more people interested in linux to join the build WG

@@ -99,7 +99,7 @@ Oct 24, 2017 22:00 UTC
 ### Have Rod walk rest of build team through Cloudflare setup [#915](https://github.com/nodejs/build/issues/915)
 - Rod: infra have access
 - Rod: iojs is on the free plan, nodejs is on the business plan (iojs has some
-  business features). We also have a Cloudflare contact 
+  business features). We also have a Cloudflare contact
 - Rod: Security is off, don’t think we need it as we just host static pages.
   Could be changed if we need to
 - Rod: We serve ssl directly from them
@@ -117,7 +117,7 @@ Oct 24, 2017 22:00 UTC
   standard configuration.
 - Rod: we need to migrate of bypassing Cloudflare’s caching, we’re basically
   always going through nodejs.org, because we used to collect logs. Really we
-  want to get Always Online to work. 
+  want to get Always Online to work.
 - Rod: Whenever we update nodejs.org, we purge everything.
 - Rod: Got IPv6 working, no complaints yet.
 - Rod: Load balancing is up, and we are synced with Joyent and primarily Digital
@@ -126,7 +126,7 @@ Oct 24, 2017 22:00 UTC
 - Michael: What’s your normal routine for figuring out an issue if something is
   broken?
   - Rod: Have a look at health, there’s also an API (you’d need an API key),
-    then you also can query to review in detail. 
+    then you also can query to review in detail.
 - Rod: I’ve posted some details around this for people to have a look at. (You’d
   need auth email and key)
 - Rod: If stale content, purge everything. Figure out the issue as well, to
@@ -144,7 +144,7 @@ Oct 24, 2017 22:00 UTC
 
 ### ansible: use gcc 4.9 on CentOS 6 [#809](https://github.com/nodejs/build/pull/809)
 
-- Refael: Test general linux and ubuntu, 32 bits should be covered. Remember not to 
+- Refael: Test general linux and ubuntu, 32 bits should be covered. Remember not to
   update the release machine.
 - Gibson: Okay, take back to GitHub?
 - All: Sure

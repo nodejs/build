@@ -15,7 +15,7 @@
 ## Agenda
 
 ## Announcements
- 
+
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 * No announcements this week.
@@ -26,7 +26,7 @@
   * Gireesh onboarded last week. Welcome!
 * Can 'make lint-py PYTHON=python3' be a mandatory Jenkins test? [#1631](https://github.com/nodejs/build/issues/1631)
   * Rafael is trying to catch up with Christian. There has been work in Ansilble to setup
-    Python3 on one of the machines.  May replace one of the machines and run lint on 
+    Python3 on one of the machines.  May replace one of the machines and run lint on
     both Python2 and Python3. However, there may be a small gap of files that are not
     yet Python 3 lint. For those listening, if you have have Python3 installed you can
     run linter specifying the path you python3 linting. Reach out to Christian or Refael if
@@ -42,7 +42,7 @@
   * No update, plan is to start strategic initiative as outlined in issue.
 
 * Rich nightly jobs
-  * Nightly job that runs benchmark tests and internet tests.  
+  * Nightly job that runs benchmark tests and internet tests.
   * Would like to add pummel tests to that. Needs a number of pull requests to land
   * Also want to add an additional nightly job to run the same on windows as well.
   * Refael, needs to make the “custom test suites” job, windows compatible.

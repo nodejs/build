@@ -11,14 +11,14 @@
 * George Adams (@gdams)
 * Rich Trott (@Trott)
 * Jon Moss (@maclover7)
-* Rod Vagg (@rvagg) 
+* Rod Vagg (@rvagg)
 * Luca Lanziani (@lucalanziani)
 * Refael Ackermann (@refack)
 
 ## Agenda
 
 ## Announcements
- 
+
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 * No announcements this week.
@@ -34,7 +34,7 @@
   * Exceptions should be well documented and messaged.
   * Examples, version selector (using PR in production), use of repo for pipelines
   * General approach we discussed
-    * Goal is to have PR for any change 
+    * Goal is to have PR for any change
     * In exceptions where that is not possible, open issue and make sure it gets enough visibility
   * Next step is to document process, @refack will write this up.
 
@@ -58,7 +58,7 @@
   * AIX is being worked inside IBM and we have a new machine at OSU that we can use
     once we have ansible scripts.  TLDR; making slow progress.
   * For website maybe better approach is to pull out into component pieces as the whole
-    is quite complicated. 
+    is quite complicated.
   * First step is probably to plan to have new website be on its own server as opposed to pulling
     into existing monolith.
   * When we outline the pieces for 1337 that will make it obvious what we might break out.

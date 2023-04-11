@@ -2,7 +2,7 @@
 
 ## Links
 
-* **Recording**:  
+* **Recording**:
 * **GitHub Issue**: https://github.com/nodejs/build/issues/2562
 
 ## Present
@@ -15,7 +15,7 @@
 ## Agenda
 
 ## Announcements
- 
+
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 ### nodejs/build

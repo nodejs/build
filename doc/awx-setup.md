@@ -2,7 +2,7 @@
 
 First step is to run the AWX playbook:
 
-```sh 
+```sh
 $ ansible-playbook playbooks/create-awx.yml
 ```
 
@@ -24,7 +24,7 @@ These are the follow fields you need to fill in:
 
  - GitHub Organization Name: `nodejs`
 
- - Organization Map: 
+ - Organization Map:
     ```
     {
     "nodejs": {
@@ -33,7 +33,7 @@ These are the follow fields you need to fill in:
     }
     ```
 
-- Team Map: 
+- Team Map:
 
     ```
     {
@@ -49,11 +49,11 @@ These are the follow fields you need to fill in:
 
 Unfortunately you have to give everyone elevated permissions manually - there isn't a way to do this automatically that fits our use case. Best way to do this is to let the user log in so their profile is automatically created, then you can assign them roles/teams as fitting - Make sure you set the members of the build team as system administrators.
 
-### Teams 
+### Teams
 
 You can then create teams where you can set the levels of permissions - ensure the build helper team is set with permissions that they can see the inventories and exectute the playbooks - ensure they are only given the `use` permission for credentials and nothing higher. Once the teams are set up you can just add the user to the respective team which saves have to manually give them every permission.
 
-## Credentials 
+## Credentials
 
 Any member of the build can upload the keys for the test machines as they have the access to the keys. Ensure you name it correctly after the key and select `machine` type credential.
 

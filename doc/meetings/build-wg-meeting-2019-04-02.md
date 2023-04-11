@@ -2,7 +2,7 @@
 
 ## Links
 
-*  **Recording**: https://www.youtube.com/watch?v=69eaff4-Uxk  
+*  **Recording**: https://www.youtube.com/watch?v=69eaff4-Uxk
 * **GitHub Issue**: https://github.com/nodejs/build/issues/1744
 
 ## Present
@@ -12,11 +12,11 @@
 * Rod Vagg (@rvagg)
 * Sam Roberts (@sam-github) (via youtube, zoom was dropping out)
 * Rich Trott (@Trott)
- 
+
 ## Agenda
 
 ## Announcements
- 
+
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 ### nodejs/build
@@ -25,16 +25,16 @@
   * @refack needs a review of [#1745](https://github.com/nodejs/build/pull/1745)
 
 * Request for elevated permissions [#1337](https://github.com/nodejs/build/issues/1337)
-  * Is this on agenda to approve @maclover7’s request, or as an ongoing discussion of the 
+  * Is this on agenda to approve @maclover7’s request, or as an ongoing discussion of the
     Process?
-  * A few steps 
+  * A few steps
     * First step has been taken.  Broke out infra for OSX.  Rafael has access
     * Another step is that people from IBM are getting access to IBM platforms
   * Rod, going to be a challenge to find time to document everything but we can take steps
     like the OSX breakout.
     * Rod: One issue is to make sure we stay within the “soft” limits
     * Michael: maybe ask that people open issue before adding new machines
-    * Refael: could also use controls in the infra itself to limit what you can do 
+    * Refael: could also use controls in the infra itself to limit what you can do
 
 * Use Foundation resources to support build [#1154](https://github.com/nodejs/build/issues/1154)
   * Refael, may be better to ask for larger companies to dedicate resources

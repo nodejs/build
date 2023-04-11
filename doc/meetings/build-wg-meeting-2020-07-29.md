@@ -2,7 +2,7 @@
 
 ## Links
 
-* **Recording**: https://youtu.be/HwfGrhbskjQ 
+* **Recording**: https://youtu.be/HwfGrhbskjQ
 * **GitHub Issue**: https://github.com/nodejs/build/issues/2391
 
 ## Present
@@ -12,11 +12,11 @@
 * Rod Vagg (@rvagg)
 * Richard Lau (@richardlau)
 * Ash Cripps (@AshCripps)
- 
+
 ## Agenda
 
 ## Announcements
- 
+
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 * Ash
@@ -49,15 +49,15 @@
 
 * osx binaries, benchmarks ?
   * Rod, in the transition to intel, Node.js was shipped as a fat binary. Guess most projects
-    will ship fat binaries for a few years. More, some will want the fat binaries so they don’t 
+    will ship fat binaries for a few years. More, some will want the fat binaries so they don’t
     even have to worry about it
-  * Johan, nvm would likely have the same approach and adding exceptions is likely not 
+  * Johan, nvm would likely have the same approach and adding exceptions is likely not
   * Will likely need to update xcode 12 version.
   * Looking at old make files we should be able to see how we built fat binaries in the past and
     we may be able to use that as a starting point.
   * How to handle finding regressions?
     * one action is to ask if people are interested in running benchmarks and reporting issues
-  
+
 * Issue about increasing permissions for the github bot increased permissions
 * Richard, suggested can we make the github bot a “collaborator”
   * https://github.com/nodejs/admin/issues/536

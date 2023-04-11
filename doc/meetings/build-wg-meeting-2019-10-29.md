@@ -17,7 +17,7 @@
 
 
 ## Announcements
- 
+
 *Extracted from **build-agenda** labelled issues and pull requests from the **nodejs org** prior to the meeting.
 
 No items on agenda adhoc coverage of
@@ -26,23 +26,23 @@ No items on agenda adhoc coverage of
   session to refine:  https://docs.google.com/document/d/1a2iLuj1Ga2FkdKHdGPAJUld1ibRkd-shl7lQJTD1KIw/edit
   * Next steps:
      * Michael will circulate to build WG members for additional comments
-     * Once we have additional feedback (1-2 days hopefully) Myles/Michael will get feedback from 
+     * Once we have additional feedback (1-2 days hopefully) Myles/Michael will get feedback from
        managers at Google to validate it has info that larger companies will need
      * Michael to take back to the board
 
 * Discussion of OSX work
-  * Need for OSX 14/xcode 10 for 13.x/master. 
+  * Need for OSX 14/xcode 10 for 13.x/master.
     * Sam/Ashley are working on this but complications in getting newer version at macstadium and
       older versions at NearForm
       * Ashley mentioned that we need a developer account to get ISO’s for older versions, Rod
         mentioned that we should already have one. Michael to help Sam/Ashley get access to our
         developer account to see if we can get what we need.
   * Signing required for Catalina
-    * Currently it is possible to click through but unsure what will happen in Jan when Apple 
+    * Currently it is possible to click through but unsure what will happen in Jan when Apple
       tightens things further
     * Will affect older versions as well. Signing requires newer version of xcode though so it
-      would mean a toolchain upgrade for older releases which is not something we’d typically 
-      do.  Michael -> might be ok that if you run latest OSX version you can only run latest 
+      would mean a toolchain upgrade for older releases which is not something we’d typically
+      do.  Michael -> might be ok that if you run latest OSX version you can only run latest
       Node.js binaries. All -> good idea to open TSC issue as we currently don’t have a
       Volunteer who has time to pick up this work and there are the larger questions (like is is
       ok if we just leave it as 10.x and 8.x not running on latest OSX and only 12.x and later do?)
