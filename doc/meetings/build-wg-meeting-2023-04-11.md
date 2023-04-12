@@ -86,7 +86,7 @@
 
 * Request for large-runners on Github CI [#45345](https://github.com/nodejs/node/issues/45345)
   * This is a TSC decision
-  * We need to discuss with Github deeper or pay for this  if we want it as our current account settings does not allow it
+  * We need to discuss with Github deeper or pay for this if we want it as our current account settings does not allow it
 
 
 ## Q&A, Other
