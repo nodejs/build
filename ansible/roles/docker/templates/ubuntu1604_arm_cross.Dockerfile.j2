@@ -56,5 +56,5 @@ CMD cd /home/{{ server_user }} \
   && curl https://ci.nodejs.org/jnlpJars/agent.jar -O \
   && java -Xmx{{ server_ram|default('128m') }} \
           -jar /home/{{ server_user }}/agent.jar \
-          -jnlpUrl {{ jenkins_url }}/computer/{{ item.name }}/agent.jnlp \
+          -jnlpUrl {{ jenkins_url }}/computer/{{ item.name }}/jenkins-agent.jnlp \
           -secret {{ item.secret }}

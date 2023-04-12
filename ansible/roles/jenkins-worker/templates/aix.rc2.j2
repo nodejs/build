@@ -22,7 +22,7 @@ start )
               export JOBS={{ jobs_env }}; \
         /usr/bin/java -Xmx128m -Dorg.jenkinsci.plugins.gitclient.Git.timeOut=30 -jar "$HOME/slave.jar" \
           -secret {{secret}} \
-          -jnlpUrl {{jenkins_url}}/computer/{{inventory_hostname}}/agent.jnlp >$jenkins_log_file 2>&1 &'
+          -jnlpUrl {{jenkins_url}}/computer/{{inventory_hostname}}/jenkins-agent.jnlp >$jenkins_log_file 2>&1 &'
         ;;
 stop )
         ;;
