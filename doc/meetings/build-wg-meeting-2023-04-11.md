@@ -49,7 +49,7 @@
   * We will keep the topic in the Agenda
 * Disk full on downloads server [#3125](https://github.com/nodejs/build/issues/3125)
   * The server was full due nightly builds
-  * Richard made an script to manual clean the builds (PR ongoing)
+  * Stewart made an script to manual clean the builds (PR ongoing)
   * The server currently is half full (not a risk currently)
   * Ulises will remove this topic from the agenda
 * Retiring the Raspberry Pi cluster [#3102](https://github.com/nodejs/build/issues/3102)
