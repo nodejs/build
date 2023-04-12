@@ -24,7 +24,7 @@
 ### nodejs/build
 
 * Terraforming Cloudflare [#3270](https://github.com/nodejs/build/issues/3270)
-  * We want to use Terraform to consolidate the Cloudflare configuration in the repository so it will more transparent and easy to manage any new change
+  * We want to use Terraform to consolidate the Cloudflare configuration in the repository so it will be more transparent and easy to manage any new change
   * There are concerns as Terraform is a new tool for the team and Cloudflare is very sensitive infrastructure for Node.js as a bad configuration can break the Node.js downloads
   * Cloudflare has many settings/rules that are in place but we don’t have all the knowledge to understand them in detail
   * Ulises will prepare a POC in a pet project to present to the team how the configuration is made (Github actions, PR, Terraform plans…) and then we will decide if the approach is valid for Node.js
