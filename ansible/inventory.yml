@@ -260,7 +260,7 @@ hosts:
             user: admin
             remote_env:
                 PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
-        intel-ubuntu1804-x64-1:
+        intel-ubuntu2204-x64-1:
             ip: 92.51.196.114
             build_test_v8: yes
             is_benchmark: yes
