@@ -56,7 +56,7 @@
   * Only the Inventory clean up is pending
 * Improve Jenkins alerts and reporting [#3088](https://github.com/nodejs/build/issues/3088)
   * This issue was related to a POC that monitors the inventory machine by doing a ping and expose the data in Grafana
-  * Ulises changed the approach to follow something similar as what has been implemented in  the Security WG for the OpenSFF Scorecard Monitoring with Github actions but using directly the Jenkins API.
+  * Ulises changed the approach to follow something similar as what has been implemented in the Security WG for the OpenSSF Scorecard Monitoring with GitHub actions but using directly the Jenkins API.
   * There is a [demo](https://github.com/UlisesGascon/jenkins-status-alerts-and-reporting-demo) repository that includes the [reporting](https://github.com/UlisesGascon/jenkins-status-alerts-and-reporting-demo/blob/main/monitor/jenkins-report.md), [database](https://github.com/UlisesGascon/jenkins-status-alerts-and-reporting-demo/blob/main/monitor/database.json) and the [issues](https://github.com/UlisesGascon/jenkins-status-alerts-and-reporting-demo/issues/65) when machines are down.
   * There is an opportunity also to implement alerts via issues when the Disk usage is in a specific threshold.
   * We agree that this idea can work for the Working Group and we can disable the workflow if we detect any bug
