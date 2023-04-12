@@ -86,9 +86,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
       - cross-compiler-armv7-gcc-4.9.4 (Node >= 10 < 12)
       - cross-compiler-armv7-gcc-6 (Node >= 12)
     - **node-test-binary-arm & node-test-binary-arm-12+**
-      - pi1-docker
-        - debian7 (Node < 10)
-        - debian8 (Node >= 10 < 12)
       - pi2-docker
         - debian7 (Node < 10)
         - debian8 (Node >= 10 < 12)
