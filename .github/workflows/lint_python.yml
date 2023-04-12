@@ -1,5 +1,5 @@
 # https://beta.ruff.rs
-name: lint_python
+name: Lint Python
 on:
   push:
     branches: [main]
