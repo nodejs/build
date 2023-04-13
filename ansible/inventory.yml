@@ -264,9 +264,9 @@ hosts:
         intel-ubuntu2204-x64-1:
             ip: 92.51.196.114
             build_test_v8: yes
-            is_benchmark: yes
         intel-ubuntu2204-x64-2:
             ip: 92.51.196.115
+            build_test_v8: yes
 
     - osuosl:
 # secret for -1 was compromised, do not use -1 name

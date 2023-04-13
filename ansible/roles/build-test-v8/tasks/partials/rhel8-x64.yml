@@ -4,11 +4,17 @@
 # Install packages for V8 builds.
 #
 
+# ninja-build on RHEL 8 is in the CodeReady Linux Builder repository.
+- name: enable codeready-builder repository
+  community.general.rhsm_repository:
+    name: codeready-builder-for-rhel-8-x86_64-rpms
+    state: enabled
+
 # V8 builds still require Python 2.
 # Newer V8 builds require Python 3.8, or later.
 - name: install packages required to build V8
   ansible.builtin.dnf:
-    name: ['python2', 'python2-pip', 'python39']
+    name: ['ninja-build', 'python2', 'python2-pip', 'python39']
     state: present
   notify: package updated
 
