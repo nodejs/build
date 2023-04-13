@@ -85,14 +85,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
       - cross-compiler-armv7-gcc-4.8  (Node < 10)
       - cross-compiler-armv7-gcc-4.9.4 (Node >= 10 < 12)
       - cross-compiler-armv7-gcc-6 (Node >= 12)
-    - **node-test-binary-arm & node-test-binary-arm-12+**
-      - pi2-docker
-        - debian7 (Node < 10)
-        - debian8 (Node >= 10 < 12)
-        - debian9 (Node >= 12)
-      - pi3-docker
-        - debian8 (Node < 10)
-        - debian9 (Node >= 10)
   - **node-test-commit-custom-suites-freestyle**
     1. `make -j1 bench-addons-build`
     1. `make -j 4 build-ci`
