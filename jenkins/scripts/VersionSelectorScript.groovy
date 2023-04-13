@@ -126,14 +126,12 @@ def buildExclusions = [
 
   // OSX ---------------------------------------------------
   [ /osx11-release-pkg/,              releaseType, lt(16)  ],
-  [ /osx11-release-tar/,              releaseType, lt(16)  ],
+  [ /osx11-arm64-release-tar/,        releaseType, lt(16)  ],
+  [ /osx11-x64-release-tar/,          releaseType, lt(20)  ],
   [ /osx1015-release-pkg/,            releaseType, gte(16) ],
+  [ /osx1015-release-tar/,            releaseType, gte(20) ],
   [ /^osx11/,                         testType,    lt(15)  ],
-  [ /osx1014/,                        anyType,     gte(17)  ],
-
-  // osx1015 enabled for all up, and builds all releases to support notarization
-  // osx11 only for 15+ and builds the fat binary
-  // This will need splitting into arm + x64 when the release machines move up from 10.15
+  [ /osx1014/,                        anyType,     gte(17) ],
 
   // FreeBSD -----------------------------------------------
   [ /^freebsd10/,                     anyType,     gte(11) ],
