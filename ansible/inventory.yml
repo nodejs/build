@@ -357,32 +357,6 @@ hosts:
         win2012r2_vs2019-x64-5: {ip: 104.130.6.92}
         win2012r2_vs2019-x64-6: {ip: 104.130.141.231}
 
-    - requireio:
-        rvagg-debian10-armv7l_pi2-1:        {ip: 192.168.2.60, user: pi, alias: iojs-ns-pi2-1 }
-        joeyvandijk-debian10-armv7l_pi2-1:  {ip: 192.168.2.61, user: pi, alias: iojs-ns-pi2-2 }
-        joeyvandijk-debian10-armv7l_pi2-2:  {ip: 192.168.2.62, user: pi, alias: iojs-ns-pi2-3 }
-        svincent-debian10-armv7l_pi2-1:     {ip: 192.168.2.63, user: pi, alias: iojs-ns-pi2-4 }
-        mcollina-debian10-armv7l_pi2-1:     {ip: 192.168.2.64, user: pi, alias: iojs-ns-pi2-5 }
-        ceejbot-debian10-armv7l_pi2-1:      {ip: 192.168.2.65, user: pi, alias: iojs-ns-pi2-6 }
-        mininodes-debian10-armv7l_pi2-1:    {ip: 192.168.2.66, user: pi, alias: iojs-ns-pi2-7 }
-        sambthompson-debian10-armv7l_pi2-1: {ip: 192.168.2.67, user: pi, alias: iojs-ns-pi2-8 }
-        louiscntr-debian10-armv7l_pi2-1:    {ip: 192.168.2.68, user: pi, alias: iojs-ns-pi2-9 }
-        svincent-debian10-armv7l_pi2-2:     {ip: 192.168.2.69, user: pi, alias: iojs-ns-pi2-10 }
-        svincent-debian10-armv7l_pi2-3:     {ip: 192.168.2.70, user: pi, alias: iojs-ns-pi2-11 }
-        jasnell-debian10-armv7l_pi2-1:      {ip: 192.168.2.71, user: pi, alias: iojs-ns-pi2-12 }
-
-        williamkapke-debian10-arm64_pi3-1:      {ip: 192.168.2.80, user: pi, alias: iojs-ns-pi3-1 }
-        williamkapke-debian10-arm64_pi3-2:      {ip: 192.168.2.81, user: pi, alias: iojs-ns-pi3-2 }
-        williamkapke-debian10-arm64_pi3-3:      {ip: 192.168.2.82, user: pi, alias: iojs-ns-pi3-3 }
-        davglass-debian10-arm64_pi3-1:          {ip: 192.168.2.83, user: pi, alias: iojs-ns-pi3-4 }
-        pivotalagency-debian10-arm64_pi3-1:     {ip: 192.168.2.84, user: pi, alias: iojs-ns-pi3-5 }
-        pivotalagency-debian10-arm64_pi3-2:     {ip: 192.168.2.85, user: pi, alias: iojs-ns-pi3-6 }
-        securogroup-debian10-arm64_pi3-1:       {ip: 192.168.2.86, user: pi, alias: iojs-ns-pi3-7 }
-        securogroup-debian10-arm64_pi3-2:       {ip: 192.168.2.87, user: pi, alias: iojs-ns-pi3-8 }
-        notthetup_sayanee-debian10-arm64_pi3-1: {ip: 192.168.2.88, user: pi, alias: iojs-ns-pi3-9 }
-        piccoloaiutante-debian10-arm64_pi3-1:   {ip: 192.168.2.89, user: pi, alias: iojs-ns-pi3-10 }
-        kahwee-debian10-arm64_pi3-1:            {ip: 192.168.2.90, user: pi, alias: iojs-ns-pi3-11 }
-
     - softlayer:
         centos7-x64-1: {ip: 50.23.85.250}
         debian9-x64-1: {ip: 169.60.150.88}
