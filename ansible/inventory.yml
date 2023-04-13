@@ -105,10 +105,6 @@ hosts:
             port: 8822
             user: administrator
 
-    - requireio:
-        rvagg-debian10-armv6l_pi1p-1: {ip: 192.168.2.40, user: pi, alias: iojs-ns-pi1p-1 }
-        andineck-debian10-armv6l_pi1p-1: {ip: 192.168.2.41, user: pi, alias: iojs-ns-pi1p-2 }
-
 
 
   - test:
@@ -362,19 +358,6 @@ hosts:
         win2012r2_vs2019-x64-6: {ip: 104.130.141.231}
 
     - requireio:
-        andineck-debian10-armv6l_pi1p-1:         {ip: 192.168.2.42, user: pi, alias: iojs-ns-pi1p-3 }
-        bengl-debian10-armv6l_pi1p-1:            {ip: 192.168.2.43, user: pi, alias: iojs-ns-pi1p-4 }
-        bengl-debian10-armv6l_pi1p-2:            {ip: 192.168.2.44, user: pi, alias: iojs-ns-pi1p-5}
-        continuationlabs-debian10-armv6l_pi1p-1: {ip: 192.168.2.45, user: pi, alias: iojs-ns-pi1p-6 }
-        ceejbot-debian10-armv6l_pi1p-1:          {ip: 192.168.2.46, user: pi, alias: iojs-ns-pi1p-7 }
-        mininodes-debian10-armv6l_pi1p-1:        {ip: 192.168.2.47, user: pi, alias: iojs-ns-pi1p-8 }
-        indieisaconcept-debian10-armv6l_pi1p-1:  {ip: 192.168.2.48, user: pi, alias: iojs-ns-pi1p-9 }
-        mhdawson-debian10-armv6l_pi1p-1:         {ip: 192.168.2.49, user: pi, alias: iojs-ns-pi1p-10 }
-        securogroup-debian10-armv6l_pi1p-1:      {ip: 192.168.2.50, user: pi, alias: iojs-ns-pi1p-11 }
-        securogroup-debian10-armv6l_pi1p-2:      {ip: 192.168.2.51, user: pi, alias: iojs-ns-pi1p-12 }
-        chrislea-debian10-armv6l_pi1p-1:         {ip: 192.168.2.52, user: pi, alias: iojs-ns-pi1p-13 }
-        davglass-debian10-armv6l_pi1p-1:         {ip: 192.168.2.53, user: pi, alias: iojs-ns-pi1p-14 }
-
         rvagg-debian10-armv7l_pi2-1:        {ip: 192.168.2.60, user: pi, alias: iojs-ns-pi2-1 }
         joeyvandijk-debian10-armv7l_pi2-1:  {ip: 192.168.2.61, user: pi, alias: iojs-ns-pi2-2 }
         joeyvandijk-debian10-armv7l_pi2-2:  {ip: 192.168.2.62, user: pi, alias: iojs-ns-pi2-3 }

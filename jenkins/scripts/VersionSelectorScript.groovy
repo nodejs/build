@@ -57,7 +57,6 @@ def buildExclusions = [
   [ /^debian8-docker-armv7$/,         anyType,     gte(12) ],
   [ /^debian9-docker-armv7$/,         anyType,     lt(10)  ],
   [ /^debian10-armv7l$/,              anyType,     gte(20) ], // gcc 10 requires newer libstdc++
-  [ /^pi1-docker$/,                   releaseType, gte(10) ],
   [ /^cross-compiler-ubuntu1604-armv[67]-gcc-4.9/, anyType, gte(12) ],
   [ /^cross-compiler-ubuntu1604-armv[67]-gcc-6/,   anyType, lt(12)  ],
   [ /^cross-compiler-ubuntu1604-armv[67]-gcc-6/,   anyType, gte(14) ],
