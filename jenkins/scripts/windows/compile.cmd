@@ -29,6 +29,21 @@ if "%nodes:~-6%" == "-arm64" (
   ) else (
     :: WiX 4 - builds ARM64 MSI
     set "VCBUILD_EXTRA_ARGS=arm64 %VCBUILD_EXTRA_ARGS%"
+
+    :: ARM64 MSI needs x64 node.exe to generate the license file.
+    :: It is downloaded from vcbuild.bat and is known to hang,
+    :: thus failing the build after timing out (1-2% runs).
+    :: Downloading it from here and updating it weekly should
+    :: decrease, if not remove, these types of CI failures.
+    :: Download and cache x64 node.exe.
+    mkdir C:\node_exe_cache
+    forfiles /p "C:\node_exe_cache" /m "node.exe" /d -7 /c "cmd /c del @path"
+    if not exist C:\node_exe_cache\node.exe (
+      curl -L https://nodejs.org/dist/latest/win-x64/node.exe -o C:\node_exe_cache\node.exe
+    )
+    :: Copy it to where vcbuild expects.
+    mkdir temp-vcbuild
+    copy C:\node_exe_cache\node.exe temp-vcbuild\node-x64-cross-compiling.exe
   )
 ) else if "%nodes:~-4%" == "-x86" (
   set "VCBUILD_EXTRA_ARGS=x86 %VCBUILD_EXTRA_ARGS%"
