@@ -1,0 +1,30 @@
+---
+
+# Set up hosts to be able to checkout/fetch from github.com.
+
+- name: create .ssh directory
+  ansible.builtin.file:
+    dest: "{{ user_home_dir }}/.ssh"
+    mode: "0700"
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    state: directory
+
+- name: write github.com entry in known_hosts
+  ansible.builtin.known_hosts:
+    name: github.com
+    key: "{{ item }}"
+    path: "{{ user_home_dir }}/.ssh/known_hosts"
+    state: present
+  become: yes
+  become_user: "{{ server_user }}"
+  loop: "{{ lookup('file', 'files/github_known_hosts').splitlines() }}"
+
+- name: remove old github.com ssh keys
+  ansible.builtin.lineinfile:
+    path: "{{ user_home_dir }}/.ssh/known_hosts"
+    search_string: "{{ item }}"
+    state: absent
+  become: yes
+  become_user: "{{ server_user }}"
+  loop: "{{ lookup('file', 'files/github_bad_hosts').splitlines() }}"

@@ -89,6 +89,16 @@
     - "{{ containers }}"
   when: containers is defined
 
+- name: enable fetching from github.com
+  include_role:
+    name: github
+  vars:
+    user_home_dir: "/{{ home }}/{{ server_user }}/{{ container.name }}/"
+  loop: "{{ containers|flatten(levels=1) }}"
+  loop_control:
+    loop_var: container
+  when: containers is defined
+
 - name: set up for release builders
   include_role:
     name: release-builder
