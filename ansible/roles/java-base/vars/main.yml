@@ -31,7 +31,6 @@ java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default(o
 # e.g. on AIX ansible_architecture is 'chrp' on some of our hosts so we
 # override arch to be on the safe side.
 adoptopenjdk: {
-  aix71_ppc64: { arch: ppc64 },
   aix72_ppc64: { arch: ppc64 },
   aix73_ppc64: { arch: ppc64 },
   centos7_ppc64: {}
