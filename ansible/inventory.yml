@@ -39,9 +39,6 @@ hosts:
         rhel8-x64-1: {ip: 159.203.115.217}
 
     - ibm:
-        aix71-ppc64_be-2:
-            ip: 169.59.74.10
-            server_jobs: 6
         aix72-ppc64_be-1:
             ip: 169.54.113.163
             remote_env:
@@ -152,12 +149,6 @@ hosts:
         ubuntu2204-x64-2: {ip: 145.40.96.123, alias: jenkins-workspace-8}
 
     - ibm:
-        aix71-ppc64_be-3: 
-            ip: 169.48.23.70
-            server_jobs: 6
-        aix71-ppc64_be-4:  
-            ip: 169.59.74.12
-            server_jobs: 6
         aix72-ppc64_be-1:
             ip: 169.54.113.142
             remote_env:

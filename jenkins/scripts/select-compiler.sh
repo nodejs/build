@@ -165,9 +165,6 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
     *aix72* )
       echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX 7.2"
       ;;
-    *aix71* )
-      echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX 7.1"
-      ;;
   esac
 
   export CC="gcc-${COMPILER_LEVEL}"

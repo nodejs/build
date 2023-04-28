@@ -5,7 +5,7 @@
 #
 
 init: {
-  aix: ['aix71', 'aix72', 'aix73'],
+  aix: ['aix72', 'aix73'],
   centos6: 'centos6',
   debian: 'debian7',
   freebsd: 'freebsd',
