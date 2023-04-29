@@ -83,6 +83,7 @@ Admin access to https://ci.nodejs.org/.
 - [@sxa](https://github.com/sxa) - Stewart X Addison
 - [@targos](https://github.com/targos) - Michaël Zasso
 - [@Trott](https://github.com/Trott) - Rich Trott
+- [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
 
 <!-- ncu-team-sync end -->
 
