@@ -290,21 +290,6 @@ hosts:
             ip: 199.7.167.101
             port: 8824
             user: administrator
-        macos10.14-x64-1:
-            ansible_python_interpreter: /usr/local/bin/python3
-            ip: 199.7.167.101
-            port: 8822
-            user: administrator
-        macos10.14-x64-2:
-            ansible_python_interpreter: /usr/local/bin/python3
-            ip: 199.7.167.101
-            port: 8823
-            user: administrator
-        macos10.14-x64-3:
-            ansible_python_interpreter: /usr/local/bin/python3
-            ip: 199.7.167.102
-            port: 8825
-            user: administrator
         macos11-x64-1:
             ansible_python_interpreter: /usr/bin/python3
             ip: 199.7.167.102
