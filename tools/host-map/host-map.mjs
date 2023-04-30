@@ -38,7 +38,6 @@ const providerMap = new Map([
   ['digitalocean', 'do'],
   ['iinthecloud', 'iitc'],
   ['nearform', 'nf'],
-  ['packetnet', 'packet'],
   ['rackspace', 'rs'],
   ['softlayer', 'ibm']
 ]);
