@@ -130,10 +130,15 @@
 
 - name: Add nodesource repo
   apt_repository:
-    repo: deb https://deb.nodesource.com/node_14.x {{ release_codename.stdout }} main
+    repo: deb https://deb.nodesource.com/node_16.x {{ release_codename.stdout }} main
     state: present
+  
+- name: Remove nodesource 14 repos
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_14.x {{ release_codename.stdout }} main
+    state: absent
 
-- name: Remove earlier nodesource repos
+- name: Remove nodesource 12 repos
   apt_repository:
     repo: deb https://deb.nodesource.com/node_12.x {{ release_codename.stdout }} main
     state: absent
@@ -141,7 +146,7 @@
 - name: Install node
   package:
     name: nodejs
-    state: present
+    state: latest
     update_cache: yes
 
 - name: Upgrade pip3
