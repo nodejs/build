@@ -5,6 +5,10 @@ export _TAG_REDIR_ERR=txt
 export _TAG_REDIR_IN=txt
 export _TAG_REDIR_OUT=txt
 
+if [[ $WORKSPACE != "" ]]; then
+  chtag -t -c iso8859-1 "$WORKSPACE/.git/config"
+fi
+
 if [[ $1 == "rev-parse" ]]; then
   {{ git_cmd }} "$@" | cat
 elif [[ $1 == "whatchanged" ]]; then
