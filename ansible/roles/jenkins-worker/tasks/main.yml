@@ -180,13 +180,6 @@
   shell:
     cmd: "iconv -f utf8 -t ibm-1047 {{ initscript.dest }} > {{ (initscript.dest | splitext)[0] }}"
   
-- name: centos6 | render sysconfig into place
-  when: "os == 'centos6'"
-  template:
-    src: "{{ role_path }}/templates/centos6.sysconfig.j2"
-    dest: "/etc/sysconfig/jenkins"
-    mode: "0644"
-
 # TODO - Should this run on every machine?
 - name: copy start.sh to {{ home }}/{{ server_user }}/start.sh
   when: os|startswith("macos")

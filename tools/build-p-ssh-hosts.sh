@@ -18,7 +18,6 @@ grep -- 'aix61-ppc64_be' hosts/all > hosts/aix61-ppc64_be
 grep -- 'arm64_pi3' hosts/all > hosts/arm64_pi3
 grep -- 'armv6l_pi1' hosts/all > hosts/armv6l_pi1
 grep -- 'armv7l_pi2' hosts/all > hosts/armv7l_pi2
-grep -- 'centos6-x64' hosts/all > hosts/centos6-x64
 grep -- 'centos7-ppc64_le' hosts/all > hosts/centos7-ppc64_le
 grep -- 'centos7-ppc64_le' hosts/all > hosts/centos7-ppc64_le
 grep -- 'centos7' hosts/all > hosts/centos7

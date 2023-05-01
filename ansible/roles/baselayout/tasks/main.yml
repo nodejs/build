@@ -57,12 +57,6 @@
   stat: path="{{ binary_dest }}"
   register: has_git
 
-- name: centos6 | remove existing git package
-  when: "os == 'centos6' and arch != 'arm64'"
-  yum:
-    name: "git"
-    state: absent
-
 - name: install packages
   when: not os|startswith("zos") and not os|startswith("macos")
   package: 
@@ -160,13 +154,6 @@
     - g++
     - cpp
     - c++
-
-- name: centos6 | install devtoolset-2
-  when: "os == 'centos6'"
-  yum:
-    disable_gpg_check: true
-    name: "devtoolset-2-gcc,devtoolset-2-gcc-c++,devtoolset-2-binutils"
-    state: present
 
 - name: remove fortune from login shells
   when: os|stripversion == 'freebsd'
