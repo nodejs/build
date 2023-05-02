@@ -20,14 +20,11 @@ def buildExclusions = [
   // Machine Label,                   Build Type,  Node Version
 
   // Linux -------------------------------------------------
-  [ /^centos6/,                       releaseType, lt(8)   ],
-  [ /^centos6/,                       anyType,     gte(12) ],
-  [ /^centos[67]-(arm)?(64|32)-gcc48/,anyType,     gte(10) ],
-  [ /^centos[67]-(arm)?(64|32)-gcc6/, anyType,     lt(10)  ],
-  [ /^centos[67]-(arm)?(64|32)-gcc6/, anyType,     gte(14) ], // 14.x: gcc6 builds stop
+  [ /^centos7-(arm)?(64|32)-gcc48/,anyType,     gte(10) ],
+  [ /^centos7-(arm)?(64|32)-gcc6/, anyType,     lt(10)  ],
+  [ /^centos7-(arm)?(64|32)-gcc6/, anyType,     gte(14) ],    // 14.x: gcc6 builds stop
   [ /^centos7-(arm)?(64)-gcc8/,       anyType,     lt(14)  ], // 14.x: gcc8 builds start
   [ /^centos7-(arm)?(64)-gcc8/,       anyType,     gte(18) ], // 18.x: centos7 builds stop
-  [ /^centos6-32-gcc6/,               releaseType, gte(10) ], // 32-bit linux for <10 only
   [ /^centos7-64/,                    releaseType, lt(12)  ],
   [ /^centos7-64/,                    anyType,     gte(18) ],
   [ /debian8-x86/,                    anyType,     gte(10) ], // 32-bit linux for <10 only

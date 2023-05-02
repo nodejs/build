@@ -182,11 +182,7 @@ elif [ "$SELECT_ARCH" = "X64" ]; then
       . /opt/rh/devtoolset-8/enable
       echo "Compiler set to devtoolset-8"
       ;;
-    centos6-64-gcc48 )
-      . /opt/rh/devtoolset-2/enable
-      echo "Compiler set to devtoolset-2"
-      ;;
-    centos[67]-64-gcc6 )
+    centos7-64-gcc6 )
       . /opt/rh/devtoolset-6/enable
       echo "Compiler set to devtoolset-6"
       ;;
@@ -225,7 +221,7 @@ elif [ "$SELECT_ARCH" = "ARM64" ]; then
       . /opt/rh/devtoolset-8/enable
       echo "Compiler set to devtoolset-8"
       ;;
-    centos[67]-arm64-gcc6 )
+    centos7-arm64-gcc6 )
       . /opt/rh/devtoolset-6/enable
       echo "Compiler set to devtoolset-6"
       ;;

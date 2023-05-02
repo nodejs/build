@@ -34,11 +34,6 @@ common_packages: [
 # % ansible -m debug -a "var=arch"  HOST
 # % ansible -m debug -a "var=os"  HOST
 packages: {
-  centos6_x64: ['centos-release-scl'], # only available on x86_64, 32-bit is from https://copr.fedorainfracloud.org/coprs/mlampe
-  centos6: [
-    'ccache,git2u,gcc-c++,devtoolset-6,sudo', # even need gcc on centos6 so ccache has symlinks
-  ],
-
   # centos-release-scl is required to enable SCLo but we do it manually in
   # partials/repo/centos7.yml for arm64
   centos7_arm64: [
