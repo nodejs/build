@@ -10,7 +10,7 @@ Supported versions for running the Node.js installer and executable as released.
 
 | Node.js Version | Windows Version            |
 |-----------------|----------------------------|
-| v16             | 8.1 / 2012 R2              |
+| v16             | 10  / 2012 R2              |
 | v18             | 10 / 2016                  |
 | v19             | 10 / 2016                  |
 | v20             | 10 / 2016                  |
