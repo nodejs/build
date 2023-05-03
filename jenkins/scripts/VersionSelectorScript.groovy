@@ -128,7 +128,6 @@ def buildExclusions = [
   [ /osx1015-release-pkg/,            releaseType, gte(16) ],
   [ /osx1015-release-tar/,            releaseType, gte(20) ],
   [ /^osx11/,                         testType,    lt(15)  ],
-  [ /osx1014/,                        anyType,     gte(17) ],
 
   // FreeBSD -----------------------------------------------
   [ /^freebsd10/,                     anyType,     gte(11) ],
