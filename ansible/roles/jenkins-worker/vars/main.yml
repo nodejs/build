@@ -72,11 +72,6 @@ needs_monit: [
 # some os'es needs different paths to java. add them here.
 java_path: {
   'ibmi73': '/QOpenSys/pkgs/lib/jvm/openjdk-11/bin/java',
-  'macos10.10': 'java',
-  'macos10.11': 'java',
-  'macos10.12': 'java',
-  'macos10.13': 'java',
-  'macos10.14': 'java',
   'macos10.15': 'java',
   'macos11': 'java',
   'macos11.0': 'java',
