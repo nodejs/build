@@ -34,8 +34,6 @@ def buildExclusions = [
   [ /rhel8/,                          releaseType, lt(18)  ],
   [ /rhel8/,                          anyType,     lt(14)  ],
   [ /^ubuntu1804/,                    anyType,     lt(10)  ], // probably temporary
-  [ /^ubuntu1404-32/,                 anyType,     gte(10) ], // 32-bit linux for <10 only
-  [ /^ubuntu1404-64/,                 anyType,     gte(12) ],
   [ /^ubuntu1604-32/,                 anyType,     gte(10) ], // 32-bit linux for <10 only
   [ /^ubuntu1604-64/,                 anyType,     gte(16) ],
   [ /^ubuntu2004/,                    anyType,     lt(13)  ], // Ubuntu 20 doesn't have Python 2

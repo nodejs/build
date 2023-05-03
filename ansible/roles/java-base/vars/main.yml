@@ -20,7 +20,6 @@ packages: {
   'smartos': 'openjdk11',
   'ubuntu': 'openjdk-17-jre-headless',
   'ubuntu1604': 'openjdk-8-jre-headless',
-  'ubuntu1404': 'oracle-java8-installer',
   'ubuntu2204': 'openjdk-17-jre-headless',
   }
 
