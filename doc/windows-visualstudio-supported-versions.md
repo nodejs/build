@@ -10,10 +10,10 @@ Supported versions for running the Node.js installer and executable as released.
 
 | Node.js Version | Windows Version            |
 |-----------------|----------------------------|
-| v14             | 8.1 / 2012 R2              |
 | v16             | 8.1 / 2012 R2              |
 | v18             | 10 / 2016                  |
 | v19             | 10 / 2016                  |
+| v20             | 10 / 2016                  |
 
 ## For building Node.js Core
 
@@ -21,10 +21,10 @@ Supported versions for building Node.js from source.
 
 | Node.js Version | Visual Studio Version               |
 |-----------------|-------------------------------------|
-| v14             | 2017, 2019                          |
 | v16             | 2019 <sup>[1]</sup>                 |
 | v18             | 2019                                |
 | v19             | 2019                                |
+| v20             | 2019                                |
 
 ## For building Node.js Addons
 
@@ -32,10 +32,10 @@ Supported versions for building Node.js addons. End-users should have one of the
 
 | Node.js Version | Visual Studio Version                     |
 |-----------------|-------------------------------------------|
-| v14             | 2015, VCBT2015, 2017, 2019                |
 | v16             | 2015, VCBT2015, 2017, 2019                |
 | v18             | 2015, VCBT2015, 2017, 2019                |
 | v19             | 2017, 2019 <sup>[2]</sup>                 |
+| v20             | 2017, 2019 <sup>[2]</sup>                 |
 
 ## Official Releases
 
@@ -43,10 +43,10 @@ These versions are used to build the official releases.
 
 | Node.js Version | Windows Version | Visual Studio Version |
 |-----------------|-----------------|-----------------------|
-| v14             | 2012 R2         | 2019                  |
 | v16             | 2012 R2         | 2019                  |
 | v18             | 2012 R2         | 2019                  |
 | v19             | 2012 R2         | 2019                  |
+| v20             | 2012 R2         | 2019                  |
 
 ## References
 
