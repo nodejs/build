@@ -41,7 +41,7 @@
     become_user: "{{ ansible_user }}"
     homebrew:
       upgrade_all: yes
-    ignore_errors: "{{ os == 'macos10.15' or os == 'macos10.14' }}"
+    ignore_errors: "{{ os == 'macos10.15' }}"
 
   - name: Install brew cu
     become_user: "{{ ansible_user }}"
