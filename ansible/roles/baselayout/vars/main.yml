@@ -82,28 +82,6 @@ packages: {
     'ccache,git,gmake,sudo,python2,python3'
   ],
 
-  'macos10.10': [
-    'cmake,python,ccache'
-  ],
-
-  'macos10.11': [
-    'cmake,python,ccache'
-  ],
-
-  'macos10.12': [
-    'cmake,python,ccache'
-  ],
-
-  'macos10.13': [
-    'cmake,python,ccache'
-  ],
-
-
-  'macos10.14': [
-    'cmake,python,ccache'
-  ],
-
-
   'macos10.15': [
     'cmake,python,ccache'
   ],
