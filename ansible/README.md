@@ -261,8 +261,6 @@ Unsorted stuff of things we need to do/think about
 - [ ] assign 192/256mb ram to the jenkins instances that requires it:
       - aix
       - TBD
-- [ ] automate more items in initial Raspberry Pi setup (see bottom of
-      setup/raspberry-pi/README.md, some of these can be automated)
 - [ ] epel-release for centos - required for centos7 on packet.net arm64
       before ccache can be installed
 - [x] make .ssh/config and .ssh/id_rsa for release machines, adding config

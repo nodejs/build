@@ -1,7 +1,1 @@
-raspberry_pi: {
-  apt_proxy: 'http://192.168.2.100:3142',
-  nfs_boot_server: '192.168.2.100',
-  nfs_boot_share_root: '/var/tftpd',
-}
-
 autologon_regpath: 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'
