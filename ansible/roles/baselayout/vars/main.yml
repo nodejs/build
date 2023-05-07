@@ -10,7 +10,6 @@ git_version: 2.10.2
 ssh_config: /etc/ssh/sshd_config
 
 sshd_service_map: {
-  'ubuntu1404': 'ssh',
   'smartos17': 'ssh',
   'smartos18': 'ssh',
 }
@@ -19,8 +18,7 @@ sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripver
 
 ntp_service: {
   chrony: ['rhel8'],
-  systemd: ['debian8', 'debian9', 'debian10', 'ubuntu1604', 'ubuntu1804'],
-  ntp_package: ['ubuntu1404']
+  systemd: ['debian8', 'debian9', 'debian10', 'ubuntu1604', 'ubuntu1804']
 }
 
 common_packages: [
@@ -145,10 +143,6 @@ packages: {
 
   ubuntu: [
     'ccache,curl,git,libfontconfig1,sudo,python3-pip',
-  ],
-
-  ubuntu1404: [
-    'ntp,gcc-8,g++-8,gcc-6,g++-6,g++-4.8,gcc-4.8,g++-4.9,gcc-4.9,binutils-2.26',
   ],
 
   # Default gcc/g++ package is 5.

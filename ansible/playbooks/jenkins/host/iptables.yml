@@ -8,16 +8,14 @@
 #
 
 - hosts:
-  - infra-digitalocean-ubuntu1404-x64-1 # ci.nodejs.org
+  - infra-digitalocean-ubuntu2204-x64-1 # ci.nodejs.org
   - infra-ibm-ubuntu1804-x64-1 # ci-release.nodejs.org
 
   vars:
     hostgroups: {
-      'infra-digitalocean-ubuntu1404-x64-1': 'test',
+      'infra-digitalocean-ubuntu2204-x64-1': 'test',
       'infra-ibm-ubuntu1804-x64-1': 'release'
       }
-    jumphost: 'vagg-arm.nodejs.org'
-
 
   tasks:
   - name: add hosts to firewall

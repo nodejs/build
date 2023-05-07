@@ -27,8 +27,6 @@ grep -- 'rhel7.*-s390x' hosts/all > hosts/rhel7x-s390x
 grep -- 'smartos' hosts/all > hosts/smartos
 grep -- 'softlayer' hosts/all > hosts/softlayer
 grep -- 'test-' hosts/all > hosts/test
-grep -- 'ubuntu1404-ppc64_be' hosts/all > hosts/ubuntu1404-ppc64_be
-grep -- 'ubuntu1404-ppc64_le' hosts/all > hosts/ubuntu1404-ppc64_le
 grep -- 'zos13' hosts/all > hosts/zos13
 
 echo "Parallel SSH config files updated in ./hosts"

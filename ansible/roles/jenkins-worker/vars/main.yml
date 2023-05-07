@@ -12,7 +12,6 @@ init: {
   macos: 'macos',
   systemd: ['centos7', 'debian8', 'debian9', 'debian10', 'fedora', 'rhel7', 'rhel8', 'ubuntu1604', 'ubuntu1804','ubuntu2204'],
   svc: 'smartos',
-  upstart: ['ubuntu12', 'ubuntu1404'],
   zos_start: 'zos'
   }
 
@@ -44,10 +43,6 @@ jenkins_init: {
   systemd: {
     dest: '/lib/systemd/system/jenkins.service',
     src: 'systemd.service.j2'
-    },
-  upstart: {
-    dest: '/etc/init/jenkins.conf',
-    src: 'upstart.j2'
     },
   zos_start: {
     dest: '{{ home }}/{{ server_user }}/start.sh.utf8',

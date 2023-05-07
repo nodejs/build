@@ -23,8 +23,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - debian9-64
     - fedora-last-latest-x64
     - fedora-latest-x64
-    - ubuntu1404-32 (Node < 10)
-    - ubuntu1404-64 (Node < 12)
     - ubuntu1604-32 (Node < 10)
     - ubuntu1604-64
     - ubuntu1804-64
@@ -33,7 +31,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - osx1011
   - **node-test-commit-plinux**
     - centos7-ppcle (Node >= 12)
-    - ppcle-ubuntu1404 (Node < 13)
   - **node-test-commit-smartos**
     - smartos15-64 (Node >= 8 < 10)
     - smartos16-64 (Node >= 8 < 12)

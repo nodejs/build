@@ -4,14 +4,6 @@
 # installs java
 #
 
-- name: install add-apt-repostory
-  when: os == "ubuntu1404" and arch != "ppc64"
-  package: name=software-properties-common state=present
-
-- name: add webupd8 oracle java repository
-  when: os == "ubuntu1404" and arch != "ppc64"
-  apt_repository: repo='ppa:webupd8team/java'
-
 - name: add webupd8team oracle java repository
   when: os == "debian8"
   lineinfile:
@@ -24,7 +16,7 @@
   shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
 
 - name: accept webupd8 oracle java 8 license
-  when: os == "ubuntu1404" and arch != "ppc64" or os == "debian8"
+  when: os == "debian8"
   debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
 
 # if this fails you want to check in vars/main.yml and add package name
@@ -57,13 +49,6 @@
   homebrew_cask:
         name: "{{ java_package_name }}"
         state: present
-
-- name: install webupd8 oracle java 8 extras
-  when: java.rc > 0 and os == "ubuntu1404" and arch != "ppc64"
-  package: name="{{item}}" state=present
-  with_items:
-    - ca-certificates
-    - oracle-java8-set-default
 
 # Uses the AdoptOpenJDK API https://github.com/adoptopenjdk/openjdk-api-v3
 # to discover the most recent release for the given adoptopenjdk_version and
