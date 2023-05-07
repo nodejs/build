@@ -135,7 +135,7 @@ packages: {
   ],
 
   smartos20: [
-    'gcc9',
+    'gcc10',
     'ccache',
     'python38',
     'py38-pip'
