@@ -54,7 +54,7 @@ deprecated and
 
 If everything is set up correctly, you should be able to log into
 the machine without passwords. By default you will log into the machine
-as `root` (except macOS machines and some raspberry Pis),
+as `root` (or a sudoer user),
 but it is recommended to switch to the `iojs` user (run `su - iojs` or
 `sudo su - iojs` for non-root logins) before performing any actions.
 

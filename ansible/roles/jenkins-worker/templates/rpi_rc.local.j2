@@ -1,6 +1,0 @@
-#!/bin/sh -e
-
-/etc/init.d/rpcbind start
-/etc/init.d/nfs-common start
-sleep 10 && (grep nfs /etc/fstab | cut -d" " -f 2 | xargs -l mount) &
-exit 0

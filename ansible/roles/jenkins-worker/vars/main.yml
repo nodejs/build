@@ -87,25 +87,6 @@ bash_path: {
   zos: 'bash'
   }
 
-raspberry_pi: {
-  nfs_root_server: '192.168.1.10',
-  nfs_root_share_root: '/exports/nodejs/pi',
-  containers: {
-    armv6l: [
-      { name: 'wheezy', template: 'rpi_wheezy.Dockerfile.j2' },
-      { name: 'jessie', template: 'rpi_jessie.Dockerfile.j2' }
-    ],
-    armv7l: [
-      { name: 'stretch', template: 'rpi_stretch.Dockerfile.j2' },
-      { name: 'buster', template: 'rpi_buster.Dockerfile.j2' }
-    ],
-    arm64: [
-      { name: 'stretch', template: 'rpi_stretch.Dockerfile.j2' },
-      { name: 'buster', template: 'rpi_buster.Dockerfile.j2' }
-    ]
-  }
-}
-
 scaleway_armv7: {
   containers: [
       { name: 'jessie', template: 'armv7_jessie.Dockerfile.j2' },
