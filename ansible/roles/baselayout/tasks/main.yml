@@ -131,21 +131,6 @@
     state: link
     src: "/usr/local/bin/python2"
 
-- name: smartos17 | update gcc symlinks
-  when: os == "smartos17"
-  file:
-    src: "/opt/local/gcc7/bin/{{ gcc }}"
-    dest: "/opt/local/bin/{{ gcc }}"
-    state: link
-  loop_control:
-    loop_var: gcc
-  with_items:
-    - gcc
-    - cc
-    - g++
-    - cpp
-    - c++
-
 - name: remove fortune from login shells
   when: os|stripversion == 'freebsd'
   lineinfile:
