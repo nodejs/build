@@ -32,9 +32,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
   - **node-test-commit-plinux**
     - centos7-ppcle (Node >= 12)
   - **node-test-commit-smartos**
-    - smartos15-64 (Node >= 8 < 10)
-    - smartos16-64 (Node >= 8 < 12)
-    - smartos17-64 (Node >= 10 < 12)
     - smartos18-64 (Node >= 12)
   - **node-test-commit-windows-fanned**  
     [See below for detailed information](#windows-test-matrix). Sub-jobs are:
