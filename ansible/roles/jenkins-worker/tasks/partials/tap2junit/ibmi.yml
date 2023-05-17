@@ -5,5 +5,8 @@
 #
 
 - name: install tap2junit
-  shell:
-    cmd: "pip3 install tap2junit"
+  ansible.builtin.pip:
+    executable: /QOpenSys/pkgs/bin/pip3.9
+    name: tap2junit
+    state: present
+    version: "{{ tap2junit_version }}"
