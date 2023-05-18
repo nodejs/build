@@ -17,7 +17,7 @@ clonedir=/home/www/github/${site}
 
 if [ ! -d "${clonedir}" ]; then
   repo="${site}.org"
-  git clone https://github.com/nodejs/${repo}.git $clonedir
+  git clone --depth 2 https://github.com/nodejs/${repo}.git $clonedir
 fi
 
 if [ "$site" == "nodejs" ]; then
@@ -51,7 +51,7 @@ docker run \
       npm config set loglevel http && \
       npm config set cache /npm/ && \
       cd /website/ && \
-      npm install --cache-min 1440 --production && \
+      npm ci && \
       $build_cmd \
     ' \
   "
