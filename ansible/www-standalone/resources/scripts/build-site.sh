@@ -51,7 +51,7 @@ docker run \
       npm config set loglevel http && \
       npm config set cache /npm/ && \
       cd /website/ && \
-      npm ci --prefer-offline && \
+      npm ci && \
       $build_cmd \
     ' \
   "
