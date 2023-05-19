@@ -7,7 +7,7 @@
     dest: "{{ user_home_dir }}/.ssh"
     mode: "0700"
     owner: "{{ server_user }}"
-    group: "{{ server_user }}"
+    group: "{{ (os|startswith('zos') or os|startswith('ibmi'))|ternary(omit, server_user) }}"
     state: directory
 
 - name: write github.com entry in known_hosts

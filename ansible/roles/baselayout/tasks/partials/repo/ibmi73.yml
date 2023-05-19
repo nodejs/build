@@ -1,7 +1,15 @@
 ---
 
-- name: ibmi73 | install IBM i 7.3 repo
-  get_url:
-    url: https://public.dhe.ibm.com/software/ibmi/products/pase/rpms/ibm-7.3.repo
-    dest: /QOpenSys/etc/yum/repos.d/ibm-7.3.repo
-    mode: 0644
+- name: ibmi73 | remove old repositories
+  ansible.builtin.yum_repository:
+    name: "{{ item }}"
+    reposdir: /QOpenSys/etc/yum/repos.d
+    state: absent
+  loop:
+    - ibm
+    - ibm-7.3
+
+- name: ibmi73 | install IBM i repositories
+  ansible.builtin.yum:
+    name: ibmi-repos
+    state: present
