@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:3.18
 
 ENV LC_ALL C
 ENV USER {{ server_user }}
@@ -30,10 +30,10 @@ RUN apk add --no-cache --virtual .build-deps \
         python3 \
         tar \
         ccache \
-        openjdk11 \
+        openjdk17 \
         git \
         procps \
-        openssh-client \
+        openssh-client-default \
         py3-pip \
         bash \
         automake \
