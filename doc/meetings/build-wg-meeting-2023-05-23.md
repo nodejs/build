@@ -8,7 +8,6 @@
 
 ## Present
 
-* Build team: @nodejs/build
 * Richard Lau @richardlau
 * Stewart Addison @sxa
 * Ulises Gascon @ulisesgascon
