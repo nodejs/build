@@ -1,4 +1,4 @@
-# Node.js  Build WorkGroup Meeting 2023-05-23
+# Node.js Build WorkGroup Meeting 2023-05-23
 
 ## Links
 
