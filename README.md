@@ -31,15 +31,12 @@ to the resources we manage.
 - [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
-- [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@MoLow](https://github.com/MoLow) - Moshe Atlow
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
-- [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 - [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 - [@sxa](https://github.com/sxa) - Stewart X Addison
 - [@targos](https://github.com/targos) - Michaël Zasso
@@ -142,11 +139,14 @@ accesses and team roles see [GOVERNANCE.md][].
 - [@bnoordhuis](https://github.com/bnoordhuis) - Ben Noordhuis
 - [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
 - [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil
+- [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 - [@LucaLanziani](https://github.com/LucaLanziani) - Luca Lanziani
 - [@maclover7](https://github.com/maclover7) - Jon Moss
 - [@mmarchini](https://github.com/mmarchini) - mary marchini
+- [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 - [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
+- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 
 ## Infrastructure Providers
 
