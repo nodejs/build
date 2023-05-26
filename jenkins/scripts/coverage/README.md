@@ -88,6 +88,7 @@ in the other sections, the job is pegged to run on:
 
 
 # Transfer to benchmarking data machine
+
 The rsync from the machine on which the job runs to the benchmarking
 data machine requires an ssh key.  Currently we have pegged the job to the
 benchmarking machine
@@ -107,8 +108,5 @@ Host coveragedata
 The results are pushed to /home/benchmark/coverage-out/out.
 
 # Transfer to the website
-As mentioned earlier, the website will pull updates hourly from
-/home/benchmark/coverage-out/out and put
-them in the right place to be served at coverage.nodejs.org.  The key
-required to do this is already in place in order to support the similar process
-for benchmarking.nodejs.org
+
+The benchmark.nodejs.org website is archived and the data is not synced anymore.

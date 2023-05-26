@@ -3,7 +3,8 @@ server {
     listen [::]:80;
     server_name benchmarking.nodejs.org;
 
-    return 301 https://benchmarking.nodejs.org$request_uri;
+    # Benchmark Website is deprecated we redirect to nodejs.org now
+    return 301 https://nodejs.org;
 }
 
 server {
@@ -15,25 +16,6 @@ server {
     ssl_certificate_key ssl/nodejs.key;
     ssl_trusted_certificate ssl/nodejs_chained.crt;
 
-    keepalive_timeout 60;
-    server_tokens off;
-
-    resolver 8.8.4.4 8.8.8.8 valid=300s;
-    resolver_timeout 10s;
-
-    add_header Strict-Transport-Security max-age=63072000;
-    add_header X-Frame-Options DENY;
-    add_header X-Content-Type-Options nosniff;
-
-    access_log /var/log/nginx/benchmarking/benchmarking.nodejs.org-access.log nodejs;
-    error_log /var/log/nginx/benchmarking/benchmarking.nodejs.org-error.log;
-
-    gzip on;
-    gzip_static on;
-    gzip_disable "MSIE [1-6]\.";
-    gzip_types text/plain text/css application/javascript text/xml application/xml application/xml+rss image/svg+xml;
-
-    root /home/www/benchmarking;
-    default_type text/plain;
-    index index.html;
+    # Benchmark Website is deprecated we redirect to nodejs.org now
+    return 301 https://nodejs.org;
 }
