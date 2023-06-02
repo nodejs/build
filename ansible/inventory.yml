@@ -179,6 +179,7 @@ hosts:
         rhel8-x64-3: {ip: 52.117.26.13, build_test_v8: yes}
         ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
         ubuntu1804-x64-2: {ip: 50.97.245.9}
+        ubuntu2204_docker-x64-1: {ip: 52.117.26.9}
 
     - equinix_mnx:
         smartos18-x64-3: {ip: 147.28.162.102}
@@ -343,4 +344,3 @@ hosts:
         debian9-x64-1: {ip: 169.60.150.88}
         debian10-x64-1: {ip: 169.44.16.126}
         ubuntu1404-x64-1: {ip: 50.97.245.5}
-        ubuntu1804_docker-x64-1: {ip: 52.117.26.9}

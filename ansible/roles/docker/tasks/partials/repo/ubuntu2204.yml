@@ -1,0 +1,18 @@
+---
+
+#
+# add Docker repo
+#
+
+- name: "repo : add Ubuntu Docker repo key"
+  ansible.builtin.apt_key:
+    state: present
+    url: https://download.docker.com/linux/ubuntu/gpg
+
+- name: "repo : add Ubuntu Docker repo"
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+  register: has_updated_package_repo
+
+- name: "repo : update apt cache"
+  apt: update_cache=yes
