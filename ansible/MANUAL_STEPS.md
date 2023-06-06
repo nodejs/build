@@ -114,7 +114,8 @@ As root:
 * Extract: `xip --expand xcode.xip`
   * This takes a long time since xcode.xip is 7-10G in size depending on version
   * If you run out of space you can delete `/Users/build/workspace/*` to free up some space. Also make sure that
-    if you are updating Xcode that you have removed any existing version of /Applications/Xcode.app
+    if you are updating Xcode that you have removed any existing version of /Applications/Xcode.app. You may also
+    need to clear the ccache by running `sudo -s su - iojs` followed by `ccache --clear`
 * Move `Xcode.app` directory to `/Applications`
 * `xcode-select --switch /Applications/Xcode.app`
 * `xcodebuild -license` - accept license
