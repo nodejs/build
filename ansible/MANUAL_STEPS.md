@@ -108,8 +108,14 @@ Xcode Command-line tools are not enough to perform a full notarization cycle, fu
 As root:
 
 * Download Xcode: https://developer.apple.com/download/more/ - find non-beta version, open Developer Tools in browser, Networking tab, start download (then cancel), in Networking tab "Copy as cURL" (available in Chrome & FF)
+  * On OSX 11 we currently install 13.2.1
 * Download onto release machine using the copied curl command (may need `-o xcode.xip` appended to curl command) to `/tmp`
+  * If you have trouble on the command line, pasting into a shell script file can make pasting/editing to add -o xcode.xip easier
 * Extract: `xip --expand xcode.xip`
+  * This takes a long time since xcode.xip is 7-10G in size depending on version
+  * If you run out of space you can delete `/Users/build/workspace/*` to free up some space. Also make sure that
+    if you are updating Xcode that you have removed any existing version of /Applications/Xcode.app. You may also
+    need to clear the ccache by running `sudo -s su - iojs` followed by `ccache --clear`
 * Move `Xcode.app` directory to `/Applications`
 * `xcode-select --switch /Applications/Xcode.app`
 * `xcodebuild -license` - accept license
