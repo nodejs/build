@@ -7,18 +7,32 @@ Clicking on most labels will take you to the relvevant area of the build reposit
 flowchart TD
     subgraph user[Releaser]
       start([<a href='https://github.com/nodejs/node/blob/main/doc/contributing/releases.md'>Start</a>])
-      A(<a href='https://github.com/nodejs/node/blob/main/doc/contributing/releases.md#9-produce-release-builds'>Start release build</a>)
+      prepareRelease(<a href='https://github.com/nodejs/node/blob/main/doc/contributing/releases.md#7-ensure-that-the-release-branch-is-stable'>Prepare the release</a>)
+      startTestBuilds(<a href='https://github.com/nodejs/node/blob/main/doc/contributing/releases.md#7-ensure-that-the-release-branch-is-stable'>Start test builds</a>)
+      readyToRelease{Ready for release?}
+      
+      startReleaseBuilds(<a href='https://github.com/nodejs/node/blob/main/doc/contributing/releases.md#9-produce-release-builds'>Start release build</a>)
       promote(<a href='https://github.com/nodejs/node/blob/main/tools/release.sh'>Promote</a>)
       blog(<a href='https://github.com/nodejs/nodejs.org/blob/main/scripts/release-post/index.mjs'>Create blog post</a>)
-      F([End])
+      done([End])
 
-      start-->A-->promote-->blog-->F
-    end
-    subgraph jenkins[Release CI]
-      builds(<a href='https://ci-release.nodejs.org/job/iojs+release/'>Release builds</a>)
+      start-->prepareRelease-->startTestBuilds-->readyToRelease
+      readyToRelease--No-->prepareRelease
+      readyToRelease--Yes-->startReleaseBuilds-->promote-->blog-->done
     end
     subgraph github[GitHub]
-      gh[<a href='https://github.com/nodejs/nodejs.org'>nodejs/nodejs.org</a>]
+      ghCode[<a href='https://github.com/nodejs/node'>nodejs/node</a>]
+      ghWebsite[<a href='https://github.com/nodejs/nodejs.org'>nodejs/nodejs.org</a>]
+      
+      %% This invisible link is to aid the layout of the flowchart, stacking the two repositories vertically
+      ghCode ~~~ ghWebsite
+    end
+    subgraph buildInfra[Owned by Build WG]
+    subgraph ci[Test CI]
+      testBuilds(<a href='https://ci.nodejs.org/job/node-test-pull-request/'>Test builds</a>)
+    end
+    subgraph ci-release[Release CI]
+      releaseBuilds(<a href='https://ci-release.nodejs.org/job/iojs+release/'>Release builds</a>)
     end
     subgraph www[www server]
       staging[(staging)]
@@ -50,11 +64,16 @@ flowchart TD
         purgeQueued--Yes-->purge
       end
     end
-    A-->builds
-    gh-.->webhook
+    end
+    prepareRelease-->|Open/update pull request|ghCode
+    startTestBuilds-->testBuilds
+    startReleaseBuilds-->releaseBuilds
+    ghWebsite-.->|Pull request merged|webhook
     promote-->promotion
-    blog-->|pull request|gh
-    builds-->staging
+    blog-->|Open pull request|ghWebsite
+    releaseBuilds-->staging
     purge-->cloudflare
 
+    %% This invisible link is to aid the layout of the flowchart, stacking the "Test CI" subgraph above the "Release CI" subgraph
+    ci ~~~ ci-release
 ```
