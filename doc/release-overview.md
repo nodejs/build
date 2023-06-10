@@ -1,7 +1,7 @@
 # Overview of release process and infrastructure for Node.js
 
 This is an overview of how the release process for Node.js works and how it interacts with Build WG infrastructure.
-Clicking on most labels will take you to the relvevant area of the build repository or other repository owned by the Node.js organization.
+Clicking on most labels will take you to the relevant area of the build repository or other repository owned by the Node.js organization.
 
 ```mermaid
 flowchart TD
@@ -27,7 +27,7 @@ flowchart TD
       %% This invisible link is to aid the layout of the flowchart, stacking the two repositories vertically
       ghCode ~~~ ghWebsite
     end
-    subgraph buildInfra[Owned by Build WG]
+    subgraph buildInfra[Infrastructure owned by Build WG]
     subgraph ci[Test CI]
       testBuilds(<a href='https://ci.nodejs.org/job/node-test-pull-request/'>Test builds</a>)
     end
