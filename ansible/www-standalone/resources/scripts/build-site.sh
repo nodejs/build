@@ -42,7 +42,7 @@ docker run \
   --rm \
   -v ${clonedir}:/website/ \
   -v /home/nodejs/.npm:/npm/ \
-  node:lts \
+  node:lts-bullseye \
   bash -c " \
     apt-get update && apt-get install -y rsync && \
     addgroup nodejs --gid ${nodeuid} && \
