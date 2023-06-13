@@ -37,7 +37,7 @@ git checkout origin/main
 nodeuid=$(grep ^nodejs: /etc/passwd | awk -F: '{print $3}')
 nodegid=$(grep ^nodejs: /etc/passwd | awk -F: '{print $4}')
 
-docker pull node:lts
+docker pull node:lts-bullseye
 docker run \
   --rm \
   -v ${clonedir}:/website/ \
