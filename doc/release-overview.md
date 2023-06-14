@@ -78,7 +78,7 @@ flowchart TD
           unofficialBuildIfQueued[[<a href='https://github.com/nodejs/unofficial-builds/blob/main/bin/build-if-queued.sh'>build-if-queued.sh</a>]]
         end
       end
-      unofficialManualQueue[/Manually queue build\]
+      unofficialManualQueue[/<a href='https://github.com/nodejs/unofficial-builds#manual-build-triggers'>Manually queue build</a>\]
       unofficialQueueBuild[<a href='https://github.com/nodejs/unofficial-builds/blob/main/bin/queue-push.sh'>Queue build</a>]
       unofficialDownloads[(download)]
       unofficialWebhook[<a href='https://github.com/nodejs/build/blob/main/ansible/roles/unofficial-builds/files/unofficial-builds-deploy-webhook.service'>Webhook</a>]
