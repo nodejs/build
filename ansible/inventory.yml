@@ -107,10 +107,6 @@ hosts:
   - test:
 
     - azure:
-        msft-win10_vs2019-x64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
-        msft-win10_vs2019-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
-        msft-win10_vs2019-x64-3: {ip: nodejs.australiaeast.cloudapp.azure.com}
-        msft-win10_vs2019-x64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
         msft-win11_vs2022-arm64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win11_vs2022-arm64-2: {ip: nodejs2.eastus.cloudapp.azure.com}
         msft-win11_vs2022-arm64-3: {ip: nodejs.westeurope.cloudapp.azure.com}
@@ -123,6 +119,10 @@ hosts:
         msft-win2016_vs2017-x64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
         msft-win2016_vs2017-x64-5: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win2016_vs2017-x64-6: {ip: nodejs.westus3.cloudapp.azure.com}
+        msft-win2022_vs2019-x64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
+        msft-win2022_vs2019-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
+        msft-win2022_vs2019-x64-3: {ip: nodejs.australiaeast.cloudapp.azure.com}
+        msft-win2022_vs2019-x64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
 
     - digitalocean:
         debian8-x64-1: {ip: 159.203.103.52}
@@ -228,10 +228,6 @@ hosts:
                 SSL_CERT_FILE: "{{ home }}/{{ server_user }}/ca-bundle.crt"
             server_jobs: 4
 
-    - msft:
-        win10_vs2017-arm64-1: {}
-        win10_vs2017-arm64-2: {}
-
     - nearform:
         arm-win10_vs2019-arm64-1: {ip: 83.147.191.73}
         arm-win10_vs2019-arm64-2: {ip: 83.147.191.74}
@@ -324,19 +320,12 @@ hosts:
         fedora32-x64-1: {ip: 119.9.51.79}
         ubuntu1604-x64-1: {ip: 119.9.51.176}
         ubuntu1604-x64-2: {ip: 104.130.124.194}
-        win2012r2_vs2013-x64-1: {ip: 104.239.174.165}
-        win2012r2_vs2013-x64-2: {ip: 104.130.132.171}
         win2012r2_vs2015-x64-1: {ip: 104.239.174.8}
         win2012r2_vs2015-x64-2: {ip: 104.130.141.137}
-        win2012r2_vs2017-x64-1: {ip: 162.242.237.72}
-        win2012r2_vs2017-x64-2: {ip: 104.239.142.99}
-        win2012r2_vs2017-x64-3: {ip: 119.9.131.54}
-        win2012r2_vs2017-x64-4: {ip: 166.78.99.25}
         win2012r2_vs2019-x64-1: {ip: 162.242.237.124}
         win2012r2_vs2019-x64-2: {ip: 104.130.158.58}
         win2012r2_vs2019-x64-3: {ip: 119.9.131.63}
         win2012r2_vs2019-x64-4: {ip: 104.130.219.103}
-        win2012r2_vs2019-x64-5: {ip: 104.130.6.92}
         win2012r2_vs2019-x64-6: {ip: 104.130.141.231}
 
     - softlayer:
