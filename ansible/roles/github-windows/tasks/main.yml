@@ -1,0 +1,39 @@
+---
+
+# Set up hosts to be able to checkout/fetch from github.com via SSH.
+
+- name: Check if current user already has a .ssh directory
+  win_stat: path='{{ansible_facts["env"]["USERPROFILE"]}}\.ssh'
+  register: ssh_stat
+
+- name: Create a .ssh directory for current user if missing
+  win_file:
+    path: '{{ansible_facts["env"]["USERPROFILE"]}}\.ssh'
+    state: directory
+  when: not ssh_stat.stat.exists
+
+- name: Check if current user already has a known_hosts file
+  win_stat: path='{{ansible_facts["env"]["USERPROFILE"]}}\.ssh\known_hosts'
+  register: known_hosts_stat
+
+- name: Create a known_hosts for current user if missing
+  win_copy:
+    src: '../github/files/github_known_hosts'
+    dest: '{{ansible_facts["env"]["USERPROFILE"]}}\.ssh\known_hosts'
+  when: not known_hosts_stat.stat.exists
+
+- name: Add github known hosts to known_hosts file if present
+  win_lineinfile:
+    path: '{{ansible_facts["env"]["USERPROFILE"]}}\.ssh\known_hosts'
+    line: '{{item}}'
+    state: present
+  loop: "{{lookup('file', '../github/files/github_known_hosts').splitlines()}}"
+  when: known_hosts_stat.stat.exists
+
+- name: Remove github bad hosts from known_hosts file if present
+  win_lineinfile:
+    path: '{{ansible_facts["env"]["USERPROFILE"]}}\.ssh\known_hosts'
+    line: '{{item}}'
+    state: absent
+  loop: "{{lookup('file', '../github/files/github_bad_hosts').splitlines()}}"
+  when: known_hosts_stat.stat.exists
