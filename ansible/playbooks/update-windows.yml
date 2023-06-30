@@ -21,6 +21,13 @@
 # Changing credentials on release machines breaks access to the code signing
 # certificate, so it need to be re-installed after running this.
 #
+# Generate a random valid Windows username with:
+# cat /dev/urandom | tr -dc 'a-z' | head -c12 ; echo
+# Generate a random valid Windows password with:
+# cat /dev/urandom | tr -dc 'a-z' | head -c1 ; cat /dev/urandom | tr -dc '[:alnum:]~@%^*_+=:,.?/' | head -c23 ; echo
+# Generate random valid ports by going to:
+# https://www.random.org/integers/?num=100&min=10000&max=49151&col=2&base=10&format=html&rnd=new
+#
 
 
 - hosts:
@@ -30,6 +37,10 @@
     autologon_regpath: 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'
 
   tasks:
+    - name: delete the unencrypted WinRM endpoint
+      win_shell: "winrm delete winrm/config/Listener?Address=*+Transport=HTTP"
+      ignore_errors: true # Deleting unencrypted WinRM endpoint fails if already deleted. Just ignore it.
+
     - name: set automatic logon user name
       when: '(new_user is defined) and (new_user|length > 0)'
       win_regedit:
