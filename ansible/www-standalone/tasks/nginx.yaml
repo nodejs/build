@@ -72,6 +72,14 @@
     regexp: "worker_connections"
   tags: nginx
 
+- name: nginx | Increase number of files
+  lineinfile:
+    line: "worker_rlimit_nofile 4096;"
+    dest: "/etc/nginx/nginx.conf"
+    insertafter: "worker_processes"
+    regexp: "worker_rlimit_nofile"
+  tags: nginx
+
 - name: nginx | Delete default config
   file:
     path: /etc/nginx/sites-enabled/default
