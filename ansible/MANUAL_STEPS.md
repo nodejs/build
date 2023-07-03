@@ -603,25 +603,16 @@ Invoke-WebRequest "https://raw.githubusercontent.com/ansible/ansible/devel/examp
 
 #### Port Configuration
 
-Delete the unencrypted WinRM endpoint:
-
-```powershell
-winrm delete winrm/config/Listener?Address=*+Transport=HTTP
-```
-
-On Rackspace hosts, it is necessary to change the port to match the value found in secrets (change 12345):
-
-```powershell
-winrm set winrm/config/Listener?Address=*+Transport=HTTPS '@{Port="12345"}'
-```
+After creating new machines, the [`update-windows.yml`](playbooks/update-windows.yml) playbook should be run to:
+- Make sure the unencrypted WinRM endpoint is deleted on every machine. Check with:
+  ```console
+  ansible -f 50 'test-*-win*' -m win_shell -a 'winrm enumerate winrm/config/listener'
+  ```
+  The HTTP endpoint should not appear. Only the HTTPS endpoint should be present.
+- On Rackspace hosts, make sure to change the ports, username, and password as described in the playbook.
 
 On Azure, changing the ports is done in the Load Balancer configuration using the Azure Portal.
-
-To see the status of running listeners:
-
-```powershell
-winrm enumerate winrm/config/listener
-```
+The username and password are set during the creation of the VM in the Azure Portal.
 
 #### Test
 
