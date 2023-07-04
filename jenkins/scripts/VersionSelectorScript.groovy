@@ -78,10 +78,13 @@ def buildExclusions = [
   [ /vcbt2015(-\w+)?$/,               testType,    gte(10)       ],
   [ /vs2017(-\w+)?$/,                 testType,    ltGte(8, 15)  ],
   [ /vs2019(-\w+)?$/,                 testType,    lt(13)        ],
+  [ /vs2022(-\w+)?$/,                 testType,    lt(20)        ], // Temporarily compile Node v20+ on both VS2019 and VS2022
   [ /vs2015-x86$/,                    testType,    gte(10)       ], // compile arm64/x86 only once
   [ /vs2017-x86$/,                    testType,    ltGte(10, 14) ],
   [ /vs2019-x86$/,                    testType,    lt(14)        ],
   [ /vs2019-arm64$/,                  testType,    lt(14)        ],
+  [ /vs2022-x86$/,                    testType,    lt(20)        ], // Temporarily compile Node v20+ arm64 and x86 on both VS2019 and VS2022
+  [ /vs2022-arm64$/,                  testType,    lt(20)        ],
   [ /COMPILED_BY-\w+-arm64$/,         testType,    lt(19)        ], // run tests on arm64 for >=19
   // VS versions supported to build add-ons
   [ /vs2013-COMPILED_BY/,             testType,    gte(9)        ],
@@ -89,6 +92,7 @@ def buildExclusions = [
   [ /vcbt2015-COMPILED_BY/,           testType,    gte(19)       ],
   [ /vs2017-COMPILED_BY/,             testType,    lt(8)         ],
   [ /vs2019-COMPILED_BY/,             testType,    lt(12)        ],
+  [ /vs2022-COMPILED_BY/,             testType,    lt(16)        ],
   // Exclude some redundant configurations
   // https://github.com/nodejs/build/blob/main/doc/node-test-commit-matrix.md
   [ /win10.*COMPILED_BY-vs2017/,      testType,    lt(10)        ], // vcbt2015 runs on win10 for <10
