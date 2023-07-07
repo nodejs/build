@@ -44,12 +44,12 @@
   * Ulises will need to get an Apple Developer Account and might need access to certificates (TBC). The team seems comfortable with this idea, we will open an issue for the permission if needed
 * Terraform 
   * Related: Setup Terraform Cloud account [#3370](https://github.com/nodejs/build/issues/3370)
-  * @Ulises has created a PR for supporting Terraform: https://github.com/nodejs/build/pull/3391
-  * @Ulises will re-sync the terraform files to match the current Cloudflare state
-  * @Richard / @Michaël will add the token missing for the PR in order to properly run the new Github actions pipeline
+  * Ulises has created a PR for supporting Terraform: https://github.com/nodejs/build/pull/3391
+  * Ulises will re-sync the terraform files to match the current Cloudflare state
+  * Richard / Michaël will add the token missing for the PR in order to properly run the new Github actions pipeline
   * Any change from terraform files won’t trigger any real change in Cloudflare as we are using read only tokens, we agree to keep this approach until we feel ready to enable write access.
-  * In order to prevent accidental deployments or similar, we agreed to update the logic in the pipeline and do `terraform apply` only when there is an event like new release/deployment created, @Ulises will update the logic
-  * @Michaël will add the Terraform Cloud Token to the secrets repo
+  * In order to prevent accidental deployments or similar, we agreed to update the logic in the pipeline and do `terraform apply` only when there is an event like new release/deployment created, Ulises will update the logic
+  * Michaël will add the Terraform Cloud Token to the secrets repo
 * Experiment with Node.js Website Traffic on Vercel [#3366](https://github.com/nodejs/build/issues/3366)
   * Claudio is checking with Cloudflare Support
   * This is ongoing and blocking Vercel initiative
@@ -57,9 +57,9 @@
   * Maybe we can ask for support from the Linux foundation (Sovereign Tech Fund initiative)
 * Infrastructure for MacOS 12.x [#3240](https://github.com/nodejs/build/issues/3240)
   * Not a lot of news
-  * @ulises will ask for support if he is still stuck with Ansible playbooks.
+  * ulises will ask for support if he is still stuck with Ansible playbooks.
   * There are empty spots (2-3 potentially) in Orka that we might we able to reuse.
-  * Images without Xcode installed can be quite limited. @Ulises to confirm if new images can include xcode properly installed. 
+  * Images without Xcode installed can be quite limited. Ulises to confirm if new images can include xcode properly installed. 
   * The Orka Snapshots are not properly restored (since the beginning of the year)
 * Membership audit [#3144](https://github.com/nodejs/build/issues/3144)
   * Skipped due time
