@@ -25,7 +25,7 @@
 * DNS Wildcard problem?[#3404](https://github.com/nodejs/build/issues/3404)
   * Wildcard was implemented in the past and we don’t have the full context 
   * This topic was added to the agenda for awareness
-  * @Richard is planning to remove the wildcard and add explicit DNS records, this should not be a breaking change (Cloudflare level change not Nginx)
+  * Richard is planning to remove the wildcard and add explicit DNS records, this should not be a breaking change (Cloudflare level change not Nginx)
   * This is not currently a worry scenario, but the community found it surprising, so we will patch it.
 * NearForm Benchmarking Servers [#3390](https://github.com/nodejs/build/issues/3390)
   * NearForm is scaling back, this will potentially impact Benchmarking machines only (two intel servers).
