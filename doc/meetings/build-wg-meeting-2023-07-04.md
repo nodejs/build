@@ -49,7 +49,7 @@
   * Richard / Michaël will add the token missing for the PR in order to properly run the new Github actions pipeline
   * Any change from terraform files won’t trigger any real change in Cloudflare as we are using read only tokens, we agree to keep this approach until we feel ready to enable write access.
   * In order to prevent accidental deployments or similar, we agreed to update the logic in the pipeline and do `terraform apply` only when there is an event like new release/deployment created, Ulises will update the logic
-  * Michaël will add the Terraform Cloud Token to the secrets repo
+  * Michaël will add the Terraform Cloud account credentials to the secrets repo
 * Experiment with Node.js Website Traffic on Vercel [#3366](https://github.com/nodejs/build/issues/3366)
   * Claudio is checking with Cloudflare Support
   * This is ongoing and blocking Vercel initiative
