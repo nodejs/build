@@ -38,8 +38,8 @@
   * As we only use notarization, it might we a easier way to use directly Notarytool and update our script with that
   * Historically we used Gon to wait for the confirmation from Apple about the notarization, but seems like Notarytool provides already this feature
   * This can be a risk for the project if we don’t solve the situation before November
-  * Nodejs 16 will be deprecated by Sep’23
-  * Nodejs 18 will need to build in Macos 11 since September/November’23 (To be confirmed any incompatibility)
+  * Node.js 16 will be EoL by Sep’23
+  * Node.js 18 will need to build on macOS 11 since September/November’23 (To be confirmed any incompatibility)
   * Ulises will lead this initiative with the support from Richard and Michaël
   * Ulises will need to get an Apple Developer Account and might need access to certificates (TBC). The team seems comfortable with this idea, we will open an issue for the permission if needed
 * Terraform 
