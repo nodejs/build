@@ -29,7 +29,7 @@
   * This is not currently a worry scenario, but the community found it surprising, so we will patch it.
 * NearForm Benchmarking Servers [#3390](https://github.com/nodejs/build/issues/3390)
   * NearForm is scaling back, this will potentially impact Benchmarking machines only (two intel servers).
-  * We can rebalance the impacted machines into other infra available spots but this will make the relocated machines potentially slower and more reliable.
+  * We can rebalance the impacted machines into other infra available spots but this will make the relocated machines potentially slower and less reliable.
   * We are following up in the issue
 * Action required by Apple: Transition to the notarytool command-line utility [#3385](https://github.com/nodejs/build/issues/3385)
   * There is a script migration needed in order to fulfill the requirements.
