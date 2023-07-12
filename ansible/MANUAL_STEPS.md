@@ -116,12 +116,14 @@ As root:
   * If you run out of space you can delete `/Users/build/workspace/*` to free up some space. Also make sure that
     if you are updating Xcode that you have removed any existing version of /Applications/Xcode.app. You may also
     need to clear the ccache by running `sudo -s su - iojs` followed by `ccache --clear`
-* Move `Xcode.app` directory to `/Applications`
-* `xcode-select --switch /Applications/Xcode.app`
-* `xcodebuild -license` - accept license
+* Move `Xcode.app` directory to `/Applications` by running `mv Xcode.app /Applications/Xcode.app`
+* `sudo xcode-select --switch /Applications/Xcode.app`
+* `sudo xcodebuild -license` - accept license
+* `git` - check that git is working (confirming license has been accepted)
 
 #### Signing certificates
 
+* Go to the `build/release` folder in the secrets repo.
 * Extract from secrets/build/release: `dotgpg cat Apple\ Developer\ ID\ Node.js\ Foundation.p12.base64 | base64 -D > /tmp/Apple\ Developer\ ID\ Node.js\ Foundation.p12`
 * Transfer to release machine (scp to /tmp)
 * `sudo security import /tmp/Apple\ Developer\ ID\ Node.js\ Foundation.p12 -k /Library/Keychains/System.keychain -T /usr/bin/codesign -T /usr/bin/productsign -P 'XXXX'` (where XXXX is found in secrets/build/release/apple.md) (`security unlock-keychain -u /Library/Keychains/System.keychain` _may_ be required prior to running this command).
