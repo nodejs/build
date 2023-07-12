@@ -28,23 +28,23 @@ to the resources we manage.
 
 <!-- ncu-team-sync.team(nodejs/build) -->
 
-- [@AshCripps](https://github.com/AshCripps) - Ash Cripps
-- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
-- [@joaocgreis](https://github.com/joaocgreis) - João Reis
-- [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
-- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
-- [@MoLow](https://github.com/MoLow) - Moshe Atlow
-- [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
-- [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
-- [@phillipj](https://github.com/phillipj) - Phillip Johnsen
-- [@richardlau](https://github.com/richardlau) - Richard Lau
-- [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
-- [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
-- [@sxa](https://github.com/sxa) - Stewart X Addison
-- [@targos](https://github.com/targos) - Michaël Zasso
-- [@Trott](https://github.com/Trott) - Rich Trott
-- [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
+* [@AshCripps](https://github.com/AshCripps) - Ash Cripps
+* [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+* [@joaocgreis](https://github.com/joaocgreis) - João Reis
+* [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
+* [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+* [@MoLow](https://github.com/MoLow) - Moshe Atlow
+* [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
+* [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
+* [@phillipj](https://github.com/phillipj) - Phillip Johnsen
+* [@richardlau](https://github.com/richardlau) - Richard Lau
+* [@rvagg](https://github.com/rvagg) - Rod Vagg
+* [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+* [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
+* [@sxa](https://github.com/sxa) - Stewart X Addison
+* [@targos](https://github.com/targos) - Michaël Zasso
+* [@Trott](https://github.com/Trott) - Rich Trott
+* [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
 
 <!-- ncu-team-sync end -->
 
@@ -54,13 +54,14 @@ Above list is manually synced with the [gpg member list](https://github.com/node
 
 <!-- ncu-team-sync.team(nodejs/build-infra) -->
 
-- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
-- [@joaocgreis](https://github.com/joaocgreis) - João Reis
-- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
-- [@richardlau](https://github.com/richardlau) - Richard Lau
-- [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@sxa](https://github.com/sxa) - Stewart X Addison
-- [@targos](https://github.com/targos) - Michaël Zasso
+* [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+* [@joaocgreis](https://github.com/joaocgreis) - João Reis
+* [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+* [@richardlau](https://github.com/richardlau) - Richard Lau
+* [@rvagg](https://github.com/rvagg) - Rod Vagg
+* [@sxa](https://github.com/sxa) - Stewart X Addison
+* [@targos](https://github.com/targos) - Michaël Zasso
+* [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
 
 <!-- ncu-team-sync end -->
 
@@ -70,20 +71,20 @@ Admin access to https://ci.nodejs.org/.
 
 <!-- ncu-team-sync.team(nodejs/jenkins-admins) -->
 
-- [@AshCripps](https://github.com/AshCripps) - Ash Cripps
-- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
-- [@joaocgreis](https://github.com/joaocgreis) - João Reis
-- [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
-- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
-- [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
-- [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
-- [@richardlau](https://github.com/richardlau) - Richard Lau
-- [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
-- [@sxa](https://github.com/sxa) - Stewart X Addison
-- [@targos](https://github.com/targos) - Michaël Zasso
-- [@Trott](https://github.com/Trott) - Rich Trott
-- [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
+* [@AshCripps](https://github.com/AshCripps) - Ash Cripps
+* [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+* [@joaocgreis](https://github.com/joaocgreis) - João Reis
+* [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
+* [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+* [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
+* [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
+* [@richardlau](https://github.com/richardlau) - Richard Lau
+* [@rvagg](https://github.com/rvagg) - Rod Vagg
+* [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
+* [@sxa](https://github.com/sxa) - Stewart X Addison
+* [@targos](https://github.com/targos) - Michaël Zasso
+* [@Trott](https://github.com/Trott) - Rich Trott
+* [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
 
 <!-- ncu-team-sync end -->
 
@@ -108,17 +109,18 @@ Admin access to https://ci-release.nodejs.org/.
 
 <!-- ncu-team-sync.team(nodejs/jenkins-release-admins) -->
 
-- [@AshCripps](https://github.com/AshCripps) - Ash Cripps
-- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
-- [@joaocgreis](https://github.com/joaocgreis) - João Reis
-- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
-- [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
-- [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
-- [@richardlau](https://github.com/richardlau) - Richard Lau
-- [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
-- [@sxa](https://github.com/sxa) - Stewart X Addison
-- [@targos](https://github.com/targos) - Michaël Zasso
+* [@AshCripps](https://github.com/AshCripps) - Ash Cripps
+* [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+* [@joaocgreis](https://github.com/joaocgreis) - João Reis
+* [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+* [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
+* [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
+* [@richardlau](https://github.com/richardlau) - Richard Lau
+* [@rvagg](https://github.com/rvagg) - Rod Vagg
+* [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
+* [@sxa](https://github.com/sxa) - Stewart X Addison
+* [@targos](https://github.com/targos) - Michaël Zasso
+* [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
 
 <!-- ncu-team-sync end -->
 
@@ -126,10 +128,10 @@ Admin access to https://ci-release.nodejs.org/.
 
 <!-- ncu-team-sync.team(nodejs/github-bot) -->
 
-- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
-- [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
-- [@phillipj](https://github.com/phillipj) - Phillip Johnsen
-- [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
+* [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+* [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
+* [@phillipj](https://github.com/phillipj) - Phillip Johnsen
+* [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
 
 <!-- ncu-team-sync end -->
 
