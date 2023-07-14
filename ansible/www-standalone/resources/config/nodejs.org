@@ -29,8 +29,8 @@ server {
     open_file_cache_errors on;
 
     # This limits the number of connections to the server by creating a maximum amount of concurrent connections
-    # We limit the number of concurrent connections to be 1000
-    # This can be fine-tuned; @see https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-proxied-http/
+    # We limit the number of concurrent connections to be 5000
+    # This can be fine-tuned; See https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-proxied-http/
     limit_conn_zone $server_name zone=limitconnserver:10m;
     limit_conn_status 429;
     limit_conn limitconnserver 5000;
@@ -109,8 +109,8 @@ server {
     open_file_cache_errors on;
 
     # This limits the number of connections to the server by creating a maximum amount of concurrent connections
-    # We limit the number of concurrent connections to be 1000
-    # This can be fine-tuned; @see https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-proxied-http/
+    # We limit the number of concurrent connections to be 5000
+    # This can be fine-tuned; See https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-proxied-http/
     limit_conn_zone $server_name zone=limitconnserver:10m;
     limit_conn_status 429;
     limit_conn limitconnserver 5000;
