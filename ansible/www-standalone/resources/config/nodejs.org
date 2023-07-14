@@ -33,7 +33,7 @@ server {
     # This can be fine-tuned; @see https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-proxied-http/
     limit_conn_zone $server_name zone=limitconnserver:10m;
     limit_conn_status 429;
-    limit_conn limitconnserver 1000;
+    limit_conn limitconnserver 5000;
 
     root /home/www/nodejs;
     default_type text/plain;
@@ -113,7 +113,7 @@ server {
     # This can be fine-tuned; @see https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-proxied-http/
     limit_conn_zone $server_name zone=limitconnserver:10m;
     limit_conn_status 429;
-    limit_conn limitconnserver 1000;
+    limit_conn limitconnserver 5000;
 
     # We set a default language to "en". This is used for the Localized 404 pages
     set $lang en;
