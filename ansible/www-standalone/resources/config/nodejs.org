@@ -293,11 +293,6 @@ server {
     # as set by the @english_fallback location block
     # Otherwise, this will fallback to $lang being "en" as defined numerous lines above
     location @localized_404 {
-        # We disable caching of 404 pages as we always want Cloudflare to check if the file now exists
-        # Some 404s may be caused by the server reaching maximum concurrent file system open() requests
-        # Disabling cache allows Cloudflare to re-evaluate the same $uri once our server recovers and then properly cache it
-        add_header Cache-Control "private, no-store, max-age=0" always;
-
         # If this was a rewritten i18n request from @english_fallback, use the localized 404
         # If there is no 404 page for that locale, fallback to the English 404
         # As a last resort, fallback to NGINX's default 404. This should never happen, and will emit a [crit]
@@ -306,6 +301,8 @@ server {
 
     # This Location directive is used to expose our Website GitHub WebHook Logs
     location = /github-webhook.log {
+        add_header Cache-Control "private, no-store, max-age=0" always;
+
         alias /home/nodejs/github-webhook.log;
         default_type text/plain;
         access_log off;
