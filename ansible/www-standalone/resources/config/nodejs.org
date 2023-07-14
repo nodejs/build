@@ -23,10 +23,17 @@ server {
     # These directives prevent our server from continuously attempting to open the same requested files on disk
     # Open file descriptors and basic metadata for each file requested gets cached
     # For specific location blocks, such as /dist, we also cache file not found (404) and other disk errors
-    open_file_cache max=100000 inactive=300s;
+    open_file_cache max=500000 inactive=300s;
     open_file_cache_valid 120s;
-    open_file_cache_min_uses 2;
-    open_file_cache_errors off;
+    open_file_cache_min_uses 1;
+    open_file_cache_errors on;
+
+    # This limits the number of connections to the server by creating a maximum amount of concurrent connections
+    # We limit the number of concurrent connections to be 1000
+    # This can be fine-tuned; @see https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-proxied-http/
+    limit_conn_zone $server_name zone=limitconnserver:10m;
+    limit_conn_status 429;
+    limit_conn limitconnserver 1000;
 
     root /home/www/nodejs;
     default_type text/plain;
@@ -96,10 +103,17 @@ server {
     # These directives prevent our server from continuously attempting to open the same requested files on disk
     # Open file descriptors and basic metadata for each file requested gets cached
     # For specific location blocks, such as /dist, we also cache file not found (404) and other disk errors
-    open_file_cache max=100000 inactive=300s;
+    open_file_cache max=500000 inactive=300s;
     open_file_cache_valid 120s;
-    open_file_cache_min_uses 2;
-    open_file_cache_errors off;
+    open_file_cache_min_uses 1;
+    open_file_cache_errors on;
+
+    # This limits the number of connections to the server by creating a maximum amount of concurrent connections
+    # We limit the number of concurrent connections to be 1000
+    # This can be fine-tuned; @see https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-proxied-http/
+    limit_conn_zone $server_name zone=limitconnserver:10m;
+    limit_conn_status 429;
+    limit_conn limitconnserver 1000;
 
     # We set a default language to "en". This is used for the Localized 404 pages
     set $lang en;
@@ -293,8 +307,6 @@ server {
 
     # This Location directive is used to expose our Website GitHub WebHook Logs
     location = /github-webhook.log {
-        add_header Cache-Control "private, no-store, max-age=0" always;
-
         alias /home/nodejs/github-webhook.log;
         default_type text/plain;
         access_log off;
