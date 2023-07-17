@@ -23,7 +23,7 @@ server {
     # These directives prevent our server from continuously attempting to open the same requested files on disk
     # Open file descriptors and basic metadata for each file requested gets cached
     # For specific location blocks, such as /dist, we also cache file not found (404) and other disk errors
-    open_file_cache max=500000 inactive=20m;
+    open_file_cache max=1000 inactive=20m;
     open_file_cache_valid 5m;
     open_file_cache_min_uses 1;
     open_file_cache_errors on;
@@ -103,7 +103,7 @@ server {
     # These directives prevent our server from continuously attempting to open the same requested files on disk
     # Open file descriptors and basic metadata for each file requested gets cached
     # For specific location blocks, such as /dist, we also cache file not found (404) and other disk errors
-    open_file_cache max=500000 inactive=20m;
+    open_file_cache max=10000 inactive=20m;
     open_file_cache_valid 5m;
     open_file_cache_min_uses 1;
     open_file_cache_errors on;
