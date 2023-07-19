@@ -443,30 +443,6 @@ server {
 server {
     listen *:80;
     listen *:443 ssl http2;
-    server_name doc.nodejs.org docs.nodejs.org;
-
-    return 301 https://nodejs.org/en/docs;
-}
-
-server {
-    listen *:80;
-    listen *:443 ssl http2;
-    server_name api.nodejs.org;
-
-    return 301 https://nodejs.org/api/;
-}
-
-server {
-    listen *:80;
-    listen *:443 ssl http2;
-    server_name dist.nodejs.org;
-
-    return 301 https://nodejs.org/dist/;
-}
-
-server {
-    listen *:80;
-    listen *:443 ssl http2;
     server_name foundation.nodejs.org;
 
     # these are 1:1 redirects from pages being served on the old foundation.nodejs.org to OpenJS Foundation website
