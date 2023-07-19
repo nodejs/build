@@ -51,7 +51,7 @@ docker run \
       npm config set loglevel http && \
       npm config set cache /npm/ && \
       cd /website/ && \
-      npm ci --ignore-scripts && \
+      npm ci --omit=dev --no-audit --no-fund --ignore-scripts && \
       $build_cmd \
     ' \
   "
