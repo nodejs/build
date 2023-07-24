@@ -128,9 +128,9 @@ hosts:
         debian8-x64-1: {ip: 159.203.103.52}
         debian9-x64-1: {ip: 138.197.97.208}
         fedora32-x64-1: {ip: 159.203.117.50}
-        fedora34-x64-1: {ip: 178.62.236.249}
         fedora34-x64-2: {ip: 159.203.98.84}
         fedora38-x64-1: {ip: 162.243.187.89}
+        fedora38-x64-2: {ip: 134.209.172.40}
         freebsd12-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd12-x64-2: {ip: 107.170.28.213, user: freebsd}
         rhel8-x64-1: {ip: 161.35.139.78, build_test_v8: yes}
