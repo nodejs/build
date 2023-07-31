@@ -33,6 +33,7 @@ server {
     index index.html;
 
     # We set a default cache for browsers of 1 hour and ask Cloudflare to cache for 4 hours
+    # When updating this, make sure to also updated the repeated lines further down
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
 
     error_page 404 /404.html;
@@ -50,6 +51,9 @@ server {
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
+
+            # Set cache-control again as it won't be inherited due to add_header being used
+            add_header Cache-Control "public, max-age=3600, s-maxage=14400";
         }
     }
 
@@ -68,6 +72,9 @@ server {
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
+
+            # Set cache-control again as it won't be inherited due to add_header being used
+            add_header Cache-Control "public, max-age=3600, s-maxage=14400";
         }
     }
 }
@@ -109,6 +116,7 @@ server {
     index index.html;
     
     # We set a default cache for browsers of 1 hour, and ask Cloudflare to cache for 4 hours
+    # When updating this, make sure to also updated the repeated lines further down
     add_header Cache-Control "public, max-age=3600, s-maxage=14400";
 
     # Sets a custom 404 error page for the whole Server region
@@ -146,6 +154,9 @@ server {
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
+
+            # Set cache-control again as it won't be inherited due to add_header being used
+            add_header Cache-Control "public, max-age=3600, s-maxage=14400";
         }
     }
 
@@ -193,6 +204,9 @@ server {
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
+
+            # Set cache-control again as it won't be inherited due to add_header being used
+            add_header Cache-Control "public, max-age=3600, s-maxage=14400";
         }
     }
 
@@ -214,8 +228,14 @@ server {
 
         add_header X-Robots-Tag noindex;
 
+        # Set cache-control again as it won't be inherited due to add_header being used
+        add_header Cache-Control "public, max-age=3600, s-maxage=14400";
+
         location ~ \.json$ {
             add_header access-control-allow-origin *;
+
+            # Set cache-control again as it won't be inherited due to add_header being used
+            add_header Cache-Control "public, max-age=3600, s-maxage=14400";
         }
     }
 
@@ -229,6 +249,9 @@ server {
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
+
+            # Set cache-control again as it won't be inherited due to add_header being used
+            add_header Cache-Control "public, max-age=3600, s-maxage=14400";
         }
     }
 
@@ -242,6 +265,9 @@ server {
 
         location ~ \.json$ {
             add_header access-control-allow-origin *;
+
+            # Set cache-control again as it won't be inherited due to add_header being used
+            add_header Cache-Control "public, max-age=3600, s-maxage=14400";
         }
     }
 
