@@ -147,6 +147,7 @@ accesses and team roles see [GOVERNANCE.md][].
 - [@mmarchini](https://github.com/mmarchini) - mary marchini
 - [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
+- [@Trott](https://github.com/Trott) - Rich Trott
 
 ## Infrastructure Providers
 
