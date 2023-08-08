@@ -43,7 +43,6 @@ to the resources we manage.
 * [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 * [@sxa](https://github.com/sxa) - Stewart X Addison
 * [@targos](https://github.com/targos) - Michaël Zasso
-* [@Trott](https://github.com/Trott) - Rich Trott
 * [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
 
 <!-- ncu-team-sync end -->
@@ -83,7 +82,6 @@ Admin access to https://ci.nodejs.org/.
 * [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 * [@sxa](https://github.com/sxa) - Stewart X Addison
 * [@targos](https://github.com/targos) - Michaël Zasso
-* [@Trott](https://github.com/Trott) - Rich Trott
 * [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
 
 <!-- ncu-team-sync end -->
@@ -149,6 +147,7 @@ accesses and team roles see [GOVERNANCE.md][].
 - [@mmarchini](https://github.com/mmarchini) - mary marchini
 - [@refack](https://github.com/refack) - Refael Ackermann (רפאל פלחי)
 - [@sam-github](https://github.com/sam-github) - Sam Roberts
+- [@Trott](https://github.com/Trott) - Rich Trott
 
 ## Infrastructure Providers
 
