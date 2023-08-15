@@ -70,6 +70,7 @@ def buildExclusions = [
   [ /sharedlibs_fips20/,              anyType,     gte(16) ],
 
   // OSX ---------------------------------------------------
+  [ /osx1015/,                        anyType,     gte(21) ],
   [ /osx11-x64-release-tar/,          releaseType, lt(20)  ],
   [ /osx1015-release-pkg/,            releaseType, gte(16) ],
   [ /osx1015-release-tar/,            releaseType, gte(20) ],
