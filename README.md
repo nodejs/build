@@ -56,6 +56,7 @@ Above list is manually synced with the [gpg member list](https://github.com/node
 * [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 * [@joaocgreis](https://github.com/joaocgreis) - João Reis
 * [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+* [@MoLow](https://github.com/MoLow) - Moshe Atlow
 * [@richardlau](https://github.com/richardlau) - Richard Lau
 * [@rvagg](https://github.com/rvagg) - Rod Vagg
 * [@sxa](https://github.com/sxa) - Stewart X Addison
