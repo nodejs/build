@@ -37,12 +37,12 @@ git checkout origin/main
 nodeuid=$(grep ^nodejs: /etc/passwd | awk -F: '{print $3}')
 nodegid=$(grep ^nodejs: /etc/passwd | awk -F: '{print $4}')
 
-docker pull node:lts
+docker pull node:lts-bullseye
 docker run \
   --rm \
   -v ${clonedir}:/website/ \
   -v /home/nodejs/.npm:/npm/ \
-  node:lts \
+  node:lts-bullseye \
   bash -c " \
     apt-get update && apt-get install -y rsync && \
     addgroup nodejs --gid ${nodeuid} && \
@@ -51,7 +51,7 @@ docker run \
       npm config set loglevel http && \
       npm config set cache /npm/ && \
       cd /website/ && \
-      npm ci && \
+      npm ci --omit=dev --no-audit --no-fund --ignore-scripts && \
       $build_cmd \
     ' \
   "

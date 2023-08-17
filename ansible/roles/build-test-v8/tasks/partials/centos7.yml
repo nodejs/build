@@ -8,3 +8,9 @@
   ansible.builtin.yum:
     name: ['python2-httplib2', 'python3-httplib2']
     state: present
+
+- name: install dependencies for V8 build tools (Python 3)
+  ansible.builtin.pip:
+    executable: pip-3
+    name: ['httplib2', 'six']
+    state: present

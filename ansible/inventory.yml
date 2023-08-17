@@ -107,10 +107,6 @@ hosts:
   - test:
 
     - azure:
-        msft-win10_vs2019-x64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
-        msft-win10_vs2019-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
-        msft-win10_vs2019-x64-3: {ip: nodejs.australiaeast.cloudapp.azure.com}
-        msft-win10_vs2019-x64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
         msft-win11_vs2022-arm64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win11_vs2022-arm64-2: {ip: nodejs2.eastus.cloudapp.azure.com}
         msft-win11_vs2022-arm64-3: {ip: nodejs.westeurope.cloudapp.azure.com}
@@ -123,14 +119,18 @@ hosts:
         msft-win2016_vs2017-x64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
         msft-win2016_vs2017-x64-5: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win2016_vs2017-x64-6: {ip: nodejs.westus3.cloudapp.azure.com}
+        msft-win2022_vs2019-x64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
+        msft-win2022_vs2019-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
+        msft-win2022_vs2019-x64-3: {ip: nodejs.australiaeast.cloudapp.azure.com}
+        msft-win2022_vs2019-x64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
 
     - digitalocean:
         debian8-x64-1: {ip: 159.203.103.52}
         debian9-x64-1: {ip: 138.197.97.208}
         fedora32-x64-1: {ip: 159.203.117.50}
-        fedora34-x64-1: {ip: 178.62.236.249}
-        fedora34-x64-2: {ip: 159.203.98.84}
+        fedora37-x64-1: {ip: 159.65.248.149}
         fedora38-x64-1: {ip: 162.243.187.89}
+        fedora38-x64-2: {ip: 134.209.172.40}
         freebsd12-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd12-x64-2: {ip: 107.170.28.213, user: freebsd}
         rhel8-x64-1: {ip: 161.35.139.78, build_test_v8: yes}
@@ -179,6 +179,7 @@ hosts:
         rhel8-x64-3: {ip: 52.117.26.13, build_test_v8: yes}
         ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
         ubuntu1804-x64-2: {ip: 50.97.245.9}
+        ubuntu2204_docker-x64-1: {ip: 52.117.26.9}
 
     - equinix_mnx:
         smartos18-x64-3: {ip: 147.28.162.102}
@@ -226,10 +227,6 @@ hosts:
                 PATH: /rsusr/rocket/python-2017-04-12-py27/python27/bin:/bin:/rsusr/rocket/bin
                 SSL_CERT_FILE: "{{ home }}/{{ server_user }}/ca-bundle.crt"
             server_jobs: 4
-
-    - msft:
-        win10_vs2017-arm64-1: {}
-        win10_vs2017-arm64-2: {}
 
     - nearform:
         arm-win10_vs2019-arm64-1: {ip: 83.147.191.73}
@@ -323,19 +320,12 @@ hosts:
         fedora32-x64-1: {ip: 119.9.51.79}
         ubuntu1604-x64-1: {ip: 119.9.51.176}
         ubuntu1604-x64-2: {ip: 104.130.124.194}
-        win2012r2_vs2013-x64-1: {ip: 104.239.174.165}
-        win2012r2_vs2013-x64-2: {ip: 104.130.132.171}
         win2012r2_vs2015-x64-1: {ip: 104.239.174.8}
         win2012r2_vs2015-x64-2: {ip: 104.130.141.137}
-        win2012r2_vs2017-x64-1: {ip: 162.242.237.72}
-        win2012r2_vs2017-x64-2: {ip: 104.239.142.99}
-        win2012r2_vs2017-x64-3: {ip: 119.9.131.54}
-        win2012r2_vs2017-x64-4: {ip: 166.78.99.25}
         win2012r2_vs2019-x64-1: {ip: 162.242.237.124}
         win2012r2_vs2019-x64-2: {ip: 104.130.158.58}
         win2012r2_vs2019-x64-3: {ip: 119.9.131.63}
         win2012r2_vs2019-x64-4: {ip: 104.130.219.103}
-        win2012r2_vs2019-x64-5: {ip: 104.130.6.92}
         win2012r2_vs2019-x64-6: {ip: 104.130.141.231}
 
     - softlayer:
@@ -343,4 +333,3 @@ hosts:
         debian9-x64-1: {ip: 169.60.150.88}
         debian10-x64-1: {ip: 169.44.16.126}
         ubuntu1404-x64-1: {ip: 50.97.245.5}
-        ubuntu1804_docker-x64-1: {ip: 52.117.26.9}

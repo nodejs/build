@@ -9,7 +9,7 @@ ssh_config: /etc/ssh/sshd_config
 sshd_service_name: 'sshd'
 
 ntp_service: {
-  systemd: ['debian8', 'debian9', 'debian10', 'ubuntu1604', 'ubuntu1804']
+  systemd: ['debian8', 'debian9', 'debian10', 'ubuntu1604', 'ubuntu1804', 'ubuntu2204']
 }
 
 common_packages: [
@@ -18,6 +18,9 @@ common_packages: [
 # you can either add os family or os to this list (see smartos)
 # but the playbook chooses os over family - not both
 packages: {
+  ubuntu2204: [
+    'docker.io',
+  ],
   ubuntu2004: [
     'docker.io',
   ],

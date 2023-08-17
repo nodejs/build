@@ -155,3 +155,9 @@
     executable: pip3
     state: latest
 
+# Required to submit builds to Coverity.
+- name: Install jq
+  ansible.builtin.package:
+    name: jq
+    state: latest
+    update_cache: yes

@@ -35,7 +35,3 @@
 - name: remove firewalld
   when: has_firewalld.rc == 0
   raw: dnf remove -y firewalld
-
-- name: update crypto policies
-  when: os in ("fedora34")
-  raw: update-crypto-policies --set LEGACY
