@@ -4,7 +4,7 @@ The Node.js Build Working Group maintains and controls infrastructure
 used for continuous integration (CI), releases, benchmarks,
 web hosting (of nodejs.org and other Node.js web properties) and more.
 
-Our mission is to provide Node.js Foundation projects with solid computing
+Our mission is to provide Node.js projects with solid computing
 infrastructure in order to improve the quality of the software itself by
 targeting correctness, speed and compatibility and to ensure streamlined
 delivery of binaries and source code to end-users.
