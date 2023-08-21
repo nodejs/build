@@ -51,8 +51,8 @@ Note: You will likely want ~1Tb storage available on /backup.
 4. Create the folder `/backup` (or edit configs to use another path)
 5. Add scripts to cron:
    ```
-   50 23 * * * /opt/local/bin/rsnapshot -c /opt/local/etc/rsnapshot.conf daily && /root/backup_scripts/remove_old.sh ci-release.nodejs.org && /root/backup_scripts/remove_old.sh ci.nodejs.org
-   40 23 * * 6 /opt/local/bin/rsnapshot -c /opt/local/etc/rsnapshot.conf weekly
+   50 23 * * * /opt/local/bin/rsnapshot -c /opt/local/etc/rsnapshot.conf daily
+   40 23 * * 6 /opt/local/bin/rsnapshot -c /opt/local/etc/rsnapshot.conf weekly && /root/backup_scripts/remove_old.sh ci-release.nodejs.org && /root/backup_scripts/remove_old.sh    ci.nodejs.org
    30 23 1 * * /opt/local/bin/rsnapshot -c /opt/local/etc/rsnapshot.conf monthly
    ```
 6. Edit your ssh config as needed (likely the benchmark host)
