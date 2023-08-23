@@ -16,7 +16,7 @@ You will need build-infra level access to be able to retrieve the certificate an
 
 ## New or reissue certificate
 
-GoGetSSL should send notifications to the Build WG email address from 30 days before the existing certificate expires. If we are within the multi-year subscription period, we can [reissue the certificate](#reissue-certificate), otherwise a new ceriticate will need to be purchased via a request to the OpenJS Foundation. 
+GoGetSSL should send notifications to the Build WG email address from 30 days before the existing certificate expires. If we are within the multi-year subscription period, we can [reissue the certificate](#reissue-certificate), otherwise a new certificate will need to be purchased via a request to the OpenJS Foundation. 
 
 ### Generating new certificate and key
 
