@@ -75,7 +75,7 @@ Add a Jenkins "system message" in https://ci.nodejs.org/configure. Something lik
 ```html
 <h1 style="color:red">system is under embargo for a security release</h1>
 <h2>For solidarity, even if you have access, please don't start unrelated jobs</h2>
-Refs: <a href="https://github.com/nodejs/build/issues/xxx">https://github.com/nodejs/build/issues/xxx</a>
+<p>Refs: <a href="https://github.com/nodejs/build/issues/xxx">https://github.com/nodejs/build/issues/xxx</a></p>
 ```
 
 And some fancy "extra-css" to "Theme" -> "Theme elements" -> "Extra CSS".
