@@ -126,7 +126,7 @@ packages: {
   ],
 
   ubuntu: [
-    'ccache,curl,git,libfontconfig1,sudo,python3-pip',
+    'acl,ccache,curl,git,libfontconfig1,sudo,python3-pip',
   ],
 
   # Default gcc/g++ package is 5.
