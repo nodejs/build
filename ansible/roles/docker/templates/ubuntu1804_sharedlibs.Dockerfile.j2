@@ -94,7 +94,7 @@ ENV ZLIB12DIR /opt/zlib_$ZLIBVER
 
 RUN mkdir -p /tmp/zlib_$ZLIBVER && \
     cd /tmp/zlib_$ZLIBVER && \
-    curl -sL https://zlib.net/zlib-$ZLIBVER.tar.gz | tar zxv --strip=1 && \
+    curl -sL https://zlib.net/fossils/zlib-$ZLIBVER.tar.gz | tar zxv --strip=1 && \
     ./configure --prefix=$ZLIB12DIR && \
     make -j 6 && \
     make install && \
