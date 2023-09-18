@@ -7,9 +7,10 @@
 
 1. Follow the [instructions to install the latest version of Ansible][ansible-install].
    * In most cases, using pip: `pip install ansible`.
-   * If you use brew, then `brew install python2 ansible`, and then run
-   `export PYTHONPATH=$(pip2 show pyyaml | grep Location | awk '{print $2}') `
+   * If you use brew, then `brew install python3 ansible`, and then run
+   `export PYTHONPATH=$(pip show pyyaml | grep Location | awk '{print $2}') `
    before you use `ansible-playbook`.
+   * If you have Python 2 installed, you may need to add an alias to your shell profile for python 3 as the default python interpreter, like `alias python=/usr/local/bin/python3.11`
 2. Read this document.
 3. For SSH access, see the [SSH guide](../doc/ssh.md).
 
