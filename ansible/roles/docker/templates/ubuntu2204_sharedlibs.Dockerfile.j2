@@ -37,7 +37,8 @@ RUN adduser --gid {{ server_user_gid.stdout_lines[0] }} --uid {{ server_user_uid
 
 ENV ICU68DIR=/opt/icu-68.1 \
     ICU69DIR=/opt/icu-69.1 \
-    ICU71DIR=/opt/icu-71.1
+    ICU71DIR=/opt/icu-71.1 \
+    ICU73DIR=/opt/icu-73.2
 
 RUN for ICU_ENV in $(env | grep ICU..DIR); do \
     ICU_PREFIX=$(echo $ICU_ENV | cut -d '=' -f 2) && \
