@@ -239,7 +239,7 @@ elif [ "$SELECT_ARCH" = "ARM64" ]; then
       fi
       echo "Compiler set to GCC" `$CXX -dumpversion`
       ;;
-    *ubuntu2004_sharedlibs* )
+    *ubuntu2004* )
       if [ "$NODEJS_MAJOR_VERSION" -gt "19" ]; then
         export CC="ccache gcc-10"
         export CXX="ccache g++-10"
