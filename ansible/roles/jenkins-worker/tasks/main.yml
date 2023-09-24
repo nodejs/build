@@ -339,7 +339,3 @@
 - name: enable jenkins at startup - zos - part 3
   when: os|startswith("zos")
   shell: "sh {{ home }}/{{ server_user }}/rc_patch_apply.sh"
-
-- name: install monit
-  when: os in needs_monit
-  include_tasks: monit.yml
