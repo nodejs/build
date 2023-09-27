@@ -36,3 +36,25 @@
     state: present
   become: yes
   become_user: "{{ server_user }}"
+
+# https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+- name: Download awscliv2 installer
+  unarchive:
+    src: "https://awscli.amazonaws.com/awscli-exe-linux-{{ ansible_architecture }}.zip"
+    dest: "/tmp"
+    remote_src: true
+    creates: '/tmp/aws'
+    mode: 0755
+
+- name: Run awscliv2 installer
+  command:
+  args:
+    cmd: "/tmp/aws/install"
+    creates: /usr/local/bin/aws
+  become: true
+  register: aws_install
+
+- name: "Show awscliv2 installer output"
+  debug:
+    var: aws_install
+    verbosity: 2
