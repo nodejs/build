@@ -46,6 +46,7 @@ for subdir in $(cd $srcdir && ls); do
       fi
 
       rm -f "${srcdir}/${subdir}/${donefile}"
+      . ${__dirname}/upload_to_cloudflare.sh $site $subdir
 
     done
 
