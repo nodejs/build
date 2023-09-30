@@ -14,6 +14,27 @@ if [ "X$2" == "X" ]; then
   exit 1
 fi
 
+if [ -z ${dstdir+x} ]; then
+  echo "\$dstdir is not set"
+  exit 1
+fi
+if [ -z ${dist_rootdir+x} ]; then
+  echo "\$dist_rootdir is not set"
+  exit 1
+fi
+if [ -z ${destination_bucket+x} ]; then
+  echo "\$destination_bucket is not set"
+  exit 1
+fi
+if [ -z ${cloudflare_endpoint+x} ]; then
+  echo "\$cloudflare_endpoint is not set"
+  exit 1
+fi
+if [ -z ${cloudflare_profile+x} ]; then
+  echo "\$cloudflare_profile is not set"
+  exit 1
+fi
+
 relativedir=${dstdir/$dist_rootdir/"$site/"}
 version=$2
 
