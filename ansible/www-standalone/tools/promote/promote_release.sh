@@ -37,8 +37,6 @@ while true; do
   if [ "X${yorn}" == "Xy" ]; then
       . ${__dirname}/_promote.sh $site $2
       nodejs-latest-linker /home/dist/${site}/release/ /home/dist/${site}/docs/
-      dstdir=/home/dist/${site}/docs
-      . ${__dirname}/upload_to_cloudflare.sh $site $2
     break
   fi
 done

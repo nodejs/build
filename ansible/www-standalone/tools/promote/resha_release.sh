@@ -25,4 +25,6 @@ fi
 
 ${__dirname}/_resha.sh $site $dstdir $2
 
+. ${__dirname}/upload_to_cloudflare.sh $site $2
+
 /home/nodejs/queue-cdn-purge.sh $site resha_release
