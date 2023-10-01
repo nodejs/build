@@ -36,6 +36,6 @@ if [ -z ${cloudflare_profile+x} ]; then
 fi
 
 relativedir=${dstdir/$dist_rootdir/"$site/"}
-version=$2
+tmpversion=$2
 
-aws s3 cp $dstdir/$version/ $destination_bucket/$relativedir/$version/ --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile --recursive
+aws s3 cp $dstdir/$tmpversion/ $destination_bucket/$relativedir/$tmpversion/ --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile --recursive
