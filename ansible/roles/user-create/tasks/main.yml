@@ -15,9 +15,15 @@
     group: "{{ server_user }}"
     shell: "{{ bash_path[os|stripversion]|default('/bin/bash') }}"
 
+- name: create group for ibmi
+  when: os|startswith("ibmi")
+  command: "/QOpenSys/usr/bin/system 'CRTUSRPRF USRPRF(GRP) GID(*GEN)'"
+  args:
+    creates: "/QSYS.LIB/GRP.USRPRF"
+
 - name: create user for ibmi
   when: os|startswith("ibmi")
-  command: "/QOpenSys/usr/bin/system 'CRTUSRPRF USRPRF({{ server_user }}) PASSWORD(*none)'"
+  command: "/QOpenSys/usr/bin/system 'CRTUSRPRF USRPRF({{ server_user }}) GRPPRF(nobody) PASSWORD(*none)'"
   args:
     creates: "/QSYS.LIB/IOJS.USRPRF"
 
