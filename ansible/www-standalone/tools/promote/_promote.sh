@@ -51,6 +51,7 @@ for subdir in $(cd $srcdir && ls); do
 
     if [ "X${version}" == "X" ] && [ "$resha" == "yes" ]; then
       ${__dirname}/_resha.sh $site $dstdir $subdir
+    . ${__dirname}/upload_to_cloudflare.sh $site $subdir
     fi
 
   fi
