@@ -23,7 +23,7 @@
 
 - name: create user for ibmi
   when: os|startswith("ibmi")
-  command: "/QOpenSys/usr/bin/system 'CRTUSRPRF USRPRF({{ server_user }}) GRPPRF(nobody) PASSWORD(*none)'"
+  command: "/QOpenSys/usr/bin/system 'CRTUSRPRF USRPRF({{ server_user }}) GRPPRF(GRP) PASSWORD(*none)'"
   args:
     creates: "/QSYS.LIB/IOJS.USRPRF"
 
