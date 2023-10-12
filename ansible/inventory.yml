@@ -87,7 +87,11 @@ hosts:
             server_jobs: 6
         centos7-arm64-1: {ip: 140.211.169.7, server_jobs: 2, user: centos}
         centos7-ppc64_le-1: {ip: 140.211.168.61, user: centos}
-        rhel8-arm64-1: {ip: 140.211.169.58, server_jobs: 2, user: cloud-user}
+        rhel8-arm64-1:
+            ip: 140.211.169.58
+            server_jobs: 2
+            user: cloud-user
+            swap_file_size_mb: 4096
         rhel8-ppc64_le-1: {ip: 140.211.168.185, user: cloud-user}
 
     - orka:
