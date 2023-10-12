@@ -1,0 +1,40 @@
+---
+
+#
+# Creates a swap file on Linux.
+# Assumes swap_file_size_mb has been set.
+#
+
+- name: create swapfile
+  ansible.builtin.command:
+    cmd: dd if=/dev/zero of=/{{ swap_file }} bs=1M count={{ swap_file_size_mb }}
+    creates: "{{ swap_file }}"
+  become: yes
+  become_user: root
+  register: swap_create
+
+- name: set swapfile permissions
+  ansible.builtin.file:
+    group: root
+    mode: 0600
+    owner: root
+    path: "{{ swap_file }}"
+
+- name: set up swap area
+  ansible.builtin.command:
+    cmd: mkswap {{ swap_file }}
+  when: swap_create.changed
+
+- name: enable swap
+  ansible.builtin.command:
+    cmd: swapon {{ swap_file }}
+  when: swap_create.changed
+
+- name: add swap to fstab
+  ansible.posix.mount:
+    fstype: swap
+    opts: defaults
+    path: swap
+    src: "{{ swap_file }}"
+    state: present
+  when: swap_create.changed
