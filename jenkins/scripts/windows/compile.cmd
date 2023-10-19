@@ -1,5 +1,3 @@
-SETLOCAL EnableDelayedExpansion
-
 :: Use Python 2 up to Node 12
 if %NODEJS_MAJOR_VERSION% leq 12 set "PATH=C:\Python27\;C:\Python27\Scripts;%PATH%"
 
@@ -37,59 +35,15 @@ if "%nodes:~-6%" == "-arm64" (
     :: thus failing the build after timing out (1-2% runs).
     :: Downloading it from here and updating it weekly should
     :: decrease, if not remove, these types of CI failures.
-    :: 1. Make node_exe_cache directory if it doesn't exist.
-    if not exist C:\node_exe_cache (
-      mkdir C:\node_exe_cache
+    :: Download and cache x64 node.exe.
+    mkdir C:\node_exe_cache
+    forfiles /p "C:\node_exe_cache" /m "node.exe" /d -7 /c "cmd /c del @path"
+    if not exist C:\node_exe_cache\node.exe (
+      curl -L https://nodejs.org/dist/latest/win-x64/node.exe -o C:\node_exe_cache\node.exe
     )
-    :: 2. Check if node.exe exists and if it's older then 7 days.
-    set NODE_CACHED=False
-    set CACHE_INVALID=False
-    if exist C:\node_exe_cache\node.exe (
-      set NODE_CACHED=True
-      forfiles /p "C:\node_exe_cache" /m "node.exe" /d -7 && set CACHE_INVALID=True
-    )
-    :: 3. If node.exe didn't exist, or was older then 7 days, download the new one and check it's validity.
-    set SHOULD_DOWNLOAD=False
-    if !NODE_CACHED! == False set SHOULD_DOWNLOAD=True
-    if !CACHE_INVALID! == True set SHOULD_DOWNLOAD=True
-    set VALID_SHASUM=
-    set DOWNLOAD_SHASUM=
-    if !SHOULD_DOWNLOAD! == True (
-      :: 3.1. Download SHASUMS and find value for "win-x64/node.exe".
-      ver > nul
-      curl -L https://nodejs.org/dist/latest/SHASUMS256.txt -o C:\node_exe_cache\SHASUMS256.txt
-      if not !errorlevel! == 0 goto download_cleanup
-      for /f %%a in ('findstr win-x64/node.exe C:\node_exe_cache\SHASUMS256.txt') do set VALID_SHASUM=%%a
-      if [!VALID_SHASUM!] == [] goto download_cleanup
-      :: 3.2. Download win-x64/node.exe and calculate its SHASUM.
-      ver > nul
-      curl -L https://nodejs.org/dist/latest/win-x64/node.exe -o C:\node_exe_cache\node_new.exe
-      if not !errorlevel! == 0 goto download_cleanup
-      for /f %%a in ('certutil -hashfile C:\node_exe_cache\node_new.exe SHA256 ^| find /v ":"') do set DOWNLOAD_SHASUM=%%a
-      if [!DOWNLOAD_SHASUM!] == [] goto download_cleanup
-      :: 3.3. Check if downloaded file is valid. If yes, delete old one. If not, delete new one.
-      if !VALID_SHASUM! == !DOWNLOAD_SHASUM! (
-        if exist C:\node_exe_cache\node.exe (
-          del C:\node_exe_cache\node.exe
-        )
-        ren C:\node_exe_cache\node_new.exe node.exe
-      )
-      :: 3.4. Clean up all of the temporary files.
-:download_cleanup
-      if exist C:\node_exe_cache\SHASUMS256.txt (
-        del C:\node_exe_cache\SHASUMS256.txt
-      )
-      if exist C:\node_exe_cache\node_new.exe (
-        del C:\node_exe_cache\node_new.exe
-      )
-    )
-    :: 4. Copy the latest valid node, if any, to where vcbuild expects it to be
-    if exist C:\node_exe_cache\node.exe (
-      if not exist temp-vcbuild (
-        mkdir temp-vcbuild
-      )
-      copy C:\node_exe_cache\node.exe temp-vcbuild\node-x64-cross-compiling.exe
-    )
+    :: Copy it to where vcbuild expects.
+    mkdir temp-vcbuild
+    copy C:\node_exe_cache\node.exe temp-vcbuild\node-x64-cross-compiling.exe
   )
 ) else if "%nodes:~-4%" == "-x86" (
   set "VCBUILD_EXTRA_ARGS=x86 %VCBUILD_EXTRA_ARGS%"
