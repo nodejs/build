@@ -38,6 +38,6 @@ fi
 relativedir=${dstdir/$dist_rootdir/"$site/"}
 tmpversion=$2
 
-aws s3 cp $dstdir/$tmpversion/ $destination_bucket/$relativedir/$tmpversion/ --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile --recursive
+aws s3 cp $dstdir/$tmpversion/ $destination_bucket/$relativedir/$tmpversion/ --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile --recursive --no-follow-symlinks
 aws s3 cp $dstdir/index.json $destination_bucket/$relativedir/index.json --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
 aws s3 cp $dstdir/index.tab $destination_bucket/$relativedir/index.tab --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
