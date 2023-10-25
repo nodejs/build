@@ -73,8 +73,8 @@ def buildExclusions = [
   [ /sharedlibs_fips20/,              anyType,     gte(16) ],
 
   // OSX ---------------------------------------------------
-  [ /osx1015/,                        anyType,     gte(21) ],
-  [ /osx11-x64-release-tar/,          releaseType, lt(20)  ],
+  [ /osx11-x64-release-tar/,          releaseType, gte(18) ],
+  [ /osx11-x64-release-pkg/,          releaseType, gte(18) ],
 
   // Source / headers / docs -------------------------------
   [ /^centos7-release-sources$/,      releaseType, gte(18) ],
