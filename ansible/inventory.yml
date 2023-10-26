@@ -70,10 +70,6 @@ hosts:
         zos24-s390x-1: {ip: 148.100.36.157, user: unix1}
 
     - nearform:
-        macos10.15-x64-1:
-            ip: 83.147.191.69
-            user: administrator
-            ansible_python_interpreter: /usr/bin/python3
         macos11.0-arm64-1:
             ansible_python_interpreter: /usr/bin/python3
             ip: 83.147.191.76
@@ -95,11 +91,6 @@ hosts:
         rhel8-ppc64_le-1: {ip: 140.211.168.185, user: cloud-user}
 
     - orka:
-        macos10.15-x64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.101
-            port: 8825
-            user: administrator
         macos11-x64-1:
             ansible_python_interpreter: /usr/bin/python3
             ip: 199.7.167.100
