@@ -74,9 +74,6 @@ def buildExclusions = [
 
   // OSX ---------------------------------------------------
   [ /osx1015/,                        anyType,     gte(21) ],
-  [ /osx11-x64-release-tar/,          releaseType, lt(20)  ],
-  [ /osx1015-release-pkg/,            releaseType, gte(16) ],
-  [ /osx1015-release-tar/,            releaseType, gte(20) ],
 
   // Source / headers / docs -------------------------------
   [ /^centos7-release-sources$/,      releaseType, gte(18) ],
