@@ -17,11 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
         with:
           persist-credentials: false
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Check web ceritificate expiry
@@ -29,7 +29,7 @@ jobs:
         run: node tools/check-certificates/check-certificates.mjs >> $GITHUB_OUTPUT
       - name: Create issue
         if: ${{ failure() }}
-        uses: dblock/create-a-github-issue@v3
+        uses: dblock/create-a-github-issue@866beb009af3db457e82ca98efe474969a5ebce8 # v3.1.1
         with:
           filename: .github/workflows/certificate-check-template.md
           search_existing: all

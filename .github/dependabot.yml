@@ -5,3 +5,43 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+
+  - package-ecosystem: docker
+    directory: /ansible/roles/metrics/files/index-generator
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /ansible/roles/metrics/files/index-generator
+    schedule:
+      interval: daily
+
+  - package-ecosystem: docker
+    directory: /ansible/roles/metrics/files/process-cloudflare
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /ansible/roles/metrics/files/process-cloudflare
+    schedule:
+      interval: daily
+
+  - package-ecosystem: docker
+    directory: /ansible/roles/metrics/files/summaries
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /ansible/roles/metrics/files/summaries
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /tools/host-map
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /tools/jenkins-status
+    schedule:
+      interval: daily
