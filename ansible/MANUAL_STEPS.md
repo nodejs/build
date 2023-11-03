@@ -599,7 +599,7 @@ The preparation script needs to be run in PowerShell (run as Administrator):
 
 ```powershell
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1" -OutFile "ConfigureRemotingForAnsible.ps1"
+Invoke-WebRequest "https://raw.githubusercontent.com/ansible/ansible-documentation/devel/examples/scripts/ConfigureRemotingForAnsible.ps1" -OutFile "ConfigureRemotingForAnsible.ps1"
 .\ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert true -CertValidityDays 3650
 ```
 
