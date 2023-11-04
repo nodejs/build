@@ -120,7 +120,7 @@ hosts:
         msft-win2022_vs2019-x64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
 
     - digitalocean:
-        debian8-x64-1: {ip: 159.203.103.52}
+        debian11-x64-1: {ip: 174.138.79.159}
         debian9-x64-1: {ip: 138.197.97.208}
         fedora32-x64-1: {ip: 159.203.117.50}
         fedora37-x64-1: {ip: 159.65.248.149}

@@ -9,7 +9,7 @@ init: {
   freebsd: 'freebsd',
   ibmi: 'ibmi73',
   macos: 'macos',
-  systemd: ['centos7', 'debian8', 'debian9', 'debian10', 'fedora', 'rhel7', 'rhel8', 'ubuntu1604', 'ubuntu1804','ubuntu2204'],
+  systemd: ['centos7', 'debian', 'fedora', 'rhel7', 'rhel8', 'ubuntu1604', 'ubuntu1804','ubuntu2204'],
   svc: 'smartos',
   zos_start: 'zos'
   }
