@@ -17,7 +17,7 @@ sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripver
 
 ntp_service: {
   chrony: ['rhel8', 'debian11'],
-  systemd: ['debian8', 'debian9', 'debian10', 'ubuntu1604', 'ubuntu1804']
+  systemd: ['debian8', 'debian9', 'debian10', 'ubuntu']
 }
 
 common_packages: [
@@ -143,7 +143,8 @@ packages: {
     'gcc-6,g++-6,gcc-8,g++-8,python3.8',
   ],  
 
+  # Default gcc/g++ package is 11.
   ubuntu2204: [
-    'gcc,g++,python2,python3,python-is-python3',
+    'gcc,g++,python3,python-is-python3',
   ],
 }
