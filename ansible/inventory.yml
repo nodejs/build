@@ -129,11 +129,11 @@ hosts:
         freebsd12-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd12-x64-2: {ip: 107.170.28.213, user: freebsd}
         rhel8-x64-1: {ip: 161.35.139.78, build_test_v8: yes}
-        ubuntu1604-x86-1: {ip: 159.203.77.233}
-        ubuntu1604-x86-2: {ip: 104.131.191.135}
         ubuntu1804_docker-x64-1: {ip: 134.209.55.216}
         ubuntu1804_docker-x64-2: {ip: 159.89.183.200}
         ubuntu1804-x64-1: {ip: 178.128.181.213}
+        ubuntu2204-x64-1: {ip: 138.197.4.1}
+        ubuntu2204-x64-2: {ip: 167.99.124.188}
 
     - equinix:
         ubuntu2004_docker-arm64-1: {ip: 145.40.81.219}
