@@ -121,6 +121,33 @@ As root:
 * `sudo xcodebuild -license` - accept license
 * `git` - check that git is working (confirming license has been accepted)
 
+#### OSX Keychain Profile
+
+Create a keychain profile (`NODE_RELEASE_PROFILE`) for the release machine: 
+
+```bash
+sudo xcrun notarytool store-credentials NODE_RELEASE_PROFILE \
+  --apple-id XXXX \
+  --team-id XXXX \
+  --password XXXX \
+  --keychain /Library/Keychains/System.keychain  
+```
+
+Note: `XXXX` values are found in `secrets/build/release/apple.md`
+
+Note2: (`security unlock-keychain -u /Library/Keychains/System.keychain` _may_ be required prior to running this command).
+
+The expected output is:
+
+```
+This process stores your credentials securely in the Keychain. You reference these credentials later using a profile name.
+
+Validating your credentials...
+Success. Credentials validated.
+Credentials saved to Keychain.
+To use them, specify `--keychain-profile "NODE_RELEASE_PROFILE" --keychain /Library/Keychains/System.keychain`
+```
+
 #### Signing certificates
 
 * Go to the `build/release` folder in the secrets repo.
