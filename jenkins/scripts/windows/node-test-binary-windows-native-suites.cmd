@@ -6,8 +6,9 @@ call %~dp0git-checkout.cmd
 if errorlevel 1 exit /b
 
 :: Run tests
-set "test_ci_args="
+set "test_ci_args=--measure-flakiness 9"
 set VCBUILD_TARGET=test-ci-native
+set FLAKY_TESTS=keep_retrying
 call %~dp0test.cmd
 if errorlevel 1 exit /b
 

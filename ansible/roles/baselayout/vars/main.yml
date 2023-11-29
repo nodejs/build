@@ -16,8 +16,8 @@ sshd_service_map: {
 sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripversion])|default('sshd') }}"
 
 ntp_service: {
-  chrony: ['rhel8'],
-  systemd: ['debian8', 'debian9', 'debian10', 'ubuntu1604', 'ubuntu1804']
+  chrony: ['rhel8', 'debian11'],
+  systemd: ['debian8', 'debian9', 'debian10', 'ubuntu']
 }
 
 common_packages: [
@@ -69,6 +69,10 @@ packages: {
 
   debian10: [
     'gcc-8,g++-8,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-pip',
+  ],
+
+  debian11: [
+    'gcc-10,g++-10,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-pip',
   ],
 
   fedora: [
@@ -126,7 +130,7 @@ packages: {
   ],
 
   ubuntu: [
-    'ccache,curl,git,libfontconfig1,sudo,python3-pip',
+    'acl,ccache,curl,git,libfontconfig1,sudo,python3-pip',
   ],
 
   # Default gcc/g++ package is 5.
@@ -139,7 +143,8 @@ packages: {
     'gcc-6,g++-6,gcc-8,g++-8,python3.8',
   ],  
 
+  # Default gcc/g++ package is 11.
   ubuntu2204: [
-    'gcc,g++,python2,python3,python-is-python3',
+    'gcc,g++,python3,python-is-python3',
   ],
 }

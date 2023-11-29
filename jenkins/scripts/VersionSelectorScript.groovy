@@ -50,9 +50,12 @@ def buildExclusions = [
   [ /vs2015/,                         releaseType, gte(16)       ],
   [ /vs2017/,                         releaseType, gte(16)       ],
   [ /vs2019-arm64/,                   releaseType, lt(20)        ],
+  [ /vs2019/,                         releaseType, gte(21)       ],
+  [ /vs2022/,                         releaseType, lt(21)        ],
   // VS versions supported to compile Node.js - also matches labels used by test runners
   [ /vs2015(-\w+)?$/,                 testType,    gte(16)       ],
   [ /vs2017(-\w+)?$/,                 testType,    gte(16)       ],
+  [ /vs2019/,                         testType,    gte(21)       ],
   [ /vs2022(-\w+)?$/,                 testType,    lt(20)        ], // Temporarily compile Node v20+ on both VS2019 and VS2022
   [ /vs2022-x86$/,                    testType,    lt(20)        ], // Temporarily compile Node v20+ arm64 and x86 on both VS2019 and VS2022
   [ /vs2022-arm64$/,                  testType,    lt(20)        ],
@@ -70,9 +73,7 @@ def buildExclusions = [
   [ /sharedlibs_fips20/,              anyType,     gte(16) ],
 
   // OSX ---------------------------------------------------
-  [ /osx11-x64-release-tar/,          releaseType, lt(20)  ],
-  [ /osx1015-release-pkg/,            releaseType, gte(16) ],
-  [ /osx1015-release-tar/,            releaseType, gte(20) ],
+  [ /osx1015/,                        anyType,     gte(21) ],
 
   // Source / headers / docs -------------------------------
   [ /^centos7-release-sources$/,      releaseType, gte(18) ],

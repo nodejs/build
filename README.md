@@ -28,19 +28,20 @@ to the resources we manage.
 
 <!-- ncu-team-sync.team(nodejs/build) -->
 
-- [@AshCripps](https://github.com/AshCripps) - Ash Cripps
-- [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
-- [@joaocgreis](https://github.com/joaocgreis) - João Reis
-- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
-- [@MoLow](https://github.com/MoLow) - Moshe Atlow
-- [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
-- [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
-- [@richardlau](https://github.com/richardlau) - Richard Lau
-- [@rvagg](https://github.com/rvagg) - Rod Vagg
-- [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
-- [@sxa](https://github.com/sxa) - Stewart X Addison
-- [@targos](https://github.com/targos) - Michaël Zasso
-- [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
+* [@AshCripps](https://github.com/AshCripps) - Ash Cripps
+* [@anonrig](https://github.com/anonrig) - Yagiz Nizipli
+* [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
+* [@joaocgreis](https://github.com/joaocgreis) - João Reis
+* [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+* [@MoLow](https://github.com/MoLow) - Moshe Atlow
+* [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
+* [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
+* [@richardlau](https://github.com/richardlau) - Richard Lau
+* [@rvagg](https://github.com/rvagg) - Rod Vagg
+* [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
+* [@sxa](https://github.com/sxa) - Stewart X Addison
+* [@targos](https://github.com/targos) - Michaël Zasso
+* [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
 
 <!-- ncu-team-sync end -->
 
@@ -53,6 +54,7 @@ Above list is manually synced with the [gpg member list](https://github.com/node
 * [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 * [@joaocgreis](https://github.com/joaocgreis) - João Reis
 * [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+* [@MoLow](https://github.com/MoLow) - Moshe Atlow
 * [@richardlau](https://github.com/richardlau) - Richard Lau
 * [@rvagg](https://github.com/rvagg) - Rod Vagg
 * [@sxa](https://github.com/sxa) - Stewart X Addison
@@ -287,7 +289,6 @@ Build and test orchestration is performed by [Jenkins][21].
 - A summary of build and test jobs can be found at: <https://ci.nodejs.org>
 - A listing of connected servers for testing, building and benchmarking
   can be found at: <https://ci.nodejs.org/computer/>
-- A summary of the general health of the last 100 jobs can be found at: <https://ci-health.nodejs.org/#/job-summary>
 - Monitoring with Grafana: <https://grafana.nodejs.org/>
 
 The Build WG will keep build configuration required for a release line for 6

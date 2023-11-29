@@ -121,6 +121,33 @@ As root:
 * `sudo xcodebuild -license` - accept license
 * `git` - check that git is working (confirming license has been accepted)
 
+#### OSX Keychain Profile
+
+Create a keychain profile (`NODE_RELEASE_PROFILE`) for the release machine: 
+
+```bash
+sudo xcrun notarytool store-credentials NODE_RELEASE_PROFILE \
+  --apple-id XXXX \
+  --team-id XXXX \
+  --password XXXX \
+  --keychain /Library/Keychains/System.keychain  
+```
+
+Note: `XXXX` values are found in `secrets/build/release/apple.md`
+
+Note2: (`security unlock-keychain -u /Library/Keychains/System.keychain` _may_ be required prior to running this command).
+
+The expected output is:
+
+```
+This process stores your credentials securely in the Keychain. You reference these credentials later using a profile name.
+
+Validating your credentials...
+Success. Credentials validated.
+Credentials saved to Keychain.
+To use them, specify `--keychain-profile "NODE_RELEASE_PROFILE" --keychain /Library/Keychains/System.keychain`
+```
+
 #### Signing certificates
 
 * Go to the `build/release` folder in the secrets repo.
@@ -128,21 +155,30 @@ As root:
 * Transfer to release machine (scp to /tmp)
 * `sudo security import /tmp/Apple\ Developer\ ID\ Node.js\ Foundation.p12 -k /Library/Keychains/System.keychain -T /usr/bin/codesign -T /usr/bin/productsign -P 'XXXX'` (where XXXX is found in secrets/build/release/apple.md) (`security unlock-keychain -u /Library/Keychains/System.keychain` _may_ be required prior to running this command).
 
-#### Validating certificates are in date
+#### Validating certificates are in date and valid
 
-1. security -i unlock-keychain    (Enter the password for the machine located in secrets)
-2. security find-certificate -c "Developer ID Application" -p > /tmp/app.cert     (outputs the PEM format of the cert so we can properly inspect it)
-3. security find-certificate -c "Developer ID Installer" -p > /tmp/installer.cert
-4. openssl x509 -inform PEM -text -in /tmp/app.cert | less
-5. openssl x509 -inform PEM -text -in /tmp/installer.cert | less
-
-The last two steps will show the details of the certificates allowing to see expiry dates.
+1. `security -i unlock-keychain` Enter the password for the machine located in secrets
+2. `security find-certificate -c "Developer ID Application" -p > /tmp/app.cert` outputs the PEM format of the cert so we can properly inspect it
+3. `security find-certificate -c "Developer ID Installer" -p > /tmp/installer.cert`
+4. `openssl x509 -inform PEM -text -in /tmp/app.cert | less`
+5. `openssl x509 -inform PEM -text -in /tmp/installer.cert | less`
+6. `security find-identity -p codesigning -v`
+The steps 4 and 5 will show the details of the certificates allowing to see expiry dates.
 
 Example:
 
 ```
 Not Before: Jan 22 03:40:05 2020 GMT
 Not After : Jan 22 03:40:05 2025 GMT
+```
+
+The step 6 will show the list of certificates available on the machine.
+
+Example:
+
+```
+  1) XXXXXXXXXXX "Developer ID Application: Node.js Foundation (XXXXXXX)"
+1 valid identities found
 ```
 
 ## macOS
@@ -599,7 +635,7 @@ The preparation script needs to be run in PowerShell (run as Administrator):
 
 ```powershell
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1" -OutFile "ConfigureRemotingForAnsible.ps1"
+Invoke-WebRequest "https://raw.githubusercontent.com/ansible/ansible-documentation/devel/examples/scripts/ConfigureRemotingForAnsible.ps1" -OutFile "ConfigureRemotingForAnsible.ps1"
 .\ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert true -CertValidityDays 3650
 ```
 

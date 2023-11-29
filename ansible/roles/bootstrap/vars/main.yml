@@ -1,1 +1,2 @@
 autologon_regpath: 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'
+swap_file: /swapfile

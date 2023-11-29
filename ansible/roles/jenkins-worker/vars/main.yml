@@ -6,11 +6,10 @@
 
 init: {
   aix: ['aix72', 'aix73'],
-  debian: 'debian7',
   freebsd: 'freebsd',
   ibmi: 'ibmi73',
   macos: 'macos',
-  systemd: ['centos7', 'debian8', 'debian9', 'debian10', 'fedora', 'rhel7', 'rhel8', 'ubuntu1604', 'ubuntu1804','ubuntu2204'],
+  systemd: ['centos7', 'debian', 'fedora', 'rhel7', 'rhel8', 'ubuntu1604', 'ubuntu1804','ubuntu2204'],
   svc: 'smartos',
   zos_start: 'zos'
   }
@@ -59,10 +58,6 @@ jenkins_init: {
 # called regardless of success.
 init_type: "{{ os|match_key(init, raise_error=False)|default(os|stripversion|match_key(init, raise_error=False)) }}"
 jenkins: "{{ jenkins_init[init_type] }}"
-
-needs_monit: [
-  'debian7',
-  ]
 
 # some os'es needs different paths to java. add them here.
 java_path: {

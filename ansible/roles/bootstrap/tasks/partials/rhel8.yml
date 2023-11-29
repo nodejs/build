@@ -15,3 +15,7 @@
     activationkey: "{{ secrets.rh_activationkey }}"
     org_id: "{{ secrets.rh_org }}"
     state: present
+
+- name: set up swap on Linux
+  include_tasks: linux-swap.yml
+  when: swap_file_size_mb is defined

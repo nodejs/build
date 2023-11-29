@@ -70,10 +70,6 @@ hosts:
         zos24-s390x-1: {ip: 148.100.36.157, user: unix1}
 
     - nearform:
-        macos10.15-x64-1:
-            ip: 83.147.191.69
-            user: administrator
-            ansible_python_interpreter: /usr/bin/python3
         macos11.0-arm64-1:
             ansible_python_interpreter: /usr/bin/python3
             ip: 83.147.191.76
@@ -87,15 +83,14 @@ hosts:
             server_jobs: 6
         centos7-arm64-1: {ip: 140.211.169.7, server_jobs: 2, user: centos}
         centos7-ppc64_le-1: {ip: 140.211.168.61, user: centos}
-        rhel8-arm64-1: {ip: 140.211.169.58, server_jobs: 2, user: cloud-user}
+        rhel8-arm64-1:
+            ip: 140.211.169.58
+            server_jobs: 2
+            user: cloud-user
+            swap_file_size_mb: 4096
         rhel8-ppc64_le-1: {ip: 140.211.168.185, user: cloud-user}
 
     - orka:
-        macos10.15-x64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.101
-            port: 8825
-            user: administrator
         macos11-x64-1:
             ansible_python_interpreter: /usr/bin/python3
             ip: 199.7.167.100
@@ -125,7 +120,7 @@ hosts:
         msft-win2022_vs2019-x64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
 
     - digitalocean:
-        debian8-x64-1: {ip: 159.203.103.52}
+        debian11-x64-1: {ip: 174.138.79.159}
         debian9-x64-1: {ip: 138.197.97.208}
         fedora32-x64-1: {ip: 159.203.117.50}
         fedora37-x64-1: {ip: 159.65.248.149}
@@ -134,11 +129,11 @@ hosts:
         freebsd12-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd12-x64-2: {ip: 107.170.28.213, user: freebsd}
         rhel8-x64-1: {ip: 161.35.139.78, build_test_v8: yes}
-        ubuntu1604-x86-1: {ip: 159.203.77.233}
-        ubuntu1604-x86-2: {ip: 104.131.191.135}
         ubuntu1804_docker-x64-1: {ip: 134.209.55.216}
         ubuntu1804_docker-x64-2: {ip: 159.89.183.200}
         ubuntu1804-x64-1: {ip: 178.128.181.213}
+        ubuntu2204-x64-1: {ip: 138.197.4.1}
+        ubuntu2204-x64-2: {ip: 167.99.124.188}
 
     - equinix:
         ubuntu2004_docker-arm64-1: {ip: 145.40.81.219}
@@ -324,9 +319,16 @@ hosts:
         win2012r2_vs2015-x64-2: {ip: 104.130.141.137}
         win2012r2_vs2019-x64-1: {ip: 162.242.237.124}
         win2012r2_vs2019-x64-2: {ip: 104.130.158.58}
-        win2012r2_vs2019-x64-3: {ip: 119.9.131.63}
-        win2012r2_vs2019-x64-4: {ip: 104.130.219.103}
-        win2012r2_vs2019-x64-6: {ip: 104.130.141.231}
+        win2019_vs2019-x64-1: {}
+        win2019_vs2019-x64-2: {}
+        win2019_vs2019-x64-3: {}
+        win2019_vs2019-x64-4: {}
+        win2022_vs2022-x64-1: {}
+        win2022_vs2022-x64-2: {}
+        win2022_vs2022-x64-3: {}
+        win2022_vs2022-x64-4: {}
+        win2022_vs2022-x64-5: {}
+        win2022_vs2022-x64-6: {}
 
     - softlayer:
         centos7-x64-1: {ip: 50.23.85.250}
