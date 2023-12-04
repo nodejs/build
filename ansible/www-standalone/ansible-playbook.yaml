@@ -6,32 +6,32 @@
     - include_vars: ansible-vars.yaml
       tags: vars
 
-    - include: tasks/base.yaml
+    - include_tasks: tasks/base.yaml
       tags: base
 
-    - include: tasks/user.yaml
+    - include_tasks: tasks/user.yaml
       tags: user
 
-    - include: tasks/docker.yaml
+    - include_tasks: tasks/docker.yaml
       tags: docker
 
-    - include: tasks/site-setup.yaml
+    - include_tasks: tasks/site-setup.yaml
       tags: setup
 
-    - include: tasks/webhook.yaml
+    - include_tasks: tasks/webhook.yaml
       tags: webhook
 
-    - include: tasks/nginx.yaml
+    - include_tasks: tasks/nginx.yaml
       tags: nginx
 
-    - include: tasks/promote.yaml
+    - include_tasks: tasks/promote.yaml
       tags: promote
 
-    - include: tasks/tools.yaml
+    - include_tasks: tasks/tools.yaml
       tags: tools
 
-    - include: tasks/metrics.yaml
+    - include_tasks: tasks/metrics.yaml
       tags: metrics
 
-    - include: tasks/cloudflare.yaml
+    - include_tasks: tasks/cloudflare.yaml
       tags: cloudflare

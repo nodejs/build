@@ -5,7 +5,7 @@
 #
 
   - name: run os-specific bootstrap
-    include: "{{ bootstrap_include }}"
+    include_tasks: "{{ bootstrap_include }}"
     loop_control:
       loop_var: bootstrap_include
     with_first_found:

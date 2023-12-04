@@ -19,7 +19,7 @@
     regexp: ^Subsystem(\s+)sftp
 
 - name: add os-specific repos
-  include: "{{ repos_include }}"
+  include_tasks: "{{ repos_include }}"
   loop_control:
     loop_var: repos_include
   with_first_found:
@@ -51,7 +51,7 @@
   with_items: [ '.login', '.profile' ]
 
 - name: set up ntp
-  include: "{{ ntp_include }}"
+  include_tasks: "{{ ntp_include }}"
   loop_control:
     loop_var: ntp_include
   with_first_found:

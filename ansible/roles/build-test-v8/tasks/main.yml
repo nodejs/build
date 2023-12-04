@@ -5,7 +5,7 @@
 #
 
 - name: install packages required for V8 builds
-  include: "{{ v8deps_include }}"
+  include_tasks: "{{ v8deps_include }}"
   loop_control:
     loop_var: v8deps_include
   with_first_found:
