@@ -14,7 +14,7 @@
       skip: true
 
 - name: decrypt additional secrets
-  include: "{{ additional_include }}"
+  include_tasks: "{{ additional_include }}"
   loop_control:
     loop_var: additional_include
   with_first_found:

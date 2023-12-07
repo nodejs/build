@@ -3,10 +3,9 @@
 # Package upgrade handler
 
 - name: package updated
-  include: "{{ handler_include }}"
+  include_tasks: "{{ handler_include }}"
   loop_control:
     loop_var: handler_include
-  notify: package updated
   with_first_found:
     - files:
       - "{{ role_path }}/handlers/partials/{{ os }}-{{ arch }}.yml"

@@ -33,11 +33,11 @@
 
 - name: run scaleway armv7 jenkins-worker setup
   when: "'scaleway-ubuntu1804-armv7l' in inventory_hostname"
-  include: "{{ role_path }}/tasks/partials/scaleway-armv7.yml"
+  include_tasks: "{{ role_path }}/tasks/partials/scaleway-armv7.yml"
 
 - name: prepare installing tap2junit
   when: type != "release"
-  include: "{{ pip_include }}"
+  include_tasks: "{{ pip_include }}"
   loop_control:
     loop_var: pip_include
   with_first_found:

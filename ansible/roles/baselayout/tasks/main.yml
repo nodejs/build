@@ -43,7 +43,7 @@
   lineinfile: state=absent dest="{{ ssh_config }}" regexp=^Subsystem(\s+)sftp
 
 - name: add os-specific repos
-  include: "{{ repos_include }}"
+  include_tasks: "{{ repos_include }}"
   loop_control:
     loop_var: repos_include
   with_first_found:
@@ -167,7 +167,7 @@
     - [ 'curl', 'curl_32', 'curl_64', 'gtar', 'python3' ]
 
 - name: run ccache installer
-  include: "{{ ccache_include }}"
+  include_tasks: "{{ ccache_include }}"
   loop_control:
     loop_var: ccache_include
   with_first_found:
@@ -178,7 +178,7 @@
       skip: true
 
 - name: set up ntp
-  include: "{{ ntp_include }}"
+  include_tasks: "{{ ntp_include }}"
   loop_control:
     loop_var: ntp_include
   with_first_found:
