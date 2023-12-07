@@ -1,4 +1,4 @@
-FROM arm32v7/debian:10
+FROM arm32v7/debian:11
 
 ENV LC_ALL C
 ENV USER {{ server_user }}
@@ -16,11 +16,11 @@ ENV ARCH {{ arch }}
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y ccache \
       curl \
-      g++-8 \
-      gcc-8 \
+      g++-10 \
+      gcc-10 \
       git \
       libfontconfig1 \
-      openjdk-11-jre-headless \
+      openjdk-17-jre-headless \
       pkg-config \
       procps \
       python3-pip \

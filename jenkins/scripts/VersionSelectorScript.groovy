@@ -35,7 +35,6 @@ def buildExclusions = [
   [ /^centos7-ppcle/,                 anyType,     gte(18) ],
 
   // ARM  --------------------------------------------------
-  [ /^debian10-armv7l$/,                             anyType, gte(20) ], // gcc 10 requires newer libstdc++
   [ /^cross-compiler-ubuntu1604-armv[67]-gcc-4.9/,   anyType, gte(16) ],
   [ /^cross-compiler-ubuntu1604-armv[67]-gcc-6/,     anyType, gte(16) ],
   [ /^cross-compiler-ubuntu1804-armv7-gcc-6/,        anyType, gte(16) ],
