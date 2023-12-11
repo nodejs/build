@@ -34,7 +34,7 @@ fi
 
 # Linux distros should be arch agnostic
 case $NODE_NAME in
-  *rhel8*)
+  *rhel8*|*ubi8*)
     case "$CONFIG_FLAGS" in
       *--enable-lto*)
         echo "Setting compiler for Node.js $NODEJS_MAJOR_VERSION (LTO) on" `cat /etc/redhat-release`
