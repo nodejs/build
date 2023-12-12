@@ -22,6 +22,7 @@ if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
     *aix* ) SELECT_ARCH=AIXPPC ;;
     *x64* ) SELECT_ARCH=X64 ;;
     *arm64* ) SELECT_ARCH=ARM64 ;;
+    *armv7l* ) SELECT_ARCH=ARMV7L ;;
     *ibmi73* ) SELECT_ARCH=IBMI73 ;;
   esac
 fi
@@ -239,6 +240,24 @@ elif [ "$SELECT_ARCH" = "ARM64" ]; then
       fi
       echo "Compiler set to GCC" `$CXX -dumpversion`
       ;;
+    *ubuntu2004* )
+      if [ "$NODEJS_MAJOR_VERSION" -gt "19" ]; then
+        export CC="ccache gcc-10"
+        export CXX="ccache g++-10"
+        export LINK="g++-10"
+      else
+        export CC="ccache gcc"
+        export CXX="ccache g++"
+        export LINK="g++"
+      fi
+      echo "Compiler set to GCC" `$CXX -dumpversion`
+      ;;
+  esac
+
+elif [ "$SELECT_ARCH" = "ARMV7L" ]; then
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on armv7l"
+
+  case $nodes in
     *ubuntu2004* )
       if [ "$NODEJS_MAJOR_VERSION" -gt "19" ]; then
         export CC="ccache gcc-10"
