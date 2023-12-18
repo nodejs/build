@@ -32,6 +32,7 @@ RUN dnf install --disableplugin=subscription-manager -y \
     && dnf --disableplugin=subscription-manager clean all
 
 RUN dnf install --disableplugin=subscription-manager -y \
+      http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/gcc-toolset-10-binutils-2.35-8.el8_5.6.x86_64.rpm \
       http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/gcc-toolset-10-gcc-10.3.1-1.2.el8_5.x86_64.rpm \
       http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/gcc-toolset-10-gcc-c++-10.3.1-1.2.el8_5.x86_64.rpm \
       http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/gcc-toolset-10-libstdc++-devel-10.3.1-1.2.el8_5.i686.rpm \
