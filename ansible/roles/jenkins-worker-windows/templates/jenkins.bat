@@ -1,3 +1,8 @@
+:: Temurin17 can only be safely upgraded outside of the running Jenkin loop.
+:: windows-update-reboot job will make sure machine is rebooted when needed.
+choco upgrade Temurin17 -y
+call refreshenv
+
 C:
 cd \
 :start
