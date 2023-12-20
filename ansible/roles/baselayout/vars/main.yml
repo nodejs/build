@@ -76,7 +76,7 @@ packages: {
   ],
 
   debian12: [
-    'gcc-12,g++-12,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-pip',
+    'gcc-12,g++-12,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-pip,python3-virtualenv',
   ],
 
   fedora: [

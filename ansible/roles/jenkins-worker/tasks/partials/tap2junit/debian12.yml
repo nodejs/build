@@ -1,0 +1,10 @@
+---
+
+#
+# install tap2junit from pip
+#
+
+- name: install tap2junit
+  pip:
+    name: tap2junit=={{ tap2junit_version }}
+    virtualenv: /home/{{ server_user }}/venv
