@@ -66,6 +66,9 @@ def buildExclusions = [
   // SmartOS -----------------------------------------------
   [ /^smartos18/,                     anyType,     gte(16) ],
 
+  // FreeBSD -----------------------------------------------
+  [ /^freebsd12/,                     anyType,     gte(22) ],
+
   // Shared libs docker containers -------------------------
   [ /sharedlibs_debug_x64/,           anyType,     gte(18) ],
   [ /sharedlibs_openssl110/,          anyType,     gte(16) ],
