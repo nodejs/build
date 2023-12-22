@@ -146,12 +146,7 @@ accesses and team roles see [GOVERNANCE.md][].
 
 ## Infrastructure Providers
 
-The Node.js Project is proud to receive contributions from many companies,
-both in the form of monetary contributions in exchange for membership or
-in-kind contributions for required resources. The Build Working Group
-collaborates with the following companies who contribute various kinds of
-cloud and physical hardware to the Node.js project.
-
+asmit raj
 
 ### Tier-1 Providers
 
