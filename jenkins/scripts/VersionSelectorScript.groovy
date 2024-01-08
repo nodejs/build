@@ -62,6 +62,7 @@ def buildExclusions = [
   [ /COMPILED_BY-\w+-arm64$/,         testType,    lt(20)        ], // run tests on arm64 for >=19
   // VS versions supported to build add-ons
   [ /vs2015-COMPILED_BY/,             testType,    gte(20)       ],
+  [ /vs2017-COMPILED_BY/,             testType,    gte(22)       ],
 
   // SmartOS -----------------------------------------------
   [ /^smartos18/,                     anyType,     gte(16) ],
