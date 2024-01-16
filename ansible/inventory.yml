@@ -102,22 +102,22 @@ hosts:
   - test:
 
     - azure:
+        msft-win10_vs2019-x64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
+        msft-win10_vs2019-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
+        msft-win10_vs2019-x64-3: {ip: nodejs2.eastus.cloudapp.azure.com}
+        msft-win10_vs2019-x64-4: {ip: nodejs.westus3.cloudapp.azure.com}
         msft-win11_vs2022-arm64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win11_vs2022-arm64-2: {ip: nodejs2.eastus.cloudapp.azure.com}
         msft-win11_vs2022-arm64-3: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win11_vs2022-arm64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
         msft-win11_vs2022-arm64-5: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win11_vs2022-arm64-6: {ip: nodejs2.eastus.cloudapp.azure.com}
+        msft-win11_vs2022-x64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
+        msft-win11_vs2022-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
+        msft-win11_vs2022-x64-3: {ip: nodejs2.eastus.cloudapp.azure.com}
+        msft-win11_vs2022-x64-4: {ip: nodejs.westus3.cloudapp.azure.com}
         msft-win2016_vs2017-x64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win2016_vs2017-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
-        msft-win2016_vs2017-x64-3: {ip: nodejs.australiaeast.cloudapp.azure.com}
-        msft-win2016_vs2017-x64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
-        msft-win2016_vs2017-x64-5: {ip: nodejs.westeurope.cloudapp.azure.com}
-        msft-win2016_vs2017-x64-6: {ip: nodejs.westus3.cloudapp.azure.com}
-        msft-win2022_vs2019-x64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
-        msft-win2022_vs2019-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
-        msft-win2022_vs2019-x64-3: {ip: nodejs.australiaeast.cloudapp.azure.com}
-        msft-win2022_vs2019-x64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
 
     - digitalocean:
         debian11-x64-1: {ip: 174.138.79.159}
