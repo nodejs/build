@@ -17,7 +17,7 @@ sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripver
 
 ntp_service: {
   chrony: ['rhel8', 'debian11'],
-  systemd: ['debian8', 'debian9', 'debian10', 'debian12', 'ubuntu']
+  systemd: ['debian8', 'debian10', 'debian12', 'ubuntu']
 }
 
 common_packages: [
@@ -63,10 +63,6 @@ packages: {
     'ccache,git,gcc-4.9,g++-4.9,libfontconfig1,binutils-2.26,sudo',
   ],
 
-  debian9: [
-    'gcc-6,g++-6,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo',
-  ],
-
   debian10: [
     'gcc-8,g++-8,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-pip',
   ],
@@ -76,7 +72,7 @@ packages: {
   ],
 
   debian12: [
-    'gcc,g++,make,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-venv',
+    'systemd-timesyncd,gcc,g++,make,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-venv',
   ],
 
   fedora: [
