@@ -24,7 +24,6 @@ def buildExclusions = [
   [ /^centos7-(arm)?64-gcc6/,         anyType,     gte(16) ],    // 14.x: gcc6 builds stop
   [ /^centos7-(arm)?64-gcc8/,         anyType,     gte(18) ], // 18.x: centos7 builds stop
   [ /^centos7-64/,                    anyType,     gte(18) ],
-  [ /debian9/,                        anyType,     gte(16) ],
   [ /debian10/,                       anyType,     gte(21) ],
   [ /rhel7/,                          anyType,     gte(18) ],
   [ /rhel8/,                          releaseType, lt(18)  ],
