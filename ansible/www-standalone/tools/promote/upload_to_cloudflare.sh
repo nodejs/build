@@ -22,8 +22,12 @@ if [ -z ${dist_rootdir+x} ]; then
   echo "\$dist_rootdir is not set"
   exit 1
 fi
-if [ -z ${destination_bucket+x} ]; then
-  echo "\$destination_bucket is not set"
+if [ -z ${staging_bucket+x} ]; then
+  echo "\$staging_bucket is not set"
+  exit 1
+fi
+if [ -z ${dist_bucket+x} ]; then
+  echo "\$dist_bucket is not set"
   exit 1
 fi
 if [ -z ${cloudflare_endpoint+x} ]; then
@@ -38,6 +42,6 @@ fi
 relativedir=${dstdir/$dist_rootdir/"$site/"}
 tmpversion=$2
 
-aws s3 cp $dstdir/$tmpversion/ $destination_bucket/$relativedir/$tmpversion/ --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile --recursive --no-follow-symlinks
-aws s3 cp $dstdir/index.json $destination_bucket/$relativedir/index.json --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
-aws s3 cp $dstdir/index.tab $destination_bucket/$relativedir/index.tab --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
+aws s3 cp $staging_bucket/$relativedir/$tmpversion/ $dist_bucket/$relativedir/$tmpversion/ --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile --recursive --no-follow-symlinks
+aws s3 cp $staging_bucket/$relativedir/index.json $dist_bucket/$relativedir/index.json --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
+aws s3 cp $staging_bucket/$relativedir/index.tab $dist_bucket/$relativedir/index.tab --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
