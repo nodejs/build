@@ -53,3 +53,9 @@ gem cleanup &>/dev/null
 
 echo 'Purge inactive memory…'
 sudo purge
+
+echo 'Remove Jenkins error logs…'
+rm ~/jenkins_err.log
+
+echo 'Remove workspace, it will be recreated again…'
+rm -rfv ~/build/workspace/*
