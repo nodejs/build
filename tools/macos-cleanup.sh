@@ -55,7 +55,7 @@ echo 'Purge inactive memory…'
 sudo purge
 
 echo 'Remove Jenkins error logs…'
-rm ~/jenkins_err.log
+rm /Users/iojs/jenkins_err.log
 
 echo 'Remove workspace, it will be recreated again…'
-rm -rfv ~/build/workspace/*
+rm -rfv /Users/iojs/build/workspace/*
