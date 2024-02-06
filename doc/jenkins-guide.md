@@ -8,6 +8,8 @@ A guide on maintaining Node.js' Test and Release Jenkins clusters
   * [Running playbooks](#running-playbooks)
 * [Security releases](#security-releases)
   * [Before the release](#before-the-release)
+    * [Annouce the pending CI lock down](#announce-the-pending-ci-lock-down)
+    * [Lock down the CI](#lock-down-the-ci)
   * [After the release](#after-the-release)
 * [Solving problems](#solving-problems)
   * [Out of memory](#out-of-memory)
@@ -61,15 +63,40 @@ important role in facilitating their testing.
 
 ### Before the release
 
-About 24 hours before a release is published, the [public CI](https://ci.nodejs.org)
-must be "locked down" to prevent anyone from interfering in the testing of the
-release.
+The [public CI](https://ci.nodejs.org) must be "locked down" to prevent anyone
+from interfering in the testing of the release. This is usually done 24 hours
+before a release is due to be published, but may be earlier depending on the
+planned contents of the release. If in doubt check with the [steward for the
+security release](https://github.com/nodejs/node/blob/main/doc/contributing/security-release-process.md#security-release-stewards).
 
-Create a tracking issue in the [`nodejs/build` issue tracker](https://github.com/nodejs/build/issues) announcing the lockdown.
+A tracking issue in the [`nodejs/build` issue tracker](https://github.com/nodejs/build/issues)
+should have been created by the security release steward requesting Build WG
+members to be available to support the security release.
+
+#### Announce the pending CI lock down
 
 Make a post in the `nodejs/collaborators` [discussion page](https://github.com/nodejs/collaborators/discussions/categories/announcements)
-to let users of the public CI know that their access will be curtailed.
+to let users of the public CI know that their access will be curtailed. Pin
+the discussion post so that it appears at the top of the page.
 Be sure to insert a link to the `nodejs/build` tracking issue.
+
+e.g.
+```text
+CI to be locked down from <date> for upcoming security release
+
+To support the upcoming security release, the public CI will be locked down
+from <date> and access restricted to it until the releases are released.
+
+Refs: <link to tracking issue>
+```
+
+Also post advance notice to the [#nodejs-core Slack channel](https://openjs-foundation.slack.com/archives/C019Y2T6STH),
+referencing the discussion post.
+
+#### Lock down the CI
+
+You must be a member of the `nodejs/jenkins-admins` team to have the necessary
+permissions to lock down the CI.
 
 Add a Jenkins "system message" in https://ci.nodejs.org/configure. Something like:
 ```html
@@ -78,7 +105,8 @@ Add a Jenkins "system message" in https://ci.nodejs.org/configure. Something lik
 <p>Refs: <a href="https://github.com/nodejs/build/issues/xxx">https://github.com/nodejs/build/issues/xxx</a></p>
 ```
 
-And some fancy "extra-css" to "Theme" -> "Theme elements" -> "Extra CSS".
+To make it more obvious that the CI has been locked down, add some "Extra CSS"
+to https://ci.nodejs.org/manage/appearance.
 This should already exist but commented out like this:
 ```css
 /* Uncomment for security releases */
@@ -111,9 +139,7 @@ a#jenkins-home-link:after {
 /* */
 ```
 
-
-To change the Jenkins security configuration, you must be a member of
-the `nodejs/jenkins-admins` team, and travel to the ["Configure Global
+To change the Jenkins security configuration, travel to the ["Configure Global
 Security"](https://ci.nodejs.org/configureSecurity/) page.
 
 Below is a screenshot of what the "Project-based Matrix Authorization Strategy"
@@ -148,7 +174,8 @@ Relevant logs:
 1. system (includes security matrix) - https://ci.nodejs.org/jobConfigHistory/history?name=config
 2. CSS - https://ci.nodejs.org/jobConfigHistory/history?name=org.codefirst.SimpleThemeDecorator
 
-Undo the "system message" and "extra css" theme changes to https://ci.nodejs.org/configure.
+Undo the "system message" changes from https://ci.nodejs.org/configure and
+"Extra CSS" theme changes from https://ci.nodejs.org/manage/appearance.
 
 ## Solving problems
 
