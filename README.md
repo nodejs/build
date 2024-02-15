@@ -28,8 +28,9 @@ to the resources we manage.
 
 <!-- ncu-team-sync.team(nodejs/build) -->
 
-* [@AshCripps](https://github.com/AshCripps) - Ash Cripps
+* [@abmusse](https://github.com/abmusse) - Abdirahim Musse
 * [@anonrig](https://github.com/anonrig) - Yagiz Nizipli
+* [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 * [@joaocgreis](https://github.com/joaocgreis) - João Reis
 * [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 * [@mhdawson](https://github.com/mhdawson) - Michael Dawson
@@ -71,6 +72,7 @@ Admin access to https://ci.nodejs.org/.
 * [@joaocgreis](https://github.com/joaocgreis) - João Reis
 * [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 * [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+* [@MoLow](https://github.com/MoLow) - Moshe Atlow
 * [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 * [@richardlau](https://github.com/richardlau) - Richard Lau
 * [@rvagg](https://github.com/rvagg) - Rod Vagg
@@ -104,6 +106,7 @@ Admin access to https://ci-release.nodejs.org/.
 * [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 * [@joaocgreis](https://github.com/joaocgreis) - João Reis
 * [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+* [@MoLow](https://github.com/MoLow) - Moshe Atlow
 * [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 * [@richardlau](https://github.com/richardlau) - Richard Lau
 * [@rvagg](https://github.com/rvagg) - Rod Vagg
@@ -118,6 +121,7 @@ Admin access to https://ci-release.nodejs.org/.
 
 <!-- ncu-team-sync.team(nodejs/github-bot) -->
 
+* [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 * [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
 * [@phillipj](https://github.com/phillipj) - Phillip Johnsen
 * [@Starefossen](https://github.com/Starefossen) - Hans Kristian Flaatten
