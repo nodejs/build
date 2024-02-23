@@ -8,33 +8,47 @@
     loop_var: package
   with_items: "{{ base_packages }}"
 
-- name: Bootstrap | Add nodesource signing key
-  apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-    state: present
+- name: Bootstrap | Ensure keyrings directory exists
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Bootstrap | Download nodesource signing key
+  ansible.builtin.get_url:
+    url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
+    dest: /tmp/nodesource-repo.gpg.key
+    mode: '0644'
+
+- name: Bootstrap | De-armoring GPG key
+  ansible.builtin.shell:
+    cmd: gpg --dearmor < /tmp/nodesource-repo.gpg.key > /etc/apt/keyrings/nodesource.gpg
+    creates: /etc/apt/keyrings/nodesource.gpg
 
 - name: Bootstrap | Add nodesource repo
-  apt_repository:
-    repo: deb https://deb.nodesource.com/node_10.x jessie main
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_16.x nodistro main"
     state: present
 
-- name: letsencrypt | Add certbot ppa
-  apt_repository:
-    repo: 'ppa:certbot/certbot'
-    state: present
+- name: letsencrypt | Add certbot snap
+  community.general.snap:
+    name: certbot
 
-- name: Bootstrap | APT Update and upgrade
-  apt:
+    classic: true
+- name: Bootstrap | APT update and upgrade
+  ansible.builtin.apt:
     update_cache: yes
     upgrade: full
 
-- name: Bootstrap | Install packages
-  package:
-    name: "{{ package }}"
-    state: present
+- name: Bootstrap | Install and upgrade packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ packages }}"
   loop_control:
-    loop_var: package
-  with_items: "{{ packages }}"
+    loop_var: item
 
 - name: Bootstrap | Enable time syncing
   service:
@@ -73,9 +87,10 @@
 - name: Init | Clone unofficial-builds repo
   become: yes
   become_user: "nodejs"
-  git:
+  ansible.builtin.git:
     repo: https://github.com/nodejs/unofficial-builds
     dest: "/home/nodejs/unofficial-builds"
+    version: "main"
 
 - name: Deploy Webhook | Install github-webhook
   npm:

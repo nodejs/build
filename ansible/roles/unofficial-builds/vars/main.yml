@@ -4,4 +4,6 @@ base_packages:
   - python-apt
 
 packages:
-  - nodejs,git,nginx,logrotate,certbot,python-certbot-nginx
+  - nodejs
+  - git
+  - logrotate
