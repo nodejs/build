@@ -22,7 +22,6 @@
       loop_control:
         loop_var: secret
       with_items:
-        - github_secret
         - cdn_api_key
         - cdn_api_email
         - cdn_api_iojs_id

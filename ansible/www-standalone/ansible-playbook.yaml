@@ -18,9 +18,6 @@
     - include_tasks: tasks/site-setup.yaml
       tags: setup
 
-    - include_tasks: tasks/webhook.yaml
-      tags: webhook
-
     - include_tasks: tasks/nginx.yaml
       tags: nginx
 

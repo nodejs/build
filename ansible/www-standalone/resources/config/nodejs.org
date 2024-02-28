@@ -291,15 +291,6 @@ server {
         try_files /$lang/404.html /en/404.html =404;
     }
 
-    # This Location directive is used to expose our Website GitHub WebHook Logs
-    location = /github-webhook.log {
-        add_header Cache-Control "private, no-store, max-age=0" always;
-
-        alias /home/nodejs/github-webhook.log;
-        default_type text/plain;
-        access_log off;
-    }
-
     # This location directive is used as the health-check/load-balancer endpoint for Cloudflare
     # Each Cloudflare colo sends a request here every 60s to check we're up
     # We use a direct response from NGINX to avoid file system load for these requests

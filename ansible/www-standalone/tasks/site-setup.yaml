@@ -1,15 +1,3 @@
-- name: Site Setup | Copy build-site scripts
-  copy:
-    src: ./resources/scripts/{{ item }}
-    dest: /home/nodejs/{{ item }}
-    mode: 0700
-    owner: nodejs
-    group: nodejs
-  with_items:
-    - build-site.sh
-    - check-build-site.sh
-  tags: setup
-
 - name: Site Setup | Make /home/www
   file:
     path: "{{ item }}"
@@ -20,7 +8,6 @@
     - /home/www
     - /home/www/iojs
     - /home/www/nodejs
-    - /home/www/github
     - /home/www/coverage
   tags: setup
 
@@ -68,38 +55,12 @@
     group: root
   tags: setup
 
-- name: Site Setup | Make /home/nodejs/.npm
-  file:
-    path: /home/nodejs/.npm
-    state: directory
-    mode: 0755
-    owner: nodejs
-  tags: setup
-
-- name: Site Setup | Make /var/run/nodejs
-  file:
-    path: /var/run/nodejs
-    state: directory
-    mode: 0755
-    owner: nodejs
-  tags: setup
-
-- name: Site Setup | Initial nodejs, iojs clone and update
-  become: yes
-  become_user: "nodejs"
-  command: "{{ item }}"
-  with_items:
-    - "/home/nodejs/build-site.sh nodejs"
-    - "/home/nodejs/build-site.sh iojs"
-  tags: setup
-
 - name: Site Setup | Add periodic tasks to crontab
   lineinfile:
     dest: /etc/crontab
     line: "{{ item }}"
   with_items:
     - "*/30 *    * * *   dist    /home/staging/tools/promote/promote_nightly.sh nodejs"
-    - "*/5  *    * * *   nodejs  /home/nodejs/check-build-site.sh nodejs"
     - "*/5  *    * * *   root    /home/nodejs/cdn-purge.sh"
   tags: setup
 
