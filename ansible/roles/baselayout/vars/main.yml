@@ -104,7 +104,7 @@ packages: {
   ],
 
   rhel8: [
-    'ccache,cmake,gcc-c++,gcc-toolset-10,gcc-toolset-10-libatomic-devel,gcc-toolset-11,git,make,python3',
+    'ccache,cmake,gcc-c++,gcc-toolset-10,gcc-toolset-10-libatomic-devel,gcc-toolset-11,gcc-toolset-12,gcc-toolset-13,git,make,python3',
   ],
 
   smartos: [
