@@ -27,5 +27,6 @@ Environment="ARCH={{ arch }}"
 
 ExecStart=/usr/bin/java -Xmx{{ server_ram|default('128m') }} \
           -jar /home/{{ server_user }}/agent.jar \
-          -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/jenkins-agent.jnlp \
+          -url {{ jenkins_url }} \
+          -name {{ inventory_hostname }} \
           -secret {{ secret }}

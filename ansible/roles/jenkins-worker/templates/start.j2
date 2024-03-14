@@ -11,4 +11,4 @@ export PATH="/usr/local/opt/python3/Frameworks/Python.framework/Versions/Current
 export PATH="$(brew --prefix)/opt/ccache/libexec:$PATH"
 {{ java_path[os] }} -Xmx{{ server_ram|default('128m') }} \
     -jar {{ home }}/{{ server_user }}/agent.jar -secret {{ secret }} \
-    -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/jenkins-agent.jnlp
+    -url {{ jenkins_url }} -name {{ inventory_hostname }}

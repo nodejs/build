@@ -20,7 +20,7 @@ start )
               export SSL_CERT_FILE="$HOME/ca-bundle.crt"; \
         java -Xmx128m -Dorg.jenkinsci.plugins.gitclient.Git.timeOut=30 -jar "$HOME/agent.jar" \
           -secret {{secret}} \
-          -jnlpUrl https://ci.nodejs.org/computer/{{id}}/jenkins-agent.jnlp >$jenkins_log_file 2>&1 &'
+          -url https://ci.nodejs.org -name {{id}} >$jenkins_log_file 2>&1 &'
         ;;
 stop )
         ;;

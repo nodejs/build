@@ -25,5 +25,5 @@ export LDFLAGS="-q64"
 
 {{ java_path[os] }} -Dfile.encoding=ISO8859_1 -Xmx{{ server_ram|default('128m') }} \
     -jar {{ home }}/{{ server_user }}/agent.jar -secret {{ secret }} \
-    -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/jenkins-agent.jnlp >{{ home }}/{{ server_user }}/jenkins.log 2>&1  &
+    -url {{ jenkins_url }} -name {{ inventory_hostname }} >{{ home }}/{{ server_user }}/jenkins.log 2>&1  &
 EOF
