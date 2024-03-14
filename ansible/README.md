@@ -243,7 +243,7 @@ Unsorted stuff of things we need to do/think about
       hosts (or set up a new jump host)
 - [x] copy release (staging) keys to release machines
 - [ ] backup host: generate config, install rsnapshot
-- [ ] switch to slaveLog for all jenkins instances lacking stdout redirection
+- [ ] switch to agentLog for all jenkins instances lacking stdout redirection
       (note: this depends on init type!)
 - [ ] add iptables-save-persistent to cron on ci hosts
 - [ ] [unencrypted host](https://gist.github.com/jbergstroem/5c308089c26e7ae7529a0ef2df92a7f9)
