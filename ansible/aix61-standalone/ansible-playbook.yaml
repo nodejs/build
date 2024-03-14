@@ -17,7 +17,7 @@
       tags: user
 
     - name: Jenkins | Download Jenkins agent.jar
-      get_url: url=https://ci.nodejs.org/jnlpJars/agent.jar dest=/home/{{ server_user }}/slave.jar validate_certs=no
+      get_url: url=https://ci.nodejs.org/jnlpJars/agent.jar dest=/home/{{ server_user }}/agent.jar validate_certs=no
       tags: jenkins
 
     - name: Jenkins | Copy S20jenkins

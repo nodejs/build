@@ -110,7 +110,7 @@ println "Node.js major version: $nodeMajorVersion"
 if (parameters['NODEJS_VERSION'])
   println "Node.js version: ${new String(parameters['NODEJS_VERSION'])}"
 
-// NOTE: this assumes that the default "Slaves"->"Name" in the Configuration
+// NOTE: this assumes that the default "Agents"->"Name" in the Configuration
 // Matrix is left as "nodes", if it's changed then `it.nodes` below won't work
 // and returning a result with a "nodes" property won't work.
 result['nodes'] = []

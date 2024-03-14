@@ -26,6 +26,6 @@ Environment="DESTCPU={{ arch }}"
 Environment="ARCH={{ arch }}"
 
 ExecStart=/usr/bin/java -Xmx{{ server_ram|default('128m') }} \
-          -jar /home/{{ server_user }}/slave.jar \
+          -jar /home/{{ server_user }}/agent.jar \
           -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/jenkins-agent.jnlp \
           -secret {{ secret }}

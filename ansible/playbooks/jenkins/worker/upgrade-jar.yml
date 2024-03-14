@@ -12,7 +12,7 @@
     - name: download agent.jar
       get_url:
         url: "{{ jenkins_agent_jar }}"
-        dest: '{{ home }}/{{ server_user }}/slave.jar'
+        dest: '{{ home }}/{{ server_user }}/agent.jar'
         mode: 0644
         force: yes
 

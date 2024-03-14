@@ -31,7 +31,7 @@ jenkins_env=" \
   CC=cc \
   CXX=c++"
 
-jenkins_jar="/home/{{ server_user }}/slave.jar"
+jenkins_jar="/home/{{ server_user }}/agent.jar"
 jenkins_log_file="/home/{{ server_user }}/${name}_console.log"
 jenkins_args="-Xmx{{ server_ram|default('128m') }} -jar ${jenkins_jar} \
   -jnlpUrl {{ jenkins_url }}/computer/{{ inventory_hostname }}/jenkins-agent.jnlp \
