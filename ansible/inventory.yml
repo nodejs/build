@@ -183,6 +183,14 @@ hosts:
         smartos20-x64-3: {ip: 147.28.162.107}
         smartos20-x64-4: {ip: 147.28.162.109}
         ubuntu1804-x64-1: {ip: 147.28.162.99, user: ubuntu}
+    
+    - hetzner:
+        ubuntu2204-x64-1: 
+            ip: 37.27.104.214
+            build_test_v8: yes
+        ubuntu2204-x64-2:
+            ip: 37.27.104.215
+            build_test_v8: yes
 
     - macstadium:
         macos11.0-arm64-3:
