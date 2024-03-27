@@ -21,9 +21,15 @@ if exist test.tap (
   tap2junit -i test.tap -o js-tests.junit.xml
   if errorlevel 1 exit /b
 )
+if exist js-tests.junit.xml (
+  call %~dp0buildpulse.cmd js-tests.junit.xml
+)
 if exist cctest.tap (
   tap2junit -i cctest.tap -o cctest.junit.xml
   if errorlevel 1 exit /b
+)
+if exist cctest.junit.xml (
+  call %~dp0buildpulse.cmd cctest.junit.xml
 )
 
 :: The JUnit Plugin only marks the job as Unstable when it finds any kind of failure, including flaky tests.
