@@ -172,6 +172,7 @@ hosts:
         rhel8-x64-1: {ip: 169.61.75.51, build_test_v8: yes}
         rhel8-x64-2: {ip: 169.61.75.58, build_test_v8: yes}
         rhel8-x64-3: {ip: 52.117.26.13, build_test_v8: yes}
+        rhel9-x64-1: {ip: 169.60.150.92}
         ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
         ubuntu2204-x64-1: {ip: 169.60.150.82}
         ubuntu2204-x64-2: {ip: 169.44.168.2}
@@ -330,6 +331,5 @@ hosts:
         win2022_vs2022-x64-6: {}
 
     - softlayer:
-        centos7-x64-1: {ip: 50.23.85.250}
         debian10-x64-1: {ip: 169.44.16.126}
         debian12-x64-1: {ip: 169.60.150.88}
