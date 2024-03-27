@@ -3,4 +3,19 @@ packages:
   - build-essential
   - flex
   - bison
+  - libelf-dev
+  - elfutils
+  - libdw-dev
+  - libunwind-dev
+  - libslang2-dev
+  - systemtap-sdt-dev
+  - libbabeltrace-dev
+  - libcap-dev
+  - libzstd-dev
+  - libcapstone-dev
+  - libnuma-dev
+  - openjdk-11-jdk
+  - libtraceevent-dev
+  - libperl-dev
+
 tmp_folder: /data/tmp

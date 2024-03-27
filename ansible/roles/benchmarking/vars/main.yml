@@ -8,9 +8,7 @@ packages:
   - libssl-dev
   - libxml2-dev
   - pkg-config
-  - python-eventlet
-  - python-numpy
-  - python-requests
+  - python3-requests
   - zlib1g-dev
   - build-essential
   - unzip
