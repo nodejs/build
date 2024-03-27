@@ -3,6 +3,13 @@
 - name: gather facts
   setup:
 
+- name: create custom jenkins workspace
+  ansible.builtin.file:
+    group: "{{ server_user }}"
+    owner: "{{ server_user }}"
+    path: "/w/bnch-comp"
+    state: directory
+
 - name: Install packages
   package:
     name: "{{ package }}"
