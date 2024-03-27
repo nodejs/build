@@ -188,9 +188,11 @@ hosts:
         ubuntu2204-x64-1: 
             ip: 37.27.104.214
             build_test_v8: yes
+            is_benchmark: true
         ubuntu2204-x64-2:
             ip: 37.27.104.215
             build_test_v8: yes
+            is_benchmark: true
 
     - macstadium:
         macos11.0-arm64-3:
