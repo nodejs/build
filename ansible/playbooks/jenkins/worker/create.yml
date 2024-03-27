@@ -14,6 +14,7 @@
     - package-upgrade
     - baselayout
     - { role: 'benchmarking',
+        tags: 'benchmarking',
         when: is_benchmark is defined and is_benchmark|bool == True }
     - jenkins-worker
     - { role: release-builder,
