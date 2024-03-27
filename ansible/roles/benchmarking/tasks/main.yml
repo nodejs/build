@@ -42,6 +42,11 @@
     keyserver: keyserver.ubuntu.com
     id: E084DAB9
 
+- name: Add Rscript key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 51716619E084DAB9
+
 - name: Update keys
   shell: "apt-key update"
 

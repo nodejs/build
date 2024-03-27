@@ -73,9 +73,10 @@
 #
 
 - hosts:
-    - test-*intel-ubuntu*-x*
+    - test-*hetzner-ubuntu*-x*
   roles:
-    - linux-perf
+    - name: linux-perf
+      tags: linux-perf
 
 #
 # Ensure node is not installed anywhere but the linter servers
