@@ -1,0 +1,16 @@
+---
+
+#
+# install tap2junit from pip
+#
+
+- name: install pip
+  ansible.builtin.dnf: 
+    name: python3-pip
+    state: present
+
+- name: install tap2junit
+  ansible.builtin.pip:
+    executable: /usr/bin/pip3
+    name: tap2junit=={{ tap2junit_version }}
+    state: present

@@ -107,6 +107,10 @@ packages: {
     'ccache,cmake,gcc-c++,gcc-toolset-10,gcc-toolset-10-libatomic-devel,gcc-toolset-11,gcc-toolset-12,gcc-toolset-13,git,make,python3',
   ],
 
+  rhel9: [
+    'ccache,cmake,gcc-c++,gcc-toolset-12,gcc-toolset-12-libatomic-devel,gcc-toolset-13,gcc-toolset-13-libatomic-devel,git,make,python3',
+  ],
+
   smartos: [
     'gccmakedep',
     'git',
