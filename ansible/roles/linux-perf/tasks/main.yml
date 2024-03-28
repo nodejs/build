@@ -18,9 +18,15 @@
         state: absent
         path: "{{ tmp_folder }}"
 
+    - name: Get current kernel version
+      ansible.builtin.shell: uname -r | awk -F. '{print $1"."$2}'
+      register: kernel_version
+      changed_when: false
+
     - name: Download Linux source code
       git:
         repo: https://github.com/torvalds/linux.git
+        version: "v{{ kernel_version.stdout }}"
         depth: 1
         dest: "{{ tmp_folder }}/linux"
 
