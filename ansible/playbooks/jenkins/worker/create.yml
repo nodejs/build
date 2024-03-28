@@ -16,6 +16,12 @@
     - { role: 'benchmarking',
         tags: 'benchmarking',
         when: is_benchmark is defined and is_benchmark|bool == True }
+#
+# Install Linux perf on Ubuntu Intel servers
+#
+    - { role: 'linux-perf',
+        tags: 'linux-perf',
+        when: is_benchmark is defined and is_benchmark|bool == True }
     - jenkins-worker
     - { role: release-builder,
         release_home_dir: "{{ home }}/{{ server_user }}",
@@ -67,16 +73,6 @@
 
   roles:
     - jenkins-workspace
-
-#
-# Install Linux perf on Ubuntu Intel servers
-#
-
-- hosts:
-    - test-*hetzner-ubuntu*-x*
-  roles:
-    - name: linux-perf
-      tags: linux-perf
 
 #
 # Ensure node is not installed anywhere but the linter servers
