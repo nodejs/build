@@ -1,0 +1,21 @@
+---
+
+# Red Hat Enterprise Linux 9
+
+# Set the hostname as it will be used by subscription manager.
+- name: gather facts
+  setup:
+
+- name: set hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname | regex_replace('_', '--') }}"
+
+- name: register Red Hat subscription
+  community.general.redhat_subscription:
+    activationkey: "{{ secrets.rh_activationkey }}"
+    org_id: "{{ secrets.rh_org }}"
+    state: present
+
+- name: set up swap on Linux
+  include_tasks: linux-swap.yml
+  when: swap_file_size_mb is defined
