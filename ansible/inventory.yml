@@ -35,7 +35,6 @@ hosts:
   - release:
 
     - digitalocean:
-        centos7-x64-1: {ip: 138.68.12.105}
         rhel8-x64-1: {ip: 159.203.115.217}
 
     - ibm:

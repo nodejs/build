@@ -187,16 +187,6 @@ elif [ "$SELECT_ARCH" = "X64" ]; then
       . /opt/rh/devtoolset-6/enable
       echo "Compiler set to devtoolset-6"
       ;;
-    centos7-release-sources )
-      if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
-        . /opt/rh/devtoolset-8/enable
-      else
-        . /opt/rh/devtoolset-6/enable
-      fi
-      export CC="ccache gcc"
-      export CXX="ccache g++"
-      echo "Compiler set to GCC" `$CXX -dumpversion`
-      ;;
     *ubuntu1804*64|*ubuntu1604-*64|benchmark )
       if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
         export CC="ccache gcc-8"
