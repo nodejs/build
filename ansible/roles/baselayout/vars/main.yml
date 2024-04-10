@@ -16,7 +16,7 @@ sshd_service_map: {
 sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripversion])|default('sshd') }}"
 
 ntp_service: {
-  chrony: ['rhel8', 'debian11'],
+  chrony: ['rhel8', 'rhel9', 'debian11'],
   systemd: ['debian8', 'debian10', 'debian12', 'ubuntu']
 }
 
