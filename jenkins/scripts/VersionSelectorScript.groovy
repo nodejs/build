@@ -20,40 +20,38 @@ def buildExclusions = [
   // Machine Label,                   Build Type,  Node Version
 
   // Linux -------------------------------------------------
-  [ /^centos7-(arm)?64-gcc48/,        anyType,     gte(16) ],
-  [ /^centos7-(arm)?64-gcc6/,         anyType,     gte(16) ],    // 14.x: gcc6 builds stop
+  [ /^centos7-(arm)?64-gcc48/,        anyType,     gte(18) ],
+  [ /^centos7-(arm)?64-gcc6/,         anyType,     gte(18) ],    // 14.x: gcc6 builds stop
   [ /^centos7-(arm)?64-gcc8/,         anyType,     gte(18) ], // 18.x: centos7 builds stop
   [ /^centos7-64/,                    anyType,     gte(18) ],
   [ /debian10/,                       anyType,     gte(21) ],
   [ /rhel7/,                          anyType,     gte(18) ],
-  [ /rhel8/,                          releaseType, lt(18)  ],
-  [ /^ubuntu1604-32/,                 anyType,     gte(16) ], // 32-bit linux for <10 only
-  [ /^ubuntu1604-64/,                 anyType,     gte(16) ],
+  [ /^ubuntu1604-32/,                 anyType,     gte(18) ], // 32-bit linux for <10 only
+  [ /^ubuntu1604-64/,                 anyType,     gte(18) ],
 
   // Linux PPC LE ------------------------------------------
   [ /^centos7-ppcle/,                 anyType,     gte(18) ],
 
   // ARM  --------------------------------------------------
   [ /^ubuntu1804-arm64/,                             anyType, gte(21) ],
-  [ /^cross-compiler-ubuntu1604-armv[67]-gcc-4.9/,   anyType, gte(16) ],
-  [ /^cross-compiler-ubuntu1604-armv[67]-gcc-6/,     anyType, gte(16) ],
-  [ /^cross-compiler-ubuntu1804-armv7-gcc-6/,        anyType, gte(16) ],
+  [ /^cross-compiler-ubuntu1604-armv[67]-gcc-4.9/,   anyType, gte(18) ],
+  [ /^cross-compiler-ubuntu1604-armv[67]-gcc-6/,     anyType, gte(18) ],
+  [ /^cross-compiler-ubuntu1804-armv7-gcc-6/,        anyType, gte(18) ],
   [ /^cross-compiler-ubuntu1804-armv7-gcc-8/,        anyType, gte(18) ],
-  [ /^cross-compiler-rhel8-armv7-gcc-8-glibc-2.28/,  anyType, lt(18)  ],
   [ /^cross-compiler-rhel8-armv7-gcc-8-glibc-2.28/,  anyType, gte(20) ],
   [ /^cross-compiler-rhel8-armv7-gcc-10-glibc-2.28/, anyType, lt(20)  ],
 
   // Windows -----------------------------------------------
   // https://github.com/nodejs/build/blob/main/doc/windows-visualstudio-supported-versions.md
   // Release Builders - should only match one VS version per Node.js version
-  [ /vs2015/,                         releaseType, gte(16)       ],
-  [ /vs2017/,                         releaseType, gte(16)       ],
+  [ /vs2015/,                         releaseType, gte(18)       ],
+  [ /vs2017/,                         releaseType, gte(18)       ],
   [ /vs2019-arm64/,                   releaseType, lt(20)        ],
   [ /vs2019/,                         releaseType, gte(21)       ],
   [ /vs2022/,                         releaseType, lt(21)        ],
   // VS versions supported to compile Node.js - also matches labels used by test runners
-  [ /vs2015(-\w+)?$/,                 testType,    gte(16)       ],
-  [ /vs2017(-\w+)?$/,                 testType,    gte(16)       ],
+  [ /vs2015(-\w+)?$/,                 testType,    gte(18)       ],
+  [ /vs2017(-\w+)?$/,                 testType,    gte(18)       ],
   [ /vs2019(-\w+)?$/,                 testType,    gte(21)       ],
   [ /vs2022(-\w+)?$/,                 testType,    lt(20)        ], // Temporarily compile Node v20+ on both VS2019 and VS2022
   [ /vs2022-x86$/,                    testType,    lt(20)        ], // Temporarily compile Node v20+ arm64 and x86 on both VS2019 and VS2022
@@ -64,16 +62,16 @@ def buildExclusions = [
   [ /vs2017-COMPILED_BY/,             testType,    gte(22)       ],
 
   // SmartOS -----------------------------------------------
-  [ /^smartos18/,                     anyType,     gte(16) ],
+  [ /^smartos18/,                     anyType,     gte(18) ],
 
   // FreeBSD -----------------------------------------------
   [ /^freebsd12/,                     anyType,     gte(22) ],
 
   // Shared libs docker containers -------------------------
   [ /sharedlibs_debug_x64/,           anyType,     gte(18) ],
-  [ /sharedlibs_openssl110/,          anyType,     gte(16) ],
-  [ /sharedlibs_openssl102/,          anyType,     gte(16) ],
-  [ /sharedlibs_fips20/,              anyType,     gte(16) ],
+  [ /sharedlibs_openssl110/,          anyType,     gte(18) ],
+  [ /sharedlibs_openssl102/,          anyType,     gte(18) ],
+  [ /sharedlibs_fips20/,              anyType,     gte(18) ],
 
   // OSX ---------------------------------------------------
   [ /osx1015/,                        anyType,     gte(21) ],
