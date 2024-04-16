@@ -37,7 +37,6 @@ if (process.argv.length > 2) {
 const providerMap = new Map([
   ['digitalocean', 'do'],
   ['iinthecloud', 'iitc'],
-  ['nearform', 'nf'],
   ['rackspace', 'rs'],
   ['softlayer', 'ibm']
 ]);
