@@ -45,8 +45,8 @@ brew cask cleanup &>/dev/null
 rm -rfv /Library/Caches/Homebrew/* &>/dev/null
 brew tap --repair &>/dev/null
 
-echo 'Cleanup MacOS Application caches'
-rm -rfv /System/Library/Caches/*
+echo 'Cleanup symbolication cache'
+symbolscache delete --quiet
 
 echo 'Cleanup any old versions of gems…'
 gem cleanup &>/dev/null
