@@ -8,7 +8,7 @@
 # Newer V8 builds require Python 3.8, or later.
 - name: install packages required to build V8
   ansible.builtin.dnf:
-    name: ['GConf2-devel', 'python2', 'python2-pip', 'python39']
+    name: ['GConf2-devel', 'python2', 'python2-pip', 'python39', 'patch']
     state: present
   notify: package updated
 
@@ -35,3 +35,11 @@
     executable: pip-3
     name: ['httplib2', 'six']
     state: present
+
+- name: temporary patch for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=113960
+  ansible.posix.patch:
+    basedir: /opt/rh/gcc-toolset-12/root/
+    ignore_whitespace: true
+    src: gcc-bug-113960.patch
+    strip: 1
+  become: true
