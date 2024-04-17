@@ -94,15 +94,21 @@ echo "GIT_URL set to %GIT_URL%."
 :: 6.Send results to BuildPulse
 echo "Sending data to BuildPulse."
 
+:: Set TREE_SHA from the current repo to process rebased branches
+:: GIT_COMMIT is different from TREE_SHA for rebased branches
+for /f %%i in ('git rev-parse HEAD') do set TREE_SHA=%%i
+echo "TREE_SHA set to %TREE_SHA%."
+
 :: Add available tags for easier navigation in BuildPulse
 set "TAGS=%NODE_NAME% %nodes% v%NODEJS_MAJOR_VERSION%"
 if defined NODEJS_VERSION (
   set "TAGS=%TAGS% v%NODEJS_VERSION%"
 )
+echo "TAGS set to %TAGS%."
 
 :: Edit BUILD_URL to enable better grouping in BuildPulse
 set "BUILD_URL_BACKUP=%BUILD_URL%"
 for /f "usebackq delims=" %%i in (`powershell -File "%~dp0modify-build-url.ps1" -BUILD_URL "%BUILD_URL%"`) do set "BUILD_URL=%%i"
-%TEST_REPORTER_PATH% submit %1 --account-id %BUILDPULSE_ACCOUNT_ID% --repository-id %BUILDPULSE_REPOSITORY_ID% --tags "%TAGS%"
+%TEST_REPORTER_PATH% submit %1 --account-id %BUILDPULSE_ACCOUNT_ID% --repository-id %BUILDPULSE_REPOSITORY_ID% --tree %TREE_SHA% --tags "%TAGS%"
 set "BUILD_URL=%BUILD_URL_BACKUP%"
 exit /b 0
