@@ -68,14 +68,6 @@ hosts:
     - marist:
         zos24-s390x-1: {ip: 148.100.36.157, user: unix1}
 
-    - nearform:
-        macos11.0-arm64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 83.147.191.76
-            user: admin
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
-
     - osuosl:
         aix72-ppc64_be-1:
             ip: 140.211.9.77
@@ -234,34 +226,6 @@ hosts:
                 PATH: /rsusr/rocket/python-2017-04-12-py27/python27/bin:/bin:/rsusr/rocket/bin
                 SSL_CERT_FILE: "{{ home }}/{{ server_user }}/ca-bundle.crt"
             server_jobs: 4
-
-    - nearform:
-        arm-win10_vs2019-arm64-1: {ip: 83.147.191.73}
-        arm-win10_vs2019-arm64-2: {ip: 83.147.191.74}
-        macos10.15-x64-1: 
-            ip: 83.147.191.70
-            user: administrator
-            ansible_python_interpreter: /usr/bin/python3
-        macos10.15-x64-2:
-            ip: 83.147.191.71
-            user: administrator
-            ansible_python_interpreter: /usr/bin/python3
-        macos10.15-x64-3: 
-            ip: 83.147.191.72
-            user: administrator
-            ansible_python_interpreter: /usr/bin/python3
-        macos11.0-arm64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 83.147.191.75
-            user: admin
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
-        intel-ubuntu2204-x64-1:
-            ip: 92.51.196.114
-            build_test_v8: yes
-        intel-ubuntu2204-x64-2:
-            ip: 92.51.196.115
-            build_test_v8: yes
 
     - osuosl:
         # secret for -1 was compromised, do not use -1 name
