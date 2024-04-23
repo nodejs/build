@@ -29,7 +29,6 @@ to the resources we manage.
 <!-- ncu-team-sync.team(nodejs/build) -->
 
 * [@abmusse](https://github.com/abmusse) - Abdirahim Musse
-* [@anonrig](https://github.com/anonrig) - Yagiz Nizipli
 * [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 * [@joaocgreis](https://github.com/joaocgreis) - João Reis
 * [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
