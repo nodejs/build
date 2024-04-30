@@ -1,0 +1,9 @@
+---
+
+#
+# debian 12
+#
+
+- name: set up swap on Linux
+  include_tasks: linux-swap.yml
+  when: swap_file_size_mb is defined
