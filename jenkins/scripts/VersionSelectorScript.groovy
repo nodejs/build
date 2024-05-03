@@ -33,7 +33,7 @@ def buildExclusions = [
   [ /^centos7-ppcle/,                 anyType,     gte(18) ],
 
   // ARM  --------------------------------------------------
-  [ /^ubuntu1804-arm64/,                             anyType, gte(21) ],
+  [ /^ubuntu1804-arm64/,                             anyType, gte(20) ], // 20.x: gcc8 builds stop
   [ /^cross-compiler-ubuntu1604-armv[67]-gcc-4.9/,   anyType, gte(18) ],
   [ /^cross-compiler-ubuntu1604-armv[67]-gcc-6/,     anyType, gte(18) ],
   [ /^cross-compiler-ubuntu1804-armv7-gcc-6/,        anyType, gte(18) ],
