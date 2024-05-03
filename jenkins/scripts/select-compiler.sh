@@ -211,6 +211,14 @@ elif [ "$SELECT_ARCH" = "X64" ]; then
       fi
       echo "Compiler set to GCC" `$CXX -dumpversion`
       ;;
+    debian12-x64 )
+      if [ "$NODEJS_MAJOR_VERSION" -gt "22" ]; then
+        export CC="ccache gcc-11"
+        export CXX="ccache g++-11"
+        export LINK="g++-11"
+      fi
+      echo "Compiler set to GCC" `$CXX -dumpversion`
+      ;;
   esac
 
 elif [ "$SELECT_ARCH" = "ARM64" ]; then
