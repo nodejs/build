@@ -25,6 +25,7 @@ def buildExclusions = [
   [ /^centos7-(arm)?64-gcc8/,         anyType,     gte(18) ], // 18.x: centos7 builds stop
   [ /^centos7-64/,                    anyType,     gte(18) ],
   [ /debian10/,                       anyType,     gte(21) ],
+  [ /alpine-last-latest/,             anyType,     gte(23) ], // Alpine 3.18. Bug in GCC 12.2.
   [ /rhel7/,                          anyType,     gte(18) ],
   [ /^ubuntu1604-32/,                 anyType,     gte(18) ], // 32-bit linux for <10 only
   [ /^ubuntu1604-64/,                 anyType,     gte(18) ],
