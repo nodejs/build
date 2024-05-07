@@ -90,10 +90,14 @@ Access to [release secrets][].
 - [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
 - [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+- [@MoLow](https://github.com/MoLow) - Moshe Atlow
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
+- [@ryanaslett](https://github.com/ryanaslett) - Ryan Aslett
 - [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 - [@sxa](https://github.com/sxa) - Stewart X Addison
+- [@targos](https://github.com/targos) - Michaël Zasso
+- [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
 
 Above list is manually synced with the [gpg member list](https://github.com/nodejs-private/secrets/tree/master/build/release/.gpg).
 
