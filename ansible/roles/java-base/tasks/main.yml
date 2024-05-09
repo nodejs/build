@@ -57,6 +57,7 @@
   check_mode: no
   register: adoptopenjdk_metadata
   uri:
+    body: ""
     body_format: json
     return_content: yes
     status_code: 200
