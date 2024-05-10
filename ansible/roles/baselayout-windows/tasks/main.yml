@@ -56,8 +56,18 @@
     when: gyp_stat.stat.exists
 
 # Necessary for compressing the Node package
+# Pinned to v22.01 because later (v23.01) has issues when extracting ARM64 node.exe
 - name: install 7Zip
-  win_chocolatey: name=7zip
+  win_chocolatey:
+    name: 7zip
+    pinned: yes
+    version: "22.1.0"
+
+- name: install 7Zip
+  win_chocolatey:
+    name: 7zip.install
+    pinned: yes
+    version: "22.1.0"
 
 # Utilities
 - block:
