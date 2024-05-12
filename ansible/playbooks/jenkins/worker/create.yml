@@ -69,7 +69,7 @@
 - hosts:
     - test-equinix-ubuntu2204-x64-1
     - test-equinix-ubuntu2204-x64-2
-    - test-ibm-ubuntu1804-x64-1
+    - test-ibm-ubuntu2204-x64-3
 
   roles:
     - jenkins-workspace
@@ -83,7 +83,7 @@
   - release
   - "!test-equinix-ubuntu2204-x64-1"
   - "!test-equinix-ubuntu2204-x64-2"
-  - "!test-ibm-ubuntu1804-x64-1"
+  - "!test-ibm-ubuntu2204-x64-3"
   tasks:
     - name: remove node and npm packages
       when:
