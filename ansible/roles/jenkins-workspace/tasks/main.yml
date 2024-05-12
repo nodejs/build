@@ -128,19 +128,14 @@
   check_mode: no
   register: release_codename
 
-- name: Add nodesource repo
+- name: Add nodesource 20 repo
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_20.x {{ release_codename.stdout }} main
+    state: present
+ 
+- name: Remove nodesource 16 repo
   apt_repository:
     repo: deb https://deb.nodesource.com/node_16.x {{ release_codename.stdout }} main
-    state: present
-  
-- name: Remove nodesource 14 repos
-  apt_repository:
-    repo: deb https://deb.nodesource.com/node_14.x {{ release_codename.stdout }} main
-    state: absent
-
-- name: Remove nodesource 12 repos
-  apt_repository:
-    repo: deb https://deb.nodesource.com/node_12.x {{ release_codename.stdout }} main
     state: absent
 
 - name: Install node
