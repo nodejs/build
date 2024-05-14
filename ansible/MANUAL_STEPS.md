@@ -658,15 +658,16 @@ Test the connection to the target machine with `ansible HOST -m win_ping -vvvv`.
 
 ## jenkins-workspace
 
-The hosts labelled jenkins-workspace are used to "execute" the coordination of Jenkins jobs. Jenkins uses them to do the initial Git work to figure out what needs to be done before farming off to the actual test machines. These machines are lower powered but have large disks so they can waste space with the numerous Git repositories Jenkins will create in this process. The use of these hosts takes a load off the Jenkins master and prevents the Jenkins master from filling up its disk with Git repositories.
+The hosts labelled [jenkins-workspace] are used to "execute" the coordination of Jenkins jobs. Jenkins uses them to do the initial Git work to figure out what needs to be done before farming off to the actual test machines. These machines are lower powered but have large disks so they can waste space with the numerous Git repositories Jenkins will create in this process. The use of these hosts takes a load off the Jenkins master and prevents the Jenkins master from filling up its disk with Git repositories.
 
-Note that not all jobs can use jenkins-workspace servers for execution, some are tied to other hosts.
+Note that not all jobs can use [jenkins-workspace] servers for execution, some are tied to other hosts.
 
-The jenkins-workspace hosts are setup as standard Node.js nodes but are only given the `jenkins-workspace` label. After setup, they require the following manual steps:
+The [jenkins-workspace] hosts are setup as standard Node.js nodes but are only given the [jenkins-workspace] label.
 
-* Download the Coverity Build Tool for Linux x64 at <https://scan.coverity.com/download> (requires a Coverity login)
-* Extract to `/var`, e.g. so the resulting directory looks like `/var/cov-analysis-linux64-2017.07/` or similar
-* Ensure that the [node-coverity-daily](https://ci.nodejs.org/job/node-daily-coverity/configure) job matches the path used in its explicit `PATH` setting
+The playbook should download and install the Coverity build tool needed for static analysis into `/var/`. The extracted build tool should end up in a directory similar to `/var/cov-analysis-linux64-2023.6.2`. This directory must match the `PATH` setting in the [node-daily-coverity][] job. According to Synopsis the tool is usually updated twice yearly -- if it is updated the directory will change and the following steps should be done:
+
+* Run the playbook on all [jenkins-workspace][] machines so that they have the same version of the Coverity build tool installed.
+* Update the [node-daily-coverity][] job so that the set `PATH` contains the new directory name.
 
 ## Docker hosts
 
@@ -777,5 +778,7 @@ pax -rf /u/unix1/SDK8_64bit_SR6_FP10.PAX.Z -ppx
 
 
 [Setting up a Windows Host]: https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html
+[jenkins-workspace]: https://ci.nodejs.org/label/jenkins-workspace/
 [newer Ansible configuration]: https://github.com/nodejs/build/tree/main/ansible
+[node-daily-coverity]: https://ci.nodejs.org/job/node-daily-coverity/configure
 [stand-alone]: https://github.com/nodejs/build/tree/main/setup/windows
