@@ -6,6 +6,7 @@
 #
 
 - name: Run which git-shell
+  changed_when: false
   command: "which git-shell"
   register: which_git_shell
 
@@ -63,6 +64,7 @@
     state: link
     owner: "binary_tmp"
     group: "binary_tmp"
+    follow: false
     mode: 0755
 
 - name: Initialize Git repository
