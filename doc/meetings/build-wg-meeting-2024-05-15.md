@@ -19,7 +19,7 @@
 
 Github bot is currently not working. There is an issue with the dependencies. It will require some manual work as not everything can be done via Ansible. Note that this is a legacy service (Node@14). https://github.com/nodejs/build/issues/3720
 Code static analysis is broken and we have an alternative in place
-We need to update the python version in the release machine due the new version of v8
+We needed to update the Python version on the release machines due the new version of gyp-next.
 
 
 
