@@ -56,6 +56,7 @@ Above list is manually synced with the [gpg member list](https://github.com/node
 * [@MoLow](https://github.com/MoLow) - Moshe Atlow
 * [@richardlau](https://github.com/richardlau) - Richard Lau
 * [@rvagg](https://github.com/rvagg) - Rod Vagg
+* [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 * [@sxa](https://github.com/sxa) - Stewart X Addison
 * [@targos](https://github.com/targos) - Michaël Zasso
 * [@UlisesGascon](https://github.com/UlisesGascon) - Ulises Gascón
