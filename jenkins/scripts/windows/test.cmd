@@ -6,7 +6,8 @@ md5sum binary/binary.tar.gz
 tar xzvf binary/binary.tar.gz
 if errorlevel 1 exit /b
 if exist out\Release\node.exe ln -s out/Release Release
-md5sum config.gypi icu_config.gypi Release/node.exe Release/node.lib Release/openssl-cli.exe Release/cctest.exe Release/embedtest.exe Release/node.pdb
+md5sum config.gypi icu_config.gypi Release/node.exe Release/node.lib Release/openssl-cli.exe Release/cctest.exe
+if exist Release\embedtest.exe md5sum Release/embedtest.exe
 
 :: Run the tests
 call :diagnostics Before
