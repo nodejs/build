@@ -1,6 +1,7 @@
 :: Processes that can and have interfered with CI in the past
 taskkill /t /f /fi "IMAGENAME eq node.exe"
 taskkill /t /f /fi "IMAGENAME eq cctest.exe"
+taskkill /t /f /fi "IMAGENAME eq embedtest.exe"
 taskkill /t /f /fi "IMAGENAME eq run-tests.exe"
 taskkill /t /f /fi "IMAGENAME eq msbuild.exe"
 taskkill /t /f /fi "IMAGENAME eq mspdbsrv.exe"

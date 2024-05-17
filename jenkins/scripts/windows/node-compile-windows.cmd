@@ -15,7 +15,7 @@ call %~dp0compile.cmd
 if errorlevel 1 exit /b
 
 :: Select files to pack
-set "BINARY_FILES=config.gypi icu_config.gypi Release/node.exe Release/node.lib Release/openssl-cli.exe Release/cctest.exe Release/node.pdb"
+set "BINARY_FILES=config.gypi icu_config.gypi Release/node.exe Release/node.lib Release/openssl-cli.exe Release/cctest.exe Release/embedtest.exe Release/node.pdb"
 if exist Release\node_test_engine.dll set "BINARY_FILES=%BINARY_FILES% Release/node_test_engine.dll"
 if exist Release\overlapped-checker.exe set "BINARY_FILES=%BINARY_FILES% Release/overlapped-checker.exe"
 
