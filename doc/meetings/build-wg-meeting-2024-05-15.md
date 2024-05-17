@@ -21,8 +21,6 @@ Github bot is currently not working. There is an issue with the dependencies. It
 Code static analysis is broken and we have an alternative in place
 We needed to update the Python version on the release machines due the new version of gyp-next.
 
-
-
 *Extracted from **build-agenda** labeled issues and pull requests from the **nodejs org** prior to the meeting.
 
 ### nodejs/build
