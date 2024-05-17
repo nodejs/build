@@ -30,7 +30,8 @@ We needed to update the Python version on the release machines due the new versi
 * Infrastructure for Orka (2024 and beyond) [#3686](https://github.com/nodejs/build/issues/3686)
   * Path has been defined in the issue
   * Onboarding with Ryan complete, he will take ownership of adding MacOS 13 nodes
-  * Right now our physical arm machines are down and we don’t have any arm testing
+ * Right now our physical arm machines are down. The only arm testing on OSX is in
+ GitHub actions
 * Extend Azure credits (Action prior May 10th) 
 [#3672](https://github.com/nodejs/build/issues/3672)
   * assume this has been handled and machines are still running.
