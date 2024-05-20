@@ -39,8 +39,6 @@
     user: "binary_tmp"
     key: "{{ lookup('file', '/tmp/nodejs-ci.keys') }}"
 
-# Repository needs to be created in /home/iojs/build because the partition with
-# free space might be mounted in a way that does not include /home/binary_tmp
 - name: Create repository parent directory
   file:
     path: "{{ home }}/{{ server_user }}/build/"
@@ -51,20 +49,10 @@
 
 - name: Create repository directory
   file:
-    path: "{{ home }}/{{ server_user }}/build/binary_tmp.git"
+    path: "~binary_tmp/binary_tmp.git"
     state: directory
     owner: "binary_tmp"
     group: "binary_tmp"
-    mode: 0755
-
-- name: Link to repository directory from bintmp home
-  file:
-    src: "{{ home }}/{{ server_user }}/build/binary_tmp.git"
-    dest: "~binary_tmp/binary_tmp.git"
-    state: link
-    owner: "binary_tmp"
-    group: "binary_tmp"
-    follow: false
     mode: 0755
 
 - name: Initialize Git repository
@@ -115,9 +103,11 @@
 - name: Disable automatic garbage collection
   become: true
   become_user: binary_tmp
-  command: "git config gc.auto 0"
-  args:
-    chdir: "~binary_tmp/binary_tmp.git/"
+  community.general.git_config:
+    name: gc.auto
+    file: "~binary_tmp/binary_tmp.git/config"
+    scope: file
+    value: 0
 
 - name: Add nodesource signing key
   apt_key:
