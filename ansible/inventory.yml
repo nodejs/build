@@ -226,6 +226,11 @@ hosts:
                 PATH: /rsusr/rocket/python-2017-04-12-py27/python27/bin:/bin:/rsusr/rocket/bin
                 SSL_CERT_FILE: "{{ home }}/{{ server_user }}/ca-bundle.crt"
             server_jobs: 4
+    - mnx:
+        smartos21-x64-1: {ip: 8.225.232.135}
+        smartos21-x64-2: {ip: 8.225.232.137}
+        smartos23-x64-1: {ip: 8.225.232.134}
+        smartos23-x64-2: {ip: 8.225.232.141}
 
     - osuosl:
         # secret for -1 was compromised, do not use -1 name
