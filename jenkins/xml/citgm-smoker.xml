@@ -362,6 +362,7 @@ $CITGM_COMMAND --nodedir=$npm_config_nodedir -v $CITGM_LOGLEVEL -x $PWD/report.x
         <hudson.tasks.BatchFile>
           <command>TASKKILL /F /IM node.exe /T || TRUE&#xd;
 TASKKILL /F /IM cctest.exe /T || TRUE&#xd;
+TASKKILL /F /IM embedtest.exe /T || TRUE&#xd;
 TASKKILL /F /IM run-tests.exe /T || TRUE&#xd;
 &#xd;
 :: smoker dir is only for the report, Release is used to run because there&apos;s no make install&#xd;
@@ -432,6 +433,7 @@ echo on&#xd;
 &#xd;
 TASKKILL /F /IM node.exe /T || TRUE&#xd;
 TASKKILL /F /IM cctest.exe /T || TRUE&#xd;
+TASKKILL /F /IM embedtest.exe /T || TRUE&#xd;
 TASKKILL /F /IM run-tests.exe /T || TRUE&#xd;
 </command>
         </hudson.tasks.BatchFile>

@@ -12,3 +12,15 @@
   ansible.builtin.dnf:
     name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
     state: present
+
+- name: install Python 3.9
+  ansible.builtin.dnf:
+    name: ['python39']
+    state: present
+  notify: package updated
+
+- name: update python3 package alternatives
+  community.general.alternatives:
+    link: /usr/bin/python3
+    name: python3
+    path: /usr/bin/python3.9

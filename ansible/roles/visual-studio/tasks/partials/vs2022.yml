@@ -9,10 +9,11 @@
   win_chocolatey: name=visualstudio2022community
 
 # Note: The .NET SDK was added as a prerequisite for WiX4 - https://github.com/nodejs/node/pull/45943
+# Note: Clang components were aded as a prerequisite for v23 - https://github.com/nodejs/node/pull/52870
 - name: install Visual Studio Community 2022 Native Desktop Workload
   win_chocolatey:
       name: visualstudio2022-workload-nativedesktop
-      params: '--add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64 --add Microsoft.NetCore.Component.SDK'
+      params: '--add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64 --add Microsoft.NetCore.Component.SDK --add Microsoft.VisualStudio.Component.VC.Llvm.Clang'
 
 - name: install WiX Toolset
   import_tasks: 'wixtoolset.yml'

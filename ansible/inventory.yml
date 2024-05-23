@@ -165,9 +165,9 @@ hosts:
         rhel8-x64-2: {ip: 169.61.75.58, build_test_v8: yes}
         rhel8-x64-3: {ip: 52.117.26.13, build_test_v8: yes}
         rhel9-x64-1: {ip: 169.60.150.92, swap_file_size_mb: 2048}
-        ubuntu1804-x64-1: {ip: 52.117.26.14, alias: jenkins-workspace-6}
         ubuntu2204-x64-1: {ip: 169.60.150.82}
         ubuntu2204-x64-2: {ip: 169.44.168.2}
+        ubuntu2204-x64-3: {ip: 52.117.26.14, alias: jenkins-workspace-6}
         ubuntu2204_docker-x64-1: {ip: 52.117.26.9}
 
     - equinix_mnx:

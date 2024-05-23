@@ -6,6 +6,7 @@
 #
 
 - name: Run which git-shell
+  changed_when: false
   command: "which git-shell"
   register: which_git_shell
 
@@ -38,8 +39,6 @@
     user: "binary_tmp"
     key: "{{ lookup('file', '/tmp/nodejs-ci.keys') }}"
 
-# Repository needs to be created in /home/iojs/build because the partition with
-# free space might be mounted in a way that does not include /home/binary_tmp
 - name: Create repository parent directory
   file:
     path: "{{ home }}/{{ server_user }}/build/"
@@ -50,17 +49,8 @@
 
 - name: Create repository directory
   file:
-    path: "{{ home }}/{{ server_user }}/build/binary_tmp.git"
+    path: "~binary_tmp/binary_tmp.git"
     state: directory
-    owner: "binary_tmp"
-    group: "binary_tmp"
-    mode: 0755
-
-- name: Link to repository directory from bintmp home
-  file:
-    src: "{{ home }}/{{ server_user }}/build/binary_tmp.git"
-    dest: "~binary_tmp/binary_tmp.git"
-    state: link
     owner: "binary_tmp"
     group: "binary_tmp"
     mode: 0755
@@ -113,9 +103,11 @@
 - name: Disable automatic garbage collection
   become: true
   become_user: binary_tmp
-  command: "git config gc.auto 0"
-  args:
-    chdir: "~binary_tmp/binary_tmp.git/"
+  community.general.git_config:
+    name: gc.auto
+    file: "~binary_tmp/binary_tmp.git/config"
+    scope: file
+    value: 0
 
 - name: Add nodesource signing key
   apt_key:
@@ -128,19 +120,14 @@
   check_mode: no
   register: release_codename
 
-- name: Add nodesource repo
+- name: Add nodesource 20 repo
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_20.x {{ release_codename.stdout }} main
+    state: present
+ 
+- name: Remove nodesource 16 repo
   apt_repository:
     repo: deb https://deb.nodesource.com/node_16.x {{ release_codename.stdout }} main
-    state: present
-  
-- name: Remove nodesource 14 repos
-  apt_repository:
-    repo: deb https://deb.nodesource.com/node_14.x {{ release_codename.stdout }} main
-    state: absent
-
-- name: Remove nodesource 12 repos
-  apt_repository:
-    repo: deb https://deb.nodesource.com/node_12.x {{ release_codename.stdout }} main
     state: absent
 
 - name: Install node
@@ -161,3 +148,41 @@
     name: jq
     state: latest
     update_cache: yes
+
+# Coverity build tool. See MANUAL_STEPS.md.
+- name: Get md5sum for Coverity build tool
+  ansible.builtin.uri:
+    body:
+      md5: 1
+      token: "{{ secrets.coverity_token }}"
+      project: Node.js
+    body_format: form-urlencoded
+    method: POST
+    url: https://scan.coverity.com/download/linux64
+    return_content: true
+  register: coverity_build_tool_meta
+
+- name: Download Coverity build tool
+  ansible.builtin.uri:
+    body:
+      token: "{{ secrets.coverity_token }}"
+      project: Node.js
+    body_format: form-urlencoded
+    dest: /tmp/
+    method: POST
+    url: https://scan.coverity.com/download/linux64
+  register: coverity_build_tool
+
+- name: Validate checksum of downloaded Coverity build tool
+  ansible.builtin.stat:
+    checksum_algorithm: md5
+    path: "{{ coverity_build_tool.path }}"
+  failed_when: coverity_build_tool_file.stat.checksum != coverity_build_tool_meta.content
+  register: coverity_build_tool_file
+
+- name: Unpack Coverity build tool
+  ansible.builtin.unarchive:
+    creates: "/var/{{ coverity_build_tool.path|regex_search('/tmp/(.+)\\.tar\\.gz', '\\1')|first }}"
+    dest: /var/
+    remote_src: true
+    src: "{{ coverity_build_tool.path }}"
