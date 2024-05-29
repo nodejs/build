@@ -47,7 +47,7 @@ valid = {
 
     # providers - validated for consistency
     'provider': ('azure', 'digitalocean', 'equinix', 'ibm', 'iinthecloud', 'joyent',
-                 'linuxonecc', 'hetzner', 'macstadium', 'marist', 'mininodes', 'msft',
+                 'linuxonecc', 'hetzner', 'macstadium', 'marist', 'mininodes', 'mnx', 'msft',
                  'orka', 'osuosl', 'rackspace',
                  'rzkh', 'scaleway', 'softlayer', 'voxer')
 }

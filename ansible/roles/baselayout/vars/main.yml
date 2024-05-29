@@ -10,7 +10,8 @@ git_version: 2.10.2
 ssh_config: /etc/ssh/sshd_config
 
 sshd_service_map: {
-  'smartos18': 'ssh',
+  'smartos21': 'ssh',
+  'smartos23': 'ssh',
 }
 
 sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripversion])|default('sshd') }}"
@@ -119,18 +120,17 @@ packages: {
     'sudo',
   ],
 
-  smartos18: [
-    'gcc7',
-    'ccache',
-    'python37',
-    'py37-pip'
-  ],
-
-  smartos20: [
+  smartos21: [
     'gcc10',
     'ccache',
-    'python38',
-    'py38-pip'
+    'py310-pip'
+  ],
+
+  smartos23: [
+    'gcc13',
+    'ccache',
+    'python310',
+    'py310-pip'
   ],
 
   ubuntu: [
