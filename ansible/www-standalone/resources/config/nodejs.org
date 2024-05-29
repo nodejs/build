@@ -251,16 +251,6 @@ server {
         rewrite ^/documentation/api(.*)$ /api$1 redirect;
     }
 
-    # This Location is used for our Metrics Pages
-    # We keep `autoindex` on as some folders are autoindex (do not have an index.html)
-    # even tho the main /metric endpoint is a build page (statically generated over time)
-    # We use ^~ to tell NGINX to not process any other Location directive or Rewrite after this match
-    location ^~ /metrics {
-        alias /home/dist/metrics;
-        autoindex on;
-        default_type text/plain;
-    }
-
     # When a website 404 occurs, attempt to load the English version of the page
     # if the request was for a localised page.
     # Also, store the original language of the request if it was localised
