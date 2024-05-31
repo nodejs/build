@@ -60,6 +60,10 @@ packages: {
     'autoconf,automake,ca-certificates-mozilla,tar-gnu,gzip,ccache,cmake,coreutils-gnu,gcc10,gcc10-cplusplus,gcc10-cpp,git,libstdcplusplus6-10-devel,m4-gnu,openssl-devel,python2-setuptools,python3,python3-pip,python39,python39-pip,python39-setuptools,sed-gnu,zlib-devel,icu-devel,c-ares-devel,brotli-devel,grep-gnu,pkg-config,xz',
   ],
 
+  clfs: [
+    'gcc,g++,binutils,git,curl,autoconf,automake,make,cmake,python3',
+  ],
+
   debian8: [
     'ccache,git,gcc-4.9,g++-4.9,libfontconfig1,binutils-2.26,sudo',
   ],

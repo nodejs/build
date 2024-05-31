@@ -39,16 +39,16 @@ except ImportError:
 
 valid = {
     # taken from nodejs/node.git: ./configure
-    'arch': ('armv6l', 'armv7l', 'arm64', 'ia32', 'mips', 'mipsel', 'ppc',
-             'ppc64', 'x32', 'x64', 'x86', 's390', 's390x'),
+    'arch': ('armv6l', 'armv7l', 'arm64', 'ia32', 'loong64', 'mips', 'mipsel',
+             'ppc', 'ppc64', 'x32', 'x64', 'x86', 's390', 's390x'),
 
     # valid roles - add as necessary
     'type': ('infra', 'release', 'test'),
 
     # providers - validated for consistency
     'provider': ('azure', 'digitalocean', 'equinix', 'ibm', 'iinthecloud', 'joyent',
-                 'linuxonecc', 'hetzner', 'macstadium', 'marist', 'mininodes', 'mnx', 'msft',
-                 'orka', 'osuosl', 'rackspace',
+                 'linuxonecc', 'loongson', 'hetzner', 'macstadium', 'marist', 'mininodes', 'mnx',
+                 'msft', 'orka', 'osuosl', 'rackspace',
                  'rzkh', 'scaleway', 'softlayer', 'voxer')
 }
 DECRYPT_TOOL = "gpg"
