@@ -28,6 +28,9 @@
   shell: "autoreconf -i && automake && autoconf && ./configure --enable-app && make -j4"
   args:
     chdir: "/home/{{ server_user }}/nghttp2"
+  environment:
+    CC: gcc-12
+    CXX: g++-12
 
 - name: Download wrk git repo
   git:

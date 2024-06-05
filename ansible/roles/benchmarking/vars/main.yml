@@ -1,5 +1,6 @@
 ---
 packages:
+  - g++-12
   - libc-ares-dev
   - libcunit1-dev
   - libev-dev
