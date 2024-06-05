@@ -1,0 +1,109 @@
+From 527b29cb7393d52ad11c09e070a0aaa24baf0bf4 Mon Sep 17 00:00:00 2001
+From: tnn <tnn@pkgsrc.org>
+Date: Wed, 17 Aug 2022 21:15:27 +0000
+Subject: [PATCH] nodejs: clean up SunOS madvise(2) legacy mess
+
+---
+ lang/nodejs/distinfo                          |  4 +-
+ ...eps_v8_src_base_platform_platform-posix.cc | 43 ++++++++++++++++---
+ 2 files changed, 39 insertions(+), 8 deletions(-)
+
+diff --git a/lang/nodejs/distinfo b/lang/nodejs/distinfo
+index 96eff2ea5668..63c7544eb590 100644
+--- a/lang/nodejs/distinfo
++++ b/lang/nodejs/distinfo
+@@ -1,4 +1,4 @@
+-$NetBSD: distinfo,v 1.219 2022/07/27 08:42:23 adam Exp $
++$NetBSD: distinfo,v 1.220 2022/08/17 21:15:27 tnn Exp $
+
+ BLAKE2s (node-v18.7.0.tar.xz) = e7b09e919f7f1d222e6f92f9df48d31381799c40c70bb81de21fe7c83f57c556
+ SHA512 (node-v18.7.0.tar.xz) = 3da56b25f304b4e205c27a59f2e442e7216e494465e4cce9f51ffd3f7c7da3ab3519c4b7d1eb41a754b86ecfa1d138d270578aa3908b4fd42cc5dbfd389a6798
+@@ -9,7 +9,7 @@ SHA1 (patch-deps_uv_common.gypi) = d38a9c8d9e3522f15812aec2f5b1e1e636d4bab3
+ SHA1 (patch-deps_uvwasi_include_wasi__serdes.h) = 32b85ef5824b96b35aba9280bbe7aa7899d9e5cf
+ SHA1 (patch-deps_v8_src_base_platform_platform-freebsd.cc) = b47025f33d2991275bbcd15dbabb28900afab0e1
+ SHA1 (patch-deps_v8_src_base_platform_platform-openbsd.cc) = 5e593879dbab095f99e82593272a0de91043f9a8
+-SHA1 (patch-deps_v8_src_base_platform_platform-posix.cc) = 099d538e33611c7094d89669287de7b2a17c4b6e
++SHA1 (patch-deps_v8_src_base_platform_platform-posix.cc) = 0fdbc003d63429e9e097531d7848d16011f273a8
+ SHA1 (patch-deps_v8_src_base_platform_semaphore.cc) = 802a95f1b1d131e0d85c1f99c659cc68b31ba2f6
+ SHA1 (patch-deps_v8_src_base_strings.h) = 4d2b37491f2f74f1a573f8c1942790204e23a8bb
+ SHA1 (patch-deps_v8_src_codegen_arm_cpu-arm.cc) = 84c75d61bc99c2ff9adeac3152f5b11ebb0e582b
+diff --git a/lang/nodejs/patches/patch-deps_v8_src_base_platform_platform-posix.cc b/lang/nodejs/patches/patch-deps_v8_src_base_platform_platform-posix.cc
+index 4e839210e3a8..f8eae75da75c 100644
+--- a/lang/nodejs/patches/patch-deps_v8_src_base_platform_platform-posix.cc
++++ b/lang/nodejs/patches/patch-deps_v8_src_base_platform_platform-posix.cc
+@@ -1,14 +1,30 @@
+-$NetBSD: patch-deps_v8_src_base_platform_platform-posix.cc,v 1.9 2022/05/05 07:08:06 adam Exp $
++$NetBSD: patch-deps_v8_src_base_platform_platform-posix.cc,v 1.10 2022/08/17 21:15:27 tnn Exp $
+
+ Use sysconf(_SC_THREAD_STACK_MIN) instead of PTHREAD_STACK_MIN.
+ Cast explicitly.
++Remove legacy madvise(2) prototypes, prefer posix_madvise(2) if available.
+
+ Avoid using a random hint, some low numbers cause spurious ENOMEM on netbsd
+ (PR port-arm/55533)
+
+---- deps/v8/src/base/platform/platform-posix.cc.orig	2022-05-03 08:18:09.000000000 +0000
++--- deps/v8/src/base/platform/platform-posix.cc.orig	2022-07-26 14:30:08.000000000 +0000
+ +++ deps/v8/src/base/platform/platform-posix.cc
+-@@ -384,6 +384,10 @@ void* OS::GetRandomMmapAddr() {
++@@ -72,14 +72,6 @@
++ #define MAP_ANONYMOUS MAP_ANON
++ #endif
++
++-#if defined(V8_OS_SOLARIS)
++-#if (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE > 2) || defined(__EXTENSIONS__)
++-extern "C" int madvise(caddr_t, size_t, int);
++-#else
++-extern int madvise(caddr_t, size_t, int);
++-#endif
++-#endif
++-
++ #ifndef MADV_FREE
++ #define MADV_FREE MADV_DONTNEED
++ #endif
++@@ -384,6 +376,10 @@ void* OS::GetRandomMmapAddr() {
+  #endif
+  #endif
+  #endif
+@@ -19,7 +35,22 @@ Avoid using a random hint, some low numbers cause spurious ENOMEM on netbsd
+    return reinterpret_cast<void*>(raw_addr);
+  }
+
+-@@ -733,6 +737,8 @@ int OS::GetCurrentThreadId() {
++@@ -515,12 +511,10 @@ bool OS::DiscardSystemPages(void* addres
++     // MADV_FREE_REUSABLE sometimes fails, so fall back to MADV_DONTNEED.
++     ret = madvise(address, size, MADV_DONTNEED);
++   }
++-#elif defined(_AIX) || defined(V8_OS_SOLARIS)
++-  int ret = madvise(reinterpret_cast<caddr_t>(address), size, MADV_FREE);
+++#elif defined(POSIX_MADV_DONTNEED)
+++  int ret = posix_madvise(address, size, POSIX_MADV_DONTNEED);
++   if (ret != 0 && errno == ENOSYS)
++     return true;  // madvise is not available on all systems.
++-  if (ret != 0 && errno == EINVAL)
++-    ret = madvise(reinterpret_cast<caddr_t>(address), size, MADV_DONTNEED);
++ #else
++   int ret = madvise(address, size, MADV_DONTNEED);
++ #endif
++@@ -733,6 +727,8 @@ int OS::GetCurrentThreadId() {
+    return static_cast<int>(syscall(__NR_gettid));
+  #elif V8_OS_ANDROID
+    return static_cast<int>(gettid());
+@@ -28,7 +59,7 @@ Avoid using a random hint, some low numbers cause spurious ENOMEM on netbsd
+  #elif V8_OS_AIX
+    return static_cast<int>(thread_self());
+  #elif V8_OS_FUCHSIA
+-@@ -1000,7 +1006,11 @@ Thread::Thread(const Options& options)
++@@ -1000,7 +996,11 @@ Thread::Thread(const Options& options)
+      : data_(new PlatformData),
+        stack_size_(options.stack_size()),
+        start_semaphore_(nullptr) {
+@@ -40,7 +71,7 @@ Avoid using a random hint, some low numbers cause spurious ENOMEM on netbsd
+    if (stack_size_ > 0) stack_size_ = std::max(stack_size_, min_stack_size);
+    set_name(options.name());
+  }
+-@@ -1016,7 +1026,7 @@ static void SetThreadName(const char* na
++@@ -1016,7 +1016,7 @@ static void SetThreadName(const char* na
+    pthread_set_name_np(pthread_self(), name);
+  #elif V8_OS_NETBSD
+    STATIC_ASSERT(Thread::kMaxThreadNameLength <= PTHREAD_MAX_NAMELEN_NP);
