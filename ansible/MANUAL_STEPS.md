@@ -23,6 +23,8 @@
   * [Control machine (where Ansible is run)](#control-machine-where-ansible-is-run)
   * [Target machines](#target-machines)
 * [jenkins-workspace](#jenkins-workspace)
+* [benchmark](#benchmark)
+  * [Static analysis](#static-analysis)
 * [Docker hosts](#docker-hosts)
 * [SmartOS](#smartos)
 * [IBM i](#ibm-i)
@@ -664,9 +666,15 @@ Note that not all jobs can use [jenkins-workspace] servers for execution, some a
 
 The [jenkins-workspace] hosts are setup as standard Node.js nodes but are only given the [jenkins-workspace] label.
 
+## benchmark
+
+### Static analysis
+
+The [benchmark][] machines are set up so they can run preinstalled tooling against the Node.js codebase and submit the results to [Coverity Scan][].
+
 The playbook should download and install the Coverity build tool needed for static analysis into `/var/`. The extracted build tool should end up in a directory similar to `/var/cov-analysis-linux64-2023.6.2`. This directory must match the `PATH` setting in the [node-daily-coverity][] job. According to Synopsis the tool is usually updated twice yearly -- if it is updated the directory will change and the following steps should be done:
 
-* Run the playbook on all [jenkins-workspace][] machines so that they have the same version of the Coverity build tool installed.
+* Run the playbook on all [benchmark][] machines so that they have the same version of the Coverity build tool installed.
 * Update the [node-daily-coverity][] job so that the set `PATH` contains the new directory name.
 
 ## Docker hosts
@@ -776,8 +784,9 @@ pax -rf /u/unix1/SDK8_64bit_SR6_FP10.PAX.Z -ppx
 ```
 
 
-
+[Coverity Scan]: https://scan.coverity.com/projects/node-js
 [Setting up a Windows Host]: https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html
+[benchmark]: https://ci.nodejs.org/label/benchmark/
 [jenkins-workspace]: https://ci.nodejs.org/label/jenkins-workspace/
 [newer Ansible configuration]: https://github.com/nodejs/build/tree/main/ansible
 [node-daily-coverity]: https://ci.nodejs.org/job/node-daily-coverity/configure

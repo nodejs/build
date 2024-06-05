@@ -1,0 +1,7 @@
+---
+
+# This role depends on read-secrets to get the token necessary to download the
+# Coverity Scan Build Tool.
+
+dependencies:
+  - role: read-secrets

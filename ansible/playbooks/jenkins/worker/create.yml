@@ -16,6 +16,9 @@
     - { role: 'benchmarking',
         tags: 'benchmarking',
         when: is_benchmark is defined and is_benchmark|bool == True }
+    - { role: 'static-analysis',
+        tags: 'static-analysis',
+        when: is_benchmark is defined and is_benchmark|bool == True }
 #
 # Install Linux perf on Benchmarking servers
 #
