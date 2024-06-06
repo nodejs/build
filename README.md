@@ -29,7 +29,6 @@ to the resources we manage.
 <!-- ncu-team-sync.team(nodejs/build) -->
 
 * [@abmusse](https://github.com/abmusse) - Abdirahim Musse
-* [@anonrig](https://github.com/anonrig) - Yagiz Nizipli
 * [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 * [@joaocgreis](https://github.com/joaocgreis) - João Reis
 * [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
@@ -38,6 +37,7 @@ to the resources we manage.
 * [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 * [@richardlau](https://github.com/richardlau) - Richard Lau
 * [@rvagg](https://github.com/rvagg) - Rod Vagg
+* [@ryanaslett](https://github.com/ryanaslett) - Ryan Aslett
 * [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 * [@sxa](https://github.com/sxa) - Stewart X Addison
 * [@targos](https://github.com/targos) - Michaël Zasso
@@ -56,6 +56,7 @@ Above list is manually synced with the [gpg member list](https://github.com/node
 * [@MoLow](https://github.com/MoLow) - Moshe Atlow
 * [@richardlau](https://github.com/richardlau) - Richard Lau
 * [@rvagg](https://github.com/rvagg) - Rod Vagg
+* [@ryanaslett](https://github.com/ryanaslett) - Ryan Aslett
 * [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 * [@sxa](https://github.com/sxa) - Stewart X Addison
 * [@targos](https://github.com/targos) - Michaël Zasso
@@ -77,6 +78,7 @@ Admin access to https://ci.nodejs.org/.
 * [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 * [@richardlau](https://github.com/richardlau) - Richard Lau
 * [@rvagg](https://github.com/rvagg) - Rod Vagg
+* [@ryanaslett](https://github.com/ryanaslett) - Ryan Aslett
 * [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 * [@sxa](https://github.com/sxa) - Stewart X Addison
 * [@targos](https://github.com/targos) - Michaël Zasso
@@ -115,6 +117,7 @@ Admin access to https://ci-release.nodejs.org/.
 * [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 * [@richardlau](https://github.com/richardlau) - Richard Lau
 * [@rvagg](https://github.com/rvagg) - Rod Vagg
+* [@ryanaslett](https://github.com/ryanaslett) - Ryan Aslett
 * [@StefanStojanovic](https://github.com/StefanStojanovic) - Stefan Stojanovic
 * [@sxa](https://github.com/sxa) - Stewart X Addison
 * [@targos](https://github.com/targos) - Michaël Zasso
@@ -139,6 +142,7 @@ accesses and team roles see [GOVERNANCE.md][].
 ### Emeriti
 
 - [@addaleax](https://github.com/addaleax) - Anna Henningsen
+* [@anonrig](https://github.com/anonrig) - Yagiz Nizipli
 - [@bnoordhuis](https://github.com/bnoordhuis) - Ben Noordhuis
 - [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
 - [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil
