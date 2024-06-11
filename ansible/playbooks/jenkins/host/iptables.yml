@@ -18,6 +18,15 @@
       }
 
   tasks:
+  - name: Update the apt cache
+    apt:
+      update_cache: yes
+
+  - name: Ensure iptables-persistent is installed
+    apt:
+      name: iptables-persistent
+      state: present
+
   - name: add hosts to firewall
     when:
       - not 'ansible_ssh_common_args' in hostvars[host]
