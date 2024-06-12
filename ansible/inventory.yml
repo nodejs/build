@@ -24,6 +24,8 @@ hosts:
         debian10-x64-1: {ip: 147.28.162.110, alias: grafana}
         smartos15-x64-1: {ip: 147.28.183.83, alias: backup}
         ubuntu1604-x64-1: {ip: 147.28.162.105, alias: unencrypted}
+    - mnx:
+        ubuntu2204-x64-1: {ip: 67.158.54.181, alias: backup-2}
 
     - rackspace:
         debian8-x64-1: {ip: 23.253.100.79, alias: gh-bot}
