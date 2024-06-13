@@ -111,6 +111,17 @@ RUN mkdir -p /tmp/openssl-$OPENSSL31VER && \
     make install && \
     rm -rf /tmp/openssl-$OPENSSL31VER
 
+ENV OPENSSL32VER 3.2.2
+ENV OPENSSL32DIR /opt/openssl-$OPENSSL32VER
+
+RUN mkdir -p /tmp/openssl-$OPENSSL32VER && \
+    cd /tmp/openssl-$OPENSSL32VER && \
+    curl -sL https://www.openssl.org/source/openssl-$OPENSSL32VER.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$OPENSSL32DIR && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/openssl-$OPENSSL32VER
+
 ENV ZLIBVER 1.2.13
 ENV ZLIB12DIR /opt/zlib_$ZLIBVER
 
