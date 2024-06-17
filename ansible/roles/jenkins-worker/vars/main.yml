@@ -93,4 +93,4 @@ jobs_variants: {
   smartos: '2'
 }
 
-tap2junit_version: 0.1.6
+tap2junit_version: 0.2.0
