@@ -164,7 +164,10 @@ function createPipeline (bucket, filename, processedFile, callback) {
           const jsonparse = JSON.parse(line)
           const printout = logTransform2(jsonparse)
           if (printout !== undefined) { results = results.concat(printout) }
-        } catch (err) { console.log(err) }
+        } catch (err) {
+          console.log('ERROR PARSING: "' + line + '" of length ' + line.length)
+          console.log(err)
+        }
       }
 
       writeBucket.file(processedFile).save(results, function (err) {
