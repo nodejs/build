@@ -16,7 +16,7 @@
 
 ## Setup
 
-- Copy `gcp-metrics-service-acct-key.json` from `secrets/build/infra` or earlier version of Dockerfile to root folder.
+- Copy `gcp-metrics-service-acct-key.json` from earlier version of Dockerfile to root folder.
 - Build Dockerfile
   - `docker buildx build --platform linux/amd64 -t gcr.io/nodejs-org/processcloudflare:latest .`
 - Push Docker image to GCR
