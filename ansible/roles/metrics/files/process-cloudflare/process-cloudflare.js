@@ -160,6 +160,9 @@ function createPipeline (bucket, filename, processedFile, callback) {
       console.log('Array Length: ', contentsArray.length)
       let results = ''
       for (const line of contentsArray) {
+        if (line.length === 0) {
+          continue
+        }
         try {
           const jsonparse = JSON.parse(line)
           const printout = logTransform2(jsonparse)
