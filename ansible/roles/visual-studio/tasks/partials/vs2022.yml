@@ -13,7 +13,7 @@
 - name: install Visual Studio Community 2022 Native Desktop Workload
   win_chocolatey:
       name: visualstudio2022-workload-nativedesktop
-      params: '--add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64 --add Microsoft.NetCore.Component.SDK --add Microsoft.VisualStudio.Component.VC.Llvm.Clang'
+      params: '--add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64 --add Microsoft.NetCore.Component.SDK --add Microsoft.VisualStudio.Component.VC.Llvm.Clang --add Microsoft.VisualStudio.Component.VC.Llvm.ClangToolset'
 
 - name: install WiX Toolset
   import_tasks: 'wixtoolset.yml'
