@@ -4,7 +4,6 @@
 
 - Ensure that you have following roles on GCP:
   - `Cloud Run Developer`
-  - `Storage Legacy Bucket Writer`
   - `Storage Object User`
   - `Service Account User`
   - Example request: [nodejs/build#3774][cloud-run-roles-request]
