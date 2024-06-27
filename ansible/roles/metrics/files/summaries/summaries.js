@@ -24,7 +24,7 @@ function csvStream (chunk) {
     return
   } catch (e) {
     console.log(e)
-  }  
+  }
 }
 
 const counts = { bytes: 0, total: 0 }
@@ -66,18 +66,16 @@ function summary (chunk) {
  }
 
 async function collectData () {
-  const storage = new Storage({
-    keyFilename: "metrics-processor-service-key.json",
-  })
+  const storage = new Storage()
   let date = moment(new Date())
   date = moment(date, 'YYYYMMDD').subtract(1, 'days').format('YYYYMMDD')
   const filePrefix = date.toString().concat('/')
   console.log(filePrefix)
   const [files] = await storage.bucket('processed-logs-nodejs').getFiles({ prefix: `${filePrefix}`})
   for (const file of files) {
-    const data = await storage.bucket('processed-logs-nodejs').file(file.name).download() 
+    const data = await storage.bucket('processed-logs-nodejs').file(file.name).download()
     const stringContents = data[0].toString()
-    const contentsArray = stringContents.split('\n')   
+    const contentsArray = stringContents.split('\n')
     for (const line of contentsArray) {
       try {
         const csvparse = csvStream(line)
@@ -88,9 +86,7 @@ async function collectData () {
 }
 
 async function produceSummaries () {
-  const storage = new Storage({
-    keyFilename: "metrics-processor-service-key.json",
-  })  
+  const storage = new Storage()
   await collectData()
   prepare()
   let date = moment(new Date())

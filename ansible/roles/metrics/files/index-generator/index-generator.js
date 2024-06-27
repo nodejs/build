@@ -1,10 +1,8 @@
 const { Storage } = require('@google-cloud/storage')
-const storage = new Storage({
-    keyFilename: "metrics-processor-service-key.json",
-  });
+const storage = new Storage();
 const express = require('express')
 const bodyParser = require('body-parser')
-const app = express()  
+const app = express()
 app.use(bodyParser.json())
 
 
@@ -23,7 +21,7 @@ async function getFileList() {
 
 
 async function generateIndex() {
-    
+
     let fileList = []
     fileList = await getFileList()
 
@@ -35,7 +33,7 @@ async function generateIndex() {
         body += (bodyString)
     }
 
-    indexfile = '<html>\n<head>\n</head>\n<body>\n' + body + '</body>\n</html>'    
+    indexfile = '<html>\n<head>\n</head>\n<body>\n' + body + '</body>\n</html>'
 
     storage.bucket('access-logs-summaries-nodejs').file('index.html').save(indexfile, function (err) {
         if (err) {
@@ -52,10 +50,10 @@ app.post('/', async (req, res) => {
     }
     res.status(200).send()
   })
-  
+
   const port = process.env.PORT || 8080
   app.listen(port, () => {
     console.log('Listening on port: ', port)
   })
-  
+
   module.exports = app

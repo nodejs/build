@@ -140,9 +140,7 @@ async function processLogs (bucket, filename, callback) {
 }
 
 function createPipeline (bucket, filename, processedFile, callback) {
-  const storage = new Storage({
-    keyFilename: 'metrics-processor-service-key.json'
-  })
+  const storage = new Storage()
   console.log('INSIDE CREATE PIPELINE')
 
   const readBucket = storage.bucket(bucket)
