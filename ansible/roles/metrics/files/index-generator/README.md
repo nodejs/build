@@ -21,7 +21,7 @@
 - Push Docker image to GCR
   - `docker push gcr.io/nodejs-org/index-generator:latest`
 - Deploy Cloud Run service
-  - `gcloud run deploy index-generator --image gcr.io/nodejs-org/index-generator:latest --region us-central1 --no-allow-unauthenticated`
+  - `gcloud run deploy index-generator --image gcr.io/nodejs-org/index-generator:latest --service-account metrics-processor-service-key.json --region us-central1 --no-allow-unauthenticated`
 - If traffic is not routed to the new revision, update the service to send all traffic to the new revision
   - `gcloud run services update-traffic index-generator --to-latest --region us-central1`
 
