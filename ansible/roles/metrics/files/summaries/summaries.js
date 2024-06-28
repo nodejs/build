@@ -101,9 +101,19 @@ async function produceSummaries (date) {
 }
 
 app.post('/', async (req, res) => {
-  // ToDo: accept optional date parameter https://github.com/nodejs/build/issues/3780
-  const yesterday = new Date().getTime() - (24 * 60 * 60 * 1000)
-  const date = new Date(yesterday).toISOString().slice(0, 10).replace(/-/g, '')
+  let date;
+
+  if (req.params && req.params.date) {
+    if (/^\d{8}$/.test(req.params.date)) {
+      res.status(400).send('Invalid date. Must be in YYYYMMDD format.')
+      return
+    }
+    date = req.params.date
+  } else {
+    const yesterday = new Date().getTime() - (24 * 60 * 60 * 1000)
+    date = new Date(yesterday).toISOString().slice(0, 10).replace(/-/g, '')
+  }
+
   await produceSummaries(date)
   res.status(200).send()
 })
