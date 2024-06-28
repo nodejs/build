@@ -5,7 +5,6 @@
 //
 
 const { Storage } = require('@google-cloud/storage')
-const moment = require('moment')
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
@@ -24,7 +23,7 @@ function csvStream (chunk) {
     return
   } catch (e) {
     console.log(e)
-  }  
+  }
 }
 
 const counts = { bytes: 0, total: 0 }
@@ -65,19 +64,17 @@ function summary (chunk) {
   return
  }
 
-async function collectData () {
+async function collectData (date) {
   const storage = new Storage({
     keyFilename: "metrics-processor-service-key.json",
   })
-  let date = moment(new Date())
-  date = moment(date, 'YYYYMMDD').subtract(1, 'days').format('YYYYMMDD')
   const filePrefix = date.toString().concat('/')
   console.log(filePrefix)
   const [files] = await storage.bucket('processed-logs-nodejs').getFiles({ prefix: `${filePrefix}`})
   for (const file of files) {
-    const data = await storage.bucket('processed-logs-nodejs').file(file.name).download() 
+    const data = await storage.bucket('processed-logs-nodejs').file(file.name).download()
     const stringContents = data[0].toString()
-    const contentsArray = stringContents.split('\n')   
+    const contentsArray = stringContents.split('\n')
     for (const line of contentsArray) {
       try {
         const csvparse = csvStream(line)
@@ -87,14 +84,12 @@ async function collectData () {
   }
 }
 
-async function produceSummaries () {
+async function produceSummaries (date) {
   const storage = new Storage({
     keyFilename: "metrics-processor-service-key.json",
-  })  
-  await collectData()
+  })
+  await collectData(date)
   prepare()
-  let date = moment(new Date())
-  date = moment(date, 'YYYYMMDD').subtract(1, 'days').format('YYYYMMDD')
   let outputFile = "nodejs.org-access.log." + date.toString() + ".json"
   storage.bucket('access-logs-summaries-nodejs').file(outputFile).save(JSON.stringify(counts), function (err) {
     if (err) {
@@ -106,7 +101,10 @@ async function produceSummaries () {
 }
 
 app.post('/', async (req, res) => {
-  await produceSummaries()
+  // ToDo: accept optional date parameter https://github.com/nodejs/build/issues/3780
+  const yesterday = new Date().getTime() - (24 * 60 * 60 * 1000)
+  const date = new Date(yesterday).toISOString().slice(0, 10).replace(/-/g, '')
+  await produceSummaries(date)
   res.status(200).send()
 })
 
