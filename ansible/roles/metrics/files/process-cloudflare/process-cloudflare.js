@@ -2,7 +2,6 @@
 
 'use strict'
 
-const strftime = require('strftime').timezone(0)
 const { Storage } = require('@google-cloud/storage')
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -117,7 +116,8 @@ function logTransform2 (jsonObj) {
   const arch = determineArch(fileType, winArch, os)
 
   const line = []
-  line.push(strftime('%Y-%m-%d', new Date(jsonObj.EdgeStartTimestamp / 1000 / 1000))) // date
+  const date = new Date(jsonObj.EdgeStartTimestamp / 1000 / 1000)
+  line.push(date.toISOString().slice(0, 10)) // date
   line.push(jsonObj.ClientCountry.toUpperCase()) // country
   line.push('') // state/province, derived from chunk.EdgeColoCode probably
   line.push(jsonObj.ClientRequestPath) // URI
