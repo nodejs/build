@@ -4,10 +4,9 @@
 
 const { Storage } = require('@google-cloud/storage')
 const express = require('express')
-const bodyParser = require('body-parser')
 const app = express()
 
-app.use(bodyParser.json())
+app.use(express.json())
 
 const extensionRe = /\.(tar\.gz|tar\.xz|pkg|msi|exe|zip|7z)$/
 const uriRe = /(\/+(dist|download\/+release)\/+(node-latest\.tar\.gz|([^/]+)\/+((win-x64|win-x86|win-arm64|x64)?\/+?node\.exe|(x64\/)?node-+(v[0-9.]+)[.-]([^? ]+))))/
