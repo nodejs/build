@@ -1,10 +1,8 @@
 const { Storage } = require('@google-cloud/storage')
 const storage = new Storage();
 const express = require('express')
-const bodyParser = require('body-parser')
 const app = express()
-app.use(bodyParser.json())
-
+app.use(express.json())
 
 async function getFileList() {
 
