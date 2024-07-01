@@ -6,7 +6,6 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
-
 async function getFileList() {
 
       let fileList = []
@@ -34,15 +33,14 @@ async function generateIndex() {
         body += (bodyString)
     }
 
-    indexfile = '<html>\n<head>\n</head>\n<body>\n' + body + '</body>\n</html>'
-
-    storage.bucket('access-logs-summaries-nodejs').file('index.html').save(indexfile, function (err) {
-        if (err) {
-          console.log('ERROR UPLOADING: ', err)
-        } else {
-          console.log('Upload complete')
-        }
-      })
+    const fileContents = '<html>\n<head>\n</head>\n<body>\n' + body + '</body>\n</html>'
+    const fileName = 'index.html'
+    try {
+      await storage.bucket('access-logs-summaries-nodejs').file(fileName).save(fileContents)
+      console.log(`Upload complete: ${fileName}`)
+    } catch (error) {
+      console.error(`ERROR UPLOADING FILE: ${fileName} - ${error}`)
+    }
 }
 
 app.post('/', async (req, res) => {

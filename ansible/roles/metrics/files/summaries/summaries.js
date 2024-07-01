@@ -89,14 +89,15 @@ async function produceSummaries (date) {
   })
   await collectData(date)
   prepare()
-  let outputFile = "nodejs.org-access.log." + date.toString() + ".json"
-  storage.bucket('access-logs-summaries-nodejs').file(outputFile).save(JSON.stringify(counts), function (err) {
-    if (err) {
-      console.log('ERROR UPLOADING: ', err)
-    } else {
-      console.log('Upload complete')
-    }
-  })
+
+  const fileContents = JSON.stringify(counts)
+  const fileName = `nodejs.org-access.log.${date.toString()}.json`
+  try {
+    await storage.bucket('access-logs-summaries-nodejs').file(fileName).save(fileContents)
+    console.log(`Upload complete: ${fileName}`)
+  } catch (error) {
+    console.error(`ERROR UPLOADING FILE: ${fileName} - ${error}`)
+  }
 }
 
 app.post('/', async (req, res) => {
