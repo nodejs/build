@@ -1,7 +1,5 @@
 const { Storage } = require('@google-cloud/storage')
-const storage = new Storage({
-    keyFilename: "metrics-processor-service-key.json",
-  });
+const storage = new Storage();
 const express = require('express')
 const app = express()
 app.use(express.json())

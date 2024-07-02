@@ -64,9 +64,7 @@ function summary (chunk) {
  }
 
 async function collectData (date) {
-  const storage = new Storage({
-    keyFilename: "metrics-processor-service-key.json",
-  })
+  const storage = new Storage()
   const filePrefix = date.toString().concat('/')
   console.log(filePrefix)
   const [files] = await storage.bucket('processed-logs-nodejs').getFiles({ prefix: `${filePrefix}`})
@@ -84,9 +82,7 @@ async function collectData (date) {
 }
 
 async function produceSummaries (date) {
-  const storage = new Storage({
-    keyFilename: "metrics-processor-service-key.json",
-  })
+  const storage = new Storage()
   await collectData(date)
   prepare()
 
