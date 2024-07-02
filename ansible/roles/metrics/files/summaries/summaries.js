@@ -85,20 +85,31 @@ async function produceSummaries (date) {
   const storage = new Storage()
   await collectData(date)
   prepare()
-  let outputFile = "nodejs.org-access.log." + date.toString() + ".json"
-  storage.bucket('access-logs-summaries-nodejs').file(outputFile).save(JSON.stringify(counts), function (err) {
-    if (err) {
-      console.log('ERROR UPLOADING: ', err)
-    } else {
-      console.log('Upload complete')
-    }
-  })
+
+  const fileContents = JSON.stringify(counts)
+  const fileName = `nodejs.org-access.log.${date.toString()}.json`
+  try {
+    await storage.bucket('access-logs-summaries-nodejs').file(fileName).save(fileContents)
+    console.log(`Upload complete: ${fileName}`)
+  } catch (error) {
+    console.error(`ERROR UPLOADING FILE: ${fileName} - ${error}`)
+  }
 }
 
 app.post('/', async (req, res) => {
-  // ToDo: accept optional date parameter https://github.com/nodejs/build/issues/3780
-  const yesterday = new Date().getTime() - (24 * 60 * 60 * 1000)
-  const date = new Date(yesterday).toISOString().slice(0, 10).replace(/-/g, '')
+  let date;
+
+  if (req.params && req.params.date) {
+    if (/^\d{8}$/.test(req.params.date)) {
+      res.status(400).send('Invalid date. Must be in YYYYMMDD format.')
+      return
+    }
+    date = req.params.date
+  } else {
+    const yesterday = new Date().getTime() - (24 * 60 * 60 * 1000)
+    date = new Date(yesterday).toISOString().slice(0, 10).replace(/-/g, '')
+  }
+
   await produceSummaries(date)
   res.status(200).send()
 })
