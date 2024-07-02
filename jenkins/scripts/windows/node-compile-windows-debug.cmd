@@ -13,5 +13,5 @@ if errorlevel 1 exit /b
 :: Test compiling and running a native add-on
 %node_gyp_exe% rebuild --directory=test\addons\hello-world --nodedir="%CD%"
 if errorlevel 1 exit /b
-Debug\node.exe test\addons\hello-world\test.js
+python tools\test.py --shell=Debug\node.exe test\addons\hello-world\test.js
 if errorlevel 1 exit /b
