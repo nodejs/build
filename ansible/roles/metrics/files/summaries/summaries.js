@@ -4,12 +4,11 @@
 // 2019-10-31,US,,/dist/v13.0.1/node-v13.0.1-linux-x64.tar.xz,v13.0.1,linux,x64,20102340
 //
 
-const { Storage } = require('@google-cloud/storage')
-const express = require('express')
+import { Storage } from '@google-cloud/storage'
+import express, { json } from 'express'
+
 const app = express()
-
-app.use(express.json())
-
+app.use(json())
 
 function csvStream (chunk) {
   try {
@@ -119,4 +118,4 @@ app.listen(port, () => {
   console.log('Listening on port: ', port)
 })
 
-module.exports = app
+export default app
