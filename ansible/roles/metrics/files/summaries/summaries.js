@@ -103,12 +103,12 @@ async function produceSummaries (date) {
 app.post('/', async (req, res) => {
   let date;
 
-  if (req.params && req.params.date) {
-    if (/^\d{8}$/.test(req.params.date)) {
+  if (req.query && req.query.date) {
+    if (/^\d{8}$/.test(req.query.date)) {
       res.status(400).send('Invalid date. Must be in YYYYMMDD format.')
       return
     }
-    date = req.params.date
+    date = req.query.date
   } else {
     const yesterday = new Date().getTime() - (24 * 60 * 60 * 1000)
     date = new Date(yesterday).toISOString().slice(0, 10).replace(/-/g, '')
