@@ -1,5 +1,30 @@
 ---
 
+- name: check if secrets are properly set
+  fail:
+  failed_when: not {{ secret }}
+  loop_control:
+    loop_var: secret
+  with_items:
+    - gh_bot_secrets.envs.port
+    - gh_bot_secrets.envs.travis_token
+    - gh_bot_secrets.envs.github_token
+    - gh_bot_secrets.envs.github_webhook_secret
+    - gh_bot_secrets.envs.login_credentials
+    - gh_bot_secrets.envs.jenkins_api_credentials
+    - gh_bot_secrets.envs.jenkins_job_citgm
+    - gh_bot_secrets.envs.jenkins_build_token_citgm
+    - gh_bot_secrets.envs.jenkins_job_node
+    - gh_bot_secrets.envs.jenkins_build_token_node
+    - gh_bot_secrets.conf.github_deploy_webhook_secret
+
+- name: Get IP addresses of jenkins-workspace machines
+  no_log: true
+  set_fact:
+    jenkins_workspace_ips: "{{ jenkins_workspace_ips | default([]) + [item.value.ansible_host | string] }}"
+  when: "item.value.alias is defined and item.value.alias is match('jenkins-workspace.*')"
+  with_dict: "{{ hostvars }}"
+
 - name: Bootstrap | Install baseline packages
   package:
     name: "{{ package }}"
@@ -9,13 +34,13 @@
   with_items: "{{ base_packages }}"
 
 - name: Bootstrap | Add nodesource signing key
-  apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-    state: present
+  ansible.builtin.get_url:
+    dest: /etc/apt/keyrings/nodesource-repo.gpg.asc
+    url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
 
 - name: Bootstrap | Add nodesource repo
   apt_repository:
-    repo: deb https://deb.nodesource.com/node_14.x jessie main
+    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/nodesource-repo.gpg.asc] https://deb.nodesource.com/node_20.x nodistro main
     state: present
 
 - name: Bootstrap | APT Update and upgrade
@@ -30,6 +55,9 @@
   loop_control:
     loop_var: package
   with_items: "{{ packages }}"
+  notify:
+    - restart github-bot-deploy-webhook
+    - restart github-bot
 
 - name: Bootstrap | Enable time syncing
   service:
@@ -53,11 +81,16 @@
   template:
     src: "{{ role_path }}/templates/github-bot.service.j2"
     dest: /lib/systemd/system/github-bot.service
+  notify:
+    - restart github-bot
 
 - name: Init | Generate and copy systemd EnvironmentFile
   template:
     src: "{{ role_path }}/templates/environment-file.j2"
     dest: "/home/{{ server_user }}/environment/github-bot"
+  notify:
+    - restart github-bot-deploy-webhook
+    - restart github-bot
 
 - name: Init | Clone github-bot repo
   become: yes
@@ -65,6 +98,8 @@
   git:
     repo: https://github.com/nodejs/github-bot.git
     dest: "/home/{{ server_user }}/github-bot"
+  notify:
+    - restart github-bot
 
 - name: Init | Install npm dependencies
   become: yes
@@ -72,6 +107,8 @@
   npm:
     path: "/home/{{ server_user }}/github-bot"
     production: yes
+  notify:
+    - restart github-bot
 
 - name: Init | Start github-bot
   service:
@@ -83,11 +120,15 @@
   npm:
     name: github-webhook
     global: yes
+  notify:
+    - restart github-bot-deploy-webhook
 
 - name: Deploy Webhook | Copy config
   template:
     src: "{{ role_path }}/templates/github-bot-deploy-webhook.json.j2"
     dest: "/home/{{ server_user }}/config/github-bot-deploy-webhook.json"
+  notify:
+    - restart github-bot-deploy-webhook
 
 - name: Deploy Webhook | Copy deploy script
   template:
@@ -95,17 +136,23 @@
     dest: "/home/{{ server_user }}/bin/deploy-github-bot.sh"
     mode: 0755
     owner: "{{ server_user }}"
+  notify:
+    - restart github-bot-deploy-webhook
 
 - name: Deploy Webhook | Generate and copy service script
   template:
     src: "{{ role_path }}/templates/github-bot-deploy-webhook.service.j2"
     dest: /lib/systemd/system/github-bot-deploy-webhook.service
+  notify:
+    - restart github-bot-deploy-webhook
 
 - name: Deploy Webhook | Start service
   service:
     name: github-bot-deploy-webhook
     state: started
     enabled: yes
+  notify:
+    - restart github-bot-deploy-webhook
 
 - name: Deploy Webhook | Allow user to restart github-bot
   lineinfile:
