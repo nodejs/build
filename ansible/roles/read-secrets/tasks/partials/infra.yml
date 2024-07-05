@@ -1,0 +1,13 @@
+---
+
+- name: Read github-bot secrets
+  ansible.builtin.set_fact:
+    gh_bot_secrets: "{{ lookup('pipe', 'gpg -d ' + group_vars | quote) | from_yaml }}"
+  no_log: yes
+  loop_control:
+    loop_var: group_vars
+  with_first_found:
+    - files:
+      - "{{ secrets_repo_root }}/build/github-bot/deployment_secrets.yml"
+      skip: true
+  when: alias is defined and alias == 'gh-bot'
