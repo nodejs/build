@@ -106,7 +106,7 @@ app.post('/', async (req, res) => {
 app.post('/date/:date', async (req, res) => {
   const date = req.params.date
 
-  if (/^\d{8}$/.test(req.params.date)) {
+  if (!/^\d{8}$/.test(req.params.date)) {
     res.status(400).send('Invalid date. Must be in YYYYMMDD format.')
     return
   }
