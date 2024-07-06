@@ -97,17 +97,18 @@ async function produceSummaries (date) {
 }
 
 app.post('/', async (req, res) => {
-  let date;
+  const yesterday = new Date().getTime() - (24 * 60 * 60 * 1000)
+  const date = new Date(yesterday).toISOString().slice(0, 10).replace(/-/g, '')
+  await produceSummaries(date)
+  res.status(200).send()
+})
 
-  if (req.params && req.params.date) {
-    if (/^\d{8}$/.test(req.params.date)) {
-      res.status(400).send('Invalid date. Must be in YYYYMMDD format.')
-      return
-    }
-    date = req.params.date
-  } else {
-    const yesterday = new Date().getTime() - (24 * 60 * 60 * 1000)
-    date = new Date(yesterday).toISOString().slice(0, 10).replace(/-/g, '')
+app.post('/date/:date', async (req, res) => {
+  const date = req.params.date
+
+  if (/^\d{8}$/.test(req.params.date)) {
+    res.status(400).send('Invalid date. Must be in YYYYMMDD format.')
+    return
   }
 
   await produceSummaries(date)
