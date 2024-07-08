@@ -24,6 +24,7 @@ hosts:
         debian10-x64-1: {ip: 147.28.162.110, alias: grafana}
         smartos15-x64-1: {ip: 147.28.183.83, alias: backup}
         ubuntu1604-x64-1: {ip: 147.28.162.105, alias: unencrypted}
+
     - mnx:
         ubuntu2204-x64-1: {ip: 67.158.54.181, alias: backup-2}
 
@@ -178,9 +179,9 @@ hosts:
         smartos20-x64-3: {ip: 147.28.162.107}
         smartos20-x64-4: {ip: 147.28.162.109}
         ubuntu1804-x64-1: {ip: 147.28.162.99, user: ubuntu}
-    
+
     - hetzner:
-        ubuntu2204-x64-1: 
+        ubuntu2204-x64-1:
             ip: 37.27.104.214
             build_test_v8: yes
             is_benchmark: true
@@ -239,7 +240,7 @@ hosts:
         aix72-ppc64_be-2:
             ip: 140.211.9.30
             server_jobs: 3 # Using anything higher than 3 causes crashes on this machine
-        aix72-ppc64_be-3: 
+        aix72-ppc64_be-3:
             ip: 140.211.9.131
             server_jobs: 6
         aix72-ppc64_be-4:
