@@ -39,4 +39,5 @@ chakracore_release_dirmatch=.*
 
 cloudflare_endpoint=https://07be8d2fbc940503ca1be344714cb0d1.r2.cloudflarestorage.com
 cloudflare_profile=worker
-destination_bucket=s3://dist-prod
+staging_bucket=s3://dist-staging
+dist_bucket=s3://dist-prod

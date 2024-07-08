@@ -1,0 +1,15 @@
+---
+
+#
+# generic handlers for github-bot
+#
+
+- name: restart github-bot
+  ansible.builtin.service:
+    name: github-bot
+    state: restarted
+
+- name: restart github-bot-deploy-webhook
+  ansible.builtin.service:
+    name: github-bot-deploy-webhook
+    state: restarted
