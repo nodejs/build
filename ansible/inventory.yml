@@ -236,6 +236,8 @@ hosts:
                 SSL_CERT_FILE: "{{ home }}/{{ server_user }}/ca-bundle.crt"
             server_jobs: 4
     - mnx:
+        ubuntu2204-x64-1: {ip: 67.158.54.159, alias: jenkins-workspace-9}
+        ubuntu2204-x64-2: {ip: 8.225.232.44, alias: jenkins-workspace-10}
         smartos21-x64-1: {ip: 8.225.232.135}
         smartos21-x64-2: {ip: 8.225.232.137}
         smartos23-x64-1: {ip: 8.225.232.134}

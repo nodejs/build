@@ -73,6 +73,8 @@
     - test-equinix-ubuntu2204-x64-1
     - test-equinix-ubuntu2204-x64-2
     - test-ibm-ubuntu2204-x64-3
+    - test-mnx-ubuntu2204-x64-1
+    - test-mnx-ubuntu2204-x64-2
 
   roles:
     - jenkins-workspace
