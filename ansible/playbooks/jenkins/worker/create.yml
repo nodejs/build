@@ -86,9 +86,6 @@
 - hosts:
   - test
   - release
-  - "!test-equinix-ubuntu2204-x64-1"
-  - "!test-equinix-ubuntu2204-x64-2"
-  - "!test-ibm-ubuntu2204-x64-3"
   tasks:
     - name: remove node and npm packages
       when:
@@ -97,6 +94,7 @@
       - not os|startswith("win")
       - not os|startswith("zos")
       - os != "macos11.0"
+      - not (alias is defined and alias is match('jenkins-workspace.*'))
       package:
         name: "{{ package }}"
         state: absent
@@ -104,13 +102,17 @@
         loop_var: package
       with_items: [ "node", "nodejs", "npm" ]
     - name: fail if node is in the path - please uninstall it
-      when: not os|startswith("win")
+      when:
+      - not os|startswith("win")
+      - not (alias is defined and alias is match('jenkins-workspace.*'))
       shell: "node -v"
       register: node_check_cmd
       failed_when: node_check_cmd.rc == 0
       changed_when: False
     - name: fail if node is in the path - please uninstall it
-      when: os|startswith("win")
+      when:
+      - os|startswith("win")
+      - not (alias is defined and alias is match('jenkins-workspace.*'))
       win_shell: "node -v"
       register: node_check_cmd_win
       failed_when: node_check_cmd_win.rc == 0
