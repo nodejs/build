@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 # Copyright Node.js contributors. All rights reserved.
@@ -64,10 +64,11 @@ def multi_replace(content, to_replace):
         content = content.replace(key, val)
     return content
 
+def get_template_section(config):
+    return match.search(config).group(1)
 
-def is_templatable(path, config):
-    return os.path.exists(path) and bool(re.search(match, config))
-
+def is_templatable(config):
+    return bool(match.search(config))
 
 def render_template(hosts):
     render = Environment()
@@ -100,12 +101,18 @@ def main():
         module.fail_json(msg='Couldn\'t find a ssh config at %s' %
                          path)
 
-    if not is_templatable(path, contents):
+    if not is_templatable(contents):
         module.fail_json(msg='Your ssh config lacks template stubs. Check README.md for instructions.')
+    
+    before_value = get_template_section(contents)
+    after_value = render_template(module.params['hostinfo'])
+
+    if before_value == after_value:
+        module.exit_json(changed=False, meta='ssh config is up-to-date')
 
     rendered = '{}{}{}'.format(
         pre_match,
-        render_template(module.params['hostinfo']),
+        after_value,
         post_match
     )
 
