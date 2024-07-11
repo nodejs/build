@@ -64,11 +64,14 @@ def multi_replace(content, to_replace):
         content = content.replace(key, val)
     return content
 
+
 def get_template_section(config):
     return match.search(config).group(1)
 
+
 def is_templatable(config):
     return bool(match.search(config))
+
 
 def render_template(hosts):
     render = Environment()
@@ -103,7 +106,7 @@ def main():
 
     if not is_templatable(contents):
         module.fail_json(msg='Your ssh config lacks template stubs. Check README.md for instructions.')
-    
+
     before_value = get_template_section(contents)
     after_value = render_template(module.params['hostinfo'])
 
