@@ -14,10 +14,10 @@
     jobs_env: "{{ jobs_variants[os|stripversion] }}"
   when: jobs_env is undefined and server_jobs is undefined and os|stripversion in jobs_variants
 
-- name: set jobs_env from server_jobs or ansible_processor_vcpus
+- name: set jobs_env from server_jobs or ansible_processor_vcpus or ansible_processor_cores
   set_fact:
-    jobs_env: "{{ server_jobs|default(ansible_processor_vcpus) }}"
-  when: jobs_env is undefined and (server_jobs is defined or ansible_processor_vcpus is defined)
+    jobs_env: "{{ server_jobs|default(ansible_processor_vcpus)|default(ansible_processor_cores) }}"
+  when: jobs_env is undefined and (server_jobs is defined or ansible_processor_vcpus is defined or ansible_processor_cores is defined)
 
 - name: set jobs_env to fall-back value of 2
   set_fact:

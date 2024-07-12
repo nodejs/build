@@ -46,8 +46,7 @@ hosts:
             remote_env:
                 PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
             server_jobs: 8
-        rhel7-s390x-1: {ip: 148.100.84.166, user: linux1}
-        rhel8-s390x-1: {ip: 148.100.84.45, user: linux1}
+        rhel8-s390x-1: {ip: 148.100.84.45, swap_file_size_mb: 2048, user: linux1}
         rhel8-x64-1: {ip: 169.62.77.228}
         rhel8-x64-2: {ip: 52.117.26.5}
 
@@ -76,13 +75,12 @@ hosts:
             ip: 140.211.9.77
             server_jobs: 6
         centos7-arm64-1: {ip: 140.211.169.7, server_jobs: 2, user: centos}
-        centos7-ppc64_le-1: {ip: 140.211.168.61, user: centos}
         rhel8-arm64-1:
             ip: 140.211.169.58
             server_jobs: 2
             user: cloud-user
             swap_file_size_mb: 4096
-        rhel8-ppc64_le-1: {ip: 140.211.168.185, user: cloud-user}
+        rhel8-ppc64_le-1: {ip: 140.211.168.185, swap_file_size_mb: 2048, user: cloud-user}
 
     - orka:
         macos11-x64-1:
@@ -152,14 +150,10 @@ hosts:
             remote_env:
                 PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
             server_jobs: 6
-        rhel7-s390x-1: {ip: 148.100.84.221, user: linux1, build_test_v8: yes}
-        rhel7-s390x-2: {ip: 148.100.84.114, user: linux1, build_test_v8: yes}
-        rhel7-s390x-3: {ip: 148.100.84.50, user: linux1, build_test_v8: yes}
-        rhel7-s390x-4: {ip: 148.100.84.235, user: linux1, build_test_v8: yes}
-        rhel8-s390x-1: {ip: 148.100.84.98, user: linux1, build_test_v8: yes}
-        rhel8-s390x-2: {ip: 148.100.84.38, user: linux1, build_test_v8: yes}
-        rhel8-s390x-3: {ip: 148.100.84.17, user: linux1, build_test_v8: yes}
-        rhel8-s390x-4: {ip: 148.100.84.239, user: linux1, build_test_v8: yes}
+        rhel8-s390x-1: {ip: 148.100.84.98, user: linux1, build_test_v8: yes, swap_file_size_mb: 2048}
+        rhel8-s390x-2: {ip: 148.100.84.38, user: linux1, build_test_v8: yes, swap_file_size_mb: 2048}
+        rhel8-s390x-3: {ip: 148.100.84.17, user: linux1, build_test_v8: yes, swap_file_size_mb: 2048}
+        rhel8-s390x-4: {ip: 148.100.84.239, user: linux1, build_test_v8: yes, swap_file_size_mb: 2048}
         rhel8-x64-1: {ip: 169.61.75.51, build_test_v8: yes}
         rhel8-x64-2: {ip: 169.61.75.58, build_test_v8: yes}
         rhel8-x64-3: {ip: 52.117.26.13, build_test_v8: yes}
@@ -203,6 +197,12 @@ hosts:
             user: administrator
             remote_env:
                 PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+
+    - linuxonecc:
+        rhel9-s390x-1: {ip: 148.100.85.171, swap_file_size_mb: 2048, user: linux1}
+        rhel9-s390x-2: {ip: 148.100.85.83, swap_file_size_mb: 2048, user: linux1}
+        rhel9-s390x-3: {ip: 148.100.85.130, swap_file_size_mb: 2048, user: linux1}
+        rhel9-s390x-4: {ip: 148.100.85.227, swap_file_size_mb: 2048, user: linux1}
 
     - marist:
         zos24-s390x-1:
@@ -252,13 +252,13 @@ hosts:
         aix72-ppc64_be-4:
             ip: 140.211.9.101
             server_jobs: 6
-        centos7-ppc64_le-1: {ip: 140.211.168.32, user: centos, build_test_v8: yes}
-        centos7-ppc64_le-2: {ip: 140.211.168.78, user: centos, build_test_v8: yes}
-        centos7-ppc64_le-3: {ip: 140.211.168.239, user: centos, build_test_v8: yes}
-        rhel8-ppc64_le-1: {ip: 140.211.168.183, user: cloud-user, build_test_v8: yes}
-        rhel8-ppc64_le-2: {ip: 140.211.168.76, user: cloud-user, build_test_v8: yes}
-        rhel8-ppc64_le-3: {ip: 140.211.168.221, user: cloud-user, build_test_v8: yes}
-        rhel8-ppc64_le-4: {ip: 140.211.168.194, user: cloud-user, build_test_v8: yes}
+        rhel8-ppc64_le-1: {ip: 140.211.168.183, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 2048}
+        rhel8-ppc64_le-2: {ip: 140.211.168.76, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 2048}
+        rhel8-ppc64_le-3: {ip: 140.211.168.221, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 2048}
+        rhel8-ppc64_le-4: {ip: 140.211.168.194, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 2048}
+        rhel9-ppc64_le-1: {ip: 140.211.10.92, user: cloud-user, swap_file_size_mb: 2048}
+        rhel9-ppc64_le-2: {ip: 140.211.10.69, user: cloud-user, swap_file_size_mb: 2048}
+        rhel9-ppc64_le-3: {ip: 140.211.10.110, user: cloud-user, swap_file_size_mb: 2048}
         ubuntu2004_docker-arm64-1: {ip: 140.211.169.11, user: ubuntu}
 
     - orka:

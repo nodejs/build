@@ -35,6 +35,19 @@ fi
 
 # Linux distros should be arch agnostic
 case $NODE_NAME in
+  *rhel9*|*ubi9*)
+    echo "Setting compiler for Node.js $NODEJS_MAJOR_VERSION on" `cat /etc/redhat-release`
+    if [ "$NODEJS_MAJOR_VERSION" -gt "21" ]; then
+      # s390x, use later toolset to avoid https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106355
+      if [ "$SELECT_ARCH" = "S390X" ]; then
+        . /opt/rh/gcc-toolset-12/enable
+      fi
+    fi
+    export CC="ccache gcc"
+    export CXX="ccache g++"
+    echo "Selected compiler:" `${CXX} -dumpversion`
+    return
+    ;;
   *rhel8*|*ubi8*)
     case "$CONFIG_FLAGS" in
       *--enable-lto*)
