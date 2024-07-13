@@ -10,7 +10,6 @@ const app = express()
 
 app.use(express.json())
 
-
 function csvStream (chunk) {
   try {
     const line = []
@@ -25,8 +24,11 @@ function csvStream (chunk) {
   }
 }
 
-const counts = { bytes: 0, total: 0 }
-function increment (type, key) {
+// ToDo: Remove global variable when refactoring.
+const cache = {}
+
+function increment (date, type, key) {
+  const counts = cache[date]
   if (!key) {
     key = 'unknown'
   }
@@ -40,7 +42,8 @@ function increment (type, key) {
   }
 }
 
-function prepare () {
+function prepare (date) {
+  const counts = cache[date]
   function sort (type) {
     const ca = Object.entries(counts[type])
     ca.sort((e1, e2) => e2[1] > e1[1] ? 1 : e2[1] < e1[1] ? -1 : 0)
@@ -52,14 +55,19 @@ function prepare () {
   'country version os arch'.split(' ').forEach(sort)
 }
 
-function summary (chunk) {
-  const [date, country, region, path, version, os, arch, bytes] = chunk[0]
-  increment('country', country)
-  increment('version', version)
-  increment('os', os)
-  increment('arch', arch)
-  counts.bytes += parseInt(bytes, 10)
-  counts.total++
+function summary (date, chunk) {
+  const [, country, region, path, version, os, arch, bytes] = chunk[0]
+
+  if (!cache[date]) {
+    cache[date] = { bytes: 0, total: 0 }
+  }
+
+  increment(date, 'country', country)
+  increment(date, 'version', version)
+  increment(date, 'os', os)
+  increment(date, 'arch', arch)
+  cache[date].bytes += parseInt(bytes, 10)
+  cache[date].total++
   return
  }
 
@@ -75,7 +83,7 @@ async function collectData (date) {
     for (const line of contentsArray) {
       try {
         const csvparse = csvStream(line)
-        if (csvparse !== undefined && csvparse[0][0] !== '') { summary(csvparse) }
+        if (csvparse !== undefined && csvparse[0][0] !== '') { summary(date, csvparse) }
       } catch (err) { console.log(err) }
     }
   }
@@ -84,9 +92,9 @@ async function collectData (date) {
 async function produceSummaries (date) {
   const storage = new Storage()
   await collectData(date)
-  prepare()
+  prepare(date)
 
-  const fileContents = JSON.stringify(counts)
+  const fileContents = JSON.stringify(cache[date])
   const fileName = `nodejs.org-access.log.${date.toString()}.json`
   try {
     await storage.bucket('access-logs-summaries-nodejs').file(fileName).save(fileContents)
