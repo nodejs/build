@@ -114,10 +114,10 @@ hosts:
     - digitalocean:
         debian11-x64-1: {ip: 174.138.79.159, swap_file_size_mb: 2048}
         debian12-x64-1: {ip: 159.203.105.159, swap_file_size_mb: 2048}
-        fedora37-x64-1: {ip: 159.65.248.149}
         fedora38-x64-1: {ip: 162.243.187.89}
         fedora39-x64-1: {ip: 159.203.117.50}
         fedora39-x64-2: {ip: 134.209.172.40}
+        fedora40-x64-1: {ip: 159.65.248.149}
         freebsd12-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd12-x64-2: {ip: 107.170.28.213, user: freebsd}
         rhel8-x64-1: {ip: 161.35.139.78, build_test_v8: yes, swap_file_size_mb: 2048}
