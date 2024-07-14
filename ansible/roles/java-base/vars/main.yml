@@ -11,7 +11,6 @@ packages: {
   'debian11': 'openjdk-17-jre-headless',
   'debian12': 'openjdk-17-jre-headless',
   'fedora': 'java-17-openjdk-headless',
-  'fedora32': 'java-11-openjdk-headless',
   'freebsd': 'openjdk11-jre',
   'ibmi': 'openjdk-11-ea',
   'macos': 'temurin17',

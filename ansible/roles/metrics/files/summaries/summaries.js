@@ -76,15 +76,25 @@ async function collectData (date) {
   const filePrefix = date.toString().concat('/')
   console.log(filePrefix)
   const [files] = await storage.bucket('processed-logs-nodejs').getFiles({ prefix: `${filePrefix}`})
-  for (const file of files) {
-    const data = await storage.bucket('processed-logs-nodejs').file(file.name).download()
-    const stringContents = data[0].toString()
-    const contentsArray = stringContents.split('\n')
-    for (const line of contentsArray) {
-      try {
-        const csvparse = csvStream(line)
-        if (csvparse !== undefined && csvparse[0][0] !== '') { summary(date, csvparse) }
-      } catch (err) { console.log(err) }
+
+  const filesBatches = []
+  for (let i = 0; i < files.length; i += 50) {
+    filesBatches.push(files.slice(i, i + 50))
+  }
+
+  for (const fileBatch of filesBatches) {
+    const dataBatch = await Promise.all(
+      fileBatch.map(file => storage.bucket('processed-logs-nodejs').file(file.name).download())
+    )
+    for (const data of dataBatch) {
+      const stringContents = data[0].toString()
+      const contentsArray = stringContents.split('\n')
+      for (const line of contentsArray) {
+        try {
+          const csvparse = csvStream(line)
+          if (csvparse !== undefined && csvparse[0][0] !== '') { summary(date, csvparse) }
+        } catch (err) { console.log(err) }
+      }
     }
   }
 }

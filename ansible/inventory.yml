@@ -115,8 +115,8 @@ hosts:
         debian11-x64-1: {ip: 174.138.79.159, swap_file_size_mb: 2048}
         debian12-x64-1: {ip: 159.203.105.159, swap_file_size_mb: 2048}
         fedora38-x64-1: {ip: 162.243.187.89}
-        fedora38-x64-2: {ip: 134.209.172.40}
         fedora39-x64-1: {ip: 159.203.117.50}
+        fedora39-x64-2: {ip: 134.209.172.40}
         fedora40-x64-1: {ip: 159.65.248.149}
         freebsd12-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd12-x64-2: {ip: 107.170.28.213, user: freebsd}
@@ -302,7 +302,6 @@ hosts:
         centos7-x64-1: {ip: 119.9.27.82}
         debian10-x64-1: {ip: 104.239.140.184}
         debian11-x64-1: {ip: 23.253.109.216, swap_file_size_mb: 4096}
-        fedora32-x64-1: {ip: 119.9.51.79}
         ubuntu1604-x64-1: {ip: 119.9.51.176}
         ubuntu1604-x64-2: {ip: 104.130.124.194}
         win2016_vs2015-x64-1: {}
