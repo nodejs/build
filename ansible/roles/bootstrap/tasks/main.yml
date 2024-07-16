@@ -3,6 +3,16 @@
 #
 # bootstrap packages required for ansible to work
 #
+  - name: run provider-specific bootstrap
+    include_tasks: "{{ bootstrap_include }}"
+    loop_control:
+      loop_var: bootstrap_include
+    with_first_found:
+      - files:
+        - "{{ role_path }}/tasks/partials/{{ provider }}/{{ os }}-{{ arch }}.yml"
+        - "{{ role_path }}/tasks/partials/{{ provider }}/{{ os }}.yml"
+        - "{{ role_path }}/tasks/partials/{{ provider }}/{{ os|stripversion }}.yml"
+        skip: true
 
   - name: run os-specific bootstrap
     include_tasks: "{{ bootstrap_include }}"

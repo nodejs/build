@@ -1,0 +1,24 @@
+---
+
+# DigitalOcean Fedora 40
+
+- name: "{{ provider }} : create systemd-resolved configuration directory"
+  ansible.builtin.file:
+    state: directory
+    path: /etc/systemd/resolved.conf.d
+
+- name: "{{ provider }} : create DNS settings file"
+  ansible.builtin.copy:
+    dest: /etc/systemd/resolved.conf.d/cloudflare.conf
+    src: "{{ os }}-resolv.conf"
+  register: resolved
+
+- name: "{{ provider }} : restart systemd-resolved"
+  ansible.builtin.service:
+    name: systemd-resolved
+    state: restarted
+  when: resolved.changed
+
+- name: "{{ provider }} : reboot machine"
+  ansible.builtin.reboot:
+  when: resolved.changed
