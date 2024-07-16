@@ -22,7 +22,6 @@ hosts:
 
     - joyent:
         debian10-x64-1: {ip: 147.28.162.110, alias: grafana}
-        smartos15-x64-1: {ip: 147.28.183.83, alias: backup}
         ubuntu1604-x64-1: {ip: 147.28.162.105, alias: unencrypted}
 
     - mnx:
