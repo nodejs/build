@@ -69,6 +69,9 @@ hosts:
     - marist:
         zos24-s390x-1: {ip: 148.100.36.157, user: unix1}
 
+    - mnx:
+        ubuntu2404_docker-x64-1: {ip: 8.225.232.80}
+
     - osuosl:
         aix72-ppc64_be-1:
             ip: 140.211.9.77
