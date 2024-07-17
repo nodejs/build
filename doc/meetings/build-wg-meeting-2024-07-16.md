@@ -26,7 +26,7 @@
   * Richard need to decide what infra changes we need/want. Good to have in place for Sep
     to be ready for 23 in Oct.
     * for example proposal is to move up to gcc 12
-    * only question would be for 32 bit arm binaries, did find that moving on this shifted glibc level
+    * only question would be for 32 bit arm binaries, did find that moving on this shifted libstdc++ level
       (others are compiled with RHEL toolset which preserves the glibc level)
 
 * Infrastructure for Orka (2024 and beyond) [#3686](https://github.com/nodejs/build/issues/3686)
