@@ -54,6 +54,6 @@ find "${dstdir}/${version}" -type f -exec chmod 644 '{}' \;
 find "${dstdir}/${version}" -type d -exec chmod 755 '{}' \;
 
 relativedir=${dstdir/$dist_rootdir/"$site/"}
-aws s3 cp ${dstdir}/index.json $staging_bucket/$relativedir/index.json --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
-aws s3 cp ${dstdir}/index.tab $staging_bucket/$relativedir/index.tab --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
-aws s3 cp ${dstdir}/${version}/SHASUMS256.txt $staging_bucket/$relativedir/${version}/SHASUM256.txt --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
+aws s3 cp ${dstdir}/index.json $staging_bucket/$relativedir/index.json --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile > /dev/null
+aws s3 cp ${dstdir}/index.tab $staging_bucket/$relativedir/index.tab --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile > /dev/null
+aws s3 cp ${dstdir}/${version}/SHASUMS256.txt $staging_bucket/$relativedir/${version}/SHASUMS256.txt --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile > /dev/null
