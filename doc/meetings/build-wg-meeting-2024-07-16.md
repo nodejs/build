@@ -67,7 +67,8 @@
   * No update
 
 * Discuss state of r2 migration on Build WG meeting [#3508](https://github.com/nodejs/build/issues/3508)
-  * A change was merged, broke release workflow.
+  * A change was merged, broke release workflow. It was partially backed out to allow the security release to happen. 
+  * Subsequent fix has been applied but looks like there might be an issue promoting nightlies in R2.
 
 ## Q&A, Other
 
