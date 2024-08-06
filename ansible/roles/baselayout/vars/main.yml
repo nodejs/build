@@ -149,6 +149,6 @@ packages: {
 
   # Default gcc/g++ package is 11.
   ubuntu2204: [
-    'gcc,g++,python3,python-is-python3',
+    'gcc,g++,gcc-12,g++-12,python3,python-is-python3',
   ],
 }
