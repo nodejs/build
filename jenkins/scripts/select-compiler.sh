@@ -174,7 +174,9 @@ elif [ "$SELECT_ARCH" = "IBMI73" ]; then
   echo "Compiler set to $COMPILER_LEVEL"
 
 elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
-  if [ "$NODEJS_MAJOR_VERSION" -gt "19" ]; then
+  if [ "$NODEJS_MAJOR_VERSION" -gt "22" ]; then
+    export COMPILER_LEVEL="12"
+  elif [ "$NODEJS_MAJOR_VERSION" -gt "19" ]; then
     export COMPILER_LEVEL="10"
   elif [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
     export COMPILER_LEVEL="8"
@@ -182,19 +184,16 @@ elif [ "$SELECT_ARCH" = "AIXPPC" ]; then
     export COMPILER_LEVEL="6"
   fi
 
-  case $NODE_NAME in
-    *aix73* )
-      echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX 7.3"
-      ;;
-    *aix72* )
-      echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX 7.2"
-      ;;
-  esac
-
+  export AIX_VERSION=`oslevel`
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on AIX $AIX_VERSION"
   export CC="gcc-${COMPILER_LEVEL}"
   export CXX="g++-${COMPILER_LEVEL}"
   export LINK="g++-${COMPILER_LEVEL}"
-  unset LIBPATH
+  if [ "$COMPILER_LEVEL" -ne "10" ]; then
+    export LIBPATH=/opt/freeware/lib/gcc/powerpc-ibm-aix$AIX_VERSION/$COMPILER_LEVEL/pthread:/opt/freeware/lib:/usr/lib:/lib
+  else
+    unset LIBPATH
+  fi
   export PATH="/opt/ccache-3.7.4/libexec:/opt/freeware/bin:$PATH"
   echo "Compiler set to GCC" `$CXX -dumpversion`
 
