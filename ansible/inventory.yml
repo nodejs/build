@@ -84,14 +84,6 @@ hosts:
             swap_file_size_mb: 4096
         rhel8-ppc64_le-1: {ip: 140.211.168.185, swap_file_size_mb: 2048, user: cloud-user}
 
-    - orka:
-        macos11-x64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.100
-            port: 8822
-            user: administrator
-
-
 
   - test:
 
