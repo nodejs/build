@@ -27,19 +27,17 @@ packer {
   }
 }
 
-source "macstadium-orka" "macos11-arm-test-image" {
+source "macstadium-orka" "macos11-intel-test-image" {
   source_image      = "90gbigsurssh.img"
-  image_name        = "macos11-arm-test-latest.img"
-  image_description = "The MacOS 11 ARM test image"
+  image_name        = "macos11-intel-test-latest.img"
+  image_description = "The MacOS 11 Intel test image"
   orka_endpoint     = var.orka_endpoint
   orka_auth_token   = var.orka_auth_token
-  ssh_username      = var.ssh_username
-  ssh_password      = var.ssh_password
 }
 
 build {
   sources = [
-    "macstadium-orka.macos11-arm-test-image"
+    "macstadium-orka.macos11-intel-test-image"
   ]
   provisioner "shell" {
     inline = [
