@@ -24,6 +24,7 @@ jobs:
 
     - name: Initialize Packer
       run: packer init .
+      working-directory: orka/templates
 
     - name: Validate Packer templates
       env:
@@ -36,3 +37,4 @@ jobs:
                         -var "orka_auth_token=$ORKA_AUTH_TOKEN" \
                         -var "ssh_username=$SSH_USERNAME" \
                         -var "ssh_password=$SSH_PASSWORD" .
+      working-directory: orka/templates
