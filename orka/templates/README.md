@@ -75,3 +75,60 @@ packer build -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_AUT
 The templates are initialized and validated in the CI pipeline using GitHub Actions. The pipeline runs on every push to the repository that modifies the templates. You can find the pipeline in the `.github/workflows/orka-templates.yml` directory.
 
 We don't plan to build the images in the CI pipeline. The images are built manually by the team once the PRs are merged or just before merged. 
+
+## Adding new images
+
+Orka provides a base image that we need to customize to our needs. 
+
+1. find the image that you want to extend by running the following command:
+    ```shell
+    orka3 remote-image list
+    ```
+2. pull the image by running the following command:
+    ```shell
+    orka3 remote-image pull <image_name>
+    ```
+
+3. Create a new vm from the image by running the following command:
+    ```shell
+    orka3 vm deploy -i <image_name>
+    ```
+4. Access the vm using vnc and then do the following manual steps (see setion below). The credentials can be found in the secrets repository.
+5. Save the vm as a new image by running the following command:
+    ```shell
+    orka3 vm save <vm_name> <new_image_name>
+    ```
+    Note: Don't stop the vm and use this pattern: `macos11-intel-base.img` for the image name. The generation can take a while.
+6. Delete the vm by running the following command:
+    ```shell
+    orka3 vm delete <vm_name>
+    ```
+    Note: Don't delete the vm until you have saved the image, check by running the command `orka3 image list`
+
+
+
+**Manual Steps**
+
+1. Update Sudoers file:
+
+this requires `NOPASSWD` to be added to the sudoers file to enable elevation
+
+`sudo visudo`
+and change:
+`%admin          ALL = (ALL) ALL`
+to
+`%admin          ALL = (ALL) NOPASSWD:ALL`
+
+2. Allow ssh access
+
+```bash
+sudo systemsetup -setremotelogin on
+```
+3. Install xcode
+
+``bash
+sudo xcode-select --install
+```
+
+Do a an update using the UI. Check the available updates and install them (click in "more info"). Note that you don't want to update the OS, just the software.
+
