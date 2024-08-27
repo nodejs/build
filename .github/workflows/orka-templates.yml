@@ -1,0 +1,40 @@
+name: Check ORKA Packer Templates
+
+on:
+  push:
+    paths:
+      - 'orka/**/*.pkr.hcl'
+  pull_request:
+    paths:
+      - 'orka/**/*.pkr.hcl'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+
+    - name: Set up Packer
+      uses: hashicorp/setup-packer@1aa358be5cf73883762b302a3a03abd66e75b232 #v3.1.0
+
+    - name: Initialize Packer
+      run: packer init .
+      working-directory: orka/templates
+
+    - name: Validate Packer templates
+      env:
+        ORKA_ENDPOINT: 'https://mock-orka-endpoint'
+        ORKA_AUTH_TOKEN: 'mock-orka-auth-token'
+        SSH_USERNAME: 'mock-ssh-username'
+        SSH_PASSWORD: 'mock-ssh-password'
+      run: |
+        packer validate -var "orka_endpoint=$ORKA_ENDPOINT" \
+                        -var "orka_auth_token=$ORKA_AUTH_TOKEN" \
+                        -var "ssh_username=$SSH_USERNAME" \
+                        -var "ssh_password=$SSH_PASSWORD" .
+      working-directory: orka/templates
