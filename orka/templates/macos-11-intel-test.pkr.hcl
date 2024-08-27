@@ -8,6 +8,16 @@ variable "orka_auth_token" {
   default = ""
 }
 
+variable "ssh_default_username" {
+  type    = string
+  default = ""
+}
+
+variable "ssh_default_password" {
+  type    = string
+  default = ""
+}
+
 variable "ssh_username" {
   type    = string
   default = ""
@@ -33,6 +43,8 @@ source "macstadium-orka" "macos11-intel-test-image" {
   image_description = "The MacOS 11 Intel test image"
   orka_endpoint     = var.orka_endpoint
   orka_auth_token   = var.orka_auth_token
+  ssh_username      = var.ssh_default_username
+  ssh_password      = var.ssh_default_password
 }
 
 build {

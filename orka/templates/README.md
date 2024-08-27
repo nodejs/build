@@ -40,6 +40,8 @@ You need to load the environment variables:
     echo $ORKA_AUTH_TOKEN
     echo $SSH_USERNAME
     echo $SSH_PASSWORD
+    echo $SSH_DEFAULT_USERNAME
+    echo $SSH_DEFAULT_PASSWORD
     ```
 
 ## Validate the template
@@ -47,13 +49,13 @@ You need to load the environment variables:
 You can validate all the templates by running the following command:
 
 ```shell
-packer validate -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_AUTH_TOKEN" -var "ssh_username=$SSH_USERNAME" -var "ssh_password=$SSH_PASSWORD" .
+packer validate -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_AUTH_TOKEN" -var "ssh_username=$SSH_USERNAME" -var "ssh_password=$SSH_PASSWORD" -var "ssh_default_username=$SSH_DEFAULT_USERNAME" -var "ssh_default_password=$SSH_DEFAULT_PASSWORD" .
 ```
 
 You can validate a specific template by running the following command:
 
 ```shell
-packer validate -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_AUTH_TOKEN" -var "ssh_username=$SSH_USERNAME" -var "ssh_password=$SSH_PASSWORD" <template_name>
+packer validate -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_AUTH_TOKEN" -var "ssh_username=$SSH_USERNAME" -var "ssh_password=$SSH_PASSWORD" -var "ssh_default_username=$SSH_DEFAULT_USERNAME" -var "ssh_default_password=$SSH_DEFAULT_PASSWORD" <template_name>
 ```
 
 ## Build the image
@@ -61,13 +63,13 @@ packer validate -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_
 You can build all the templates by running the following command:
 
 ```shell
-packer build -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_AUTH_TOKEN" -var "ssh_username=$SSH_USERNAME" -var "ssh_password=$SSH_PASSWORD" .
+packer build -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_AUTH_TOKEN" -var "ssh_username=$SSH_USERNAME" -var "ssh_password=$SSH_PASSWORD" -var "ssh_default_username=$SSH_DEFAULT_USERNAME" -var "ssh_default_password=$SSH_DEFAULT_PASSWORD" .
 ```
 
 You can build a specific template by running the following command:
 
 ```shell
-packer build -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_AUTH_TOKEN" -var "ssh_username=$SSH_USERNAME" -var "ssh_password=$SSH_PASSWORD" <template_name>
+packer build -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_AUTH_TOKEN" -var "ssh_username=$SSH_USERNAME" -var "ssh_password=$SSH_PASSWORD" -var "ssh_default_username=$SSH_DEFAULT_USERNAME" -var "ssh_default_password=$SSH_DEFAULT_PASSWORD" <template_name>
 ```
 
 ## Continuous Integration
