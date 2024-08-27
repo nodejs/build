@@ -38,7 +38,7 @@ packer {
 }
 
 source "macstadium-orka" "macos11-intel-test-image" {
-  source_image      = "90gbigsurssh.img"
+  source_image      = "macos11-intel-base.img"
   image_name        = "macos11-intel-test-latest.img"
   image_description = "The MacOS 11 Intel test image"
   orka_endpoint     = var.orka_endpoint
