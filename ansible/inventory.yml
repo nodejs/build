@@ -127,8 +127,8 @@ hosts:
         ubuntu2204_docker-x64-1: {ip: 134.209.55.216}
         ubuntu2204_docker-x64-2: {ip: 159.89.183.200}
         ubuntu1804-x64-1: {ip: 178.128.181.213}
-        ubuntu2204-x64-1: {ip: 138.197.4.1}
-        ubuntu2204-x64-2: {ip: 167.99.124.188}
+        ubuntu2204-x64-1: {ip: 138.197.4.1, swap_file_size_mb: 2048}
+        ubuntu2204-x64-2: {ip: 167.99.124.188, swap_file_size_mb: 2048}
 
     - equinix:
         ubuntu2004_docker-arm64-1: {ip: 145.40.81.219}
