@@ -88,6 +88,7 @@ Orka provides a base image that we need to customize to our needs.
     ```shell
     orka3 remote-image pull <image_name>
     ```
+    Note: this can take a while, use `orka3 image list <image_name>` to check the progress of the image. Wait until the image is in status `Ready`.
 
 3. Create a new vm from the image by running the following command:
     ```shell
@@ -98,7 +99,7 @@ Orka provides a base image that we need to customize to our needs.
     ```shell
     orka3 vm save <vm_name> <new_image_name>
     ```
-    Note: Don't stop the vm and use this pattern: `macos11-intel-base.img` for the image name. The generation can take a while.
+    Note: Don't stop the vm and use this pattern: `macos13-intel-base.img` or `macos13-arm-base.orkasi` for the image name. The generation can take a while.
 6. Delete the vm by running the following command:
     ```shell
     orka3 vm delete <vm_name>
