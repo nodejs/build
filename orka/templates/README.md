@@ -126,7 +126,7 @@ sudo systemsetup -setremotelogin on
 ```
 3. Install xcode
 
-``bash
+```bash
 sudo xcode-select --install
 ```
 
