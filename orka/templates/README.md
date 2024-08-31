@@ -46,12 +46,6 @@ You need to load the environment variables:
 
 ## Validate the template
 
-You can validate all the templates by running the following command:
-
-```shell
-packer validate -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_AUTH_TOKEN" -var "ssh_default_username=$SSH_DEFAULT_USERNAME" -var "ssh_default_password=$SSH_DEFAULT_PASSWORD" -var "ssh_test_password=$SSH_TEST_PASSWORD" -var "ssh_test_puclic_key=$SSH_TEST_PUBLIC_KEY" .
-```
-
 You can validate a specific template by running the following command:
 
 ```shell
@@ -60,11 +54,6 @@ packer validate -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_
 
 ## Build the image
 
-You can build all the templates by running the following command:
-
-```shell
-packer build -var "orka_endpoint=$ORKA_ENDPOINT" -var "orka_auth_token=$ORKA_AUTH_TOKEN" -var "ssh_default_username=$SSH_DEFAULT_USERNAME" -var "ssh_default_password=$SSH_DEFAULT_PASSWORD" -var "ssh_test_password=$SSH_TEST_PASSWORD" -var "ssh_test_puclic_key=$SSH_TEST_PUBLIC_KEY" .
-```
 
 You can build a specific template by running the following command:
 
