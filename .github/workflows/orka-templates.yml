@@ -23,7 +23,11 @@ jobs:
       uses: hashicorp/setup-packer@1aa358be5cf73883762b302a3a03abd66e75b232 #v3.1.0
 
     - name: Initialize Packer
-      run: packer init .
+      run: |
+        for file in $(find . -name '*.pkr.hcl'); do
+          echo "Initializing $file"
+          packer init $file || exit 1
+        done
       working-directory: orka/templates
 
     - name: Validate Packer templates
