@@ -63,7 +63,7 @@ build {
       "/usr/local/bin/brew doctor || true"
     ]
   }
-  // Install dependencies using Homebrew.
+  // Install dependencies for build and test.
   provisioner "shell" {
     inline = [
       "echo 'Installing packages using Homebrew...'",
@@ -71,12 +71,21 @@ build {
       "/usr/local/bin/brew install git automake bash libtool cmake python ccache"
     ]
   }
+  // Install Java 17 for Jenkins.
+  provisioner "shell" {
+    inline = [
+      "echo 'Installing JRE...'",
+      "eval \"$(/usr/local/bin/brew shellenv)\"",
+      "/usr/local/bin/brew install --cask temurin@17",
+    ]
+  }
   // Print the version of the installed packages.
   provisioner "shell" {
     inline = [
       "echo 'Printing the version of the installed packages...'",
       "eval \"$(/usr/local/bin/brew shellenv)\"",
-      "/usr/local/bin/brew list --versions"
+      "/usr/local/bin/brew list --versions",
+      "java -version"
     ]
   }
 }
