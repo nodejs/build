@@ -45,7 +45,7 @@ jobs:
                           -var "orka_auth_token=$ORKA_AUTH_TOKEN" \
                           -var "ssh_default_username=$SSH_DEFAULT_USERNAME" \
                           -var "ssh_default_password=$SSH_DEFAULT_PASSWORD" \
-                          -var "ssh_test_public_key=$SSH_TEST_PASSWORD" \
-                          -var "ssh_userssh_test_passwordname=$SSH_TEST_PUBLIC_KEY" $file || exit 1
+                          -var "ssh_test_public_key=$SSH_TEST_PUBLIC_KEY" \
+                          -var "ssh_test_password=$SSH_TEST_PASSWORD" $file || exit 1
         done
       working-directory: orka/templates
