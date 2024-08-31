@@ -1,12 +1,3 @@
-packer {
-  required_plugins {
-    macstadium-orka = {
-      version = "~> 3.0"
-      source  = "github.com/macstadium/macstadium-orka"
-    }
-  }
-}
-
 source "macstadium-orka" "macos13-intel-test-image" {
   source_image      = "macos13-intel-base.img"
   image_name        = "macos13-intel-test-latest.img"

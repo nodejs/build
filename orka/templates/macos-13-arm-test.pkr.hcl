@@ -1,12 +1,3 @@
-packer {
-  required_plugins {
-    macstadium-orka = {
-      version = "~> 3.0"
-      source  = "github.com/macstadium/macstadium-orka"
-    }
-  }
-}
-
 source "macstadium-orka" "macos13-arm-test-image" {
   source_image      = "macos13-arm-base.orkasi"
   image_name        = "macos13-arm-test-latest.orkasi"
