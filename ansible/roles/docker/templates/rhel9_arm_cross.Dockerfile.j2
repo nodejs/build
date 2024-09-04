@@ -12,9 +12,9 @@ ENV OSVARIANT docker
 ENV DESTCPU {{ arch }}
 ENV ARCH {{ arch }}
 
-# ccache is not in the default repositories so get it from EPEL 8.
+# ccache is not in the default repositories so get it from EPEL 9.
 RUN dnf install --disableplugin=subscription-manager -y \
-      https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
+      https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm \
     && dnf update --disableplugin=subscription-manager -y \
     && dnf install --disableplugin=subscription-manager -y \
       ccache \
