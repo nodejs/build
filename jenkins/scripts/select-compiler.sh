@@ -113,7 +113,7 @@ case $NODE_NAME in
     else
       # Default gcc on Ubuntu 22.04 is gcc 11.
       export CC="ccache gcc"
-      export CC="ccache g++"
+      export CXX="ccache g++"
     fi
     echo "Compiler set to GCC" `$CXX -dumpversion`
     return
