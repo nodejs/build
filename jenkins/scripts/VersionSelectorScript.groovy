@@ -42,6 +42,8 @@ def buildExclusions = [
   [ /^cross-compiler-ubuntu1804-armv7-gcc-8/,        anyType, gte(18) ],
   [ /^cross-compiler-rhel8-armv7-gcc-8-glibc-2.28/,  anyType, gte(20) ],
   [ /^cross-compiler-rhel8-armv7-gcc-10-glibc-2.28/, anyType, lt(20)  ],
+  [ /^cross-compiler-rhel8-armv7-gcc-10-glibc-2.28/, anyType, gte(23) ],
+  [ /^cross-compiler-rhel9-armv7-gcc-12-glibc-2.28/, anyType, lt(23)  ],
 
   // Windows -----------------------------------------------
   // https://github.com/nodejs/build/blob/main/doc/windows-visualstudio-supported-versions.md
