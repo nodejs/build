@@ -105,6 +105,19 @@ case $NODE_NAME in
         ;;
     esac
     ;;
+  *ubuntu2204*)
+    if [ "$NODEJS_MAJOR_VERSION" -gt "22" ]; then
+      export CC="ccache gcc-12"
+      export CXX="ccache g++-12"
+      echo ""
+    else
+      # Default gcc on Ubuntu 22.04 is gcc 11.
+      export CC="ccache gcc"
+      export CXX="ccache g++"
+    fi
+    echo "Compiler set to GCC" `$CXX -dumpversion`
+    return
+    ;;
 esac
 
 if [ "$SELECT_ARCH" = "PPC64LE" ]; then
