@@ -68,8 +68,14 @@ build {
       "chmod 700 /Users/${var.ssh_default_username}/.ssh",
       "chmod 600 /Users/${var.ssh_default_username}/.ssh/authorized_keys"
     ]
-  } 
-
+  }
+  // Add GitHub host key to known hosts.
+  provisioner "shell" {
+    inline = [
+      "echo 'Adding GitHub host key to known hosts...'",
+      "ssh-keyscan github.com >> /Users/${var.ssh_default_username}/.ssh/known_hosts"
+    ]
+  }
   // Disable SSH password authentication.
   // @TODO: Review fallback to password authentication.
   provisioner "shell" {
