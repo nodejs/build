@@ -304,8 +304,8 @@ hosts:
         centos7-x64-1: {ip: 119.9.27.82}
         debian10-x64-1: {ip: 104.239.140.184}
         debian11-x64-1: {ip: 23.253.109.216, swap_file_size_mb: 4096}
-        ubuntu1604-x64-1: {ip: 119.9.51.176}
-        ubuntu1604-x64-2: {ip: 104.130.124.194}
+        debian12-x64-1: {ip: 104.130.124.194, swap_file_size_mb: 2048}
+        ubuntu2204-x64-1: {ip: 119.9.52.75, swap_file_size_mb: 2048, user: ubuntu}
         win2016_vs2015-x64-1: {}
         win2016_vs2015-x64-2: {}
         win2019_vs2019-x64-1: {}
