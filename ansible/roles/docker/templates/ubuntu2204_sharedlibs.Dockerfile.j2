@@ -56,12 +56,12 @@ RUN for ICU_ENV in $(env | grep ICU..DIR); do \
     rm -rf /tmp/icu-$ICU_VERSION; \
     done
 
-ENV OPENSSL111VER 1.1.1u
+ENV OPENSSL111VER 1.1.1w
 ENV OPENSSL111DIR /opt/openssl-$OPENSSL111VER
 
 RUN mkdir -p /tmp/openssl_$OPENSSL111VER && \
     cd /tmp/openssl_$OPENSSL111VER && \
-    curl -sL https://www.openssl.org/source/openssl-$OPENSSL111VER.tar.gz | tar zxv --strip=1 && \
+    curl -sL https://github.com/openssl/openssl/releases/download/OpenSSL_1_1_1w/openssl-$OPENSSL111VER.tar.gz | tar zxv --strip=1 && \
     ./config --prefix=$OPENSSL111DIR && \
     make -j $JOBS && \
     make install && \
@@ -75,7 +75,7 @@ ENV OPENSSL30FIPSDIR /opt/openssl-$OPENSSL30FIPSVER-fips
 
 RUN mkdir -p /tmp/openssl-$OPENSSL30FIPSVER && \
     cd /tmp/openssl-$OPENSSL30FIPSVER && \
-    curl -sL https://www.openssl.org/source/openssl-$OPENSSL30FIPSVER.tar.gz | tar zxv --strip=1 && \
+    curl -sL https://github.com/openssl/openssl/releases/download/openssl-$OPENSSL30FIPSVER/openssl-$OPENSSL30FIPSVER.tar.gz | tar zxv --strip=1 && \
     ./config --prefix=$OPENSSL30FIPSDIR enable-fips && \
     make -j $JOBS && \
     make install && \
@@ -90,7 +90,7 @@ RUN LD_LIBRARY_PATH=$OPENSSL30FIPSDIR/lib64 $OPENSSL30FIPSDIR/bin/openssl fipsin
       sed -i -r 's/^# (activate = 1)/\1/g' $OPENSSL30FIPSDIR/ssl/openssl.cnf && \
       echo "\n[evp_properties]\ndefault_properties = \"fips=yes\"\n" >> $OPENSSL30FIPSDIR/ssl/openssl.cnf
 
-ENV OPENSSL30VER 3.0.8+quic
+ENV OPENSSL30VER 3.0.14+quic
 ENV OPENSSL30DIR /opt/openssl-$OPENSSL30VER
 
 RUN mkdir -p /tmp/openssl-$OPENSSL30VER && \
@@ -102,23 +102,23 @@ RUN mkdir -p /tmp/openssl-$OPENSSL30VER && \
     make install && \
     rm -rf /tmp/openssl-$OPENSSL30VER
 
-ENV OPENSSL31VER 3.1.1
+ENV OPENSSL31VER 3.1.7
 ENV OPENSSL31DIR /opt/openssl-$OPENSSL31VER
 
 RUN mkdir -p /tmp/openssl-$OPENSSL31VER && \
     cd /tmp/openssl-$OPENSSL31VER && \
-    curl -sL https://www.openssl.org/source/openssl-$OPENSSL31VER.tar.gz | tar zxv --strip=1 && \
+    curl -sL https://github.com/openssl/openssl/releases/download/openssl-$OPENSSL31VER/openssl-$OPENSSL31VER.tar.gz | tar zxv --strip=1 && \
     ./config --prefix=$OPENSSL31DIR && \
     make -j $JOBS && \
     make install && \
     rm -rf /tmp/openssl-$OPENSSL31VER
 
-ENV OPENSSL32VER 3.2.2
+ENV OPENSSL32VER 3.2.3
 ENV OPENSSL32DIR /opt/openssl-$OPENSSL32VER
 
 RUN mkdir -p /tmp/openssl-$OPENSSL32VER && \
     cd /tmp/openssl-$OPENSSL32VER && \
-    curl -sL https://www.openssl.org/source/openssl-$OPENSSL32VER.tar.gz | tar zxv --strip=1 && \
+    curl -sL https://github.com/openssl/openssl/releases/download/openssl-$OPENSSL32VER/openssl-$OPENSSL32VER.tar.gz | tar zxv --strip=1 && \
     ./config --prefix=$OPENSSL32DIR && \
     make -j $JOBS && \
     make install && \
