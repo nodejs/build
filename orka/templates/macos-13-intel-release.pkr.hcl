@@ -131,7 +131,8 @@ build {
       "echo 'Printing the version of the installed packages...'",
       "eval \"$(/usr/local/bin/brew shellenv)\"",
       "/usr/local/bin/brew list --versions",
-      "java -version"
+      "java -version",
+      "xcodebuild -version"
     ]
   }
 }
