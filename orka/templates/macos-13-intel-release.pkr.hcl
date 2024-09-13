@@ -93,6 +93,14 @@ build {
       "eval \"$($(brew --prefix)/bin/brew shellenv)\""
     ]
   }
+  // Ensure Homebrew environment is set up in the shell profile.
+  provisioner "shell" {
+    inline = [
+      "echo 'Setting up Homebrew environment in shell profile...'",
+      "echo 'eval \"$(/usr/local/bin/brew shellenv)\"' >> /Users/admin/.zshrc",
+      "echo 'eval \"$(/usr/local/bin/brew shellenv)\"' >> /Users/admin/.bash_profile"
+    ]
+  }
   // Check Homebrew. Ignore errors because we are not using the last version of Xcode.
   provisioner "shell" {
     inline = [
