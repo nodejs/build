@@ -117,6 +117,14 @@ build {
       "/usr/local/bin/brew install git automake bash libtool cmake python ccache xz"
     ]
   }
+  // Install tap2junit using pip.
+  provisioner "shell" {
+    inline = [
+      "echo 'Installing tap2junit using pip...'",
+      "python3 -m pip install --user tap2junit",
+      "export PATH=$PATH:/Users/admin/.local/bin"
+    ]
+  }
   // Install Java 17 for Jenkins.
   provisioner "shell" {
     inline = [
