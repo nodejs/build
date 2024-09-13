@@ -160,8 +160,8 @@ hosts:
         rhel8-x64-2: {ip: 169.61.75.58, build_test_v8: yes}
         rhel8-x64-3: {ip: 52.117.26.13, build_test_v8: yes}
         rhel9-x64-1: {ip: 169.60.150.92, swap_file_size_mb: 2048}
+        rhel9-x64-2: {ip: 169.44.168.2}
         ubuntu2204-x64-1: {ip: 169.60.150.82}
-        ubuntu2204-x64-2: {ip: 169.44.168.2}
         # when adding, removing or changing the IPs for any
         # `jenkins-workspace-*` machine, remember to rerun
         # the `ansible/playbooks/create-github-bot.yml` playbook
