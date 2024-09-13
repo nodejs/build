@@ -114,7 +114,7 @@ build {
     inline = [
       "echo 'Installing packages using Homebrew...'",
       "eval \"$(/usr/local/bin/brew shellenv)\"",
-      "/usr/local/bin/brew install git automake bash libtool cmake python ccache"
+      "/usr/local/bin/brew install git automake bash libtool cmake python ccache xz"
     ]
   }
   // Install Java 17 for Jenkins.
