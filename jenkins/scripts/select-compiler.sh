@@ -192,7 +192,11 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
   fi
 
 elif [ "$SELECT_ARCH" = "IBMI73" ]; then
-  export COMPILER_LEVEL="10"
+  if [ "$NODEJS_MAJOR_VERSION" -gt "22" ]; then
+    export COMPILER_LEVEL="12"
+  else
+    export COMPILER_LEVEL="10"
+  fi
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on IBMI73"
   export CC="ccache gcc-${COMPILER_LEVEL}"
   export CXX="ccache g++-${COMPILER_LEVEL}"
