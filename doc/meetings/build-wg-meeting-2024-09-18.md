@@ -23,7 +23,7 @@
 ### nodejs/build
 
 * NodeJS STF Future State [#3854](https://github.com/nodejs/build/issues/3854)
-  * No updated
+  * No updates
 * Planning/requirements for Node.js 23 [#3807](https://github.com/nodejs/build/issues/3807)
   * GCC 12 is installed on all Linuxes except SmartOS which will hopefully be taken care of by the migration off Equinix work (as we’ll need to move to a newer version of SmartOS which have a later version of gcc by default).
   * Windows seems ok. We are not yet ready to switch to ClangCL
