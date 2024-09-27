@@ -122,6 +122,7 @@ hosts:
         fedora40-x64-2: {ip: 162.243.187.89}
         freebsd12-x64-1: {ip: 45.55.90.237, user: freebsd}
         freebsd12-x64-2: {ip: 107.170.28.213, user: freebsd}
+        freebsd13-x64-1: {ip: 138.197.25.49, user: freebsd}
         rhel8-x64-1: {ip: 161.35.139.78, build_test_v8: yes, swap_file_size_mb: 2048}
         rhel9-x64-1: {ip: 134.122.12.240, swap_file_size_mb: 2048}
         ubuntu2204_docker-x64-1: {ip: 134.209.55.216}
