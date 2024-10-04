@@ -42,6 +42,10 @@ fi
 relativedir=${dstdir/$dist_rootdir/"$site/"}
 tmpversion=$2
 
-aws s3 cp $staging_bucket/$relativedir/$tmpversion/ $dist_bucket/$relativedir/$tmpversion/ --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile --recursive --no-follow-symlinks
+# Due to R2 limitations, `aws s3 cp` and `aws s3 sync` only succeed in copying
+# different sets of files across. Fortunately the sets are disjoint, so running
+# both commands (ignoring errors) will copy all the files across.
+aws s3 cp $staging_bucket/$relativedir/$tmpversion/ $dist_bucket/$relativedir/$tmpversion/ --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile --recursive --no-follow-symlinks --copy-props none || true
+aws s3 sync $staging_bucket/$relativedir/$tmpversion/ $dist_bucket/$relativedir/$tmpversion/ --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile --no-follow-symlinks || true
 aws s3 cp $staging_bucket/$relativedir/index.json $dist_bucket/$relativedir/index.json --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
 aws s3 cp $staging_bucket/$relativedir/index.tab $dist_bucket/$relativedir/index.tab --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
