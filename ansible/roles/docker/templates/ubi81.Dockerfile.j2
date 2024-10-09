@@ -23,7 +23,8 @@ RUN dnf install --disableplugin=subscription-manager -y \
       git \
       java-17-openjdk-headless \
       make \
-      python3.8 \
+      python3.12 \
+      python3.12-pip \
       openssl-devel \
       procps-ng \
     && dnf --disableplugin=subscription-manager clean all
