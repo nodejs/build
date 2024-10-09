@@ -4,8 +4,12 @@ if %NODEJS_MAJOR_VERSION% leq 12 set "PATH=C:\Python27\;C:\Python27\Scripts;%PAT
 :: Opt-in for a generating binlog (work with code has https://github.com/nodejs/node/pull/26431/files)
 set "msbuild_args=/binaryLogger:node.binlog"
 
+:: Check if compiler is ClangCL
+echo %nodes% | findstr /R "_clang" >nul
+set "not_clang=%errorlevel%"
+
 :: Opt-in for a clcache
-if not defined DISABLE_CLCACHE if exist C:\clcache\dist\clcache_main\clcache_main.exe (
+if %not_clang% equ 1 if not defined DISABLE_CLCACHE if exist C:\clcache\dist\clcache_main\clcache_main.exe (
   set CLCACHE_OBJECT_CACHE_TIMEOUT_MS=60000
   set CLCACHE_BASEDIR="%WORKSPACE%"
   set CLCACHE_HARDLINK=1
@@ -49,6 +53,9 @@ if "%nodes:~-6%" == "-arm64" (
   set "VCBUILD_EXTRA_ARGS=x86 %VCBUILD_EXTRA_ARGS%"
 ) else (
   set "VCBUILD_EXTRA_ARGS=x64 %VCBUILD_EXTRA_ARGS%"
+)
+if %not_clang% equ 0  (
+  set "VCBUILD_EXTRA_ARGS=%VCBUILD_EXTRA_ARGS% clang-cl"
 )
 set DEBUG_HELPER=1
 call vcbuild.bat %VCBUILD_EXTRA_ARGS%

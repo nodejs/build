@@ -58,10 +58,9 @@ def buildExclusions = [
   [ /vs2015(-\w+)?$/,                 testType,    gte(18)       ],
   [ /vs2017(-\w+)?$/,                 testType,    gte(18)       ],
   [ /vs2019(-\w+)?$/,                 testType,    gte(21)       ],
-  [ /vs2022(-\w+)?$/,                 testType,    lt(20)        ], // Temporarily compile Node v20+ on both VS2019 and VS2022
-  [ /vs2022-x86$/,                    testType,    lt(20)        ], // Temporarily compile Node v20+ arm64 and x86 on both VS2019 and VS2022
-  [ /vs2022-x86$/,                    testType,    gte(23)       ],
-  [ /vs2022-arm64$/,                  testType,    lt(20)        ],
+  [ /vs2022(-\w+)?$/,                 testType,    lt(21)        ],
+  [ /vs2022-x86$/,                    testType,    gte(23)       ], // x86 was dropped on Windows in v23
+  [ /vs2022_clang(-\w+)?$/,           testType,    lt(23)        ], // ClangCL support was added in v23
   [ /COMPILED_BY-\w+-arm64$/,         testType,    lt(20)        ], // run tests on arm64 for >=19
   // VS versions supported to build add-ons
   [ /vs2015-COMPILED_BY/,             testType,    gte(20)       ],
