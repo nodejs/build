@@ -42,6 +42,6 @@ fi
 relativedir=${dstdir/$dist_rootdir/"$site/"}
 tmpversion=$2
 
-aws s3 cp $staging_bucket/$relativedir/$tmpversion/ $dist_bucket/$relativedir/$tmpversion/ --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile --recursive --no-follow-symlinks
-aws s3 cp $staging_bucket/$relativedir/index.json $dist_bucket/$relativedir/index.json --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
-aws s3 cp $staging_bucket/$relativedir/index.tab $dist_bucket/$relativedir/index.tab --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile
+gh workflow run promote-release.yml --repo nodejs/release-cloudflare-worker --field path=$relativedir/$tmpversion/ --field recursive='true'
+gh workflow run promote-release.yml --repo nodejs/release-cloudflare-worker --field path=$relativedir/index.json
+gh workflow run promote-release.yml --repo nodejs/release-cloudflare-worker --field path=$relativedir/index.tab
