@@ -42,6 +42,6 @@ fi
 relativedir=${dstdir/$dist_rootdir/"$site/"}
 tmpversion=$2
 
-gh workflow run promote-release.yml --repo nodejs/release-cloudflare-worker --field path=$relativedir/$tmpversion/ --field recursive='true'
+gh workflow run promote-release.yml --repo nodejs/release-cloudflare-worker --field path=$relativedir/$tmpversion/ --field recursive=true
 gh workflow run promote-release.yml --repo nodejs/release-cloudflare-worker --field path=$relativedir/index.json
 gh workflow run promote-release.yml --repo nodejs/release-cloudflare-worker --field path=$relativedir/index.tab
