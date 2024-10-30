@@ -25,6 +25,11 @@ fi
 
 ${__dirname}/_resha.sh $site $dstdir $2
 
-. ${__dirname}/upload_to_cloudflare.sh $site $2
+# https://github.com/nodejs/build/issues/3508
+# Output from upload_to_cloudflare.sh must not go to stdout to prevent
+# breaking the release.sh script.
+logfile="${__dirname}/logs/cloudflare.log"
+date >> "${logfile}"
+. ${__dirname}/upload_to_cloudflare.sh $site $2 >> "${logfile}" 2>&1
 
 /home/nodejs/queue-cdn-purge.sh $site resha_release
