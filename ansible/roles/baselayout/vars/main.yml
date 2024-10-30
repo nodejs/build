@@ -57,7 +57,7 @@ packages: {
   ],
 
   ibmi: [
-    'autoconf,automake,ca-certificates-mozilla,tar-gnu,gzip,ccache,cmake,coreutils-gnu,gcc10,gcc10-cplusplus,gcc10-cpp,git,libstdcplusplus6-10-devel,m4-gnu,openssl-devel,python2-setuptools,python3,python3-pip,python39,python39-pip,python39-setuptools,sed-gnu,zlib-devel,icu-devel,c-ares-devel,brotli-devel,grep-gnu,pkg-config,xz',
+    'autoconf,automake,ca-certificates-mozilla,tar-gnu,gzip,ccache,cmake,coreutils-gnu,gcc12,gcc12-cplusplus,gcc12-cpp,libstdcplusplus6-12-devel,gcc10,gcc10-cplusplus,gcc10-cpp,git,libstdcplusplus6-10-devel,m4-gnu,openssl-devel,python2-setuptools,python3,python3-pip,python39,python39-pip,python39-setuptools,sed-gnu,zlib-devel,icu-devel,c-ares-devel,brotli-devel,grep-gnu,pkg-config,xz',
   ],
 
   debian8: [
