@@ -31,9 +31,10 @@ if [ -z ${staging_bucket+x} ]; then
   exit 1
 fi
 
-relativedir=${dstdir/$dist_rootdir/"$site/"}
+relative_srcdir=${srcdir/$staging_rootdir/"$site/"}
+relative_dstdir=${dstdir/$dist_rootdir/"$site/"}
 tmpversion=$2
 
-rclone copy $staging_bucket/$relativedir/$tmpversion/ $prod_bucket/$relativedir/$tmpversion/
-rclone copyto $staging_bucket/$relativedir/index.json $prod_bucket/$relativedir/index.json
-rclone copyto $staging_bucket/$relativedir/index.tab $prod_bucket/$relativedir/index.tab
+rclone copy $staging_bucket/$relative_srcdir/$tmpversion/ $prod_bucket/$relative_dstdir/$tmpversion/
+rclone copyto $staging_bucket/$relative_dstdir/index.json $prod_bucket/$relative_dstdir/index.json
+rclone copyto $staging_bucket/$relative_dstdir/index.tab $prod_bucket/$relative_dstdir/index.tab
