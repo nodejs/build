@@ -71,6 +71,7 @@ def buildExclusions = [
 
   // FreeBSD -----------------------------------------------
   [ /^freebsd12/,                     anyType,     gte(22) ],
+  [ /^freebsd13/,                     anyType,     gte(22) ], // https://github.com/nodejs/node/issues/54576
 
   // Shared libs docker containers -------------------------
   [ /sharedlibs_debug_x64/,           anyType,     gte(18) ],
