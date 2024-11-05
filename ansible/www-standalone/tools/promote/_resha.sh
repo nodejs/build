@@ -34,6 +34,11 @@ if [ -z ${staging_bucket+x} ]; then
   exit 1
 fi
 
+if [ -z ${rclone_log+x} ]; then
+    echo "\$rclone_log is not set"
+    exit 1
+fi
+
 (cd "${dstdir}/${version}" && shasum -a256 $(ls node* openssl* iojs* win-*/* x64/* 2> /dev/null) > SHASUMS256.txt) || exit 1
 if [[ $version =~ ^v[0] ]]; then
   (cd "${dstdir}/${version}" && shasum $(ls node* openssl* x64/* 2> /dev/null) > SHASUMS.txt) || exit 1
@@ -44,6 +49,6 @@ find "${dstdir}/${version}" -type f -exec chmod 644 '{}' \;
 find "${dstdir}/${version}" -type d -exec chmod 755 '{}' \;
 
 relativedir=${dstdir/$dist_rootdir/"$site/"}
-rclone copyto ${dstdir}/index.json $staging_bucket/$relativedir/index.json > /dev/null
-rclone copyto ${dstdir}/index.tab $staging_bucket/$relativedir/index.tab > /dev/null
-rclone copyto ${dstdir}/${version}/SHASUMS256.txt $staging_bucket/$relativedir/${version}/SHASUMS256.txt > /dev/null
+rclone copyto --log-file=${rclone_log} ${dstdir}/index.json $staging_bucket/$relativedir/index.json > /dev/null
+rclone copyto --log-file=${rclone_log} ${dstdir}/index.tab $staging_bucket/$relativedir/index.tab > /dev/null
+rclone copyto --log-file=${rclone_log} ${dstdir}/${version}/SHASUMS256.txt $staging_bucket/$relativedir/${version}/SHASUMS256.txt > /dev/null
