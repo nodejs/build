@@ -42,4 +42,4 @@ staging_bucket=r2:dist-staging
 
 # format: yyyy-mm-dd-hh-mm-ss.log
 rclone_log_level=INFO
-rclone_log=${dist_rootdir}rclone/$(date "+%F-%H-%M-%S.log")
+rclone_log=/home/dist/rclone/$(date "+%F-%H-%M-%S.log")
