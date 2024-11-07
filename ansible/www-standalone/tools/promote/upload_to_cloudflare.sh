@@ -34,11 +34,26 @@ if [ -z ${rclone_log+x} ]; then
     echo "\$rlone_log is not set"
     exit 1
 fi
+if [ -z ${rclone_log_level+x} ]; then
+  rclone_log_level=INFO
+fi
 
 relative_srcdir=${srcdir/$staging_rootdir/"$site/"}
 relative_dstdir=${dstdir/$dist_rootdir/"$site/"}
 tmpversion=$2
 
-rclone copy --log-file=$rclone_log $staging_bucket/$relative_srcdir/$tmpversion/ $prod_bucket/$relative_dstdir/$tmpversion/
-rclone copyto --log-file=$rclone_log $staging_bucket/$relative_dstdir/index.json $prod_bucket/$relative_dstdir/index.json
-rclone copyto --log-file=$rclone_log $staging_bucket/$relative_dstdir/index.tab $prod_bucket/$relative_dstdir/index.tab
+rclone copy \
+  --log-level=$rclone_log_level \
+  --log-file=$rclone_log \
+  $staging_bucket/$relative_srcdir/$tmpversion/ \
+  $prod_bucket/$relative_dstdir/$tmpversion/
+rclone copyto \
+  --log-level=$rclone_log_level \
+  --log-file=$rclone_log \
+  $staging_bucket/$relative_dstdir/index.json \
+  $prod_bucket/$relative_dstdir/index.json
+rclone copyto \
+  --log-level=$rclone_log_level \
+  --log-file=$rclone_log \
+  $staging_bucket/$relative_dstdir/index.tab \
+  $prod_bucket/$relative_dstdir/index.tab
