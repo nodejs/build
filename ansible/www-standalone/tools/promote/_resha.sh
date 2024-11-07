@@ -52,20 +52,21 @@ nodejs-dist-indexer --dist $dstdir --indexjson ${dstdir}/index.json  --indextab 
 find "${dstdir}/${version}" -type f -exec chmod 644 '{}' \;
 find "${dstdir}/${version}" -type d -exec chmod 755 '{}' \;
 
-relativedir=${dstdir/$dist_rootdir/"$site/"}
+relative_srcdir=${srcdir/$staging_rootdir/"$site/"}
+relative_dstdir=${dstdir/$dist_rootdir/"$site/"}
+
 rclone copyto \
   --log-level=${rclone_log_level} \
   --log-file=${rclone_log} \
   ${dstdir}/index.json \
-  $staging_bucket/$relativedir/index.json > /dev/null
+  $staging_bucket/$relative_dstdir/index.json > /dev/null
 rclone copyto \
   --log-level=${rclone_log_level} \
   --log-file=${rclone_log} \
   ${dstdir}/index.tab \
-  $staging_bucket/$relativedir/index.tab > /dev/null
+  $staging_bucket/$relative_dstdir/index.tab > /dev/null
 rclone copyto \
   --log-level=${rclone_log_level} \
   --log-file=${rclone_log} \
   ${dstdir}/${version}/SHASUMS256.txt \
-  $staging_bucket/$relativedir/${version}/SHASUMS256.txt > /dev/null
-  
+  $staging_bucket/$relative_srcdir/${version}/SHASUMS256.txt > /dev/null
