@@ -39,3 +39,7 @@ chakracore_release_dirmatch=.*
 
 prod_bucket=r2:dist-prod
 staging_bucket=r2:dist-staging
+
+# format: yyyy-mm-dd-hh-mm-ss.log
+rclone_log_level=INFO
+rclone_log=/home/dist/rclone/$(date "+%F-%H-%M-%S.log")
