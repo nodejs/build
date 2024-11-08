@@ -16,6 +16,7 @@ fi
 
 . ${__dirname}/settings
 
+srcdir=$release_srcdir
 dstdir=$release_dstdir
 
 if [ "X${1}" == "X" ]; then
@@ -23,7 +24,7 @@ if [ "X${1}" == "X" ]; then
   exit 1
 fi
 
-${__dirname}/_resha.sh $site $dstdir $2
+${__dirname}/_resha.sh $site $srcdir $dstdir $2
 
 # https://github.com/nodejs/build/issues/3508
 # Output from upload_to_cloudflare.sh must not go to stdout to prevent
