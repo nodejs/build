@@ -3,14 +3,20 @@
 set -e
 
 site=$1
-dstdir=$2
-version=$3
+srcdir=$2
+dstdir=$3
+version=$4
 
 __dirname="$(CDPATH= cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . ${__dirname}/settings
 
 if [ "X${site}" == "X" ]; then
   echo "site argument not provided"
+  exit 1
+fi
+
+if [ "X${srcdir}" == "X" ]; then
+  echo "srcdir argument not provided"
   exit 1
 fi
 
