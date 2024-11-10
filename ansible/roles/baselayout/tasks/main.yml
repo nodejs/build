@@ -124,13 +124,6 @@
     name: python3
     path: "/usr/bin/python3.8"
 
-- name: freebsd | update python package alternatives
-  when: os == "freebsd12"
-  file:
-    dest: "/usr/local/bin/python"
-    state: link
-    src: "/usr/local/bin/python2"
-
 - name: remove fortune from login shells
   when: os|stripversion == 'freebsd'
   lineinfile:
