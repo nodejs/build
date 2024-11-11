@@ -59,7 +59,7 @@ should be aware of the bounds of their expertise and act accordingly.
      working groups and activities. The longer the better. In case of doubt,
      or if the individual is _not_ a Node.js Collaborator, contact the Node.js
      TSC.
-  3. A contractual relationship (such as employment) with a member company of
+  2. A contractual relationship (such as employment) with a member company of
      the OpenJS Foundation. Contractual relationships carry legal weight and
      provide greater likelihood of a stable trust relationship; at a minimum
      they establish strong legal accountability.
