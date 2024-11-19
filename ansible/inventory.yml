@@ -120,6 +120,7 @@ hosts:
         fedora39-x64-2: {ip: 134.209.172.40}
         fedora40-x64-1: {ip: 159.65.248.149}
         fedora40-x64-2: {ip: 162.243.187.89}
+        fedora41-x64-1: {ip: 165.227.191.35}
         freebsd13-x64-1: {ip: 138.197.25.49, user: freebsd, swap_file_size_mb: 2048}
         freebsd13-x64-2: {ip: 159.89.188.229, user: freebsd, swap_file_size_mb: 2048}
         rhel8-x64-1: {ip: 161.35.139.78, build_test_v8: yes, swap_file_size_mb: 2048}
