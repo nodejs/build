@@ -48,3 +48,11 @@
     insertafter: ":OUTPUT ACCEPT.*]"
     line: "-A INPUT -s 127.0.0.2/32 -d 127.0.0.1/32 -j ACCEPT"
   notify: restart iptables
+
+- name: Configure getaddrinfo to prefer IPv4 addresses
+  ansible.builtin.copy:
+    dest: /etc/gai.conf
+    group: root
+    mode: 0644
+    owner: root
+    src: "gai.conf"
