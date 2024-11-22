@@ -314,8 +314,8 @@ function test () {
     const version = 'v10.1.0'
     const expectedStdout =
       '... Checking assets\n' +
-      '... Expecting a total of 40 assets for v10.x\n' +
-      '... 37 assets waiting in staging\n' +
+      '... Expecting a total of 41 assets for v10.x\n' +
+      '... 38 assets waiting in staging\n' +
       '... 0 assets already promoted\n' +
       ' \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  The following assets are expected for v10.x but are currently missing from staging:\n' +
       '    • node-v10.1.0-linux-armv6l.tar.gz\n' +
@@ -376,9 +376,9 @@ function test () {
     const version = 'v11.11.11'
     const expectedStdout =
       '... Checking assets\n' +
-      '... Expecting a total of 40 assets for v11.x\n' +
-      '... 40 assets waiting in staging\n' +
-      ' \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  40 assets already promoted will be overwritten, is this OK?\n' +
+      '... Expecting a total of 41 assets for v11.x\n' +
+      '... 41 assets waiting in staging\n' +
+      ' \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  41 assets already promoted will be overwritten, is this OK?\n' +
       ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v11.x\n' +
       '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
 
@@ -399,13 +399,17 @@ function test () {
       '    Should a new list be created for v9.x?\n' +
       '    https://github.com/nodejs/build/tree/main/ansible/www-standalone/tools/promote/expected_assets/v9.x\n' +
       '... Expecting a total of 44 assets for v9.x\n' +
-      '... 40 assets waiting in staging\n' +
+      '... 41 assets waiting in staging\n' +
       '... 0 assets already promoted\n' +
       ' \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  The following assets are expected for v9.x but are currently missing from staging:\n' +
       '    • node-v9.9.9-linux-x86.tar.gz\n' +
       '    • node-v9.9.9-linux-x86.tar.xz\n' +
       '    • node-v9.9.9-sunos-x86.tar.gz\n' +
       '    • node-v9.9.9-sunos-x86.tar.xz\n' +
+      ' \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  The following assets were found in staging but are not expected for v9.x:\n' +
+      '    • docs/apilinks.json\n' +
+      '    Does the expected assets list for v9.x need to be updated?\n' +
+      '    https://github.com/nodejs/build/tree/main/ansible/www-standalone/tools/promote/expected_assets/v9.x\n' +
       '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n'
 
     async function setup (fixtureStagingDir, fixtureDistDir) {
@@ -422,9 +426,9 @@ function test () {
     const version = 'v10.0.0'
     const expectedStdout =
       '... Checking assets\n' +
-      '... Expecting a total of 40 assets for v10.x\n' +
+      '... Expecting a total of 41 assets for v10.x\n' +
       '... 2 assets waiting in staging\n' +
-      '... 38 assets already promoted\n' +
+      '... 39 assets already promoted\n' +
       ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v10.x\n'
 
     async function setup (fixtureStagingDir, fixtureDistDir) {
@@ -448,9 +452,9 @@ function test () {
     const version = 'v10.0.0'
     const expectedStdout =
       '... Checking assets\n' +
-      '... Expecting a total of 40 assets for v10.x\n' +
+      '... Expecting a total of 41 assets for v10.x\n' +
       '... 2 assets waiting in staging\n' +
-      '... 40 assets already promoted\n' +
+      '... 41 assets already promoted\n' +
       ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v10.x\n' +
       ' \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  The following assets were found in staging but are not expected for v10.x:\n' +
       '    • ooolaalaa.tar.gz\n' +
@@ -476,8 +480,8 @@ function test () {
     const version = 'v11.11.1'
     const expectedStdout =
       '... Checking assets\n' +
-      '... Expecting a total of 40 assets for v11.x\n' +
-      '... 42 assets waiting in staging\n' +
+      '... Expecting a total of 41 assets for v11.x\n' +
+      '... 43 assets waiting in staging\n' +
       '... 0 assets already promoted\n' +
       ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v11.x\n' +
       ' \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  The following assets were found in staging but are not expected for v11.x:\n' +
