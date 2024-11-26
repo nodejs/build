@@ -1,0 +1,39 @@
+name: Run tests for check_assets
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/check_assets-tool.yml'
+      - 'ansible/www-standalone/tools/promote/expected_assets/*'
+      - 'ansible/www-standalone/tools/promote/check_assets*'
+  push:
+    paths:
+      - '.github/workflows/check_assets-tool.yml'
+      - 'ansible/www-standalone/tools/promote/expected_assets/*'
+      - 'ansible/www-standalone/tools/promote/check_assets*'
+  schedule:
+    - cron: 0 0 * * *
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # This needs to match the version of Node.js on www.
+  NODE_VERSION: 22
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Run tests
+        run: node --test
+        working-directory: ansible/www-standalone/tools/promote/  
