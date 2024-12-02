@@ -14,7 +14,7 @@ flowchart TD
       
       startReleaseBuilds[/<a href='https://github.com/nodejs/node/blob/main/doc/contributing/releases.md#9-produce-release-builds'>Start release build</a>\]
       promote[/<a href='https://github.com/nodejs/node/blob/main/tools/release.sh'>Promote</a>\]
-      blog[/<a href='https://github.com/nodejs/nodejs.org/blob/main/scripts/release-post/index.mjs'>Create blog post</a>\]
+      blog[/<a href='https://github.com/nodejs/nodejs.org/blob/main/apps/site/scripts/release-post/index.mjs'>Create blog post</a>\]
       done([End])
 
       start-->prepareRelease-->startTestBuilds-->readyToRelease
