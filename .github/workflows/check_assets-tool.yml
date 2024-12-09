@@ -6,11 +6,15 @@ on:
       - '.github/workflows/check_assets-tool.yml'
       - 'ansible/www-standalone/tools/promote/expected_assets/*'
       - 'ansible/www-standalone/tools/promote/check_assets*'
+      - 'ansible/www-standalone/tools/promote/check_r2_assets*'
+      - 'ansible/www-standalone/tools/promote/test/**'
   push:
     paths:
       - '.github/workflows/check_assets-tool.yml'
       - 'ansible/www-standalone/tools/promote/expected_assets/*'
       - 'ansible/www-standalone/tools/promote/check_assets*'
+      - 'ansible/www-standalone/tools/promote/check_r2_assets*'
+      - 'ansible/www-standalone/tools/promote/test/**'
   schedule:
     - cron: 0 0 * * *
   workflow_dispatch:
@@ -35,5 +39,5 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Run tests
-        run: node --test
+        run: node --test --experimental-test-module-mocks
         working-directory: ansible/www-standalone/tools/promote/  
