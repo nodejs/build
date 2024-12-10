@@ -61,7 +61,7 @@ jenkins: "{{ jenkins_init[init_type] }}"
 
 # some os'es needs different paths to java. add them here.
 java_path: {
-  'ibmi73': '/QOpenSys/pkgs/lib/jvm/openjdk-11/bin/java',
+  'ibmi74': '/QOpenSys/QIBM/ProdData/JavaVM/jdk17/64bit/bin/java',
   'macos10.15': 'java',
   'macos11': 'java',
   'macos11.0': 'java',
