@@ -1,0 +1,4 @@
+[
+    {"Path":"foo.tar.gz","Name":"foo.tar.gz","Size":69853847,"ModTime":"","IsDir":false,"Tier":"STANDARD"},
+    {"Path":"bar.tar.xz","Name":"foo.tar.xz","Size":89666140,"ModTime":"","IsDir":false,"Tier":"STANDARD"}
+]
