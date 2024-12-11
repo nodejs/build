@@ -7,7 +7,7 @@
 init: {
   aix: ['aix72', 'aix73'],
   freebsd: 'freebsd',
-  ibmi: 'ibmi73',
+  ibmi: 'ibmi74',
   macos: 'macos',
   systemd: ['centos7', 'debian', 'fedora', 'rhel7', 'rhel8', 'rhel9', 'ubuntu1604', 'ubuntu1804','ubuntu2204'],
   svc: 'smartos',
@@ -61,7 +61,7 @@ jenkins: "{{ jenkins_init[init_type] }}"
 
 # some os'es needs different paths to java. add them here.
 java_path: {
-  'ibmi73': '/QOpenSys/pkgs/lib/jvm/openjdk-11/bin/java',
+  'ibmi74': '/QOpenSys/QIBM/ProdData/JavaVM/jdk17/64bit/bin/java',
   'macos10.15': 'java',
   'macos11': 'java',
   'macos11.0': 'java',

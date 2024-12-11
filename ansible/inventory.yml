@@ -291,8 +291,8 @@ hosts:
             user: admin
 
     - iinthecloud:
-        ibmi73-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
-        ibmi73-ppc64_be-2: {ip: 65.183.160.59, user: nodejs}
+        ibmi74-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
+        ibmi74-ppc64_be-2: {ip: 65.183.160.59, user: nodejs}
 
     - rzkh:
         ibmi73-ppc64_be-1:

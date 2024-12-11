@@ -1,6 +1,6 @@
 ---
 
-- name: ibmi73 | remove old repositories
+- name: ibmi74 | remove old repositories
   ansible.builtin.yum_repository:
     name: "{{ item }}"
     reposdir: /QOpenSys/etc/yum/repos.d
@@ -9,7 +9,7 @@
     - ibm
     - ibm-7.3
 
-- name: ibmi73 | install IBM i repositories
+- name: ibmi74 | install IBM i repositories
   ansible.builtin.yum:
     name: ibmi-repos
     state: present

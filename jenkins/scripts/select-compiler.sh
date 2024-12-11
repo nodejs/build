@@ -23,7 +23,7 @@ if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
     *x64* ) SELECT_ARCH=X64 ;;
     *arm64* ) SELECT_ARCH=ARM64 ;;
     *armv7l* ) SELECT_ARCH=ARMV7L ;;
-    *ibmi73* ) SELECT_ARCH=IBMI73 ;;
+    *ibmi74* ) SELECT_ARCH=IBMI74 ;;
   esac
 fi
 
@@ -191,13 +191,13 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
     echo "Compiler set to $COMPILER_LEVEL"
   fi
 
-elif [ "$SELECT_ARCH" = "IBMI73" ]; then
+elif [ "$SELECT_ARCH" = "IBMI74" ]; then
   if [ "$NODEJS_MAJOR_VERSION" -gt "22" ]; then
     export COMPILER_LEVEL="12"
   else
     export COMPILER_LEVEL="10"
   fi
-  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on IBMI73"
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on IBMI74"
   export CC="ccache gcc-${COMPILER_LEVEL}"
   export CXX="ccache g++-${COMPILER_LEVEL}"
   export LINK="g++-${COMPILER_LEVEL}"

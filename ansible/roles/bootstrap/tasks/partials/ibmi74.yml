@@ -1,0 +1,4 @@
+- name: "ibmi : create git wrapper"
+  ansible.builtin.copy:
+    dest: /QOpenSys/pkgs/bin/git-jenkins
+    src: "ibmi-git.sh"
