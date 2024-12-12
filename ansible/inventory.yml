@@ -57,15 +57,6 @@ hosts:
         smartos20-x64-2: {ip: 147.28.162.108}
         ubuntu1804_docker-x64-1: {ip: 147.28.162.104, user: ubuntu}
 
-    - macstadium:
-        macos11.0-arm64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 207.254.38.74
-            user: administrator
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
-            server_jobs: 6
-
     - marist:
         zos24-s390x-1: {ip: 148.100.36.157, user: unix1}
 
