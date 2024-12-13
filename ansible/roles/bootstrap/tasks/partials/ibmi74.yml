@@ -2,3 +2,4 @@
   ansible.builtin.copy:
     dest: /QOpenSys/pkgs/bin/git-jenkins
     src: "ibmi-git.sh"
+    mode: 0755
