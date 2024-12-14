@@ -66,6 +66,7 @@ java_path: {
   'macos11': 'java',
   'macos11.0': 'java',
   'smartos21': '/opt/local/java/openjdk11/bin/java',
+  'smartos22': '/opt/local/java/openjdk11/bin/java',
   'smartos23': '/opt/local/java/openjdk11/bin/java',
   'zos24': '/usr/lpp/java/J8.0_64/bin/java'
   }

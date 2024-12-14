@@ -11,6 +11,7 @@ ssh_config: /etc/ssh/sshd_config
 
 sshd_service_map: {
   'smartos21': 'ssh',
+  'smartos22': 'ssh',
   'smartos23': 'ssh',
 }
 
@@ -110,11 +111,18 @@ packages: {
     'py310-pip'
   ],
 
+  smartos22: [
+    'gcc12',
+    'ccache',
+    'python311',
+    'py311-pip'
+  ],
+
   smartos23: [
     'gcc13',
     'ccache',
-    'python310',
-    'py310-pip'
+    'python312',
+    'py312-pip'
   ],
 
   ubuntu: [
