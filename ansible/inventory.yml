@@ -300,7 +300,6 @@ hosts:
             server_jobs: 32
 
     - rackspace:
-        debian10-x64-1: {ip: 104.239.140.184}
         debian11-x64-1: {ip: 23.253.109.216, swap_file_size_mb: 4096}
         debian12-x64-1: {ip: 104.130.124.194, swap_file_size_mb: 4096}
         ubuntu2204-x64-1: {ip: 119.9.52.75, swap_file_size_mb: 4096, user: ubuntu}
@@ -318,5 +317,4 @@ hosts:
         win2022_vs2022-x64-6: {}
 
     - softlayer:
-        debian10-x64-1: {ip: 169.44.16.126}
         debian12-x64-1: {ip: 169.60.150.88, swap_file_size_mb: 2048}
