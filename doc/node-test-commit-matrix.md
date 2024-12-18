@@ -16,8 +16,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
   - **node-test-commit-linux**
     - alpine-last-latest-x64
     - alpine-latest-x64
-    - centos7-64-gcc48 (Node < 10)
-    - centos7-64-gcc6 (Node >= 10)
     - debian8-64
     - debian8-x86 (Node < 10)
     - debian9-64
@@ -30,7 +28,8 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - osx1010 (Node < 11)
     - osx1011
   - **node-test-commit-plinux**
-    - centos7-ppcle (Node >= 12)
+    - rhel8-ppc64le
+    - rhel9-ppc64le
   - **node-test-commit-smartos**
     - smartos18-64 (Node >= 12)
   - **node-test-commit-windows-fanned**  
@@ -60,8 +59,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - ubuntu1604_sharedlibs_zlib_x64
       1. `CONFIG_FLAGS="$CONFIG_FLAGS --shared-zlib --shared-zlib-includes=${ZLIB12DIR}/include/ --shared-zlib-libpath=${ZLIB12DIR}/lib/" make run-ci -j $JOBS` (ZLIB12DIR points to a pre-build of zlib 1.2)
   - **node-test-commit-arm**
-    - centos7-arm64-gcc48 (Node < 10)
-    - centos7-arm64-gcc6 (Node >= 10)
     - debian7-docker-armv7 (Node < 10)
     - debian8-docker-armv7 (Node < 12)
     - debian9-docker-armv7 (Node >= 10)

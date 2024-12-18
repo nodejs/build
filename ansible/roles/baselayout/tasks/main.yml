@@ -59,7 +59,7 @@
 
 - name: install packages
   when: not os|startswith("zos") and not os|startswith("macos")
-  package: 
+  package:
     name: "{{ package }}"
     state: present
     # Package manager mapping in ansible/roles/package-upgrade/vars/main.yml.
@@ -87,19 +87,6 @@
     - "{{ packages[os]|default('[]') }}"
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"
-
-- name: centos7_ppc64 | update package alternatives
-  when: os == "centos7" and arch == "ppc64"
-  alternatives:
-    link: /usr/local/bin/{{ cmake }}
-    name: "{{ cmake }}"
-    path: /usr/bin/{{ cmake }}3
-  loop_control:
-    loop_var: cmake
-  with_items:
-    - cmake
-    - cpack
-    - ctest
 
 - name: ubuntu1604 | update package alternatives
   when: os == "ubuntu1604"

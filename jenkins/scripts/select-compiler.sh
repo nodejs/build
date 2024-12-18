@@ -126,28 +126,6 @@ if [ "$SELECT_ARCH" = "PPC64LE" ]; then
 
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on ppc64le"
 
-  case $NODE_NAME in
-    *centos7* )
-      if [ "$NODEJS_MAJOR_VERSION" -gt "13" ]; then
-        # Setup devtoolset-8, sets LD_LIBRARY_PATH, PATH, etc.
-        . /opt/rh/devtoolset-8/enable
-        export CC="ccache ppc64le-redhat-linux-gcc"
-        export CXX="ccache ppc64le-redhat-linux-g++"
-        export LINK="ppc64le-redhat-linux-g++"
-        echo "Compiler set to devtoolset-8"
-        return
-      elif [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
-        # Setup devtoolset-6, sets LD_LIBRARY_PATH, PATH, etc.
-        . /opt/rh/devtoolset-6/enable
-        export CC="ccache ppc64le-redhat-linux-gcc"
-        export CXX="ccache ppc64le-redhat-linux-g++"
-        export LINK="ppc64le-redhat-linux-g++"
-        echo "Compiler set to devtoolset-6"
-        return
-      fi
-      ;;
-   esac
-
 elif [ "$SELECT_ARCH" = "S390X" ]; then
 
   # Set default
@@ -231,14 +209,6 @@ elif [ "$SELECT_ARCH" = "X64" ]; then
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on x64"
 
   case $nodes in
-    centos7-64-gcc8 )
-      . /opt/rh/devtoolset-8/enable
-      echo "Compiler set to devtoolset-8"
-      ;;
-    centos7-64-gcc6 )
-      . /opt/rh/devtoolset-6/enable
-      echo "Compiler set to devtoolset-6"
-      ;;
     *ubuntu1804*64|*ubuntu1604-*64|benchmark )
       if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
         export CC="ccache gcc-8"
@@ -260,14 +230,6 @@ elif [ "$SELECT_ARCH" = "ARM64" ]; then
 
 
   case $nodes in
-    centos7-arm64-gcc8 )
-      . /opt/rh/devtoolset-8/enable
-      echo "Compiler set to devtoolset-8"
-      ;;
-    centos7-arm64-gcc6 )
-      . /opt/rh/devtoolset-6/enable
-      echo "Compiler set to devtoolset-6"
-      ;;
     *ubuntu1804* )
       if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
         export CC="ccache gcc-8"

@@ -32,18 +32,6 @@ common_packages: [
 # % ansible -m debug -a "var=arch"  HOST
 # % ansible -m debug -a "var=os"  HOST
 packages: {
-  # centos-release-scl is required to enable SCLo but we do it manually in
-  # partials/repo/centos7.yml for arm64
-  centos7_arm64: [
-    'git,python3', # git2u not available for aarch64 (yet)
-  ],
-  centos7_x64: ['devtoolset-6-libatomic-devel,git222,centos-release-scl,python3'],
-  centos7_ppc64: ['cmake3,glib2-devel,git,python3'],
-
-  centos7: [
-    'bzip2-devel,openssl-devel,ccache,gcc-c++,sudo,zlib-devel,libffi-devel,devtoolset-8,devtoolset-8-libatomic-devel',
-  ],
-
   aix: [
     'bash,cmake,coreutils,curl,gcc-c++,tar,unzip,git,make,sudo,python-setuptools,python3.9',
   ],
@@ -145,7 +133,7 @@ packages: {
   # Default gcc/g++ package is 7.
   ubuntu1804: [
     'gcc-6,g++-6,gcc-8,g++-8,python3.8',
-  ],  
+  ],
 
   # Default gcc/g++ package is 11.
   ubuntu2204: [
