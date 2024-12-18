@@ -76,7 +76,6 @@ hosts:
         aix72-ppc64_be-1:
             ip: 140.211.9.77
             server_jobs: 6
-        centos7-arm64-1: {ip: 140.211.169.7, server_jobs: 2, user: centos}
         rhel8-arm64-1:
             ip: 140.211.169.58
             server_jobs: 2
@@ -301,7 +300,6 @@ hosts:
             server_jobs: 32
 
     - rackspace:
-        centos7-x64-1: {ip: 119.9.27.82}
         debian10-x64-1: {ip: 104.239.140.184}
         debian11-x64-1: {ip: 23.253.109.216, swap_file_size_mb: 4096}
         debian12-x64-1: {ip: 104.130.124.194, swap_file_size_mb: 4096}

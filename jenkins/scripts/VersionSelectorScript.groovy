@@ -20,19 +20,12 @@ def buildExclusions = [
   // Machine Label,                   Build Type,  Node Version
 
   // Linux -------------------------------------------------
-  [ /^centos7-(arm)?64-gcc48/,        anyType,     gte(18) ],
-  [ /^centos7-(arm)?64-gcc6/,         anyType,     gte(18) ],    // 14.x: gcc6 builds stop
-  [ /^centos7-(arm)?64-gcc8/,         anyType,     gte(18) ], // 18.x: centos7 builds stop
-  [ /^centos7-64/,                    anyType,     gte(18) ],
   [ /debian10/,                       anyType,     gte(21) ],
   [ /debian11/,                       anyType,     gte(23) ],
   [ /alpine-last-latest/,             anyType,     gte(22) ], // Alpine 3.18. Bug in GCC 12.2.
   [ /rhel7/,                          anyType,     gte(18) ],
   [ /^ubuntu1604-32/,                 anyType,     gte(18) ], // 32-bit linux for <10 only
   [ /^ubuntu1604-64/,                 anyType,     gte(18) ],
-
-  // Linux PPC LE ------------------------------------------
-  [ /^centos7-ppcle/,                 anyType,     gte(18) ],
 
   // ARM  --------------------------------------------------
   [ /^ubuntu1804-arm64/,                             anyType, gte(20) ], // 20.x: gcc8 builds stop
