@@ -15,7 +15,7 @@ packages: {
   'rhel7': 'java-11-openjdk',
   'rhel8': 'java-17-openjdk',
   'rhel9': 'java-17-openjdk',
-  'smartos': 'openjdk11',
+  'smartos': 'openjdk17',
   'ubuntu': 'openjdk-17-jre-headless',
   'ubuntu1604': 'openjdk-8-jre-headless',
   'ubuntu2204': 'openjdk-17-jre-headless',
