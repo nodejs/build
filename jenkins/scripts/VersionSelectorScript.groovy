@@ -20,7 +20,6 @@ def buildExclusions = [
   // Machine Label,                   Build Type,  Node Version
 
   // Linux -------------------------------------------------
-  [ /debian10/,                       anyType,     gte(21) ],
   [ /debian11/,                       anyType,     gte(23) ],
   [ /alpine-last-latest/,             anyType,     gte(22) ], // Alpine 3.18. Bug in GCC 12.2.
   [ /rhel7/,                          anyType,     gte(18) ],

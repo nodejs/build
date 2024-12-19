@@ -9,7 +9,7 @@ ssh_config: /etc/ssh/sshd_config
 sshd_service_name: 'sshd'
 
 ntp_service: {
-  systemd: ['debian8', 'debian10', 'ubuntu1604', 'ubuntu1804', 'ubuntu2204', 'ubuntu2404']
+  systemd: ['debian8', 'ubuntu1604', 'ubuntu1804', 'ubuntu2204', 'ubuntu2404']
 }
 
 common_packages: [
