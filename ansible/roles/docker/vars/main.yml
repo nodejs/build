@@ -20,9 +20,11 @@ common_packages: [
 packages: {
   ubuntu2404: [
     'docker.io',
+    'docker-buildx',
   ],
   ubuntu2204: [
     'docker.io',
+    'docker-buildx',
   ],
   ubuntu2004: [
     'docker.io',
