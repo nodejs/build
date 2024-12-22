@@ -255,7 +255,6 @@ Unsorted stuff of things we need to do/think about
 - [ ] move all service-related stuff to handlers
 - [ ] find a nicer way of adding proxyhosts to iptables
 - [ ] add clang/clang++ symlinks for ccache
-- [ ] debian7 needs to update alternative gcc/g++
 - [ ] verify that /usr/local/bin works as ccache install path
 - [x] remove subversion since v8 tests uses git nowadays
 - [ ] assign 192/256mb ram to the jenkins instances that requires it:

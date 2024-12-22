@@ -6,7 +6,6 @@
 
 packages: {
   'centos': 'java-11-openjdk-headless',
-  'debian8': 'oracle-java8-installer',
   'debian11': 'openjdk-17-jre-headless',
   'debian12': 'openjdk-17-jre-headless',
   'fedora': 'java-17-openjdk-headless',

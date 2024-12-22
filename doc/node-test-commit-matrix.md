@@ -16,9 +16,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
   - **node-test-commit-linux**
     - alpine-last-latest-x64
     - alpine-latest-x64
-    - debian8-64
-    - debian8-x86 (Node < 10)
-    - debian9-64
     - fedora-last-latest-x64
     - fedora-latest-x64
     - ubuntu1604-32 (Node < 10)
@@ -59,9 +56,6 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
     - ubuntu1604_sharedlibs_zlib_x64
       1. `CONFIG_FLAGS="$CONFIG_FLAGS --shared-zlib --shared-zlib-includes=${ZLIB12DIR}/include/ --shared-zlib-libpath=${ZLIB12DIR}/lib/" make run-ci -j $JOBS` (ZLIB12DIR points to a pre-build of zlib 1.2)
   - **node-test-commit-arm**
-    - debian7-docker-armv7 (Node < 10)
-    - debian8-docker-armv7 (Node < 12)
-    - debian9-docker-armv7 (Node >= 10)
     - ubuntu1604-arm64 
   - **node-test-commit-linuxone**
     - rhel7-s390x (Node >= 6)
