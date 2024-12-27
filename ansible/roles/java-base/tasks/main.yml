@@ -4,21 +4,6 @@
 # installs java
 #
 
-- name: add webupd8team oracle java repository
-  when: os == "debian8"
-  lineinfile:
-    dest: /etc/apt/sources.list
-    state: present
-    line: deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main
-
-- name: add webupd8team oracle java repository key
-  when: os == "debian8"
-  shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
-
-- name: accept webupd8 oracle java 8 license
-  when: os == "debian8"
-  debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
-
 # if this fails you want to check in vars/main.yml and add package name
 # as appropriate -- try to use generic os family if available.
 
@@ -72,7 +57,7 @@
   file:
     path: "/var/cache/adoptopenjdk-binaries"
     state: directory
-  when: 
+  when:
     - use_adoptopenjdk == True
     - update_adoptopenjdk == True
 
@@ -104,7 +89,7 @@
   register: adoptopenjdk_symlink
   stat:
     path: "/usr/bin/java"
-  when: 
+  when:
     - use_adoptopenjdk == True
     - update_adoptopenjdk == True
 
