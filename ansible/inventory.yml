@@ -307,7 +307,7 @@ hosts:
         ibmi74-ppc64_be-2: {ip: 65.183.160.59, user: nodejs}
 
     - rzkh:
-        ibmi73-ppc64_be-1:
+        ibmi74-ppc64_be-1:
             ip: 185.113.4.148
             user: nodejs
             server_jobs: 32
