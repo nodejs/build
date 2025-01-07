@@ -53,8 +53,6 @@ hosts:
         ibmi73-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
 
     - joyent:
-        smartos18-x64-2: {ip: 147.28.162.101}
-        smartos20-x64-2: {ip: 147.28.162.108}
         ubuntu1804_docker-x64-1: {ip: 147.28.162.104, user: ubuntu}
 
     - macstadium:
@@ -169,10 +167,6 @@ hosts:
         ubuntu2204_docker-x64-1: {ip: 52.117.26.9}
 
     - equinix_mnx:
-        smartos18-x64-3: {ip: 147.28.162.102}
-        smartos18-x64-4: {ip: 147.28.162.103}
-        smartos20-x64-3: {ip: 147.28.162.107}
-        smartos20-x64-4: {ip: 147.28.162.109}
         ubuntu1804-x64-1: {ip: 147.28.162.99, user: ubuntu}
 
     - hetzner:
