@@ -2,6 +2,48 @@
 
 This is an overview of infrastructure owned/managed by the Build WG and how it interacts with Node.js' [release process][].
 
+## Architecture
+
+```mermaid
+architecture-beta
+    group buildInfra[Infrastructure maintained by Build WG]
+    group webServers[www servers] in buildInfra
+    group releasejenkins[Release CI] in buildInfra
+    group releaseagents(cloud)[Release machines] in releasejenkins
+    group github(cloud)[GitHub]
+    group cloudflare(cloud)[CloudFlare]
+    group r2(cloud)[R2] in cloudflare
+    group vercel(cloud)[Vercel]
+
+    service releaseci(server)[Jenkins] in releasejenkins
+    service releaseagent(server)[release machine] in releaseagents
+    service direct(server)[www server] in webServers
+    service unencrypted(server)[failover www server] in webServers
+    service ghnode(disk)[node] in github
+    service ghnodeorg(disk)[nodejs_org] in github
+    service ghcfworker(disk)[release_cloudflare_worker] in github
+    service cdn(cloud)[cdn] in cloudflare
+    service staging(disk)[staging] in r2
+    service prod(disk)[prod] in r2
+    service worker(cloud)[worker] in cloudflare
+    service website(cloud)[nodejs_org] in vercel
+
+    releaseci:R -- L:releaseagent{group}
+    releaseagent:R --> L:direct
+    direct:B --> T:unencrypted
+    direct:R --> L:staging
+    staging:T --> B:prod
+    prod:T --> B:worker
+    worker:T --> B:cdn
+    ghnodeorg:L --> R:website
+    ghcfworker:R --> L:worker
+    ghnode:B --> T:releaseagent
+```
+
+This diagram shows the major components of how a Node.js release is built and made publicly available on [nodejs.org][].
+
+## In Detail
+
 Clicking on most labels will take you to the relevant area of the build repository or other repository owned by the Node.js organization.
 
 ```mermaid
@@ -117,4 +159,5 @@ flowchart TD
     r2Staging ~~~ website
 ```
 
+[nodejs.org]: https://nodejs.org
 [release process]: https://github.com/nodejs/node/blob/main/doc/contributing/releases.md
