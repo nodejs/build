@@ -265,8 +265,7 @@ Unsorted stuff of things we need to do/think about
 - [ ] add explicit ARCH and DESTCPU for release machines (RV: I'm adding
       "arm64" manually for both to force the right thing, from memory I've
       needed to do this on x86 and x64, best be explicit to be sure)
-- [ ] github-bot: automate list of whitelisted Jenkins worker IPs with
-      python
+- [x] github-bot: automate allow list of Jenkins worker IPs
 
 [ansible-install]: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
 [callback]: plugins/inventory/nodejs_yaml.py
