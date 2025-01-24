@@ -24,7 +24,7 @@
 
 * Equinix Metal sunset, June 2026 [#3975](https://github.com/nodejs/build/issues/3975)
   * This is equinix metal as a whole is being sunset 2026
-  * We have already moved the x86 machines out based on their request
+  * We are already moving the x64 machines out based on their request
   * We are working to figure out if that affects the ARM machines. Losing those would be
     a significant impact.
   * Richard has already pinged our contact, and he is going to check into it.
