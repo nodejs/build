@@ -35,3 +35,8 @@
 - name: remove firewalld
   when: has_firewalld.rc == 0
   raw: dnf remove -y firewalld
+
+# https://github.com/ansible/ansible/issues/84206
+- name: install python3-libdnf5
+  when: os in ("fedora41")
+  raw: dnf install -y python3-libdnf5
