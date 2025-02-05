@@ -9,6 +9,7 @@
 # cross-compiler-ubuntu1804-armv7-gcc-8
 # cross-compiler-rhel8-armv7-gcc-8-glibc-2.28
 # cross-compiler-rhel8-armv7-gcc-10-glibc-2.28
+# cross-compiler-rhel9-armv7-gcc-12-glibc-2.28
 
 rpi_newer_tools_base="/opt/raspberrypi/rpi-newer-crosstools/"
 base_4_9_4="${rpi_newer_tools_base}x64-gcc-4.9.4-binutils-2.28/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-"
@@ -16,6 +17,7 @@ base_6="${rpi_newer_tools_base}x64-gcc-6.5.0/arm-rpi-linux-gnueabihf/bin/arm-rpi
 base_8="${rpi_newer_tools_base}x64-gcc-8.3.0/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-"
 base_8_glibc_2_28="${rpi_newer_tools_base}x64-gcc-8.3.0-glibc-2.28/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-"
 base_10_glibc_2_28="${rpi_newer_tools_base}x64-gcc-10.3.0-glibc-2.28/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-"
+base_12_glibc_2_28="${rpi_newer_tools_base}x64-gcc-12.3.0-glibc-2.28/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-"
 
 flags_armv6="-march=armv6zk"
 flags_armv7="-march=armv7-a"
@@ -23,17 +25,17 @@ flags_armv7="-march=armv7-a"
 function run {
   local label="$1"
 
-  export arm_type=$(echo $label | sed -E 's/^cross-compiler-(ubuntu1[68]04|rhel8)-(armv[67])-gcc-.*$/\2/')
-  export gcc_version=$(echo $label | sed -E 's/^cross-compiler-(ubuntu1[68]04|rhel8)-armv[67]-gcc-(4\.9\.4|6|8|10)/\2/')
+  export arm_type=$(echo $label | sed -E 's/^cross-compiler-(ubuntu1[68]04|rhel[89])-(armv[67])-gcc-.*$/\2/')
+  export gcc_version=$(echo $label | sed -E 's/^cross-compiler-(ubuntu1[68]04|rhel[89])-armv[67]-gcc-(4\.9\.4|6|8|10|12)/\2/')
   export git_branch="cc-${arm_type}"
-  export host_os=$(echo $label | sed -E 's/^cross-compiler-(ubuntu1[68]04|rhel8)-(armv[67])-gcc-.*$/\1/')
+  export host_os=$(echo $label | sed -E 's/^cross-compiler-(ubuntu1[68]04|rhel[89])-(armv[67])-gcc-.*$/\1/')
 
   if [[ ! "$arm_type" =~ ^armv[67]$ ]]; then
     echo "Could not determine ARM type from '$label'"
     exit 1
   fi
-  if [[ ! "$gcc_version" =~ ^(4\.9\.4|6|8|8-glibc-2.28|10-glibc-2.28)$ ]]; then
-    echo "Could not determine ARM type from '$label'"
+  if [[ ! "$gcc_version" =~ ^(4\.9\.4|6|8|8-glibc-2\.28|10-glibc-2\.28|12-glibc-2\.28)$ ]]; then
+    echo "Could not determine gcc version from '$label'"
     exit 1
   fi
 
@@ -49,10 +51,11 @@ function run {
 
   export ARCH="${arm_type}l"
   export DESTCPU=arm
-  if [ "$host_os" = "rhel8" ]; then
+  if [ "$host_os" = "rhel8" ] || [ "$host_os" = "rhel9" ]; then
     current_gcc_version="$(gcc -dumpversion)"
     # Additional gcc versions are installed via gcc-toolset-<n> packages.
-    # No such package exists for the default gcc version (8 on RHEL 8).
+    # No such package exists for the default gcc version (8 on RHEL 8,
+    # 11 on RHEL 9).
     if [ "${current_gcc_version}" != "${gcc_host_version}" ]; then
       if ! . /opt/rh/gcc-toolset-${gcc_host_version}/enable; then
         echo "Host gcc version mismatch (wanted ${gcc_host_version} but got ${current_gcc_version})."

@@ -1,0 +1,56 @@
+name: Check ORKA Packer Templates
+
+on:
+  push:
+    paths:
+      - 'orka/**/*.pkr.hcl'
+  pull_request:
+    paths:
+      - 'orka/**/*.pkr.hcl'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+
+    - name: Set up Packer
+      uses: hashicorp/setup-packer@1aa358be5cf73883762b302a3a03abd66e75b232 #v3.1.0
+
+    - name: Initialize Packer
+      run: |
+        for file in $(find . -name '*.pkr.hcl'); do
+          echo "Initializing $file"
+          packer init $file || exit 1
+        done
+      working-directory: orka/templates
+
+    - name: Validate Packer templates
+      env:
+        ORKA_ENDPOINT: 'https://mock-orka-endpoint'
+        ORKA_AUTH_TOKEN: 'mock-orka-auth-token'
+        SSH_DEFAULT_USERNAME: 'mock-ssh-default-username'
+        SSH_DEFAULT_PASSWORD: 'mock-ssh-default-password'
+        SSH_TEST_PASSWORD: 'mock-ssh-test-password'
+        SSH_RELEASE_PASSWORD: 'mock-ssh-release-password'
+        SSH_TEST_PUBLIC_KEY: 'mock-ssh-test-public-key'
+        SSH_RELEASE_PUBLIC_KEY: 'mock-ssh-release-public-key'
+      run: |
+        for file in $(find . -name '*.pkr.hcl'); do
+          echo "Validating $file"
+          vars="-var orka_endpoint=$ORKA_ENDPOINT -var orka_auth_token=$ORKA_AUTH_TOKEN -var ssh_default_username=$SSH_DEFAULT_USERNAME"
+          
+          if echo "$file" | grep -q "release"; then
+            vars="$vars -var ssh_release_password=$SSH_RELEASE_PASSWORD -var ssh_release_public_key=$SSH_RELEASE_PUBLIC_KEY"
+          elif echo "$file" | grep -q "test"; then
+            vars="$vars -var ssh_test_password=$SSH_TEST_PASSWORD -var ssh_test_public_key=$SSH_TEST_PUBLIC_KEY -var ssh_default_password=$SSH_DEFAULT_PASSWORD"
+          fi
+
+          packer validate $vars $file || exit 1
+        done
+      working-directory: orka/templates

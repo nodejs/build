@@ -59,7 +59,7 @@
 
 - name: install packages
   when: not os|startswith("zos") and not os|startswith("macos")
-  package: 
+  package:
     name: "{{ package }}"
     state: present
     # Package manager mapping in ansible/roles/package-upgrade/vars/main.yml.
@@ -88,19 +88,6 @@
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"
 
-- name: centos7_ppc64 | update package alternatives
-  when: os == "centos7" and arch == "ppc64"
-  alternatives:
-    link: /usr/local/bin/{{ cmake }}
-    name: "{{ cmake }}"
-    path: /usr/bin/{{ cmake }}3
-  loop_control:
-    loop_var: cmake
-  with_items:
-    - cmake
-    - cpack
-    - ctest
-
 - name: ubuntu1604 | update package alternatives
   when: os == "ubuntu1604"
   alternatives: link=/usr/bin/{{ gcc }} name={{ gcc }} path=/usr/bin/{{ gcc }}-5
@@ -123,13 +110,6 @@
     link: "/usr/bin/python3"
     name: python3
     path: "/usr/bin/python3.8"
-
-- name: freebsd | update python package alternatives
-  when: os == "freebsd12"
-  file:
-    dest: "/usr/local/bin/python"
-    state: link
-    src: "/usr/local/bin/python2"
 
 - name: remove fortune from login shells
   when: os|stripversion == 'freebsd'
@@ -187,10 +167,3 @@
         - "{{ role_path }}/tasks/partials/ntp/{{ os|stripversion }}.yml"
         - "{{ role_path }}/tasks/partials/ntp/{{ os|match_key(ntp_service, raise_error=False) }}.yml"
       skip: true
-
-- name: reset default OpenSSL security level
-  ansible.builtin.replace:
-    path: /etc/ssl/openssl.cnf
-    regexp: "SECLEVEL=2"
-    replace: "SECLEVEL=1"
-  when: "os == 'debian10'"

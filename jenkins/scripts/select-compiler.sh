@@ -23,7 +23,7 @@ if [ "$DONTSELECT_COMPILER" != "DONT" ]; then
     *x64* ) SELECT_ARCH=X64 ;;
     *arm64* ) SELECT_ARCH=ARM64 ;;
     *armv7l* ) SELECT_ARCH=ARMV7L ;;
-    *ibmi73* ) SELECT_ARCH=IBMI73 ;;
+    *ibmi74* ) SELECT_ARCH=IBMI74 ;;
   esac
 fi
 
@@ -37,7 +37,9 @@ fi
 case $NODE_NAME in
   *rhel9*|*ubi9*)
     echo "Setting compiler for Node.js $NODEJS_MAJOR_VERSION on" `cat /etc/redhat-release`
-    if [ "$NODEJS_MAJOR_VERSION" -gt "21" ]; then
+    if [ "$NODEJS_MAJOR_VERSION" -gt "22" ]; then
+      . /opt/rh/gcc-toolset-12/enable
+    elif [ "$NODEJS_MAJOR_VERSION" -gt "21" ]; then
       # s390x, use later toolset to avoid https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106355
       if [ "$SELECT_ARCH" = "S390X" ]; then
         . /opt/rh/gcc-toolset-12/enable
@@ -52,7 +54,11 @@ case $NODE_NAME in
     case "$CONFIG_FLAGS" in
       *--enable-lto*)
         echo "Setting compiler for Node.js $NODEJS_MAJOR_VERSION (LTO) on" `cat /etc/redhat-release`
-        . /opt/rh/gcc-toolset-11/enable
+        if [ "$NODEJS_MAJOR_VERSION" -gt "22" ]; then
+          . /opt/rh/gcc-toolset-12/enable
+        else
+          . /opt/rh/devtoolset-11/enable
+        fi
         export CC="ccache gcc"
         export CXX="ccache g++"
         echo "Selected compiler:" `${CXX} -dumpversion`  
@@ -60,6 +66,13 @@ case $NODE_NAME in
         ;;
       *)
         echo "Setting compiler for Node.js $NODEJS_MAJOR_VERSION on" `cat /etc/redhat-release`
+        if [ "$NODEJS_MAJOR_VERSION" -gt "22" ]; then
+          . /opt/rh/gcc-toolset-12/enable
+          export CC="ccache gcc"
+          export CXX="ccache g++"
+          echo "Selected compiler:" `${CXX} -dumpversion`
+          return
+        fi
         if [ "$NODEJS_MAJOR_VERSION" -gt "21" ]; then
           # s390x, use later toolset to avoid https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106355
           if [ "$SELECT_ARCH" = "S390X" ]; then
@@ -92,6 +105,19 @@ case $NODE_NAME in
         ;;
     esac
     ;;
+  *ubuntu2204*)
+    if [ "$NODEJS_MAJOR_VERSION" -gt "22" ]; then
+      export CC="ccache gcc-12"
+      export CXX="ccache g++-12"
+      echo ""
+    else
+      # Default gcc on Ubuntu 22.04 is gcc 11.
+      export CC="ccache gcc"
+      export CXX="ccache g++"
+    fi
+    echo "Compiler set to GCC" `$CXX -dumpversion`
+    return
+    ;;
 esac
 
 if [ "$SELECT_ARCH" = "PPC64LE" ]; then
@@ -99,28 +125,6 @@ if [ "$SELECT_ARCH" = "PPC64LE" ]; then
   export COMPILER_LEVEL="4.8"
 
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on ppc64le"
-
-  case $NODE_NAME in
-    *centos7* )
-      if [ "$NODEJS_MAJOR_VERSION" -gt "13" ]; then
-        # Setup devtoolset-8, sets LD_LIBRARY_PATH, PATH, etc.
-        . /opt/rh/devtoolset-8/enable
-        export CC="ccache ppc64le-redhat-linux-gcc"
-        export CXX="ccache ppc64le-redhat-linux-g++"
-        export LINK="ppc64le-redhat-linux-g++"
-        echo "Compiler set to devtoolset-8"
-        return
-      elif [ "$NODEJS_MAJOR_VERSION" -gt "9" ]; then
-        # Setup devtoolset-6, sets LD_LIBRARY_PATH, PATH, etc.
-        . /opt/rh/devtoolset-6/enable
-        export CC="ccache ppc64le-redhat-linux-gcc"
-        export CXX="ccache ppc64le-redhat-linux-g++"
-        export LINK="ppc64le-redhat-linux-g++"
-        echo "Compiler set to devtoolset-6"
-        return
-      fi
-      ;;
-   esac
 
 elif [ "$SELECT_ARCH" = "S390X" ]; then
 
@@ -165,9 +169,13 @@ elif [ "$SELECT_ARCH" = "S390X" ]; then
     echo "Compiler set to $COMPILER_LEVEL"
   fi
 
-elif [ "$SELECT_ARCH" = "IBMI73" ]; then
-  export COMPILER_LEVEL="10"
-  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on IBMI73"
+elif [ "$SELECT_ARCH" = "IBMI74" ]; then
+  if [ "$NODEJS_MAJOR_VERSION" -gt "22" ]; then
+    export COMPILER_LEVEL="12"
+  else
+    export COMPILER_LEVEL="10"
+  fi
+  echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on IBMI74"
   export CC="ccache gcc-${COMPILER_LEVEL}"
   export CXX="ccache g++-${COMPILER_LEVEL}"
   export LINK="g++-${COMPILER_LEVEL}"
@@ -201,14 +209,6 @@ elif [ "$SELECT_ARCH" = "X64" ]; then
   echo "Setting compiler for Node version $NODEJS_MAJOR_VERSION on x64"
 
   case $nodes in
-    centos7-64-gcc8 )
-      . /opt/rh/devtoolset-8/enable
-      echo "Compiler set to devtoolset-8"
-      ;;
-    centos7-64-gcc6 )
-      . /opt/rh/devtoolset-6/enable
-      echo "Compiler set to devtoolset-6"
-      ;;
     *ubuntu1804*64|*ubuntu1604-*64|benchmark )
       if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
         export CC="ccache gcc-8"
@@ -230,14 +230,6 @@ elif [ "$SELECT_ARCH" = "ARM64" ]; then
 
 
   case $nodes in
-    centos7-arm64-gcc8 )
-      . /opt/rh/devtoolset-8/enable
-      echo "Compiler set to devtoolset-8"
-      ;;
-    centos7-arm64-gcc6 )
-      . /opt/rh/devtoolset-6/enable
-      echo "Compiler set to devtoolset-6"
-      ;;
     *ubuntu1804* )
       if [ "$NODEJS_MAJOR_VERSION" -gt "15" ]; then
         export CC="ccache gcc-8"

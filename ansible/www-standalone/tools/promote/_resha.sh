@@ -3,14 +3,20 @@
 set -e
 
 site=$1
-dstdir=$2
-version=$3
+srcdir=$2
+dstdir=$3
+version=$4
 
 __dirname="$(CDPATH= cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . ${__dirname}/settings
 
 if [ "X${site}" == "X" ]; then
   echo "site argument not provided"
+  exit 1
+fi
+
+if [ "X${srcdir}" == "X" ]; then
+  echo "srcdir argument not provided"
   exit 1
 fi
 
@@ -34,14 +40,13 @@ if [ -z ${staging_bucket+x} ]; then
   exit 1
 fi
 
-if [ -z ${cloudflare_endpoint+x} ]; then
-  echo "\$cloudflare_endpoint is not set"
-  exit 1
+if [ -z ${rclone_log+x} ]; then
+    echo "\$rclone_log is not set"
+    exit 1
 fi
 
-if [ -z ${cloudflare_profile+x} ]; then
-  echo "\$cloudflare_profile is not set"
-  exit 1
+if [ -z ${rclone_log_level+x} ]; then
+  rclone_log_level=INFO
 fi
 
 (cd "${dstdir}/${version}" && shasum -a256 $(ls node* openssl* iojs* win-*/* x64/* 2> /dev/null) > SHASUMS256.txt) || exit 1
@@ -53,7 +58,21 @@ nodejs-dist-indexer --dist $dstdir --indexjson ${dstdir}/index.json  --indextab 
 find "${dstdir}/${version}" -type f -exec chmod 644 '{}' \;
 find "${dstdir}/${version}" -type d -exec chmod 755 '{}' \;
 
-relativedir=${dstdir/$dist_rootdir/"$site/"}
-aws s3 cp ${dstdir}/index.json $staging_bucket/$relativedir/index.json --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile > /dev/null
-aws s3 cp ${dstdir}/index.tab $staging_bucket/$relativedir/index.tab --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile > /dev/null
-aws s3 cp ${dstdir}/${version}/SHASUMS256.txt $staging_bucket/$relativedir/${version}/SHASUMS256.txt --endpoint-url=$cloudflare_endpoint --profile $cloudflare_profile > /dev/null
+relative_srcdir=${srcdir/$staging_rootdir/"$site/"}
+relative_dstdir=${dstdir/$dist_rootdir/"$site/"}
+
+rclone copyto \
+  --log-level=${rclone_log_level} \
+  --log-file=${rclone_log} \
+  ${dstdir}/index.json \
+  $staging_bucket/$relative_dstdir/index.json > /dev/null
+rclone copyto \
+  --log-level=${rclone_log_level} \
+  --log-file=${rclone_log} \
+  ${dstdir}/index.tab \
+  $staging_bucket/$relative_dstdir/index.tab > /dev/null
+rclone copyto \
+  --log-level=${rclone_log_level} \
+  --log-file=${rclone_log} \
+  ${dstdir}/${version}/SHASUMS256.txt \
+  $staging_bucket/$relative_srcdir/${version}/SHASUMS256.txt > /dev/null

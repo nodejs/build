@@ -45,7 +45,7 @@
 
 - name: Install Rscript repo | {{ os }}
   when: os|startswith("ubuntu")
-  shell: echo "deb https://ftp.heanet.ie/mirrors/cran.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/" > /etc/apt/sources.list.d/r.list
+  shell: echo "deb https://cran.datenrettung360.de/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/" > /etc/apt/sources.list.d/r.list
 
 - name: Add R key
   apt_key:
