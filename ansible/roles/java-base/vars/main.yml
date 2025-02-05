@@ -6,18 +6,15 @@
 
 packages: {
   'centos': 'java-11-openjdk-headless',
-  'debian8': 'oracle-java8-installer',
-  'debian10': 'openjdk-11-jre-headless',
   'debian11': 'openjdk-17-jre-headless',
   'debian12': 'openjdk-17-jre-headless',
   'fedora': 'java-17-openjdk-headless',
-  'freebsd': 'openjdk11-jre',
-  'ibmi': 'openjdk-11-ea',
+  'freebsd': 'openjdk17-jre',
   'macos': 'temurin17',
   'rhel7': 'java-11-openjdk',
   'rhel8': 'java-17-openjdk',
   'rhel9': 'java-17-openjdk',
-  'smartos': 'openjdk11',
+  'smartos': 'openjdk17',
   'ubuntu': 'openjdk-17-jre-headless',
   'ubuntu1604': 'openjdk-8-jre-headless',
   'ubuntu2204': 'openjdk-17-jre-headless',
@@ -26,13 +23,12 @@ packages: {
 java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default(omit) }}"
 
 # Add os_arch combinations here that should install and use AdoptOpenJDK
-# binaries. Override any variables in the dictionary. 
+# binaries. Override any variables in the dictionary.
 # e.g. on AIX ansible_architecture is 'chrp' on some of our hosts so we
 # override arch to be on the safe side.
 adoptopenjdk: {
   aix72_ppc64: { arch: ppc64 },
   aix73_ppc64: { arch: ppc64 },
-  centos7_ppc64: {}
 }
 
 adoptopenjdk_arch: "{{ adoptopenjdk[os+'_'+arch].arch | default(ansible_architecture) }}"
