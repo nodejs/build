@@ -142,7 +142,7 @@ accesses and team roles see [GOVERNANCE.md][].
 ### Emeriti
 
 - [@addaleax](https://github.com/addaleax) - Anna Henningsen
-* [@anonrig](https://github.com/anonrig) - Yagiz Nizipli
+- [@anonrig](https://github.com/anonrig) - Yagiz Nizipli
 - [@bnoordhuis](https://github.com/bnoordhuis) - Ben Noordhuis
 - [@gibfahn](https://github.com/gibfahn) - Gibson Fahnestock
 - [@gireeshpunathil](https://github.com/gireeshpunathil) - Gireesh Punathil

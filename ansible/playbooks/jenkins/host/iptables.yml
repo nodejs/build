@@ -9,12 +9,12 @@
 
 - hosts:
   - infra-digitalocean-ubuntu2204-x64-1 # ci.nodejs.org
-  - infra-ibm-ubuntu1804-x64-1 # ci-release.nodejs.org
+  - infra-ibm-ubuntu2404-x64-1 # ci-release.nodejs.org
 
   vars:
     hostgroups: {
       'infra-digitalocean-ubuntu2204-x64-1': 'test',
-      'infra-ibm-ubuntu1804-x64-1': 'release'
+      'infra-ibm-ubuntu2404-x64-1': 'release'
       }
 
   tasks:

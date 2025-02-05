@@ -1,15 +1,39 @@
 ---
 
 #
-# generic freebsd python check
+# FreeBSD
 #
 
-- name: check for python
-  raw: stat /usr/local/bin/python
-  check_mode: no
-  register: has_python
-  failed_when: has_python.rc > 1
+# Assumes swap_file_size_mb has been set.
+- name: create swapfile
+  ansible.builtin.command:
+    cmd: dd if=/dev/zero of=/{{ swap_file }} bs=1M count={{ swap_file_size_mb }}
+    creates: "{{ swap_file }}"
+  become: yes
+  become_user: root
+  register: swap_create
 
-- name: install python
-  raw: pkg install -y python
-  when: has_python.rc == 1
+- name: set swapfile permissions
+  ansible.builtin.file:
+    mode: 0600
+    owner: root
+    path: "{{ swap_file }}"
+
+- name: set up swap area
+  ansible.builtin.command:
+    cmd: mdconfig -a -t vnode -f {{ swap_file }} -u 0
+  when: swap_create.changed
+
+- name: enable swap
+  ansible.builtin.command:
+    cmd: swapon /dev/md0
+  when: swap_create.changed
+
+- name: add swap to fstab
+  ansible.posix.mount:
+    fstype: swap
+    opts: "sw,file={{ swap_file }},late"
+    path: none
+    src: md0
+    state: present
+  when: swap_create.changed

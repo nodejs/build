@@ -1,7 +1,6 @@
 ---
 
 compiler: {
-  'centos7': '. /opt/rh/devtoolset-8/enable',
   'rhel7': '. /opt/rh/devtoolset-8/enable',
   'rhel8': '. /opt/rh/gcc-toolset-11/enable'
 }
