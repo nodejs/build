@@ -17,8 +17,8 @@ hosts:
         ubuntu2204-x64-1: {ip: 107.170.240.62, alias: ci}
 
     - ibm:
-        ubuntu1804-x64-1: {ip: 169.45.166.50, alias: ci-release}
         ubuntu2004-x64-1: {ip: 169.60.150.91, alias: ansible}
+        ubuntu2404-x64-1: {ip: 169.61.75.62, alias: ci-release}
 
     - joyent:
         debian10-x64-1: {ip: 147.28.162.110, alias: grafana}
@@ -53,18 +53,7 @@ hosts:
         ibmi73-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
 
     - joyent:
-        smartos18-x64-2: {ip: 147.28.162.101}
-        smartos20-x64-2: {ip: 147.28.162.108}
         ubuntu1804_docker-x64-1: {ip: 147.28.162.104, user: ubuntu}
-
-    - macstadium:
-        macos11.0-arm64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 207.254.38.74
-            user: administrator
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
-            server_jobs: 6
 
     - marist:
         zos24-s390x-1: {ip: 148.100.36.157, user: unix1}
@@ -76,21 +65,12 @@ hosts:
         aix72-ppc64_be-1:
             ip: 140.211.9.77
             server_jobs: 6
-        centos7-arm64-1: {ip: 140.211.169.7, server_jobs: 2, user: centos}
         rhel8-arm64-1:
             ip: 140.211.169.58
             server_jobs: 2
             user: cloud-user
             swap_file_size_mb: 4096
         rhel8-ppc64_le-1: {ip: 140.211.168.185, swap_file_size_mb: 2048, user: cloud-user}
-
-    - orka:
-        macos11-x64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.100
-            port: 8822
-            user: administrator
-
 
 
   - test:
@@ -116,12 +96,12 @@ hosts:
     - digitalocean:
         debian11-x64-1: {ip: 174.138.79.159, swap_file_size_mb: 2048}
         debian12-x64-1: {ip: 159.203.105.159, swap_file_size_mb: 2048}
-        fedora39-x64-1: {ip: 159.203.117.50}
-        fedora39-x64-2: {ip: 134.209.172.40}
         fedora40-x64-1: {ip: 159.65.248.149}
         fedora40-x64-2: {ip: 162.243.187.89}
-        freebsd12-x64-1: {ip: 45.55.90.237, user: freebsd}
-        freebsd12-x64-2: {ip: 107.170.28.213, user: freebsd}
+        fedora41-x64-1: {ip: 165.227.191.35}
+        fedora41-x64-2: {ip: 159.65.246.5}
+        freebsd13-x64-1: {ip: 138.197.25.49, user: freebsd, swap_file_size_mb: 2048}
+        freebsd13-x64-2: {ip: 159.89.188.229, user: freebsd, swap_file_size_mb: 2048}
         rhel8-x64-1: {ip: 161.35.139.78, build_test_v8: yes, swap_file_size_mb: 2048}
         rhel9-x64-1: {ip: 134.122.12.240, swap_file_size_mb: 2048}
         ubuntu2204_docker-x64-1: {ip: 134.209.55.216}
@@ -160,8 +140,8 @@ hosts:
         rhel8-x64-2: {ip: 169.61.75.58, build_test_v8: yes}
         rhel8-x64-3: {ip: 52.117.26.13, build_test_v8: yes}
         rhel9-x64-1: {ip: 169.60.150.92, swap_file_size_mb: 2048}
+        rhel9-x64-2: {ip: 169.44.168.2}
         ubuntu2204-x64-1: {ip: 169.60.150.82}
-        ubuntu2204-x64-2: {ip: 169.44.168.2}
         # when adding, removing or changing the IPs for any
         # `jenkins-workspace-*` machine, remember to rerun
         # the `ansible/playbooks/create-github-bot.yml` playbook
@@ -170,10 +150,6 @@ hosts:
         ubuntu2204_docker-x64-1: {ip: 52.117.26.9}
 
     - equinix_mnx:
-        smartos18-x64-3: {ip: 147.28.162.102}
-        smartos18-x64-4: {ip: 147.28.162.103}
-        smartos20-x64-3: {ip: 147.28.162.107}
-        smartos20-x64-4: {ip: 147.28.162.109}
         ubuntu1804-x64-1: {ip: 147.28.162.99, user: ubuntu}
 
     - hetzner:
@@ -185,20 +161,6 @@ hosts:
             ip: 37.27.104.215
             build_test_v8: yes
             is_benchmark: true
-
-    - macstadium:
-        macos11.0-arm64-3:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 207.254.38.86
-            user: administrator
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
-        macos11.0-arm64-4:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 207.254.38.89
-            user: administrator
-            remote_env:
-                PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
 
     - linuxonecc:
         rhel9-s390x-1: {ip: 148.100.85.171, swap_file_size_mb: 2048, user: linux1}
@@ -238,10 +200,23 @@ hosts:
         # to update the Jenkins worker IP allowlist in github-bot
         ubuntu2204-x64-1: {ip: 67.158.54.159, alias: jenkins-workspace-9}
         ubuntu2204-x64-2: {ip: 8.225.232.44, alias: jenkins-workspace-10}
-        smartos21-x64-1: {ip: 8.225.232.135}
-        smartos21-x64-2: {ip: 8.225.232.137}
-        smartos23-x64-1: {ip: 8.225.232.134}
-        smartos23-x64-2: {ip: 8.225.232.141}
+        smartos22-x64-1:
+          ip: 172.16.9.3
+          ansible_ssh_common_args: '-o ProxyCommand="ssh -i ~/.ssh/nodejs_build_test -W %h:%p root@67.158.54.157"'
+          ansible_user: root
+        smartos22-x64-2:
+          ip: 172.16.9.3
+          ansible_ssh_common_args: '-o ProxyCommand="ssh -i ~/.ssh/nodejs_build_test -W %h:%p root@67.158.54.56"'
+          ansible_user: root
+        smartos23-x64-4:
+          ip: 172.16.9.3
+          ansible_ssh_common_args: '-o ProxyCommand="ssh -i ~/.ssh/nodejs_build_test -W %h:%p root@192.207.255.124"'
+          ansible_user: root
+        smartos23-x64-5:
+          ip: 172.16.9.3
+          ansible_ssh_common_args: '-o ProxyCommand="ssh -i ~/.ssh/nodejs_build_test -W %h:%p root@67.158.54.51"'
+          ansible_user: root
+
 
     - osuosl:
         # secret for -1 was compromised, do not use -1 name
@@ -258,54 +233,26 @@ hosts:
         rhel8-ppc64_le-2: {ip: 140.211.168.76, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 2048}
         rhel8-ppc64_le-3: {ip: 140.211.168.221, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 2048}
         rhel8-ppc64_le-4: {ip: 140.211.168.194, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 2048}
-        rhel9-ppc64_le-1: {ip: 140.211.10.92, user: cloud-user, swap_file_size_mb: 2048}
-        rhel9-ppc64_le-2: {ip: 140.211.10.69, user: cloud-user, swap_file_size_mb: 2048}
-        rhel9-ppc64_le-3: {ip: 140.211.10.110, user: cloud-user, swap_file_size_mb: 2048}
+        rhel9-ppc64_le-1: {ip: 140.211.10.105, user: cloud-user, swap_file_size_mb: 2048}
+        rhel9-ppc64_le-2: {ip: 140.211.10.98, user: cloud-user, swap_file_size_mb: 2048}
+        rhel9-ppc64_le-3: {ip: 140.211.10.102, user: cloud-user, swap_file_size_mb: 2048}
+        rhel9-ppc64_le-4: {ip: 140.211.10.107, user: cloud-user, swap_file_size_mb: 2048}
         ubuntu2004_docker-arm64-1: {ip: 140.211.169.11, user: ubuntu}
 
-    - orka:
-        macos10.15-x64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.102
-            port: 8824
-            user: administrator
-        macos10.15-x64-2:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.101
-            port: 8824
-            user: administrator
-        macos11-x64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.102
-            port: 8822
-            user: administrator
-        macos11-x64-2:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.102
-            port: 8823
-            user: administrator
-        macos12-x64-1:
-            ansible_python_interpreter: /usr/bin/python3
-            ip: 199.7.167.100
-            port: 8823
-            user: admin
-
     - iinthecloud:
-        ibmi73-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
-        ibmi73-ppc64_be-2: {ip: 65.183.160.59, user: nodejs}
+        ibmi74-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
+        ibmi74-ppc64_be-2: {ip: 65.183.160.59, user: nodejs}
 
     - rzkh:
-        ibmi73-ppc64_be-1:
+        ibmi74-ppc64_be-1:
             ip: 185.113.4.148
             user: nodejs
             server_jobs: 32
 
     - rackspace:
-        centos7-x64-1: {ip: 119.9.27.82}
-        debian10-x64-1: {ip: 104.239.140.184}
         debian11-x64-1: {ip: 23.253.109.216, swap_file_size_mb: 4096}
-        ubuntu1604-x64-1: {ip: 119.9.51.176}
-        ubuntu1604-x64-2: {ip: 104.130.124.194}
+        debian12-x64-1: {ip: 104.130.124.194, swap_file_size_mb: 4096}
+        ubuntu2204-x64-1: {ip: 119.9.52.75, swap_file_size_mb: 4096, user: ubuntu}
         win2016_vs2015-x64-1: {}
         win2016_vs2015-x64-2: {}
         win2019_vs2019-x64-1: {}
@@ -320,5 +267,4 @@ hosts:
         win2022_vs2022-x64-6: {}
 
     - softlayer:
-        debian10-x64-1: {ip: 169.44.16.126}
         debian12-x64-1: {ip: 169.60.150.88, swap_file_size_mb: 2048}

@@ -69,7 +69,13 @@ build {
       "chmod 600 /Users/${var.ssh_default_username}/.ssh/authorized_keys"
     ]
   } 
-
+  // Add GitHub host key to known hosts.
+  provisioner "shell" {
+    inline = [
+      "echo 'Adding GitHub host key to known hosts...'",
+      "ssh-keyscan github.com >> /Users/${var.ssh_default_username}/.ssh/known_hosts"
+    ]
+  }
   // Disable SSH password authentication.
   // @TODO: Review fallback to password authentication.
   provisioner "shell" {
@@ -95,6 +101,14 @@ build {
       "eval \"$($(brew --prefix)/bin/brew shellenv)\""
     ]
   }
+  // Ensure Homebrew environment is set up in the shell profile.
+  provisioner "shell" {
+    inline = [
+      "echo 'Setting up Homebrew environment in shell profile...'",
+      "echo 'eval \"$(/opt/homebrew/bin/brew shellenv)\"' >> /Users/admin/.zshrc",
+      "echo 'eval \"$(/opt/homebrew/bin/brew shellenv)\"' >> /Users/admin/.bash_profile"
+    ]
+  }
   // Check Homebrew. Ignore errors because we are not using the last version of Xcode.
   provisioner "shell" {
     inline = [
@@ -108,7 +122,15 @@ build {
     inline = [
       "echo 'Installing packages using Homebrew...'",
       "eval \"$(/opt/homebrew/bin/brew shellenv)\"",
-      "/opt/homebrew/bin/brew install git automake bash libtool cmake python ccache"
+      "/opt/homebrew/bin/brew install git automake bash libtool cmake python ccache xz"
+    ]
+  }
+  // Install tap2junit using pip.
+  provisioner "shell" {
+    inline = [
+      "echo 'Installing tap2junit using pip...'",
+      "python3 -m pip install --user tap2junit",
+      "export PATH=$PATH:/Users/admin/.local/bin"
     ]
   }
   // Install Java 17 for Jenkins.
@@ -125,7 +147,9 @@ build {
       "echo 'Printing the version of the installed packages...'",
       "eval \"$(/opt/homebrew/bin/brew shellenv)\"",
       "/opt/homebrew/bin/brew list --versions",
-      "java -version"
+      "java -version",
+      // @TODO: Solve the problem with the Xcode version.
+      //"xcodebuild -version"
     ]
   }
 }

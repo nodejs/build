@@ -1,20 +1,20 @@
 ---
 
 #
-# freebsd: python3.8
+# freebsd13: python3.11
 #
 
 - name: install pip
   package:
-    name: py39-pip
+    name: py311-pip
     state: present
 
 - name: freebsd | update pip3 symlink
-  when: os == "freebsd12"
+  when: os == "freebsd13"
   file:
     dest: "/usr/local/bin/pip3"
     state: link
-    src: "/usr/local/bin/pip-3.9"
+    src: "/usr/local/bin/pip-3.11"
 
 - name: install tap2junit
   pip:

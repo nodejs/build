@@ -15,9 +15,6 @@ egrep '^Host .*-.*-.*-.*' ~/.ssh/config | sed -e 's/^Host //' -e 's/ .*//' > hos
 # Add aliases for groups of hosts. Feel free to add more aliases as useful.
 grep -- '-arm' hosts/all > hosts/arm
 grep -- 'aix61-ppc64_be' hosts/all > hosts/aix61-ppc64_be
-grep -- 'centos7-ppc64_le' hosts/all > hosts/centos7-ppc64_le
-grep -- 'centos7-ppc64_le' hosts/all > hosts/centos7-ppc64_le
-grep -- 'centos7' hosts/all > hosts/centos7
 grep -- 'digitalocean' hosts/all > hosts/digitalocean
 grep -- 'infra-' hosts/all > hosts/infra
 grep -- 'joyent' hosts/all > hosts/joyent

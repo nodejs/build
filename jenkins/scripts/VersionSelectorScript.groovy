@@ -20,19 +20,11 @@ def buildExclusions = [
   // Machine Label,                   Build Type,  Node Version
 
   // Linux -------------------------------------------------
-  [ /^centos7-(arm)?64-gcc48/,        anyType,     gte(18) ],
-  [ /^centos7-(arm)?64-gcc6/,         anyType,     gte(18) ],    // 14.x: gcc6 builds stop
-  [ /^centos7-(arm)?64-gcc8/,         anyType,     gte(18) ], // 18.x: centos7 builds stop
-  [ /^centos7-64/,                    anyType,     gte(18) ],
-  [ /debian10/,                       anyType,     gte(21) ],
   [ /debian11/,                       anyType,     gte(23) ],
   [ /alpine-last-latest/,             anyType,     gte(22) ], // Alpine 3.18. Bug in GCC 12.2.
   [ /rhel7/,                          anyType,     gte(18) ],
   [ /^ubuntu1604-32/,                 anyType,     gte(18) ], // 32-bit linux for <10 only
   [ /^ubuntu1604-64/,                 anyType,     gte(18) ],
-
-  // Linux PPC LE ------------------------------------------
-  [ /^centos7-ppcle/,                 anyType,     gte(18) ],
 
   // ARM  --------------------------------------------------
   [ /^ubuntu1804-arm64/,                             anyType, gte(20) ], // 20.x: gcc8 builds stop
@@ -58,10 +50,9 @@ def buildExclusions = [
   [ /vs2015(-\w+)?$/,                 testType,    gte(18)       ],
   [ /vs2017(-\w+)?$/,                 testType,    gte(18)       ],
   [ /vs2019(-\w+)?$/,                 testType,    gte(21)       ],
-  [ /vs2022(-\w+)?$/,                 testType,    lt(20)        ], // Temporarily compile Node v20+ on both VS2019 and VS2022
-  [ /vs2022-x86$/,                    testType,    lt(20)        ], // Temporarily compile Node v20+ arm64 and x86 on both VS2019 and VS2022
-  [ /vs2022-x86$/,                    testType,    gte(23)       ],
-  [ /vs2022-arm64$/,                  testType,    lt(20)        ],
+  [ /vs2022(-\w+)?$/,                 testType,    lt(21)        ],
+  [ /vs2022-x86$/,                    testType,    gte(23)       ], // x86 was dropped on Windows in v23
+  [ /vs2022_clang(-\w+)?$/,           testType,    lt(23)        ], // ClangCL support was added in v23
   [ /COMPILED_BY-\w+-arm64$/,         testType,    lt(20)        ], // run tests on arm64 for >=19
   // VS versions supported to build add-ons
   [ /vs2015-COMPILED_BY/,             testType,    gte(20)       ],
@@ -72,6 +63,7 @@ def buildExclusions = [
 
   // FreeBSD -----------------------------------------------
   [ /^freebsd12/,                     anyType,     gte(22) ],
+  [ /^freebsd13/,                     anyType,     gte(22) ], // https://github.com/nodejs/node/issues/54576
 
   // Shared libs docker containers -------------------------
   [ /sharedlibs_debug_x64/,           anyType,     gte(18) ],

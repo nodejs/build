@@ -10,7 +10,7 @@ git_version: 2.10.2
 ssh_config: /etc/ssh/sshd_config
 
 sshd_service_map: {
-  'smartos21': 'ssh',
+  'smartos22': 'ssh',
   'smartos23': 'ssh',
 }
 
@@ -18,7 +18,7 @@ sshd_service_name: "{{ sshd_service_map[os]|default(sshd_service_map[os|stripver
 
 ntp_service: {
   chrony: ['rhel8', 'rhel9', 'debian11'],
-  systemd: ['debian8', 'debian10', 'debian12', 'ubuntu']
+  systemd: ['debian12', 'ubuntu']
 }
 
 common_packages: [
@@ -32,18 +32,6 @@ common_packages: [
 # % ansible -m debug -a "var=arch"  HOST
 # % ansible -m debug -a "var=os"  HOST
 packages: {
-  # centos-release-scl is required to enable SCLo but we do it manually in
-  # partials/repo/centos7.yml for arm64
-  centos7_arm64: [
-    'git,python3', # git2u not available for aarch64 (yet)
-  ],
-  centos7_x64: ['devtoolset-6-libatomic-devel,git222,centos-release-scl,python3'],
-  centos7_ppc64: ['cmake3,glib2-devel,git,python3'],
-
-  centos7: [
-    'bzip2-devel,openssl-devel,ccache,gcc-c++,sudo,zlib-devel,libffi-devel,devtoolset-8,devtoolset-8-libatomic-devel',
-  ],
-
   aix: [
     'bash,cmake,coreutils,curl,gcc-c++,tar,unzip,git,make,sudo,python-setuptools,python3.9',
   ],
@@ -57,15 +45,7 @@ packages: {
   ],
 
   ibmi: [
-    'autoconf,automake,ca-certificates-mozilla,tar-gnu,gzip,ccache,cmake,coreutils-gnu,gcc10,gcc10-cplusplus,gcc10-cpp,git,libstdcplusplus6-10-devel,m4-gnu,openssl-devel,python2-setuptools,python3,python3-pip,python39,python39-pip,python39-setuptools,sed-gnu,zlib-devel,icu-devel,c-ares-devel,brotli-devel,grep-gnu,pkg-config,xz',
-  ],
-
-  debian8: [
-    'ccache,git,gcc-4.9,g++-4.9,libfontconfig1,binutils-2.26,sudo',
-  ],
-
-  debian10: [
-    'gcc-8,g++-8,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-pip',
+    'autoconf,automake,ca-certificates-mozilla,tar-gnu,gzip,ccache,cmake,coreutils-gnu,gcc12,gcc12-cplusplus,gcc12-cpp,libstdcplusplus6-12-devel,gcc10,gcc10-cplusplus,gcc10-cpp,git,libstdcplusplus6-10-devel,m4-gnu,openssl-devel,python2-setuptools,python3,python3-pip,python39,python39-pip,python39-setuptools,sed-gnu,zlib-devel,icu-devel,c-ares-devel,brotli-devel,grep-gnu,pkg-config,xz',
   ],
 
   debian11: [
@@ -81,7 +61,7 @@ packages: {
   ],
 
   freebsd: [
-    'ccache,git,gmake,sudo,python2,python3'
+    'ccache,git,gmake,sudo,python3'
   ],
 
   'macos10.15': [
@@ -120,17 +100,18 @@ packages: {
     'sudo',
   ],
 
-  smartos21: [
-    'gcc10',
+  smartos22: [
+    'gcc12',
     'ccache',
-    'py310-pip'
+    'python311',
+    'py311-pip'
   ],
 
   smartos23: [
     'gcc13',
     'ccache',
-    'python310',
-    'py310-pip'
+    'python312',
+    'py312-pip'
   ],
 
   ubuntu: [
@@ -145,7 +126,7 @@ packages: {
   # Default gcc/g++ package is 7.
   ubuntu1804: [
     'gcc-6,g++-6,gcc-8,g++-8,python3.8',
-  ],  
+  ],
 
   # Default gcc/g++ package is 11.
   ubuntu2204: [
