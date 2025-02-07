@@ -56,3 +56,23 @@
   - name: build clcache
     win_shell: '$env:PYTHONPATH = "C:\clcache"; py -3 -m PyInstaller -y pyinstaller/clcache_main.py'
     args: { chdir: 'C:\clcache' }
+
+# Install ccache and enable using it with Visual Studio
+- block:
+  - name: install ccache
+    win_chocolatey:
+      name: ccache
+      pinned: yes
+      version: "4.10.2"
+  - name: make ccache directory
+    win_command: 'mkdir C:\ccache'
+  - name: copy ccache to ccache directory as cl.exe
+    win_command: 'cp C:\ProgramData\chocolatey\lib\ccache\tools\ccache-4.10.2-windows-x86_64\ccache.exe C:\ccache\cl.exe'
+  - name: make directory for caching
+    win_command: 'mkdir C:\ccache\cache'
+  - name: set caching directory enviroment variable
+    win_command: 'setx CCACHE_DIR C:\ccache\cache /M'
+  - name: copy ccache.conf to ccache directory
+    win_copy:
+        src: ../files/ccache.conf
+        dest: C:\ccache\cache\ccache.conf
