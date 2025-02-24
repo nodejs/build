@@ -66,8 +66,10 @@
       version: "4.10.2"
   - name: make ccache directory
     win_command: 'mkdir C:\ccache'
-  - name: copy ccache to ccache directory as cl.exe
+  - name: copy ccache to ccache directory as cl.exe for MSVC
     win_command: 'cp C:\ProgramData\chocolatey\lib\ccache\tools\ccache-4.10.2-windows-x86_64\ccache.exe C:\ccache\cl.exe'
+  - name: copy ccache to ccache directory as clang-cl.exe for ClangCL
+    win_command: 'cp C:\ProgramData\chocolatey\lib\ccache\tools\ccache-4.10.2-windows-x86_64\ccache.exe C:\ccache\clang-cl.exe'
   - name: make directory for caching
     win_command: 'mkdir C:\ccache\cache'
   - name: set caching directory enviroment variable

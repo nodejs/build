@@ -21,6 +21,11 @@ if %not_clang% equ 1 if not defined DISABLE_CLCACHE if exist C:\clcache\dist\clc
   C:\clcache\dist\clcache_main\clcache_main.exe -s
 )
 
+:: Opt-in for ccache
+if %not_clang% equ 0 if defined CCACHE_DIR if not defined DISABLE_CCACHE if exist C:\ccache\cl.exe (
+  set "VCBUILD_EXTRA_ARGS=%VCBUILD_EXTRA_ARGS% ccache C:\ccache"
+)
+
 :: Call vcbuild
 if "%nodes:~-6%" == "-arm64" (
   :: Building MSI is not yet supported for ARM64 with WiX 3.
