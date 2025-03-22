@@ -124,6 +124,17 @@ RUN mkdir -p /tmp/openssl-$OPENSSL32VER && \
     make install && \
     rm -rf /tmp/openssl-$OPENSSL32VER
 
+ENV OPENSSL35VER 3.5.0-alpha1
+ENV OPENSSL35DIR /opt/openssl-$OPENSSL35VER
+
+RUN mkdir -p /tmp/openssl-$OPENSSL35VER && \
+    cd /tmp/openssl-$OPENSSL35VER && \
+    curl -sL https://github.com/openssl/openssl/releases/download/openssl-$OPENSSL35VER/openssl-$OPENSSL35VER.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$OPENSSL35DIR && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/openssl-$OPENSSL35VER
+
 ENV ZLIBVER 1.2.13
 ENV ZLIB12DIR /opt/zlib_$ZLIBVER
 
