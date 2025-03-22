@@ -27,6 +27,13 @@ git status
 git rev-parse HEAD
 git rev-parse $REBASE_ONTO
 
+# COMMIT_SHA_CHECK needs to be set in the job. Check that the gitref
+# that is checked out hasn't been updated since the job was requested.
+if [ "$(git rev-parse HEAD)" != "$(git rev-parse ${COMMIT_SHA_CHECK})" ]; then
+    echo "HEAD does not match expected COMMIT_SHA_CHECK"
+    exit 1
+fi
+
 if [ -n "${REBASE_ONTO}" ]; then
   git rebase --committer-date-is-author-date $REBASE_ONTO
 fi
