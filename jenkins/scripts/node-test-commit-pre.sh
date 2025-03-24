@@ -29,7 +29,7 @@ git rev-parse $REBASE_ONTO
 
 # COMMIT_SHA_CHECK needs to be set in the job. Check that it looks like
 # a SHA and not some other git ref (e.g. branch ref)
-if ! expr "${COMMIT_SHA_CHECK}" : [0-9a-fA-F]\\+\$ > /dev/null; then
+if ! expr "${COMMIT_SHA_CHECK}" : "[0-9a-fA-F]\\+\$" > /dev/null; then
   echo "COMMIT_SHA_CHECK does not look like a SHA"
   exit 1
 fi
