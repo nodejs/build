@@ -27,8 +27,15 @@ git status
 git rev-parse HEAD
 git rev-parse $REBASE_ONTO
 
-# COMMIT_SHA_CHECK needs to be set in the job. Check that the gitref
-# that is checked out hasn't been updated since the job was requested.
+# COMMIT_SHA_CHECK needs to be set in the job. Check that it looks like
+# a SHA and not some other git ref (e.g. branch ref)
+if ! expr "${COMMIT_SHA_CHECK}" : [0-9a-fA-F]\\+\$ > /dev/null; then
+  echo "COMMIT_SHA_CHECK does not look like a SHA"
+  exit 1
+fi
+
+# Check that the gitref that is checked out hasn't been updated since
+# the job was requested.
 if [ "$(git rev-parse HEAD)" != "$(git rev-parse ${COMMIT_SHA_CHECK})" ]; then
     echo "HEAD does not match expected COMMIT_SHA_CHECK"
     exit 1
