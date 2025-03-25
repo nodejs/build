@@ -216,10 +216,6 @@ hosts:
           ip: 172.16.9.3
           ansible_ssh_common_args: '-o ProxyCommand="ssh -i ~/.ssh/nodejs_build_test -W %h:%p root@192.207.255.124"'
           ansible_user: root
-        smartos23-x64-5:
-          ip: 172.16.9.3
-          ansible_ssh_common_args: '-o ProxyCommand="ssh -i ~/.ssh/nodejs_build_test -W %h:%p root@67.158.54.51"'
-          ansible_user: root
         smartos23-x64-6:
           ip: 172.16.9.3
           ansible_ssh_common_args: '-o ProxyCommand="ssh -i ~/.ssh/nodejs_build_test -W %h:%p root@8.225.232.36"'
