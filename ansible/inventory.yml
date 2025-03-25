@@ -200,10 +200,6 @@ hosts:
         # to update the Jenkins worker IP allowlist in github-bot
         ubuntu2204-x64-1: {ip: 67.158.54.159, alias: jenkins-workspace-9}
         ubuntu2204-x64-2: {ip: 8.225.232.44, alias: jenkins-workspace-10}
-        smartos22-x64-1:
-          ip: 172.16.9.3
-          ansible_ssh_common_args: '-o ProxyCommand="ssh -i ~/.ssh/nodejs_build_test -W %h:%p root@67.158.54.157"'
-          ansible_user: root
         smartos22-x64-2:
           ip: 172.16.9.3
           ansible_ssh_common_args: '-o ProxyCommand="ssh -i ~/.ssh/nodejs_build_test -W %h:%p root@67.158.54.56"'
