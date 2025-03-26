@@ -28,3 +28,16 @@
   become: yes
   become_user: "{{ server_user }}"
   loop: "{{ lookup('file', 'files/github_bad_hosts').splitlines() }}"
+
+# Entries in `files/binary_tmp_known_hosts` are generated via
+# `ssh-keyscan -H -t ed25519 <host>`, where `<host>` should match
+# the `TEMP_REPO_SERVER` environment variable set in Jenkins.
+- name: add binary_tmp entry in known_hosts
+  ansible.builtin.lineinfile:
+    path: "{{ user_home_dir }}/.ssh/known_hosts"
+    line: "{{ item }}"
+    state: present
+  become: yes
+  become_user: "{{ server_user }}"
+  loop: "{{ lookup('file', 'files/binary_tmp_known_hosts').splitlines() }}"
+  when: (user_home_dir.find('_arm_cross') != -1) or (user_home_dir.find('armv7l') != -1)
