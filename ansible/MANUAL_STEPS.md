@@ -718,7 +718,120 @@ Note that while this is being done across all Docker hosts, you should disable [
 
 ## SmartOS
 
-Joyent SmartOS machines use `libsmartsshd.so` for PAM SSH authentication in order to look up SSH keys allowed to access machines. Part of our Ansible setup removes this so we can only rely on traditional SSH authentication. Therefore, it is critcal to put `nodejs_test_*` public keys into `$USER/.ssh/authorized_keys` as appropriate or access will be lost and not recoverable after reboot or sshd restart (part of Ansible setup).
+The SmartOS machines are hosted by MNX.io. They are individual machines with the actual jenkins worker housed inside a VM on the host. To provision a new SmartOS jenkins host for testing we must do the following manual steps to prepare:
+1. Provision the host at MNX.io. The credentials for the mnx.io account are located in the admin logins file in the secrets repo.
+2. Configuration of the host environment
+3. Create the VM environment
+4. Configure the VM environment
+5. Create the Jenkins nodes/Open the jenkins firewall
+6. Ansible the VM
+
+### Provisioning the Machines
+The host environment that houses the virtual machines currently relies on some older system libraries in order for compilation to succeed on smartos VM's. MNX.io has provided a base platform that has these older libs that we can use to make the workers.  
+
+1. Login to MNX.io.
+2. Select "Compute" and then "Custom Images" From the left sidebar
+3. Click on "Create Instance" on the `smartos-retro-20220407T001427Z`row.
+4. Then "click on the "Compute" option and pick c1.xlarge-ojsf (16GB Rab, 4vcpus, 200GB Disk), and then "Next"
+5. Name the instance test-mnx-smartosXX-x64-Y where XX is the version of smartos you plan on provisioning, and Y is an incremented number of similar instances
+6. Select MNX-Triton-Public (public) as the Network
+7. Add a tag of "role" = "test"
+8. Click Launch.
+
+Instances should launch and be ready relatively quickly (less than 5 minutes)
+
+### Configuring the Host Environment
+Once the instance is up you should be able to find its host IP address (choose Instances from the left column).
+Then, ssh to get into the host hypervisor: `ssh root@<IP ADDRESS> -i ~/.ssh/nodejs_build_test` (the nodejs_build_test key should be on the machine)
+The older images are still configured to point at a defunct joyent image archve. We have to point to the new mnx one:
+1. `mkdir /var/imgadm`
+2. `vi /var/imgadm/imgadm.conf`
+3. Put the following json into the contents:
+```
+{
+  "dockerImportSkipUuids": true,
+  "upgradedToVer": "3.0.0",
+  "source": "https://images.mnx.io",
+  "sources": [
+    {
+      "type": "imgapi",
+      "url": "https://images.smartos.org"
+    }
+  ]
+}
+``` 
+4. Find the UUID of the image for the version of smartos you want to run on the VM: `imgadm avail name=base-64-lts`
+```
+UUID                                  NAME         VERSION  OS       TYPE          PUB
+[... older version omitted ...]
+1d05e788-5409-11eb-b12f-037bd7fee4ee  base-64-lts  20.4.0   smartos  zone-dataset  2021-01-11
+c8715b60-7e98-11ec-82d1-03d16599f529  base-64-lts  21.4.0   smartos  zone-dataset  2022-01-26
+85d0f826-0131-11ed-973d-2bfeef68011c  base-64-lts  21.4.1   smartos  zone-dataset  2022-07-11
+93bdf06a-01ef-11ed-81ff-bf0efad842c7  base-64-lts  20.4.1   smartos  zone-dataset  2022-07-12
+e44ed3e0-910b-11ed-a5d4-00151714048c  base-64-lts  22.4.0   smartos  zone-dataset  2023-01-10
+8adac45a-aca7-11ee-b53e-00151714048c  base-64-lts  23.4.0   smartos  zone-dataset  2024-01-06
+```
+5. Import the image
+smartos22: `imgadm import e44ed3e0-910b-11ed-a5d4-00151714048c`
+smartos23: `imgadm import 8adac45a-aca7-11ee-b53e-00151714048c`
+6. create new image_properties.json to define the VM we're creating:
+```
+  {
+    "brand": "joyent",
+    "resolvers": [
+      "8.8.8.8",
+      "8.8.4.4"
+    ],
+    "ram": 15360,
+    "alias": "os1",
+    "customer_metadata": {
+      "root_authorized_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDQ+xhL3A6vERZoUUoQspAuydcEghmjiC0m8yETHqghnPr2Y5nfFjnzmNB8EPM5+/jsSwPBF0jUPFpAgWYYXAGQZ62hsovfVMcwqXlMYJyA+L/uGDX7KxtLhn6FcftxJgyHwbggC1kXuzmrtzX/4oHSQi9mth3sOuf4KxS2pE0nNqIy4lIEyfkutuIZa3dhKTYLVCklNCH+UjYBtVgIjvqBBoEKNcBNO4fhLM5MCS6/MpbkhTkTJBN/kvJYBfZ9xAh+2/gQc0ndtK+rJsOJaQ1yFnIHoJBTRZN3qS5O8aE7Tdtxh5G1B+S2BNujdPestpBHPGONsVtFgdMkRFfmp3lVCwoBOpNHL5zzkGHNuq2ViphxRsX5A9SgL4MP/5P3xKgxWbzYYEl/0ef612d8fQQmiMitX7STM5R/9aau1d3PUV9ZJLgNgIWLCjdifGgDJeO32fISGK/mHkCvR5zjhtd7wUBPKspOxbVNCj2C5mHGKhT3PlQNt1drwbLJUYndXCQN0EJuIeM81jcKGO6J51kOHco/NM3vQBGdn24efbj/R1gPtZsGmhc6ho/xUNEoSXY7sg6Ma++iYJ+nJqgUvvVPzpJxurcwABTjwqjFj9NZrUQtVchnONsfrpcEnZhOhUZSxhQquaWwpYfWw/slMe/B7BGRiRLY5payqlZkxWCUJw== test@build.nodejs.org",
+      "user-script" : "/usr/sbin/mdata-get root_authorized_keys > ~root/.ssh/authorized_keys ; /usr/sbin/mdata-get root_authorized_keys > ~admin/.ssh/authorized_keys"
+    },
+    "nics": [
+      {
+          "interface": "net0",
+          "nic_tag": "vswitch0",
+          "gateway": "172.16.9.1",
+          "gateways": [
+              "172.16.9.1"
+          ],
+          "netmask": "255.255.255.0",
+          "ip": "172.16.9.3",
+          "ips": [
+              "172.16.9.3/24"
+          ],
+      "primary": true
+    }
+    ],
+    "image_uuid": "8adac45a-aca7-11ee-b53e-00151714048c",
+    "quota": 160
+  }
+```
+7. create the vm with `vmadm create -f  image_properties.json`
+8. ssh to the internal vm, proxying through the host: ```ssh root@172.16.9.3 -oProxyCommand="ssh root@192.207.255.126 -i ~/.ssh/nodejs_build_test -W %h:%p" -o StrictHostKeyChecking=no -i ~/.ssh/nodejs_build_test```  Note that the 192.207.255.126 is the IP address asssigned to the instance at MNX.(see image)
+9. install `htop` and `python` (use `pkgin search` to find the latest version of python to install based on the smartos version `python311` on smartos22, `python312` on smartos23)
+10. `pkgin install python311`
+11. Smartos22 extra steps: 
+    1. `pkg_alternatives manual python311`
+    2. `pkgin install py311-expat-3.11.1nb1`
+    3. `pkgin install openjdk17-17.0.9`
+    4. `pkg_alternatives manual openjdk17-17.0.9`
+16. install pip: `python -m ensurepip --upgrade` and `python -m pip install packaging`
+17. Add the machine to the inventory with the proxycommand:
+```
+          smartos23-x64-4:
+          ip: 172.16.9.3
+          ansible_ssh_common_args: '-o ProxyCommand="ssh -i ~/.ssh/nodejs_build_test -W %h:%p root@192.207.255.124"'
+          ansible_user: root
+```
+18. Add the node to jenkins
+19. add the jenkins secret for the new node to the secrets repo
+20. Provision with ansible: `ansible-playbook ansible/playbooks/jenkins/worker/create.yml --limit "<HOSTNAME_TO_PROVISION>" -vv
+21. Ensure host can connect by modifying iptables on jenkins ci director.
+
+
+SmartOS machines use `libsmartsshd.so` for PAM SSH authentication in order to look up SSH keys allowed to access machines. Part of our Ansible setup removes this so we can only rely on traditional SSH authentication. Therefore, it is critcal to put `nodejs_test_*` public keys into `$USER/.ssh/authorized_keys` as appropriate or access will be lost and not recoverable after reboot or sshd restart (part of Ansible setup).
 
 ## IBM i
 
