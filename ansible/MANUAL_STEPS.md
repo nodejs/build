@@ -3,11 +3,6 @@
 * [Adding firewall entries for Jenkins workers](#adding-firewall-entries-for-jenkins-workers)
 * [`release-*` machines](#release--machines)
   * [`release-*container*` machines](#release-container-machines)
-  * [macOS release machines](#macos-release-machines)
-    * [Full Xcode](#full-xcode)
-    * [Signing certificates](#signing-certificates)
-* [macOS](#macos)
-  * [Install Command Line Tools for Xcode](#install-command-line-tools-for-xcode)
 * [AIX](#aix)
   * [Disk layout](#disk-layout)
   * [OpenSSL](#openssl)
@@ -98,107 +93,6 @@ Therefore, the above SSH configuration should take place in
 1. Find the running container ID using `docker ps`
 2. Enter the container using `docker exec <containerid> -ti bash`
 3. Run `ssh node-www date` (as above)
-
-### macOS release machines
-
-Previous notes: [#1393](https://github.com/nodejs/build/issues/1393)
-
-#### Full Xcode
-
-Xcode Command-line tools are not enough to perform a full notarization cycle, full Xcode must be installed manually.
-
-As root:
-
-* Download Xcode: https://developer.apple.com/download/more/ - find non-beta version, open Developer Tools in browser, Networking tab, start download (then cancel), in Networking tab "Copy as cURL" (available in Chrome & FF)
-  * On OSX 11 we currently install 13.2.1
-* Download onto release machine using the copied curl command (may need `-o xcode.xip` appended to curl command) to `/tmp`
-  * If you have trouble on the command line, pasting into a shell script file can make pasting/editing to add -o xcode.xip easier
-* Extract: `xip --expand xcode.xip`
-  * This takes a long time since xcode.xip is 7-10G in size depending on version
-  * If you run out of space you can delete `/Users/build/workspace/*` to free up some space. Also make sure that
-    if you are updating Xcode that you have removed any existing version of /Applications/Xcode.app. You may also
-    need to clear the ccache by running `sudo -s su - iojs` followed by `ccache --clear`
-* Move `Xcode.app` directory to `/Applications` by running `mv Xcode.app /Applications/Xcode.app`
-* `sudo xcode-select --switch /Applications/Xcode.app`
-* `sudo xcodebuild -license` - accept license
-* `git` - check that git is working (confirming license has been accepted)
-
-#### OSX Keychain Profile
-
-Create a keychain profile (`NODE_RELEASE_PROFILE`) for the release machine: 
-
-```bash
-sudo xcrun notarytool store-credentials NODE_RELEASE_PROFILE \
-  --apple-id XXXX \
-  --team-id XXXX \
-  --password XXXX \
-  --keychain /Library/Keychains/System.keychain  
-```
-
-Note: `XXXX` values are found in `secrets/build/release/apple.md`
-
-Note2: (`security unlock-keychain -u /Library/Keychains/System.keychain` _may_ be required prior to running this command).
-
-The expected output is:
-
-```
-This process stores your credentials securely in the Keychain. You reference these credentials later using a profile name.
-
-Validating your credentials...
-Success. Credentials validated.
-Credentials saved to Keychain.
-To use them, specify `--keychain-profile "NODE_RELEASE_PROFILE" --keychain /Library/Keychains/System.keychain`
-```
-
-#### Signing certificates
-
-* Go to the `build/release` folder in the secrets repo.
-* Extract from secrets/build/release: `dotgpg cat Apple\ Developer\ ID\ Node.js\ Foundation.p12.base64 | base64 -D > /tmp/Apple\ Developer\ ID\ Node.js\ Foundation.p12`
-* Transfer to release machine (scp to /tmp)
-* `sudo security import /tmp/Apple\ Developer\ ID\ Node.js\ Foundation.p12 -k /Library/Keychains/System.keychain -T /usr/bin/codesign -T /usr/bin/productsign -P 'XXXX'` (where XXXX is found in secrets/build/release/apple.md) (`security unlock-keychain -u /Library/Keychains/System.keychain` _may_ be required prior to running this command).
-
-#### Validating certificates are in date and valid
-
-1. `security -i unlock-keychain` Enter the password for the machine located in secrets
-2. `security find-certificate -c "Developer ID Application" -p > /tmp/app.cert` outputs the PEM format of the cert so we can properly inspect it
-3. `security find-certificate -c "Developer ID Installer" -p > /tmp/installer.cert`
-4. `openssl x509 -inform PEM -text -in /tmp/app.cert | less`
-5. `openssl x509 -inform PEM -text -in /tmp/installer.cert | less`
-6. `security find-identity -p codesigning -v`
-The steps 4 and 5 will show the details of the certificates allowing to see expiry dates.
-
-Example:
-
-```
-Not Before: Jan 22 03:40:05 2020 GMT
-Not After : Jan 22 03:40:05 2025 GMT
-```
-
-The step 6 will show the list of certificates available on the machine.
-
-Example:
-
-```
-  1) XXXXXXXXXXX "Developer ID Application: Node.js Foundation (XXXXXXX)"
-1 valid identities found
-```
-
-## macOS
-1. Update Sudoers file:
-
-this requires `NOPASSWD` to be added to the sudoers file to enable elevation
-
-`sudo visudo`
-and change:
-`%admin          ALL = (ALL) ALL`
-to
-`%admin          ALL = (ALL) NOPASSWD:ALL`
-
-2. Allow ssh access
-
-```bash
-sudo systemsetup -setremotelogin on
-```
 
 ## AIX
 
