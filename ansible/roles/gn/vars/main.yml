@@ -1,9 +1,12 @@
 ---
 
 compiler: {
-  'rhel7': '. /opt/rh/devtoolset-8/enable',
-  'rhel8': '. /opt/rh/gcc-toolset-11/enable'
+  'rhel8': '. /opt/rh/gcc-toolset-12/enable'
 }
 
 gn_select_compiler: "{{ compiler[os]|default(compiler[os|stripversion])|default('true') }}"
 gn_version: 88e8054
+
+packages: {
+  'rhel8': 'ninja-build,gcc-toolset-12'
+}
