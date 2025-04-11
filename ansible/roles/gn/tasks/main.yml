@@ -30,6 +30,14 @@
   ansible.builtin.set_fact:
     rebuild_gn: "{{ not gn_installed_version.stdout|default('') is search(gn_git.after[:7]) }}"
 
+- name: clean git checkout
+  ansible.builtin.shell: git clean -fdX
+  args:
+    chdir: "{{ gn_git_dir }}"
+  become: "{{ gn_user|default(omit)|bool }}"
+  become_user: "{{ gn_user|default(omit) }}"
+  when: rebuild_gn
+
 # Requires a C++17 compiler.
 - name: build gn
   ansible.builtin.shell: |
