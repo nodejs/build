@@ -46,12 +46,15 @@ def buildExclusions = [
   [ /vs2019/,                         releaseType, gte(21)       ],
   [ /vs2022-x86/,                     releaseType, gte(23)       ],
   [ /vs2022/,                         releaseType, lt(21)        ],
+  [ /vs2022(?!_clang)(-\w+)?$/,       releaseType, gte(24)       ],
+  [ /vs2022_clang/,                   releaseType, lt(24)        ],
   // VS versions supported to compile Node.js - also matches labels used by test runners
   [ /vs2015(-\w+)?$/,                 testType,    gte(18)       ],
   [ /vs2017(-\w+)?$/,                 testType,    gte(18)       ],
   [ /vs2019(-\w+)?$/,                 testType,    gte(21)       ],
   [ /vs2022(-\w+)?$/,                 testType,    lt(21)        ],
   [ /vs2022-x86$/,                    testType,    gte(23)       ], // x86 was dropped on Windows in v23
+  [ /vs2022(?!_clang)(-\w+)?$/,       testType,    gte(24)       ], // MSVC was dropped on Windows in v24
   [ /vs2022_clang(-\w+)?$/,           testType,    lt(24)        ], // ClangCL support was added in v23
   [ /COMPILED_BY-\w+-arm64$/,         testType,    lt(20)        ], // run tests on arm64 for >=19
   // VS versions supported to build add-ons
