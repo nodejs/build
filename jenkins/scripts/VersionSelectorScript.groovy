@@ -21,7 +21,6 @@ def buildExclusions = [
 
   // Linux -------------------------------------------------
   [ /debian11/,                       anyType,     gte(23) ],
-  [ /alpine-last-latest/,             anyType,     gte(22) ], // Alpine 3.18. Bug in GCC 12.2.
   [ /rhel7/,                          anyType,     gte(18) ],
   [ /^ubuntu1604-32/,                 anyType,     gte(18) ], // 32-bit linux for <10 only
   [ /^ubuntu1604-64/,                 anyType,     gte(18) ],
