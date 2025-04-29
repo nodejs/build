@@ -11,8 +11,6 @@ node-{VERSION}-headers.tar.gz
 node-{VERSION}-headers.tar.xz
 node-{VERSION}-linux-arm64.tar.gz
 node-{VERSION}-linux-arm64.tar.xz
-node-{VERSION}-linux-armv7l.tar.gz
-node-{VERSION}-linux-armv7l.tar.xz
 node-{VERSION}-linux-ppc64le.tar.gz
 node-{VERSION}-linux-ppc64le.tar.xz
 node-{VERSION}-linux-s390x.tar.gz
