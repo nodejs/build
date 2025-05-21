@@ -8,7 +8,7 @@ import { exit } from 'node:process';
 const testcases = [
   {
     name: 'No rclone',
-    version: 'v22.12.0',
+    version: 'v22.16.0',
     expectedStdout: '',
     setup: async function setup (context) {
       const command = `rclone lsjson ${context.r2StagingDir} --no-modtime --no-mimetype -R --max-depth 2`;
@@ -29,7 +29,7 @@ const testcases = [
   },
   {
     name: 'Everything is in staging, nothing in dist, good to go',
-    version: 'v22.12.0',
+    version: 'v22.16.0',
     expectedStdout:
       '... Checking R2 assets\n' +
       '... Expecting a total of 47 assets for v22.x\n' +
@@ -42,7 +42,7 @@ const testcases = [
   },
   {
     name: 'Not quite everything is in staging, missing two assets, nothing in dist',
-    version: 'v22.12.0',
+    version: 'v22.16.0',
     expectedStdout:
       '... Checking R2 assets\n' +
       '... Expecting a total of 47 assets for v22.x\n' +
@@ -58,7 +58,7 @@ const testcases = [
   },
   {
     name: 'Everything is in staging and everything in dist',
-    version: 'v22.12.0',
+    version: 'v22.16.0',
     expectedStdout:
       '... Checking R2 assets\n' +
       '... Expecting a total of 47 assets for v22.x\n' +
@@ -73,7 +73,7 @@ const testcases = [
   },
   {
     name: 'Everything is in dist except for the armv7l files, but they are in staging',
-    version: 'v22.12.0',
+    version: 'v22.16.0',
     expectedStdout:
       '... Checking R2 assets\n' +
       '... Expecting a total of 47 assets for v22.x\n' +
@@ -88,7 +88,7 @@ const testcases = [
   },
   {
     name: 'Everything is in dist except for the armv7l files, but they are in staging. Ignores SHASUMS in staging.',
-    version: 'v22.12.0',
+    version: 'v22.16.0',
     expectedStdout:
       '... Checking R2 assets\n' +
       '... Expecting a total of 47 assets for v22.x\n' +
@@ -103,7 +103,7 @@ const testcases = [
   },
   {
     name: 'Everything is in dist except for the armv7l files, but they are in staging. Ignores SHASUMS in dist.',
-    version: 'v22.12.0',
+    version: 'v22.16.0',
     expectedStdout:
       '... Checking R2 assets\n' +
       '... Expecting a total of 47 assets for v22.x\n' +
@@ -118,7 +118,7 @@ const testcases = [
   },
   {
     name: 'Unexpected files in dist',
-    version: 'v22.12.0',
+    version: 'v22.16.0',
     expectedStdout:
       '... Checking R2 assets\n' +
       '... Expecting a total of 47 assets for v22.x\n' +
