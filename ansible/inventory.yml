@@ -8,6 +8,8 @@
 hosts:
 
   - infra:
+    - azure:
+        ubuntu2404-x64-1: {ip: 172.203.217.211, alias: rsync, user: iojs}
 
     - digitalocean:
         ubuntu1604-x64-1: {ip: 138.197.224.240, alias: www}
@@ -19,10 +21,6 @@ hosts:
     - ibm:
         ubuntu2004-x64-1: {ip: 169.60.150.91, alias: ansible}
         ubuntu2404-x64-1: {ip: 169.61.75.62, alias: ci-release}
-
-    - joyent:
-        debian10-x64-1: {ip: 147.28.162.110, alias: grafana}
-        ubuntu1604-x64-1: {ip: 147.28.162.105, alias: unencrypted}
 
     - mnx:
         ubuntu2204-x64-1: {ip: 67.158.54.181, alias: backup-2}
@@ -51,9 +49,6 @@ hosts:
 
     - iinthecloud:
         ibmi73-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
-
-    - joyent:
-        ubuntu1804_docker-x64-1: {ip: 147.28.162.104, user: ubuntu}
 
     - marist:
         zos24-s390x-1: {ip: 148.100.36.157, user: unix1}
@@ -148,9 +143,6 @@ hosts:
         # to update the Jenkins worker IP allowlist in github-bot
         ubuntu2204-x64-3: {ip: 52.117.26.14, alias: jenkins-workspace-6}
         ubuntu2204_docker-x64-1: {ip: 52.117.26.9}
-
-    - equinix_mnx:
-        ubuntu1804-x64-1: {ip: 147.28.162.99, user: ubuntu}
 
     - hetzner:
         ubuntu2204-x64-1:

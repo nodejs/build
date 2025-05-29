@@ -1,0 +1,24 @@
+server {
+    server_name ~unencrypted.(?<dist_path>nodejs|iojs).org;
+
+    listen *:80;
+    listen [::]:80;
+
+
+    root /home/dist/www;
+
+    location /download {
+        alias /home/dist/$dist_path;
+        autoindex on;
+        default_type text/plain;
+        add_header X-Robots-Tag noindex;
+        add_header X-Service-Expires-At "2022-01-01";
+
+        location ~ \.json$ {
+            add_header access-control-allow-origin *;
+        }
+    }
+
+    access_log /var/log/nginx/unencrypted/unencrypted.nodejs.org-access.log nodejs;
+    error_log /var/log/nginx/unencrypted/unencrypted.nodejs.org-error.log;
+}
