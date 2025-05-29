@@ -1,0 +1,14 @@
+---
+
+#
+# sets up the host that serves unencrypted and rsync endpoints
+#
+# This is very incomplete, and mostly just for bootstrapping the box.
+# The rsync config, and rsync mirror service are not configured with ansible. (and hopefully wont have to be)
+
+- hosts: infra-azure-ubuntu2404-x64-1
+  roles:
+    - bootstrap
+    - package-upgrade
+    - baselayout
+    - { role: nginx, sites: [ 'nodejs.org','unencrypted' ] }
