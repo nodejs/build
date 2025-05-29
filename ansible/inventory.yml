@@ -151,9 +151,6 @@ hosts:
         ubuntu2204-x64-3: {ip: 52.117.26.14, alias: jenkins-workspace-6}
         ubuntu2204_docker-x64-1: {ip: 52.117.26.9}
 
-    - equinix_mnx:
-        ubuntu1804-x64-1: {ip: 147.28.162.99, user: ubuntu}
-
     - hetzner:
         ubuntu2204-x64-1:
             ip: 37.27.104.214
