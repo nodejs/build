@@ -8,6 +8,8 @@
 hosts:
 
   - infra:
+    - azure:
+        ubuntu2404-x64-1: {ip: 172.203.217.211, alias: rsync, user: iojs}
 
     - digitalocean:
         ubuntu1604-x64-1: {ip: 138.197.224.240, alias: www}
