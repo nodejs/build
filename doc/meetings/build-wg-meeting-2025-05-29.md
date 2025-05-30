@@ -33,8 +33,8 @@
   * Ryan opened this up as changing the infra from our current secret repo which has some challenges, hard to track, offboarding is hard to do.
   * This may not solve all issues but the primary value of it would be to have a log of changes.
   * Richard, one aspect is that using 1 password may widen who has access to the secrets (all
-     TSC members as owners) so we should make that decision on purpose versus just
-     accidentally expanding.
+    TSC members as owners) so we should make that decision on purpose versus just
+    accidentally expanding.
 
 * Transition from Digicert keylocker to Azure Trusted Signing
 [#4036](https://github.com/nodejs/build/issues/4036)
