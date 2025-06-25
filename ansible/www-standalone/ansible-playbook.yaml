@@ -12,9 +12,6 @@
     - include_tasks: tasks/user.yaml
       tags: user
 
-    - include_tasks: tasks/docker.yaml
-      tags: docker
-
     - include_tasks: tasks/site-setup.yaml
       tags: setup
 
