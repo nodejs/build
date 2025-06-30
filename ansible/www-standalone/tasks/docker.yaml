@@ -1,7 +1,0 @@
-- name: Docker | Add the Docker.io repo
-  command: "bash -c 'curl -sL http://get.docker.io/ | bash -'"
-  tags: docker
-
-- name: Docker | Add nodejs to docker group
-  command: usermod -aG docker nodejs
-  tags: docker
