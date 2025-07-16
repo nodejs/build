@@ -8,7 +8,6 @@
 
 ## Present
 
-* Build team: @nodejs/build
 * Abdirahim Musse @abmusse
 * Milad Fa @miladfarca
 * Richard Lau @richardlau
