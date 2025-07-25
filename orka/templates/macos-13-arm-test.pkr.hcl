@@ -135,20 +135,32 @@ build {
       "/opt/homebrew/bin/brew doctor || true"
     ]
   }
+  // Create symlink for Homebrew to /usr/local/bin for legacy script compatibility.
+  provisioner "shell" {
+    inline = [
+      "echo 'Creating Homebrew compatibility symlink...'",
+      # Check if the path exists and is not already a symlink to avoid errors on reruns
+      "if [ ! -L /usr/local/bin ]; then sudo ln -s /opt/homebrew/bin /usr/local/bin; fi"
+    ]
+  }
   // Install dependencies for build and test.
   provisioner "shell" {
     inline = [
       "echo 'Installing packages using Homebrew...'",
       "eval \"$(/opt/homebrew/bin/brew shellenv)\"",
-      "/opt/homebrew/bin/brew install git automake bash libtool cmake python ccache xz"
+      "/opt/homebrew/bin/brew install git automake bash libtool cmake python ccache xz pipx orka-vm-tools"
     ]
   }
-  // Install tap2junit using pip.
+
+  // Install tap2junit using pipx for better isolation.
   provisioner "shell" {
+    environment_vars = ["HOME=/Users/admin", "USER=admin"]
     inline = [
-      "echo 'Installing tap2junit using pip...'",
-      "python3 -m pip install --user tap2junit",
-      "export PATH=$PATH:/Users/admin/.local/bin"
+      "echo 'Installing tap2junit using pipx...'",
+      "eval \"$(/opt/homebrew/bin/brew shellenv)\"",
+      "/opt/homebrew/bin/pipx install tap2junit",
+      // This command automatically adds the pipx path to the user's profile
+      "/opt/homebrew/bin/pipx ensurepath"
     ]
   }
   // Install Java 17 for Jenkins.
