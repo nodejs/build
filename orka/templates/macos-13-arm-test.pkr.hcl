@@ -182,4 +182,30 @@ build {
       //"xcodebuild -version"
     ]
   }
+  // Configure ccache to use a shared directory and enable path integration.
+  provisioner "shell" {
+    inline = [
+      "echo 'Configuring ccache...'",
+      "mkdir -p /Users/admin/.ccache",
+
+      # Use an HCL heredoc (<<-EOT) to pass a multi-line script to the shell.
+      # The shell will then execute its own heredoc (cat <<'EOF').
+      <<-EOT
+        cat <<'EOF' > /Users/admin/.ccache/ccache.conf
+        # This file is managed by Packer.
+        # Set the cache directory to a shared volume provided by the CI system.
+        cache_dir = /Volumes/orka/ccache_arm64
+        # Set a reasonable cache size limit.
+        max_size = 50.0G
+        EOF
+      EOT
+      , # Note the comma here to separate elements in the HCL list
+
+      "chown -R admin:staff /Users/admin/.ccache",
+
+      # Add ccache to the PATH in .zprofile for login shells (which CI uses).
+      # This makes 'cc' an alias for 'ccache cc', etc.
+      "echo 'export PATH=\"/opt/homebrew/opt/ccache/libexec:$PATH\"' >> /Users/admin/.zprofile"
+    ]
+  }
 }
