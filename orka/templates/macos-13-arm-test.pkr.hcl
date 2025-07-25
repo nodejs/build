@@ -38,8 +38,8 @@ packer {
 }
 
 source "macstadium-orka" "macos13-arm-test-image" {
-  source_image      = "macos13-arm-base.orkasi"
-  image_name        = "macos13-arm-test-latest.orkasi"
+  source_image      = "90gbventurassh-13.5.1.orkasi"
+  image_name        = "macos13-arm-test-base"
   image_description = "The MacOS 13 ARM test image"
   orka_endpoint     = var.orka_endpoint
   orka_auth_token   = var.orka_auth_token
