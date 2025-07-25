@@ -68,6 +68,13 @@ build {
       "sudo sysadminctl -adminUser ${var.ssh_default_username} -adminPassword ${var.ssh_default_password} -resetPasswordFor ${var.ssh_default_username} -newPassword ${var.ssh_test_password}"
     ]
   }
+  // Set system hostname.
+  provisioner "shell" {
+    inline = [
+      "echo 'Setting system hostname...'",
+      "sudo scutil --set HostName macos13-arm-test"
+    ]
+  }
   // Add SSH key access.
   provisioner "shell" {
     inline = [
