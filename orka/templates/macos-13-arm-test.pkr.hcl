@@ -51,6 +51,16 @@ build {
   sources = [
     "macstadium-orka.macos13-arm-test-image"
   ]
+  // Allow admin to sudo without a password
+  provisioner "shell" {
+    inline = [
+      "echo 'Allowing sudo without password...'",
+      "echo ${var.ssh_default_password} | sudo -S id",
+      "echo ${var.ssh_default_password} | sudo -S tee /private/etc/sudoers.d/90-nopasswd-admin > /dev/null <<< '%admin ALL=(ALL) NOPASSWD:ALL'",
+      "echo ${var.ssh_default_password} | sudo -S chmod 0440 /private/etc/sudoers.d/90-nopasswd-admin",
+      "echo ${var.ssh_default_password} | sudo -S visudo -c"
+    ]
+  }
   // Change the password of the default user.
   provisioner "shell" {
     inline = [
