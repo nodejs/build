@@ -91,8 +91,6 @@ hosts:
     - digitalocean:
         debian11-x64-1: {ip: 174.138.79.159, swap_file_size_mb: 2048}
         debian12-x64-1: {ip: 159.203.105.159, swap_file_size_mb: 2048}
-        fedora40-x64-1: {ip: 159.65.248.149}
-        fedora40-x64-2: {ip: 162.243.187.89}
         fedora41-x64-1: {ip: 165.227.191.35}
         fedora41-x64-2: {ip: 159.65.246.5}
         fedora42-x64-1: {ip: 174.138.62.120}
