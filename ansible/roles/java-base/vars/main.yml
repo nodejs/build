@@ -9,6 +9,7 @@ packages: {
   'debian11': 'openjdk-17-jre-headless',
   'debian12': 'openjdk-17-jre-headless',
   'fedora': 'java-17-openjdk-headless',
+  'fedora42': 'java-21-openjdk-headless',
   'freebsd': 'openjdk17-jre',
   'macos': 'temurin17',
   'rhel7': 'java-11-openjdk',
