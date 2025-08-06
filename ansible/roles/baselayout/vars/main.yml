@@ -57,7 +57,7 @@ packages: {
   ],
 
   fedora: [
-    'bzip2,ccache,gcc-c++,git,fontconfig,sudo,make,python3-pip',
+    'bzip2,ccache,clang,gcc-c++,git,fontconfig,sudo,make,python3-pip',
   ],
 
   freebsd: [
