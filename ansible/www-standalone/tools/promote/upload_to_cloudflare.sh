@@ -4,12 +4,12 @@ set -e
 
 site=$1
 
-if [ "X$site" != "Xiojs" ] && [ "X$site" != "Xnodejs" ]; then
+if [ "$site" != "iojs" ] && [ "$site" != "nodejs" ]; then
   echo "Usage: upload_to_cloudflare.sh < iojs | nodejs > <version>"
   exit 1
 fi
 
-if [ "X$2" == "X" ]; then
+if [ -z "$2" ]; then
   echo "Usage: upload_to_cloudflare.sh < iojs | nodejs > <version>"
   exit 1
 fi

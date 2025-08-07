@@ -28,7 +28,7 @@ for subdir in $(cd $srcdir && ls); do
   if [ -d "${srcdir}/${subdir}" ] && [[ $subdir =~ $dirmatch ]]; then
     resha=no
 
-    if [ "X${version}" != "X" ] && [ "X${version}" != "X${subdir}" ]; then
+    if [ "${version}" != "" ] && [ "${version}" != "${subdir}" ]; then
       continue
     fi
 
@@ -49,7 +49,7 @@ for subdir in $(cd $srcdir && ls); do
 
     done
 
-    if [ "X${version}" == "X" ] && [ "$resha" == "yes" ]; then
+    if [ -z "${version}" ] && [ "$resha" == "yes" ]; then
       ${__dirname}/_resha.sh $site $srcdir $dstdir $subdir
     . ${__dirname}/upload_to_cloudflare.sh $site $subdir
     fi

@@ -10,22 +10,22 @@ version=$4
 __dirname="$(CDPATH= cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . ${__dirname}/settings
 
-if [ "X${site}" == "X" ]; then
+if [ -z "$site" ]; then
   echo "site argument not provided"
   exit 1
 fi
 
-if [ "X${srcdir}" == "X" ]; then
+if [ -z "$srcdir" ]; then
   echo "srcdir argument not provided"
   exit 1
 fi
 
-if [ "X${dstdir}" == "X" ]; then
+if [ -z "$dstdir" ]; then
   echo "dstdir argument not provided"
   exit 1
 fi
 
-if [ "X${version}" == "X" ]; then
+if [ -z "$version" ]; then
   echo "version argument not provided"
   exit 1
 fi

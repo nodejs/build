@@ -6,12 +6,12 @@ site=$1
 
 __dirname="$(CDPATH= cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-if [ "X$site" != "Xiojs" ] && [ "X$site" != "Xnodejs" ]; then
+if [ "$site" != "iojs" ] && [ "$site" != "nodejs" ]; then
   echo "Usage: promote_release.sh < iojs | nodejs > <version>"
   exit 1
 fi
 
-if [ "X$2" == "X" ]; then
+if [ -z "$2" ]; then
   echo "Usage: promote_release.sh < iojs | nodejs > <version>"
   exit 1
 fi
@@ -34,12 +34,12 @@ while true; do
   yorn=""
   read yorn
 
-  if [ "X${yorn}" == "Xn" ]; then
+  if [ "${yorn}" == "n" ]; then
     echo "Bailing out ..."
     exit 1
   fi
 
-  if [ "X${yorn}" == "Xy" ]; then
+  if [ "${yorn}" == "y" ]; then
       . ${__dirname}/_promote.sh $site $2
       nodejs-latest-linker /home/dist/${site}/release/ /home/dist/${site}/docs/
     break
