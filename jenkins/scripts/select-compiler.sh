@@ -33,6 +33,19 @@ if [ -z ${NODEJS_MAJOR_VERSION+x} ]; then
   NODEJS_MAJOR_VERSION="$(echo "$NODE_VERSION" | cut -d . -f 1)"
 fi
 
+# Gradual transition to Clang from Node.js 25 (https://github.com/nodejs/build/issues/4091).
+if [ "$NODEJS_MAJOR_VERSION" -ge "25" ]; then
+  case $NODE_NAME in
+    *fedora*)
+      echo "Using Clang for Node.js $NODEJS_MAJOR_VERSION"
+      export CC="ccache clang"
+      export CXX="ccache clang++"
+      echo "Compiler set to Clang" `${CXX} -dumpversion`
+      return
+      ;;
+  esac
+fi
+
 # Linux distros should be arch agnostic
 case $NODE_NAME in
   *rhel9*|*ubi9*)
