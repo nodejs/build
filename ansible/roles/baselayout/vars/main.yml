@@ -53,7 +53,7 @@ packages: {
   ],
 
   debian12: [
-    'systemd-timesyncd,gcc,g++,make,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-venv',
+    'systemd-timesyncd,clang-19,gcc,g++,make,ccache,git,curl,libfontconfig1,apt-transport-https,ca-certificates,sudo,python3-venv',
   ],
 
   fedora: [
