@@ -7,6 +7,10 @@
 
 1. Follow the [instructions to install the latest version of Ansible][ansible-install].
    * In most cases, using pip: `pip install ansible`.
+     * Newer versions of Ansible are incompatible with some older operating systems in the inventory (e.g. RHEL 8). In those cases you will need to install an older version of Ansible, e.g. if using `pip`:
+      ```console
+      pip install ansible-core==2.16.14 ansible==9.13
+      ```
    * If you use brew, then `brew install python3 ansible`, and then run
    `export PYTHONPATH=$(pip show pyyaml | grep Location | awk '{print $2}') `
    before you use `ansible-playbook`.
