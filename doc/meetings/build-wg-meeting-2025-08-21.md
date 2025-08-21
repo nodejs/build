@@ -10,8 +10,8 @@
 
 * Build team: @nodejs/build
 * Milad Fa @miladfarca
-* Richard Lau
-* Ryan Aslett
+* Richard Lau @richardlau 
+* Ryan Aslett @ryanaslett 
 * Duc Thien @iuuukhueeee
 * Abdirahim Musse @abmusse
 
