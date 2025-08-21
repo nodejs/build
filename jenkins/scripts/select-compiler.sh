@@ -50,6 +50,13 @@ if [ "$NODEJS_MAJOR_VERSION" -ge "25" ]; then
       echo "Compiler set to Clang" `${CXX} -dumpversion`
       return
       ;;
+    *rhel*|*ubi*)
+      echo "Using Clang for Node.js $NODEJS_MAJOR_VERSION"
+      export CC="ccache clang"
+      export CXX="ccache clang++"
+      echo "Compiler set to Clang" `${CXX} -dumpversion`
+      return
+      ;;
   esac
 fi
 

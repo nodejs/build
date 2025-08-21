@@ -18,6 +18,7 @@ RUN dnf install --disableplugin=subscription-manager -y \
     && dnf update --disableplugin=subscription-manager -y \
     && dnf install --disableplugin=subscription-manager -y \
       ccache \
+      clang \
       gcc-c++ \
       gcc-toolset-12 \
       git \
@@ -30,6 +31,7 @@ RUN dnf install --disableplugin=subscription-manager -y \
     && dnf --disableplugin=subscription-manager clean all
 
 RUN dnf install --disableplugin=subscription-manager -y \
+      https://repo.almalinux.org/almalinux/8/AppStream/{{ ansible_architecture }}/os/Packages/gcc-toolset-14-libatomic-devel-14.2.1-1.1.el8_10.{{ ansible_architecture }}.rpm \
       http://vault.centos.org/centos/8-stream/AppStream/{{ ansible_architecture }}/os/Packages/gcc-toolset-10-binutils-2.35-11.el8.{{ ansible_architecture }}.rpm \
       http://vault.centos.org/centos/8-stream/AppStream/{{ ansible_architecture }}/os/Packages/gcc-toolset-10-gcc-10.3.1-1.2.el8_5.{{ ansible_architecture }}.rpm \
       http://vault.centos.org/centos/8-stream/AppStream/{{ ansible_architecture }}/os/Packages/gcc-toolset-10-gcc-c++-10.3.1-1.2.el8_5.{{ ansible_architecture }}.rpm \
