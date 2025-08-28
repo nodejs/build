@@ -16,17 +16,20 @@
     key: "{{ item }}"
     path: "{{ user_home_dir }}/.ssh/known_hosts"
     state: present
-  become: yes
-  become_user: "{{ server_user }}"
   loop: "{{ lookup('file', 'files/github_known_hosts').splitlines() }}"
+
+- name: set ownership of known_hosts file
+  ansible.builtin.file:
+    path: "{{ user_home_dir }}/.ssh/known_hosts"
+    owner: "{{ server_user }}"
+    group: "{{ (os|startswith('zos') or os|startswith('ibmi'))|ternary(omit, server_user) }}"
+    mode: "0600"
 
 - name: remove old github.com ssh keys
   ansible.builtin.lineinfile:
     path: "{{ user_home_dir }}/.ssh/known_hosts"
     search_string: "{{ item }}"
     state: absent
-  become: yes
-  become_user: "{{ server_user }}"
   loop: "{{ lookup('file', 'files/github_bad_hosts').splitlines() }}"
 
 # Entries in `files/binary_tmp_known_hosts` are generated via
@@ -37,7 +40,12 @@
     path: "{{ user_home_dir }}/.ssh/known_hosts"
     line: "{{ item }}"
     state: present
-  become: yes
-  become_user: "{{ server_user }}"
   loop: "{{ lookup('file', 'files/binary_tmp_known_hosts').splitlines() }}"
   when: (user_home_dir.find('_arm_cross') != -1) or (user_home_dir.find('armv7l') != -1)
+
+- name: ensure final ownership of known_hosts file
+  ansible.builtin.file:
+    path: "{{ user_home_dir }}/.ssh/known_hosts"
+    owner: "{{ server_user }}"
+    group: "{{ (os|startswith('zos') or os|startswith('ibmi'))|ternary(omit, server_user) }}"
+    mode: "0600"
