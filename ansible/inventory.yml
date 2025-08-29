@@ -105,10 +105,6 @@ hosts:
         ubuntu2204-x64-1: {ip: 138.197.4.1, swap_file_size_mb: 2048}
         ubuntu2204-x64-2: {ip: 167.99.124.188, swap_file_size_mb: 2048}
 
-    - equinix:
-        ubuntu2004_docker-arm64-1: {ip: 145.40.81.219}
-        ubuntu2004_docker-arm64-3: {ip: 145.40.99.31}
-
     - ibm:
         aix72-ppc64_be-1:
             ip: 169.54.113.142
