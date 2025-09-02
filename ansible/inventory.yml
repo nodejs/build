@@ -9,6 +9,7 @@ hosts:
 
   - infra:
     - azure:
+        #This is under the OpenJS Foundation Azure subscription
         ubuntu2404-x64-1: {ip: 172.203.217.211, alias: rsync, user: iojs}
 
     - digitalocean:
@@ -87,6 +88,10 @@ hosts:
         msft-win11_vs2022-x64-4: {ip: nodejs.westus3.cloudapp.azure.com}
         msft-win2016_vs2017-x64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win2016_vs2017-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
+        # OpenJS Foundation Azure account
+        ubuntu2404_docker-arm64-1: {ip: 4.242.42.14, user: nodejs}
+        ubuntu2404_docker-arm64-2: {ip: 20.84.43.2, user: nodejs}
+        ubuntu2404_docker-arm64-3: {ip: 20.172.67.207, user: nodejs}
 
     - digitalocean:
         debian11-x64-1: {ip: 174.138.79.159, swap_file_size_mb: 2048}
