@@ -8,7 +8,7 @@
 #       have to set up manually and have mounted to /home
 #       before proceeding
 
-- hosts: infra-digitalocean-ubuntu1604-x64-1
+- hosts: infra-digitalocean-ubuntu2204-x64-2
   roles:
     - bootstrap
     - package-upgrade
