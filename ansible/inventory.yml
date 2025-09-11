@@ -109,6 +109,7 @@ hosts:
         ubuntu1804-x64-1: {ip: 178.128.181.213}
         ubuntu2204-x64-1: {ip: 138.197.4.1, swap_file_size_mb: 2048}
         ubuntu2204-x64-2: {ip: 167.99.124.188, swap_file_size_mb: 2048}
+        ubuntu2404-x64-1: {ip: 165.227.180.106, swap_file_size_mb: 2048}
 
     - ibm:
         aix72-ppc64_be-1:
