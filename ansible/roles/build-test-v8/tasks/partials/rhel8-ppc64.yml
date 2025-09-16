@@ -13,7 +13,7 @@
 # V8 builds still require Python 2.
 - name: install packages required to build V8
   ansible.builtin.dnf:
-    name: ['glib2-devel', 'ninja-build', 'python2', 'python2-pip']
+    name: ['glib2-devel', 'llvm-toolset', 'ninja-build', 'python2', 'python2-pip']
     state: present
   notify: package updated
 
