@@ -75,8 +75,9 @@ def buildExclusions = [
   [ /sharedlibs_openssl35/,           anyType,     lt(24)  ], // Temporary until test fixes are backported
   [ /sharedlibs_fips20/,              anyType,     gte(18) ],
 
-  // OSX ---------------------------------------------------
-  [ /osx1015/,                        anyType,     gte(21) ],
+  // macOS -------------------------------------------------
+  [ /^osx13/,                         anyType,     gte(25) ],
+  [ /^macos15/,                       anyType,     lt(25)  ],
 
   // Source / headers / docs -------------------------------
   [ /^rhel8-release-sources$/,        releaseType, lt(18)  ],
