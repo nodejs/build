@@ -17,3 +17,5 @@ Pipfile.lock
 
 # Orka secrets files including naming mutations
 orka/*/.env*
+/orka/templates/files/secrets/*
+/orka/templates/*.pkrvars.hcl
