@@ -146,8 +146,3 @@ build {
     ]
   }
 }
-
-Host node-www
-  HostName direct.nodejs.org
-  User staging
-  IdentityFile ~/.ssh/id_rsa
