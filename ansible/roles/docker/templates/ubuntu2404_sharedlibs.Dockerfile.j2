@@ -1,0 +1,163 @@
+FROM ubuntu:24.04
+
+ENV LC_ALL C
+ENV USER {{ server_user }}
+ENV JOBS {{ server_jobs | default(ansible_processor_vcpus) }}
+ENV SHELL /bin/bash
+ENV HOME /home/{{ server_user }}
+ENV PATH /usr/local/venv/bin:/usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV NODE_COMMON_PIPE /home/{{ server_user }}/test.pipe
+ENV NODE_TEST_DIR /home/{{ server_user }}/tmp
+ENV OSTYPE linux-gnu
+ENV OSVARIANT docker
+ENV DESTCPU {{ arch }}
+ENV ARCH {{ arch }}
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get install apt-utils -y && \
+    apt-get dist-upgrade -y && apt-get install -y \
+      ccache \
+      g++ \
+      gcc \
+      clang-19 \
+      git \
+      openjdk-21-jre-headless \
+      pkg-config \
+      curl \
+      python3-pip \
+      python3-venv \
+      python-is-python3 \
+      libfontconfig1 \
+      libtool \
+      automake
+
+RUN python3 -m venv /usr/local/venv
+RUN pip3 install tap2junit=={{ tap2junit_version }}
+
+# Delete the default ubuntu user so we can use its UID/GID (1000) if necessary.
+RUN deluser ubuntu && \
+    addgroup --gid {{ server_user_gid.stdout_lines[0] }} {{ server_user }} && \
+    adduser --gid {{ server_user_gid.stdout_lines[0] }} --uid {{ server_user_uid.stdout_lines[0] }} --disabled-password --gecos {{ server_user }} {{ server_user }}
+
+ENV ICU69DIR=/opt/icu-69.1 \
+    ICU71DIR=/opt/icu-71.1 \
+    ICU73DIR=/opt/icu-73.2
+
+RUN for ICU_ENV in $(env | grep ICU..DIR); do \
+    ICU_PREFIX=$(echo $ICU_ENV | cut -d '=' -f 2) && \
+    ICU_VERSION=$(echo $ICU_PREFIX | cut -d '-' -f 2) && \
+    ICU_MAJOR=$(echo $ICU_VERSION | cut -d '.' -f 1) && \
+    ICU_MINOR=$(echo $ICU_VERSION | cut -d '.' -f 2) && \
+    mkdir -p /tmp/icu-$ICU_VERSION && \
+    cd /tmp/icu-$ICU_VERSION && \
+    curl -sL "https://github.com/unicode-org/icu/releases/download/release-$ICU_MAJOR-$ICU_MINOR/icu4c-${ICU_MAJOR}_$ICU_MINOR-src.tgz" | tar zxv --strip=1 && \
+    cd source && \
+    ./runConfigureICU Linux --prefix=$ICU_PREFIX && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/icu-$ICU_VERSION; \
+    done
+
+ENV OPENSSL111VER 1.1.1w
+ENV OPENSSL111DIR /opt/openssl-$OPENSSL111VER
+
+RUN mkdir -p /tmp/openssl_$OPENSSL111VER && \
+    cd /tmp/openssl_$OPENSSL111VER && \
+    curl -sL https://github.com/openssl/openssl/releases/download/OpenSSL_1_1_1w/openssl-$OPENSSL111VER.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$OPENSSL111DIR && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/openssl_$OPENSSL111VER
+
+# OpenSSL FIPS validation occurs post-release, and not for every version.
+# See https://www.openssl.org/docs/fips.html and the version documented in the
+# certificate and security policy.
+ENV OPENSSL30FIPSVER 3.0.8
+ENV OPENSSL30FIPSDIR /opt/openssl-$OPENSSL30FIPSVER-fips
+
+RUN mkdir -p /tmp/openssl-$OPENSSL30FIPSVER && \
+    cd /tmp/openssl-$OPENSSL30FIPSVER && \
+    curl -sL https://github.com/openssl/openssl/releases/download/openssl-$OPENSSL30FIPSVER/openssl-$OPENSSL30FIPSVER.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$OPENSSL30FIPSDIR enable-fips && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/openssl-$OPENSSL30FIPSVER
+# Install the FIPS provider. Update OpenSSL config file to enable FIPS.
+RUN LD_LIBRARY_PATH=$OPENSSL30FIPSDIR/lib64 $OPENSSL30FIPSDIR/bin/openssl fipsinstall \
+      -module $OPENSSL30FIPSDIR/lib64/ossl-modules/fips.so -provider_name fips \
+      -out $OPENSSL30FIPSDIR/ssl/fipsmodule.cnf && \
+      sed -i -r "s|^# (.include fipsmodule.cnf)|.include $OPENSSL30FIPSDIR\/ssl\/fipsmodule.cnf|g" $OPENSSL30FIPSDIR/ssl/openssl.cnf && \
+      sed -i -r '/^providers = provider_sect/a alg_section = evp_properties' $OPENSSL30FIPSDIR/ssl/openssl.cnf && \
+      sed -i -r 's/^# (fips = fips_sect)/\1/g' $OPENSSL30FIPSDIR/ssl/openssl.cnf && \
+      sed -i -r 's/^# (activate = 1)/\1/g' $OPENSSL30FIPSDIR/ssl/openssl.cnf && \
+      echo "\n[evp_properties]\ndefault_properties = \"fips=yes\"\n" >> $OPENSSL30FIPSDIR/ssl/openssl.cnf
+
+ENV OPENSSL30VER 3.0.14+quic
+ENV OPENSSL30DIR /opt/openssl-$OPENSSL30VER
+
+RUN mkdir -p /tmp/openssl-$OPENSSL30VER && \
+    cd /tmp/openssl-$OPENSSL30VER && \
+    git clone https://github.com/quictls/openssl.git -b openssl-$OPENSSL30VER --depth 1 && \
+    cd openssl && \
+    ./config --prefix=$OPENSSL30DIR && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/openssl-$OPENSSL30VER
+
+ENV OPENSSL31VER 3.1.7
+ENV OPENSSL31DIR /opt/openssl-$OPENSSL31VER
+
+RUN mkdir -p /tmp/openssl-$OPENSSL31VER && \
+    cd /tmp/openssl-$OPENSSL31VER && \
+    curl -sL https://github.com/openssl/openssl/releases/download/openssl-$OPENSSL31VER/openssl-$OPENSSL31VER.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$OPENSSL31DIR && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/openssl-$OPENSSL31VER
+
+ENV OPENSSL32VER 3.2.3
+ENV OPENSSL32DIR /opt/openssl-$OPENSSL32VER
+
+RUN mkdir -p /tmp/openssl-$OPENSSL32VER && \
+    cd /tmp/openssl-$OPENSSL32VER && \
+    curl -sL https://github.com/openssl/openssl/releases/download/openssl-$OPENSSL32VER/openssl-$OPENSSL32VER.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$OPENSSL32DIR && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/openssl-$OPENSSL32VER
+
+ENV OPENSSL35VER 3.5.0
+ENV OPENSSL35DIR /opt/openssl-$OPENSSL35VER
+
+RUN mkdir -p /tmp/openssl-$OPENSSL35VER && \
+    cd /tmp/openssl-$OPENSSL35VER && \
+    curl -sL https://github.com/openssl/openssl/releases/download/openssl-$OPENSSL35VER/openssl-$OPENSSL35VER.tar.gz | tar zxv --strip=1 && \
+    ./config --prefix=$OPENSSL35DIR && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/openssl-$OPENSSL35VER
+
+ENV ZLIBVER 1.2.13
+ENV ZLIB12DIR /opt/zlib_$ZLIBVER
+
+RUN mkdir -p /tmp/zlib_$ZLIBVER && \
+    cd /tmp/zlib_$ZLIBVER && \
+    curl -sL https://zlib.net/fossils/zlib-$ZLIBVER.tar.gz | tar zxv --strip=1 && \
+    ./configure --prefix=$ZLIB12DIR && \
+    make -j $JOBS && \
+    make install && \
+    rm -rf /tmp/zlib_$ZLIBVER
+
+VOLUME /home/{{ server_user }}/ /home/{{ server_user }}/.ccache
+
+USER iojs:iojs
+
+ENV CCACHE_TEMPDIR /home/iojs/.ccache/{{ item.name }}
+
+CMD cd /home/iojs \
+  && curl https://ci.nodejs.org/jnlpJars/agent.jar -O \
+  && java -Xmx{{ server_ram|default('128m') }} \
+          -jar /home/{{ server_user }}/agent.jar \
+          -url {{ jenkins_url }} \
+          -name {{ item.name }} \
+          -secret {{ item.secret }}
