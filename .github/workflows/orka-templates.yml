@@ -34,6 +34,12 @@ jobs:
         ssh_image_password  = "mock-ssh_image_password"
         ssh_new_public_key = "mock-new_public_key"
         EOF
+    - name: Mock secret files for validate
+      working-directory: orka/templates
+      run: |
+        mkdir -p files/secrets
+        : > "files/secrets/Apple Developer ID Node.js Foundation.p12"
+        : > "files/secrets/id_rsa"
 
     - name: Initialize Packer
       env:
