@@ -39,7 +39,7 @@
 ### nodejs/node
 
 * Enabling Rust support for Temporal [#58730](https://github.com/nodejs/node/issues/58730)
-    * Work is in progress.
+    * Work is in progress
 
 ## Q&A, Other
 
