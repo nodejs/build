@@ -32,7 +32,7 @@ to the resources we manage.
 * [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 * [@joaocgreis](https://github.com/joaocgreis) - João Reis
 * [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
-* [@mhdawson](https://github.com/mhdawson) - Michael Dawson
+
 * [@MoLow](https://github.com/MoLow) - Moshe Atlow
 * [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 * [@richardlau](https://github.com/richardlau) - Richard Lau
@@ -52,7 +52,6 @@ Above list is manually synced with the [gpg member list](https://github.com/node
 <!-- ncu-team-sync.team(nodejs/build-infra) -->
 
 * [@joaocgreis](https://github.com/joaocgreis) - João Reis
-* [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 * [@MoLow](https://github.com/MoLow) - Moshe Atlow
 * [@richardlau](https://github.com/richardlau) - Richard Lau
 * [@rvagg](https://github.com/rvagg) - Rod Vagg
@@ -73,7 +72,6 @@ Admin access to https://ci.nodejs.org/.
 * [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 * [@joaocgreis](https://github.com/joaocgreis) - João Reis
 * [@joyeecheung](https://github.com/joyeecheung) - Joyee Cheung
-* [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 * [@MoLow](https://github.com/MoLow) - Moshe Atlow
 * [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 * [@richardlau](https://github.com/richardlau) - Richard Lau
@@ -92,7 +90,6 @@ Access to [release secrets][].
 
 - [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 - [@joaocgreis](https://github.com/joaocgreis) - João Reis
-- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@MoLow](https://github.com/MoLow) - Moshe Atlow
 - [@richardlau](https://github.com/richardlau) - Richard Lau
 - [@rvagg](https://github.com/rvagg) - Rod Vagg
@@ -112,7 +109,6 @@ Admin access to https://ci-release.nodejs.org/.
 
 * [@AshCripps](https://github.com/AshCripps) - Ash Cripps
 * [@joaocgreis](https://github.com/joaocgreis) - João Reis
-* [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 * [@MoLow](https://github.com/MoLow) - Moshe Atlow
 * [@node-forward-build](https://github.com/node-forward-build) - node-forward build infrastructure
 * [@richardlau](https://github.com/richardlau) - Richard Lau
@@ -149,6 +145,7 @@ accesses and team roles see [GOVERNANCE.md][].
 - [@jbergstroem](https://github.com/jbergstroem) - Johan Bergström
 - [@LucaLanziani](https://github.com/LucaLanziani) - Luca Lanziani
 - [@maclover7](https://github.com/maclover7) - Jon Moss
+- [@mhdawson](https://github.com/mhdawson) - Michael Dawson
 - [@mmarchini](https://github.com/mmarchini) - mary marchini
 - [@MylesBorins](https://github.com/MylesBorins) - Myles Borins
 - [@phillipj](https://github.com/phillipj) - Phillip Johnsen
