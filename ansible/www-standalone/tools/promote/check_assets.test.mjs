@@ -86,7 +86,7 @@ const testcases = [
       '    • node-v10.1.0-linux-armv6l.tar.gz\n' +
       '    • node-v10.1.0-linux-armv6l.tar.xz\n' +
       '    • node-v10.1.0.pkg\n' +
-      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n',
+      '... Canceling the promotion',
     setup: async function setup (version, fixtureStagingDir, fixtureDistDir) {
       await makeFixture(version, true, fixtureStagingDir);
       await Promise.all([
