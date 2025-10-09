@@ -188,7 +188,7 @@ async function execute () {
     caution = true
     console.log(` \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  The following assets are expected for ${line} but are currently missing from staging:`)
     notInActual.forEach((a) => console.log(`    • ${a}`))
-    console.log('Canceling the promotion')
+    console.log('... Canceling the promotion')
     process.exit(1)
   }
 

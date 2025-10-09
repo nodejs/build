@@ -51,7 +51,7 @@ const testcases = [
       ' \x1B[33m\x1B[1m⚠\x1B[22m\x1B[39m  The following assets are expected for v22.x but are currently missing from R2 staging:\n' +
       '    • node-v22.12.0-linux-armv7l.tar.gz\n' +
       '    • node-v22.12.0-linux-armv7l.tar.xz\n' +
-      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n',
+      '... Canceling the promotion',
     setup: async function setup (context) {
       context.rcloneLs[context.r2StagingDir] = await fixture('partial-v22.12.0.json');
     }
