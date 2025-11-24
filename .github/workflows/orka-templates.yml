@@ -17,7 +17,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd #v5.0.1
+      uses: actions/checkout@c2d88d3ecc89a9ef08eebf45d9637801dcee7eb5 #v5.0.1
 
     - name: Set up Packer
       uses: hashicorp/setup-packer@1aa358be5cf73883762b302a3a03abd66e75b232 #v3.1.0
