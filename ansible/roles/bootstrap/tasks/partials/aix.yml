@@ -73,3 +73,8 @@
 - name: Set hostname to inventory_hostname AIX
   ansible.builtin.command: hostname {{ inventory_hostname }}
   when: current_hostname.stdout != inventory_hostname
+
+- name: set pkg_mgr
+  ansible.builtin.set_fact:
+    ansible_facts:
+      pkg_mgr: dnf
