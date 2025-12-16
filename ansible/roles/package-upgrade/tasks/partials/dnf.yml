@@ -8,5 +8,5 @@
     ansible.builtin.dnf:
       name: "*"
       state: latest
-      use_backend: dnf4
+      use_backend: "{{ os|startswith('aix')|ternary('dnf4', omit) }}"
     notify: package updated
