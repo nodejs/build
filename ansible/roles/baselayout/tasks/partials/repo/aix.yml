@@ -1,0 +1,15 @@
+# Appears to be some issue with the Ansible dnf task on AIX and gcc10-c++,
+# so manage that package here.
+
+- name: Check for gcc10-c++
+  ansible.builtin.command:
+    cmd: /opt/freeware/bin/dnf list installed gcc10-c++
+  changed_when: no
+  check_mode: no
+  failed_when: no
+  register: gcc10_installed
+
+- name: Install gcc10-c++
+  ansible.builtin.command:
+    cmd: /opt/freeware/bin/dnf install -y gcc10-c++
+  when: gcc10_installed.rc != 0

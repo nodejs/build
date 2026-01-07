@@ -33,15 +33,17 @@ common_packages: [
 # % ansible -m debug -a "var=os"  HOST
 packages: {
   aix: [
-    'bash,cmake,coreutils,curl,gcc-c++,tar,unzip,git,make,sudo,python-setuptools,python3.9',
+    'bash,cmake,coreutils,curl,gcc-c++,tar,unzip,git,make,sudo,python3-setuptools,python3',
   ],
 
+  # Appears to be some issue with the Ansible dnf task on AIX and gcc10-c++, so handle separately.
   aix72: [
-    'gcc8-c++,gcc10-c++,gcc12-c++'
+    'gcc8-c++,gcc12-c++'
   ],
 
+  # Appears to be some issue with the Ansible dnf task on AIX and gcc10-c++, so handle separately.
   aix73: [
-    'gcc8-c++,gcc10-c++,gcc12-c++'
+    'gcc8-c++,gcc12-c++'
   ],
 
   ibmi: [
