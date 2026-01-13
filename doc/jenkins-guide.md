@@ -108,7 +108,7 @@ and under "Customizable Header" click the "+ Add System message" button. In the
 <p>Refs: <a href="https://github.com/nodejs/build/issues/xxx">https://github.com/nodejs/build/issues/xxx</a></p>
 ```
 
-Unselect "Dismissable" and change the "Background of System Message" to
+Unselect "Dismissible" and change the "Background of System Message" to
 "Warning".
 
 ![](../static-assets/jenkins-set-system-message.png)
