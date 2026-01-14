@@ -143,7 +143,7 @@
     dest: "/usr/bin/{{ item.1 }}"
     state: link
   with_together:
-    - [ 'curl', 'curl_32', 'curl_64', 'tar', 'python3.9' ]
+    - [ 'curl', 'curl_32', 'curl_64', 'tar', 'python3.12' ]
     - [ 'curl', 'curl_32', 'curl_64', 'gtar', 'python3' ]
 
 - name: run ccache installer
