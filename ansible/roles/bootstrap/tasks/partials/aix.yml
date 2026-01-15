@@ -16,16 +16,16 @@
     size: 6G
     state: present    
 
-- name: Set size of /var to 1G
+- name: Set size of /var to 2G
   aix_filesystem:
     filesystem: /var
-    size: 1G
+    size: 2G
     state: present
 
-- name: Set size of /tmp to 1G
+- name: Set size of /tmp to 2G
   aix_filesystem:
     filesystem: /tmp
-    size: 1G
+    size: 2G
     state: present
 
 - name: Set size of /home to 50G
