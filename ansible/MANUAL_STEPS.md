@@ -280,6 +280,8 @@ ENCRYPTION:         no
 On AIX OpenSSL is not available as an rpm via yum/dnf and is instead an
 installp fileset that must be manually downloaded and installed.
 
+The following instructions are based on https://www.ibm.com/support/pages/downloading-and-installing-or-upgrading-openssl-and-openssh.
+
 Go to https://www.ibm.com/resources/mrs/assets?source=aixbp&S_PKG=openssl
 and pick the most recent OpenSSL release (each package should contain
 compatibility libraries for older versions). Download/copy the `.tar.Z`
@@ -287,17 +289,17 @@ package (URL will be temporary) on to the machine into a temporary directory
 e.g. `/tmp/openssl`.
 
 ```console
-curl -sL openssl-3.0.8.1000.tar.Z https://iwm.dhe.ibm.com/.../openssl-3.0.8.1000.tar.Z
+curl -sL openssl-3.0.16.1000.tar.Z https://iwm.dhe.ibm.com/.../openssl-3.0.16.1000.tar.Z
 ```
 
 Then unpack the compressed archive:
 ```console
-zcat openssl-3.0.8.1000.tar.Z | tar -xvf -
+zcat openssl-3.0.16.1000.tar.Z | tar -xvf -
 ```
 
 and install:
 ```console
-installp -aXYgd openssl-3.0.8.1000 -e /tmp/install.log all
+installp -qaXFY -d . openssl.base openssl.license openssl.man.en_US
 ```
 
 To see a list of installed packages, run:
