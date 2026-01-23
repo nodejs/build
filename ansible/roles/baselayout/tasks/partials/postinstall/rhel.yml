@@ -1,0 +1,60 @@
+# Red Hat Enterprise Linux
+
+# Version lock packages to prevent them being updated. Unfortunately we cannot
+# lock a package before it is installed.
+# The generic "install packages" task in ansible/roles/baselayout/tasks/main.yml
+# doesn't allow downgrading, which means if a package is already installed at
+# a later version, specifying the version to install will not downgrade to that
+# version. So here we check the version and downgrade if necessary before
+# version locking to ensure we get what we want.
+
+- name: get installed clang version
+  ansible.builtin.command: clang -dumpversion
+  changed_when: false
+  check_mode: false
+  register: clang_dumpversion_result
+
+- name: get installed rust version
+  ansible.builtin.command: rustc -vV
+  changed_when: false
+  check_mode: false
+  register: rustc_vv_result
+
+# We don't need this. Get rid of it to simplify the number of packages to lock.
+- name: remove tracker-miners packages
+  ansible.builtin.dnf:
+    autoremove: true
+    name: tracker-miners
+    state: absent
+
+- name: downgrade packages
+  ansible.builtin.dnf:
+    allow_downgrade: true
+    name:
+      - llvm-toolset-{{rhel_llvm_version}}
+      - rust-toolset-{{rhel_rust_version}}
+    state: present
+  when: 'clang_dumpversion_result.rc != 0 or clang_dumpversion_result.stdout != rhel_llvm_version or
+    rustc_vv_result.rc != 0 or "release: " + rhel_rust_version not in rustc_vv_result.stdout_lines'
+
+# Lock dependent packages as well to prevent those being updated.
+- name: lock package versions
+  community.general.dnf_versionlock:
+    name:
+      - cargo-{{rhel_rust_version}}
+      - clang-{{rhel_llvm_version}}
+      - clang-libs-{{rhel_llvm_version}}
+      - clang-resource-filesystem-{{rhel_llvm_version}}
+      - compiler-rt-{{rhel_llvm_version}}
+      - libomp-{{rhel_llvm_version}}
+      - libomp-devel-{{rhel_llvm_version}}
+      - lld-{{rhel_llvm_version}}
+      - lld-libs-{{rhel_llvm_version}}
+      - llvm-{{rhel_llvm_version}}
+      - llvm-libs-{{rhel_llvm_version}}
+      - llvm-toolset-{{rhel_llvm_version}}
+      - rust-{{rhel_rust_version}}
+      - rust-std-static-{{rhel_rust_version}}
+      - rust-toolset-{{rhel_rust_version}}
+      - rustfmt-{{rhel_rust_version}}
+    state: present

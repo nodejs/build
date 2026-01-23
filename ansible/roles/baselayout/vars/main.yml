@@ -7,6 +7,10 @@
 git_no_binpkg: [ ]
 git_version: 2.10.2
 
+# toolchain versions
+rhel_llvm_version: 19.1.7
+rhel_rust_version: 1.84.1
+
 ssh_config: /etc/ssh/sshd_config
 
 sshd_service_map: {
@@ -87,11 +91,11 @@ packages: {
   ],
 
   rhel8: [
-    'ccache,clang,cmake,gcc-c++,gcc-toolset-10,gcc-toolset-10-libatomic-devel,gcc-toolset-11,gcc-toolset-12,gcc-toolset-12-libatomic-devel,gcc-toolset-13,gcc-toolset-13-libatomic-devel,gcc-toolset-14-libatomic-devel,git,make,python3',
+    'ccache,cmake,gcc-c++,gcc-toolset-10,gcc-toolset-10-libatomic-devel,gcc-toolset-11,gcc-toolset-12,gcc-toolset-12-libatomic-devel,gcc-toolset-13,gcc-toolset-13-libatomic-devel,gcc-toolset-14-libatomic-devel,git,llvm-toolset-{{rhel_llvm_version}},make,python3,python3-dnf-plugin-versionlock,rust-toolset-{{rhel_rust_version}}',
   ],
 
   rhel9: [
-    'ccache,clang,cmake,gcc-c++,gcc-toolset-12,gcc-toolset-12-libatomic-devel,gcc-toolset-13,gcc-toolset-13-libatomic-devel,gcc-toolset-14-libatomic-devel,git,make,python3',
+    'ccache,cmake,gcc-c++,gcc-toolset-12,gcc-toolset-12-libatomic-devel,gcc-toolset-13,gcc-toolset-13-libatomic-devel,gcc-toolset-14-libatomic-devel,git,llvm-toolset-{{rhel_llvm_version}},make,python3,python3-dnf-plugin-versionlock,rust-toolset-{{rhel_rust_version}}',
   ],
 
   smartos: [
