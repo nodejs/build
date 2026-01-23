@@ -11,9 +11,10 @@
     state: enabled
 
 # V8 builds still require Python 2.
+# rhel_llvm_version and rhel_rust_version from ansible/roles/baselayout/vars/main.yml
 - name: install packages required to build V8
   ansible.builtin.dnf:
-    name: ['llvm-toolset', 'ninja-build', 'python2', 'python2-pip']
+    name: ['bindgen-cli', 'llvm-toolset-{{rhel_llvm_version}}', 'ninja-build', 'python2', 'python2-pip', 'rustfmt-{{rhel_rust_version}}']
     state: present
   notify: package updated
 
