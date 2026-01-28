@@ -98,12 +98,20 @@ referencing the discussion post.
 You must be a member of the `nodejs/jenkins-admins` team to have the necessary
 permissions to lock down the CI.
 
-Add a Jenkins "system message" in https://ci.nodejs.org/configure. Something like:
+Add a system message to Jenkins by going to https://ci.nodejs.org/manage/appearance
+and under "Customizable Header" click the "+ Add System message" button. In the
+"Message" field that is created, enter something like:
+
 ```html
 <h1 style="color:red">system is under embargo for a security release</h1>
 <h2>For solidarity, even if you have access, please don't start unrelated jobs</h2>
 <p>Refs: <a href="https://github.com/nodejs/build/issues/xxx">https://github.com/nodejs/build/issues/xxx</a></p>
 ```
+
+Unselect "Dismissible" and change the "Background of System Message" to
+"Warning".
+
+![](../static-assets/jenkins-set-system-message.png)
 
 To make it more obvious that the CI has been locked down, add some "Extra CSS"
 to https://ci.nodejs.org/manage/appearance.
@@ -174,8 +182,7 @@ Relevant logs:
 1. system (includes security matrix) - https://ci.nodejs.org/jobConfigHistory/history?name=config
 2. CSS - https://ci.nodejs.org/jobConfigHistory/history?name=org.codefirst.SimpleThemeDecorator
 
-Undo the "system message" changes from https://ci.nodejs.org/configure and
-"Extra CSS" theme changes from https://ci.nodejs.org/manage/appearance.
+Undo the "system message" changes and "Extra CSS" theme changes from https://ci.nodejs.org/manage/appearance.
 
 ## Solving problems
 
