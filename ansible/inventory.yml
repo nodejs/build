@@ -237,7 +237,7 @@ hosts:
         rhel9-ppc64_le-2: {ip: 140.211.10.98, user: cloud-user, swap_file_size_mb: 2048}
         rhel9-ppc64_le-3: {ip: 140.211.10.102, user: cloud-user, swap_file_size_mb: 2048}
         rhel9-ppc64_le-4: {ip: 140.211.10.107, user: cloud-user, swap_file_size_mb: 2048}
-        ubuntu2004_docker-arm64-1: {ip: 140.211.169.11, user: ubuntu}
+        ubuntu2404_docker-arm64-1: {ip: 140.211.169.11, user: ubuntu}
 
     - iinthecloud:
         ibmi74-ppc64_be-1: {ip: 65.183.160.52, user: nodejs}
