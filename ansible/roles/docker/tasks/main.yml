@@ -175,11 +175,26 @@
     - "{{ containers }}"
   when: containers is defined and item.os.find('_arm_cross') != -1
 
-- name: "docker : build image"
+- name: "docker : create RHEL secrets file"
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/rhel_secrets.j2"
+    dest: /root/docker-container-{{ item.name }}/secrets.txt
+    mode: "0600"
+  with_items:
+    - "{{ containers }}"
+  when: containers is defined and (item.os == 'rhel8' or item.os == 'ubi81')
+
+- name: "docker : build images"
   command: docker build -t node-ci:{{ item.name }} /root/docker-container-{{ item.name }}/
   with_items:
     - "{{ containers }}"
-  when: containers is defined
+  when: containers is defined and item.os != 'rhel8' and item.os != 'ubi81'
+
+- name: "docker : build RHEL images"
+  command: docker build --build-arg BUILDKIT_SANDBOX_HOSTNAME={{ item.name | regex_replace('_', '--') }} -t node-ci:{{ item.name }} /root/docker-container-{{ item.name }}/
+  with_items:
+    - "{{ containers }}"
+  when: containers is defined and (item.os == 'rhel8' or item.os == 'ubi81')
 
 - name: "docker : generate and copy init script"
   template:
