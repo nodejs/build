@@ -9,7 +9,7 @@ WantedBy=multi-user.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/bin/docker run --init --rm -v /home/{{ server_user }}/{{ item.name }}/:/home/{{ server_user }} -v /home/{{ server_user }}/.ccache/:/home/{{ server_user }}/.ccache --name node-ci-{{ item.name }} --sysctl net.ipv4.ip_unprivileged_port_start=1024 node-ci:{{ item.name }}
+ExecStart=/usr/bin/docker run --init --rm -h {{ item.name | regex_replace('_', '--') }} -v /home/{{ server_user }}/{{ item.name }}/:/home/{{ server_user }} -v /home/{{ server_user }}/.ccache/:/home/{{ server_user }}/.ccache --name node-ci-{{ item.name }} --sysctl net.ipv4.ip_unprivileged_port_start=1024 node-ci:{{ item.name }}
 ExecStop=/usr/bin/docker stop -t 5 node-ci-{{ item.name }}
 Restart=always
 RestartSec=30
