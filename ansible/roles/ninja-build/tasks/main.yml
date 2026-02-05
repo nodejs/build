@@ -1,0 +1,61 @@
+- name: install ninja build dependencies
+  include_tasks: "{{ v8deps_include }}"
+  loop_control:
+    loop_var: v8deps_include
+  with_first_found:
+    - files:
+      - "{{ role_path }}/tasks/partials/{{ os }}-{{ arch }}.yml"
+      - "{{ role_path }}/tasks/partials/{{ os }}.yml"
+      - "{{ role_path }}/tasks/partials/{{ os|stripversion }}.yml"
+      skip: true
+
+- name: check existing ninja
+  ansible.builtin.command: "{{ ninja_dest_dir }}/ninja --version"
+  changed_when: no
+  failed_when: no
+  register: ninja_installed_version
+
+# `ninja --version` does not include the 'v' prefix.
+- name: check if ninja needs to be rebuilt
+  ansible.builtin.set_fact:
+    rebuild_ninja: "{{ not ninja_installed_version.stdout|default('') is search(ninja_version[1:]) }}"
+
+- name: clone/update ninja repository
+  ansible.builtin.git:
+    dest: "{{ ninja_git_dir }}"
+    repo: "{{ ninja_git_repository }}"
+    version: "{{ ninja_version|default(omit) }}"
+  become: "{{ ninja_user|default(omit)|bool }}"
+  become_user: "{{ ninja_user|default(omit) }}"
+  register: ninja_git
+  when: rebuild_ninja
+
+- name: clean git checkout
+  ansible.builtin.shell: git clean -fdX
+  args:
+    chdir: "{{ ninja_git_dir }}"
+  become: "{{ ninja_user|default(omit)|bool }}"
+  become_user: "{{ ninja_user|default(omit) }}"
+  when: rebuild_ninja
+
+- name: build ninja
+  ansible.builtin.shell: |
+    {{ ninja_select_compiler }} && \
+    ./configure.py --bootstrap
+  args:
+    chdir: "{{ ninja_git_dir }}"
+  become: "{{ ninja_user|default(omit)|bool }}"
+  become_user: "{{ ninja_user|default(omit) }}"
+  environment:
+    CC: gcc
+    CXX: g++
+  when: rebuild_ninja
+
+- name: create symlink
+  ansible.builtin.file:
+    dest: "{{ ninja_dest_dir }}/ninja"
+    src: "{{ ninja_git_dir }}/ninja"
+    state: link
+  become: "{{ ninja_user|default(omit)|bool }}"
+  become_user: "{{ ninja_user|default(omit) }}"
+  when: rebuild_ninja
