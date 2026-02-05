@@ -167,3 +167,15 @@
         - "{{ role_path }}/tasks/partials/ntp/{{ os|stripversion }}.yml"
         - "{{ role_path }}/tasks/partials/ntp/{{ os|match_key(ntp_service, raise_error=False) }}.yml"
       skip: true
+
+
+- name: install clang
+  include_tasks: "{{ clang_include }}"
+  loop_control:
+    loop_var: clang_include
+  with_first_found:
+    - files:
+        - "{{ role_path }}/tasks/partials/clang/{{ os }}-{{ arch }}.yml"
+        - "{{ role_path }}/tasks/partials/clang/{{ os }}.yml"
+        - "{{ role_path }}/tasks/partials/clang/{{ os|stripversion }}.yml"
+      skip: true
