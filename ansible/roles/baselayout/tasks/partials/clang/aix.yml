@@ -1,0 +1,10 @@
+---
+#
+# Downloads and installs clang
+#
+
+- name: "clang : extract tarball - aix"
+  ansible.builtin.unarchive:
+    src: https://github.com/IBM/llvm-project/releases/download/llvmorg-20.1.7/clang+llvm-20.1.7-powerpc64-ibm-aix-7.2.tar.xz
+    dest: /opt
+    remote_src: yes
