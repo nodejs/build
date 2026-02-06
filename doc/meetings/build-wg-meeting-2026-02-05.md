@@ -34,7 +34,7 @@
 ### nodejs/node
 
 * Enabling Rust support for Temporal [#58730](https://github.com/nodejs/node/issues/58730)
-    * not enabling by default until V8 14.5
+    * not enabling by default until V8 14.4 or 14.5
     * installed 1.84
     * minimum https://github.com/nodejs/node/blob/main/BUILDING.md#building-nodejs-with-temporal-support 1.82 (LLVM 19)
     * GitHub Action Linux build has been enabled. macOS and Windows to come.
