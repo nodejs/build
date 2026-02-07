@@ -1,0 +1,13 @@
+---
+
+compiler: {
+  'rhel8': '. /opt/rh/gcc-toolset-12/enable'
+}
+
+ninja_git_repository: 'https://github.com/ninja-build/ninja'
+ninja_select_compiler: '{{ compiler[os]|default(compiler[os|stripversion])|default("true") }}'
+ninja_version: 'v1.13.2'
+
+packages: {
+  'rhel8': 'gcc-toolset-12'
+}

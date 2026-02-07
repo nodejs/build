@@ -43,7 +43,7 @@
   ansible.builtin.shell: |
     python3 build/gen.py && \
     {{ gn_select_compiler }} && \
-    ninja -C out && \
+    {{ gn_dest_dir }}/ninja -C out && \
     out/gn_unittests
   args:
     chdir: "{{ gn_git_dir }}"
