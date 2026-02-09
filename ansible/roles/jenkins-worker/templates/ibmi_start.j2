@@ -2,9 +2,9 @@
 CIJOBNAME="JENKINS_CI"
 SBMJOB_OPTS="JOB($CIJOBNAME) USER(IOJS) JOBQ(QUSRNOMAX)"
 
-export PATH=/QOpenSys/pkgs/lib/ccache:/QOpenSys/pkgs/bin:/QOpenSys/usr/bin:/usr/ccs/bin:/QOpenSys/usr/bin/X11:/usr/sbin:.:/usr/bin
-export PASE_PATH=$PATH
 export HOME={{ home }}/{{ server_user|upper }}
+export PATH=$HOME/venv/bin:/QOpenSys/pkgs/lib/ccache:/QOpenSys/pkgs/bin:/QOpenSys/usr/bin:/usr/ccs/bin:/QOpenSys/usr/bin/X11:/usr/sbin:.:/usr/bin
+export PASE_PATH=$PATH
 export NODE_COMMON_PIPE="$HOME/test.pipe"
 export NODE_TEST_DIR="$HOME/tmp"
 export JOBS=$(qsh -c "db2 -s 'SELECT configured_cpus*8 as cpus FROM TABLE(qsys2.system_status()) x'" | egrep "^\s*[0-9]+\s*$" | tr -d ' ')
