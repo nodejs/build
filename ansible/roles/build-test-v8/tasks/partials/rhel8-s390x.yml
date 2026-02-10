@@ -27,5 +27,5 @@
 - name: install dependencies for V8 build tools (Python 3)
   ansible.builtin.pip:
     executable: pip-3
-    name: ['filecheck', 'httplib2', 'six']
+    name: ['filecheck', 'httplib2==0.22.0', 'six']
     state: present
