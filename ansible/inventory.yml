@@ -67,6 +67,7 @@ hosts:
             user: cloud-user
             swap_file_size_mb: 4096
         rhel8-ppc64_le-1: {ip: 140.211.168.185, swap_file_size_mb: 2048, user: cloud-user}
+        rhel8-ppc64_le-2: {ip: 140.211.168.70, swap_file_size_mb: 4096, user: cloud-user}
 
 
   - test:
@@ -127,6 +128,7 @@ hosts:
             remote_env:
                 PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
             server_jobs: 6
+        rhel8-ppc64_le-1: {ip: 169.54.113.162, build_test_v8: yes, server_jobs: 4, swap_file_size_mb: 4096}
         rhel8-s390x-1: {ip: 148.100.84.98, user: linux1, build_test_v8: yes, swap_file_size_mb: 4096}
         rhel8-s390x-2: {ip: 148.100.84.38, user: linux1, build_test_v8: yes, swap_file_size_mb: 4096}
         rhel8-s390x-3: {ip: 148.100.84.17, user: linux1, build_test_v8: yes, swap_file_size_mb: 4096}
@@ -134,6 +136,7 @@ hosts:
         rhel8-x64-1: {ip: 169.61.75.51, build_test_v8: yes}
         rhel8-x64-2: {ip: 169.61.75.58, build_test_v8: yes}
         rhel8-x64-3: {ip: 52.117.26.13, build_test_v8: yes}
+        rhel9-ppc64_le-1: {ip: 169.54.113.138, server_jobs: 4, swap_file_size_mb: 4096}
         rhel9-x64-1: {ip: 169.60.150.92, swap_file_size_mb: 2048}
         rhel9-x64-2: {ip: 169.44.168.2}
         ubuntu2404-x64-1: {ip: 169.60.150.82}
@@ -232,7 +235,8 @@ hosts:
         rhel8-ppc64_le-1: {ip: 140.211.168.183, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 4096}
         rhel8-ppc64_le-2: {ip: 140.211.168.76, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 4096}
         rhel8-ppc64_le-3: {ip: 140.211.168.221, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 4096}
-        rhel8-ppc64_le-4: {ip: 140.211.168.194, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 4096}
+        rhel8-ppc64_le-4: {ip: 140.211.168.161, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 4096}
+        rhel8-ppc64_le-5: {ip: 140.211.168.5, user: cloud-user, build_test_v8: yes, swap_file_size_mb: 4096}
         rhel9-ppc64_le-1: {ip: 140.211.10.105, user: cloud-user, swap_file_size_mb: 2048}
         rhel9-ppc64_le-2: {ip: 140.211.10.98, user: cloud-user, swap_file_size_mb: 2048}
         rhel9-ppc64_le-3: {ip: 140.211.10.102, user: cloud-user, swap_file_size_mb: 2048}
