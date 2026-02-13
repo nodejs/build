@@ -15,7 +15,7 @@ ENV ARCH {{ arch }}
 # Register with RHEL subscription to be able to install older versions of packages.
 COPY secrets.txt /secrets.txt
 # ccache is not in the default repositories so get it from EPEL 8.
-RUN chmod u+x /secrets.txt && . /secrets.txt \
+RUN . /secrets.txt \
     && sed -i 's/\(def in_container():\)/\1\n    return False/g' /usr/lib64/python*/*-packages/rhsm/config.py \
     && subscription-manager register --org $RH_ORG --activationkey $RH_ACTIVATION_KEY \
     && rm -rf /secrets.txt \
