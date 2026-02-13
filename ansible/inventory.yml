@@ -80,8 +80,6 @@ hosts:
         msft-win11_vs2022-arm64-2: {ip: nodejs2.eastus.cloudapp.azure.com}
         msft-win11_vs2022-arm64-3: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win11_vs2022-arm64-4: {ip: nodejs2.eastus.cloudapp.azure.com}
-        msft-win11_vs2022-arm64-5: {ip: nodejs.westeurope.cloudapp.azure.com}
-        msft-win11_vs2022-arm64-6: {ip: nodejs2.eastus.cloudapp.azure.com}
         msft-win11_vs2022-x64-1: {ip: nodejs.westeurope.cloudapp.azure.com}
         msft-win11_vs2022-x64-2: {ip: nodejs.westus3.cloudapp.azure.com}
         msft-win11_vs2022-x64-3: {ip: nodejs2.eastus.cloudapp.azure.com}
