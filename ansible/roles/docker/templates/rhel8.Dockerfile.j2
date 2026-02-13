@@ -12,31 +12,32 @@ ENV OSVARIANT docker
 ENV DESTCPU {{ arch }}
 ENV ARCH {{ arch }}
 
+# Register with RHEL subscription to be able to install older versions of packages.
+COPY secrets.txt /secrets.txt
 # ccache is not in the default repositories so get it from EPEL 8.
-RUN dnf install --disableplugin=subscription-manager -y \
-      https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
-    && dnf update --disableplugin=subscription-manager -y \
-    && dnf install --disableplugin=subscription-manager -y \
+RUN . /secrets.txt \
+    && sed -i 's/\(def in_container():\)/\1\n    return False/g' /usr/lib64/python*/*-packages/rhsm/config.py \
+    && subscription-manager register --org $RH_ORG --activationkey $RH_ACTIVATION_KEY \
+    && rm -rf /secrets.txt \
+    && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
+    && dnf update -y \
+    && dnf install -y \
       ccache \
-      clang \
       gcc-c++ \
+      gcc-toolset-10 \
       gcc-toolset-12 \
+      gcc-toolset-14-libatomic-devel \
       git \
       java-17-openjdk-headless \
+      llvm-toolset-19.1.7 \
       make \
       python3.12 \
       python3.12-pip \
       procps-ng \
+      rust-toolset-1.84.1 \
       xz \
-    && dnf --disableplugin=subscription-manager clean all
-
-RUN dnf install --disableplugin=subscription-manager -y \
-      https://repo.almalinux.org/almalinux/8/AppStream/{{ ansible_architecture }}/os/Packages/gcc-toolset-14-libatomic-devel-14.2.1-1.1.el8_10.{{ ansible_architecture }}.rpm \
-      http://vault.centos.org/centos/8-stream/AppStream/{{ ansible_architecture }}/os/Packages/gcc-toolset-10-binutils-2.35-11.el8.{{ ansible_architecture }}.rpm \
-      http://vault.centos.org/centos/8-stream/AppStream/{{ ansible_architecture }}/os/Packages/gcc-toolset-10-gcc-10.3.1-1.2.el8_5.{{ ansible_architecture }}.rpm \
-      http://vault.centos.org/centos/8-stream/AppStream/{{ ansible_architecture }}/os/Packages/gcc-toolset-10-gcc-c++-10.3.1-1.2.el8_5.{{ ansible_architecture }}.rpm \
-      http://vault.centos.org/centos/8-stream/AppStream/{{ ansible_architecture }}/os/Packages/gcc-toolset-10-libstdc++-devel-10.3.1-1.2.el8_5.{{ ansible_architecture }}.rpm \
-      http://vault.centos.org/centos/8-stream/AppStream/{{ ansible_architecture }}/os/Packages/gcc-toolset-10-runtime-10.1-0.el8.{{ ansible_architecture }}.rpm
+    && dnf clean all \
+    && subscription-manager unregister
 
 RUN groupadd -r -g {{ server_user_gid.stdout_lines[0] }} {{ server_user }} \
     && adduser -r -m -d /home/{{ server_user }}/ \
