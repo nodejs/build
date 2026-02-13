@@ -22,6 +22,8 @@ def buildExclusions = [
   // Linux -------------------------------------------------
   [ /debian11/,                       anyType,     gte(23) ],
   [ /rhel7/,                          anyType,     gte(18) ],
+  [ /rhel8-ppc64le/,                  anyType,     gte(26) ], // Power 8 was dropped in v26
+  [ /rhel8-power9le/,                 releaseType, lt(26)  ], // Power 8 was dropped in v26
   [ /^ubuntu1604-32/,                 anyType,     gte(18) ], // 32-bit linux for <10 only
   [ /^ubuntu1604-64/,                 anyType,     gte(18) ],
 
