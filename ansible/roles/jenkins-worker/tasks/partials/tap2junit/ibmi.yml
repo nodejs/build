@@ -5,8 +5,7 @@
 #
 
 - name: install tap2junit
-  ansible.builtin.pip:
-    executable: /QOpenSys/pkgs/bin/pip3.9
-    name: tap2junit
-    state: present
-    version: "{{ tap2junit_version }}"
+  pip:
+    name: tap2junit=={{ tap2junit_version }}
+    virtualenv: /home/{{ server_user|upper }}/venv
+    virtualenv_command: python3.13 -m venv
