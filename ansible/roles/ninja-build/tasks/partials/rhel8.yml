@@ -1,0 +1,16 @@
+---
+# Install ninja build dependencies for RHEL 8
+
+- name: install ninja build dependencies for {{ os }}-{{ arch }}
+  package:
+    name: "{{ package }}"
+    state: present
+    use: dnf
+  loop_control:
+    loop_var: package
+  notify: package updated
+  with_items:
+    # ansible doesn't like empty lists
+    - "{{ packages[os+'_'+arch]|default('[]') }}"
+    - "{{ packages[os]|default('[]') }}"
+    - "{{ packages[os|stripversion]|default('[]') }}"

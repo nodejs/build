@@ -5,8 +5,8 @@ compiler: {
 }
 
 gn_select_compiler: "{{ compiler[os]|default(compiler[os|stripversion])|default('true') }}"
-gn_version: c0a46c5e8c316010baf1a0eb2d2ee5a86f73e4c2
+gn_version: 304bbef6c7e9a86630c12986b99c8654eb7fe648
 
 packages: {
-  'rhel8': 'ninja-build,gcc-toolset-12'
+  'rhel8': 'gcc-toolset-12'
 }

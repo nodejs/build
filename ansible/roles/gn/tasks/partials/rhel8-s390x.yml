@@ -1,8 +1,0 @@
-# ninja-build on RHEL 8 is in the CodeReady Linux Builder repository.
-- name: enable codeready-builder repository
-  community.general.rhsm_repository:
-    name: codeready-builder-for-rhel-8-s390x-rpms
-    state: enabled
-
-- name: run common RHEL 8 tasks
-  ansible.builtin.include_tasks: rhel8.yml

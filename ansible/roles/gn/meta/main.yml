@@ -1,0 +1,8 @@
+# Building gn requires ninja.
+dependencies:
+  - role: ninja-build
+    when: arch == 'ppc64' or arch == 's390x'
+    vars:
+      ninja_dest_dir: "{{ gn_dest_dir }}"
+      ninja_git_dir: "{{ tools_git_dir }}/ninja"
+      ninja_user: "{{ tools_user }}"
