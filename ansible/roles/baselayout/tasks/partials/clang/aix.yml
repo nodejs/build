@@ -3,8 +3,51 @@
 # Downloads and installs clang
 #
 
-- name: "clang : extract tarball - aix"
-  ansible.builtin.unarchive:
-    src: https://github.com/IBM/llvm-project/releases/download/llvmorg-20.1.7/clang+llvm-20.1.7-powerpc64-ibm-aix-7.2.tar.xz
-    dest: /opt
+# - name: "clang : extract tarball - aix"
+#   ansible.builtin.unarchive:
+#     src: https://github.com/IBM/llvm-project/releases/download/llvmorg-20.1.7/clang+llvm-20.1.7-powerpc64-ibm-aix-7.2.tar.xz
+#     dest: /opt
+#     remote_src: yes
+
+
+- name: Check if clang is already installed
+  changed_when: no
+  check_mode: no
+  command: "/opt/clang+llvm-20.1.7-powerpc64-ibm-aix-7.2/bin/clang --version"
+  register: clang
+  ignore_errors: yes
+
+# If we're already using the latest there is no need to do anything.
+# TODO improve the error handling
+- name: check existing clang version is up to date
+  set_fact:
+    update_clang: "{{ 'clang version 20.1.7' not in clang.stdout }}"
+
+- name: create cache directory for clang binaries
+  file:
+    path: "/var/cache/clang-binaries"
+    state: directory
+  when: update_clang == True
+
+- name: download clang binary
+  get_url:
+    checksum: sha256:a18aea07f5b977e64bc7fe7358e95897c7ba05fbe68eeefb1614631347be4b3a
+    dest: "/var/cache/clang-binaries/clang+llvm-20.1.7-powerpc64-ibm-aix-7.2.tar.xz"
+    url: "https://github.com/IBM/llvm-project/releases/download/llvmorg-20.1.7/clang+llvm-20.1.7-powerpc64-ibm-aix-7.2.tar.xz"
+  register: clang_local
+  when: update_clang == True
+
+- name: unpack clang binary
+  register: clang_unpacked
+  unarchive:
+    dest: "/opt/"
+    list_files: yes
     remote_src: yes
+    src: "{{ clang_local.dest }}"
+  when: update_clang == True
+
+
+- name: Check if we have a runnable clang
+  changed_when: no
+  check_mode: no
+  ansible.builtin.command: "/opt/clang+llvm-20.1.7-powerpc64-ibm-aix-7.2/bin/clang --version"
