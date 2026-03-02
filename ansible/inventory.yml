@@ -126,6 +126,7 @@ hosts:
             remote_env:
                 PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
             server_jobs: 6
+        debian12-x64-1: {ip: 169.60.150.84, swap_file_size_mb: 4096}
         rhel8-ppc64_le-1: {ip: 169.54.113.162, build_test_v8: yes, server_jobs: 4, swap_file_size_mb: 4096}
         rhel8-s390x-1: {ip: 148.100.84.98, user: linux1, build_test_v8: yes, swap_file_size_mb: 4096}
         rhel8-s390x-2: {ip: 148.100.84.38, user: linux1, build_test_v8: yes, swap_file_size_mb: 4096}
@@ -267,6 +268,3 @@ hosts:
         win2022_vs2022-x64-4: {}
         win2022_vs2022-x64-5: {}
         win2022_vs2022-x64-6: {}
-
-    - softlayer:
-        debian12-x64-1: {ip: 169.60.150.88, swap_file_size_mb: 2048}
