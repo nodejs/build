@@ -25,4 +25,8 @@
     dest: 'C:\TEMP\Votive2017.vsix'
 
 - name: install WiX Toolset Visual Studio Extension
-  win_shell: '& "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VSIXInstaller.exe" /quiet C:\TEMP\Votive2017.vsix'
+  win_shell: |
+    $exitCode = (Start-Process -FilePath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VSIXInstaller.exe" -ArgumentList "/quiet", "C:\TEMP\Votive2017.vsix" -Wait -PassThru).ExitCode
+    if ($exitCode -ne 0) {
+      throw "VSIXInstaller failed with exit code $exitCode"
+    }
