@@ -7,18 +7,14 @@
 #        use our own logic. Perhaps better to avoid ansible facts altogether?
 #
 
-- name: check for {{ 'libselinux-python' if os in ("fedora30") else 'python3-libselinux' }} bindings
-  raw: dnf info {{ 'libselinux-python' if os in ("fedora30") else 'python3-libselinux' }} | grep Installed
+- name: check for python3-libselinux bindings
+  raw: dnf info python3-libselinux | grep Installed
   check_mode: no
   register: has_libselinux
   failed_when:  has_libselinux.rc > 1
 
-- name: install libselinux-python bindings
-  when: os in ("fedora30") and has_libselinux.rc == 1
-  raw: dnf install -y libselinux-python
-
 - name: install python3-libselinux bindings
-  when: os not in ("fedora30") and has_libselinux.rc == 1
+  when: has_libselinux.rc == 1
   raw: dnf install -y python3-libselinux
 
 - name: disable selinux
@@ -35,8 +31,3 @@
 - name: remove firewalld
   when: has_firewalld.rc == 0
   raw: dnf remove -y firewalld
-
-# https://github.com/ansible/ansible/issues/84206
-- name: install python3-libdnf5
-  when: os in ("fedora41")
-  raw: dnf install -y python3-libdnf5
