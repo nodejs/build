@@ -16,10 +16,10 @@
     size: 6G
     state: present    
 
-- name: Set size of /var to 2G
+- name: Set size of /var to 5G
   aix_filesystem:
     filesystem: /var
-    size: 2G
+    size: 5G
     state: present
 
 - name: Set size of /tmp to 2G
@@ -34,10 +34,10 @@
     size: 50G
     state: present
 
-- name: Set size of /opt to 5G
+- name: Set size of /opt to 12G
   aix_filesystem:
     filesystem: /opt
-    size: 5G
+    size: 12G
     state: present
 
 # This is to mount the AIX file event infrastructure to get the file watcher tests passing
