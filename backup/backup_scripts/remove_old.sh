@@ -22,7 +22,7 @@ REGEX="${ROOTDIR}/.*/builds/[0-9]+"
 #MULTIJOBS="$ROOTDIR/*/configurations/axis-*/*/builds/"
 CREDENTIALS=$(</root/.jenkins_credentials)
 ssh -i /root/.ssh/nodejs_build_backup $HOST find "$ROOTDIR" -depth -type d -regex "$REGEX" -mtime +$DAYS -exec "rm -rvf '{}' \;"
-JENKINS_CRUMB=$(curl -sL --user "$CREDENTIALS" https://$HOST/'crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)')
 # sxa: Skip due to jenkins bug - https://github.com/nodejs/build/issues/4247#issuecomment-4019757795
+# JENKINS_CRUMB=$(curl -sL --user "$CREDENTIALS" https://$HOST/'crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)')
 # curl -X POST -q --user "$CREDENTIALS" -H "$JENKINS_CRUMB" https://$HOST/reload
 
