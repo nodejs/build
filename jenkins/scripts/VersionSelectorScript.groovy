@@ -63,6 +63,10 @@ def buildExclusions = [
   [ /vs2015-COMPILED_BY/,             testType,    gte(20)       ],
   [ /vs2017-COMPILED_BY/,             testType,    gte(22)       ],
 
+  // AIX ---------------------------------------------------
+  [ /^aix72-ppc64/,                     anyType,     gte(26) ], // Power 8 was dropped in v26
+  [ /^aix72-power9/,                    releaseType, lt(26)  ], // Build releases on Power 9 for >=26
+
   // SmartOS -----------------------------------------------
   [ /^smartos18/,                     anyType,     gte(18) ],
 
