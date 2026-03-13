@@ -1,29 +1,41 @@
 # Manual steps required to setup machines
 
-* [Adding firewall entries for Jenkins workers](#adding-firewall-entries-for-jenkins-workers)
-* [`release-*` machines](#release--machines)
-  * [`release-*container*` machines](#release-container-machines)
-* [AIX](#aix)
-  * [Disk layout](#disk-layout)
-  * [OpenSSL](#openssl)
-  * [Remove en1 network interface](#remove-en1-network-interface)
-* [AIX 7.1](#aix-71)
-  * [Update XL C/C++ Runtime](#update-xl-cc-runtime)
-* [AIX 7.2 Install](#aix-72-install)
-  * [ccache 3.7.4 on AIX 7.2](#ccache-374-on-aix-72)
-  * [Enable the AHA fs](#enable-the-aha-fs)
-  * [Install XL compilers](#install-xl-compilers)
-  * [Preparing gcc distributables](#preparing-gcc-distributables)
-* [Windows (Azure/Rackspace)](#windows-azurerackspace)
-  * [Control machine (where Ansible is run)](#control-machine-where-ansible-is-run)
-  * [Target machines](#target-machines)
-* [jenkins-workspace](#jenkins-workspace)
-* [benchmark](#benchmark)
-  * [Static analysis](#static-analysis)
-* [Docker hosts](#docker-hosts)
-* [SmartOS](#smartos)
-* [IBM i](#ibm-i)
-* [z/OS](#zos)
+- [Manual steps required to setup machines](#manual-steps-required-to-setup-machines)
+  - [Adding firewall entries for Jenkins workers](#adding-firewall-entries-for-jenkins-workers)
+  - [`release-*` machines](#release--machines)
+    - [`release-*container*` machines](#release-container-machines)
+  - [AIX](#aix)
+    - [Disk Layout](#disk-layout)
+    - [OpenSSL](#openssl)
+    - [Remove en1 network interface](#remove-en1-network-interface)
+  - [AIX 7.1](#aix-71)
+    - [Update XL C/C++ Runtime](#update-xl-cc-runtime)
+  - [AIX 7.2 Install](#aix-72-install)
+    - [ccache 3.7.4 on AIX 7.2](#ccache-374-on-aix-72)
+    - [Enable the AHA fs](#enable-the-aha-fs)
+    - [Install XL compilers](#install-xl-compilers)
+    - [Preparing gcc distributables](#preparing-gcc-distributables)
+    - [Install Clang Backend](#install-clang-backend)
+    - [Preparing ccache distributables](#preparing-ccache-distributables)
+  - [Windows (Azure/Rackspace)](#windows-azurerackspace)
+    - [Control machine (where Ansible is run)](#control-machine-where-ansible-is-run)
+    - [Target machines](#target-machines)
+      - [Port Configuration](#port-configuration)
+      - [Test](#test)
+  - [jenkins-workspace](#jenkins-workspace)
+  - [benchmark](#benchmark)
+    - [Static analysis](#static-analysis)
+  - [Docker hosts](#docker-hosts)
+  - [SmartOS](#smartos)
+    - [Provisioning the Machines](#provisioning-the-machines)
+    - [Configuring the Host Environment](#configuring-the-host-environment)
+  - [IBM i](#ibm-i)
+    - [Install open source ecosystem](#install-open-source-ecosystem)
+    - [Create Nodejs user](#create-nodejs-user)
+    - [Create Nodejs user's home directory](#create-nodejs-users-home-directory)
+    - [Set global PATH and .bashrc to use Open Source Ecosystem](#set-global-path-and-bashrc-to-use-open-source-ecosystem)
+    - [Use bash as the default shell for your user (maintainer convenience) and the nodejs user](#use-bash-as-the-default-shell-for-your-user-maintainer-convenience-and-the-nodejs-user)
+  - [z/OS](#zos)
 
 ## Adding firewall entries for Jenkins workers
 
@@ -486,6 +498,42 @@ the version numbers.
 
 Example search for 4.8.5 gcc on bullfreeware:
 - http://www.bullfreeware.com/?searching=true&package=gcc&from=&to=&libraries=false&exact=true&version=5
+
+### Install Clang Backend
+
+The clang frontend will be auto installed via ansible playbook from:
+https://github.com/IBM/llvm-project/releases
+
+The clang backend requires manually installing xl runtime and xl utilities
+
+runtime:
+
+1. Download the current *.tar.Z from https://www.ibm.com/support/pages/fix-list-xl-cc-runtime-aix
+
+2. scp the tar onto the target
+
+3. On the target
+
+  ```sh
+  uncompress IBM_OPEN_XL_CPP_RUNTIME_17.1.4.1_AIX.tar.Z 
+  tar -xf IBM_OPEN_XL_CPP_RUNTIME_17.1.4.1_AIX.tar
+  installp -aFXYd . ALL
+  ```
+
+
+utilities:
+
+1. Download the current *.tar.Z from https://www.ibm.com/support/pages/ibm-open-xl-cc-utilities-aix-1712#DNLD
+2. scp tar onto the target
+3. On the target
+
+  ```sh
+  uncompress IBM_OPEN_XL_CPP_UTILITIES_17.1.2.8_AIX.tar.Z
+  tar -xf IBM_OPEN_XL_CPP_RUNTIME_17.1.4.1_AIX.tar
+  installp -aFXYd . ALL
+  ```
+
+
 
 ### Preparing ccache distributables
 
