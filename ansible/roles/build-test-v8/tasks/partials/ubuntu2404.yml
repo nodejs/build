@@ -11,6 +11,6 @@
 
 - name: install Python packages required to build V8
   ansible.builtin.pip:
-    name: ['httplib2==0.22.0']
+    name: ['filecheck', 'httplib2==0.22.0', 'six']
     virtualenv: /home/{{ server_user }}/venv
     virtualenv_command: python3 -m venv
