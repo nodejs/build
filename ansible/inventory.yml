@@ -160,6 +160,14 @@ hosts:
             ip: 37.27.104.215
             build_test_v8: yes
             is_benchmark: true
+        ubuntu2404-x64-1:
+            ip: 135.181.228.157
+            build_test_v8: yes
+            is_benchmark: true
+        ubuntu2404-x64-2:
+            ip: 135.181.228.214
+            build_test_v8: yes
+            is_benchmark: true
 
     - linuxonecc:
         rhel9-s390x-1: {ip: 148.100.85.156, swap_file_size_mb: 2048, user: linux1}
