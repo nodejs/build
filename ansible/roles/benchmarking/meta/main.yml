@@ -1,0 +1,7 @@
+---
+
+dependencies:
+  - role: user-create
+  - role: github
+    vars:
+      user_home_dir: "{{ home }}/{{ server_user }}"
