@@ -37,7 +37,7 @@ common_packages: [
 # % ansible -m debug -a "var=os"  HOST
 packages: {
   aix: [
-    'bash,cmake,coreutils,curl,gcc-c++,tar,unzip,git,make,sudo,python3-setuptools,python3,rust-1.86.0,cargo-1.86.0,rustfmt-1.86.0',
+    'bash,cmake,coreutils,curl,gcc-c++,tar,unzip,git,make,sudo,python3-setuptools,python3,rust-1.88.0,cargo-1.88.0,rustfmt-1.88.0',
   ],
 
   # Appears to be some issue with the Ansible dnf task on AIX and gcc10-c++, so handle separately.
