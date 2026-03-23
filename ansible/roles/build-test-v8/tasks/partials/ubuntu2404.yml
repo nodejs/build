@@ -1,0 +1,16 @@
+---
+
+#
+# Install packages for V8 builds.
+#
+
+- name: install apt packages required to build V8
+  ansible.builtin.apt:
+    name: ['ninja-build']
+    state: present
+
+- name: install Python packages required to build V8
+  ansible.builtin.pip:
+    name: ['filecheck', 'httplib2==0.22.0', 'six']
+    virtualenv: /home/{{ server_user }}/venv
+    virtualenv_command: python3 -m venv
