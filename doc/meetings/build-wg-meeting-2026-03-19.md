@@ -24,7 +24,7 @@
 
 * Certificates expiring on 2026-04-12 [#4274](https://github.com/nodejs/build/issues/4274)
     * Let's not touch the infra until the security releases are done.
-    * We need to talk to the foundation on wether the certs will get extended again or a different approach is needed (for the time after this).
+    * We need to talk to the foundation on whether the certs will get extended again or a different approach is needed (for the time after this).
 * Clarify policy: usage of production tokens in GitHub Actions [#4253](https://github.com/nodejs/build/issues/4253)
 * Add rust toolchain to CI machines [#4245](https://github.com/nodejs/build/issues/4245)
     * Not much has changed since our last meeting.
