@@ -533,6 +533,12 @@ utilities:
   installp -aFXYd . ALL
   ```
 
+After installing these packages we will need to update dnf:
+
+```sh
+/usr/sbin/updtvpkg
+```
+
 
 
 ### Preparing ccache distributables
