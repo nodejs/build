@@ -93,8 +93,9 @@ hosts:
         ubuntu2404_docker-arm64-3: {ip: 20.172.67.207, user: nodejs}
 
     - digitalocean:
-        debian11-x64-1: {ip: 174.138.79.159, swap_file_size_mb: 2048}
         debian12-x64-1: {ip: 159.203.105.159, swap_file_size_mb: 2048}
+        debian13-x64-1: {ip: 174.138.79.159, swap_file_size_mb: 2048}
+        debian13-x64-2: {ip: 137.184.225.39, swap_file_size_mb: 2048}
         fedora42-x64-1: {ip: 174.138.62.120}
         fedora42-x64-2: {ip: 104.131.92.208}
         fedora43-x64-1: {ip: 165.227.191.35}
@@ -106,7 +107,6 @@ hosts:
         ubuntu2204_docker-x64-1: {ip: 134.209.55.216}
         ubuntu2204_docker-x64-2: {ip: 159.89.183.200}
         ubuntu2404-x64-1: {ip: 165.227.180.106, swap_file_size_mb: 2048}
-        ubuntu2404-x64-2: {ip: 167.99.124.188, swap_file_size_mb: 2048}
 
     - ibm:
         aix72-ppc64_be-1:
@@ -266,9 +266,9 @@ hosts:
             server_jobs: 32
 
     - rackspace:
-        debian11-x64-1: {ip: 23.253.109.216, swap_file_size_mb: 4096}
         debian12-x64-1: {ip: 104.130.124.194, swap_file_size_mb: 4096}
         ubuntu2404-x64-1: {ip: 119.9.52.75, swap_file_size_mb: 4096, user: ubuntu}
+        ubuntu2404-x64-2: {ip: 104.130.124.245, swap_file_size_mb: 4096, user: ubuntu}
         win2016_vs2015-x64-1: {}
         win2016_vs2015-x64-2: {}
         win2019_vs2019-x64-1: {}
