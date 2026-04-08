@@ -510,7 +510,7 @@ runtime:
 
 1. Download the current *.tar.Z from https://www.ibm.com/support/pages/fix-list-xl-cc-runtime-aix
 
-2. scp the tar onto the target
+2. scp the tar onto the target - it helps to put both tarfiles into a single folder and scp the folder
 
 3. On the target
 
@@ -529,7 +529,8 @@ utilities:
 
   ```sh
   uncompress IBM_OPEN_XL_CPP_UTILITIES_17.1.2.8_AIX.tar.Z
-  tar -xf IBM_OPEN_XL_CPP_RUNTIME_17.1.4.1_AIX.tar
+  tar -xf IBM_OPEN_XL_CPP_UTILITIES_17.1.2.8_AIX.tar
+  inutoc .
   installp -aFXYd . ALL
   ```
 
