@@ -39,7 +39,7 @@
     src: "{{ clang_local.dest }}"
   when: update_clang == True
 
-
+# if we don't have the clang runtime libraries installed this will fail
 - name: Check if we have a runnable clang
   changed_when: no
   check_mode: no
