@@ -26,6 +26,13 @@
     pinned: yes
     version: "3.10.8"
 
+- name: Install rustup
+  win_chocolatey:
+    name: rustup.install
+
+- name: Add arm64 Rust target
+  win_command: rustup target add aarch64-pc-windows-msvc
+
 - block:
   - name: install Git
     win_chocolatey:
