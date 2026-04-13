@@ -43,7 +43,7 @@ if [ "$NODEJS_MAJOR_VERSION" -ge "25" ]; then
       echo "Compiler set to Clang" `${CXX} -dumpversion`
       return
       ;;
-    *debian12*)
+    *debian12*|*debian13*)
       echo "Using Clang for Node.js $NODEJS_MAJOR_VERSION"
       export CC="ccache clang-19"
       export CXX="ccache clang++-19"
@@ -65,6 +65,8 @@ if [ "$NODEJS_MAJOR_VERSION" -ge "25" ]; then
       return
       ;;
     *ubuntu2404*)
+      export CARGO=cargo-1.82
+      export RUSTC=rustc-1.82
       echo "Using Clang for Node.js $NODEJS_MAJOR_VERSION"
       export CC="ccache clang-19"
       export CXX="ccache clang++-19"
