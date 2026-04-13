@@ -20,6 +20,7 @@ RUN apk add --no-cache libstdc++
 RUN apk add --no-cache --virtual .build-deps \
         shadow \
         binutils-gold \
+        cargo \
         curl \
         clang \
         g++ \
@@ -29,6 +30,7 @@ RUN apk add --no-cache --virtual .build-deps \
         linux-headers \
         make \
         python3 \
+        rust \
         tar \
         ccache \
         openjdk21 \
