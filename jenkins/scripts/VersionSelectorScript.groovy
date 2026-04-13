@@ -68,7 +68,7 @@ def buildExclusions = [
   [ /^aix72-power9/,                    releaseType, lt(26)  ], // Build releases on Power 9 for >=26
 
   // SmartOS -----------------------------------------------
-  [ /^smartos18/,                     anyType,     gte(18) ],
+  [ /^smartos22/,                     anyType,     gte(26) ],
 
   // FreeBSD -----------------------------------------------
   [ /^freebsd12/,                     anyType,     gte(22) ],
