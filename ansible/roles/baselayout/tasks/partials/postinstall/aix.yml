@@ -1,0 +1,15 @@
+#
+# AIX post-installation tasks
+#
+
+- name: "rust : create symlinks for Rust binaries"
+  file:
+    src: /opt/freeware/lib/RustSDK/1.88/bin/{{ item }}
+    dest: /opt/freeware/bin/{{ item }}
+    owner: root
+    group: system
+    state: link
+  loop:
+    - rustc
+    - rustfmt
+    - cargo
