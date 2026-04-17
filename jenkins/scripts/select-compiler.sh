@@ -36,6 +36,14 @@ fi
 # Gradual transition to Clang from Node.js 25 (https://github.com/nodejs/build/issues/4091).
 if [ "$NODEJS_MAJOR_VERSION" -ge "25" ]; then
   case $NODE_NAME in
+    *aix*)
+      echo "Using Clang for Node.js $NODEJS_MAJOR_VERSION"
+      export PATH="/opt/ccache-3.7.4/libexec:/opt/clang+llvm-20.1.7-powerpc64-ibm-aix-7.2/bin/:$PATH"
+      export CC="clang"
+      export CXX="clang++"
+      echo "Compiler set to Clang" `${CXX} -dumpversion`
+      return
+      ;;
     *fedora*)
       echo "Using Clang for Node.js $NODEJS_MAJOR_VERSION"
       export CC="ccache clang"
