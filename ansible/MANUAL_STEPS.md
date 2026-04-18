@@ -523,13 +523,13 @@ runtime:
 
 utilities:
 
-1. Download the current *.tar.Z from https://www.ibm.com/support/pages/ibm-open-xl-cc-utilities-aix-1712#DNLD
+1. Download the current *.tar.Z from https://www.ibm.com/support/pages/ibm-open-xl-cc-utilities-aix-1713
 2. scp tar onto the target
 3. On the target
 
   ```sh
-  uncompress IBM_OPEN_XL_CPP_UTILITIES_17.1.2.8_AIX.tar.Z
-  tar -xf IBM_OPEN_XL_CPP_UTILITIES_17.1.2.8_AIX.tar
+  uncompress IBM_OPEN_XL_CPP_UTILITIES_17.1.3.0_AIX.tar.Z
+  tar -xf IBM_OPEN_XL_CPP_UTILITIES_17.1.3.0_AIX.tar
   inutoc .
   installp -aFXYd . ALL
   ```
