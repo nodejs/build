@@ -137,9 +137,9 @@
     dest: /etc/apt/keyrings/nodesource-repo.gpg.asc
     url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
 
-- name: Add nodesource 20 repo
+- name: Add nodesource 22 repo
   apt_repository:
-    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/nodesource-repo.gpg.asc] https://deb.nodesource.com/node_20.x nodistro main
+    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/nodesource-repo.gpg.asc] https://deb.nodesource.com/node_22.x nodistro main
     state: present
 
 - name: Install node
