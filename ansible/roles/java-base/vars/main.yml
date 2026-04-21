@@ -16,9 +16,7 @@ packages: {
   'rhel8': 'java-17-openjdk',
   'rhel9': 'java-17-openjdk',
   'smartos': 'openjdk17',
-  'ubuntu': 'openjdk-17-jre-headless',
-  'ubuntu1604': 'openjdk-8-jre-headless',
-  'ubuntu2204': 'openjdk-17-jre-headless',
+  'ubuntu': 'openjdk-25-jre-headless',
   }
 
 java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default(omit) }}"
