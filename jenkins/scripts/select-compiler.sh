@@ -44,8 +44,8 @@ if [ "$NODEJS_MAJOR_VERSION" -ge "25" ]; then
         export CC="clang"
         export CXX="clang++"
         echo "Compiler set to Clang" `${CXX} -dumpversion`
+        return
       fi
-      return
       ;;
     *fedora*)
       echo "Using Clang for Node.js $NODEJS_MAJOR_VERSION"
