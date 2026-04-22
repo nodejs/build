@@ -37,11 +37,14 @@ fi
 if [ "$NODEJS_MAJOR_VERSION" -ge "25" ]; then
   case $NODE_NAME in
     *aix*)
-      echo "Using Clang for Node.js $NODEJS_MAJOR_VERSION"
-      export PATH="/opt/ccache-3.7.4/libexec:/opt/clang+llvm-20.1.7-powerpc64-ibm-aix-7.2/bin/:$PATH"
-      export CC="clang"
-      export CXX="clang++"
-      echo "Compiler set to Clang" `${CXX} -dumpversion`
+      # AIX does not support building v25 with clang so restrict to >25
+      if [ "$NODEJS_MAJOR_VERSION" -ge "26" ]; then
+        echo "Using Clang for Node.js $NODEJS_MAJOR_VERSION"
+        export PATH="/opt/ccache-3.7.4/libexec:/opt/clang+llvm-20.1.7-powerpc64-ibm-aix-7.2/bin/:$PATH"
+        export CC="clang"
+        export CXX="clang++"
+        echo "Compiler set to Clang" `${CXX} -dumpversion`
+      fi
       return
       ;;
     *fedora*)
