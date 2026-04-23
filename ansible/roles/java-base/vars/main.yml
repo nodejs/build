@@ -4,22 +4,29 @@
 # different os'es have different names for java
 #
 
+# When updating Java version, put the old version in the `previous_packages`
+# map below so it can be removed.
 packages: {
-  'centos': 'java-11-openjdk-headless',
   'debian12': 'openjdk-17-jre-headless',
   'debian13': 'openjdk-25-jre-headless',
   'fedora42': 'java-21-openjdk-headless',
   'fedora43': 'java-25-openjdk-headless',
   'freebsd': 'openjdk17-jre',
   'macos': 'temurin17',
-  'rhel7': 'java-11-openjdk',
-  'rhel8': 'java-17-openjdk',
-  'rhel9': 'java-17-openjdk',
+  'rhel8': 'java-21-openjdk-headless',
+  'rhel9': 'java-25-openjdk-headless',
   'smartos': 'openjdk17',
   'ubuntu': 'openjdk-25-jre-headless',
   }
 
+previous_packages: {
+  'rhel8': 'java-17-openjdk-headless',
+  'rhel9': 'java-17-openjdk-headless',
+  'ubuntu': 'openjdk-17-jre-headless',
+  }
+
 java_package_name: "{{ packages[os]|default(packages[os|stripversion])|default(omit) }}"
+previous_java_package_name: "{{ previous_packages[os]|default(previous_packages[os|stripversion])|default(omit) }}"
 
 # Add os_arch combinations here that should install and use AdoptOpenJDK
 # binaries. Override any variables in the dictionary.
