@@ -50,7 +50,7 @@
 # If we're already using the latest there is no need to do anything.
 - name: check existing adoptopenjdk version is up to date
   set_fact:
-    update_adoptopenjdk: "{{ adoptopenjdk_metadata.json[0].version_data.openjdk_version not in java.stdout }}"
+    update_adoptopenjdk: "{{ java.rc != 0 or adoptopenjdk_metadata.json[0].version_data.openjdk_version not in java.stdout }}"
   when: use_adoptopenjdk == True
 
 - name: create cache directory for adoptopenjdk binaries
