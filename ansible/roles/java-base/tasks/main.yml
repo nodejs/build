@@ -35,6 +35,20 @@
         name: "{{ java_package_name }}"
         state: present
 
+- name: uninstall previous java
+  when:
+    - previous_java_package_name is defined and previous_java_package_name != ""
+    - not os|startswith("zos")
+    - not os|startswith("macos")
+  notify:
+    - package updated
+    - restart Jenkins
+  package:
+    name: "{{ previous_java_package_name }}"
+    state: "absent"
+    # Package manager mapping in ansible/roles/package-upgrade/vars/main.yml.
+    use: "{{ os|match_key(pm)|default(omit) }}"
+
 # Uses the AdoptOpenJDK API https://github.com/adoptopenjdk/openjdk-api-v3
 # to discover the most recent release for the given adoptopenjdk_version and
 # platform.
