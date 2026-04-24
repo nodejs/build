@@ -36,6 +36,12 @@ variable "xcode_version" {
   default = "16.4"
 }
 
+variable "rust_version" {
+  type    = string
+  default = "1.82"
+  description = "Rust toolchain version to install via rustup. Matches RUSTC_VERSION in nodejs/node test-macos.yml."
+}
+
 
 variable "ssh_default_username" {
   type    = string
@@ -158,7 +164,7 @@ build {
       "chmod 700 /Users/${var.ssh_default_username}/.ssh",
       "chmod 600 /Users/${var.ssh_default_username}/.ssh/authorized_keys"
     ]
-  } 
+  }
   // Add GitHub host key to known hosts.
   provisioner "shell" {
     inline = [
@@ -244,6 +250,21 @@ build {
       "${local.homebrew_path}/bin/brew install --cask temurin@17",
     ]
   }
+  // Install Rust via rustup (matches nodejs/node test-macos.yml RUSTC_VERSION).
+  provisioner "shell" {
+    environment_vars = ["HOME=/Users/admin", "USER=admin"]
+    inline = [
+      "echo 'Installing rustup...'",
+      "eval \"$(${local.homebrew_path}/bin/brew shellenv)\"",
+      "${local.homebrew_path}/bin/brew install rustup",
+      "echo 'Installing Rust ${var.rust_version} toolchain...'",
+      "rustup-init -y --no-modify-path --default-toolchain ${var.rust_version} --profile minimal",
+      "echo 'export PATH=\"/Users/admin/.cargo/bin:$PATH\"' >> /Users/admin/.zprofile",
+      "/Users/admin/.cargo/bin/rustup --version",
+      "/Users/admin/.cargo/bin/rustc --version",
+      "/Users/admin/.cargo/bin/cargo --version"
+    ]
+  }
   // Print the version of the installed packages.
   provisioner "shell" {
     inline = [
@@ -251,6 +272,7 @@ build {
       "eval \"$(${local.homebrew_path}/bin/brew shellenv)\"",
       "${local.homebrew_path}/bin/brew list --versions",
       "java -version",
+      "source /Users/admin/.zprofile && rustc --version && cargo --version",
       // @TODO: Solve the problem with the Xcode version.
       //"xcodebuild -version"
     ]
