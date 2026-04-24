@@ -5,7 +5,7 @@ compiler: {
 }
 
 gn_select_compiler: "{{ compiler[os]|default(compiler[os|stripversion])|default('true') }}"
-gn_version: 304bbef6c7e9a86630c12986b99c8654eb7fe648
+gn_version: e2f38fa47b6a6e58e1d427e9d2af246a19cb980c
 
 packages: {
   'rhel8': 'gcc-toolset-12'
