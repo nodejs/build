@@ -10,7 +10,7 @@ Once installed, you can verify the installation by running the following command
 packer --version
 ```
 
-While writing this document, the latest version of Packer is `1.14.2`.
+While writing this document, the latest version of Packer is `1.15.1`.
 
 ## Install dependencies
 
@@ -49,9 +49,9 @@ We need the private key for node-www for the release images, as well as the appl
 2. Go to the `build/release` folder in the secrets repo 
 3. Extract from secrets/build/release and put it in this repo (adjust the orka path in this command): `dotgpg cat Apple\ Developer\ ID\ Node.js\ Foundation.p12.base64 | base64 -D > orka/templates/files/secrets/Apple\ Developer\ ID\ Node.js\ Foundation.p12`
 
-## Download Xcode to the shared vm storage
+## Download Xcode to the shared vm storage 
 
-1. Full Xcode installation
+1. Full Xcode installation (if adding a new xcode version)
 
     Xcode Command-line tools are not enough to perform a full notarization cycle, full Xcode must be fully installed on the release images.
 
