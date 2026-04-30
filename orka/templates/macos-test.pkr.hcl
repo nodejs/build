@@ -259,6 +259,7 @@ build {
       "${local.homebrew_path}/bin/brew install rustup",
       "echo 'Installing Rust ${var.rust_version} toolchain...'",
       "rustup-init -y --no-modify-path --default-toolchain ${var.rust_version} --profile minimal",
+      "rustup target add x86_64-apple-darwin",
       "echo 'export PATH=\"/Users/admin/.cargo/bin:$PATH\"' >> /Users/admin/.zprofile",
       "/Users/admin/.cargo/bin/rustup --version",
       "/Users/admin/.cargo/bin/rustc --version",
