@@ -34,7 +34,7 @@ def buildExclusions = [
   // https://github.com/nodejs/build/blob/main/doc/windows-visualstudio-supported-versions.md
   // Release Builders - should only match one VS version per Node.js version
   [ /vs2017/,                         releaseType, gte(22)       ],
-  [ /vs2019/,                         releaseType, gte(24)       ],
+  [ /vs2019/,                         releaseType, gte(22)       ],
   [ /vs2022-x86/,                     releaseType, gte(24)       ],
   [ /vs2022(?!_clang)(-\w+)?$/,       releaseType, gte(24)       ],
   [ /vs2022_clang/,                   releaseType, lt(24)        ],
