@@ -13,13 +13,15 @@ ENV OSVARIANT docker
 ENV DESTCPU {{ arch }}
 ENV ARCH {{ arch }}
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y ccache \
+
+RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
+      ccache \
       g++-10 \
       gcc-10 \
       g++-12 \
       gcc-12 \
       git \
-      openjdk-17-jre-headless \
+      openjdk-25-jre-headless \
       pkg-config \
       curl \
       python3-pip \
