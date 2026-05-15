@@ -337,7 +337,7 @@ lslpp -L all
 Some libuv/Node.js tests currently
 (`parallel/test-dgram-udp6-link-local-address` is an example](https://github.com/nodejs/node/issues/46792)
 fail on AIX with a network interface containing a link local address.
-Until the underlying reason is resolved In the meantime the 
+In the meantime the 
 interface containing the link local address should be removed by running the
 following command as root on the appropriate interface.
 ```
