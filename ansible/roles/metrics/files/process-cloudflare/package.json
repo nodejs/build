@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "process-cloudflare.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "processLogs": "node --trace-warnings process-cloudflare.js"

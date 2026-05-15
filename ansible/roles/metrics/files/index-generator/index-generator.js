@@ -1,8 +1,9 @@
-const { Storage } = require('@google-cloud/storage')
+import { Storage } from '@google-cloud/storage';
+import express, { json } from 'express';
+
 const storage = new Storage();
-const express = require('express')
 const app = express()
-app.use(express.json())
+app.use(json())
 
 async function getFileList() {
 
@@ -53,4 +54,4 @@ app.post('/', async (req, res) => {
     console.log('Listening on port: ', port)
   })
 
-  module.exports = app
+  export default app

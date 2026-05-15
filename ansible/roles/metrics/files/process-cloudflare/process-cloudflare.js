@@ -2,11 +2,11 @@
 
 'use strict'
 
-const { Storage } = require('@google-cloud/storage')
-const express = require('express')
-const app = express()
+import { Storage } from '@google-cloud/storage'
+import express, { json } from 'express'
 
-app.use(express.json())
+const app = express()
+app.use(json())
 
 const extensionRe = /\.(tar\.gz|tar\.xz|pkg|msi|exe|zip|7z)$/
 const uriRe = /(\/+(dist|download\/+release)\/+(node-latest\.tar\.gz|([^/]+)\/+((win-x64|win-x86|win-arm64|x64)?\/+?node\.exe|(x64\/)?node-+(v[0-9.]+)[.-]([^? ]+))))/
@@ -230,4 +230,4 @@ app.listen(port, () => {
   console.log('Listening on port: ', port)
 })
 
-module.exports = app
+export default app
