@@ -369,7 +369,7 @@ communicate with it properly (`dnf install python3-pip` will often be enough)
 
 ### Enable the AIX Event Infrastructure with AHAFS
 
-The AIX Event Infrastructure is [required for the file watcher
+The [AIX Event Infrastructure](https://www.ibm.com/docs/en/aix/7.3.0?topic=management-aix-event-infrastructure-aix-aix-clusters-ahafs) is [required for the file watcher
 tests](https://github.com/nodejs/node/pull/10085).  Check if it is installed
 on your machine by looking in the `/aha` directory and verify if it is
 present and non-empty.
