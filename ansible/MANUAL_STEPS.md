@@ -382,7 +382,7 @@ Ensure that the `bos.ahafs` package is installed:
 lslpp -l bos.ahafs`
 ```
 which will tell you if it is not already installed. If it is not, then you will
-need to get it installed form  the AIX install media, which may involve contacting
+need to get it installed from the AIX install media, which may involve contacting
 the provider of the system.
 
 Once the package is installed, ensure that the following is in `/etc/filesystems`
