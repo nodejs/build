@@ -267,17 +267,18 @@ ENCRYPTION:         no
 ```
 
 and use [`chlv -x`](https://www.ibm.com/docs/en/aix/7.3?topic=c-chlv-command)
-to increase the maximum logical partitions (`MAX LPs`). For our 100Gb we use
-`6000` (to match what we have for our AIX 7.1 IBM Cloud instances):
+to increase the maximum logical partitions (`MAX LPs`). For the 50GB file
+system `2048` should be adequate as that typically allows up to a 64GB file
+system.
 
 ```
-# chlv -x 6000 hd1
+# chlv -x 2048 hd1
 # lslv hd1
 LOGICAL VOLUME:     hd1                    VOLUME GROUP:   rootvg
 LV IDENTIFIER:      00fa00d600004c000000017d43623707.8 PERMISSION:     read/write
 VG STATE:           active/complete        LV STATE:       opened/syncd
 TYPE:               jfs2                   WRITE VERIFY:   off
-MAX LPs:            6000                   PP SIZE:        32 megabyte(s)
+MAX LPs:            2048                   PP SIZE:        32 megabyte(s)
 COPIES:             1                      SCHED POLICY:   parallel
 LPs:                1                      PPs:            1
 STALE PPs:          0                      BB POLICY:      relocatable
@@ -352,7 +353,7 @@ to list the available interfaces and shut down the the one that doesn't have
 an IPv4 configured on it (Listed after `inet` in the `ifconfig` output if it's configured).
 
 
-## AIX 7.2 Install
+## AIX package Install
 
 Most packages required by Node.js build and test can be installed via the
 normal ansible playbooks. This will typically install various open-source
@@ -361,11 +362,9 @@ packages via the [IBM AIX toolbox](https://www.ibm.com/support/pages/aix-toolbox
 Some exceptions are as follows (all done automatically by the playbooks):
 - [ccache](https://github.com/nodejs/build/blob/main/ansible/roles/baselayout/tasks/partials/ccache/aix.yml) (not in the AIX toolbox - we build from source)
 - [clang](https://github.com/nodejs/build/blob/main/ansible/roles/baselayout/tasks/partials/clang/aix.yml)
-- Potentially `rust` in the future if we need a version not in the AIX toolbox for V8 ...
 
 You may need to set up the AIX toolbox if it is not configured by default by
-your provider, and potentially update python and pip to allow ansible to
-communicate with it properly (`dnf install python3-pip` will often be enough)
+your provider.
 
 ### Enable the AIX Event Infrastructure with AHAFS
 
@@ -409,8 +408,9 @@ The clang frontend will be auto installed via ansible playbook from:
 https://github.com/IBM/llvm-project/releases
 
 The clang backend requires the installation of the IBM OpenXL17 runtime and
-utilities package (Note that the utilities install will be added the
-playbooks in the future)
+parts of the utilities package. The utilties packages should be downloaded and
+installed automatically be the playbooks but the Runtime packages need to be
+done manually as per the collapsed section below.
 
 <details>
 <summary>IBM OpenXL 17 Runtime (Note: Requires IBM login)</summary>
@@ -425,32 +425,6 @@ playbooks in the future)
   uncompress IBM_OPEN_XL_CPP_RUNTIME_17.1.4.1_AIX.tar.Z | tar xpf -
   installp -aFXYd . ALL
   ```
-
-</details>
-
-<details>
-<summary>IBM Open XL C/C++ Utilities</summary>
-utilities:
-
-1. Download the current *.tar.Z from https://www.ibm.com/support/pages/ibm-open-xl-cc-utilities-aix-1713
-2. scp tar onto the target
-3. On the target (Note `inutoc` will only be needed if you extracted to the same directory as the RUNTIME package above
-
-  ```sh
-  uncompress IBM_OPEN_XL_CPP_UTILITIES_17.1.3.0_AIX.tar.Z | tar xpf -
-  inutoc .
-  installp -aFXYd . ALL
-  ```
-
-After installing these packages we will need to sync up the RPM database with
-the files from the AIX OOM used by native package installs:
-
-```sh
-/usr/sbin/updtvpkg
-```
-
-If you want more details on this command check out
-[this IBM documentation](https://www.ibm.com/support/pages/understanding-aix-virtual-rpm-package-rpmrte)
 
 </details>
 
