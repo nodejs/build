@@ -10,7 +10,7 @@
     - [Remove unused network interface](#remove-unused-network-interface)
     - [AIX package Install](#aix-package-install)
     - [AIX Event Infrastructure - ahafs](#enable-the-aix-event-infrastructure-with-ahafs)
-    - [AIX OpenXL runtime/utilities packages for clang](#install-clang-prerequesities)
+    - [AIX OpenXL runtime/utilities packages for clang](#install-clang-prerequisites)
   - [Windows (Azure/Rackspace)](#windows-azurerackspace)
     - [Control machine (where Ansible is run)](#control-machine-where-ansible-is-run)
     - [Target machines](#target-machines)
