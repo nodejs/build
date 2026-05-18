@@ -327,7 +327,7 @@ lslpp -L all
 
 </details>
 
-### Remove unused network interface (typically `en1`)
+### Remove unused network interface
 
 Some libuv/Node.js tests currently
 ([`parallel/test-dgram-udp6-link-local-address` is an example](https://github.com/nodejs/node/issues/46792))
@@ -396,7 +396,7 @@ mount /aha
 
 </details>
 
-### Install `clang` prerequisites
+### Install clang prerequisites
 
 The clang frontend will be auto installed via ansible playbook from:
 https://github.com/IBM/llvm-project/releases
