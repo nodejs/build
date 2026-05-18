@@ -139,10 +139,11 @@ hdisk0          00c8d470fdbc3b5e                    rootvg          active
 hdisk1          00f6db0a6c7aece5                    rootvg          active
 ```
 
-shows two disks attached to one volume group named `rootvg`. If this shows one
-of the disks as `None` this indicates that the disk has not been included in
-the volume group. If you only have one physical volume attached and don't
-have enough space, then you should add a second through your provider which
+shows two disks attached to one volume group named `rootvg`.  If this shows
+one of the disks as `None` this indicates that the disk has not been
+included in the volume group.  If you only have one physical volume attached
+and don't have enough space, then you should add a second through your
+provider (You want to total of at least 90GiB across the volume group) which
 you can then add to the volume group as per the instructions below.
 
 ```console
