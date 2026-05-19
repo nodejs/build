@@ -2,4 +2,4 @@
   ansible.builtin.pip:
     name: tap2junit=={{ tap2junit_version }}
     state: present
-    executable: /usr/bin/pip3
+    executable: /opt/freeware/bin/pip3

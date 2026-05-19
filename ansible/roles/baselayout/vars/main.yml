@@ -47,7 +47,7 @@ packages: {
 
   # Appears to be some issue with the Ansible dnf task on AIX and gcc10-c++, so handle separately.
   aix73: [
-    'gcc8-c++,gcc12-c++'
+    'gcc8-c++,gcc12-c++,python3-pip'
   ],
 
   ibmi: [
