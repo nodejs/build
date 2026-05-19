@@ -7,9 +7,12 @@
 git_no_binpkg: [ ]
 git_version: 2.10.2
 
-# toolchain versions
-rhel_llvm_version: 19.1.7
-rhel_rust_version: 1.84.1
+# Toolchain versions.
+# If changing the RHEL versions, you may need to run `dnf versionlock clear`
+# before running the playbook to undo previous version locking in
+# ansible\roles\baselayout\tasks\partials\postinstall\rhel.yml.
+rhel_llvm_version: 20.1.8
+rhel_rust_version: 1.88.0
 
 ssh_config: /etc/ssh/sshd_config
 
