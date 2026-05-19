@@ -405,8 +405,9 @@ https://github.com/IBM/llvm-project/releases
 The clang backend requires the installation of the IBM OpenXL17 runtime and
 parts of the utilities package.  The utilties packages should be downloaded
 and installed automatically be the playbooks but if you are on AIX 7.2 then
-the Runtime packages need to be done manually as per the collapsed section
-below. AIX 7.3 already has the appropriate filesets preinstalled.
+the OpenXL 17 Runtime packages need to be downloaded and installed manually
+as per the collapsed section below.  AIX 7.3 already has the appropriate
+filesets preinstalled so are not explicitly required.
 
 <details>
 <summary>IBM OpenXL 17 Runtime (Note: Requires IBM login)</summary>
@@ -419,7 +420,7 @@ below. AIX 7.3 already has the appropriate filesets preinstalled.
 
   ```sh
   uncompress IBM_OPEN_XL_CPP_RUNTIME_17.1.4.1_AIX.tar.Z | tar xpf -
-  installp -aFXYd . ALL
+  installp -aFXYd . libc++.rte libc++abi.rte libunwind.rte
   ```
 
 </details>
