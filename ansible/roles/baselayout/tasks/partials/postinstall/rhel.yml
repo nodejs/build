@@ -51,6 +51,7 @@
       - lld-{{rhel_llvm_version}}
       - lld-libs-{{rhel_llvm_version}}
       - llvm-{{rhel_llvm_version}}
+      - llvm-filesystem-{{rhel_llvm_version}}
       - llvm-libs-{{rhel_llvm_version}}
       - llvm-toolset-{{rhel_llvm_version}}
       - rust-{{rhel_rust_version}}
