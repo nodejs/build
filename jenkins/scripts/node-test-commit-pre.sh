@@ -17,6 +17,27 @@ echo $GIT_COMMITTER_NAME
 echo $GIT_AUTHOR_NAME
 
 git rebase --abort || true
+
+# Refresh the refs used below in case the Jenkins checkout left a stale or
+# shallow copy. If REBASE_ONTO is present locally without its parents, rebase
+# can replay almost the entire Node.js history instead of only the PR commits.
+fetch_from_origin() {
+  fetch_args="--no-tags"
+  if [ -f "$(git rev-parse --git-dir)/shallow" ]; then
+    fetch_args="${fetch_args} --unshallow"
+  fi
+
+  git fetch ${fetch_args} origin "$@"
+}
+
+if [ -n "${GIT_REMOTE_REF}" ]; then
+  fetch_from_origin "+${GIT_REMOTE_REF}:refs/remotes/origin/_jenkins_local_branch"
+fi
+
+if [ -n "${REBASE_ONTO}" ]; then
+  fetch_from_origin "${REBASE_ONTO}"
+fi
+
 git checkout -f refs/remotes/origin/_jenkins_local_branch
 git config user.name
 git config user.email
