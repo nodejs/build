@@ -133,7 +133,7 @@ hosts:
             server_jobs: 6
         aix73-ppc64_be-2:
             ansible_remote_tmp: /tmp/.ansible
-            ip: 169.54.166.36
+            ip: 169.54.113.164
             remote_env:
                 PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
             server_jobs: 6
