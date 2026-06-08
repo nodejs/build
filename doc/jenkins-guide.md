@@ -6,11 +6,8 @@ A guide on maintaining Node.js' Test and Release Jenkins clusters
 
 * [Ansible](#ansible)
   * [Running playbooks](#running-playbooks)
+* [Default security permissions](#default-security-permissions)
 * [Security releases](#security-releases)
-  * [Before the release](#before-the-release)
-    * [Annouce the pending CI lock down](#announce-the-pending-ci-lock-down)
-    * [Lock down the CI](#lock-down-the-ci)
-  * [After the release](#after-the-release)
 * [Solving problems](#solving-problems)
   * [Out of memory](#out-of-memory)
   * [Out of space](#out-of-space)
@@ -56,133 +53,22 @@ some WG members available in the
 [Node.js Build Slack channel][], who can try and
 lend a hand.
 
+## Default security permissions
+
+Default security permissions for the test CI are as shown:
+
+![](../static-assets/jenkins-authorization-matrix.png)
+
 ## Security releases
 
 When security releases are due to go out, the Build WG plays an
 important role in facilitating their testing.
 
-### Before the release
-
-The [public CI](https://ci.nodejs.org) must be "locked down" to prevent anyone
-from interfering in the testing of the release. This is usually done 24 hours
-before a release is due to be published, but may be earlier depending on the
-planned contents of the release. If in doubt check with the [steward for the
-security release](https://github.com/nodejs/node/blob/main/doc/contributing/security-release-process.md#security-release-stewards).
-
 A tracking issue in the [`nodejs/build` issue tracker](https://github.com/nodejs/build/issues)
 should have been created by the security release steward requesting Build WG
-members to be available to support the security release.
-
-#### Announce the pending CI lock down
-
-Make a post in the `nodejs/collaborators` [discussion page](https://github.com/nodejs/collaborators/discussions/categories/announcements)
-to let users of the public CI know that their access will be curtailed. Pin
-the discussion post so that it appears at the top of the page.
-Be sure to insert a link to the `nodejs/build` tracking issue.
-
-e.g.
-```text
-CI to be locked down from <date> for upcoming security release
-
-To support the upcoming security release, the public CI will be locked down
-from <date> and access restricted to it until the releases are released.
-
-Refs: <link to tracking issue>
-```
-
-Also post advance notice to the [#nodejs-core Slack channel](https://openjs-foundation.slack.com/archives/C019Y2T6STH),
-referencing the discussion post.
-
-#### Lock down the CI
-
-You must be a member of the `nodejs/jenkins-admins` team to have the necessary
-permissions to lock down the CI.
-
-Add a system message to Jenkins by going to https://ci.nodejs.org/manage/appearance
-and under "Customizable Header" click the "+ Add System message" button. In the
-"Message" field that is created, enter something like:
-
-```html
-<h1 style="color:red">system is under embargo for a security release</h1>
-<h2>For solidarity, even if you have access, please don't start unrelated jobs</h2>
-<p>Refs: <a href="https://github.com/nodejs/build/issues/xxx">https://github.com/nodejs/build/issues/xxx</a></p>
-```
-
-Unselect "Dismissible" and change the "Background of System Message" to
-"Warning".
-
-![](../static-assets/jenkins-set-system-message.png)
-
-To make it more obvious that the CI has been locked down, add some "Extra CSS"
-to https://ci.nodejs.org/manage/appearance.
-This should already exist but commented out like this:
-```css
-/* Uncomment for security releases */
-/*
-#page-header, .task-icon-link[href="/"] {
-  background-color: red;
-}
-a#jenkins-home-link:after {
-  content: "Under security embargo!";
-  font-size: larger;
-  color: yellow;
-  margin-left: 250px;
-}
-/* */
-```
-
-Uncomment by adding `*/` before the `#page-header` line:
-```css
-/* Uncomment for security releases */
-/* */
-#page-header, .task-icon-link[href="/"] {
-  background-color: red;
-}
-a#jenkins-home-link:after {
-  content: "Under security embargo!";
-  font-size: larger;
-  color: yellow;
-  margin-left: 250px;
-}
-/* */
-```
-
-To change the Jenkins security configuration, travel to the ["Configure Global
-Security"](https://ci.nodejs.org/configureSecurity/) page.
-
-Below is a screenshot of what the "Project-based Matrix Authorization Strategy"
-table should look like before the release testing:
-
-![](../static-assets/jenkins-authorization-normal.png)
-
-***Note: the Jenkins UI changes occasionally, as does the permissions. Make a
-screenshot of the "before" state if it does not exactly match the documented
-screenshot (and update the documented screenshot).***
-
-Below is a screenshot of what the table should look like while release
-testing is underway:
-
-![](../static-assets/jenkins-authorization-sec.png)
-
-### After the release
-
-After the release has gone out, restore the table to its original
-condition. Add a comment to your post in `nodejs/collaborators` and the
-tracking issue in `nodejs/build` to announce that access has been
-restored.
-
-The process of restoring permissions involves adding back the groups that are no
-longer displayed (because they had no permissions), and setting the permissions
-to those shown above ("before the release testing").
-
-The history audit log may be helpful, but there is no way to revert to an
-earlier configuration.
-
-Relevant logs:
-1. system (includes security matrix) - https://ci.nodejs.org/jobConfigHistory/history?name=config
-2. CSS - https://ci.nodejs.org/jobConfigHistory/history?name=org.codefirst.SimpleThemeDecorator
-
-Undo the "system message" changes and "Extra CSS" theme changes from https://ci.nodejs.org/manage/appearance.
+members to be available to support the security release. Avoid making any
+unnecessary changes to the Jenkins job or machine configurations in the
+lead up to the release.
 
 ## Solving problems
 
