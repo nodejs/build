@@ -15,21 +15,21 @@ ENV ARCH {{ arch }}
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
-    ccache \
-    g++ \
-    gcc \
-    clang-19 \
-    cargo-1.82 \
-    rustc-1.82 \
-    git \
-    openjdk-21-jre-headless \
-    curl \
-    python3-pip \
-    python3-venv \
-    python-is-python3 \
-    libfontconfig1 \
-    libtool \
-    automake
+      ccache \
+      g++ \
+      gcc \
+      clang-19 \
+      cargo-1.82 \
+      rustc-1.82 \
+      git \
+      openjdk-25-jre-headless \
+      curl \
+      python3-pip \
+      python3-venv \
+      python-is-python3 \
+      libfontconfig1 \
+      libtool \
+      automake
 
 RUN python3 -m venv /usr/local/venv
 RUN pip3 install tap2junit=={{ tap2junit_version }}
