@@ -1,8 +1,0 @@
----
-
-#
-# enable/start the os-bundled ntpd
-#
-
-- name: start ntpd
-  service: name=ntpd state=started enabled=yes
