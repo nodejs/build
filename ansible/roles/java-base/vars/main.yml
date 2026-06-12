@@ -7,7 +7,7 @@
 # When updating Java version, put the old version in the `previous_packages`
 # map below so it can be removed.
 packages: {
-  'debian12': 'openjdk-17-jre-headless',
+  'debian12': 'temurin-25-jre',
   'debian13': 'openjdk-25-jre-headless',
   'fedora42': 'java-21-openjdk-headless',
   'fedora43': 'java-25-openjdk-headless',
@@ -20,6 +20,7 @@ packages: {
   }
 
 previous_packages: {
+  'debian12': 'openjdk-17-jre-headless',
   'rhel8': 'java-17-openjdk-headless',
   'rhel9': 'java-17-openjdk-headless',
   'ubuntu': 'openjdk-17-jre-headless',
