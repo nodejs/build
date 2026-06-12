@@ -69,10 +69,6 @@ packages: {
     'bzip2,ccache,clang,gcc-c++,git,fontconfig,sudo,make,python3-pip,python3-setuptools,rust,cargo',
   ],
 
-  freebsd: [
-    'ccache,git,gmake,sudo,python3'
-  ],
-
   'macos10.15': [
     'cmake,python,ccache'
   ],

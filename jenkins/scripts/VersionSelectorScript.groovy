@@ -54,9 +54,6 @@ def buildExclusions = [
   // SmartOS -----------------------------------------------
   [ /^smartos22/,                     anyType,     gte(26) ],
 
-  // FreeBSD -----------------------------------------------
-  [ /^freebsd13/,                     anyType,     gte(22) ], // https://github.com/nodejs/node/issues/54576
-
   // Shared libs docker containers -------------------------
   [ /sharedlibs_debug_x64/,           anyType,     gte(22) ],
   [ /sharedlibs_openssl110/,          anyType,     gte(22) ],

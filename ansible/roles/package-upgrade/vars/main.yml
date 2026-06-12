@@ -8,7 +8,6 @@
     'yum': ['centos', 'rhel7', 'ibmi'],
     'apt': ['debian', 'ubuntu'],
     'dnf': ['aix72', 'aix73', 'fedora', 'rhel8', 'rhel9'],
-    'pkgng': 'freebsd',
     'pkgin': 'smartos',
     'chocolatey': 'win',
     'brew': 'macos'
