@@ -131,6 +131,30 @@ hosts:
             remote_env:
                 PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
             server_jobs: 6
+        aix73-ppc64_be-2:
+            ansible_remote_tmp: /tmp/.ansible
+            ip: 169.54.113.164
+            remote_env:
+                PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
+            server_jobs: 6
+        aix73-ppc64_be-3:
+            ansible_remote_tmp: /tmp/.ansible
+            ip: 169.54.166.141
+            remote_env:
+                PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
+            server_jobs: 10
+        aix73-ppc64_be-4:
+            ansible_remote_tmp: /tmp/.ansible
+            ip: 169.54.113.139
+            remote_env:
+                PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
+            server_jobs: 5
+        aix73-ppc64_be-5:
+            ansible_remote_tmp: /tmp/.ansible
+            ip: 169.54.115.60
+            remote_env:
+                PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
+            server_jobs: 10
         debian12-x64-1: {ip: 169.60.150.84, swap_file_size_mb: 4096}
         rhel8-ppc64_le-1: {ip: 169.54.113.162, build_test_v8: yes, server_jobs: 4, swap_file_size_mb: 4096}
         rhel8-s390x-1: {ip: 148.100.84.98, user: linux1, build_test_v8: yes, swap_file_size_mb: 4096}
