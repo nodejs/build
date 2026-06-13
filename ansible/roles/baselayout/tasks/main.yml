@@ -69,10 +69,10 @@
   notify: package updated
   with_items:
     # ansible doesn't like empty lists
-    - "{{ packages[os+'_'+arch]|default('[]') }}"
-    - "{{ packages[os]|default('[]') }}"
-    - "{{ packages[os|stripversion]|default('[]') }}"
-    - "{{ common_packages|default('[]') }}"
+    - "{{ packages[os+'_'+arch]|default([]) }}"
+    - "{{ packages[os]|default([]) }}"
+    - "{{ packages[os|stripversion]|default([]) }}"
+    - "{{ common_packages|default([]) }}"
 
 # Currently does not work on the DTK for 11.0 - The unsupported warnings cause the task to fail
 - name: install packages (macos)
@@ -83,10 +83,10 @@
     loop_var: package
   with_items:
     # ansible doesn't like empty lists
-    - "{{ packages[os+'_'+arch]|default('[]') }}"
-    - "{{ packages[os]|default('[]') }}"
-    - "{{ packages[os|stripversion]|default('[]') }}"
-    - "{{ common_packages|default('[]') }}"
+    - "{{ packages[os+'_'+arch]|default([]) }}"
+    - "{{ packages[os]|default([]) }}"
+    - "{{ packages[os|stripversion]|default([]) }}"
+    - "{{ common_packages|default([]) }}"
 
 - name: ubuntu1604 | update package alternatives
   when: os == "ubuntu1604"
