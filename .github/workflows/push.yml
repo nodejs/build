@@ -4,6 +4,10 @@ on:
     branches-ignore:
       - "dependabot/*"
   pull_request:
+
+permissions:
+  contents: read
+
 jobs:
   Python:
     runs-on: ubuntu-latest
