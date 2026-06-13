@@ -1,4 +1,4 @@
-FROM alpine:3.21
+FROM alpine:3.24
 
 ENV LC_ALL C
 ENV USER {{ server_user }}
@@ -22,7 +22,7 @@ RUN apk add --no-cache --virtual .build-deps \
         binutils-gold \
         cargo \
         curl \
-        clang19 \
+        clang22 \
         g++ \
         gcc \
         gnupg \
@@ -33,7 +33,7 @@ RUN apk add --no-cache --virtual .build-deps \
         rust \
         tar \
         ccache \
-        openjdk21 \
+        openjdk25 \
         git \
         procps-ng \
         openssh-client-default \
