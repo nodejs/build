@@ -36,9 +36,9 @@
     loop_var: package
   with_items:
     # ansible doesn't like empty lists
-    - "{{ packages[os]|default('[]') }}"
-    - "{{ packages[os|stripversion]|default('[]') }}"
-    - "{{ common_packages|default('[]') }}"
+    - "{{ packages[os]|default([]) }}"
+    - "{{ packages[os|stripversion]|default([]) }}"
+    - "{{ common_packages|default([]) }}"
 
 - name: remove fortune from login shells
   when: os|stripversion == 'freebsd'
