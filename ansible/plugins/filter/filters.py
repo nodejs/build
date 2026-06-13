@@ -29,13 +29,11 @@ from ansible.errors import AnsibleFilterError
 
 def match_key(value, dictionary, raise_error=True, feedback_name='os'):
     for key, val in dictionary.items():
-        # yes, yes; we can lambda this but my old self in
-        # two years will cry having to understand
-        if type(val) is list:
-            for list_key in val:
-                if value.startswith(list_key):
-                    return key
-        elif value.startswith(val):
+        if isinstance(val, str) and value.startswith(val):
+            return key
+        # `val` can be a simple list in Ansible <=11,
+        # or a `_AnsibleLazyTemplateList` in Ansible >=12.
+        if not isinstance(val, str) and value.startswith(tuple(val)):
             return key
     if raise_error:
         raise AnsibleFilterError(
