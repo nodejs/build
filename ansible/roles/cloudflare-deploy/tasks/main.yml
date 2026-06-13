@@ -1,0 +1,15 @@
+---
+
+# Set up release hosts to be able to upload to clouflare.
+# Requires access to the secrets repository. User should have already
+# been prompted for GPG credentials during the inventory load.
+
+- name: run os-specific deploy
+  include: "{{ deploy_include }}"
+  loop_control:
+    loop_var: deploy_include
+  with_first_found:
+    - files:
+      - "{{ role_path }}/tasks/partials/{{ os|stripversion }}.yml"
+      - "{{ role_path }}/tasks/partials/default.yml"
+      skip: true
