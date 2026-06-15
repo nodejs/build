@@ -24,7 +24,9 @@ packer init .
 
 1. You need to connect to the Orka VPN. You can find the instructions in the secrets repository. @TODO
 2. Authenticate the cluster with `orka3 login` -> this will give a url to access to login to macstadium. This login lasts for 3600s. 
-3. Once logged into macstadium, you can `orka3 user get-token` to get a user token to do other things, like build images. 
+3. Once logged into macstadium, we need to get the service account token so we can build images without timing out.
+   `orka3 sa list` will display the service account tokens. `orka-deploy-dev` is the token we use for image builds.
+
 
 ## Authenticate to ghcr.io
 
@@ -72,7 +74,7 @@ We need the private key for node-www for the release images, as well as the appl
 You can validate a specific template by running the following command (replace test with release if doing release images)
 
 ```shell
-ORKA_AUTH_TOKEN=$(orka3 user get-token) packer validate -var-file=variables.auto.pkrvars.hcl macos-test.pkr.hcl
+ORKA_AUTH_TOKEN=$(orka3 sa token orka-deploy-dev) packer validate -var-file=variables.auto.pkrvars.hcl macos-test.pkr.hcl
  ```
 
 ## Build the image
@@ -80,7 +82,7 @@ ORKA_AUTH_TOKEN=$(orka3 user get-token) packer validate -var-file=variables.auto
 You can build a specific template by running the following command:
 
 ```shell
-ORKA_AUTH_TOKEN=$(orka3 user get-token) packer build -var-file=variables.auto.pkrvars.hcl macos-test.pkr.hcl
+ORKA_AUTH_TOKEN=$(orka3 sa token orka-deploy-dev) packer build -var-file=variables.auto.pkrvars.hcl macos-test.pkr.hcl
 ```
 
 ## Continuous Integration
