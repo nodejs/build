@@ -11,7 +11,6 @@ packages: {
   'debian13': 'openjdk-25-jre-headless',
   'fedora42': 'java-21-openjdk-headless',
   'fedora43': 'java-25-openjdk-headless',
-  'freebsd': 'openjdk17-jre',
   'macos': 'temurin17',
   'rhel8': 'java-21-openjdk-headless',
   'rhel9': 'java-25-openjdk-headless',

@@ -121,16 +121,6 @@
         - "{{ role_path }}/tasks/partials/postinstall/{{ os|stripversion }}.yml"
       skip: true
 
-- name: remove fortune from login shells
-  when: os|stripversion == 'freebsd'
-  lineinfile:
-    dest: "/home/{{ server_user }}/{{ login_item }}"
-    state: absent
-    regexp: fortune freebsd
-  loop_control:
-    loop_var: login_item
-  with_items: [ '.login', '.profile' ]
-
 - name: pi | set hostname
   when: "inventory_hostname|regex_search('-arm(v6l|v7l|64)_pi')"
   copy:

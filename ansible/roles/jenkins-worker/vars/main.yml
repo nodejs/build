@@ -6,7 +6,6 @@
 
 init: {
   aix: ['aix72', 'aix73'],
-  freebsd: 'freebsd',
   ibmi: 'ibmi74',
   macos: 'macos',
   systemd: ['debian', 'fedora', 'rhel7', 'rhel8', 'rhel9', 'ubuntu'],
@@ -23,11 +22,6 @@ jenkins_init: {
   debian: {
     dest: '/etc/init.d/jenkins',
     src: 'sysvinit.initd.j2',
-    mode: '0755'
-    },
-  freebsd: {
-    dest: '/usr/local/etc/rc.d/jenkins',
-    src: 'freebsd.initd.j2',
     mode: '0755'
     },
   macos: {
@@ -73,7 +67,6 @@ java_path: {
 # same for bash. will default to /bin/bash if you don't set it
 bash_path: {
   aix: '/usr/bin/ksh',
-  freebsd: '/usr/local/bin/bash',
   zos: 'bash'
   }
 

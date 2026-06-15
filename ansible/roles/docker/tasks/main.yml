@@ -40,16 +40,6 @@
     - "{{ packages[os|stripversion]|default('[]') }}"
     - "{{ common_packages|default('[]') }}"
 
-- name: remove fortune from login shells
-  when: os|stripversion == 'freebsd'
-  lineinfile:
-    dest: "/home/{{ server_user }}/{{ login_item }}"
-    state: absent
-    regexp: fortune freebsd
-  loop_control:
-    loop_var: login_item
-  with_items: [ '.login', '.profile' ]
-
 - name: set up ntp
   include_tasks: "{{ ntp_include }}"
   loop_control:
