@@ -10,13 +10,12 @@ async function executeMe (stagingDir, distDir) {
   return new Promise((resolve, reject) => {
     const args = [ '--no-warnings', join(import.meta.dirname, 'check_assets.js'), stagingDir, distDir ];
     execFile(process.execPath, args, (err, stdout, stderr) => {
-      if (err) {
-        return reject(err);
-      }
       if (stderr) {
         console.log('STDERR:', stderr);
       }
-      resolve(stdout);
+      // Return both stdout and exit code, even if there's an error
+      const exitCode = err ? (err.code || 1) : 0;
+      resolve({ stdout, exitCode });
     });
   });
 }
@@ -86,7 +85,8 @@ const testcases = [
       '    • node-v10.1.0-linux-armv6l.tar.gz\n' +
       '    • node-v10.1.0-linux-armv6l.tar.xz\n' +
       '    • node-v10.1.0.pkg\n' +
-      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n',
+      '... Canceling the promotion\n',
+    expectedExitCode: 1,
     setup: async function setup (version, fixtureStagingDir, fixtureDistDir) {
       await makeFixture(version, true, fixtureStagingDir);
       await Promise.all([
@@ -159,11 +159,8 @@ const testcases = [
       '    • node-v9.9.9-linux-x86.tar.xz\n' +
       '    • node-v9.9.9-sunos-x86.tar.gz\n' +
       '    • node-v9.9.9-sunos-x86.tar.xz\n' +
-      ' \u001b[31m\u001b[1m✖\u001b[22m\u001b[39m  The following assets were found in staging but are not expected for v9.x:\n' +
-      '    • docs/apilinks.json\n' +
-      '    Does the expected assets list for v9.x need to be updated?\n' +
-      '    https://github.com/nodejs/build/tree/main/ansible/www-standalone/tools/promote/expected_assets/v9.x\n' +
-      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n',
+      '... Canceling the promotion\n',
+    expectedExitCode: 1,
     setup: async function setup (version, fixtureStagingDir, fixtureDistDir) {
       // use the 10.x list, which is missing the x86 files, it'll check the 9.x
       const expectedAssets = await loadExpectedAssets(version, 'v10.x');
@@ -303,14 +300,15 @@ describe(`${basename(import.meta.filename, '.test.mjs')} tests`, async () => {
   afterEach(async (context) => {
     await rm(context.testDir, { recursive: true, force: true, maxRetries: 10 });
   });
-  for (const { name, version, expectedStdout, setup } of testcases) {
+  for (const { name, version, expectedStdout, expectedExitCode = 0, setup } of testcases) {
     it(name, async (context) => {
       const fixtureStagingDir = join(context.fixtureStagingDir, version);
       const fixtureDistDir = join(context.fixtureDistDir, version);
       await setup(version, fixtureStagingDir, fixtureDistDir);
     
-      const stdout = await executeMe(fixtureStagingDir, fixtureDistDir);
+      const { stdout, exitCode } = await executeMe(fixtureStagingDir, fixtureDistDir);
       assert.strictEqual(stdout, expectedStdout);
+      assert.strictEqual(exitCode, expectedExitCode);
     });
   }
 });
