@@ -38,7 +38,7 @@ variable "xcode_version" {
 
 variable "rust_version" {
   type    = string
-  default = "1.82"
+  default = "1.88"
   description = "Rust toolchain version to install via rustup. Matches RUSTC_VERSION in nodejs/node test-macos.yml."
 }
 
@@ -242,12 +242,12 @@ build {
       "${local.homebrew_path}/bin/pipx ensurepath"
     ]
   }
-  // Install Java 17 for Jenkins.
+  // Install Java 25 for Jenkins.
   provisioner "shell" {
     inline = [
       "echo 'Installing JRE...'",
       "eval \"$(${local.homebrew_path}/bin/brew shellenv)\"",
-      "${local.homebrew_path}/bin/brew install --cask temurin@17",
+      "${local.homebrew_path}/bin/brew install --cask temurin@25",
     ]
   }
   // Install Rust via rustup (matches nodejs/node test-macos.yml RUSTC_VERSION).
