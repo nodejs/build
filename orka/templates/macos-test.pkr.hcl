@@ -254,12 +254,13 @@ build {
   provisioner "shell" {
     environment_vars = ["HOME=/Users/admin", "USER=admin"]
     inline = [
-      "echo 'Installing rustup...'",
-      "eval \"$(${local.homebrew_path}/bin/brew shellenv)\"",
-      "${local.homebrew_path}/bin/brew install rustup",
-      "echo 'Installing Rust ${var.rust_version} toolchain...'",
-      "rustup-init -y --no-modify-path --default-toolchain ${var.rust_version} --profile minimal",
-      "rustup target add x86_64-apple-darwin",
+      "echo 'Installing Rust ${var.rust_version} via rustup installer...'",
+      "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path --default-toolchain ${var.rust_version} --profile minimal",
+      // On arm64: adds the Intel cross-compile target (arm builds x86 binaries).
+      // On x64: x86_64-apple-darwin is the host target already installed by the
+      // toolchain installer, so this is a harmless no-op. Do not make this
+      // architecture-conditional — the unconditional form is intentionally correct.
+      "/Users/admin/.cargo/bin/rustup target add x86_64-apple-darwin",
       "echo 'export PATH=\"/Users/admin/.cargo/bin:$PATH\"' >> /Users/admin/.zprofile",
       "/Users/admin/.cargo/bin/rustup --version",
       "/Users/admin/.cargo/bin/rustc --version",
