@@ -1,8 +1,8 @@
 #!/usr/bin/env groovy
 
 // DESCRIPTION:
-// Updates the status of a GitHub pull request via the GitHub Bot. Primarily
-// used for node-test-commit-* sub builds.
+// Updates the status of a GitHub pull request directly via the GitHub API.
+// Primarily used for node-test-commit-* sub builds.
 
 import groovy.json.JsonOutput
 
@@ -31,49 +31,89 @@ pipeline {
 }
 
 def sendBuildStatus(repo, identifier, status, url, commit, ref) {
-    def path = ""
-    def message = ""
+    def state = status
+    def description = ''
 
-    if (status == "pending") {
-        path = "start"
-        message = "running tests"
-    } else if (status == "failure") {
-        path = "end"
-        message = "tests failed"
-    } else if (status == "unstable") {
-        path = "end"
-        message = "flaky tests failed"
-        status = "success"
-    } else if (status == "success") {
-        path = "end"
-        message = "tests passed"
+    if (status == 'pending') {
+        description = 'running tests'
+    } else if (status == 'failure') {
+        description = 'tests failed'
+    } else if (status == 'unstable') {
+        state = 'success'
+        description = 'flaky tests failed'
+    } else if (status == 'success') {
+        description = 'tests passed'
     }
 
-    def buildPayload = JsonOutput.toJson([
-        'identifier': identifier,
-        'status': status,
-        'url': url,
-        'commit': commit,
-        'ref': ref,
-        'message': message
-        ])
+    def statusPayload = JsonOutput.toJson([
+        'state': state,
+        'target_url': url,
+        'context': identifier,
+        'description': description,
+    ])
 
-    println(buildPayload)
-    
+    println(statusPayload)
+
     def response
     try {
-        response = httpRequest(
-            url: "http://github-bot.nodejs.org:3333/${repo}/jenkins/${path}",
-            httpMode: "POST",
-            timeout: 30,
-            contentType: 'APPLICATION_JSON_UTF8',
-            requestBody: buildPayload
-        )
+        withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
+            response = httpRequest(
+                url: "https://api.github.com/repos/nodejs/${repo}/statuses/${commit}",
+                httpMode: 'POST',
+                timeout: 30,
+                contentType: 'APPLICATION_JSON_UTF8',
+                customHeaders: [[
+                    name: 'Authorization',
+                    value: "Bearer ${GITHUB_TOKEN}",
+                    maskValue: true,
+                ]],
+                requestBody: statusPayload
+            )
+        }
     } catch (Exception e) {
         println(e.toString())
         if (response) {
-            println("Status: "+response.status)
-            println("Content: "+response.content)
+            println('Status: ' + response.status)
+            println('Content: ' + response.content)
+        }
+    }
+
+    if (status == 'pending') {
+        def pr = ref.split('/')[2]
+        def commentBody = ''
+
+        switch (identifier) {
+            case 'node-test-pull-request':
+                commentBody = "CI: ${url}"
+                break
+            case 'node-test-commit-v8-linux':
+                commentBody = "V8 CI: ${url}"
+                break
+            case 'node-test-pull-request-lite-pipeline':
+                commentBody = "Lite-CI: ${url}"
+                break
+        }
+
+        if (commentBody) {
+            def commentPayload = JsonOutput.toJson(['body': commentBody])
+            try {
+                withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
+                    httpRequest(
+                        url: "https://api.github.com/repos/nodejs/${repo}/issues/${pr}/comments",
+                        httpMode: 'POST',
+                        timeout: 30,
+                        contentType: 'APPLICATION_JSON_UTF8',
+                        customHeaders: [[
+                            name: 'Authorization',
+                            value: "Bearer ${GITHUB_TOKEN}",
+                            maskValue: true,
+                        ]],
+                        requestBody: commentPayload
+                    )
+                }
+            } catch (Exception e) {
+                println(e.toString())
+            }
         }
     }
 }
