@@ -58,7 +58,8 @@ def buildExclusions = [
   [ /sharedlibs_debug_x64/,           anyType,     gte(22) ],
   [ /sharedlibs_openssl110/,          anyType,     gte(22) ],
   [ /sharedlibs_openssl102/,          anyType,     gte(22) ],
-  [ /sharedlibs_openssl35/,           anyType,     lt(24)  ], // Temporary until test fixes are backported
+  [ /sharedlibs_openssl35/,           anyType,     lt(22)  ],
+  [ /sharedlibs_openssl40/,           anyType,     lt(24)  ],
   [ /sharedlibs_fips20/,              anyType,     gte(22) ],
 
   // macOS -------------------------------------------------
