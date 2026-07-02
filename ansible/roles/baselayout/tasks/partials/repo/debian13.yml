@@ -1,0 +1,25 @@
+---
+
+# Debian 13
+
+- name: install prereqs for deb822_repository task
+  ansible.builtin.apt:
+    name: python3-debian
+    state: present
+
+- name: enable debian_backports repository
+  ansible.builtin.deb822_repository:
+    architectures: amd64
+    components: main
+    enabled: true
+    name: debian-backports
+    signed_by: /usr/share/keyrings/debian-archive-keyring.gpg
+    suites: trixie-backports
+    types: deb
+    uris: http://deb.debian.org/debian
+  register: debian_backports_repo_install_result
+
+- name: update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+  when: debian_backports_repo_install_result.changed
