@@ -62,7 +62,7 @@ packages: {
   ],
 
   debian13: [
-    'apt-transport-https,ca-certificates,cargo,clang-19,gcc,g++,make,ccache,git,curl,libfontconfig1,python3-packaging,python3-venv,rustc,sudo,systemd-timesyncd',
+    'apt-transport-https,ca-certificates,cargo/trixie-backports,clang-19,gcc,g++,make,ccache,git,curl,libfontconfig1,python3-packaging,python3-venv,rustc/trixie-backports,sudo,systemd-timesyncd',
   ],
 
   fedora: [
