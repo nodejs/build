@@ -38,6 +38,7 @@ Or in your local time:
 * Ryan Aslett (@ryanaslett)
 * Stewart Addison (@sxa)
 
+Noting that Juan José attemped to join but was unable to using the link in the meeting which we should look to resolve for the next one.
 
 ### Observers/Guests
 
