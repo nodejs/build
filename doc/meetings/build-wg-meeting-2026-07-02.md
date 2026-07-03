@@ -68,7 +68,12 @@ Extracted from **build-agenda** labelled issues and pull requests from the **nod
 
 ## Q&A, Other
 
-* Alpine to tier 2.
+* Alpine to tier 2 is approved by the TSC so we need to consider how to make it available in the release CI before formally merging [PR63737](https://github.com/nodejs/node/pull/63737).
+  * We have three Linux/x64 machines in the release CI which can lead to slowness if the ccaches are invalidated so are looking to drop this to two as per https://github.com/nodejs/build/issues/4390
+  * This would free up one x64 machine which could be used for Alpine
+  * If we leave the machine running RHEL8 then we would need to look at how to run the container. The playbooks have code to run some container images with `docker` on Ubuntu hosts but if we leave the machine as RHEL8 then `podman` would likely be the preferred option
+  * We discussed the version of Alpine to use and ultimately decided that as long as it was one that was suitable for the versions used in the docker images then it would be ok
+  * Subject to any build toolchain restrictions we will aim to build on the oldest or second oldest supported Alpine version at any given time and move it up when an Alpine release goes out of support. New Alpine releases occur every six motnhs and are supported for approximately two years.
 * Coverity.
   * Currently broken https://github.com/nodejs/build/issues/4287
   * Add Ryan as owner.
