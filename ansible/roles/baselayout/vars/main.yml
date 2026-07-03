@@ -141,6 +141,6 @@ packages: {
 
   # Default gcc/g++ package is 13.
   ubuntu2404: [
-    'cargo-1.82,clang-19,gcc,g++,python3,python3-pip,python-is-python3,python3-venv,rustc-1.82',
+    'cargo-1.89,clang-19,gcc,g++,python3,python3-pip,python-is-python3,python3-venv,rustc-1.89',
   ],
 }
