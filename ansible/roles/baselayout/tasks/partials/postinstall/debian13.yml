@@ -1,0 +1,10 @@
+---
+
+# Debian 13
+
+- name: install packages from backports
+  ansible.builtin.apt:
+    autoremove: true
+    default_release: trixie-backports
+    name: cargo, rustc
+    state: latest
