@@ -72,6 +72,7 @@ Extracted from **build-agenda** labelled issues and pull requests from the **nod
 * Coverity.
   * Currently broken https://github.com/nodejs/build/issues/4287
   * Add Ryan as owner.
+* SmartOS: An [update came through regarding Illumos](https://github.com/nodejs/build/issues/4259#issuecomment-4867539795) during the meeting. We need to look at that message and determine which machines/distributions we want to support and include in the CI axes. We have removed smartos22 from the CI already so only have 23. The update includes an offer of additional smartos24/25 systems and also OmniOS machines. We should consider this in view of clang/rust availability and look to have a decision approved at the next build WG meeting.
 
 ## Upcoming Meetings
 
