@@ -76,8 +76,8 @@ if [ "$NODEJS_MAJOR_VERSION" -ge "25" ]; then
       return
       ;;
     *ubuntu2404*)
-      export CARGO=cargo-1.82
-      export RUSTC=rustc-1.82
+      export CARGO=cargo-1.89
+      export RUSTC=rustc-1.89
       echo "Using Clang for Node.js $NODEJS_MAJOR_VERSION"
       export CC="ccache clang-19"
       export CXX="ccache clang++-19"
