@@ -2,7 +2,6 @@ docs/
 docs/apilinks.json
 docs/api/
 docs/llms.txt
-docs/node.1
 docs/node-config-schema.json
 node-{VERSION}-aix-ppc64.tar.gz
 node-{VERSION}-darwin-arm64.tar.gz
