@@ -155,6 +155,8 @@ hosts:
             server_jobs: 10
         debian12-x64-1: {ip: 169.60.150.84, swap_file_size_mb: 4096}
         rhel8-ppc64_le-1: {ip: 169.54.113.162, build_test_v8: yes, server_jobs: 4, swap_file_size_mb: 4096}
+        rhel8-ppc64_le-2: {ip: 169.54.115.59, build_test_v8: yes, server_jobs: 4, swap_file_size_mb: 4096}
+        rhel8-ppc64_le-3: {ip: 169.54.115.61, build_test_v8: yes, server_jobs: 4, swap_file_size_mb: 4096}
         rhel8-s390x-1: {ip: 148.100.84.98, user: linux1, build_test_v8: yes, swap_file_size_mb: 4096}
         rhel8-s390x-2: {ip: 148.100.84.38, user: linux1, build_test_v8: yes, swap_file_size_mb: 4096}
         rhel8-s390x-3: {ip: 148.100.84.17, user: linux1, build_test_v8: yes, swap_file_size_mb: 4096}
