@@ -41,7 +41,8 @@ RUN apk add --no-cache --virtual .build-deps \
         bash \
         automake \
         libtool \
-        autoconf
+        autoconf \
+        xz
 
 RUN python3 -m venv /usr/local/venv
 RUN pip3 install tap2junit=={{ tap2junit_version }}
