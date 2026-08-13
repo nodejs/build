@@ -12,3 +12,4 @@
   with_items:
     - { 'key': 'staging_key', 'file': "staging_id_rsa_private.key" }
     - { 'key': 'known_hosts', 'file': "known_hosts" }
+    - { 'key': 'worker_credentials', 'file': "release-cloudflare-worker-credentials" }
