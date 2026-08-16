@@ -4,7 +4,7 @@
 # Updates all packages for fedora-based distributions
 #
 
-  - name: upgrade installed packages
+  - name: upgrade installed packages using dnf
     ansible.builtin.dnf:
       name: "*"
       state: latest
