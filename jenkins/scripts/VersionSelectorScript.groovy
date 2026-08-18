@@ -24,6 +24,9 @@ def buildExclusions = [
   [ /rhel8-ppc64le/,                  anyType,     gte(26) ], // Power 8 was dropped in v26
   [ /rhel8-power9le/,                 releaseType, lt(26)  ], // Power 8 was dropped in v26
 
+  // Alpine/musl -------------------------------------------
+  [ /alpine-x64/,                     releaseType, le(22)  ], // Only release on v24+ for now pending test changes
+
   // ARM  --------------------------------------------------
   [ /^cross-compiler-rhel8-armv7-gcc-8-glibc-2.28/,  anyType, gte(22) ],
   [ /^cross-compiler-rhel8-armv7-gcc-10-glibc-2.28/, anyType, gte(24) ],

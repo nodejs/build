@@ -18,8 +18,6 @@ node-{VERSION}-linux-s390x.tar.gz
 node-{VERSION}-linux-s390x.tar.xz
 node-{VERSION}-linux-x64.tar.gz
 node-{VERSION}-linux-x64.tar.xz
-node-{VERSION}-linux-x64-musl.tar.gz
-node-{VERSION}-linux-x64-musl.tar.xz
 node-{VERSION}.pkg
 node-{VERSION}.tar.gz
 node-{VERSION}.tar.xz
