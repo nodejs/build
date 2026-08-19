@@ -42,8 +42,8 @@
       loop_control:
         loop_var: repo
       with_items:
-        - deb https://deb.nodesource.com/node_6.x xenial main
-        - deb-src https://deb.nodesource.com/node_6.x xenial main
+        - deb https://deb.nodesource.com/node_22.x nodistro main
+        - deb-src https://deb.nodesource.com/node_22.x nodistro main
 
     - name: install node.js
       apt: name=nodejs state=present
