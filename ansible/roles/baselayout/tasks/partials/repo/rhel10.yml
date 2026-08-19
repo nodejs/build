@@ -1,0 +1,22 @@
+---
+
+# Red Hat Enterprise Linux 10
+
+# EPEL 10's GPG key is only importable via `ansible.builtin.rpm_key` by newer
+# versions of Ansible which we cannot use until we drop all RHEL 8 hosts.
+- name: install GPG key for EPEL 10
+  become: yes
+  ansible.builtin.command:
+    cmd: rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-10
+    creates: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-10
+
+- name: Enable RHEL 10 repositories
+  community.general.rhsm_repository:
+    name:
+    - codeready-builder-for-rhel-10-{{ ansible_architecture }}-rpms
+    state: enabled
+
+- name: install EPEL 10
+  ansible.builtin.dnf:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
+    state: present

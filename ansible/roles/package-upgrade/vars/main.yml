@@ -7,7 +7,7 @@
   pm: {
     'yum': ['centos', 'rhel7', 'ibmi'],
     'apt': ['debian', 'ubuntu'],
-    'dnf': ['aix72', 'aix73', 'fedora', 'rhel8', 'rhel9'],
+    'dnf': ['aix72', 'aix73', 'fedora', 'rhel8', 'rhel9', 'rhel10'],
     'pkgin': 'smartos',
     'chocolatey': 'win',
     'brew': 'macos'
