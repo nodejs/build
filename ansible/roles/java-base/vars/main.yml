@@ -14,6 +14,7 @@ packages: {
   'macos': 'temurin17',
   'rhel8': 'java-21-openjdk-headless',
   'rhel9': 'java-25-openjdk-headless',
+  'rhel10': 'java-25-openjdk-headless',
   'smartos': 'openjdk17',
   'ubuntu': 'openjdk-25-jre-headless',
   }

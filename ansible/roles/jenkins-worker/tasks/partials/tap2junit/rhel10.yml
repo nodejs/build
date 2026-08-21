@@ -1,0 +1,17 @@
+---
+
+#
+# install tap2junit from pip
+#
+
+- name: install pip
+  ansible.builtin.dnf: 
+    name: ['python3.12','python3.12-pip']
+    state: present
+
+- name: install tap2junit
+  ansible.builtin.pip:
+    name: tap2junit=={{ tap2junit_version }}
+    state: present
+    virtualenv: /home/{{ server_user }}/venv
+    virtualenv_command: python3.12 -m venv

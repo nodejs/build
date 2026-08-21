@@ -98,6 +98,10 @@ packages: {
     'ccache,cmake,gcc-c++,gcc-toolset-12,gcc-toolset-12-libatomic-devel,gcc-toolset-13,gcc-toolset-13-libatomic-devel,gcc-toolset-14-libatomic-devel,git,llvm-toolset-{{rhel_llvm_version}},make,python3,python3-dnf-plugin-versionlock,rust-toolset-{{rhel_rust_version}}',
   ],
 
+  rhel10: [
+    'ccache,cmake,gcc-c++,git,llvm-toolset-{{rhel_llvm_version}},make,python3,python3-dnf-plugin-versionlock,rust-toolset-{{rhel_rust_version}}',
+  ],
+
   smartos: [
     'gccmakedep',
     'git',
