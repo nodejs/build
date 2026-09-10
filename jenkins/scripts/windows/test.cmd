@@ -62,8 +62,8 @@ echo. >> %DIAGFILE%
 echo tasklist /svc >> %DIAGFILE%
 tasklist /svc >> %DIAGFILE% 2>&1
 echo. >> %DIAGFILE%
-echo wmic path win32_process get Caption,Processid,Commandline >> %DIAGFILE%
-wmic path win32_process get Caption,Processid,Commandline | more >> %DIAGFILE% 2>&1
+echo powershell -NoProfile -NonInteractive -Command "Get-CimInstance Win32_Process | Format-List Caption,ProcessId,CommandLine" >> %DIAGFILE%
+powershell -NoProfile -NonInteractive -Command "Get-CimInstance Win32_Process | Format-List Caption,ProcessId,CommandLine" >> %DIAGFILE% 2>&1
 mv %DIAGFILE% %DIAGFILE%-OLD
 cat %DIAGFILE%-OLD | sed s/\r//g;s/$/\r/ | tail -c 20000000 > %DIAGFILE%
 rm %DIAGFILE%-OLD
