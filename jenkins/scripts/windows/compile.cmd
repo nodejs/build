@@ -12,6 +12,8 @@ set "not_clang=%errorlevel%"
 if %not_clang% equ 1 if not defined DISABLE_CLCACHE if exist C:\clcache\dist\clcache_main\clcache_main.exe (
   set CLCACHE_OBJECT_CACHE_TIMEOUT_MS=60000
   set CLCACHE_BASEDIR="%WORKSPACE%"
+  :: Keep the cache out of %USERPROFILE%, which trips frerich/clcache#342
+  set CLCACHE_DIR=C:\clcache_dir
   set CLCACHE_HARDLINK=1
   set "msbuild_args=%msbuild_args% /p:CLToolExe=clcache_main.exe /p:CLToolPath=C:\clcache\dist\clcache_main"
   :: multiproc msbuild doesn't play nice with clcache
