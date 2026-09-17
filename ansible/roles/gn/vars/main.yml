@@ -1,12 +1,12 @@
 ---
 
 compiler: {
-  'rhel8': '. /opt/rh/gcc-toolset-12/enable'
 }
 
 gn_select_compiler: "{{ compiler[os]|default(compiler[os|stripversion])|default('true') }}"
-gn_version: e2f38fa47b6a6e58e1d427e9d2af246a19cb980c
+gn_version: 59107452bf84ce0d35bed08eecc1209e247b246b
 
 packages: {
-  'rhel8': 'gcc-toolset-12'
+  ## rhel_llvm_version from baselayout vars
+  'rhel8': 'clang-{{rhel_llvm_version}}'
 }
