@@ -1,0 +1,33 @@
+---
+
+#
+# Remove the clcache directory abandoned by the cache-path migration in #4472.
+# Workers must be drained before running this playbook.
+#
+
+- hosts: "*-win*"
+  gather_facts: yes
+  gather_subset: min
+  any_errors_fatal: true
+
+  tasks:
+    - name: Check for limit
+      fail:
+        msg: "No limit set!"
+      when: ansible_limit is not defined
+      run_once: true
+
+    - name: Check whether the relocated clcache has been initialized
+      win_stat:
+        path: 'C:\clcache_dir\config.txt'
+      register: relocated_clcache_config
+
+    - name: Refuse to remove the legacy cache before migration
+      fail:
+        msg: 'C:\clcache_dir\config.txt does not exist; refusing to remove the legacy clcache directory.'
+      when: not relocated_clcache_config.stat.exists
+
+    - name: Remove the legacy clcache directory from the user profile
+      win_file:
+        path: '{{ ansible_facts["env"]["USERPROFILE"] }}\clcache'
+        state: absent

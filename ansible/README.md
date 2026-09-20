@@ -98,6 +98,10 @@ These playbooks are available to you:
 
   - **jenkins/worker/create.yml**: Sets up jenkins workers.
 
+  - **jenkins/worker/cleanup-clcache.yml**: Removes the legacy profile-based
+    clcache directory from Windows workers after confirming the relocated cache
+    is initialized. Drain the workers and use `--limit` when running it.
+
   - **jenkins/worker/upgrade-jar.yml**: Upgrades the worker jar file.
 
   - **jenkins/docker-host.yml**: Sets up a host to run Docker workers.
