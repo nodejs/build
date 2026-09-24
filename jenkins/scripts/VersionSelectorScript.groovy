@@ -23,7 +23,7 @@ def buildExclusions = [
   [ /debian11/,                       anyType,     gte(24) ],
   [ /rhel8-ppc64le/,                  anyType,     gte(26) ], // Power 8 was dropped in v26
   [ /rhel8-power9le/,                 releaseType, lt(26)  ], // Power 8 was dropped in v26
-  [ /rhel8/,                          releaseType, gte(27) ], // Build releases on RHEL 9 for >=27
+  [ /rhel8/,                          releaseType, gte(27) ], // Build releases on RHEL 8 for <27
   [ /rhel9/,                          releaseType, lt(27)  ], // Build releases on RHEL 9 for >=27
 
   // ARM  --------------------------------------------------
