@@ -37,6 +37,7 @@ hosts:
 
     - digitalocean:
         rhel8-x64-1: {ip: 159.203.115.217, swap_file_size_mb: 2048}
+        rhel9-x64-1: {ip: 174.138.56.45, swap_file_size_mb: 4096}
 
     - ibm:
         aix72-ppc64_be-1:
@@ -46,11 +47,14 @@ hosts:
             server_jobs: 8
         rhel8-s390x-1: {ip: 148.100.84.45, swap_file_size_mb: 2048, user: linux1}
         rhel8-x64-1: {ip: 169.62.77.228}
-        rhel8-x64-2: {ip: 52.117.26.5}
+        rhel9-x64-1: {ip: 52.117.26.5, swap_file_size_mb: 4096}
         ubuntu2404_docker-x64-1: {ip: 169.62.77.227}
 
     - iinthecloud:
         ibmi73-ppc64_be-1: {ip: 65.183.160.62, user: nodejs}
+
+    - linuxonecc:
+        rhel9-s390x-1: {ip: 148.100.85.61, swap_file_size_mb: 4096, user: linux1}
 
     - marist:
         zos24-s390x-1: {ip: 148.100.36.157, user: unix1}
@@ -69,6 +73,15 @@ hosts:
             swap_file_size_mb: 4096
         rhel8-ppc64_le-1: {ip: 140.211.168.185, swap_file_size_mb: 2048, user: cloud-user}
         rhel8-ppc64_le-2: {ip: 140.211.168.70, swap_file_size_mb: 4096, user: cloud-user}
+        rhel9-arm64-1:
+            ip: 140.211.11.55
+            server_jobs: 2
+            swap_file_size_mb: 4096
+            user: cloud-user
+        rhel9-ppc64_le-1:
+            ip: 140.211.168.14
+            swap_file_size_mb: 4096
+            user: cloud-user
 
 
   - test:
