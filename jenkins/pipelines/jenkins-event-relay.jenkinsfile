@@ -1,0 +1,83 @@
+﻿#!/usr/bin/env groovy
+
+// DESCRIPTION:
+// Relays Jenkins events directly to GitHub as repository_dispatch events.
+// Replaces the HTTP POST to the GitHub bot with a direct GitHub API call.
+// Primarily used to trigger GitHub Actions workflows based on Jenkins events.
+
+import groovy.json.JsonOutput
+
+pipeline {
+    agent { label 'jenkins-workspace' }
+
+    parameters {
+        string(defaultValue: 'nodejs', description: 'GitHub organization', name: 'OWNER')
+        string(defaultValue: 'node', description: 'GitHub repository', name: 'REPO')
+        string(defaultValue: '', description: 'Jenkins job identifier', name: 'IDENTIFIER')
+        string(defaultValue: '', description: 'Jenkins event type (e.g. start, end)', name: 'EVENT')
+    }
+
+    stages {
+        stage('Relay event') {
+            steps {
+                validateParams(params)
+                timeout(activity: true, time: 30, unit: 'SECONDS') {
+                    relayEvent(params.OWNER, params.REPO, params.IDENTIFIER, params.EVENT)
+                }
+            }
+        }
+    }
+}
+
+def relayEvent(owner, repo, identifier, event) {
+    def eventType = "jenkins.${identifier}.${event}"
+
+    def payload = JsonOutput.toJson([
+        'event_type': eventType,
+        'client_payload': [
+            'owner': owner,
+            'repo': repo,
+            'identifier': identifier,
+            'event': event,
+        ],
+    ])
+
+    println(payload)
+
+    def response
+    try {
+        withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
+            response = httpRequest(
+                url: "https://api.github.com/repos/${owner}/${repo}/dispatches",
+                httpMode: 'POST',
+                timeout: 30,
+                contentType: 'APPLICATION_JSON_UTF8',
+                customHeaders: [
+                    [
+                        name: 'Authorization',
+                        value: "Bearer ${GITHUB_TOKEN}",
+                        maskValue: true,
+                    ],
+                    [
+                        name: 'Accept',
+                        value: 'application/vnd.github+json',
+                        maskValue: false,
+                    ],
+                ],
+                requestBody: payload
+            )
+        }
+    } catch (Exception e) {
+        println(e.toString())
+        if (response) {
+            println('Status: ' + response.status)
+            println('Content: ' + response.content)
+        }
+    }
+}
+
+def validateParams(params) {
+    if (params.IDENTIFIER == '' || params.EVENT == '') {
+        error('IDENTIFIER and EVENT parameters are required.')
+    }
+}
