@@ -24,6 +24,12 @@
     dest: /etc/nginx/conf.d/jenkins-static.conf
     mode: 0644
 
+- name: jenkins-nginx | ensure nginx ssl directory
+  file:
+    path: /etc/nginx/ssl
+    state: directory
+    mode: 0755
+
 - name: jenkins-nginx | ensure dhparam
   copy:
     src: dhparam.pem
