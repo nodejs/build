@@ -1,0 +1,56 @@
+---
+
+#
+# installs and configures the nginx reverse proxy that fronts a Jenkins
+# master, matching the config already running by hand on ci.nodejs.org
+# and ci-release.nodejs.org.
+#
+# expects:
+#   jenkins_nginx_fqdn: the hostname this proxy serves (e.g. ci.nodejs.org).
+#     Selects the site template `{{ jenkins_nginx_fqdn }}.conf.j2`.
+#   jenkins_nginx_status_page: whether to install the localhost-only
+#     `/server_status` stub_status site (only ci.nodejs.org has this today).
+#     Defaults to false.
+#
+
+- name: jenkins-nginx | install nginx
+  package:
+    name: nginx
+    state: present
+
+- name: jenkins-nginx | ensure conf.d cache path config
+  copy:
+    src: jenkins-static.conf
+    dest: /etc/nginx/conf.d/jenkins-static.conf
+    mode: 0644
+
+- name: jenkins-nginx | ensure dhparam
+  copy:
+    src: dhparam.pem
+    dest: /etc/nginx/ssl/dhparam.pem
+    mode: 0644
+
+- name: jenkins-nginx | copy site config to sites-available
+  template:
+    src: "{{ jenkins_nginx_fqdn }}.conf.j2"
+    dest: /etc/nginx/sites-available/jenkins-iojs
+    mode: 0644
+
+- name: jenkins-nginx | symlink site into sites-enabled
+  file:
+    src: /etc/nginx/sites-available/jenkins-iojs
+    dest: /etc/nginx/sites-enabled/jenkins-iojs
+    state: link
+
+- name: jenkins-nginx | install status page
+  copy:
+    src: status.conf
+    dest: /etc/nginx/sites-enabled/status.conf
+    mode: 0644
+  when: jenkins_nginx_status_page | default(false)
+
+- name: jenkins-nginx | enable and start nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
