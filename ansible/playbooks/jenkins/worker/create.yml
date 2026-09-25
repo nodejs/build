@@ -65,6 +65,23 @@
 
   environment: '{{remote_env}}'
 
+
+- hosts:
+  - release
+  gather_facts: yes
+
+  roles:
+    - role: cloudflare-deploy
+      release_home_dir: "{{ home }}/{{ server_user }}"
+
+  pre_tasks:
+    - name: release check if secret is properly set
+      fail:
+      failed_when: not secret
+
+  environment: '{{remote_env}}'
+
+
 #
 # Set up Jenkins Workspace servers
 #
