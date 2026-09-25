@@ -12,3 +12,14 @@
   ansible.builtin.dnf:
     name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
     state: present
+
+- name: install Python 3.12
+  ansible.builtin.dnf:
+    name: ['python3.12','python3.12-pip']
+    state: present
+  notify: package updated
+
+- name: create Python virtual environment
+  ansible.builtin.command:
+    cmd: python3.12 -m venv /home/{{ server_user }}/venv
+    creates: /home/{{ server_user }}/venv/bin/python3.12
