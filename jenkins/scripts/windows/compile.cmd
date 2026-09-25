@@ -8,6 +8,8 @@ set "msbuild_args=/binaryLogger:node.binlog"
 echo %nodes% | findstr /R "_clang" >nul
 set "not_clang=%errorlevel%"
 
+if exist "%USERPROFILE%\clcache" rmdir /s /q "%USERPROFILE%\clcache"
+
 :: Opt-in for a clcache
 if %not_clang% equ 1 if not defined DISABLE_CLCACHE if exist C:\clcache\dist\clcache_main\clcache_main.exe (
   set CLCACHE_OBJECT_CACHE_TIMEOUT_MS=60000
