@@ -45,7 +45,7 @@ This is assumed correct as of the date of last commit. If you notice a discrepan
       1. `CONFIG_FLAGS="$CONFIG_FLAGS --shared-openssl --shared-openssl-includes=${OPENSSL102DIR}/include/ --shared-openssl-libpath=${OPENSSL102DIR}/lib/" make run-ci -j $JOBS` (OPENSSL102DIR points to a pre-build of OpenSSL 1.0.2)
     - ubuntu1604_sharedlibs_openssl110_x64 (Node >= 9 < 12)
       1. `CONFIG_FLAGS="$CONFIG_FLAGS --shared-openssl --shared-openssl-includes=${OPENSSL110DIR}/include/ --shared-openssl-libpath=${OPENSSL110DIR}/lib/" make run-ci -j $JOBS` (OPENSSL110DIR points to a pre-build of OpenSSL 1.1.0)
-    - ubuntu1604_sharedlibs_openssl111_x64 (Node >= 11)
+    - ubuntu1604_sharedlibs_openssl111_x64 (Node >= 11 < 27)
       1. `CONFIG_FLAGS="$CONFIG_FLAGS --shared-openssl --shared-openssl-includes=${OPENSSL111DIR}/include/ --shared-openssl-libpath=${OPENSSL111DIR}/lib/" make run-ci -j $JOBS` (OPENSSL111DIR points to a pre-build of OpenSSL 1.1.1)
     - ubuntu1604_sharedlibs_shared_x64 (Node >= 10)
       1. `CONFIG_FLAGS="$CONFIG_FLAGS --shared" make run-ci -j $JOBS`
