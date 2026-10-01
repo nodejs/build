@@ -7,16 +7,10 @@
   - [AIX](#aix)
     - [Disk Layout](#disk-layout)
     - [OpenSSL](#openssl)
-    - [Remove en1 network interface](#remove-en1-network-interface)
-  - [AIX 7.1](#aix-71)
-    - [Update XL C/C++ Runtime](#update-xl-cc-runtime)
-  - [AIX 7.2 Install](#aix-72-install)
-    - [ccache 3.7.4 on AIX 7.2](#ccache-374-on-aix-72)
-    - [Enable the AHA fs](#enable-the-aha-fs)
-    - [Install XL compilers](#install-xl-compilers)
-    - [Preparing gcc distributables](#preparing-gcc-distributables)
-    - [Install Clang Backend](#install-clang-backend)
-    - [Preparing ccache distributables](#preparing-ccache-distributables)
+    - [Remove unused network interface](#remove-unused-network-interface)
+    - [AIX package Install](#aix-package-install)
+    - [AIX Event Infrastructure - ahafs](#enable-the-aix-event-infrastructure-with-ahafs)
+    - [AIX OpenXL runtime/utilities packages for clang](#install-clang-prerequisites)
   - [Windows (Azure/Rackspace)](#windows-azurerackspace)
     - [Control machine (where Ansible is run)](#control-machine-where-ansible-is-run)
     - [Target machines](#target-machines)
@@ -117,6 +111,9 @@ need to have enough disk space available to fit the requested disk space. On
 IBM Cloud, for example, this involves having a second disk added in addition to
 the default one (e.g. 20Gb standard disk and an additional 100Gb one).
 
+<details>
+<summary>If you get an error with the automated disk expansion, expand this section</summary>
+
 If not enough space is availble the Jenkins worker create playbook will fail
 with an `allocp` error, e.g.
 
@@ -142,9 +139,12 @@ hdisk0          00c8d470fdbc3b5e                    rootvg          active
 hdisk1          00f6db0a6c7aece5                    rootvg          active
 ```
 
-shows two disks attached to one volume group named `rootvg`. If this shows one
-of the disks as `None` this indicates that the disk has not been included in
-the volume group.
+shows two disks attached to one volume group named `rootvg`.  If this shows
+one of the disks as `None` this indicates that the disk has not been
+included in the volume group.  If you only have one physical volume attached
+and don't have enough space, then you should add a second through your
+provider (You want to total of at least 90GiB across the volume group) which
+you can then add to the volume group as per the instructions below.
 
 ```console
 hdisk0          00fa00d6b552f41b                    rootvg          active
@@ -262,17 +262,18 @@ ENCRYPTION:         no
 ```
 
 and use [`chlv -x`](https://www.ibm.com/docs/en/aix/7.3?topic=c-chlv-command)
-to increase the maximum logical partitions (`MAX LPs`). For our 100Gb we use
-`6000` (to match what we have for our AIX 7.1 IBM Cloud instances):
+to increase the maximum logical partitions (`MAX LPs`). For the 50GB file
+system `2048` should be adequate as that typically allows up to a 64GB file
+system.
 
 ```
-# chlv -x 6000 hd1
+# chlv -x 2048 hd1
 # lslv hd1
 LOGICAL VOLUME:     hd1                    VOLUME GROUP:   rootvg
 LV IDENTIFIER:      00fa00d600004c000000017d43623707.8 PERMISSION:     read/write
 VG STATE:           active/complete        LV STATE:       opened/syncd
 TYPE:               jfs2                   WRITE VERIFY:   off
-MAX LPs:            6000                   PP SIZE:        32 megabyte(s)
+MAX LPs:            2048                   PP SIZE:        32 megabyte(s)
 COPIES:             1                      SCHED POLICY:   parallel
 LPs:                1                      PPs:            1
 STALE PPs:          0                      BB POLICY:      relocatable
@@ -287,10 +288,16 @@ ENCRYPTION:         no
 #
 ```
 
+</details>
+
 ### OpenSSL
 
-On AIX OpenSSL is not available as an rpm via yum/dnf and is instead an
-installp fileset that must be manually downloaded and installed.
+On AIX the OpenSSL is packaged as part of the base AIX operating systems and
+not via the AIX Toolbox dnf repositories. When deploying a new system it
+is possible that it will already be at the latest version.
+
+<details>
+<summary>If you need to update OpenSSL then expand this section and follow the instructions</summary>
 
 The following instructions are based on https://www.ibm.com/support/pages/downloading-and-installing-or-upgrading-openssl-and-openssh.
 
@@ -319,81 +326,60 @@ To see a list of installed packages, run:
 lslpp -L all
 ```
 
-### Remove en1 network interface
+</details>
 
-Some libuv/Node.js tests currently fail on AIX with a network interface
-containing a link local address. This is being tracked in
-https://github.com/nodejs/node/issues/46792. In the meantime the `en1`
-interface containing the link local address is removed.
+### Remove unused network interface
+
+Some libuv/Node.js tests currently
+([`parallel/test-dgram-udp6-link-local-address` is an example](https://github.com/nodejs/node/issues/46792))
+fail on AIX with a network interface containing a link local address.
+In the meantime the 
+interface containing the link local address should be removed by running the
+following command as root on the appropriate interface.
 ```
-sudo ifconfig en1 down detach
+chdev -l en1 -a state=down
 ```
 
 Use
 ```
 ifconfig -a
 ```
-to list the available interfaces. To add back the `en1` interface, run
+to list the available interfaces and shut down the the one that doesn't have
+an IPv4 configured on it (Listed after `inet` in the `ifconfig` output if it's configured).
+
+
+## AIX package Install
+
+Most packages required by Node.js build and test can be installed via the
+normal ansible playbooks. This will typically install various open-source
+packages via the [IBM AIX toolbox](https://www.ibm.com/support/pages/aix-toolbox-open-source-software-downloads-alpha).
+
+Some exceptions are as follows (all done automatically by the playbooks):
+- [ccache](https://github.com/nodejs/build/blob/main/ansible/roles/baselayout/tasks/partials/ccache/aix.yml) (not in the AIX toolbox - we build from source)
+- [clang](https://github.com/nodejs/build/blob/main/ansible/roles/baselayout/tasks/partials/clang/aix.yml)
+
+You may need to set up the AIX toolbox if it is not configured by default by
+your provider.
+
+### Enable the AIX Event Infrastructure with AHAFS
+
+The [AIX Event Infrastructure](https://www.ibm.com/docs/en/aix/7.3.0?topic=management-aix-event-infrastructure-aix-aix-clusters-ahafs) is [required for the file watcher
+tests](https://github.com/nodejs/node/pull/10085).  Check if it is installed
+on your machine by looking in the `/aha` directory and verify if it is
+present and non-empty.
+
+<details>
+<summary>If `/aha` is not available or is empty expand this section:</summary>
+
+Ensure that the `bos.ahafs` package is installed:
 ```
-sudo autoconf6 -i en1
+lslpp -l bos.ahafs`
 ```
+which will tell you if it is not already installed. If it is not, then you will
+need to get it installed from the AIX install media, which may involve contacting
+the provider of the system.
 
-## AIX 7.1
-
-### Update XL C/C++ Runtime
-
-Java 17 requires XL C/C++ Runtime 16.1 available from https://www.ibm.com/support/pages/fix-list-xl-cc-runtime-aix#161X.
-Once downloaded, unpack the files with `zcat`:
-```
-zcat 16.1.0.9-IBM-xlCrte-AIX-FP009.tar.Z |  tar -xvf -
-```
-and then install with `installp`:
-```
-installp -aXYgd . -e /tmp/install.log all
-```
-
-Use `lslpp -l xlC\*` to view the curently installed version.
-
-```
-# lslpp -l xlC\*
-  Fileset                      Level  State      Description
-  ----------------------------------------------------------------------------
-Path: /usr/lib/objrepos
-  xlC.aix61.rte             13.1.3.3  COMMITTED  IBM XL C++ Runtime for AIX 6.1
-                                                 and later
-  xlC.cpp                    9.0.0.0  COMMITTED  C for AIX Preprocessor
-  xlC.rte                   13.1.3.3  COMMITTED  IBM XL C++ Runtime for AIX
-  xlC.sup.aix50.rte          9.0.0.1  COMMITTED  XL C/C++ Runtime for AIX 5.2
-#
-```
-
-## AIX 7.2 Install
-
-Most packages should be installed via ansible.
-
-If there are any missing they should be installed via yum
-
-What you do need to install manually is **ccache**
-
-
-```bash
-mkdir -p /opt/gcc-6.3 && cd /opt/gcc-6.3
-curl -L https://ci.nodejs.org/downloads/aix/gcc-6.3-aix7.2.ppc.tar.gz | /opt/freeware/bin/tar -xzf -
-```
-
-### ccache 3.7.4 on AIX 7.2
-
-```bash
-mkdir -p /opt/ccache-3.7.4 && cd /opt/ccache-3.7.4
-curl -L https://ci.nodejs.org/downloads/aix/ccache-3.7.4.aix7.2.ppc.tar.gz | /opt/freeware/bin/tar -xzf -
-```
-
-### Enable the AHA fs
-
-For AIX 7 and 6.1, needed for the file watcher unit tests.
-
-Add the following to /etc/filesystems:
-
+Once the package is installed, ensure that the following is in `/etc/filesystems`
 ```
 /aha:
         dev             = /aha
@@ -409,104 +395,22 @@ mkdir /aha
 mount /aha
 ```
 
-### Install XL compilers
+</details>
 
-1. Download 16.1.0 packages from: https://testcase.boulder.ibm.com (username:
-   xlcomp4, password: ask @mhdawson)
-2. scp them to target:/opt/ibm-xlc
-3. on target:
-```bash
-cd /opt/ibm-xlc
-uncompress 16.1.0.3-IBM-xlCcmp-AIX-FP003.tar.Z
-tar -xvf 16.1.0.3-IBM-xlCcmp-AIX-FP003.tar
-uncompress IBM_XL_C_CPP_V16.1.0.0_AIX.tar.Z
-tar -xvf IBM_XL_C_CPP_V16.1.0.0_AIX.tar
-installp -aXYgd ./usr/sys/inst.images -e /tmp/install.log all
-inutoc
-installp -aXgd ./ -e /tmp/install.log all
-```
-4. Find compilers in `/opt/IBM/xl[cC]/16.1.0/bin/`
-
-### Preparing gcc distributables
-
-1. download gcc-c++ (with dependencies) from bullfreeware.com
-2. `scp 15412gcc-c++-6.3.0-1.aix7.2.ppc.rpm-with-deps.zip TARGET:/ramdisk0`
-   - Note: / is too small
-3. `unzip 15412gcc-c++-6.3.0-1.aix7.2.ppc.rpm-with-deps.zip`
-4. contained wrong libstdc++-9.1, so downloaded bundle for libstdc++ 6.3.0-1
-5. unpack the RPMs:
-        `$ for f in *gcc* *stdc*; do rpm2cpio $f | /opt/freeware/bin/cpio_64 -idmv; done`
-5. Find absolute symlinks, and make them relative, example:
-	```
-	$ find . -type l | xargs file
-	./opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/ppc64/libatomic.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/libatomic.a.
-	./opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/ppc64/libgcc_s.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/libgcc_s.a.
-	./opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/ppc64/libstdc++.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/libstdc++.a.
-	./opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/ppc64/libsupc++.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/libsupc++.a.
-	./opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/ppc64/libatomic.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/libatomic.a.
-	./opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/ppc64/libgcc_s.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/libgcc_s.a.
-	./opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/ppc64/libstdc++.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/libstdc++.a.
-	./opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/ppc64/libsupc++.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/libsupc++.a.
-	```
-	```
-	bash-5.0# pwd
-	/ramdisk0/aixtoolbox/opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/ppc64
-	```
-	```
-	bash-5.0# ln -fs ../libatomic.a ../libgcc_s.a ../libstdc++.a ../libsupc++.a ./
-	```
-	```
-	bash-5.0# find . -type l | xargs file
-	./ppc64/libatomic.a: archive (big format)
-	./ppc64/libgcc_s.a: archive (big format)
-	./ppc64/libstdc++.a: archive (big format)
-	./ppc64/libsupc++.a: archive (big format)
-	./pthread/ppc64/libatomic.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/libatomic.a.
-	./pthread/ppc64/libgcc_s.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/libgcc_s.a.
-	./pthread/ppc64/libstdc++.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/libstdc++.a.
-	./pthread/ppc64/libsupc++.a: symbolic link to /opt/freeware/lib/gcc/powerpc-ibm-aix7.2.0.0/6.3.0/pthread/libsupc++.a.
-	```
-	```
-	bash-5.0# cd pthread/ppc64/
-	```
-	```
-	bash-5.0# ln -fs ../libatomic.a ../libgcc_s.a ../libstdc++.a ../libsupc++.a ./
-	```
-	```
-	bash-5.0# file *.a
-	libatomic.a: archive (big format)
-	libgcc.a: archive (big format)
-	libgcc_eh.a: archive (big format)
-	libgcc_s.a: archive (big format)
-	libgcov.a: archive (big format)
-	libstdc++.a: archive (big format)
-	libsupc++.a: archive (big format)
-	```
-
-6. Move to target location and create a tarball with no assumptions on leading
-path prefix:
-    ```
-    $ mkdir /opt/gcc-6.3
-	$ cd /opt/gcc-6.3
-	$ mv .../opt/freeware/* ./
-	$ tar -cvf ../gcc-6.3-aix7.2.ppc.tar *
-	```
-
-
-Example above was for 6.3.0, but process for 4.8.5 is identical, other than
-the version numbers.
-
-Example search for 4.8.5 gcc on bullfreeware:
-- http://www.bullfreeware.com/?searching=true&package=gcc&from=&to=&libraries=false&exact=true&version=5
-
-### Install Clang Backend
+### Install clang prerequisites
 
 The clang frontend will be auto installed via ansible playbook from:
 https://github.com/IBM/llvm-project/releases
 
-The clang backend requires manually installing xl runtime and xl utilities
+The clang backend requires the installation of the IBM OpenXL17 runtime and
+parts of the utilities package.  The utilties packages should be downloaded
+and installed automatically be the playbooks but if you are on AIX 7.2 then
+the OpenXL 17 Runtime packages need to be downloaded and installed manually
+as per the collapsed section below.  AIX 7.3 already has the appropriate
+filesets preinstalled so are not explicitly required.
 
-runtime:
+<details>
+<summary>IBM OpenXL 17 Runtime (Note: Requires IBM login)</summary>
 
 1. Download the current *.tar.Z from https://www.ibm.com/support/pages/fix-list-xl-cc-runtime-aix
 
@@ -515,60 +419,11 @@ runtime:
 3. On the target
 
   ```sh
-  uncompress IBM_OPEN_XL_CPP_RUNTIME_17.1.4.1_AIX.tar.Z 
-  tar -xf IBM_OPEN_XL_CPP_RUNTIME_17.1.4.1_AIX.tar
-  installp -aFXYd . ALL
+  uncompress IBM_OPEN_XL_CPP_RUNTIME_17.1.4.1_AIX.tar.Z | tar xpf -
+  installp -aFXYd . libc++.rte libc++abi.rte libunwind.rte
   ```
 
-
-utilities:
-
-1. Download the current *.tar.Z from https://www.ibm.com/support/pages/ibm-open-xl-cc-utilities-aix-1713
-2. scp tar onto the target
-3. On the target
-
-  ```sh
-  uncompress IBM_OPEN_XL_CPP_UTILITIES_17.1.3.0_AIX.tar.Z
-  tar -xf IBM_OPEN_XL_CPP_UTILITIES_17.1.3.0_AIX.tar
-  inutoc .
-  installp -aFXYd . ALL
-  ```
-
-After installing these packages we will need to update dnf:
-
-```sh
-/usr/sbin/updtvpkg
-```
-
-
-
-### Preparing ccache distributables
-
-Notes:
-- AIX tar doesn't know about the "z" switch, so use GNU tar.
-- Build tools create 32-bit binaries by default, so explicitly create 64-bit
-  ones.
-
-    ```
-	$ curl -L -O https://github.com/ccache/ccache/releases/download/v3.7.4/ccache-3.7.4.tar.gz
-	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-					 Dload  Upload   Total   Spent    Left  Speed
-	100   607    0   607    0     0   3281      0 --:--:-- --:--:-- --:--:--  3281
-	100  490k  100  490k    0     0   586k      0 --:--:-- --:--:-- --:--:-- 60.4M
-	$ /opt/freeware/bin/tar -xzf ccache-3.7.4.tar.gz
-	$ cd ccache-3.7.4
-	$ ./configure CC="gcc -maix64" && gmake
-	$ mkdir -p /opt/ccache-3.7.4/libexec /opt/ccache-3.7.4/bin
-	$ cp ccache /opt/ccache-3.7.4/bin
-	$ cd /opt/ccache-3.7.4/libexec
-	$ ln -s ../bin/ccache c++
-	$ ln -s ../bin/ccache cpp
-	$ ln -s ../bin/ccache g++
-	$ ln -s ../bin/ccache gcc
-	$ ln -s ../bin/ccache gcov
-	$ cd cd /opt/ccache-3.7.4
-	$ tar -cf /opt/ccache-3.7.4.aix7.2.ppc.tar.gz *
-	```
+</details>
 
 ## Windows (Azure/Rackspace)
 
