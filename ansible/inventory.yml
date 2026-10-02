@@ -29,9 +29,6 @@ hosts:
     - rackspace:
         debian12-x64-1: {ip: 104.239.144.144, alias: gh-bot}
 
-    - softlayer:
-        debian8-x64-1: {ip: 184.172.29.199, alias: registry-mirror}
-
 
   - release:
 
