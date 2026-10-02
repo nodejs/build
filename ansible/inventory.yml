@@ -116,8 +116,6 @@ hosts:
         fedora43-x64-2: {ip: 159.65.246.5}
         rhel8-x64-1: {ip: 161.35.139.78, build_test_v8: yes, swap_file_size_mb: 2048}
         rhel9-x64-1: {ip: 134.122.12.240, swap_file_size_mb: 2048}
-        rhel10-x64-1: {ip: 159.89.189.244, swap_file_size_mb: 2048}
-        rhel10-x64-2: {ip: 138.197.66.92, swap_file_size_mb: 2048}
         ubuntu2204_docker-x64-1: {ip: 134.209.55.216}
         ubuntu2204_docker-x64-2: {ip: 159.89.183.200}
         ubuntu2404-x64-1: {ip: 165.227.180.106, swap_file_size_mb: 2048}
