@@ -275,8 +275,6 @@ companies that have donated miscellaneous hardware:
 - Chris Lea [@chrislea](https://github.com/chrislea) for a Raspberry Pi 1 B+
 
 
-The Build Working Group only manages operations and is no longer in a position
-to accept donations of hardware, services or other infrastructure directly.
 If you would like to donate or sponsor machines or services for the Node.js
 Project, please contact the OpenJS Foundation, as described in the
 [OpenJS Foundation Project Infrastructure Services][infra-menu] documentation.
