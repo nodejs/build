@@ -10,7 +10,16 @@
 
   roles:
   - bootstrap
+  - package-upgrade
   - baselayout
 
   tasks:
 #    - name: place init script
+
+- hosts: infra-digitalocean-ubuntu2204-x64-1 # ci.nodejs.org
+  roles:
+  - { role: jenkins-nginx, jenkins_nginx_fqdn: 'ci.nodejs.org', jenkins_nginx_status_page: true }
+
+- hosts: infra-ibm-ubuntu2404-x64-1 # ci-release.nodejs.org
+  roles:
+  - { role: jenkins-nginx, jenkins_nginx_fqdn: 'ci-release.nodejs.org' }
