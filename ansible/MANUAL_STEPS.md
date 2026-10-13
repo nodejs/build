@@ -110,6 +110,14 @@ Therefore, the above SSH configuration should take place in
 
 ### Disk Layout
 
+It is important for build performance on AIX that the disk containing the
+workspace is as fast as possible. On IBM Cloud it is recommended that a file
+system rated as "tier0" is used. Some performance data analysis can be seen in
+[this issue](https://github.com/nodejs/build/issues/4230#issuecomment-5992417390).
+You can either make the whole of the machine use faster disks at machine
+provision time, or create a separate file system to use as the workspace
+directory later.
+
 [Our AIX Ansible bootstrap role](roles/bootstrap/tasks/partials/aix.yml) 
 attempts to resize filesystems to be large enough to install packages from the
 AIX Toolbox and to hold workspaces for CI builds. The server instances will
