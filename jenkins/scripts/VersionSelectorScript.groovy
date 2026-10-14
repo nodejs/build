@@ -11,6 +11,10 @@ def noVer = { nodeVersion -> false }
 def releaseType = { buildType -> buildType == 'release' }
 def testType = { buildType -> buildType == 'test' }
 def anyType = { buildType -> true }
+// node-test-pull-request passes the pull ref down to every sub-job; daily
+// and release jobs pass a branch ref
+def isPullRequest = new String(parameters['GIT_REMOTE_REF'] ?: '') ==~ /refs\/pull\/.+/
+def prTestType = { buildType -> buildType == 'test' && isPullRequest }
 
 def buildExclusions = [
   // Given a machine label, build type (release or !release) and a Node.js
@@ -54,6 +58,9 @@ def buildExclusions = [
   [ /^aix72-power9/,                    releaseType, lt(26)  ], // Build releases on Power 9 for >=26
 
   // SmartOS -----------------------------------------------
+  // Not run for pull requests, node-daily-* still covers them
+  // https://github.com/nodejs/build/issues/4457
+  [ /^smartos/,                       prTestType,  allVer  ],
   [ /^smartos22/,                     anyType,     gte(26) ],
 
   // Shared libs docker containers -------------------------
