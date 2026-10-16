@@ -1,7 +1,15 @@
 server {
     listen 80;
     server_name {{ jenkins_nginx_fqdn }};
-    return 301 https://{{ jenkins_nginx_fqdn }}$request_uri;
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt;
+        default_type text/plain;
+    }
+
+    location / {
+        return 301 https://{{ jenkins_nginx_fqdn }}$request_uri;
+    }
 }
 
 server {

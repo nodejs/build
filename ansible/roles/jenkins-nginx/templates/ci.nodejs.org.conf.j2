@@ -23,6 +23,11 @@ server {
       autoindex on;
     }
 
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt;
+        default_type text/plain;
+    }
+
     location / {
         rewrite ^ https://{{ jenkins_nginx_fqdn }}$request_uri permanent;
     }

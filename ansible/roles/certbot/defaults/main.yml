@@ -1,4 +1,10 @@
 ---
 
 certbot_email: build@iojs.org
+
+# Hostnames for one certificate; the first is also the certificate name.
+# Each must resolve straight to this host on port 80, and the nginx vhost
+# answering on port 80 must serve /.well-known/acme-challenge/ from
+# certbot_webroot.
 certbot_domains: []
+certbot_webroot: /var/www/letsencrypt

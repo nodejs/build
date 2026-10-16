@@ -1,41 +1,35 @@
 ---
 
 #
-# issues and auto-renews a Let's Encrypt certificate via the
-# certbot-dns-cloudflare plugin (DNS-01 challenge). Works whether or not
-# the domain is Cloudflare-proxied, since it only needs DNS API access,
-# not inbound HTTP on the host.
+# issues and auto-renews a Let's Encrypt certificate using the HTTP-01
+# challenge, answered by nginx from a webroot. Renewal runs from the
+# distro-packaged certbot.timer.
 #
 # expects:
-#   certbot_domains: list of hostnames to include on the certificate.
-#     certbot_domains[0] is used as the certificate's --cert-name.
+#   certbot_domains: list of hostnames on the certificate. The first is
+#     used as the certificate name. See defaults for the requirements.
 #   certbot_email: contact address passed to --email.
-#     Defaults to build@iojs.org.
 #
-# expects a `cloudflare_api_token` secret (via the read-secrets role),
-# scoped to a Cloudflare API token restricted to editing DNS on the
-# zone(s) covering certbot_domains.
+# The first run requests the certificate; later runs leave renewal to
+# certbot.timer.
 #
 
-- name: certbot | install certbot and the cloudflare dns plugin
+- name: certbot | install certbot
   package:
-    name:
-      - certbot
-      - python3-certbot-dns-cloudflare
+    name: certbot
     state: present
+
+- name: certbot | create the acme challenge webroot
+  file:
+    path: "{{ certbot_webroot }}"
+    state: directory
+    mode: 0755
 
 - name: certbot | ensure renewal deploy hook directory
   file:
     path: /etc/letsencrypt/renewal-hooks/deploy
     state: directory
     mode: 0755
-
-- name: certbot | install cloudflare dns api credentials
-  template:
-    src: cloudflare.ini.j2
-    dest: /etc/letsencrypt/cloudflare.ini
-    mode: 0600
-  no_log: yes
 
 - name: certbot | install nginx reload deploy hook
   copy:
@@ -47,9 +41,8 @@
   command:
     cmd: >-
       certbot certonly
-      --dns-cloudflare
-      --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini
-      --dns-cloudflare-propagation-seconds 30
+      --webroot
+      --webroot-path {{ certbot_webroot }}
       --cert-name {{ certbot_domains[0] }}
       -d {{ certbot_domains | join(' -d ') }}
       --email {{ certbot_email }}
