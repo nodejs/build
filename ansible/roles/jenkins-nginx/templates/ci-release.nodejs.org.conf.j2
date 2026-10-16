@@ -1,0 +1,80 @@
+server {
+    listen 80;
+    server_name {{ jenkins_nginx_fqdn }};
+    return 301 https://{{ jenkins_nginx_fqdn }}$request_uri;
+}
+
+server {
+    listen 443 default_server ssl http2;
+    server_name {{ jenkins_nginx_fqdn }};
+
+    ssl_certificate     ssl/nodejs_chained.crt;
+    ssl_certificate_key ssl/nodejs.key;
+
+    ssl_ciphers "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 EECDH EDH+aRSA RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS";
+    ssl_prefer_server_ciphers on;
+    ssl_dhparam ssl/dhparam.pem;
+    ssl_session_timeout 5m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_session_cache shared:SSL:50m;
+
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    ssl_trusted_certificate ssl/nodejs_chained.crt;
+    resolver 8.8.4.4 8.8.8.8 valid=300s;
+    resolver_timeout 10s;
+
+    add_header Strict-Transport-Security max-age=15552000;
+
+    access_log /var/log/nginx/jenkins-iojs-access.log;
+    error_log /var/log/nginx/jenkins-iojs-error.log;
+
+    gzip on;
+    gzip_static on;
+    gzip_disable "MSIE [1-6]\.";
+    default_type text/html;
+    gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+    location /static/ {
+      proxy_set_header        Host $host;
+      proxy_set_header        X-Real-IP $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto $scheme;
+
+      proxy_cache            jenkins-static;
+      proxy_cache_valid      200  1y;
+      proxy_cache_use_stale  error timeout invalid_header updating
+                             http_500 http_502 http_503 http_504;
+
+      expires 1y;
+
+      proxy_pass          http://localhost:8080;
+      proxy_read_timeout  90;
+    }
+
+    location / {
+
+      proxy_set_header        Host $host;
+      proxy_set_header        X-Real-IP $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto $scheme;
+
+      proxy_pass          http://localhost:8080;
+      proxy_read_timeout  90;
+
+      # Hide jenkins headers because reasons
+      proxy_hide_header X-Hudson-CLI-Port;
+      proxy_hide_header X-Jenkins-CLI-Port;
+      proxy_hide_header X-Jenkins-CLI2-Port;
+
+      proxy_redirect      http://localhost:8080 https://{{ jenkins_nginx_fqdn }};
+    }
+
+    location ~ ^/cli {
+      return 403;
+    }
+
+    location /theme/ {
+      alias /var/lib/jenkins/theme/;
+    }
+}
