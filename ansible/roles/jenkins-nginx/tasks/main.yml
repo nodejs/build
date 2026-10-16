@@ -41,6 +41,7 @@
     src: "{{ jenkins_nginx_fqdn }}.conf.j2"
     dest: /etc/nginx/sites-available/jenkins-iojs
     mode: 0644
+  notify: reload nginx
 
 - name: jenkins-nginx | symlink site into sites-enabled
   file:

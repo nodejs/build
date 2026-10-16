@@ -20,6 +20,8 @@
   loop_control:
     loop_var: site
   with_items: "{{ sites }}"
+  notify: reload nginx
+  tags: nginx-sites
 
 - name: symlink sites to `sites-enabled`
   file:
@@ -29,6 +31,7 @@
   loop_control:
     loop_var: site
   with_indexed_items: "{{ sites }}"
+  tags: nginx-sites
 
 - name: remove default site
   file:

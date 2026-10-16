@@ -12,3 +12,4 @@
     - package-upgrade
     - baselayout
     - { role: nginx, sites: [ 'nodejs.org','unencrypted' ] }
+    - { role: certbot, certbot_domains: ['unencrypted.nodejs.org'], tags: certbot }
