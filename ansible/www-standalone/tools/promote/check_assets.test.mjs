@@ -290,6 +290,41 @@ const testcases = [
       ]);
     }
   },
+  {
+    name: 'Alpha release, everything is in staging, nothing in dist, good to go',
+    version: 'v27.0.0-alpha.0.0.0',
+    expectedStdout:
+      '... Checking assets\n' +
+      '... Expecting a total of 39 assets for v27.x\n' +
+      '... 39 assets waiting in staging\n' +
+      '... 0 assets already promoted\n' +
+      ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v27.x\n',
+    setup: async function setup (version, fixtureStagingDir, fixtureDistDir) {
+      await makeFixture(version, true, fixtureStagingDir);
+    }
+  },
+  {
+    name: 'Alpha release, missing two assets in staging, nothing in dist',
+    version: 'v27.0.0-alpha.1.2.3',
+    expectedStdout:
+      '... Checking assets\n' +
+      '... Expecting a total of 39 assets for v27.x\n' +
+      '... 37 assets waiting in staging\n' +
+      '... 0 assets already promoted\n' +
+      ' \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  The following assets are expected for v27.x but are currently missing from staging:\n' +
+      '    • node-v27.0.0-alpha.1.2.3-linux-x64.tar.gz\n' +
+      '    • node-v27.0.0-alpha.1.2.3.pkg\n' +
+      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n',
+    setup: async function setup (version, fixtureStagingDir, fixtureDistDir) {
+      await makeFixture(version, true, fixtureStagingDir);
+      await Promise.all([
+        rm(join(fixtureStagingDir, 'node-v27.0.0-alpha.1.2.3-linux-x64.tar.gz')),
+        rm(join(fixtureStagingDir, 'node-v27.0.0-alpha.1.2.3-linux-x64.tar.gz.done')),
+        rm(join(fixtureStagingDir, 'node-v27.0.0-alpha.1.2.3.pkg')),
+        rm(join(fixtureStagingDir, 'node-v27.0.0-alpha.1.2.3.pkg.done'))
+      ]);
+    }
+  },
 ];
 
 describe(`${basename(import.meta.filename, '.test.mjs')} tests`, async () => {

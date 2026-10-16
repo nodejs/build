@@ -136,6 +136,34 @@ const testcases = [
       context.rcloneLs[context.r2DistDir] = await fixture('unexpected-files.json');
     }
   },
+  {
+    name: 'Alpha release, everything is in staging, nothing in dist, good to go',
+    version: 'v27.0.0-alpha.0.0.0',
+    expectedStdout:
+      '... Checking R2 assets\n' +
+      '... Expecting a total of 39 assets for v27.x\n' +
+      '... 39 assets waiting in R2 staging\n' +
+      '... 0 assets already promoted in R2\n' +
+      ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v27.x\n',
+    setup: async function setup (context) {
+      context.rcloneLs[context.r2StagingDir] = await fixture('all-present-v27.0.0-alpha.0.0.0.json');
+    }
+  },
+  {
+    name: 'Alpha release, everything is in staging and everything in dist',
+    version: 'v27.0.0-alpha.0.0.0',
+    expectedStdout:
+      '... Checking R2 assets\n' +
+      '... Expecting a total of 39 assets for v27.x\n' +
+      '... 39 assets waiting in R2 staging\n' +
+      ' \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m  39 assets already promoted in R2 will be overwritten, is this OK?\n' +
+      ' \u001b[32m\u001b[1m✓\u001b[22m\u001b[39m  Complete set of expected assets in place for v27.x\n' +
+      '    \u001b[33mPromote if you are certain this is the the correct course of action\u001b[39m\n',
+    setup: async function setup (context) {
+      context.rcloneLs[context.r2StagingDir] = await fixture('all-present-v27.0.0-alpha.0.0.0.json');
+      context.rcloneLs[context.r2DistDir] = await fixture('all-present-v27.0.0-alpha.0.0.0.json');
+    }
+  },
 ];
 
 async function fixture (name) {
@@ -233,6 +261,16 @@ describe(`${basename(import.meta.filename, '.mjs')} tests`, async () => {
     restoreConsole();
     assert.strictEqual(exitFunc.mock.callCount(), 1);
     assert.strictEqual(context.stderr, expectedStderr);
+  });
+  it('Alpha staging and dist directories', async (context) => {
+    captureConsole(context);
+    const exitFunc = context.mock.fn();
+    process.exit = exitFunc;
+    await check_r2_assets.checkArgs([ process.execPath, 'check_r2_assets.mjs', 'v27.0.0-alpha.0.0.0', 'v27.0.0-alpha.0.0.0' ]);
+    process.exit = exit;
+    restoreConsole();
+    assert.strictEqual(exitFunc.mock.callCount(), 0);
+    assert.strictEqual(context.stderr, '');
   });
   for (const { name, version, expectedStdout, setup } of testcases) {
     it(name, async (context) => {
