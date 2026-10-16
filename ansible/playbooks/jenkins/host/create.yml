@@ -18,10 +18,10 @@
 
 - hosts: infra-digitalocean-ubuntu2204-x64-1 # ci.nodejs.org
   roles:
-  - { role: jenkins-nginx, jenkins_nginx_fqdn: 'ci.nodejs.org', jenkins_nginx_status_page: true }
-  - { role: certbot, certbot_domains: ['ci.nodejs.org'] }
+  - { role: jenkins-nginx, jenkins_nginx_fqdn: 'ci.nodejs.org', jenkins_nginx_status_page: true, tags: jenkins-nginx }
+  - { role: certbot, certbot_domains: ['ci.nodejs.org'], tags: certbot }
 
 - hosts: infra-ibm-ubuntu2404-x64-1 # ci-release.nodejs.org
   roles:
-  - { role: jenkins-nginx, jenkins_nginx_fqdn: 'ci-release.nodejs.org' }
-  - { role: certbot, certbot_domains: ['ci-release.nodejs.org'] }
+  - { role: jenkins-nginx, jenkins_nginx_fqdn: 'ci-release.nodejs.org', tags: jenkins-nginx }
+  - { role: certbot, certbot_domains: ['ci-release.nodejs.org'], tags: certbot }

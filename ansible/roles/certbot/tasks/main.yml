@@ -24,6 +24,12 @@
       - python3-certbot-dns-cloudflare
     state: present
 
+- name: certbot | ensure renewal deploy hook directory
+  file:
+    path: /etc/letsencrypt/renewal-hooks/deploy
+    state: directory
+    mode: 0755
+
 - name: certbot | install cloudflare dns api credentials
   template:
     src: cloudflare.ini.j2
@@ -49,7 +55,6 @@
       --email {{ certbot_email }}
       --agree-tos
       --non-interactive
-      --deploy-hook /etc/letsencrypt/renewal-hooks/deploy/reload-nginx.sh
   args:
     creates: "/etc/letsencrypt/live/{{ certbot_domains[0] }}/fullchain.pem"
 

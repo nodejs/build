@@ -14,6 +14,7 @@
     - package-upgrade
     - baselayout
     - { role: nginx, sites: [ 'nodejs.org', 'iojs.org', 'dist.libuv.org' ] }
+    - { role: certbot, certbot_domains: ['nodejs.org', '*.nodejs.org'], tags: certbot }
 
   pre_tasks:
     - name: check if secrets are properly set
