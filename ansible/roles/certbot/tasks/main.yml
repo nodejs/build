@@ -1,0 +1,60 @@
+---
+
+#
+# issues and auto-renews a Let's Encrypt certificate via the
+# certbot-dns-cloudflare plugin (DNS-01 challenge). Works whether or not
+# the domain is Cloudflare-proxied, since it only needs DNS API access,
+# not inbound HTTP on the host.
+#
+# expects:
+#   certbot_domains: list of hostnames to include on the certificate.
+#     certbot_domains[0] is used as the certificate's --cert-name.
+#   certbot_email: contact address passed to --email.
+#     Defaults to build@iojs.org.
+#
+# expects a `cloudflare_api_token` secret (via the read-secrets role),
+# scoped to a Cloudflare API token restricted to editing DNS on the
+# zone(s) covering certbot_domains.
+#
+
+- name: certbot | install certbot and the cloudflare dns plugin
+  package:
+    name:
+      - certbot
+      - python3-certbot-dns-cloudflare
+    state: present
+
+- name: certbot | install cloudflare dns api credentials
+  template:
+    src: cloudflare.ini.j2
+    dest: /etc/letsencrypt/cloudflare.ini
+    mode: 0600
+  no_log: yes
+
+- name: certbot | install nginx reload deploy hook
+  copy:
+    src: reload-nginx.sh
+    dest: /etc/letsencrypt/renewal-hooks/deploy/reload-nginx.sh
+    mode: 0755
+
+- name: certbot | request certificate
+  command:
+    cmd: >-
+      certbot certonly
+      --dns-cloudflare
+      --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini
+      --dns-cloudflare-propagation-seconds 30
+      --cert-name {{ certbot_domains[0] }}
+      -d {{ certbot_domains | join(' -d ') }}
+      --email {{ certbot_email }}
+      --agree-tos
+      --non-interactive
+      --deploy-hook /etc/letsencrypt/renewal-hooks/deploy/reload-nginx.sh
+  args:
+    creates: "/etc/letsencrypt/live/{{ certbot_domains[0] }}/fullchain.pem"
+
+- name: certbot | enable and start renewal timer
+  service:
+    name: certbot.timer
+    state: started
+    enabled: yes
