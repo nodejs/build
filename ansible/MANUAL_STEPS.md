@@ -121,7 +121,7 @@ with an `allocp` error, e.g.
 TASK [bootstrap : Set size of /tmp to 1G] ******************************************************************************************************************
 task path: /home/rlau/sandbox/github/build/ansible/roles/bootstrap/tasks/partials/aix.yml:25
 redirecting (type: modules) ansible.builtin.aix_filesystem to community.general.aix_filesystem
-fatal: [test-ibm-aix73-ppc64_be-1]: FAILED! => {"changed": false, "msg": "Failed to run chfs. Error message: 0516-404 allocp: This system cannot fulfill the allocation request.\n\tThere are not enough free partitions or not enough physical volumes \n\tto keep strictness and satisfy allocation requests.  The command\n\tshould be retried with different allocation characteristics.\n"}
+fatal: [test-ibm-aix73-ppc64_be-1]: FAILED! => {"changed": false, "msg": "Failed to run chfs. Error message: 0516-404 allocp: This system cannot fulfill the allocation request.\n\tThere are not enough free partitions or not enough physical volumes \n\tto keep strictness and satisfy allocation requests. The command\n\tshould be retried with different allocation characteristics.\n"}
 ```
 
 On AIX disks are organised into physical volumes (the disks) and logical
@@ -139,9 +139,9 @@ hdisk0          00c8d470fdbc3b5e                    rootvg          active
 hdisk1          00f6db0a6c7aece5                    rootvg          active
 ```
 
-shows two disks attached to one volume group named `rootvg`.  If this shows
+shows two disks attached to one volume group named `rootvg`. If this shows
 one of the disks as `None` this indicates that the disk has not been
-included in the volume group.  If you only have one physical volume attached
+included in the volume group. If you only have one physical volume attached
 and don't have enough space, then you should add a second through your
 provider (You want to total of at least 90GiB across the volume group) which
 you can then add to the volume group as per the instructions below.
@@ -364,7 +364,7 @@ your provider.
 ### Enable the AIX Event Infrastructure with AHAFS
 
 The [AIX Event Infrastructure](https://www.ibm.com/docs/en/aix/7.3.0?topic=management-aix-event-infrastructure-aix-aix-clusters-ahafs) is [required for the file watcher
-tests](https://github.com/nodejs/node/pull/10085).  Check if it is installed
+tests](https://github.com/nodejs/node/pull/10085). Check if it is installed
 on your machine by looking in the `/aha` directory and verify if it is
 present and non-empty.
 
@@ -403,10 +403,10 @@ The clang frontend will be auto installed via ansible playbook from:
 https://github.com/IBM/llvm-project/releases
 
 The clang backend requires the installation of the IBM OpenXL 17 runtime and
-parts of the utilities package.  The utilties packages should be downloaded
+parts of the utilities package. The utilties packages should be downloaded
 and installed automatically be the playbooks but if you are on AIX 7.2 then
 the OpenXL 17 Runtime packages need to be downloaded and installed manually
-as per the collapsed section below.  AIX 7.3 already has the appropriate
+as per the collapsed section below. AIX 7.3 already has the appropriate
 filesets preinstalled so are not explicitly required.
 
 <details>
@@ -533,7 +533,7 @@ The SmartOS machines are hosted by MNX.io. They are individual machines with the
 6. Ansible the VM
 
 ### Provisioning the Machines
-The host environment that houses the virtual machines currently relies on some older system libraries in order for compilation to succeed on smartos VM's. MNX.io has provided a base platform that has these older libs that we can use to make the workers.  
+The host environment that houses the virtual machines currently relies on some older system libraries in order for compilation to succeed on smartos VM's. MNX.io has provided a base platform that has these older libs that we can use to make the workers.
 
 1. Login to MNX.io.
 2. Select "Compute" and then "Custom Images" From the left sidebar
