@@ -60,7 +60,7 @@ def buildExclusions = [
   // SmartOS -----------------------------------------------
   // Not run for pull requests, node-daily-* still covers them
   // https://github.com/nodejs/build/issues/4457
-  [ /^smartos/,                       prTestType,  allVer  ],
+  [ /^smartos/,                       prTestType,  gte(27)  ],
   [ /^smartos22/,                     anyType,     gte(26) ],
 
   // Shared libs docker containers -------------------------
