@@ -402,7 +402,7 @@ mount /aha
 The clang frontend will be auto installed via ansible playbook from:
 https://github.com/IBM/llvm-project/releases
 
-The clang backend requires the installation of the IBM OpenXL17 runtime and
+The clang backend requires the installation of the IBM OpenXL 17 runtime and
 parts of the utilities package.  The utilties packages should be downloaded
 and installed automatically be the playbooks but if you are on AIX 7.2 then
 the OpenXL 17 Runtime packages need to be downloaded and installed manually
