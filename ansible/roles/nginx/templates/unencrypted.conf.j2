@@ -7,6 +7,11 @@ server {
 
     root /home/dist/www;
 
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt;
+        default_type text/plain;
+    }
+
     location /download {
         alias /home/dist/$dist_path;
         autoindex on;

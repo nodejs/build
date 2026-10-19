@@ -37,6 +37,12 @@ server {
 
     error_page 404 /404.html;
 
+    # Let's Encrypt HTTP-01 validation, served from the certbot webroot
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt;
+        default_type text/plain;
+    }
+
     # For the unencrypted Node.js server, we redirect any request to the HTTPS site
     # Unless it is within /dist or is for a JSON file
     location ~ ^/(?!(dist/|dist$|\.json$)) {

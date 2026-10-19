@@ -1,0 +1,58 @@
+---
+
+#
+# issues and auto-renews a Let's Encrypt certificate using the HTTP-01
+# challenge, answered by nginx from a webroot. Renewal runs from the
+# distro-packaged certbot.timer.
+#
+# expects:
+#   certbot_domains: list of hostnames on the certificate. The first is
+#     used as the certificate name. See defaults for the requirements.
+#   certbot_email: contact address passed to --email.
+#
+# The first run requests the certificate; later runs leave renewal to
+# certbot.timer.
+#
+
+- name: certbot | install certbot
+  package:
+    name: certbot
+    state: present
+
+- name: certbot | create the acme challenge webroot
+  file:
+    path: "{{ certbot_webroot }}"
+    state: directory
+    mode: 0755
+
+- name: certbot | ensure renewal deploy hook directory
+  file:
+    path: /etc/letsencrypt/renewal-hooks/deploy
+    state: directory
+    mode: 0755
+
+- name: certbot | install nginx reload deploy hook
+  copy:
+    src: reload-nginx.sh
+    dest: /etc/letsencrypt/renewal-hooks/deploy/reload-nginx.sh
+    mode: 0755
+
+- name: certbot | request certificate
+  command:
+    cmd: >-
+      certbot certonly
+      --webroot
+      --webroot-path {{ certbot_webroot }}
+      --cert-name {{ certbot_domains[0] }}
+      -d {{ certbot_domains | join(' -d ') }}
+      --email {{ certbot_email }}
+      --agree-tos
+      --non-interactive
+  args:
+    creates: "/etc/letsencrypt/live/{{ certbot_domains[0] }}/fullchain.pem"
+
+- name: certbot | enable and start renewal timer
+  service:
+    name: certbot.timer
+    state: started
+    enabled: yes
