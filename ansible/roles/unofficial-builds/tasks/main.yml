@@ -29,7 +29,7 @@
 
 - name: Bootstrap | Add nodesource repo
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_16.x nodistro main"
+    repo: "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main"
     state: present
 
 - name: letsencrypt | Add certbot snap
