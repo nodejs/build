@@ -275,14 +275,13 @@ companies that have donated miscellaneous hardware:
 - Chris Lea [@chrislea](https://github.com/chrislea) for a Raspberry Pi 1 B+
 
 
-If you would like to donate hardware to the Node.js Project, please reach
-out to the Build Working Group, via the [#nodejs-build channel on the OpenJS Foundation Slack
-instance][1] or contact [Rod Vagg](mailto:rod@vagg.org) directly. The Build
-Working Group reserves the right to choose what hardware is actively used
-and how it is used, donating hardware does not guarantee its use within the
-testing infrastructure as there are many other factors that must be
-considered.  Some donated hardware, while not used actively in the CI
-infrastructure, is used from time to time for R&D purposes by the project.
+If you would like to donate or sponsor machines or services for the Node.js
+Project, please contact the OpenJS Foundation, as described in the
+[OpenJS Foundation Project Infrastructure Services][infra-menu] documentation.
+Donating hardware does not guarantee its use within the testing infrastructure
+as there are many other factors that must be considered. Some donated hardware,
+while not used actively in the CI infrastructure, is used from time to time for
+R&D purposes by the project.
 
 
 ## CI Software
@@ -300,6 +299,7 @@ are required. After that the configuration will be removed.
 
 
 [1]:    https://openjs-foundation.slack.com/archives/C03BJP63CH0
+[infra-menu]: https://github.com/openjs-foundation/cross-project-council/blob/main/project-resources/INFRASTRUCTURE_MENU.md
 [2]:    https://digitalocean.com/
 [3]:    https://www.rackspace.com/
 [5]:    https://www.mailgun.com/
