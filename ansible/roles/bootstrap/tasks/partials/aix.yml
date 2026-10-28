@@ -28,7 +28,7 @@
     size: 2G
     state: present
 
-- name: Set size of /home to 50G
+- name: Set size of /home to 50G (If it fails try chlv -x 2048 on the LV for /home)
   aix_filesystem:
     filesystem: /home
     size: 50G
@@ -53,7 +53,7 @@
     path: /aha
     state: directory
 
-- name: Mount /aha filesystem
+- name: Mount /aha filesystem (if this fails install bos.ahafs)
   shell:
     cmd: mount -v ahafs /aha /aha
   when: ahafs.matched == 0
@@ -74,7 +74,58 @@
   ansible.builtin.command: hostname {{ inventory_hostname }}
   when: current_hostname.stdout != inventory_hostname
 
+- name: Ensure the python3-dnf package is up to date
+  shell:
+    cmd: /opt/freeware/bin/dnf install -y python3-dnf
+
 - name: set pkg_mgr
   ansible.builtin.set_fact:
     ansible_facts:
       pkg_mgr: dnf
+
+- name: Check for presence of C++ ADT headers
+  changed_when: no
+  check_mode: no
+  command: "lslpp -l libc++.adt.include"
+  register: adtheaders_installed
+  ignore_errors: yes
+
+# This is from https://www.ibm.com/support/pages/open-xl-cc-aix-utilities
+
+- name: Download OpenXL utilities to /var/cache if needed
+  get_url:
+    checksum: sha256:0d8aba8d06ad403b00a44d5a4466cf55aaeb3a912f071ec840d2ff762a738e28
+    dest: "/var/cache/IBM_OPEN_XL_CPP_UTILITIES_17.1.4.1_AIX.tar.Z"
+    url: "https://public.dhe.ibm.com/aix/products/ccpp/xlc.rte.aix.17.1.4/IBM_OPEN_XL_CPP_UTILITIES_17.1.4.1_AIX.tar.Z"
+  register: clang_local
+  when: adtheaders_installed.rc != 0
+
+- name: Create /tmpopenxlUtilities
+  file:
+    path: /tmp/openxlUtilities
+    state: directory
+    mode: 0700
+  when: adtheaders_installed.rc != 0
+
+# "unarchive" function can't handle the tar.Z file, so call to shell instead
+# which also makes it a bit easier to extract only the fileset we require
+
+- name: Unpack OpenXL utilities
+  shell: "uncompress -c /var/cache/IBM_OPEN_XL_CPP_UTILITIES_17.1.4.1_AIX.tar.Z | tar xpf - -C /tmp/openxlUtilities libc++.adt.include"
+  when: adtheaders_installed.rc != 0
+
+- name: Install C++ ADT headers from OpenXL utilities
+  command: "installp -qaFXYd /tmp/openxlUtilities libc++.adt.include"
+  when: adtheaders_installed.rc != 0
+
+- name: Cleanup /tmp/openxlUtilities
+  file:
+    path: "/tmp/openxlUtilities"
+    state: absent
+  when: adtheaders_installed.rc != 0
+
+# Ref: https://www.ibm.com/support/pages/understanding-aix-virtual-rpm-package-rpmrte
+
+- name: Run updtvpkg to get ODM and DNF databases in sync
+  command: /usr/sbin/updtvpkg
+  when: adtheaders_installed.rc != 0

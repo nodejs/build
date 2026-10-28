@@ -57,7 +57,7 @@
   stat: path="{{ binary_dest }}"
   register: has_git
 
-- name: install packages
+- name: install native packages
   when: not os|startswith("zos") and not os|startswith("macos")
   package:
     name: "{{ package }}"
