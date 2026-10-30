@@ -40,7 +40,7 @@
 
 - name: Bootstrap | Add nodesource repo
   apt_repository:
-    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/nodesource-repo.gpg.asc] https://deb.nodesource.com/node_20.x nodistro main
+    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/nodesource-repo.gpg.asc] https://deb.nodesource.com/node_22.x nodistro main
     state: present
 
 - name: Bootstrap | APT Update and upgrade
