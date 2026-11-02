@@ -133,19 +133,6 @@ hosts:
             remote_env:
                 PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
             server_jobs: 8
-        aix73-ppc64_be-1:
-            ansible_python_interpreter: /opt/freeware/bin/python3
-            ansible_remote_tmp: /tmp/.ansible
-            ip: 163.68.64.114
-            remote_env:
-                PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
-            server_jobs: 6
-        aix73-ppc64_be-2:
-            ansible_remote_tmp: /tmp/.ansible
-            ip: 169.54.113.164
-            remote_env:
-                PATH: /opt/freeware/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin
-            server_jobs: 6
         aix73-ppc64_be-3:
             ansible_remote_tmp: /tmp/.ansible
             ip: 169.54.166.141
