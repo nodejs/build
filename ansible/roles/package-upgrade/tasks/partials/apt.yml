@@ -8,6 +8,8 @@
   apt:
     update_cache: yes
     upgrade: dist
+  async: 3600
+
 
 - name: clean unwanted packages
   apt:
