@@ -16,8 +16,6 @@ git config user.email
 echo $GIT_COMMITTER_NAME
 echo $GIT_AUTHOR_NAME
 
-pwd
-ls -l .git || true
 if [ -r .git/rebase-apply ]; then
   git rebase --abort
 fi
