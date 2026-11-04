@@ -1,0 +1,28 @@
+---
+
+- name: create .aws directory
+  ansible.builtin.file:
+    dest: "{{ release_home_dir }}/.aws"
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    state: directory
+  
+- name: copy credentials to deploy release artifacts
+  ansible.builtin.copy:
+    content: "{{ secrets.worker_credentials }}"
+    dest: "{{ release_home_dir }}/.aws/credentials"
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+
+- name: write worker_config
+  ansible.builtin.copy:
+    dest: "{{ release_home_dir }}/.aws/config"
+    src: "{{ role_path }}/files/worker_config"
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+  when: not os|startswith("win")
+
+
+- name: install awscli
+  community.general.homebrew: name="awscli" state=present
+  become_user: "{{ ansible_user }}"

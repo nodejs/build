@@ -1,0 +1,19 @@
+---
+
+- name: create .aws directory
+  win_file:
+    path: '{{ansible_facts["env"]["USERPROFILE"]}}\.aws'
+    state: directory
+
+- name: copy credentials to deploy release artifacts
+  win_copy:
+    content: "{{ secrets.worker_credentials }}"
+    dest: '{{ansible_facts["env"]["USERPROFILE"]}}\.aws\credentials'
+
+- name: write worker_config
+  win_copy:
+    dest: '{{ansible_facts["env"]["USERPROFILE"]}}\.aws\config'
+    src: "{{ role_path }}/files/worker_config"
+
+- name: install AWS CLI
+  win_chocolatey: name=awscli
