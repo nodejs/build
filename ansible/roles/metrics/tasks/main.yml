@@ -7,7 +7,7 @@
 
 - name: Bootstrap | Add nodesource repo
   apt_repository:
-    repo: deb https://deb.nodesource.com/node_12.x bionic main
+    repo: deb https://deb.nodesource.com/node_22.x nodistro main
     state: present
 
 - name: GCP | Install GCP APT key
