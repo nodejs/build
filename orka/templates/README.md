@@ -57,6 +57,8 @@ We need the private key for node-www for the release images, as well as the appl
 
     Xcode Command-line tools are not enough to perform a full notarization cycle, full Xcode must be fully installed on the release images.
 
+    The release image is used by both the `.pkg` and the tarball nodes of `iojs+release`, and both notarize their output, so every release image needs full Xcode and the `NODE_RELEASE_PROFILE` notarytool profile that this template stores in the System keychain.
+
     * Login to https://developer.apple.com using the apple-operations@openjsf.org account
     * Download Xcode: https://developer.apple.com/download/more/ - find non-beta version, open Developer Tools in browser, Networking tab, start download (then cancel), in Networking tab "Copy as cURL" (available in Chrome & FF)
         * On OSX 15 we currently install 16.4
