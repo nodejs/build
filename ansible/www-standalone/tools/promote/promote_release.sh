@@ -22,7 +22,7 @@ srcdir=$release_srcdir
 dstdir=$release_dstdir
 dirmatch=$release_dirmatch
 
-node --no-warnings /home/staging/tools/promote/check_assets.js $srcdir/$2 $dstdir/$2
+node --no-warnings /home/staging/tools/promote/check_assets.js $srcdir/$2 $dstdir/$2 || exit 1
 
 relative_srcdir=${srcdir/$staging_rootdir/"$site/"}
 relative_dstdir=${dstdir/$dist_rootdir/"$site/"}
