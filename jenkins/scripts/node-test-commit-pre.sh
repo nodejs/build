@@ -16,7 +16,9 @@ git config user.email
 echo $GIT_COMMITTER_NAME
 echo $GIT_AUTHOR_NAME
 
-git rebase --abort || true
+if [ -r .git/rebase-apply ]; then
+  git rebase --abort
+fi
 git checkout -f refs/remotes/origin/_jenkins_local_branch
 git config user.name
 git config user.email
