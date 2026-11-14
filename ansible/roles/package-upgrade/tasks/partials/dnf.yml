@@ -9,4 +9,5 @@
       name: "*"
       state: latest
       use_backend: "{{ os|startswith('aix')|ternary('dnf4', omit) }}"
+    async: 3600
     notify: package updated
