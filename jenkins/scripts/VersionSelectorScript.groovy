@@ -76,6 +76,7 @@ def buildExclusions = [
   [ /^osx13/,                         anyType,     gte(25) ],
   [ /^macos15/,                       anyType,     lt(25)  ],
   [ /^macos\d+-x64/,                  releaseType, gte(27) ],
+  [ /^macos\d+-x64/,                  prTestType,  gte(27) ],
 
   // -------------------------------------------------------
 ]
