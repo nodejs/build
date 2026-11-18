@@ -10,6 +10,7 @@
 
 - hosts: infra-rackspace-debian12-x64-1
   roles:
+    - read-secrets
     - bootstrap
     - package-upgrade
     - github-bot
