@@ -36,9 +36,8 @@
 #                     nightlies are never included.
 #   --latest N        with --all-supported, only the N most recent releases
 #                     of each line. 0 (the default) means all of them. Every
-#                     check downloads one tarball per architecture, so the
-#                     scheduled job uses a small N and a deeper backfill is a
-#                     one-off run with a larger one.
+#                     check downloads one tarball per architecture, so a
+#                     small N keeps a run short.
 #
 # Environment:
 #   NOTARIZATION_PROFILE   keychain profile name (default NODE_RELEASE_PROFILE)
@@ -132,7 +131,7 @@ fi
 
 # Temporary workspace, removed on any exit. Same shape as the
 # tools/dep_updaters scripts in nodejs/node. Signals exit with their
-# conventional status so Jenkins sees an abort, not a success.
+# conventional status so the caller sees an abort, not a success.
 workdir=$(mktemp -d 2> /dev/null || mktemp -d -t 'tmp')
 cleanup () {
   EXIT_CODE=$?

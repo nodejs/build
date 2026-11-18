@@ -174,7 +174,10 @@ The script only runs when `NOTARIZATION_ID`, `NOTARIZATION_PASSWORD` and
 `NOTARIZATION_TEAM_ID` are set. `iojs+release` injects them from a
 conditional step per node type; the tarball steps need them as well as the
 pkg step, otherwise tarballs ship signed but not notarized
-([nodejs/node#67140](https://github.com/nodejs/node/issues/67140)). A
+([nodejs/node#67140](https://github.com/nodejs/node/issues/67140)). Both steps
+also run `security unlock-keychain` before `make`: `notarytool` reads its
+credentials from the keychain profile and fails with `keychainLocked`
+otherwise. A
 successful tarball axis logs `Verification was successful.`; `Skipping
 notarization` means the variables were not injected.
 
@@ -183,16 +186,24 @@ when a third party notarizes an app that bundles them; the window right after
 a release and any version nobody bundles stay uncovered, which is what the
 build step closes. To check a published release from any Mac (the script asks
 Apple's ticket service by code directory hash; `codesign -R=notarized` alone
-only reads the local cache), or to backfill tickets for already published
-tarballs from a machine with the keychain profile:
+only reads the local cache):
 
 ```shell
 tools/macos-tarball-notarization.sh v26.13.0
-tools/macos-tarball-notarization.sh --submit --all-supported --latest 10
 ```
 
-The scheduled `notarize-darwin-tarballs` job in [jenkins-jobs.md](./jenkins-jobs.md)
-runs the second form nightly.
+Tarballs published before the build step notarized them are backfilled with a
+one-off run over SSH on a macOS release VM, which has the keychain profile.
+Unlock the keychain first and set the team the binaries must be signed by:
+
+```shell
+security unlock-keychain -p "<release keychain password>"
+NOTARIZATION_TEAM_ID=<team id> tools/macos-tarball-notarization.sh --submit --all-supported --latest 10
+```
+
+Submissions are serial and each one waits for Apple's verdict, so a large
+backfill can take hours. A rerun skips every binary that already has a ticket,
+so an interrupted run is simply rerun.
 
 [nodejs.org]: https://nodejs.org
 [release process]: https://github.com/nodejs/node/blob/main/doc/contributing/releases.md
