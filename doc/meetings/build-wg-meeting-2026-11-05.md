@@ -32,7 +32,10 @@ Or in your local time:
 
 ## Present
 
-* Build team: @nodejs/build
+* Richard Lau (@richardlau)
+* Ryan Aslett (@ryanaslett)
+* Stewart Addison (@sxa)
+* Abdirahim Musse (@abmusse)
 
 ### Observers/Guests
 
