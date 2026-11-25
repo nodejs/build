@@ -1,0 +1,179 @@
+/* Vars from website redesign */
+$gray0: #f5f6f7;
+$gray1: #eaedef;
+$gray2: #dae1e5;
+$gray3: #cbd4d8;
+$gray4: #b0bcc1;
+$gray5: #929fa5;
+$gray6: #6f7b82;
+$gray7: #556066;
+$gray8: #3f484c;
+$gray9: #2d3438;
+$red0: #faf0f0;
+$red1: #fad4d4;
+$red2: #fab6b6;
+$red3: #fa8e8e;
+$red4: #f55353;
+$red5: #de1b1b;
+$red6: #b80d0d;
+$red7: #8f0e0e;
+$red8: #661414;
+$red9: #451717;
+$orange0: #fcf2e6;
+$orange1: #fad8af;
+$orange2: #f5bc76;
+$orange3: #e89c3f;
+$orange4: #cf7911;
+$orange5: #ad5f00;
+$orange6: #8a4d03;
+$orange7: #693d07;
+$orange8: #4d2f0b;
+$orange9: #33210c;
+$green0: #ecf2e9;
+$green1: #c5e5b5;
+$green2: #9acc7d;
+$green3: #83ba63;
+$green4: #5fa04d;
+$green5: #417f38;
+$green6: #2c682c;
+$green7: #215127;
+$green8: #193f1d;
+$green9: #0f260f;
+$blue0: #e8f4fa;
+$blue1: #bbe5fa;
+$blue2: #8dd4f7;
+$blue3: #53baed;
+$blue4: #229ad6;
+$blue5: #0c7bb3;
+$blue6: #066391;
+$blue7: #064d70;
+$blue8: #093952;
+$blue9: #0c2938;
+$purple0: #f5f0fa;
+$purple1: #ead9fa;
+$purple2: #dabcf7;
+$purple3: #c79bf2;
+$purple4: #ae74e8;
+$purple5: #9656d6;
+$purple6: #7d3cbd;
+$purple7: #642b9e;
+$purple8: #4b2175;
+$purple9: #371c52;
+$pink0: #faf0f4;
+$pink1: #fad4e4;
+$pink2: #fab4d1;
+$pink3: #f78bb8;
+$pink4: #ed5393;
+$pink5: #d6246e;
+$pink6: #b01355;
+$pink7: #8a1244;
+$pink8: #611535;
+$pink9: #421527;
+$brand-light: $green3;
+$brand: $green5;
+$brand-dark: $green7;
+$banner-clip: polygon(0 0, 100% 0, 100% calc(100% - 72px), 0 100%);
+$banner-gradient: linear-gradient(90deg, $purple9, $blue7);
+$nav-height: 6.2rem;
+$hero-height: 36rem;
+$sans-serif: "Open Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+$serif: "Merriweather", Georgia, Cambria, "Times New Roman", Times, serif;
+
+/* Base */
+html {
+  font-size: 10px;
+}
+
+body {
+  background: $gray0;
+  color: $gray9;
+  font-family: $sans-serif;
+  font-size: 1.8rem;
+}
+
+/* Font sizes */
+.font-large {
+  line-height: 1.5;
+  font-size: 2rem;
+}
+
+.font-regular {
+  line-height: 1.5;
+  font-size: 1.8rem;
+}
+
+.font-small, small, .small,
+.shared-partial.uptime-90-days-wrapper .legend .legend-item,
+#uptime-tooltip .no-outages-msg, #uptime-tooltip .outage-count {
+  line-height: 1.5;
+  font-size: 1.15rem;
+}
+
+/* Gradient BG */
+.layout-content.status::before {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $hero-height * .75;
+  -webkit-filter: brightness(160%) saturate(45%);
+  filter: brightness(160%) saturate(45%);
+  background: $banner-gradient;
+  -webkit-clip-path: $banner-clip;
+  clip-path: $banner-clip;
+  z-index: -1;
+}
+
+.layout-content.status-index::before {
+  height: $hero-height * 1.2;
+}
+
+/* Logo text */
+.layout-content.status .masthead-container.basic .masthead .logo-container {
+  max-width: none;
+}
+
+.layout-content.status .masthead-container.basic .masthead .logo-container::after {
+  content: 'Node.js Status';
+  color: #fff;
+  font-size: 4.2rem;
+  font-weight: 600;
+  line-height: 1.5;
+  vertical-align: middle;
+  padding: 0 0 0 .5rem;
+
+  @media screen and (max-width: 850px) {
+    display: block;
+    padding: .25rem 0;
+  }
+}
+
+.layout-content.status.status-incident .page-title {
+  margin: 0 0 20rem;
+}
+
+/* Status box */
+.layout-content.status.status-index .page-status {
+  margin-bottom: 96px;
+  padding: .85rem 1.25rem 1.25rem;
+}
+
+/* Buttons */
+.flat-button, .layout-content.status .masthead-container .updates-dropdown-container .show-updates-dropdown {
+  box-shadow: none;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+/* Incidents */
+.unresolved-incident .incident-title a {
+  color: $gray9 !important;
+}
+.unresolved-incident .incident-title .subscribe {
+  font-size: 1em !important;
+}
+.unresolved-incident .updates {
+  background: $gray0;
+}
