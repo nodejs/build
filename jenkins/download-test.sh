@@ -43,7 +43,7 @@ VERSION=$(echo "$indexTab" | awk 'NR>1 {print $1}' | grep -E "${NODE_VERSION}" |
 
 if [ -z "$VERSION" ]; then
   echo "No matches found for '$NODE_VERSION' in $indexUrl"
-  [ "$tapFile" ] && rm -rf "$tapFile" && echo "TAP version 13
+  [ "$tapFile" ] && rm "$tapFile" && echo "TAP version 13
 not ok 1 - find most recent downloads for ${NODE_VERSION}
   ---
   No matches found for '$NODE_VERSION' in $indexUrl
